@@ -1,0 +1,254 @@
+/* ============================================================
+   ANDREW ZOLL — Design Tokens
+   Clean. Minimal. Structured. Built for business clarity.
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root {
+  /* ---------------------------------------------------------
+     COLOR — Primary
+     Navy is the foundation. Green is used sparingly.
+     --------------------------------------------------------- */
+  --navy-900: #0B1A36;   /* deepest — headings on light */
+  --navy-800: #0F2144;   /* primary navy (logo) */
+  --navy-700: #17305E;
+  --navy-600: #22427A;
+  --navy-500: #3A5A92;
+  --navy-300: #8FA1BF;
+  --navy-100: #DCE2ED;
+  --navy-50:  #F1F4F9;
+
+  --green-700: #234A2F;
+  --green-600: #2F5D3E;   /* primary green (logo accent) */
+  --green-500: #3A7450;
+  --green-400: #5E9573;
+  --green-100: #DDE8E0;
+  --green-50:  #EEF3EF;
+
+  /* ---------------------------------------------------------
+     COLOR — Neutrals
+     Pure, quiet grays. No blue cast.
+     --------------------------------------------------------- */
+  --white:     #FFFFFF;
+  --paper:     #FAFAFA;    /* page background alt */
+  --ink-50:    #F4F4F5;
+  --ink-100:   #E8E9EB;
+  --ink-200:   #D4D6DA;
+  --ink-300:   #B6B9BF;
+  --ink-400:   #888C94;
+  --ink-500:   #5E6169;
+  --ink-600:   #3F434B;
+  --ink-700:   #292C32;
+  --ink-900:   #121418;
+
+  /* ---------------------------------------------------------
+     COLOR — Semantic
+     --------------------------------------------------------- */
+  --bg:            var(--white);
+  --bg-alt:        var(--paper);
+  --bg-inverse:    var(--navy-800);
+  --bg-subtle:     var(--ink-50);
+
+  --fg:            var(--navy-900);    /* primary text */
+  --fg-muted:      var(--ink-500);     /* secondary text */
+  --fg-subtle:     var(--ink-400);     /* tertiary / eyebrow */
+  --fg-inverse:    var(--white);
+  --fg-accent:     var(--green-600);   /* use sparingly */
+
+  --border:        var(--ink-100);
+  --border-strong: var(--ink-200);
+  --divider:       var(--ink-100);
+
+  --accent:        var(--green-600);
+  --accent-hover:  var(--green-700);
+  --accent-soft:   var(--green-50);
+
+  --primary:       var(--navy-800);
+  --primary-hover: var(--navy-900);
+
+  --success:       var(--green-600);
+  --warning:       #B77B1F;
+  --danger:        #B4323C;
+
+  /* ---------------------------------------------------------
+     TYPOGRAPHY
+     Sans-serif only. High legibility. Structured hierarchy.
+     --------------------------------------------------------- */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+
+  /* Weights — slightly bold for headlines, normal for body */
+  --fw-regular:  400;
+  --fw-medium:   500;
+  --fw-semibold: 600;
+  --fw-bold:     700;
+  --fw-extra:    800;
+
+  /* Scale — 1.25 modular, tuned for clarity */
+  --fs-xs:   0.75rem;    /* 12 — micro labels */
+  --fs-sm:   0.875rem;   /* 14 — caption / meta */
+  --fs-base: 1rem;       /* 16 — body */
+  --fs-md:   1.125rem;   /* 18 — lead body */
+  --fs-lg:   1.375rem;   /* 22 — subhead */
+  --fs-xl:   1.75rem;    /* 28 — h3 */
+  --fs-2xl:  2.25rem;    /* 36 — h2 */
+  --fs-3xl:  3rem;       /* 48 — h1 */
+  --fs-4xl:  4rem;       /* 64 — display */
+  --fs-5xl:  5.25rem;    /* 84 — hero display */
+
+  --lh-tight:   1.1;
+  --lh-snug:    1.25;
+  --lh-normal:  1.5;
+  --lh-relaxed: 1.7;
+
+  --ls-tighter: -0.03em;
+  --ls-tight:   -0.015em;
+  --ls-normal:  0;
+  --ls-wide:    0.04em;
+  --ls-wider:   0.12em;     /* eyebrow / all-caps labels */
+  --ls-widest:  0.22em;     /* logo supporting text */
+
+  /* ---------------------------------------------------------
+     SPACING — 4px base, tight & consistent
+     --------------------------------------------------------- */
+  --sp-0:  0;
+  --sp-1:  4px;
+  --sp-2:  8px;
+  --sp-3:  12px;
+  --sp-4:  16px;
+  --sp-5:  20px;
+  --sp-6:  24px;
+  --sp-8:  32px;
+  --sp-10: 40px;
+  --sp-12: 48px;
+  --sp-16: 64px;
+  --sp-20: 80px;
+  --sp-24: 96px;
+  --sp-32: 128px;
+
+  /* ---------------------------------------------------------
+     RADII — Subtle. Structured, not playful.
+     --------------------------------------------------------- */
+  --r-none: 0;
+  --r-sm:   2px;
+  --r-md:   4px;
+  --r-lg:   6px;
+  --r-xl:   8px;
+  --r-2xl: 12px;
+  --r-pill: 999px;
+
+  /* ---------------------------------------------------------
+     ELEVATION — Quiet. Never floaty.
+     --------------------------------------------------------- */
+  --shadow-xs: 0 1px 2px rgba(11, 26, 54, 0.06);
+  --shadow-sm: 0 1px 3px rgba(11, 26, 54, 0.08), 0 1px 2px rgba(11, 26, 54, 0.04);
+  --shadow-md: 0 4px 12px rgba(11, 26, 54, 0.08), 0 2px 4px rgba(11, 26, 54, 0.04);
+  --shadow-lg: 0 12px 32px rgba(11, 26, 54, 0.10), 0 4px 8px rgba(11, 26, 54, 0.04);
+  --shadow-focus: 0 0 0 3px rgba(47, 93, 62, 0.25);
+
+  /* ---------------------------------------------------------
+     LAYOUT
+     --------------------------------------------------------- */
+  --container: 1200px;
+  --container-narrow: 760px;
+  --container-wide: 1440px;
+
+  /* ---------------------------------------------------------
+     MOTION — Calm. Functional. Never flashy.
+     --------------------------------------------------------- */
+  --ease: cubic-bezier(0.2, 0.6, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --dur-fast: 120ms;
+  --dur-base: 180ms;
+  --dur-slow: 280ms;
+}
+
+/* ============================================================
+   BASE ELEMENT STYLES — Semantic defaults
+   ============================================================ */
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  font-family: var(--font-sans);
+  font-size: var(--fs-base);
+  line-height: var(--lh-normal);
+  color: var(--fg);
+  background: var(--bg);
+  font-feature-settings: "cv11", "ss01";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--fg);
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-tight);
+  margin: 0;
+  text-wrap: balance;
+}
+
+h1 { font-size: var(--fs-3xl); letter-spacing: var(--ls-tighter); }
+h2 { font-size: var(--fs-2xl); }
+h3 { font-size: var(--fs-xl); letter-spacing: var(--ls-tight); }
+h4 { font-size: var(--fs-lg); font-weight: var(--fw-semibold); }
+h5 { font-size: var(--fs-md); font-weight: var(--fw-semibold); letter-spacing: var(--ls-normal); }
+h6 {
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-wider);
+  text-transform: uppercase;
+  color: var(--fg-muted);
+}
+
+p {
+  margin: 0;
+  line-height: var(--lh-relaxed);
+  color: var(--fg);
+  text-wrap: pretty;
+}
+
+small { font-size: var(--fs-sm); color: var(--fg-muted); }
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease);
+}
+a:hover { color: var(--accent-hover); border-bottom-color: currentColor; }
+
+code, pre, kbd {
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid var(--divider);
+  margin: var(--sp-8) 0;
+}
+
+::selection { background: var(--green-100); color: var(--navy-900); }
+
+/* ============================================================
+   TYPE UTILITY CLASSES
+   ============================================================ */
+
+.display    { font-size: var(--fs-5xl); font-weight: var(--fw-extra); line-height: 1.02; letter-spacing: var(--ls-tighter); }
+.t-hero     { font-size: var(--fs-4xl); font-weight: var(--fw-bold); line-height: 1.05; letter-spacing: var(--ls-tighter); }
+.t-h1       { font-size: var(--fs-3xl); font-weight: var(--fw-bold); line-height: var(--lh-tight); letter-spacing: var(--ls-tighter); }
+.t-h2       { font-size: var(--fs-2xl); font-weight: var(--fw-bold); line-height: var(--lh-tight); letter-spacing: var(--ls-tight); }
+.t-h3       { font-size: var(--fs-xl);  font-weight: var(--fw-bold); line-height: var(--lh-snug); letter-spacing: var(--ls-tight); }
+.t-lead     { font-size: var(--fs-md);  font-weight: var(--fw-regular); line-height: var(--lh-relaxed); color: var(--fg-muted); }
+.t-body     { font-size: var(--fs-base); line-height: var(--lh-relaxed); }
+.t-small    { font-size: var(--fs-sm);  line-height: var(--lh-normal); color: var(--fg-muted); }
+.t-eyebrow  { font-size: var(--fs-xs);  font-weight: var(--fw-semibold); letter-spacing: var(--ls-wider); text-transform: uppercase; color: var(--fg-accent); }
+.t-label    { font-size: var(--fs-xs);  font-weight: var(--fw-semibold); letter-spacing: var(--ls-wide); text-transform: uppercase; color: var(--fg-muted); }
+.t-mono     { font-family: var(--font-mono); font-size: var(--fs-sm); }
+
+.fg-accent  { color: var(--fg-accent); }
+.fg-muted   { color: var(--fg-muted); }
+.fg-inverse { color: var(--fg-inverse); }

@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Andrew Zoll · AI Efficiency Audits</title>
+  <link rel="icon" href="assets/favicon-primary.png"/>
+  <link rel="stylesheet" href="colors_and_type.css"/>
+  <style>
+    html,body{margin:0;padding:0;background:#fff;overflow-x:hidden;}
+    *{box-sizing:border-box;}
+    @keyframes fade{from{opacity:0}to{opacity:1}}
+    @keyframes slide{from{transform:translateX(30px);opacity:0}to{transform:translateX(0);opacity:1}}
+    @keyframes modalIn{from{opacity:0;transform:translate(-50%, calc(-50% + 16px))}to{opacity:1;transform:translate(-50%,-50%)}}
+    button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,a:focus-visible{outline:2px solid #2F5D3E;outline-offset:2px;}
+
+    /* Mobile menu button visibility */
+    .az-mobile-menu-btn{display:none !important;}
+    @media (max-width: 820px){
+      .az-desktop-nav{display:none !important;}
+      .az-desktop-cta{display:none !important;}
+      .az-mobile-menu-btn{display:flex !important;}
+    }
+
+    /* Problem grid collapses */
+    @media (max-width: 900px){
+      .az-problem-grid{grid-template-columns:repeat(2, 1fr) !important;}
+    }
+    @media (max-width: 520px){
+      .az-problem-grid{grid-template-columns:1fr !important;}
+    }
+
+    /* Two-column sections collapse */
+    @media (max-width: 820px){
+      .az-audit-grid,
+      .az-whofor-grid,
+      .az-about-grid,
+      .az-footer-top{grid-template-columns:1fr !important; gap:32px !important;}
+      .az-footer-cols{grid-template-columns:1fr 1fr !important;}
+      .az-hide-mobile{display:none;}
+    }
+
+    /* Hero padding and meta */
+    @media (max-width: 640px){
+      .az-hero-meta{gap:16px !important; flex-direction:column; align-items:flex-start;}
+      .az-hero-ctas{flex-direction:column; align-items:stretch;}
+      .az-hero-ctas > *{width:100%; text-align:center;}
+    }
+
+    /* H2 on mobile */
+    @media (max-width: 520px){
+      .az-h2{font-size:34px !important;}
+    }
+
+    /* About photo — not sticky on mobile */
+    @media (max-width: 820px){
+      section#about > div > div > div:first-child{position:static !important;}
+      section#about > div > div > div:first-child > div:first-child{max-width:320px;}
+    }
+
+    /* Booking sheet full-width on mobile */
+    @media (max-width: 520px){
+      aside{width:100% !important;}
+      aside > div{padding:64px 24px 32px !important;}
+    }
+  </style>
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel" src="components/tweaks.jsx"></script>
+<script type="text/babel" src="components/SiteNav.jsx"></script>
+<script type="text/babel" src="components/SiteHero.jsx"></script>
+<script type="text/babel" src="components/Problem.jsx"></script>
+<script type="text/babel" src="components/TheAudit.jsx"></script>
+<script type="text/babel" src="components/HowItWorksNew.jsx"></script>
+<script type="text/babel" src="components/SamplePlan.jsx"></script>
+<script type="text/babel" src="components/WhoFor.jsx"></script>
+<script type="text/babel" src="components/AboutInline.jsx"></script>
+<script type="text/babel" src="components/FAQNew.jsx"></script>
+<script type="text/babel" src="components/CTABand.jsx"></script>
+<script type="text/babel" src="components/SiteFooter.jsx"></script>
+<script type="text/babel" src="components/BookingSheetNew.jsx"></script>
+<script type="text/babel">
+  const { useState } = React;
+  function App(){
+    const [booking, setBooking] = useState(false);
+    const openBook = () => setBooking(true);
+    const { tweaks, set, visible } = useTweaks();
+    return (
+      <div>
+        <SiteNav onBook={openBook} tweaks={tweaks}/>
+        <main>
+          <SiteHero onBook={openBook} tweaks={tweaks}/>
+          <Problem/>
+          <TheAudit onBook={openBook}/>
+          <HowItWorksNew/>
+          <SamplePlan/>
+          <WhoFor/>
+          <AboutInline/>
+          <FAQNew/>
+          <CTABand onBook={openBook}/>
+        </main>
+        <SiteFooter/>
+        <BookingSheetNew open={booking} onClose={()=>setBooking(false)}/>
+        <TweaksPanel tweaks={tweaks} set={set} visible={visible}/>
+      </div>
+    );
+  }
+  ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>
