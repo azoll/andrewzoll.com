@@ -3,7 +3,7 @@ function AboutInline() {
     <section id="about" style={ab.root}>
       <div style={ab.inner}>
         <div style={ab.grid} className="az-about-grid">
-          <div style={ab.photoWrap}>
+          <div style={ab.photoWrap} className="az-reveal">
             <div style={ab.photo}>
               <img src="../assets/andrew-headshot.png" alt="Andrew Zoll" style={{width:'100%', height:'100%', objectFit:'cover', display:'block'}}/>
             </div>
@@ -13,21 +13,21 @@ function AboutInline() {
             </div>
           </div>
 
-          <div style={ab.copy}>
+          <div style={ab.copy} className="az-reveal" data-reveal-delay="120">
             <div style={ab.eyebrow}>About</div>
             <h2 style={ab.h2} className="az-h2">Hi, I'm Andrew.</h2>
             <div style={ab.body}>
-              <p>I grew up in Colorado. I'm a financial advisor by trade and a builder by wiring. Husband, dad of four, business owner. I spend most of my time trying to build things that actually matter.</p>
+              <p>I'm a builder who ended up in finance.</p>
 
-              <p>For the last five years I've worked as a financial advisor with high-income Christian families. That work sharpened how I think about stewardship, long-term planning, and what matters once you strip the noise away.</p>
+              <p>For the last five years, I've worked as a financial advisor with high-income Christian families. That work forced me to think clearly about stewardship, long-term decisions, and what actually matters when the noise is stripped away.</p>
 
-              <p>Alongside that, I've always been wired to build. Systems, workflows, automations. That eventually turned into software. FieldCommand is the current version of it, a bid-to-payment platform for commercial electricians.</p>
+              <p>At the same time, I've always built systems. Not for fun. Because broken processes bother me. I've spent years turning messy workflows into something that actually runs. That eventually turned into software. FieldCommand is the current version, a bid-to-payment platform for commercial electricians.</p>
 
-              <p>I didn't come up through a traditional tech path. I learned by doing, breaking things, and using AI as a lever to move faster. I use it aggressively, but I stress-test everything it produces until it actually works in the real world.</p>
+              <p>I didn't come up through a traditional tech path. I learned by doing, breaking things, and rebuilding them better. AI just made that faster. I use it aggressively, but I don't trust it. Everything gets tested until it works in the real world.</p>
 
-              <p>The audits came out of frustration. I kept seeing business owners either ignore AI completely, or use it in shallow ways that wasted more time than they saved. Meanwhile I was using it to build real systems. The gap stuck out, so I started auditing workflows instead of just talking about tools.</p>
+              <p>The audits came out of frustration. Most business owners either ignore AI or use it in ways that create more work, not less. Meanwhile, I was using it to remove hours from my own workflows. The gap was obvious.</p>
 
-              <p>My worldview shapes how I work. Stewardship, responsibility, clarity over noise. That shows up whether we're talking about money, business, or systems.</p>
+              <p>So I stopped talking about tools and started fixing systems.</p>
             </div>
           </div>
         </div>

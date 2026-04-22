@@ -8,13 +8,13 @@ function HowItWorksNew() {
   return (
     <section id="how" style={hw.root}>
       <div style={hw.inner}>
-        <div style={hw.head}>
+        <div style={hw.head} className="az-reveal">
           <div style={hw.eyebrow}>How it works</div>
           <h2 style={hw.h2} className="az-h2">Four steps. No surprises.</h2>
         </div>
         <div style={hw.list}>
           {steps.map((s,i) => (
-            <div key={i} style={hw.step}>
+            <div key={i} style={hw.step} className="az-reveal" data-reveal-delay={i * 90}>
               <div style={hw.stepNum}>{s.n}</div>
               <div style={hw.stepBody}>
                 <div style={hw.stepHead}>

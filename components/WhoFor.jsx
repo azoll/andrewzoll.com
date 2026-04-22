@@ -13,13 +13,13 @@ function WhoFor() {
   return (
     <section style={wf.root}>
       <div style={wf.inner}>
-        <div style={wf.head}>
+        <div style={wf.head} className="az-reveal">
           <div style={wf.eyebrow}>Who it's for</div>
           <h2 style={wf.h2} className="az-h2">Honest about<br className="az-hide-mobile"/> the fit.</h2>
         </div>
 
         <div style={wf.grid} className="az-whofor-grid">
-          <div style={wf.col}>
+          <div style={wf.col} className="az-reveal">
             <div style={wf.colHead}>
               <div style={{...wf.dot, background:'#2F5D3E'}}/>
               <div style={wf.colTitle}>This is for you if</div>
@@ -28,7 +28,7 @@ function WhoFor() {
               {forYou.map((t,i)=>(<li key={i} style={wf.li}><span style={wf.bullet}>+</span>{t}</li>))}
             </ul>
           </div>
-          <div style={{...wf.col, ...wf.colDim}}>
+          <div style={{...wf.col, ...wf.colDim}} className="az-reveal" data-reveal-delay="120">
             <div style={wf.colHead}>
               <div style={{...wf.dot, background:'#B6B9BF'}}/>
               <div style={wf.colTitle}>Not the right fit if</div>

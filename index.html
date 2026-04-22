@@ -14,6 +14,30 @@
     @keyframes modalIn{from{opacity:0;transform:translate(-50%, calc(-50% + 16px))}to{opacity:1;transform:translate(-50%,-50%)}}
     button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,a:focus-visible{outline:2px solid #2F5D3E;outline-offset:2px;}
 
+    /* ---------- Global reveal-on-scroll ---------- */
+    .az-reveal{opacity:0; transform:translateY(14px); transition:opacity 280ms ease-out, transform 280ms ease-out; will-change:opacity,transform;}
+    .az-reveal.az-in{opacity:1; transform:translateY(0);}
+    @media (prefers-reduced-motion: reduce){
+      .az-reveal{opacity:1 !important; transform:none !important; transition:none !important;}
+    }
+
+    /* ---------- Scroll progress bar ---------- */
+    #az-progress{position:fixed; top:0; left:0; height:2px; width:0%; background:#2F5D3E; z-index:60; transition:width 80ms linear; pointer-events:none;}
+
+    /* ---------- Button polish (primary CTAs) ---------- */
+    .az-btn-primary{transition: background-color 150ms ease-out, transform 150ms ease-out, box-shadow 150ms ease-out, filter 150ms ease-out;}
+    .az-btn-primary:hover{transform: scale(1.02); filter: brightness(1.06);}
+    .az-btn-primary:active{transform: scale(0.99);}
+    .az-btn-primary .az-arrow{display:inline-block; transition: transform 150ms ease-out; will-change:transform;}
+    .az-btn-primary:hover .az-arrow{transform: translateX(5px);}
+
+    /* ---------- Card hover lift ---------- */
+    .az-card-hover{transition: transform 180ms ease-out, box-shadow 180ms ease-out;}
+    .az-card-hover:hover{transform: translateY(-2px);}
+    .az-stat-card:hover{box-shadow: 0 6px 20px rgba(11,26,54,0.06);}
+    .az-price-card:hover{box-shadow: 0 18px 40px rgba(0,0,0,0.28), 0 4px 10px rgba(0,0,0,0.18);}
+    .az-deliverable-card:hover{box-shadow: 0 28px 68px rgba(0,0,0,0.4), 0 6px 16px rgba(0,0,0,0.2);}
+
     /* Mobile menu button visibility */
     .az-mobile-menu-btn{display:none !important;}
     @media (max-width: 820px){
@@ -69,7 +93,66 @@
   <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
 </head>
 <body>
+<div id="az-progress"></div>
 <div id="root"></div>
+<script>
+  // Scroll progress bar + reveal-on-scroll — both driven by a single scroll handler
+  // so they work reliably inside iframes where IntersectionObserver can be flaky.
+  (function(){
+    const bar = document.getElementById('az-progress');
+    const prefersReduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function updateBar(){
+      const h = document.documentElement;
+      const max = (h.scrollHeight - h.clientHeight) || 1;
+      const p = Math.min(100, Math.max(0, (h.scrollTop / max) * 100));
+      bar.style.width = p + '%';
+    }
+
+    function revealVisible(){
+      const vh = window.innerHeight || document.documentElement.clientHeight;
+      const els = document.querySelectorAll('.az-reveal:not(.az-in)');
+      els.forEach((el) => {
+        if (prefersReduce){ el.classList.add('az-in'); return; }
+        const r = el.getBoundingClientRect();
+        // Visible if its top is above the bottom edge minus a small margin, AND bottom below 0
+        if (r.top < vh - 40 && r.bottom > 0){
+          const delay = parseInt(el.dataset.revealDelay || '0', 10);
+          if (delay > 0) setTimeout(() => el.classList.add('az-in'), delay);
+          else el.classList.add('az-in');
+        }
+      });
+    }
+
+    let scheduled = false;
+    function onScroll(){
+      if (scheduled) return;
+      scheduled = true;
+      setTimeout(() => {
+        updateBar();
+        revealVisible();
+        scheduled = false;
+      }, 16);
+    }
+
+    window.addEventListener('scroll', onScroll, {passive:true});
+    document.addEventListener('scroll', onScroll, {passive:true});
+    window.addEventListener('resize', onScroll, {passive:true});
+    window.addEventListener('load', onScroll);
+
+    // Rescan whenever React mounts new nodes (they start with az-reveal -> opacity:0).
+    const mo = new MutationObserver(() => onScroll());
+    mo.observe(document.body, {childList:true, subtree:true});
+
+    // Initial paint
+    updateBar();
+    revealVisible();
+    // A few follow-up passes in case React mounts after first tick
+    setTimeout(revealVisible, 50);
+    setTimeout(revealVisible, 200);
+    setTimeout(revealVisible, 600);
+  })();
+</script>
 <script type="text/babel" src="components/tweaks.jsx"></script>
 <script type="text/babel" src="components/SiteNav.jsx"></script>
 <script type="text/babel" src="components/SiteHero.jsx"></script>

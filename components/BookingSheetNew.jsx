@@ -36,9 +36,9 @@ function BookingSheetNew({ open, onClose }) {
             </div>
           </div>
 
-          <button onClick={handleBook} style={bs.primary}>
+          <button onClick={handleBook} style={bs.primary} className="az-btn-primary">
             Pick a time on my calendar
-            <span style={{marginLeft:10, display:'inline-flex'}}>
+            <span className="az-arrow" style={{marginLeft:10, display:'inline-flex'}}>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M7 17L17 7"/><path d="M7 7h10v10"/></svg>
             </span>
           </button>

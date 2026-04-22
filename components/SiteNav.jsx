@@ -22,8 +22,9 @@ function SiteNav({ onBook, tweaks }) {
     position:'fixed', top:0, left:0, right:0, zIndex:30,
     background: dark ? 'transparent' : 'rgba(255,255,255,0.92)',
     backdropFilter: dark ? 'none' : 'blur(8px)',
-    borderBottom: dark ? '1px solid rgba(255,255,255,0.08)' : '1px solid #E8E9EB',
-    transition:'background 220ms, border-color 220ms',
+    borderBottom: dark ? '1px solid rgba(255,255,255,0.08)' : (scrolled ? '1px solid #E0E2E6' : '1px solid #E8E9EB'),
+    boxShadow: (!dark && scrolled) ? '0 2px 12px rgba(11,26,54,0.05)' : 'none',
+    transition:'background 220ms ease-out, border-color 220ms ease-out, box-shadow 220ms ease-out',
   };
   const ctaStyle = {
     fontFamily:'inherit', fontSize:13, fontWeight:600, padding:'10px 18px',
@@ -52,7 +53,7 @@ function SiteNav({ onBook, tweaks }) {
           <a onClick={()=>scrollTo('about')} style={linkStyle}>About</a>
         </div>
         <div style={{display:'flex', alignItems:'center', gap:10}}>
-          <button onClick={onBook} style={ctaStyle} className="az-desktop-cta">Book the audit <span style={{marginLeft:6}}>→</span></button>
+          <button onClick={onBook} style={ctaStyle} className="az-desktop-cta az-btn-primary">Book the audit <span className="az-arrow" style={{marginLeft:6}}>→</span></button>
           <button
             onClick={()=>setMobileOpen(v=>!v)}
             aria-label="Menu"
@@ -72,7 +73,7 @@ function SiteNav({ onBook, tweaks }) {
           <a onClick={()=>scrollTo('how')} style={nv.mobileLink}>How it works</a>
           <a onClick={()=>scrollTo('faq')} style={nv.mobileLink}>FAQ</a>
           <a onClick={()=>scrollTo('about')} style={nv.mobileLink}>About</a>
-          <button onClick={()=>{setMobileOpen(false);onBook();}} style={nv.mobileCta}>Book the audit →</button>
+          <button onClick={()=>{setMobileOpen(false);onBook();}} style={nv.mobileCta} className="az-btn-primary">Book the audit <span className="az-arrow">→</span></button>
         </div>
       )}
     </nav>

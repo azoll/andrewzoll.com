@@ -13,12 +13,12 @@ function FAQNew() {
   return (
     <section id="faq" style={fq.root}>
       <div style={fq.inner}>
-        <div style={fq.head}>
+        <div style={fq.head} className="az-reveal">
           <div style={fq.eyebrow}>Questions</div>
           <h2 style={fq.h2} className="az-h2">The basics.</h2>
         </div>
 
-        <div style={fq.list}>
+        <div style={fq.list} className="az-reveal" data-reveal-delay="100">
           {qs.map((item,i) => (
             <div key={i} style={{...fq.item, borderBottom:i===qs.length-1?'1px solid #E8E9EB':'1px solid #E8E9EB'}}>
               <button onClick={()=>setOpen(open===i?-1:i)} style={fq.q}>
@@ -46,8 +46,8 @@ const fq = {
   item: {},
   q: { width:'100%', fontFamily:'inherit', fontSize:18, fontWeight:600, color:'#0B1A36', textAlign:'left', padding:'24px 4px', background:'transparent', border:'none', cursor:'pointer', display:'flex', alignItems:'center', justifyContent:'space-between', gap:16, letterSpacing:'-0.01em' },
   qText: { flex:1 },
-  plus: { fontSize:28, fontWeight:300, color:'#2F5D3E', transition:'transform 200ms', flexShrink:0 },
-  aWrap: { overflow:'hidden', transition:'max-height 260ms ease-out' },
+  plus: { fontSize:28, fontWeight:300, color:'#2F5D3E', transition:'transform 220ms ease-out', flexShrink:0, display:'inline-block' },
+  aWrap: { overflow:'hidden', transition:'max-height 240ms ease-out' },
   a: { padding:'0 4px 24px', fontSize:16, lineHeight:1.65, color:'#5E6169', maxWidth:720 },
 };
 

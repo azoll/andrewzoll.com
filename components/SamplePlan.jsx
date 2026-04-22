@@ -2,13 +2,13 @@ function SamplePlan() {
   return (
     <section style={sp.root}>
       <div style={sp.inner}>
-        <div style={sp.head}>
+        <div style={sp.head} className="az-reveal">
           <div style={sp.eyebrow}>A peek at the deliverable</div>
           <h2 style={sp.h2} className="az-h2">This is what lands<br className="az-hide-mobile"/> in your inbox.</h2>
           <p style={sp.lead}>Real format, redacted client. Two to three pages. Specific tools, specific steps, ordered by hours saved.</p>
         </div>
 
-        <div style={sp.doc}>
+        <div style={sp.doc} className="az-reveal az-card-hover az-deliverable-card" data-reveal-delay="120">
           <div style={sp.docHeader}>
             <div style={sp.docBrand}>
               <img src="../assets/logo-icon-primary.png" alt="" style={{width:28, height:28, borderRadius:5}}/>

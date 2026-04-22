@@ -10,7 +10,7 @@ function TheAudit({ onBook }) {
   return (
     <section id="audit" style={ta.root}>
       <div style={ta.inner}>
-        <div style={ta.head}>
+        <div style={ta.head} className="az-reveal">
           <div style={ta.eyebrow}>The audit</div>
           <h2 style={ta.h2} className="az-h2">One session.<br/>A plan you can use.</h2>
           <p style={ta.lead}>
@@ -19,7 +19,7 @@ function TheAudit({ onBook }) {
         </div>
 
         <div style={ta.grid} className="az-audit-grid">
-          <div style={ta.left}>
+          <div style={ta.left} className="az-reveal">
             <ul style={ta.list}>
               {included.map((it,i) => (
                 <li key={i} style={ta.li}>
@@ -30,11 +30,11 @@ function TheAudit({ onBook }) {
                 </li>
               ))}
             </ul>
-            <button onClick={onBook} style={ta.cta}>Book the audit <span style={{marginLeft:8}}>→</span></button>
+            <button onClick={onBook} style={ta.cta} className="az-btn-primary">Book the audit <span className="az-arrow" style={{marginLeft:8}}>→</span></button>
           </div>
 
-          <div style={ta.right}>
-            <div style={ta.priceCard}>
+          <div style={ta.right} className="az-reveal" data-reveal-delay="120">
+            <div style={ta.priceCard} className="az-card-hover az-price-card">
               <div style={ta.priceEyebrow}>The audit</div>
               <div style={ta.priceRow}>
                 <span style={ta.priceDollar}>$</span>

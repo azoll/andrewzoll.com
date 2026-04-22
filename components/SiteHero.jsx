@@ -30,8 +30,8 @@ function SiteHero({ onBook, tweaks }) {
         </p>
 
         <div style={hs.ctas} className="az-hero-ctas">
-          <button onClick={onBook} style={{...hs.primary, background:ctaBg, color:ctaFg}}>
-            Book the audit <span style={{marginLeft:8}}>→</span>
+          <button onClick={onBook} style={{...hs.primary, background:ctaBg, color:ctaFg}} className="az-btn-primary">
+            Book the audit <span className="az-arrow" style={{marginLeft:8}}>→</span>
           </button>
           <a href="#audit" onClick={(e)=>{e.preventDefault();document.getElementById('audit')?.scrollIntoView({behavior:'smooth'});}} style={{...hs.ghost, color:ghostFg, borderBottomColor: dark ? 'rgba(255,255,255,0.3)' : '#D4D6DA'}}>
             See what you get

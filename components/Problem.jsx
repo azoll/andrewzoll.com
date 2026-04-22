@@ -1,3 +1,35 @@
+const { useState: useStateProblem, useEffect: useEffectProblem, useRef: useRefProblem } = React;
+
+function useCountUp(target, { duration = 1400, decimals = 0, start = false } = {}) {
+  const [val, setVal] = useStateProblem(start ? target : 0);
+  useEffectProblem(() => {
+    if (!start) return;
+    const t0 = Date.now();
+    const ease = (p) => 1 - Math.pow(1 - p, 3);
+    let done = false;
+    const id = setInterval(() => {
+      const p = Math.min(1, (Date.now() - t0) / duration);
+      setVal(target * ease(p));
+      if (p >= 1 && !done) { done = true; clearInterval(id); }
+    }, 16);
+    return () => clearInterval(id);
+  }, [target, duration, start]);
+  return decimals > 0 ? val.toFixed(decimals) : Math.round(val).toString();
+}
+
+function StatNumber({ value, start, delay = 0 }) {
+  const decimals = (value.toString().split('.')[1] || '').length;
+  const [go, setGo] = useStateProblem(false);
+  useEffectProblem(() => {
+    if (!start) return;
+    if (delay <= 0) { setGo(true); return; }
+    const t = setTimeout(() => setGo(true), delay);
+    return () => clearTimeout(t);
+  }, [start, delay]);
+  const display = useCountUp(parseFloat(value), { duration: 1300, decimals, start: go });
+  return <>{display}</>;
+}
+
 function Problem() {
   const items = [
     { n:'6.3', u:'hrs/wk', lbl:'Email, inbox triage, rewriting the same reply' },
@@ -5,10 +37,36 @@ function Problem() {
     { n:'3.8', u:'hrs/wk', lbl:'Quotes, invoices, and one-off documents' },
     { n:'2.5', u:'hrs/wk', lbl:'Reporting, weekly summaries, status updates' },
   ];
+
+  const ref = useRefProblem(null);
+  const [inView, setInView] = useStateProblem(false);
+  useEffectProblem(() => {
+    if (inView) return;
+    const el = ref.current;
+    if (!el) return;
+    // Respect reduced-motion
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setInView(true);
+      return;
+    }
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          setInView(true);
+          io.disconnect();
+        }
+      });
+    }, { threshold: 0.25 });
+    io.observe(el);
+    return () => io.disconnect();
+  }, [inView]);
+
+  const totalDisplay = useCountUp(16, { duration: 1500, decimals: 0, start: inView });
+
   return (
-    <section style={pr.root}>
+    <section style={pr.root} ref={ref}>
       <div style={pr.inner}>
-        <div style={pr.head}>
+        <div style={pr.head} className="az-reveal">
           <div style={pr.eyebrow}>The problem</div>
           <h2 style={pr.h2} className="az-h2">
             The week disappears<br className="az-hide-mobile"/> into the same four places.
@@ -20,9 +78,16 @@ function Problem() {
 
         <div style={pr.grid} className="az-problem-grid">
           {items.map((it,i) => (
-            <div key={i} style={pr.card}>
+            <div
+              key={i}
+              style={pr.card}
+              className={`az-reveal az-card-hover az-stat-card`}
+              data-reveal-delay={i * 110}
+            >
               <div style={pr.num}>
-                {it.n}
+                <span style={{fontVariantNumeric:'tabular-nums'}}>
+                  <StatNumber value={it.n} start={inView} delay={i * 120} />
+                </span>
                 <span style={pr.unit}>{it.u}</span>
               </div>
               <div style={pr.lbl}>{it.lbl}</div>
@@ -30,10 +95,12 @@ function Problem() {
           ))}
         </div>
 
-        <div style={pr.footer}>
+        <div style={pr.footer} className="az-reveal" data-reveal-delay="200">
           <div style={pr.footerRule}/>
           <div style={pr.footerText}>
-            <span style={pr.footerBig}>≈ 16 hours</span>
+            <span style={pr.footerBig}>
+              ≈ <span style={{fontVariantNumeric:'tabular-nums'}}>{totalDisplay}</span> hours
+            </span>
             <span style={pr.footerSmall}>of weekly repetition, most of it automatable.</span>
           </div>
         </div>
