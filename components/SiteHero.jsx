@@ -25,8 +25,7 @@ function SiteHero({ onBook, tweaks }) {
         </h1>
 
         <p style={{...hs.lead, color:muted}} className="az-hero-lead">
-          A 30-minute audit. A short list of fixes.
-          Things you can use on Monday.
+          A 30-minute audit that finds where your follow-ups, admin, and workflows are leaking time and revenue, then shows you exactly how to fix it.
         </p>
 
         <div style={hs.ctas} className="az-hero-ctas">

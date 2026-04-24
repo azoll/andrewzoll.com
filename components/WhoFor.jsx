@@ -1,11 +1,13 @@
 function WhoFor() {
   const forYou = [
-    'You own a small business (1–15 people).',
-    'Your week disappears into email, scheduling, and admin.',
+    'You own a small business with 1 to 15 people.',
+    'Your week disappears into email, scheduling, follow-up, quotes, documents, or admin.',
+    'You suspect things are slipping through the cracks but have not had time to fix the system.',
     'You want specific fixes, not a strategy deck.',
-    'You are the one who would actually implement them.',
+    'You are willing to implement the highest-value fixes.',
   ];
   const notFor = [
+    'You want vague AI strategy instead of operational fixes.',
     'You want a vendor who only works on retainer from day one.',
     'You want a 40-page report with charts.',
     'You run a 200-person company with a procurement process.',

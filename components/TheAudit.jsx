@@ -4,7 +4,7 @@ function TheAudit({ onBook }) {
     'A written plan delivered within 48 hours',
     'Three to five specific, ordered fixes',
     'Tool names, no jargon, no black boxes',
-    'An estimated hours-saved figure for each fix',
+    'Estimated time saved and business impact for each fix',
     'You own the plan whether we work together after or not',
   ];
   return (
@@ -12,9 +12,9 @@ function TheAudit({ onBook }) {
       <div style={ta.inner}>
         <div style={ta.head} className="az-reveal">
           <div style={ta.eyebrow}>The audit</div>
-          <h2 style={ta.h2} className="az-h2">One session.<br/>A plan you can use.</h2>
+          <h2 style={ta.h2} className="az-h2">One session.<br/>A leak-finding plan you can use.</h2>
           <p style={ta.lead}>
-            I look at how you actually work. Email, scheduling, quotes, reporting. Then I show you where AI can cut the repetitive parts. That's the whole offer.
+            I look at how you actually work: email, scheduling, quotes, reporting, follow-ups, and the admin that keeps pulling you away from higher-value work. Then I show you where simple automation can remove the repetitive parts and where your business is quietly leaking time and money.
           </p>
         </div>
 
@@ -40,9 +40,9 @@ function TheAudit({ onBook }) {
                 <span style={ta.priceDollar}>$</span>
                 <span style={ta.price}>1,000</span>
               </div>
-              <div style={ta.priceNote}>Flat fee. 30 minutes on a call, a written plan in your inbox within 48 hours.</div>
+              <div style={ta.priceNote}>Flat fee. 30 minutes on a call, a written plan in your inbox within 48 hours, and a ranked list of the leaks worth fixing first.</div>
               <div style={ta.priceRule}/>
-              <div style={ta.priceFine}>If you want help putting the plan in place after that, implementation is separate and priced based on the scope of the work.</div>
+              <div style={ta.priceFine}>If you want help putting the plan in place after that, implementation is separate and priced based on scope.</div>
             </div>
           </div>
         </div>

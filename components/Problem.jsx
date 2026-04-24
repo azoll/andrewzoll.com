@@ -72,6 +72,9 @@ function Problem() {
             The week disappears<br className="az-hide-mobile"/> into the same four places.
           </h2>
           <p style={pr.lead}>
+            Most small businesses do not lose money in one obvious place. They lose it through slow replies, missed follow-ups, manual admin, and work that should have been systemized years ago.
+          </p>
+          <p style={{...pr.lead, marginTop:16}}>
             Averages from small-business owners I've audited. Your numbers will differ. The shape is almost always the same.
           </p>
         </div>
@@ -101,7 +104,7 @@ function Problem() {
             <span style={pr.footerBig}>
               ≈ <span style={{fontVariantNumeric:'tabular-nums'}}>{totalDisplay}</span> hours
             </span>
-            <span style={pr.footerSmall}>of weekly repetition, most of it automatable.</span>
+            <span style={pr.footerSmall}>of weekly repetition, usually showing up as slow response times, missed follow-ups, and revenue leaks.</span>
           </div>
         </div>
       </div>

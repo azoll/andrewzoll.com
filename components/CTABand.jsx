@@ -6,9 +6,9 @@ function CTABand({ onBook }) {
         <div className="az-reveal">
           <div style={cb.eyebrow}>Ready when you are</div>
           <h2 style={cb.h2} className="az-h2">
-            Let's get<br/>your hours back.
+            Let's find<br/>what's leaking.
           </h2>
-          <p style={cb.lead}>A 30-minute call. A plan in 48 hours. The plan is yours either way.</p>
+          <p style={cb.lead}>A 30-minute call. A ranked plan in 48 hours. The plan is yours either way.</p>
         </div>
         <div style={cb.ctas} className="az-reveal" data-reveal-delay="200">
           <button onClick={onBook} style={cb.primary} className="az-btn-primary">Book the audit <span className="az-arrow" style={{marginLeft:8}}>→</span></button>

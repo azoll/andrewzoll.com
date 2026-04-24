@@ -1,9 +1,9 @@
 function HowItWorksNew() {
   const steps = [
-    { n:'01', t:'The call', d:'30 minutes on Zoom. I ask about your week. Where it goes, what repeats, what drags.', time:'30 min' },
-    { n:'02', t:'The audit', d:'I map your actual workflow and pinpoint the three to five places AI can remove the repetitive parts.', time:'Offline' },
-    { n:'03', t:'The plan', d:'A written document in your inbox. Ranked by hours saved. Tools named, steps listed.', time:'Within 48 hrs' },
-    { n:'04', t:'Your call', d:'Take the plan and run with it yourself. Or, if you want help putting it in place, we can talk about a retainer.', time:'You decide' },
+    { n:'01', t:'The call', d:'30 minutes on Zoom. I ask about your week, where work gets stuck, what repeats, and where follow-ups or admin are costing you.', time:'30 min' },
+    { n:'02', t:'The audit', d:'I map your actual workflow and identify the three to five places simple automation can remove repetition, tighten follow-up, or reduce operational drag.', time:'Offline' },
+    { n:'03', t:'The plan', d:'A written document in your inbox. Ranked by time saved, business impact, and ease of implementation. Tools named, steps listed.', time:'Within 48 hrs' },
+    { n:'04', t:'Your call', d:'Take the plan and run with it yourself. Or, if you want help putting it in place, we can talk about implementation.', time:'You decide' },
   ];
   return (
     <section id="how" style={hw.root}>

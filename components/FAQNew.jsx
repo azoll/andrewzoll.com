@@ -3,12 +3,12 @@ const { useState: useStateFAQ } = React;
 function FAQNew() {
   const [open, setOpen] = useStateFAQ(0);
   const qs = [
-    { q:'How much does the audit cost?', a:'The audit is $1,000, flat. That covers the 30-minute call and the written plan you get within 48 hours. If you want me to help implement any of it afterward, that is separate work and priced based on the scope. The plan is yours to keep either way.' },
-    { q:'Who is this for?', a:'Small business owners running teams of roughly 1 to 15 people. Service businesses, professional practices, trades, small agencies. If your week disappears into email, scheduling, and repeated admin, this is for you.' },
-    { q:'Do I need to know anything about AI?', a:'No. The plan is written for business owners, not developers. Tools are named. Steps are listed. Nothing in the plan requires code.' },
-    { q:'What if AI isn\'t the right answer for my business?', a:'Then I tell you that and refund your money. I\'d rather say "AI won\'t help here, you need an assistant or a better tool," than invent problems to solve.' },
-    { q:'Do you do the implementation for me?', a:'Yes, if you want that. The audit stands alone, and plenty of people take the plan and run with it themselves. If you want help putting it in place, implementation is priced separately based on the scope of the work. We only talk about it after the plan lands, not before.' },
-    { q:'How do you handle my data?', a:'I see whatever you show me during the call. I do not connect to your systems. I do not retain anything beyond the written plan. If you want a signed NDA before the call, just say so.' },
+    { q:'How much does the audit cost?', a:'The audit is $1,000, flat. That covers the 30-minute call and the written plan you get within 48 hours. If you want help implementing the plan afterward, that is separate work and priced based on scope. The plan is yours to keep either way.' },
+    { q:'Who is this for?', a:'Small business owners who are losing time and momentum to repetitive admin, missed follow-ups, slow quoting, scheduling friction, inbox drag, or manual reporting. The best fit is a 1 to 15 person business where the owner is still close enough to the work to know where things get stuck.' },
+    { q:'Do I need to know anything about AI?', a:'No. The audit is not about making you an AI expert. It is about finding practical places where simple tools can reduce repetitive work, improve follow-up, and make the business easier to run.' },
+    { q:'What if AI is not the right answer for my business?', a:'Then I will say so. Sometimes the best fix is a better process, a template, a checklist, or a simpler tool. I am not trying to force AI where it does not belong.' },
+    { q:'Do you do the implementation for me?', a:'Yes, when it makes sense. The audit is the first step. If you want help putting the plan in place, implementation is separate and priced based on the scope of the work.' },
+    { q:'How do you handle my data?', a:'I only ask for what is needed to understand the workflow. Do not send sensitive client, customer, medical, financial, or employee information unless we have agreed on how it will be handled. The goal is to map the process, not collect private data.' },
   ];
   return (
     <section id="faq" style={fq.root}>
