@@ -48,7 +48,14 @@ function SiteHero({ onBook, tweaks }) {
 }
 
 function renderHeadline(text, dark) {
-  // Highlight "5 to 10 hours", "5–10 hours", "5-10 hours" (number range + hours)
+  // Color the first sentence in brand green. Falls back to highlighting an
+  // hours-range pattern (e.g. "5 to 10 hours") if no sentence break is found.
+  const sentenceIdx = text.search(/[.!?]\s/);
+  if (sentenceIdx !== -1) {
+    const first = text.slice(0, sentenceIdx + 1);
+    const rest = text.slice(sentenceIdx + 1);
+    return (<><span style={{color:'#5E9573'}}>{first}</span>{rest}</>);
+  }
   const re = /(\d+\s*(?:to|–|-)\s*\d+\s+hours?)/i;
   const m = text.match(re);
   if (!m) return text;
