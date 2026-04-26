@@ -1,0 +1,821 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+  <meta name="robots" content="noindex, nofollow, noarchive"/>
+  <title>Workout · Andrew Zoll</title>
+  <link rel="icon" href="/assets/favicon-primary.png"/>
+  <link rel="stylesheet" href="/colors_and_type.css"/>
+  <style>
+    html, body { margin:0; padding:0; background: var(--navy-900); color:#fff; min-height:100vh; }
+    * { box-sizing: border-box; }
+    body { font-family: var(--font-sans); -webkit-font-smoothing: antialiased; }
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.16); }
+
+    button { font-family: inherit; }
+    input { font-family: inherit; color:#fff; }
+    input:focus { outline: 1px solid var(--green-400); }
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button { -webkit-appearance:none; margin:0; }
+
+    .ex-row:hover { background: rgba(255,255,255,0.025) !important; }
+    .day-btn:hover, .lift-btn:hover, .nav-btn:hover { color:#fff !important; }
+    .primary-btn:hover { background: var(--green-700) !important; }
+    .ghost-btn:hover { border-color: rgba(255,255,255,0.5) !important; color:#fff !important; }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .spin { animation: spin 0.8s linear infinite; }
+  </style>
+</head>
+<body>
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+
+<script type="text/babel">
+const { useState, useEffect, useCallback, useRef, useMemo } = React;
+
+// -------------------------------------------------------------------
+// Supabase client
+// -------------------------------------------------------------------
+const SUPABASE_URL = "https://pgklnhspnvuxpqalmgau.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_bqPgeKVKnc7QxA_j0stXNQ_OntEukxP";
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+  auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: false }
+});
+
+// -------------------------------------------------------------------
+// Brand palette (from colors_and_type.css)
+// -------------------------------------------------------------------
+const C = {
+  bg:          "#0B1A36",   // navy-900
+  bgPanel:     "#0F2144",   // navy-800
+  border:      "rgba(255,255,255,0.10)",
+  borderSoft:  "rgba(255,255,255,0.06)",
+  fg:          "#FFFFFF",
+  fgMuted:     "rgba(255,255,255,0.72)",
+  fgSubtle:    "rgba(255,255,255,0.50)",
+  fgFaint:     "rgba(255,255,255,0.30)",
+  green:       "#2F5D3E",   // green-600
+  greenDark:   "#234A2F",   // green-700
+  greenLight:  "#5E9573",   // green-400
+  greenSoft:   "rgba(94,149,115,0.10)",
+  amber:       "#B77B1F",   // warning
+  amberSoft:   "rgba(183,123,31,0.10)",
+  navyAccent:  "#8FA1BF",   // navy-300
+  navyAccentSoft: "rgba(143,161,191,0.10)",
+};
+
+const IC = { Heavy: C.greenLight, Medium: C.amber, Volume: C.navyAccent };
+const IB = { Heavy: C.greenSoft, Medium: C.amberSoft, Volume: C.navyAccentSoft };
+
+// -------------------------------------------------------------------
+// Workout data
+// -------------------------------------------------------------------
+const PROTEIN_GOAL = 180;
+
+const WEIGHTS = {
+  "Barbell Bench Press":         { heavy:175, medium:150, volume:120, startHeavy:140, startMedium:120, startVolume:95  },
+  "Overhead Press":              { heavy:80,  medium:70,  volume:55,  startHeavy:65,  startMedium:55,  startVolume:45  },
+  "Barbell Squat":               { heavy:215, medium:185, volume:145, startHeavy:170, startMedium:150, startVolume:115 },
+  "Trap Bar Deadlift":           { heavy:215, medium:185, volume:145, startHeavy:170, startMedium:150, startVolume:115 },
+  "Bent Over Row":               { heavy:110, medium:95,  volume:75,  startHeavy:90,  startMedium:75,  startVolume:60  },
+  "Incline Dumbbell Press":      { heavy:55,  medium:45,  volume:35,  startHeavy:45,  startMedium:35,  startVolume:30  },
+  "Chest Press Machine":         { heavy:155, medium:135, volume:105, startHeavy:125, startMedium:110, startVolume:85  },
+  "Dumbbell Bench Press":        { heavy:60,  medium:50,  volume:40,  startHeavy:50,  startMedium:40,  startVolume:30  },
+  "Lateral Raises":              { heavy:20,  medium:15,  volume:10,  startHeavy:15,  startMedium:12,  startVolume:10  },
+  "Arnold Press":                { heavy:35,  medium:30,  volume:25,  startHeavy:30,  startMedium:25,  startVolume:20  },
+  "Front Raise":                 { heavy:20,  medium:15,  volume:12,  startHeavy:15,  startMedium:12,  startVolume:10  },
+  "Lat Pulldown":                { heavy:135, medium:115, volume:90,  startHeavy:110, startMedium:95,  startVolume:75  },
+  "Dumbbell Row":                { heavy:55,  medium:45,  volume:35,  startHeavy:45,  startMedium:35,  startVolume:30  },
+  "Face Pulls":                  { heavy:40,  medium:30,  volume:20,  startHeavy:30,  startMedium:25,  startVolume:15  },
+  "Seated Row":                  { heavy:95,  medium:80,  volume:65,  startHeavy:75,  startMedium:65,  startVolume:50  },
+  "Straight Arm Pulldown":       { heavy:40,  medium:30,  volume:25,  startHeavy:30,  startMedium:25,  startVolume:20  },
+  "Dumbbell Hammer Curls":       { heavy:30,  medium:25,  volume:20,  startHeavy:25,  startMedium:20,  startVolume:15  },
+  "Dumbbell Curl":               { heavy:30,  medium:25,  volume:20,  startHeavy:25,  startMedium:20,  startVolume:15  },
+  "Goblet Squat":                { heavy:65,  medium:55,  volume:45,  startHeavy:55,  startMedium:45,  startVolume:35  },
+  "Walking Lunges":              { heavy:40,  medium:35,  volume:25,  startHeavy:30,  startMedium:25,  startVolume:20  },
+  "Dumbbell Reverse Lunge":      { heavy:40,  medium:35,  volume:25,  startHeavy:30,  startMedium:25,  startVolume:20  },
+  "Dumbbell Romanian Deadlift":  { heavy:65,  medium:55,  volume:45,  startHeavy:50,  startMedium:45,  startVolume:35  },
+  "Single Leg Romanian Deadlift":{ heavy:45,  medium:35,  volume:30,  startHeavy:35,  startMedium:30,  startVolume:25  },
+};
+
+const TRACKABLE_LIFTS = [
+  "Barbell Bench Press","Overhead Press","Barbell Squat","Trap Bar Deadlift","Bent Over Row",
+  "Incline Dumbbell Press","Chest Press Machine","Lat Pulldown","Dumbbell Row","Seated Row",
+  "Dumbbell Romanian Deadlift","Goblet Squat",
+];
+
+const PLAN = [
+  { day:1, label:"Push Heavy + Legs", intensity:"Heavy", warmup:"Jump rope — 5 min continuous",
+    exercises:[
+      {name:"Barbell Bench Press",sets:"4",reps:"4-6",notes:"Main strength lift. Full stop at chest."},
+      {name:"Overhead Press",sets:"4",reps:"4-6",notes:"Standing. Brace hard."},
+      {name:"Incline Dumbbell Press",sets:"3",reps:"6-8",notes:"Control the negative."},
+      {name:"Chest Press Machine",sets:"3",reps:"6-8",notes:"Pause at peak contraction."},
+      {name:"Lateral Raises",sets:"3",reps:"10-12",notes:"Light. Don't swing."},
+      {name:"Trap Bar Deadlift",sets:"4",reps:"4-6",notes:"Primary leg work. Treat it like a squat."},
+      {name:"Dumbbell Romanian Deadlift",sets:"3",reps:"8-10",notes:"Feel the hamstring stretch."},
+    ], finisher:"Agility ladder — 3 min footwork drills"},
+  { day:2, label:"Pull Heavy + Legs", intensity:"Heavy", warmup:"Jump rope — 5 min continuous",
+    exercises:[
+      {name:"Weighted Pull-Ups",sets:"4",reps:"4-6",notes:"Add weight via belt or dumbbell between feet."},
+      {name:"Bent Over Row",sets:"4",reps:"4-6",notes:"Chest to bar. Control the eccentric."},
+      {name:"Lat Pulldown",sets:"3",reps:"6-8",notes:"Full stretch at top. Drive elbows down."},
+      {name:"Dumbbell Row",sets:"3",reps:"6-8",notes:"Brace on bench. Row to hip."},
+      {name:"Face Pulls",sets:"3",reps:"12-15",notes:"Cable or band. Rear delts and rotator cuff."},
+      {name:"Barbell Squat",sets:"4",reps:"4-6",notes:"Primary leg work. Hit depth."},
+      {name:"Goblet Squat",sets:"3",reps:"8-10",notes:"Heavy dumbbell. Pause at bottom."},
+    ], finisher:"Hurdle hops — 3 sets x 10 reps"},
+  { day:3, label:"Push Medium + Legs", intensity:"Medium", warmup:"Agility ladder — 5 min footwork",
+    exercises:[
+      {name:"Chest Press Machine",sets:"4",reps:"8-12",notes:"Main pressing movement today. Full ROM."},
+      {name:"Dumbbell Bench Press",sets:"3",reps:"10-12",notes:"Neutral or pronated grip."},
+      {name:"Dumbbell Fly",sets:"3",reps:"12-15",notes:"Stretch and squeeze. Light weight."},
+      {name:"Arnold Press",sets:"3",reps:"10-12",notes:"Slow rotation. Full range."},
+      {name:"Lateral Raises",sets:"4",reps:"15-20",notes:"Drop set on last set."},
+      {name:"Trap Bar Deadlift",sets:"3",reps:"8-10",notes:"Moderate weight. Focus on form."},
+      {name:"Walking Lunges",sets:"3",reps:"12 each",notes:"Keep torso upright."},
+    ], finisher:"Jump rope — 5 x 30 sec on / 15 sec off"},
+  { day:4, label:"Pull Medium + Legs", intensity:"Medium", warmup:"Jump rope — 5 min continuous",
+    exercises:[
+      {name:"Pull-Ups",sets:"4",reps:"8-12",notes:"If easy, add pauses at top."},
+      {name:"Lat Pulldown",sets:"4",reps:"10-12",notes:"Wide grip. Lean back slightly."},
+      {name:"Seated Row",sets:"3",reps:"10-12",notes:"Squeeze at end range."},
+      {name:"Straight Arm Pulldown",sets:"3",reps:"12-15",notes:"Cable or band. Lats only."},
+      {name:"Dumbbell Hammer Curls",sets:"3",reps:"10-12",notes:"Alternate arms. Control down."},
+      {name:"Barbell Squat",sets:"3",reps:"8-10",notes:"Moderate weight. Controlled tempo."},
+      {name:"Dumbbell Romanian Deadlift",sets:"3",reps:"10-12",notes:"Slow negative. Full hamstring load."},
+    ], finisher:"Agility cone drills — 5 min"},
+  { day:5, label:"Push Volume + Legs", intensity:"Volume", warmup:"Agility ladder + hurdles — 5 min circuit",
+    exercises:[
+      {name:"Chest Press Machine",sets:"4",reps:"15-20",notes:"Lighter weight. Pump focused. Rest 60 sec."},
+      {name:"Incline Dumbbell Press",sets:"3",reps:"15-20",notes:"Super slow negative."},
+      {name:"Dumbbell Fly",sets:"3",reps:"15-20",notes:"Full stretch. Light."},
+      {name:"Lateral Raises",sets:"4",reps:"20-25",notes:"Mechanical drop set if possible."},
+      {name:"Front Raise",sets:"3",reps:"15",notes:"Alternate arms or together."},
+      {name:"Goblet Squat",sets:"4",reps:"15-20",notes:"Pause at bottom for 2 sec."},
+      {name:"Dumbbell Reverse Lunge",sets:"3",reps:"15 each",notes:"Core tight. Slow and controlled."},
+    ], finisher:"Jump rope — 10 min steady state"},
+  { day:6, label:"Pull Volume + Legs", intensity:"Volume", warmup:"Jump rope — 5 min continuous",
+    exercises:[
+      {name:"Lat Pulldown",sets:"4",reps:"15-20",notes:"Lighter. Feel the muscle, not the weight."},
+      {name:"Seated Row",sets:"4",reps:"15-20",notes:"Elbows tight. Full retraction."},
+      {name:"Dumbbell Row",sets:"3",reps:"15-20",notes:"Slow down, fast up."},
+      {name:"Face Pulls",sets:"4",reps:"20-25",notes:"Band or cable. High reps are fine here."},
+      {name:"Dumbbell Curl",sets:"3",reps:"15-20",notes:"Full supination at top."},
+      {name:"Trap Bar Deadlift",sets:"3",reps:"12-15",notes:"Light to moderate. Form check day."},
+      {name:"Single Leg Romanian Deadlift",sets:"3",reps:"12 each",notes:"Dumbbell in opposite hand."},
+    ], finisher:"Agility ladder + hurdle circuit — 5 min"},
+];
+
+// -------------------------------------------------------------------
+// Helpers
+// -------------------------------------------------------------------
+function todayStr() {
+  const d = new Date();
+  return [d.getFullYear(), String(d.getMonth()+1).padStart(2,'0'), String(d.getDate()).padStart(2,'0')].join('-');
+}
+
+function localDateString(d) {
+  return [d.getFullYear(), String(d.getMonth()+1).padStart(2,'0'), String(d.getDate()).padStart(2,'0')].join('-');
+}
+
+function getStreak(sessions, proteinLog) {
+  const dates = {};
+  sessions.forEach(s => { dates[s.date] = true; });
+  Object.entries(proteinLog).forEach(([d, v]) => { if (v) dates[d] = true; });
+  let streak = 0;
+  const d = new Date();
+  while (true) {
+    const str = localDateString(d);
+    if (dates[str]) { streak++; d.setDate(d.getDate() - 1); }
+    else break;
+  }
+  return streak;
+}
+
+function buildProgressionData(sessions, lift) {
+  const pts = [];
+  sessions.forEach(s => {
+    const ex = s.exercises.find(e => e.name === lift && e.weightUsed);
+    if (ex) pts.push({ date: s.date, weight: parseFloat(ex.weightUsed) });
+  });
+  return pts.sort((a, b) => a.date.localeCompare(b.date));
+}
+
+// -------------------------------------------------------------------
+// Data layer
+// -------------------------------------------------------------------
+async function fetchAll(userId) {
+  const [{ data: ses, error: sesErr }, { data: pro, error: proErr }] = await Promise.all([
+    sb.from("workout_sessions").select("date, day, label, intensity, exercises").eq("user_id", userId).order("date", { ascending: true }),
+    sb.from("protein_log").select("date, hit").eq("user_id", userId),
+  ]);
+  if (sesErr) console.error("sessions fetch", sesErr);
+  if (proErr) console.error("protein fetch", proErr);
+  const proteinLog = {};
+  (pro || []).forEach(r => { if (r.hit) proteinLog[r.date] = true; });
+  return { sessions: ses || [], proteinLog };
+}
+
+async function upsertSession(userId, session) {
+  const row = {
+    user_id: userId,
+    date: session.date,
+    day: session.day,
+    label: session.label,
+    intensity: session.intensity,
+    exercises: session.exercises,
+  };
+  const { error } = await sb.from("workout_sessions").upsert(row, { onConflict: "user_id,date,day" });
+  if (error) console.error("upsert session", error);
+}
+
+async function setProtein(userId, date, hit) {
+  if (hit) {
+    const { error } = await sb.from("protein_log").upsert({ user_id: userId, date, hit: true }, { onConflict: "user_id,date" });
+    if (error) console.error("upsert protein", error);
+  } else {
+    const { error } = await sb.from("protein_log").delete().match({ user_id: userId, date });
+    if (error) console.error("delete protein", error);
+  }
+}
+
+// -------------------------------------------------------------------
+// Auth hook
+// -------------------------------------------------------------------
+function useAuth() {
+  const [session, setSession] = useState(null);
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    sb.auth.getSession().then(({ data }) => {
+      setSession(data.session);
+      setLoading(false);
+    });
+    const { data: sub } = sb.auth.onAuthStateChange((_e, s) => setSession(s));
+    return () => sub.subscription.unsubscribe();
+  }, []);
+  return { session, loading };
+}
+
+// -------------------------------------------------------------------
+// Login screen
+// -------------------------------------------------------------------
+function Login() {
+  const [email, setEmail] = useState("");
+  const [pw, setPw] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [err, setErr] = useState("");
+
+  async function submit(e) {
+    e.preventDefault();
+    setBusy(true); setErr("");
+    const { error } = await sb.auth.signInWithPassword({ email: email.trim(), password: pw });
+    if (error) { setErr(error.message); setBusy(false); }
+  }
+
+  return (
+    <div style={{ minHeight:"100vh", display:"flex", alignItems:"center", justifyContent:"center", padding:24, position:"relative", overflow:"hidden" }}>
+      <div aria-hidden style={{ position:"absolute", top:"50%", right:"-4vw", transform:"translateY(-48%)", fontSize:"min(62vw, 780px)", fontWeight:800, letterSpacing:"-0.08em", lineHeight:0.8, userSelect:"none", pointerEvents:"none", color:"rgba(255,255,255,0.04)" }}>AZ</div>
+      <form onSubmit={submit} style={{ position:"relative", zIndex:2, width:"100%", maxWidth:380, display:"flex", flexDirection:"column", gap:18 }}>
+        <div style={{ marginBottom:8 }}>
+          <div style={{ fontSize:12, fontWeight:600, letterSpacing:"0.2em", textTransform:"uppercase", color:C.greenLight, marginBottom:14, display:"inline-flex", alignItems:"center", gap:10 }}>
+            <span style={{ width:6, height:6, borderRadius:"50%", background:C.greenLight }} />
+            Sign in
+          </div>
+          <h1 style={{ fontSize:36, fontWeight:700, letterSpacing:"-0.035em", lineHeight:1.05, margin:0 }}>Workout</h1>
+        </div>
+        <label style={{ display:"flex", flexDirection:"column", gap:6 }}>
+          <span style={{ fontSize:11, fontWeight:600, letterSpacing:"0.12em", textTransform:"uppercase", color:C.fgSubtle }}>Email</span>
+          <input type="email" autoComplete="username" value={email} onChange={e=>setEmail(e.target.value)} required
+            style={{ background:"rgba(255,255,255,0.04)", border:`1px solid ${C.border}`, borderRadius:6, padding:"12px 14px", fontSize:15 }} />
+        </label>
+        <label style={{ display:"flex", flexDirection:"column", gap:6 }}>
+          <span style={{ fontSize:11, fontWeight:600, letterSpacing:"0.12em", textTransform:"uppercase", color:C.fgSubtle }}>Password</span>
+          <input type="password" autoComplete="current-password" value={pw} onChange={e=>setPw(e.target.value)} required
+            style={{ background:"rgba(255,255,255,0.04)", border:`1px solid ${C.border}`, borderRadius:6, padding:"12px 14px", fontSize:15 }} />
+        </label>
+        {err && <div style={{ fontSize:13, color:"#E48A8A" }}>{err}</div>}
+        <button type="submit" disabled={busy} className="primary-btn"
+          style={{ marginTop:6, background:C.green, color:"#fff", border:"none", borderRadius:6, padding:"14px 22px", fontSize:15, fontWeight:600, cursor: busy ? "wait" : "pointer", letterSpacing:"-0.005em", transition:"background 150ms" }}>
+          {busy ? "Signing in…" : "Sign in →"}
+        </button>
+      </form>
+    </div>
+  );
+}
+
+// -------------------------------------------------------------------
+// Spinner (full-page)
+// -------------------------------------------------------------------
+function FullPageSpinner() {
+  return (
+    <div style={{ minHeight:"100vh", display:"flex", alignItems:"center", justifyContent:"center" }}>
+      <div className="spin" style={{ width:24, height:24, border:`2px solid ${C.border}`, borderTopColor:C.greenLight, borderRadius:"50%" }} />
+    </div>
+  );
+}
+
+// -------------------------------------------------------------------
+// SVG line chart
+// -------------------------------------------------------------------
+function SVGLineChart({ data, color }) {
+  const W = 600, H = 220;
+  const pad = { top:16, right:20, bottom:36, left:44 };
+  const innerW = W - pad.left - pad.right;
+  const innerH = H - pad.top - pad.bottom;
+  const [hov, setHov] = useState(null);
+
+  if (!data || data.length < 2) {
+    return <div style={{ color:C.fgFaint, fontSize:12, padding:20, textAlign:"center" }}>Log at least 2 sessions to see progression.</div>;
+  }
+
+  const weights = data.map(d => d.weight);
+  const minW = Math.min(...weights), maxW = Math.max(...weights);
+  const wRange = maxW - minW || 10;
+  const padW = wRange * 0.1;
+  const yMin = minW - padW, yMax = maxW + padW;
+
+  const xPos = i => pad.left + (i/(data.length-1))*innerW;
+  const yPos = w => pad.top + (1-(w-yMin)/(yMax-yMin))*innerH;
+
+  const pathD = data.map((d,i)=>(i===0?"M":"L")+xPos(i).toFixed(1)+","+yPos(d.weight).toFixed(1)).join(" ");
+
+  const yTicks = [];
+  const nT = 4;
+  for (let i=0; i<=nT; i++) {
+    const v = yMin + ((yMax-yMin)/nT)*i;
+    yTicks.push({ v, y:yPos(v) });
+  }
+  const xLabels = [0, Math.floor((data.length-1)/2), data.length-1].filter((v,i,a)=>a.indexOf(v)===i);
+
+  return (
+    <svg width="100%" viewBox={`0 0 ${W} ${H}`} style={{ overflow:"visible" }} onMouseLeave={()=>setHov(null)}>
+      {yTicks.map((t,i)=>(
+        <line key={i} x1={pad.left} y1={t.y} x2={pad.left+innerW} y2={t.y} stroke="rgba(255,255,255,0.06)" strokeWidth={1} />
+      ))}
+      {yTicks.map((t,i)=>(
+        <text key={i} x={pad.left-6} y={t.y+4} textAnchor="end" fill={C.fgFaint} fontSize={10}>{Math.round(t.v)}</text>
+      ))}
+      {xLabels.map(i=>(
+        <text key={i} x={xPos(i)} y={H-8} textAnchor="middle" fill={C.fgFaint} fontSize={10}>{data[i].date.slice(5)}</text>
+      ))}
+      <path d={pathD} fill="none" stroke={color} strokeWidth={2} strokeLinejoin="round" />
+      {data.map((d,i)=>(
+        <g key={i}>
+          <circle cx={xPos(i)} cy={yPos(d.weight)} r={hov===i?5:3} fill={color} />
+          <rect x={xPos(i)-12} y={pad.top} width={24} height={innerH} fill="transparent" onMouseEnter={()=>setHov(i)} />
+        </g>
+      ))}
+      {hov !== null && (
+        <g>
+          <rect x={xPos(hov)-44} y={yPos(data[hov].weight)-34} width={88} height={24} rx={4} fill={C.bgPanel} stroke={C.border} />
+          <text x={xPos(hov)} y={yPos(data[hov].weight)-18} textAnchor="middle" fill={C.fg} fontSize={11}>
+            {data[hov].date.slice(5)} · {data[hov].weight} lbs
+          </text>
+        </g>
+      )}
+    </svg>
+  );
+}
+
+// -------------------------------------------------------------------
+// Reusable bits
+// -------------------------------------------------------------------
+const card = { background:"rgba(255,255,255,0.025)", border:`1px solid ${C.borderSoft}`, borderRadius:8, padding:"18px 20px", marginBottom:12 };
+const lbl  = { fontSize:11, color:C.fgSubtle, letterSpacing:"0.12em", textTransform:"uppercase", marginBottom:8, fontWeight:600 };
+const secTtl = { fontSize:24, fontWeight:700, letterSpacing:"-0.02em", color:C.fg, marginBottom:18, marginTop:30 };
+const inp = { background:"rgba(255,255,255,0.04)", border:`1px solid ${C.border}`, borderRadius:5, padding:"6px 10px", color:C.fg, fontSize:13, width:74, textAlign:"center" };
+
+function Pill({ color, bg, children }) {
+  return <span style={{ display:"inline-block", padding:"3px 9px", background:bg, border:`1px solid ${color}40`, borderRadius:3, fontSize:10, color, letterSpacing:"0.12em", textTransform:"uppercase", fontWeight:600 }}>{children}</span>;
+}
+
+// -------------------------------------------------------------------
+// Main app (post-login)
+// -------------------------------------------------------------------
+function Workout({ session }) {
+  const userId = session.user.id;
+  const [tab, setTab] = useState("today");
+  const [sessions, setSessions] = useState([]);
+  const [proteinLog, setProteinLog] = useState({});
+  const [activeDay, setActiveDay] = useState(() => {
+    const v = parseInt(localStorage.getItem("workout_active_day") || "0", 10);
+    return isNaN(v) ? 0 : Math.max(0, Math.min(5, v));
+  });
+  const [checks, setChecks] = useState({});
+  const [wInputs, setWInputs] = useState({});
+  const [selLift, setSelLift] = useState(TRACKABLE_LIFTS[0]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchAll(userId).then(({ sessions, proteinLog }) => {
+      setSessions(sessions);
+      setProteinLog(proteinLog);
+      setLoading(false);
+    });
+  }, [userId]);
+
+  const today = todayStr();
+  const cp = PLAN[activeDay];
+  const iColor = IC[cp.intensity];
+  const iBg = IB[cp.intensity];
+
+  const todaySess = useMemo(
+    () => sessions.find(s => s.date === today && s.day === cp.day),
+    [sessions, today, cp.day]
+  );
+
+  // Hydrate today's checkboxes + weight inputs from existing session
+  useEffect(() => {
+    if (!todaySess) { setChecks({}); setWInputs({}); return; }
+    const c = {}, w = {};
+    todaySess.exercises.forEach((e, i) => {
+      if (e.completed) c[i] = true;
+      if (e.weightUsed) w[i] = e.weightUsed;
+    });
+    setChecks(c);
+    setWInputs(w);
+  }, [todaySess && todaySess.date, todaySess && todaySess.day]); // eslint-disable-line
+
+  const doneCount = cp.exercises.filter((_, i) => checks[i]).length;
+  const allDone = doneCount === cp.exercises.length && cp.exercises.length > 0;
+  const streak = getStreak(sessions, proteinLog);
+  const progData = buildProgressionData(sessions, selLift);
+
+  // Persist session whenever checks or weights change
+  const persistTimer = useRef(null);
+  useEffect(() => {
+    if (loading) return;
+    if (Object.keys(checks).length === 0 && Object.keys(wInputs).length === 0 && !todaySess) return;
+    clearTimeout(persistTimer.current);
+    persistTimer.current = setTimeout(() => {
+      const next = {
+        date: today, day: cp.day, label: cp.label, intensity: cp.intensity,
+        exercises: cp.exercises.map((ex, i) => ({
+          name: ex.name, sets: ex.sets, reps: ex.reps,
+          weightUsed: wInputs[i] || "",
+          completed: !!checks[i],
+        })),
+      };
+      upsertSession(userId, next);
+      setSessions(prev => {
+        const filtered = prev.filter(s => !(s.date === today && s.day === cp.day));
+        return [...filtered, next].sort((a,b)=>a.date.localeCompare(b.date));
+      });
+    }, 500);
+    return () => clearTimeout(persistTimer.current);
+  }, [checks, wInputs]); // eslint-disable-line
+
+  function toggleCheck(i) { setChecks(p => ({ ...p, [i]: !p[i] })); }
+  function setW(i, v) { setWInputs(p => ({ ...p, [i]: v })); }
+  function togglePro(d) {
+    const next = !proteinLog[d];
+    setProteinLog(p => { const n = { ...p }; if (next) n[d] = true; else delete n[d]; return n; });
+    setProtein(userId, d, next);
+  }
+  function switchDay(i) {
+    setActiveDay(i);
+    localStorage.setItem("workout_active_day", String(i));
+  }
+  async function signOut() { await sb.auth.signOut(); }
+
+  if (loading) return <FullPageSpinner />;
+
+  return (
+    <div style={{ minHeight:"100vh", color:C.fg, fontFamily:"var(--font-sans)" }}>
+      {/* Header */}
+      <div style={{ borderBottom:`1px solid ${C.borderSoft}`, padding:"22px 24px 18px", position:"relative", overflow:"hidden" }}>
+        <div aria-hidden style={{ position:"absolute", top:"50%", right:"-4vw", transform:"translateY(-48%)", fontSize:"min(40vw, 460px)", fontWeight:800, letterSpacing:"-0.08em", lineHeight:0.8, userSelect:"none", pointerEvents:"none", color:"rgba(255,255,255,0.025)", fontFamily:"var(--font-sans)" }}>AZ</div>
+        <div style={{ position:"relative", zIndex:2, display:"flex", alignItems:"flex-end", justifyContent:"space-between", flexWrap:"wrap", gap:14, maxWidth:1100, margin:"0 auto" }}>
+          <div>
+            <div style={{ fontSize:11, fontWeight:600, letterSpacing:"0.2em", textTransform:"uppercase", color:C.greenLight, marginBottom:8, display:"inline-flex", alignItems:"center", gap:10 }}>
+              <span style={{ width:6, height:6, borderRadius:"50%", background:C.greenLight }} />
+              2026 Program
+            </div>
+            <div style={{ fontSize:"clamp(28px,5vw,44px)", fontWeight:700, letterSpacing:"-0.035em", lineHeight:1.05, color:C.fg }}>Workout</div>
+            <div style={{ fontSize:13, color:C.fgMuted, marginTop:6 }}>Push + Pull + Legs · 6 days/week · Target 185 by Dec 2026</div>
+          </div>
+          <div style={{ display:"flex", gap:24, alignItems:"center" }}>
+            <div style={{ textAlign:"center" }}>
+              <div style={{ fontSize:32, fontWeight:700, color:C.greenLight, lineHeight:1, letterSpacing:"-0.02em" }}>{streak}</div>
+              <div style={{ fontSize:10, color:C.fgSubtle, letterSpacing:"0.12em", marginTop:4, fontWeight:600 }}>STREAK</div>
+            </div>
+            <div style={{ textAlign:"center" }}>
+              <div style={{ fontSize:32, fontWeight:700, color:C.fg, lineHeight:1, letterSpacing:"-0.02em" }}>{sessions.length}</div>
+              <div style={{ fontSize:10, color:C.fgSubtle, letterSpacing:"0.12em", marginTop:4, fontWeight:600 }}>SESSIONS</div>
+            </div>
+            <button onClick={signOut} className="ghost-btn"
+              style={{ background:"transparent", border:`1px solid ${C.border}`, borderRadius:6, color:C.fgMuted, padding:"8px 14px", fontSize:12, fontWeight:500, cursor:"pointer", letterSpacing:"0.02em", transition:"all 150ms" }}>
+              Sign out
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Tabs */}
+      <div style={{ display:"flex", padding:"0 24px", borderBottom:`1px solid ${C.borderSoft}`, overflowX:"auto" }}>
+        <div style={{ display:"flex", maxWidth:1100, margin:"0 auto", width:"100%" }}>
+          {["today","weights","protein","history","progression"].map(t => (
+            <button key={t} onClick={()=>setTab(t)} className="nav-btn"
+              style={{ padding:"14px 18px", background:"transparent", border:"none",
+                borderBottom: tab===t ? `2px solid ${C.greenLight}` : "2px solid transparent",
+                color: tab===t ? C.fg : C.fgSubtle,
+                fontSize:12, fontWeight:600, letterSpacing:"0.10em", textTransform:"uppercase", cursor:"pointer",
+                transition:"color 150ms" }}>{t}</button>
+          ))}
+        </div>
+      </div>
+
+      {/* Body */}
+      <div style={{ padding:"22px 24px 100px", maxWidth:1100, margin:"0 auto" }}>
+
+        {/* TODAY */}
+        {tab==="today" && (
+          <div>
+            <div style={{ display:"flex", gap:6, flexWrap:"wrap", marginBottom:22 }}>
+              {PLAN.map((d,i)=>{
+                const active = i===activeDay, c = IC[d.intensity];
+                return (
+                  <button key={i} onClick={()=>switchDay(i)} className="day-btn"
+                    style={{ padding:"7px 14px", background: active ? IB[d.intensity] : "transparent",
+                      border:`1px solid ${active ? c : C.border}`, borderRadius:5,
+                      color: active ? c : C.fgSubtle, fontSize:12, fontWeight:600, letterSpacing:"0.04em",
+                      cursor:"pointer", transition:"all 150ms" }}>
+                    Day {d.day}
+                  </button>
+                );
+              })}
+            </div>
+
+            <div style={{ display:"flex", alignItems:"center", gap:12, marginBottom:10, flexWrap:"wrap" }}>
+              <div style={{ fontSize:22, fontWeight:700, letterSpacing:"-0.02em", color:C.fg }}>{cp.label}</div>
+              <Pill color={iColor} bg={iBg}>{cp.intensity}</Pill>
+              {allDone && <Pill color={C.greenLight} bg={C.greenSoft}>Logged</Pill>}
+              <div style={{ marginLeft:"auto", fontSize:13, color: allDone ? C.greenLight : C.fgSubtle, fontWeight:500 }}>
+                {doneCount}/{cp.exercises.length}
+              </div>
+            </div>
+
+            <div style={{ height:2, background:"rgba(255,255,255,0.06)", borderRadius:2, marginBottom:18 }}>
+              <div style={{ height:"100%", width:(doneCount/cp.exercises.length*100)+"%", background:iColor, borderRadius:2, transition:"width 250ms" }}/>
+            </div>
+
+            <div style={{ ...card, display:"flex", gap:14, alignItems:"center", marginBottom:8 }}>
+              <div style={{ fontSize:10, color:C.fgSubtle, letterSpacing:"0.12em", textTransform:"uppercase", minWidth:55, flexShrink:0, fontWeight:600 }}>Warmup</div>
+              <div style={{ fontSize:14, color:C.fgMuted }}>{cp.warmup}</div>
+            </div>
+
+            <div style={{ border:`1px solid ${C.borderSoft}`, borderRadius:8, overflow:"hidden", marginBottom:8 }}>
+              <div style={{ display:"grid", gridTemplateColumns:"22px 1fr 44px 70px 76px 1fr", padding:"10px 14px", background:"rgba(255,255,255,0.025)", borderBottom:`1px solid ${C.borderSoft}`, fontSize:10, color:C.fgSubtle, letterSpacing:"0.12em", textTransform:"uppercase", fontWeight:600 }}>
+                <div></div><div>Exercise</div><div>Sets</div><div>Reps</div><div>Wt</div><div>Notes</div>
+              </div>
+              {cp.exercises.map((ex,i)=>{
+                const done = !!checks[i];
+                const wEntry = WEIGHTS[ex.name];
+                const suggested = wEntry ? wEntry[cp.intensity.toLowerCase()] : null;
+                return (
+                  <div key={i} className="ex-row"
+                    style={{ display:"grid", gridTemplateColumns:"22px 1fr 44px 70px 76px 1fr",
+                      padding:"12px 14px", borderBottom: i<cp.exercises.length-1?`1px solid ${C.borderSoft}`:"none",
+                      background: done ? C.greenSoft : "transparent", alignItems:"start", transition:"background 120ms" }}>
+                    <div onClick={()=>toggleCheck(i)}
+                      style={{ width:16, height:16, border:`1px solid ${done?iColor:C.border}`, borderRadius:3,
+                        background: done?iBg:"transparent", cursor:"pointer", display:"flex",
+                        alignItems:"center", justifyContent:"center", marginTop:3, flexShrink:0 }}>
+                      {done && <div style={{ width:6, height:6, background:iColor, borderRadius:1 }}/>}
+                    </div>
+                    <div style={{ fontSize:13, color: done?C.fgFaint:C.fg, textDecoration: done?"line-through":"none", paddingRight:10, fontWeight: done?400:500 }}>{ex.name}</div>
+                    <div style={{ fontSize:13, color: done?C.fgFaint:C.fgMuted }}>{ex.sets}</div>
+                    <div style={{ fontSize:12, color: done?C.fgFaint:iColor, fontWeight:600 }}>{ex.reps}</div>
+                    <div>
+                      {wEntry
+                        ? <input type="number" placeholder={suggested?String(suggested):"lbs"}
+                            value={wInputs[i]||""} onChange={e=>setW(i, e.target.value)}
+                            style={{ ...inp, opacity: done?0.4:1 }} />
+                        : <div style={{ fontSize:12, color:C.fgFaint }}>BW</div>}
+                    </div>
+                    <div style={{ fontSize:12, color: done?C.fgFaint:C.fgMuted, lineHeight:1.5 }}>{ex.notes}</div>
+                  </div>
+                );
+              })}
+            </div>
+
+            <div style={{ ...card, display:"flex", gap:14, alignItems:"center" }}>
+              <div style={{ fontSize:10, color:C.fgSubtle, letterSpacing:"0.12em", textTransform:"uppercase", minWidth:55, flexShrink:0, fontWeight:600 }}>Finisher</div>
+              <div style={{ fontSize:14, color:C.fgMuted }}>{cp.finisher}</div>
+            </div>
+
+            <div style={{ ...card, marginTop:14, display:"flex", alignItems:"center", justifyContent:"space-between" }}>
+              <div>
+                <div style={lbl}>Protein Goal Today</div>
+                <div style={{ fontSize:14, color:C.fgMuted }}>Did you hit {PROTEIN_GOAL}g protein?</div>
+              </div>
+              <div onClick={()=>togglePro(today)}
+                style={{ width:32, height:32, border:`1px solid ${proteinLog[today]?C.greenLight:C.border}`,
+                  borderRadius:6, background: proteinLog[today]?C.greenSoft:"transparent",
+                  cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"center", transition:"all 150ms" }}>
+                {proteinLog[today] && <div style={{ fontSize:16, color:C.greenLight }}>✓</div>}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* WEIGHTS */}
+        {tab==="weights" && (
+          <div>
+            <div style={secTtl}>Working Weights</div>
+            <div style={{ fontSize:13, color:C.fgMuted, marginBottom:18, lineHeight:1.5 }}>Weeks 1-2: use Start weights. Week 3+: full working weights. Add 5-10 lbs upper / 10-15 lbs lower weekly.</div>
+            <div style={{ border:`1px solid ${C.borderSoft}`, borderRadius:8, overflowX:"auto" }}>
+              <div style={{ display:"grid", gridTemplateColumns:"1.6fr repeat(6,1fr)", padding:"10px 16px", background:"rgba(255,255,255,0.025)", borderBottom:`1px solid ${C.borderSoft}`, fontSize:10, color:C.fgSubtle, letterSpacing:"0.12em", textTransform:"uppercase", minWidth:580, fontWeight:600 }}>
+                <div>Lift</div>
+                <div style={{ color:IC.Heavy }}>Heavy</div>
+                <div style={{ color:IC.Medium }}>Medium</div>
+                <div style={{ color:IC.Volume }}>Volume</div>
+                <div style={{ color:IC.Heavy, opacity:0.55 }}>Start H</div>
+                <div style={{ color:IC.Medium, opacity:0.55 }}>Start M</div>
+                <div style={{ color:IC.Volume, opacity:0.55 }}>Start V</div>
+              </div>
+              {Object.entries(WEIGHTS).map(([lift,w],i,arr)=>(
+                <div key={lift} style={{ display:"grid", gridTemplateColumns:"1.6fr repeat(6,1fr)", padding:"12px 16px", borderBottom: i<arr.length-1?`1px solid ${C.borderSoft}`:"none", alignItems:"center", minWidth:580 }}>
+                  <div style={{ fontSize:13, color:C.fg, fontWeight:500 }}>{lift}</div>
+                  <div style={{ fontSize:13, color:IC.Heavy, fontWeight:600 }}>{w.heavy}</div>
+                  <div style={{ fontSize:13, color:IC.Medium, fontWeight:600 }}>{w.medium}</div>
+                  <div style={{ fontSize:13, color:IC.Volume, fontWeight:600 }}>{w.volume}</div>
+                  <div style={{ fontSize:12, color:IC.Heavy, opacity:0.55 }}>{w.startHeavy}</div>
+                  <div style={{ fontSize:12, color:IC.Medium, opacity:0.55 }}>{w.startMedium}</div>
+                  <div style={{ fontSize:12, color:IC.Volume, opacity:0.55 }}>{w.startVolume}</div>
+                </div>
+              ))}
+            </div>
+
+            <div style={{ ...card, marginTop:18 }}>
+              <div style={lbl}>Pull-Ups Protocol</div>
+              {[["Heavy days","4 sets x 3 reps · Rest 2 min · Full dead hang"],
+                ["Medium days","3 sets to failure · Rest 90 sec"],
+                ["Volume days","Band-assisted · 4 sets x 10-12 reps"],
+                ["Progression","Track reps weekly. Weight drops = reps climb."]
+              ].map((kv,i)=>(
+                <div key={i} style={{ display:"grid", gridTemplateColumns:"120px 1fr", gap:14, marginTop:i===0?2:10 }}>
+                  <div style={{ fontSize:12, color:C.fgSubtle }}>{kv[0]}</div>
+                  <div style={{ fontSize:13, color:C.fgMuted }}>{kv[1]}</div>
+                </div>
+              ))}
+            </div>
+
+            <div style={card}>
+              <div style={lbl}>Nutrition</div>
+              {[["Daily Protein","180g — your one tracked number"],
+                ["Creatine","5g/day — any time, be consistent"],
+                ["Protein Powder","Fill gaps. Not a meal replacement."],
+                ["Everything else","Don't eat like you're bulking."]
+              ].map((kv,i)=>(
+                <div key={i} style={{ display:"grid", gridTemplateColumns:"140px 1fr", gap:14, marginTop:i===0?2:10 }}>
+                  <div style={{ fontSize:12, color:C.fgSubtle }}>{kv[0]}</div>
+                  <div style={{ fontSize:13, color:C.fgMuted }}>{kv[1]}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* PROTEIN */}
+        {tab==="protein" && (
+          <div>
+            <div style={secTtl}>Protein Log</div>
+            <div style={{ fontSize:13, color:C.fgMuted, marginBottom:18 }}>One checkbox. Did you hit {PROTEIN_GOAL}g today?</div>
+            <div style={{ display:"grid", gridTemplateColumns:"repeat(7,1fr)", gap:8, marginBottom:24 }}>
+              {Array.from({length:14},(_,i)=>{
+                const d = new Date(); d.setDate(d.getDate()-(13-i));
+                const str = localDateString(d);
+                const hit = !!proteinLog[str], isToday = str===today;
+                return (
+                  <div key={str} onClick={()=>togglePro(str)}
+                    style={{ padding:"10px 4px", background: hit?C.greenSoft:"rgba(255,255,255,0.025)",
+                      border:`1px solid ${hit?C.greenLight:isToday?C.border:C.borderSoft}`,
+                      borderRadius:6, cursor:"pointer", textAlign:"center", transition:"all 150ms" }}>
+                    <div style={{ fontSize:9, color:C.fgFaint, letterSpacing:"0.06em", marginBottom:4, fontWeight:600 }}>
+                      {d.toLocaleDateString("en-US",{weekday:"short"}).toUpperCase()}
+                    </div>
+                    <div style={{ fontSize:13, color: hit?C.greenLight:isToday?C.fg:C.fgSubtle, fontWeight:600 }}>{d.getDate()}</div>
+                    {hit && <div style={{ fontSize:12, color:C.greenLight, marginTop:2 }}>✓</div>}
+                  </div>
+                );
+              })}
+            </div>
+            <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr 1fr", gap:10 }}>
+              {[
+                {label:"Current Streak",val:streak+" days"},
+                {label:"This Month",val:Object.entries(proteinLog).filter(e=>e[1]&&e[0].startsWith(today.slice(0,7))).length+" days"},
+                {label:"Total Logged",val:Object.values(proteinLog).filter(Boolean).length+" days"},
+              ].map((s,i)=>(
+                <div key={i} style={card}>
+                  <div style={lbl}>{s.label}</div>
+                  <div style={{ fontSize:28, fontWeight:700, color:C.greenLight, letterSpacing:"-0.02em" }}>{s.val}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* HISTORY */}
+        {tab==="history" && (
+          <div>
+            <div style={secTtl}>Session History</div>
+            {sessions.length===0
+              ? <div style={{ ...card, color:C.fgSubtle, fontSize:14, textAlign:"center", padding:40 }}>No sessions yet. Complete a workout to see history.</div>
+              : (
+                <div style={{ display:"grid", gap:8 }}>
+                  {sessions.slice().sort((a,b)=>b.date.localeCompare(a.date)).map((s,i)=>{
+                    const iC = IC[s.intensity]||C.fgSubtle;
+                    const iB2 = IB[s.intensity]||"transparent";
+                    const phit = !!proteinLog[s.date];
+                    const tracked = s.exercises.filter(e=>e.weightUsed);
+                    return (
+                      <div key={i} style={card}>
+                        <div style={{ display:"flex", alignItems:"center", gap:10, marginBottom: tracked.length?10:0, flexWrap:"wrap" }}>
+                          <div style={{ fontSize:12, color:C.fgSubtle, fontFamily:"var(--font-mono)" }}>{s.date}</div>
+                          <div style={{ fontSize:16, color:C.fg, fontWeight:600, letterSpacing:"-0.01em" }}>{s.label}</div>
+                          <Pill color={iC} bg={iB2}>{s.intensity}</Pill>
+                          {phit && <Pill color={C.greenLight} bg={C.greenSoft}>Protein ✓</Pill>}
+                        </div>
+                        {tracked.length>0 && (
+                          <div style={{ display:"flex", gap:7, flexWrap:"wrap" }}>
+                            {tracked.map((e,j)=>(
+                              <div key={j} style={{ fontSize:12, color:C.fgMuted, background:"rgba(255,255,255,0.04)", padding:"4px 9px", borderRadius:4 }}>
+                                {e.name}: <span style={{ color:iC, fontWeight:600 }}>{e.weightUsed} lbs</span>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+          </div>
+        )}
+
+        {/* PROGRESSION */}
+        {tab==="progression" && (
+          <div>
+            <div style={secTtl}>Lift Progression</div>
+            <div style={{ display:"flex", gap:6, flexWrap:"wrap", marginBottom:18 }}>
+              {TRACKABLE_LIFTS.map(l=>(
+                <button key={l} onClick={()=>setSelLift(l)} className="lift-btn"
+                  style={{ padding:"6px 12px", background: selLift===l?"rgba(255,255,255,0.05)":"transparent",
+                    border:`1px solid ${selLift===l?C.border:C.borderSoft}`, borderRadius:5,
+                    color: selLift===l?C.fg:C.fgSubtle, fontSize:12, fontWeight:500, cursor:"pointer", transition:"all 150ms" }}>
+                  {l}
+                </button>
+              ))}
+            </div>
+            <div style={{ ...card, padding:"18px 12px 12px" }}>
+              <div style={{ fontSize:12, color:C.fgSubtle, marginBottom:14, paddingLeft:14, fontWeight:500 }}>{selLift} · lbs over time</div>
+              <SVGLineChart data={progData} color={C.greenLight} />
+            </div>
+
+            <div style={secTtl}>Personal Bests</div>
+            <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill,minmax(170px,1fr))", gap:10 }}>
+              {TRACKABLE_LIFTS.map(lift=>{
+                const data = buildProgressionData(sessions, lift);
+                const best = data.length ? Math.max(...data.map(d=>d.weight)) : null;
+                const latest = data.length ? data[data.length-1].weight : null;
+                return (
+                  <div key={lift} style={card}>
+                    <div style={lbl}>{lift.replace("Barbell ","").replace(" Press","").replace("Dumbbell ","DB ").replace(" Deadlift"," DL")}</div>
+                    <div style={{ fontSize:26, fontWeight:700, color: best?C.greenLight:C.fgFaint, letterSpacing:"-0.02em" }}>{best?best+" lbs":"—"}</div>
+                    {latest && latest!==best && <div style={{ fontSize:12, color:C.fgSubtle, marginTop:3 }}>Latest: {latest} lbs</div>}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// -------------------------------------------------------------------
+// Root
+// -------------------------------------------------------------------
+function App() {
+  const { session, loading } = useAuth();
+  if (loading) return <FullPageSpinner />;
+  if (!session) return <Login />;
+  return <Workout session={session} />;
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+</script>
+</body>
+</html>
