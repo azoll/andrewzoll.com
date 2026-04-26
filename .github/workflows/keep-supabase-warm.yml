@@ -1,0 +1,27 @@
+name: Keep Supabase warm
+
+# Supabase free-tier projects pause after 7 days of inactivity.
+# This workflow hits the project's REST API twice a week (Mon + Thu)
+# so the project never goes idle long enough to pause.
+#
+# The publishable key below is the same one shipped in the public
+# /workout page; it's safe to commit. Row-level security on the
+# tables enforces the actual access boundary.
+
+on:
+  schedule:
+    # 12:00 UTC every Monday and Thursday — max 4 days between runs
+    - cron: '0 12 * * 1,4'
+  workflow_dispatch: {}
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Supabase REST endpoint
+        run: |
+          curl --fail --silent --show-error --output /dev/null \
+            -w "HTTP %{http_code} in %{time_total}s\n" \
+            "https://pgklnhspnvuxpqalmgau.supabase.co/rest/v1/protein_log?select=date&limit=1" \
+            -H "apikey: sb_publishable_bqPgeKVKnc7QxA_j0stXNQ_OntEukxP" \
+            -H "Authorization: Bearer sb_publishable_bqPgeKVKnc7QxA_j0stXNQ_OntEukxP"
