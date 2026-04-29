@@ -22,10 +22,11 @@
     input[type=number]::-webkit-inner-spin-button,
     input[type=number]::-webkit-outer-spin-button { -webkit-appearance:none; margin:0; }
 
-    .ex-row:hover { background: rgba(255,255,255,0.025) !important; }
     .day-btn:hover, .lift-btn:hover, .nav-btn:hover { color:#fff !important; }
     .primary-btn:hover { background: var(--green-700) !important; }
     .ghost-btn:hover { border-color: rgba(255,255,255,0.5) !important; color:#fff !important; }
+    .set-btn:hover:not(:disabled) { border-color: rgba(255,255,255,0.4) !important; }
+    input[type=number]:disabled { cursor: not-allowed; }
 
     @keyframes spin { to { transform: rotate(360deg); } }
     .spin { animation: spin 0.8s linear infinite; }
@@ -202,11 +203,74 @@ function getStreak(sessions, proteinLog) {
   return streak;
 }
 
-function buildProgressionData(sessions, lift) {
+function parseTargetReps(repsStr) {
+  if (!repsStr) return 0;
+  const m = String(repsStr).match(/(\d+)(?:\s*-\s*(\d+))?/);
+  if (!m) return 0;
+  const lo = parseInt(m[1], 10);
+  const hi = m[2] ? parseInt(m[2], 10) : lo;
+  return Math.round((lo + hi) / 2);
+}
+
+// Normalize an exercise to its setLogs array. Old sessions stored a single
+// { weightUsed, completed } per exercise — project that across N sets so
+// charts and history still light up for legacy data.
+function readSetLogs(ex) {
+  if (Array.isArray(ex.setLogs)) return ex.setLogs;
+  const n = parseInt(ex.sets, 10) || 1;
+  const targetReps = parseTargetReps(ex.reps);
+  return Array.from({ length: n }, () => ({
+    reps: ex.completed ? String(targetReps) : "",
+    weight: ex.weightUsed ? String(ex.weightUsed) : "",
+    status: ex.completed ? "done" : "pending",
+    completedAt: null,
+  }));
+}
+
+function epley1RM(weight, reps) {
+  const w = parseFloat(weight), r = parseInt(reps, 10);
+  if (!w || !r) return 0;
+  if (r === 1) return w;
+  return w * (1 + r / 30);
+}
+
+function completedSets(setLogs) {
+  return (setLogs || []).filter(s => s && s.status === "done");
+}
+
+function numericCompletedSets(setLogs) {
+  return completedSets(setLogs).filter(s => parseFloat(s.weight) > 0 && parseInt(s.reps, 10) > 0);
+}
+
+function compute1RM(setLogs) {
+  const cs = numericCompletedSets(setLogs);
+  if (!cs.length) return 0;
+  return Math.max(...cs.map(s => epley1RM(s.weight, s.reps)));
+}
+
+function computeVolume(setLogs) {
+  return numericCompletedSets(setLogs).reduce((sum, s) => sum + parseFloat(s.weight) * parseInt(s.reps, 10), 0);
+}
+
+function computeAvgWeightPerRep(setLogs) {
+  const cs = numericCompletedSets(setLogs);
+  const totalReps = cs.reduce((a, s) => a + parseInt(s.reps, 10), 0);
+  const totalLoad = cs.reduce((a, s) => a + parseFloat(s.weight) * parseInt(s.reps, 10), 0);
+  return totalReps ? totalLoad / totalReps : 0;
+}
+
+function buildProgressionData(sessions, lift, metric = "1rm") {
   const pts = [];
   sessions.forEach(s => {
-    const ex = s.exercises.find(e => e.name === lift && e.weightUsed);
-    if (ex) pts.push({ date: s.date, weight: parseFloat(ex.weightUsed) });
+    const ex = s.exercises.find(e => e.name === lift);
+    if (!ex) return;
+    const logs = readSetLogs(ex);
+    if (!numericCompletedSets(logs).length) return;
+    let value = 0;
+    if (metric === "volume") value = computeVolume(logs);
+    else if (metric === "avg") value = computeAvgWeightPerRep(logs);
+    else value = compute1RM(logs);
+    if (value > 0) pts.push({ date: s.date, weight: Math.round(value * 10) / 10 });
   });
   return pts.sort((a, b) => a.date.localeCompare(b.date));
 }
@@ -411,9 +475,9 @@ function Workout({ session }) {
     const v = parseInt(localStorage.getItem("workout_active_day") || "0", 10);
     return isNaN(v) ? 0 : Math.max(0, Math.min(5, v));
   });
-  const [checks, setChecks] = useState({});
-  const [wInputs, setWInputs] = useState({});
+  const [setLogs, setSetLogs] = useState({});
   const [selLift, setSelLift] = useState(TRACKABLE_LIFTS[0]);
+  const [progMetric, setProgMetric] = useState("1rm");
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -434,36 +498,54 @@ function Workout({ session }) {
     [sessions, today, cp.day]
   );
 
-  // Hydrate today's checkboxes + weight inputs from existing session
+  // Hydrate today's per-set logs from existing session, or seed empty per the plan.
   useEffect(() => {
-    if (!todaySess) { setChecks({}); setWInputs({}); return; }
-    const c = {}, w = {};
-    todaySess.exercises.forEach((e, i) => {
-      if (e.completed) c[i] = true;
-      if (e.weightUsed) w[i] = e.weightUsed;
+    const next = {};
+    cp.exercises.forEach((ex, i) => {
+      const existing = todaySess && todaySess.exercises && todaySess.exercises[i];
+      if (existing && existing.name === ex.name) {
+        const logs = readSetLogs(existing);
+        const target = parseInt(ex.sets, 10) || logs.length || 1;
+        // Pad if plan now has more sets than the saved record.
+        next[i] = logs.length >= target
+          ? logs
+          : [...logs, ...Array.from({ length: target - logs.length }, () => ({
+              reps: "", weight: "", status: "pending", completedAt: null,
+            }))];
+      } else {
+        const n = parseInt(ex.sets, 10) || 1;
+        next[i] = Array.from({ length: n }, () => ({
+          reps: "", weight: "", status: "pending", completedAt: null,
+        }));
+      }
     });
-    setChecks(c);
-    setWInputs(w);
-  }, [todaySess && todaySess.date, todaySess && todaySess.day]); // eslint-disable-line
+    setSetLogs(next);
+  }, [cp.day, todaySess && todaySess.date]); // eslint-disable-line
 
-  const doneCount = cp.exercises.filter((_, i) => checks[i]).length;
+  const isExerciseDone = (i) => {
+    const arr = setLogs[i];
+    return Array.isArray(arr) && arr.length > 0 && arr.every(s => s.status !== "pending");
+  };
+  const doneCount = cp.exercises.filter((_, i) => isExerciseDone(i)).length;
   const allDone = doneCount === cp.exercises.length && cp.exercises.length > 0;
   const streak = getStreak(sessions, proteinLog);
-  const progData = buildProgressionData(sessions, selLift);
+  const progData = buildProgressionData(sessions, selLift, progMetric);
 
-  // Persist session whenever checks or weights change
+  // Persist session whenever per-set logs change
   const persistTimer = useRef(null);
   useEffect(() => {
     if (loading) return;
-    if (Object.keys(checks).length === 0 && Object.keys(wInputs).length === 0 && !todaySess) return;
+    const dirty = Object.values(setLogs).some(arr =>
+      Array.isArray(arr) && arr.some(s => s && (s.status !== "pending" || (s.reps != null && s.reps !== "") || (s.weight != null && s.weight !== "")))
+    );
+    if (!dirty && !todaySess) return;
     clearTimeout(persistTimer.current);
     persistTimer.current = setTimeout(() => {
       const next = {
         date: today, day: cp.day, label: cp.label, intensity: cp.intensity,
         exercises: cp.exercises.map((ex, i) => ({
           name: ex.name, sets: ex.sets, reps: ex.reps,
-          weightUsed: wInputs[i] || "",
-          completed: !!checks[i],
+          setLogs: setLogs[i] || [],
         })),
       };
       upsertSession(userId, next);
@@ -473,10 +555,40 @@ function Workout({ session }) {
       });
     }, 500);
     return () => clearTimeout(persistTimer.current);
-  }, [checks, wInputs]); // eslint-disable-line
+  }, [setLogs]); // eslint-disable-line
 
-  function toggleCheck(i) { setChecks(p => ({ ...p, [i]: !p[i] })); }
-  function setW(i, v) { setWInputs(p => ({ ...p, [i]: v })); }
+  function updateSet(exIdx, setIdx, updates) {
+    setSetLogs(prev => {
+      const arr = prev[exIdx] || [];
+      return { ...prev, [exIdx]: arr.map((s, j) => j === setIdx ? { ...s, ...updates } : s) };
+    });
+  }
+  function markSetDone(exIdx, setIdx) {
+    setSetLogs(prev => {
+      const arr = prev[exIdx] || [];
+      const cur = arr[setIdx];
+      if (!cur) return prev;
+      const willBeDone = cur.status !== "done";
+      return { ...prev, [exIdx]: arr.map((s, j) => j === setIdx ? {
+        ...s,
+        status: willBeDone ? "done" : "pending",
+        completedAt: willBeDone ? new Date().toISOString() : null,
+      } : s) };
+    });
+  }
+  function markSetSkipped(exIdx, setIdx) {
+    setSetLogs(prev => {
+      const arr = prev[exIdx] || [];
+      const cur = arr[setIdx];
+      if (!cur) return prev;
+      const willBeSkipped = cur.status !== "skipped";
+      return { ...prev, [exIdx]: arr.map((s, j) => j === setIdx ? {
+        ...s,
+        status: willBeSkipped ? "skipped" : "pending",
+        completedAt: null,
+      } : s) };
+    });
+  }
   function togglePro(d) {
     const next = !proteinLog[d];
     setProteinLog(p => { const n = { ...p }; if (next) n[d] = true; else delete n[d]; return n; });
@@ -575,35 +687,79 @@ function Workout({ session }) {
             </div>
 
             <div style={{ border:`1px solid ${C.borderSoft}`, borderRadius:8, overflow:"hidden", marginBottom:8 }}>
-              <div style={{ display:"grid", gridTemplateColumns:"22px 1fr 44px 70px 76px 1fr", padding:"10px 14px", background:"rgba(255,255,255,0.025)", borderBottom:`1px solid ${C.borderSoft}`, fontSize:10, color:C.fgSubtle, letterSpacing:"0.12em", textTransform:"uppercase", fontWeight:600 }}>
-                <div></div><div>Exercise</div><div>Sets</div><div>Reps</div><div>Wt</div><div>Notes</div>
-              </div>
               {cp.exercises.map((ex,i)=>{
-                const done = !!checks[i];
+                const logs = setLogs[i] || [];
                 const wEntry = WEIGHTS[ex.name];
                 const suggested = wEntry ? wEntry[cp.intensity.toLowerCase()] : null;
+                const isBW = !wEntry;
+                const exDone = isExerciseDone(i);
+                const exHasDone = logs.some(s => s.status === "done");
+                const oneRM = compute1RM(logs);
                 return (
                   <div key={i} className="ex-row"
-                    style={{ display:"grid", gridTemplateColumns:"22px 1fr 44px 70px 76px 1fr",
-                      padding:"12px 14px", borderBottom: i<cp.exercises.length-1?`1px solid ${C.borderSoft}`:"none",
-                      background: done ? C.greenSoft : "transparent", alignItems:"start", transition:"background 120ms" }}>
-                    <div onClick={()=>toggleCheck(i)}
-                      style={{ width:16, height:16, border:`1px solid ${done?iColor:C.border}`, borderRadius:3,
-                        background: done?iBg:"transparent", cursor:"pointer", display:"flex",
-                        alignItems:"center", justifyContent:"center", marginTop:3, flexShrink:0 }}>
-                      {done && <div style={{ width:6, height:6, background:iColor, borderRadius:1 }}/>}
+                    style={{ borderBottom: i<cp.exercises.length-1 ? `1px solid ${C.borderSoft}` : "none",
+                      padding:"14px 16px",
+                      background: exDone ? (exHasDone ? C.greenSoft : "rgba(255,255,255,0.025)") : "transparent",
+                      transition:"background 120ms" }}>
+                    <div style={{ display:"flex", alignItems:"baseline", gap:10, marginBottom:10, flexWrap:"wrap" }}>
+                      <div style={{ fontSize:14, fontWeight:600,
+                        color: exDone && !exHasDone ? C.fgFaint : C.fg,
+                        textDecoration: exDone ? "line-through" : "none" }}>{ex.name}</div>
+                      <div style={{ fontSize:11, color:iColor, fontWeight:600, letterSpacing:"0.04em" }}>
+                        {ex.sets} × {ex.reps}{isBW ? " · BW" : suggested ? ` · ~${suggested} lbs` : ""}
+                      </div>
+                      {oneRM > 0 && (
+                        <div style={{ fontSize:11, color:C.fgFaint, marginLeft:"auto", fontWeight:500 }}>
+                          1RM ≈ {Math.round(oneRM)} lbs
+                        </div>
+                      )}
                     </div>
-                    <div style={{ fontSize:13, color: done?C.fgFaint:C.fg, textDecoration: done?"line-through":"none", paddingRight:10, fontWeight: done?400:500 }}>{ex.name}</div>
-                    <div style={{ fontSize:13, color: done?C.fgFaint:C.fgMuted }}>{ex.sets}</div>
-                    <div style={{ fontSize:12, color: done?C.fgFaint:iColor, fontWeight:600 }}>{ex.reps}</div>
-                    <div>
-                      {wEntry
-                        ? <input type="number" placeholder={suggested?String(suggested):"lbs"}
-                            value={wInputs[i]||""} onChange={e=>setW(i, e.target.value)}
-                            style={{ ...inp, opacity: done?0.4:1 }} />
-                        : <div style={{ fontSize:12, color:C.fgFaint }}>BW</div>}
+                    <div style={{ display:"flex", flexDirection:"column", gap:6 }}>
+                      {logs.map((log, j) => {
+                        const done = log.status === "done";
+                        const skipped = log.status === "skipped";
+                        return (
+                          <div key={j} style={{ display:"grid", gridTemplateColumns:"42px 1fr 1fr 70px", gap:8, alignItems:"center" }}>
+                            <div style={{ fontSize:10,
+                              color: done ? iColor : skipped ? C.amber : C.fgFaint,
+                              letterSpacing:"0.1em", fontWeight:700 }}>SET {j+1}</div>
+                            <input type="number" inputMode="numeric"
+                              placeholder={skipped ? "—" : "reps"}
+                              value={log.reps == null ? "" : log.reps}
+                              disabled={skipped}
+                              onChange={e => updateSet(i, j, { reps: e.target.value })}
+                              style={{ ...inp, width:"100%", opacity: skipped ? 0.35 : 1 }} />
+                            {isBW
+                              ? <div style={{ fontSize:11, color:C.fgFaint, textAlign:"center" }}>BW</div>
+                              : <input type="number" inputMode="decimal"
+                                  placeholder={skipped ? "—" : (suggested ? String(suggested) : "lbs")}
+                                  value={log.weight == null ? "" : log.weight}
+                                  disabled={skipped}
+                                  onChange={e => updateSet(i, j, { weight: e.target.value })}
+                                  style={{ ...inp, width:"100%", opacity: skipped ? 0.35 : 1 }} />}
+                            <div style={{ display:"flex", gap:4, justifyContent:"flex-end" }}>
+                              <button onClick={() => markSetDone(i, j)} title="Done" className="set-btn"
+                                style={{ width:30, height:30, padding:0, borderRadius:5,
+                                  background: done ? iBg : "transparent",
+                                  border:`1px solid ${done ? iColor : C.border}`,
+                                  color: done ? iColor : C.fgSubtle,
+                                  cursor:"pointer", fontSize:14, fontWeight:700,
+                                  display:"flex", alignItems:"center", justifyContent:"center",
+                                  transition:"all 150ms" }}>✓</button>
+                              <button onClick={() => markSetSkipped(i, j)} title="Skip" className="set-btn"
+                                style={{ width:30, height:30, padding:0, borderRadius:5,
+                                  background: skipped ? C.amberSoft : "transparent",
+                                  border:`1px solid ${skipped ? C.amber : C.border}`,
+                                  color: skipped ? C.amber : C.fgSubtle,
+                                  cursor:"pointer", fontSize:18, fontWeight:700, lineHeight:1,
+                                  display:"flex", alignItems:"center", justifyContent:"center",
+                                  transition:"all 150ms" }}>−</button>
+                            </div>
+                          </div>
+                        );
+                      })}
                     </div>
-                    <div style={{ fontSize:12, color: done?C.fgFaint:C.fgMuted, lineHeight:1.5 }}>{ex.notes}</div>
+                    {ex.notes && <div style={{ fontSize:11, color:C.fgFaint, lineHeight:1.5, marginTop:10 }}>{ex.notes}</div>}
                   </div>
                 );
               })}
@@ -738,7 +894,10 @@ function Workout({ session }) {
                     const iC = IC[s.intensity]||C.fgSubtle;
                     const iB2 = IB[s.intensity]||"transparent";
                     const phit = !!proteinLog[s.date];
-                    const tracked = s.exercises.filter(e=>e.weightUsed);
+                    const tracked = s.exercises
+                      .map(e => { const logs = readSetLogs(e); return { ex: e, logs, cs: numericCompletedSets(logs) }; })
+                      .filter(t => t.cs.length > 0);
+                    const sessionVolume = tracked.reduce((acc, t) => acc + computeVolume(t.logs), 0);
                     return (
                       <div key={i} style={card}>
                         <div style={{ display:"flex", alignItems:"center", gap:10, marginBottom: tracked.length?10:0, flexWrap:"wrap" }}>
@@ -746,14 +905,24 @@ function Workout({ session }) {
                           <div style={{ fontSize:16, color:C.fg, fontWeight:600, letterSpacing:"-0.01em" }}>{s.label}</div>
                           <Pill color={iC} bg={iB2}>{s.intensity}</Pill>
                           {phit && <Pill color={C.greenLight} bg={C.greenSoft}>Protein ✓</Pill>}
+                          {sessionVolume > 0 && (
+                            <div style={{ marginLeft:"auto", fontSize:11, color:C.fgFaint, fontWeight:500 }}>
+                              Volume {Math.round(sessionVolume).toLocaleString()} lbs
+                            </div>
+                          )}
                         </div>
                         {tracked.length>0 && (
                           <div style={{ display:"flex", gap:7, flexWrap:"wrap" }}>
-                            {tracked.map((e,j)=>(
-                              <div key={j} style={{ fontSize:12, color:C.fgMuted, background:"rgba(255,255,255,0.04)", padding:"4px 9px", borderRadius:4 }}>
-                                {e.name}: <span style={{ color:iC, fontWeight:600 }}>{e.weightUsed} lbs</span>
-                              </div>
-                            ))}
+                            {tracked.map((t, j) => {
+                              const oneRM = compute1RM(t.logs);
+                              const vol = computeVolume(t.logs);
+                              return (
+                                <div key={j} style={{ fontSize:12, color:C.fgMuted, background:"rgba(255,255,255,0.04)", padding:"4px 9px", borderRadius:4 }}>
+                                  {t.ex.name}: <span style={{ color:iC, fontWeight:600 }}>{Math.round(oneRM)} 1RM</span>
+                                  <span style={{ color:C.fgFaint }}> · {t.cs.length} sets · {Math.round(vol).toLocaleString()} vol</span>
+                                </div>
+                              );
+                            })}
                           </div>
                         )}
                       </div>
@@ -768,7 +937,7 @@ function Workout({ session }) {
         {tab==="progression" && (
           <div>
             <div style={secTtl}>Lift Progression</div>
-            <div style={{ display:"flex", gap:6, flexWrap:"wrap", marginBottom:18 }}>
+            <div style={{ display:"flex", gap:6, flexWrap:"wrap", marginBottom:12 }}>
               {TRACKABLE_LIFTS.map(l=>(
                 <button key={l} onClick={()=>setSelLift(l)} className="lift-btn"
                   style={{ padding:"6px 12px", background: selLift===l?"rgba(255,255,255,0.05)":"transparent",
@@ -778,22 +947,49 @@ function Workout({ session }) {
                 </button>
               ))}
             </div>
+            <div style={{ display:"flex", gap:6, flexWrap:"wrap", marginBottom:18 }}>
+              {[
+                { id:"1rm", label:"Est. 1RM" },
+                { id:"volume", label:"Volume" },
+                { id:"avg", label:"Avg Wt/Rep" },
+              ].map(m => {
+                const active = progMetric === m.id;
+                return (
+                  <button key={m.id} onClick={() => setProgMetric(m.id)} className="lift-btn"
+                    style={{ padding:"5px 11px",
+                      background: active ? C.greenSoft : "transparent",
+                      border:`1px solid ${active ? C.greenLight : C.borderSoft}`,
+                      borderRadius:5,
+                      color: active ? C.greenLight : C.fgSubtle,
+                      fontSize:10, fontWeight:700, letterSpacing:"0.10em", textTransform:"uppercase",
+                      cursor:"pointer", transition:"all 150ms" }}>
+                    {m.label}
+                  </button>
+                );
+              })}
+            </div>
             <div style={{ ...card, padding:"18px 12px 12px" }}>
-              <div style={{ fontSize:12, color:C.fgSubtle, marginBottom:14, paddingLeft:14, fontWeight:500 }}>{selLift} · lbs over time</div>
+              <div style={{ fontSize:12, color:C.fgSubtle, marginBottom:14, paddingLeft:14, fontWeight:500 }}>
+                {selLift} · {progMetric === "1rm" ? "estimated 1RM (lbs)" : progMetric === "volume" ? "total volume (lbs)" : "average weight per rep (lbs)"} over time
+              </div>
               <SVGLineChart data={progData} color={C.greenLight} />
             </div>
 
-            <div style={secTtl}>Personal Bests</div>
+            <div style={secTtl}>Personal Bests · Est. 1RM</div>
             <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fill,minmax(170px,1fr))", gap:10 }}>
               {TRACKABLE_LIFTS.map(lift=>{
-                const data = buildProgressionData(sessions, lift);
+                const data = buildProgressionData(sessions, lift, "1rm");
                 const best = data.length ? Math.max(...data.map(d=>d.weight)) : null;
                 const latest = data.length ? data[data.length-1].weight : null;
                 return (
                   <div key={lift} style={card}>
                     <div style={lbl}>{lift.replace("Barbell ","").replace(" Press","").replace("Dumbbell ","DB ").replace(" Deadlift"," DL")}</div>
-                    <div style={{ fontSize:26, fontWeight:700, color: best?C.greenLight:C.fgFaint, letterSpacing:"-0.02em" }}>{best?best+" lbs":"—"}</div>
-                    {latest && latest!==best && <div style={{ fontSize:12, color:C.fgSubtle, marginTop:3 }}>Latest: {latest} lbs</div>}
+                    <div style={{ fontSize:26, fontWeight:700, color: best?C.greenLight:C.fgFaint, letterSpacing:"-0.02em" }}>
+                      {best ? Math.round(best) + " lbs" : "—"}
+                    </div>
+                    {latest != null && best != null && Math.round(latest) !== Math.round(best) && (
+                      <div style={{ fontSize:12, color:C.fgSubtle, marginTop:3 }}>Latest: {Math.round(latest)} lbs</div>
+                    )}
                   </div>
                 );
               })}
