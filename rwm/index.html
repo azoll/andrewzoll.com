@@ -15,42 +15,35 @@
   </div>
 </section>
 
-<section id="book" class="section book-offer">
+<section id="scorecard" class="section scorecard-cta">
   <div class="container">
-    <h2 class="section-heading-centered">Get my Book: Free PDF or Buy it on Amazon</h2>
-    <p style="max-width: 640px; margin: 1rem auto 2rem; text-align: center;">
-  I wrote <em>How to Master Your Money God&rsquo;s Way</em> to help believers develop a healthy, God&ndash;honoring relationship with money&mdash;one rooted in biblical truth, contentment, and stewardship. You can join my email list and get a free PDF copy, or purchase it on Amazon if you prefer a printed version.
-</p>
+    <p class="scorecard-eyebrow">FREE BIBLICAL STEWARDSHIP SCORECARD</p>
+    <h2 class="section-heading-centered">How well does your financial life reflect your faith?</h2>
+    <p class="scorecard-lede">12 questions. 3 minutes. An honest diagnostic of where your money lines up with your convictions&mdash;and where the gaps are.</p>
 
-  <div class="book">
-    <img src="assets/book-cover.jpeg" alt="Book cover: How to Master Your Money God’s Way" loading="lazy" width="300" height="400">
-
-    <!-- PLAIN HTML CONVERTKIT FORM (no scripts, no inline CSS) -->
-    <form action="https://app.kit.com/forms/8106721/subscriptions" method="post" class="simple-ck-form" novalidate>
-      <!-- Paste any hidden fields CK shows in the HTML embed here -->
-      <!-- Example (yours may differ): -->
-      <!-- <input type="hidden" name="ck_form_recaptcha" value=""> -->
-      <!-- <input type="hidden" name="tags[]" value="book-free-pdf"> -->
-
-      <div class="form-row">
-        <label for="first_name">First Name</label>
-        <input id="first_name" name="fields[first_name]" type="text" autocomplete="given-name" placeholder="First Name" required>
+    <div class="scorecard-grid">
+      <div class="scorecard-points">
+        <ul>
+          <li>A personalized score across <strong>Theological Foundation</strong> and <strong>Practical Alignment</strong></li>
+          <li>Your top three priorities, mapped to where your gaps actually are</li>
+          <li>Scripture and a plain-English explanation behind every question</li>
+          <li>A printable PDF you can revisit, share with your spouse, or bring to a planning conversation</li>
+        </ul>
       </div>
 
-      <div class="form-row">
-        <label for="email_address">Email Address</label>
-        <input id="email_address" name="email_address" type="email" autocomplete="email" placeholder="Email Address" required>
+      <div class="scorecard-preview" aria-hidden="true">
+        <div class="scorecard-preview-card">
+          <div class="scorecard-preview-overline">SAMPLE RESULT</div>
+          <div class="scorecard-preview-score">37<span>/48</span></div>
+          <div class="scorecard-preview-pill">B &mdash; Intentional but Incomplete</div>
+        </div>
       </div>
+    </div>
 
-      <button type="submit" class="btn">Send me the Book</button>
-
-      <p class="form-footnote">You&rsquo;ll get the PDF free and occasional emails on mastering your money God&rsquo;s way. Unsubscribe any time.</p>
-    </form>
-
-  </div>
-
-  <div style="text-align:center; margin-top:1rem;">
-    <a class="btn-hero-alt" href="https://www.amazon.com/How-Master-Your-Money-Gods/dp/B0F21NGMQL/" target="_blank" rel="noopener noreferrer">Buy on Amazon</a>
+    <div class="scorecard-cta-wrap">
+      <a href="scorecard/" class="btn">Take the Scorecard</a>
+      <p class="scorecard-fineprint">Free. No payment. No phone number. Your email gets you your results and occasional notes on biblical stewardship. Unsubscribe any time.</p>
+    </div>
   </div>
 </section>
 
@@ -621,6 +614,40 @@ document.addEventListener("DOMContentLoaded", function () {
 </a>
     </div>
 
+  </div>
+</section>
+
+<section id="book" class="section book-offer">
+  <div class="container">
+    <h2 class="section-heading-centered">Get my Book: Free PDF or Buy it on Amazon</h2>
+    <p style="max-width: 640px; margin: 1rem auto 2rem; text-align: center;">
+  I wrote <em>How to Master Your Money God&rsquo;s Way</em> to help believers develop a healthy, God&ndash;honoring relationship with money&mdash;one rooted in biblical truth, contentment, and stewardship. You can join my email list and get a free PDF copy, or purchase it on Amazon if you prefer a printed version.
+</p>
+
+  <div class="book">
+    <img src="assets/book-cover.jpeg" alt="Book cover: How to Master Your Money God’s Way" loading="lazy" width="300" height="400">
+
+    <!-- PLAIN HTML CONVERTKIT FORM (no scripts, no inline CSS) -->
+    <form action="https://app.kit.com/forms/8106721/subscriptions" method="post" class="simple-ck-form" novalidate>
+      <div class="form-row">
+        <label for="first_name">First Name</label>
+        <input id="first_name" name="fields[first_name]" type="text" autocomplete="given-name" placeholder="First Name" required>
+      </div>
+
+      <div class="form-row">
+        <label for="email_address">Email Address</label>
+        <input id="email_address" name="email_address" type="email" autocomplete="email" placeholder="Email Address" required>
+      </div>
+
+      <button type="submit" class="btn">Send me the Book</button>
+
+      <p class="form-footnote">You&rsquo;ll get the PDF free and occasional emails on mastering your money God&rsquo;s way. Unsubscribe any time.</p>
+    </form>
+
+  </div>
+
+  <div style="text-align:center; margin-top:1rem;">
+    <a class="btn-hero-alt" href="https://www.amazon.com/How-Master-Your-Money-Gods/dp/B0F21NGMQL/" target="_blank" rel="noopener noreferrer">Buy on Amazon</a>
   </div>
 </section>
 
@@ -1855,6 +1882,163 @@ input {
 
 
 /* ========================================================================== */
+/* 19b) SCORECARD CTA SECTION                                                 */
+/* ========================================================================== */
+
+.scorecard-cta {
+  background: #f6f5f4;
+  padding: 4.5rem 1rem 4rem;
+  border-top: 1px solid rgba(0,0,0,0.06);
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+}
+.scorecard-cta .container {
+  max-width: 1080px;
+  margin: 0 auto;
+}
+.scorecard-eyebrow {
+  text-align: center;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: #b58428;
+  margin-bottom: 0.75rem;
+}
+.scorecard-cta h2.section-heading-centered {
+  margin-bottom: 0.75rem;
+}
+.scorecard-lede {
+  max-width: 640px;
+  margin: 0 auto 2.5rem;
+  text-align: center;
+  font-size: 1.1rem;
+  line-height: 1.55;
+  color: #4a4a4a;
+}
+.scorecard-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 3rem;
+  align-items: center;
+  max-width: 920px;
+  margin: 0 auto 2.5rem;
+}
+.scorecard-points ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.scorecard-points li {
+  position: relative;
+  padding: 0.55rem 0 0.55rem 2rem;
+  font-size: 1.02rem;
+  line-height: 1.55;
+  color: #2c2c2c;
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+}
+.scorecard-points li:last-child {
+  border-bottom: none;
+}
+.scorecard-points li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.95rem;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #C8962E;
+  box-shadow: 0 0 0 4px rgba(200,150,46,0.18);
+}
+.scorecard-points strong {
+  color: #1B3A5C;
+  font-weight: 700;
+}
+.scorecard-preview {
+  display: flex;
+  justify-content: center;
+}
+.scorecard-preview-card {
+  position: relative;
+  background: #1B3A5C;
+  color: #ffffff;
+  padding: 2.25rem 2rem 2rem;
+  border-radius: 16px;
+  text-align: center;
+  width: 100%;
+  max-width: 320px;
+  box-shadow:
+    rgba(27,58,92,0.25) 0 30px 45px -30px,
+    rgba(0,0,0,0.10) 0 18px 36px -18px;
+  overflow: hidden;
+}
+.scorecard-preview-card::before {
+  content: "";
+  position: absolute;
+  inset: -20% -20% auto -20%;
+  height: 60%;
+  background: radial-gradient(ellipse at top, rgba(200,150,46,0.18), transparent 65%);
+  pointer-events: none;
+}
+.scorecard-preview-overline {
+  position: relative;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: #E8B84D;
+  margin-bottom: 0.75rem;
+}
+.scorecard-preview-score {
+  position: relative;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 4rem;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -2px;
+  margin-bottom: 1rem;
+}
+.scorecard-preview-score span {
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: rgba(255,255,255,0.55);
+  letter-spacing: -0.5px;
+}
+.scorecard-preview-pill {
+  position: relative;
+  display: inline-block;
+  background: #FDF3E0;
+  color: #1B3A5C;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  padding: 0.4rem 1rem;
+  border-radius: 9999px;
+}
+.scorecard-cta-wrap {
+  text-align: center;
+  margin-top: 1rem;
+}
+.scorecard-cta-wrap .btn {
+  font-size: 1.05rem;
+  padding: 0.95rem 2.4rem;
+}
+.scorecard-fineprint {
+  max-width: 540px;
+  margin: 1rem auto 0;
+  font-size: 0.85rem;
+  line-height: 1.55;
+  color: #6b6b6b;
+}
+@media (max-width: 760px) {
+  .scorecard-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  .scorecard-preview { order: -1; }
+  .scorecard-preview-card { max-width: 280px; }
+  .scorecard-preview-score { font-size: 3.4rem; }
+}
+
+/* ========================================================================== */
 /* 20) LEAD MAGNETS                                                           */
 /* ========================================================================== */
 
@@ -2423,6 +2607,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (a.matches('a[href="#schedule"]')) {
       track('Contact', { cta: 'See if we\'re a fit', location: 'anchor-#schedule' });
+      return;
+    }
+    if (a.matches('a[href^="scorecard/"], a[href*="/scorecard/"]')) {
+      track('Lead', { source: 'Scorecard CTA', product: 'Biblical Stewardship Scorecard' });
       return;
     }
     const text = (a.textContent || '').trim().toLowerCase();
