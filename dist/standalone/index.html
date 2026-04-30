@@ -7,11 +7,35 @@
   <meta name="description" content="Biblical financial guidance for high-earning Christian families who want clarity, confidence, and eternal impact.">
 </head>
 <body>
-<section class="hero" style="background-image: url('https://raw.githubusercontent.com/azoll/andrewzoll.com/main/rwm/assets/home-hero-image.png');">
+<section class="hero" style="--hero-bg: url('https://raw.githubusercontent.com/azoll/andrewzoll.com/main/rwm/assets/home-hero-image.png');">
   <div class="hero-content">
+    <span class="hero-eyebrow">Biblical Wealth Advisor</span>
     <h1>Steward your wealth.<br>Strengthen your faith.<br>Leave a Kingdom legacy.</h1>
-    <p class="hero-subtext">Biblical financial guidance for high-earning Christian families (earning $200k+ or $500k+ investable assets) who want clarity, confidence, and eternal impact.</p>
-    <a href="#schedule" class="btn">Schedule Your Stewardship Clarity Call</a>
+    <p class="hero-subtext">Biblical financial guidance for high-earning Christian families ($200k+ income or $500k+ investable assets) who want clarity, confidence, and eternal impact.</p>
+    <div class="hero-cta-row">
+      <a href="scorecard.html" class="btn">Take the Free Scorecard</a>
+      <a href="#schedule" class="btn-secondary-outline">Schedule a Call</a>
+    </div>
+  </div>
+</section>
+
+<section class="trust-bar" aria-label="Credentials">
+  <div class="trust-bar-inner">
+    <div class="trust-item">
+      <span class="trust-label">CRPC&trade; Fiduciary Advisor</span>
+    </div>
+    <span class="trust-divider" aria-hidden="true"></span>
+    <div class="trust-item">
+      <span class="trust-label">10+ Years in Pastoral Ministry</span>
+    </div>
+    <span class="trust-divider" aria-hidden="true"></span>
+    <div class="trust-item">
+      <span class="trust-label">Author, <em>How to Master Your Money God&rsquo;s Way</em></span>
+    </div>
+    <span class="trust-divider" aria-hidden="true"></span>
+    <div class="trust-item">
+      <span class="trust-label">Registered Investment Advisor</span>
+    </div>
   </div>
 </section>
 
@@ -86,7 +110,7 @@
   </div>
 </section>
 
-<section class="hero" style="background-image: url('https://raw.githubusercontent.com/azoll/andrewzoll.com/main/rwm/assets/about-hero-image.jpg');">
+<section class="hero" style="--hero-bg: url('https://raw.githubusercontent.com/azoll/andrewzoll.com/main/rwm/assets/about-hero-image.jpg');">
   <div class="hero-content">
     <h1>I left the pulpit, but I never stopped pastoring families.</h1>
     <p class="hero-subtext">Helping devout Christian families turn wealth into lasting faithfulness.</p>
@@ -433,7 +457,7 @@ document.addEventListener("DOMContentLoaded", function () {
   </div>
 </section>
 
-<section class="hero" style="background-image: url('https://raw.githubusercontent.com/azoll/andrewzoll.com/main/rwm/assets/resources-hero-image.png');">
+<section class="hero" style="--hero-bg: url('https://raw.githubusercontent.com/azoll/andrewzoll.com/main/rwm/assets/resources-hero-image.png');">
   <div class="hero-content">
     <h1>Resources</h1>
 	  <p class="hero-subtext"><em>Give instruction to a wise man, and he will be still wiser; teach a righteous man, and he will increase in learning.</em>
@@ -525,7 +549,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
 /* ========================================================================== */
@@ -720,30 +744,48 @@ button, input, select, textarea {
   text-align: center;
   color: var(--white);
   width: 100%;
-  min-height: 100svh;            /* fill the window height */
+  min-height: 100svh;
   overflow: hidden;
   padding: 6rem 1rem;
+  background: #0d1f2f;
+}
+
+/* Ken Burns slow zoom on the background image (premium cinematic) */
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: -3%;
+  background-image: var(--hero-bg);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  background-attachment: fixed;
+  transform: scale(1);
+  animation: heroKenBurns 22s ease-in-out infinite alternate;
+  z-index: 0;
+  will-change: transform;
 }
-@media (max-width: 768px) {
-  .hero {
-    background-attachment: scroll;
-  }
+@keyframes heroKenBurns {
+  from { transform: scale(1); }
+  to   { transform: scale(1.06); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero::before { animation: none; }
 }
 
+/* Duotone navy gradient overlay (cinematic, branded) */
 .hero::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, .45);
+  background:
+    linear-gradient(135deg, rgba(19,41,66,0.72) 0%, rgba(27,58,92,0.48) 55%, rgba(13,31,47,0.78) 100%),
+    radial-gradient(ellipse at 70% 30%, rgba(200,150,46,0.10), transparent 55%);
   z-index: 1;
 }
+
 .hero-content {
   position: relative;
-  max-width: 800px;
+  max-width: 880px;
   padding: 1rem;
   color: var(--white);
   z-index: 2;
@@ -751,17 +793,66 @@ button, input, select, textarea {
 .hero-content h1,
 .hero-content p {
   color: #ffffff;
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
+}
+.hero-eyebrow {
+  display: inline-block;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #E8B84D;
+  padding: 0.35rem 0.9rem;
+  border: 1px solid rgba(232,184,77,0.35);
+  border-radius: 9999px;
+  margin-bottom: 1.5rem;
+  background: rgba(27,58,92,0.25);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 .hero h1 {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 2.75rem;
-  font-weight: 700;
-  margin-bottom: 1rem;
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(2.25rem, 5.2vw, 3.75rem);
+  font-weight: 300;
+  letter-spacing: -1.4px;
+  line-height: 1.06;
+  margin-bottom: 1.25rem;
 }
 .hero p {
-  font-size: 1.25rem;
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;
+  font-size: clamp(1.05rem, 1.6vw, 1.25rem);
+  line-height: 1.5;
+  letter-spacing: -0.2px;
   margin-bottom: 2rem;
+  max-width: 640px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hero-cta-row {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+}
+.hero-cta-row .btn-secondary-outline {
+  display: inline-block;
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  padding: 0.85rem 1.6rem;
+  border: 1px solid rgba(255,255,255,0.45);
+  border-radius: 4px;
+  color: #ffffff;
+  background: transparent;
+  text-decoration: none;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+.hero-cta-row .btn-secondary-outline:hover {
+  background: rgba(255,255,255,0.10);
+  border-color: rgba(255,255,255,0.65);
 }
 
 /* Optional hero subtext */
@@ -1890,6 +1981,124 @@ input {
   .scorecard-preview-score { font-size: 3.4rem; }
 }
 
+/* ========================================================================== */
+/* 19c) TRUST BAR (under hero)                                                */
+/* ========================================================================== */
+.trust-bar {
+  background: #ffffff;
+  border-bottom: 1px solid rgba(0,0,0,0.08);
+  padding: 1.4rem 1rem;
+  position: relative;
+  z-index: 5;
+}
+.trust-bar-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.65rem 1.4rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.86rem;
+  font-weight: 500;
+  letter-spacing: 0.1px;
+  color: #1B3A5C;
+}
+.trust-item .trust-label { white-space: nowrap; }
+.trust-item em { font-style: italic; font-weight: 400; color: #4a4a4a; }
+.trust-divider {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #C8962E;
+  flex-shrink: 0;
+}
+@media (max-width: 760px) {
+  .trust-bar-inner {
+    gap: 0.55rem 1rem;
+    font-size: 0.8rem;
+  }
+}
+
+/* ========================================================================== */
+/* 19d) GLOBAL TYPE REFRESH (Inter for headlines + body)                      */
+/* ========================================================================== */
+body, p, li, a, h1, h2, h3, h4, h5, h6 {
+  font-family: 'Inter', 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+h1, h2 {
+  font-weight: 300;
+  letter-spacing: -0.8px;
+  line-height: 1.12;
+}
+h2.section-heading-centered {
+  font-size: clamp(1.85rem, 3.4vw, 2.5rem);
+  font-weight: 300;
+  letter-spacing: -0.7px;
+}
+h3 {
+  font-weight: 600;
+  letter-spacing: -0.2px;
+}
+
+/* ========================================================================== */
+/* 19e) CARD SYSTEM UNIFICATION (Stripe + Notion treatment)                   */
+/* ========================================================================== */
+.card,
+.lead-magnet-card,
+.media-card,
+#credibility ul.checklist,
+.accordion-item,
+.step {
+  background: #ffffff;
+  border: 1px solid rgba(0,0,0,0.10);
+  border-radius: 12px;
+  box-shadow:
+    rgba(27,58,92,0.04) 0px 4px 18px,
+    rgba(27,58,92,0.027) 0px 2.025px 7.85px,
+    rgba(27,58,92,0.02) 0px 0.8px 2.93px,
+    rgba(27,58,92,0.01) 0px 0.175px 1.04px;
+  transition: box-shadow 0.25s ease, transform 0.25s ease;
+}
+.card:hover,
+.lead-magnet-card:hover,
+.media-card:hover {
+  box-shadow:
+    rgba(27,58,92,0.10) 0px 12px 32px -8px,
+    rgba(27,58,92,0.05) 0px 6px 14px -4px;
+  transform: translateY(-2px);
+}
+.card.highlight-card {
+  border-color: rgba(200,150,46,0.30);
+}
+.card.highlight-card::before {
+  content: "";
+  display: block;
+  width: 32px;
+  height: 2px;
+  background: #C8962E;
+  border-radius: 2px;
+  margin-bottom: 1rem;
+}
+
+/* ========================================================================== */
+/* 19f) SCROLL REVEAL                                                         */
+/* ========================================================================== */
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+}
+
 /* "What this covers" pill list under How We Help */
 .services-covered {
   max-width: 880px;
@@ -2537,6 +2746,26 @@ document.addEventListener('DOMContentLoaded', function () {
     }, { threshold: [0,0.25,0.5] });
     io.observe(book);
   }
+});
+</script>
+
+<!-- Scroll-reveal animation for sections -->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  if (!('IntersectionObserver' in window)) return;
+  const targets = document.querySelectorAll(
+    'section:not(.hero):not(.trust-bar), .card, .lead-magnet-card, .media-card, .step, .scorecard-grid, .about-grid'
+  );
+  targets.forEach(el => el.classList.add('reveal'));
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  targets.forEach(el => io.observe(el));
 });
 </script>
 </body>
