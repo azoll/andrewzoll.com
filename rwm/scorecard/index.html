@@ -4,76 +4,96 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Biblical Stewardship Scorecard | Andrew Zoll</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
+      /* Brand (RWM) */
       --navy: #1B3A5C;
-      --navy-dark: #132942;
-      --navy-light: #244B6E;
+      --navy-deep: #132942;
       --gold: #C8962E;
-      --gold-light: #E8B84D;
+      --gold-hover: #B58428;
       --gold-pale: #FDF3E0;
-      --white: #FFFFFF;
-      --off-white: #F8F9FA;
-      --gray-100: #F1F3F5;
-      --gray-200: #E9ECEF;
-      --gray-300: #DEE2E6;
-      --gray-400: #CED4DA;
-      --gray-500: #ADB5BD;
-      --gray-600: #6C757D;
-      --gray-700: #495057;
-      --gray-800: #343A40;
-      --text: #2C3E50;
-      --text-light: #5A6C7D;
-      --radius: 12px;
-      --shadow: 0 2px 12px rgba(27, 58, 92, 0.08);
-      --shadow-lg: 0 8px 32px rgba(27, 58, 92, 0.12);
-      --transition: 0.3s ease;
+
+      /* Notion warmth */
+      --bg: #ffffff;
+      --bg-warm: #f6f5f4;
+      --ink: rgba(0,0,0,0.95);
+      --ink-muted: #615d59;
+      --ink-faint: #a39e98;
+      --whisper: rgba(0,0,0,0.10);
+
+      /* Stripe-tinted shadows (using navy as the brand-tint) */
+      --shadow-card:
+        rgba(27,58,92,0.04) 0px 4px 18px,
+        rgba(27,58,92,0.027) 0px 2.025px 7.846875px,
+        rgba(27,58,92,0.02) 0px 0.8px 2.925px,
+        rgba(27,58,92,0.01) 0px 0.175px 1.040625px;
+      --shadow-elevated:
+        rgba(27,58,92,0.25) 0px 30px 45px -30px,
+        rgba(0,0,0,0.10) 0px 18px 36px -18px;
+
+      /* Radii */
+      --r-button: 4px;
+      --r-input: 4px;
+      --r-card: 12px;
+      --r-feature: 16px;
+      --r-pill: 9999px;
+
+      --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
+    html { scroll-behavior: smooth; }
+
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-      color: var(--text);
-      background: var(--off-white);
-      line-height: 1.6;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
+      font-feature-settings: 'cv11', 'ss01', 'cv02';
+      color: var(--ink);
+      background: var(--bg-warm);
+      line-height: 1.5;
       -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
     }
 
     .scorecard-container {
-      max-width: 640px;
+      max-width: 680px;
       margin: 0 auto;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
+      background: var(--bg);
     }
 
     /* ── Header ── */
     .sc-header {
       background: var(--navy);
-      padding: 16px 24px;
+      padding: 18px 24px;
       text-align: center;
     }
     .sc-header-logo {
-      color: var(--white);
-      font-size: 14px;
+      color: var(--bg);
+      font-size: 13px;
       font-weight: 600;
-      letter-spacing: 0.5px;
+      letter-spacing: 1.5px;
       text-transform: uppercase;
-      opacity: 0.9;
+      opacity: 0.92;
     }
 
     /* ── Screens ── */
     .sc-screen {
       display: none;
       flex: 1;
-      padding: 32px 24px 40px;
-      animation: fadeIn 0.35s ease;
+      padding: 56px 32px 64px;
+      animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .sc-screen.active { display: flex; flex-direction: column; }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(12px); }
+      from { opacity: 0; transform: translateY(8px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
@@ -81,39 +101,44 @@
     .landing-badge {
       display: inline-block;
       background: var(--gold-pale);
-      color: var(--gold);
+      color: var(--gold-hover);
       font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 1px;
+      font-weight: 600;
+      letter-spacing: 1.25px;
       text-transform: uppercase;
-      padding: 6px 14px;
-      border-radius: 20px;
-      margin-bottom: 24px;
+      padding: 5px 12px;
+      border-radius: var(--r-pill);
+      margin-bottom: 28px;
+      align-self: flex-start;
     }
     .landing-headline {
-      font-size: 32px;
-      font-weight: 800;
+      font-size: 44px;
+      font-weight: 300;
       color: var(--navy);
-      line-height: 1.2;
-      margin-bottom: 12px;
+      line-height: 1.05;
+      letter-spacing: -1.2px;
+      margin-bottom: 16px;
     }
     .landing-subhead {
-      font-size: 17px;
-      color: var(--text-light);
-      margin-bottom: 32px;
-      line-height: 1.5;
+      font-size: 19px;
+      font-weight: 400;
+      color: var(--ink-muted);
+      margin-bottom: 36px;
+      line-height: 1.45;
+      letter-spacing: -0.2px;
     }
     .landing-body {
       font-size: 16px;
-      color: var(--text);
-      margin-bottom: 16px;
-      line-height: 1.7;
+      color: var(--ink);
+      margin-bottom: 18px;
+      line-height: 1.65;
     }
     .landing-body strong {
       color: var(--navy);
+      font-weight: 600;
     }
     .landing-cta-wrap {
-      margin-top: 32px;
+      margin-top: 36px;
       text-align: center;
     }
 
@@ -121,20 +146,39 @@
     .btn-primary {
       display: inline-block;
       background: var(--gold);
-      color: var(--white);
-      font-size: 17px;
-      font-weight: 700;
-      padding: 16px 40px;
-      border: none;
-      border-radius: var(--radius);
+      color: var(--bg);
+      font-family: inherit;
+      font-size: 16px;
+      font-weight: 500;
+      padding: 14px 32px;
+      border: 1px solid transparent;
+      border-radius: var(--r-button);
       cursor: pointer;
-      transition: background var(--transition), transform var(--transition);
+      transition: background var(--transition), box-shadow var(--transition), transform 0.1s ease;
       text-decoration: none;
       width: 100%;
-      max-width: 360px;
+      max-width: 380px;
+      letter-spacing: -0.1px;
+      box-shadow:
+        rgba(27,58,92,0.15) 0px 4px 12px -2px,
+        rgba(0,0,0,0.06) 0px 2px 4px -1px;
     }
-    .btn-primary:hover { background: var(--gold-light); transform: translateY(-1px); }
-    .btn-primary:active { transform: translateY(0); }
+    .btn-primary:hover {
+      background: var(--gold-hover);
+      box-shadow:
+        rgba(27,58,92,0.25) 0px 8px 20px -4px,
+        rgba(0,0,0,0.08) 0px 4px 8px -2px;
+    }
+    .btn-primary:active { transform: scale(0.98); }
+    .btn-primary:focus-visible {
+      outline: 2px solid var(--gold);
+      outline-offset: 2px;
+    }
+    .btn-primary:disabled {
+      background: var(--ink-faint);
+      box-shadow: none;
+      cursor: not-allowed;
+    }
 
     .btn-secondary {
       display: inline-flex;
@@ -142,7 +186,8 @@
       gap: 6px;
       background: none;
       border: none;
-      color: var(--gray-600);
+      color: var(--ink-muted);
+      font-family: inherit;
       font-size: 14px;
       font-weight: 500;
       cursor: pointer;
@@ -154,310 +199,408 @@
 
     /* ── Progress Bar ── */
     .progress-wrap {
-      padding: 20px 24px 0;
-      background: var(--white);
+      padding: 24px 32px 0;
+      background: var(--bg);
     }
     .progress-label {
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--gray-600);
-      margin-bottom: 8px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--ink-muted);
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
       text-align: center;
     }
     .progress-bar-track {
-      height: 6px;
-      background: var(--gray-200);
-      border-radius: 3px;
+      height: 4px;
+      background: var(--bg-warm);
+      border-radius: var(--r-pill);
       overflow: hidden;
     }
     .progress-bar-fill {
       height: 100%;
       background: var(--gold);
-      border-radius: 3px;
-      transition: width 0.4s ease;
+      border-radius: var(--r-pill);
+      transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     /* ── Question Screen ── */
     .question-category {
       font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 1px;
+      font-weight: 600;
+      letter-spacing: 1.25px;
       text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 12px;
+      color: var(--gold-hover);
+      margin-bottom: 14px;
     }
     .question-text {
-      font-size: 22px;
-      font-weight: 700;
+      font-size: 26px;
+      font-weight: 400;
       color: var(--navy);
-      line-height: 1.35;
-      margin-bottom: 28px;
+      line-height: 1.30;
+      letter-spacing: -0.5px;
+      margin-bottom: 32px;
     }
-    .answer-options { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .answer-options { list-style: none; display: flex; flex-direction: column; gap: 10px; }
     .answer-option {
+      position: relative;
       display: block;
       width: 100%;
       text-align: left;
-      background: var(--white);
-      border: 2px solid var(--gray-200);
-      border-radius: var(--radius);
+      background: var(--bg);
+      border: 1px solid var(--whisper);
+      border-radius: 8px;
       padding: 16px 20px;
+      font-family: inherit;
       font-size: 15px;
       line-height: 1.5;
-      color: var(--text);
+      color: var(--ink);
       cursor: pointer;
-      transition: border-color var(--transition), background var(--transition), box-shadow var(--transition);
+      transition:
+        border-color var(--transition),
+        background var(--transition),
+        box-shadow var(--transition);
     }
     .answer-option:hover {
-      border-color: var(--navy-light);
-      background: var(--gray-100);
+      background: var(--bg-warm);
+      border-color: rgba(0,0,0,0.18);
     }
     .answer-option.selected {
-      border-color: var(--navy);
-      background: #EDF2F7;
-      box-shadow: 0 0 0 1px var(--navy);
-      font-weight: 600;
+      border-color: var(--gold);
+      background: var(--gold-pale);
+      box-shadow:
+        rgba(200,150,46,0.12) 0px 4px 12px -2px,
+        rgba(200,150,46,0.20) 0px 0px 0px 1px;
+      font-weight: 500;
+      color: var(--navy);
+    }
+    .answer-option.selected::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 8px;
+      bottom: 8px;
+      width: 3px;
+      background: var(--gold);
+      border-radius: var(--r-pill);
+    }
+    .answer-option:focus-visible {
+      outline: 2px solid var(--gold);
+      outline-offset: 2px;
     }
 
     .question-nav {
       margin-top: auto;
-      padding-top: 24px;
+      padding-top: 32px;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
+    #btnNext {
+      width: auto !important;
+      max-width: none !important;
+      padding: 12px 28px !important;
+      font-size: 15px !important;
+    }
 
     /* ── Email Gate ── */
     .email-gate-icon {
-      width: 64px;
-      height: 64px;
+      width: 56px;
+      height: 56px;
       background: var(--gold-pale);
-      border-radius: 50%;
+      border-radius: var(--r-pill);
       display: flex;
       align-items: center;
       justify-content: center;
-      margin: 0 auto 24px;
+      margin: 0 auto 28px;
+      border: 1px solid rgba(200,150,46,0.20);
     }
-    .email-gate-icon svg { width: 28px; height: 28px; color: var(--gold); }
+    .email-gate-icon svg { width: 24px; height: 24px; color: var(--gold-hover); }
     .email-headline {
-      font-size: 26px;
-      font-weight: 800;
+      font-size: 32px;
+      font-weight: 300;
       color: var(--navy);
       text-align: center;
-      margin-bottom: 12px;
+      letter-spacing: -0.7px;
+      line-height: 1.15;
+      margin-bottom: 14px;
     }
     .email-body {
       font-size: 15px;
-      color: var(--text-light);
+      color: var(--ink-muted);
       text-align: center;
-      margin-bottom: 32px;
+      margin-bottom: 36px;
       line-height: 1.6;
+      max-width: 480px;
+      margin-left: auto;
+      margin-right: auto;
     }
     .form-group {
-      margin-bottom: 16px;
+      margin-bottom: 18px;
     }
     .form-label {
       display: block;
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--text);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--ink);
       margin-bottom: 6px;
+      letter-spacing: -0.1px;
     }
     .form-input {
       width: 100%;
-      padding: 14px 16px;
-      font-size: 16px;
-      border: 2px solid var(--gray-300);
-      border-radius: 8px;
+      padding: 12px 14px;
+      font-family: inherit;
+      font-size: 15px;
+      border: 1px solid var(--whisper);
+      border-radius: var(--r-input);
       outline: none;
-      transition: border-color var(--transition);
-      color: var(--text);
-      background: var(--white);
+      transition: border-color var(--transition), box-shadow var(--transition);
+      color: var(--ink);
+      background: var(--bg);
     }
-    .form-input:focus { border-color: var(--navy); }
-    .form-input::placeholder { color: var(--gray-500); }
+    .form-input:focus {
+      border-color: var(--gold);
+      box-shadow: rgba(200,150,46,0.20) 0px 0px 0px 3px;
+    }
+    .form-input::placeholder { color: var(--ink-faint); }
     .form-error {
       font-size: 13px;
-      color: #D63031;
-      margin-top: 4px;
+      color: #C0392B;
+      margin-top: 6px;
       display: none;
     }
     .email-fine-print {
       font-size: 12px;
-      color: var(--gray-600);
+      color: var(--ink-muted);
       text-align: center;
-      margin-top: 16px;
-      line-height: 1.5;
+      margin-top: 20px;
+      line-height: 1.6;
+      max-width: 460px;
+      margin-left: auto;
+      margin-right: auto;
     }
     .email-submit-wrap {
-      margin-top: 24px;
+      margin-top: 28px;
       text-align: center;
     }
 
     /* ── Results ── */
     .results-header {
       text-align: center;
-      margin-bottom: 32px;
+      margin-bottom: 36px;
     }
     .results-overline {
       font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 1px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
       text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 8px;
+      color: var(--gold-hover);
+      margin-bottom: 10px;
     }
     .results-title {
-      font-size: 28px;
-      font-weight: 800;
+      font-size: 36px;
+      font-weight: 300;
       color: var(--navy);
-      margin-bottom: 4px;
+      letter-spacing: -0.9px;
+      line-height: 1.1;
     }
 
     .score-card {
       background: var(--navy);
-      border-radius: var(--radius);
-      padding: 32px 24px;
+      border-radius: var(--r-feature);
+      padding: 40px 28px;
       text-align: center;
-      margin-bottom: 28px;
-      box-shadow: var(--shadow-lg);
+      margin-bottom: 32px;
+      box-shadow: var(--shadow-elevated);
+      position: relative;
+      overflow: hidden;
+    }
+    .score-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at top, rgba(200,150,46,0.10), transparent 60%);
+      pointer-events: none;
     }
     .score-number {
-      font-size: 56px;
-      font-weight: 800;
-      color: var(--white);
+      position: relative;
+      font-size: 72px;
+      font-weight: 700;
+      color: var(--bg);
       line-height: 1;
+      letter-spacing: -2.5px;
+      font-feature-settings: 'tnum';
     }
     .score-total {
-      font-size: 20px;
-      font-weight: 400;
-      color: var(--gray-400);
+      font-size: 22px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.55);
+      letter-spacing: -0.5px;
     }
     .score-grade {
+      position: relative;
       display: inline-block;
-      background: var(--gold);
-      color: var(--white);
-      font-size: 14px;
-      font-weight: 800;
-      letter-spacing: 1px;
-      padding: 6px 18px;
-      border-radius: 20px;
-      margin-top: 12px;
+      background: var(--gold-pale);
+      color: var(--navy);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      padding: 5px 14px;
+      border-radius: var(--r-pill);
+      margin-top: 16px;
     }
 
     .category-section {
-      background: var(--white);
-      border-radius: var(--radius);
-      padding: 24px;
-      margin-bottom: 16px;
-      box-shadow: var(--shadow);
+      background: var(--bg);
+      border: 1px solid var(--whisper);
+      border-radius: var(--r-card);
+      padding: 22px 24px;
+      margin-bottom: 12px;
+      box-shadow: var(--shadow-card);
     }
     .category-label {
       font-size: 14px;
-      font-weight: 700;
-      color: var(--text);
+      font-weight: 600;
+      color: var(--navy);
       margin-bottom: 4px;
+      letter-spacing: -0.1px;
     }
     .category-score-text {
       font-size: 13px;
-      color: var(--gray-600);
-      margin-bottom: 12px;
+      color: var(--ink-muted);
+      margin-bottom: 14px;
+      font-feature-settings: 'tnum';
     }
     .bar-track {
-      height: 10px;
-      background: var(--gray-200);
-      border-radius: 5px;
+      height: 6px;
+      background: var(--bg-warm);
+      border-radius: var(--r-pill);
       overflow: hidden;
     }
     .bar-fill {
       height: 100%;
-      border-radius: 5px;
-      transition: width 1s ease;
+      border-radius: var(--r-pill);
+      transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .bar-fill.theology { background: var(--navy); }
     .bar-fill.practical { background: var(--gold); }
 
     .results-section {
-      margin-bottom: 28px;
+      margin: 40px 0;
     }
     .results-section-title {
-      font-size: 18px;
-      font-weight: 700;
+      font-size: 20px;
+      font-weight: 500;
       color: var(--navy);
-      margin-bottom: 12px;
+      margin-bottom: 14px;
+      letter-spacing: -0.3px;
     }
     .results-section p {
-      font-size: 15px;
+      font-size: 16px;
       line-height: 1.7;
-      color: var(--text);
+      color: var(--ink);
     }
 
     .priority-card {
-      background: var(--white);
-      border-left: 4px solid var(--gold);
-      border-radius: 0 var(--radius) var(--radius) 0;
-      padding: 16px 20px;
-      margin-bottom: 12px;
-      box-shadow: var(--shadow);
+      position: relative;
+      background: var(--bg);
+      border: 1px solid var(--whisper);
+      border-radius: var(--r-card);
+      padding: 18px 22px 18px 26px;
+      margin-bottom: 10px;
+      transition: box-shadow var(--transition);
+    }
+    .priority-card::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 14px;
+      bottom: 14px;
+      width: 3px;
+      background: var(--gold);
+      border-radius: var(--r-pill);
+    }
+    .priority-card:hover {
+      box-shadow: var(--shadow-card);
     }
     .priority-card strong {
       display: block;
       font-size: 15px;
+      font-weight: 600;
       color: var(--navy);
       margin-bottom: 4px;
+      letter-spacing: -0.1px;
     }
     .priority-card p {
       font-size: 14px;
-      color: var(--text-light);
+      color: var(--ink-muted);
       line-height: 1.6;
       margin: 0;
     }
 
     .cta-section {
       background: var(--navy);
-      border-radius: var(--radius);
-      padding: 32px 24px;
+      border-radius: var(--r-feature);
+      padding: 40px 28px;
       text-align: center;
-      margin-bottom: 12px;
+      margin: 32px 0 16px;
+      box-shadow: var(--shadow-elevated);
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-section::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at bottom right, rgba(200,150,46,0.12), transparent 60%);
+      pointer-events: none;
     }
     .cta-headline {
-      font-size: 22px;
-      font-weight: 800;
-      color: var(--white);
-      margin-bottom: 12px;
+      position: relative;
+      font-size: 26px;
+      font-weight: 300;
+      color: var(--bg);
+      letter-spacing: -0.5px;
+      line-height: 1.2;
+      margin-bottom: 14px;
     }
     .cta-body {
+      position: relative;
       font-size: 15px;
-      color: var(--gray-400);
+      color: rgba(255,255,255,0.72);
       line-height: 1.6;
-      margin-bottom: 24px;
+      margin-bottom: 28px;
+      max-width: 440px;
+      margin-left: auto;
+      margin-right: auto;
     }
-    .cta-or {
-      font-size: 14px;
-      color: var(--gray-400);
-      margin-top: 16px;
-    }
-    .cta-or em {
-      color: var(--gold-light);
-      font-style: normal;
+    .cta-section .btn-primary {
+      position: relative;
     }
 
     .disclosure {
       font-size: 11px;
-      color: var(--gray-600);
-      line-height: 1.6;
-      padding: 24px 0;
-      border-top: 1px solid var(--gray-200);
-      margin-top: 16px;
+      color: var(--ink-muted);
+      line-height: 1.7;
+      padding: 28px 0;
+      border-top: 1px solid var(--whisper);
+      margin-top: 24px;
     }
+    .disclosure a { color: var(--ink-muted); text-decoration: underline; text-decoration-color: var(--whisper); }
 
     /* ── Responsive ── */
-    @media (max-width: 480px) {
-      .sc-screen { padding: 24px 20px 32px; }
-      .landing-headline { font-size: 26px; }
-      .question-text { font-size: 19px; }
-      .score-number { font-size: 48px; }
-      .results-title { font-size: 24px; }
+    @media (max-width: 540px) {
+      .sc-screen { padding: 36px 22px 48px; }
+      .progress-wrap { padding: 18px 22px 0; }
+      .landing-headline { font-size: 32px; letter-spacing: -0.85px; }
+      .landing-subhead { font-size: 17px; }
+      .question-text { font-size: 21px; letter-spacing: -0.35px; }
+      .results-title { font-size: 28px; letter-spacing: -0.65px; }
+      .email-headline { font-size: 26px; }
+      .score-number { font-size: 60px; letter-spacing: -2px; }
+      .score-card { padding: 32px 22px; }
+      .cta-section { padding: 32px 22px; }
+      .cta-headline { font-size: 22px; }
     }
   </style>
 </head>
@@ -567,9 +710,8 @@
 
     <div class="cta-section">
       <h3 class="cta-headline">Want to close the gaps?</h3>
-      <p class="cta-body">A Biblical Wealth Clarity Call is a focused conversation where we review your financial situation through a biblical lens. No sales pitch. No pressure. Just an honest look at where you stand and what it would take to move from confusion to confidence.</p>
-      <a class="btn-primary" href="https://calendly.com/andrew-zoll/clarity-call" target="_blank" rel="noopener" id="bookingLink">Book a Biblical Wealth Clarity Call</a>
-      <p class="cta-or">Or DM me <em>'CLARITY'</em> on LinkedIn and I'll reach out personally.</p>
+      <p class="cta-body">A Stewardship Clarity Call is a focused conversation where we review your financial situation through a biblical lens. We'll look honestly at where you stand and what it would take to move from confusion to confidence.</p>
+      <a class="btn-primary" href="https://calendly.com/andrew-zoll/clarity-call" target="_blank" rel="noopener" id="bookingLink">Book a Stewardship Clarity Call</a>
     </div>
 
     <div style="text-align:center; margin-bottom:24px;">
@@ -716,13 +858,13 @@ const questions = [
 
 const gradeTiers = [
   { min: 41, max: 48, grade: "A", label: "Faithful Steward",
-    meaning: "You\u2019re in a strong position. Your financial life reflects real theological conviction and practical follow-through. That doesn\u2019t mean there\u2019s nothing to refine, but the foundation is solid. Most people in your position benefit from a second set of eyes to confirm their plan is optimized and to catch blind spots they can\u2019t see on their own. If you\u2019d like that kind of review, I\u2019d welcome the conversation." },
+    meaning: "You\u2019re in a strong position. Your financial life reflects real theological conviction and practical follow-through. That doesn\u2019t mean there\u2019s nothing to refine, but the foundation is solid. A second set of eyes often catches blind spots in even strong plans, and confirms the structure is doing what you think it\u2019s doing. If you\u2019d like that kind of review, I\u2019d welcome the conversation." },
   { min: 33, max: 40, grade: "B", label: "Intentional but Incomplete",
-    meaning: "You\u2019ve done meaningful work here. Your convictions are real and your financial life reflects them in significant ways. The gaps that remain tend to be the ones that compound over time: tax inefficiency, estate planning delays, or a giving strategy that hasn\u2019t been stress-tested against your actual financial picture. Closing those gaps is the difference between a good plan and one that actually honors God across every dimension of your wealth." },
+    meaning: "You\u2019ve done meaningful work here. Your convictions are real and your financial life reflects them in significant ways. The gaps that remain tend to be the ones that compound over time: tax inefficiency, estate planning delays, or a giving strategy that hasn\u2019t been stress-tested against your actual financial picture. Closing those gaps is what brings your conviction and your structure into the same conversation." },
   { min: 24, max: 32, grade: "C", label: "Good Intentions, Gaps in Execution",
-    meaning: "You care about stewarding well. That\u2019s clear. The gap is between what you believe and how your financial structure actually operates. This is the most common score I see, and it\u2019s nothing to be ashamed of. It usually means you\u2019ve never had someone sit down with you and connect the theological dots to the financial ones. That\u2019s exactly what a Biblical Wealth Clarity Call is designed to do." },
+    meaning: "You care about stewarding well. That\u2019s clear. The gap is between what you believe and how your financial structure actually operates. This is a common starting point. It usually means you\u2019ve never had someone sit down with you and connect the theological dots to the financial ones. That\u2019s exactly what a Stewardship Clarity Call is designed to do." },
   { min: 16, max: 23, grade: "D", label: "Significant Misalignment",
-    meaning: "There\u2019s a meaningful distance between your faith convictions and your financial reality. That\u2019s not a character judgment. It usually means no one has ever helped you build the bridge between Scripture and strategy. You\u2019re not behind because you\u2019re unfaithful. You\u2019re behind because you haven\u2019t had the right guide. This is fixable, and it\u2019s worth fixing before the gaps create real consequences for your family." },
+    meaning: "There\u2019s a meaningful distance between your faith convictions and your financial reality. That\u2019s not a character judgment. It usually means no one has ever helped you build the bridge between Scripture and strategy. What\u2019s missing isn\u2019t faithfulness. What\u2019s missing is a clear path forward, and that\u2019s something we can build. This is fixable, and it\u2019s worth fixing before the gaps create real consequences for your family." },
   { min: 12, max: 15, grade: "F", label: "Foundation Needed",
     meaning: "Honest answer: your financial life and your faith life are running on separate tracks. That\u2019s a more common starting point than you\u2019d think. The good news is that building a biblical financial foundation doesn\u2019t require starting over. It requires starting with the right conversation. I\u2019d encourage you to book a call and let me show you what this looks like when it\u2019s done well." }
 ];
@@ -737,7 +879,7 @@ const priorityStatements = [
   { title: "Examine your relationship with debt through a biblical lens.", body: "Debt is one of the most discussed financial topics in Scripture, yet most believers have never evaluated their borrowing against biblical principles. Your approach to debt should be intentional and informed by conviction, not just convenience." },
   { title: "Close the gap between your values and your daily financial behavior.", body: "It\u2019s common to hold strong convictions about stewardship while your actual spending, saving, and giving run on autopilot. Aligning the two requires intentional systems, not just good intentions." },
   { title: "Protect your family with a current estate plan.", body: "This is one of the most neglected areas of stewardship. If your spouse would be scrambling, that\u2019s a gap you can close now." },
-  { title: "Review your tax strategy.", body: "Most high-income families overpay in taxes because their tax, investment, and giving strategies aren\u2019t coordinated. A comprehensive review often reveals significant opportunities." },
+  { title: "Review your tax strategy.", body: "It\u2019s common for tax, investment, and giving strategies to operate in silos. A comprehensive review can reveal opportunities to coordinate them." },
   { title: "Align your investments with a real strategy.", body: "Money sitting in accounts without a deliberate structure is money working against you. Your investments should be connected to your goals, timeline, and convictions." },
   { title: "Schedule a financial review.", body: "The fact that you haven\u2019t had a thorough review recently means decisions are being made (or avoided) without full information. This is the single easiest gap to close." }
 ];
@@ -956,15 +1098,40 @@ function downloadPDF() {
   const doc = new jsPDF({ unit: 'pt', format: 'letter' });
   const pageW = doc.internal.pageSize.getWidth();
   const pageH = doc.internal.pageSize.getHeight();
-  const margin = 50;
+  const margin = 56;
   const contentW = pageW - margin * 2;
-  let y = 50;
+  let y = 56;
 
+  // Design tokens (Stripe + Notion hybrid, RWM brand)
   const NAVY = [27, 58, 92];
   const GOLD = [200, 150, 46];
-  const TEXT = [44, 62, 80];
-  const GRAY = [108, 117, 125];
+  const GOLD_HOVER = [181, 132, 40];
+  const GOLD_PALE = [253, 243, 224];
+  const INK = [13, 13, 13];
+  const INK_MUTED = [97, 93, 89];
+  const WHISPER = [228, 226, 224];
+  const BG = [255, 255, 255];
+  const BG_WARM = [246, 245, 244];
   const WHITE = [255, 255, 255];
+
+  function setOpacity(o) { doc.setGState(new doc.GState({ opacity: o })); }
+  function fillPageBg() { doc.setFillColor(...BG_WARM); doc.rect(0, 0, pageW, pageH, 'F'); }
+  function drawCardShadow(x, yPos, w, h, r) {
+    doc.setFillColor(27, 58, 92);
+    setOpacity(0.05);
+    doc.roundedRect(x, yPos + 4, w, h, r, r, 'F');
+    setOpacity(0.04);
+    doc.roundedRect(x - 1, yPos + 7, w + 2, h, r, r, 'F');
+    setOpacity(1);
+  }
+  function drawElevatedShadow(x, yPos, w, h, r) {
+    doc.setFillColor(27, 58, 92);
+    setOpacity(0.10);
+    doc.roundedRect(x - 2, yPos + 10, w + 4, h, r, r, 'F');
+    setOpacity(0.06);
+    doc.roundedRect(x - 5, yPos + 16, w + 10, h, r, r, 'F');
+    setOpacity(1);
+  }
 
   const totalScore = answers.reduce((a, b) => a + b, 0);
   const cat1 = answers.slice(0, 5).reduce((a, b) => a + b, 0);
@@ -975,11 +1142,12 @@ function downloadPDF() {
   let footerDrawn = false;
 
   function checkPage(needed) {
-    const bottomMargin = !footerDrawn ? 80 : 50;
+    const bottomMargin = !footerDrawn ? 90 : 56;
     if (y + needed > pageH - bottomMargin) {
       if (!footerDrawn) { addFooter(); }
       doc.addPage();
-      y = 50;
+      fillPageBg();
+      y = 56;
     }
   }
 
@@ -989,141 +1157,179 @@ function downloadPDF() {
     const disclosure = 'This assessment is for educational purposes only and does not constitute financial, tax, or legal advice. No specific investment recommendations are provided. Securities offered through Kestra Investment Services, LLC (Kestra IS), member FINRA/SIPC. Investment advisory services offered through Kestra Advisory Services, LLC (Kestra AS), an affiliate of Kestra IS. Ryleigh Wealth Management and any other entity listed herein are not affiliated with Kestra IS or Kestra AS. Ryleigh Wealth Management does not offer tax or legal advice. Investor Disclosures: https://www.kestrafinancial.com/disclosures';
     doc.setFont('helvetica', 'normal');
     doc.setFontSize(7);
-    doc.setTextColor(...GRAY);
+    doc.setTextColor(...INK_MUTED);
     const lines = doc.splitTextToSize(disclosure, contentW);
-    const footerY = pageH - 30 - (lines.length * 8);
-    doc.line(margin, footerY - 10, pageW - margin, footerY - 10);
-    doc.text(lines, margin, footerY);
+    const footerY = pageH - 36 - (lines.length * 8.5);
+    doc.setDrawColor(...WHISPER);
+    doc.setLineWidth(0.5);
+    doc.line(margin, footerY - 14, pageW - margin, footerY - 14);
+    doc.text(lines, margin, footerY, { lineHeightFactor: 1.5 });
   }
 
-  // ── Header bar ──
-  doc.setFillColor(...NAVY);
-  doc.rect(0, 0, pageW, 60, 'F');
-  doc.setFont('helvetica', 'bold');
-  doc.setFontSize(14);
-  doc.setTextColor(...WHITE);
-  doc.text('ANDREW ZOLL', pageW / 2, 36, { align: 'center' });
-  y = 85;
+  fillPageBg();
 
-  // ── Title ──
+  // Header band
+  doc.setFillColor(...NAVY);
+  doc.rect(0, 0, pageW, 50, 'F');
   doc.setFont('helvetica', 'normal');
-  doc.setFontSize(10);
-  doc.setTextColor(...GOLD);
-  doc.text('YOUR RESULTS', pageW / 2, y, { align: 'center' });
-  y += 22;
+  doc.setFontSize(11);
+  doc.setTextColor(...WHITE);
+  doc.setCharSpace(2);
+  doc.text('ANDREW ZOLL', pageW / 2, 31, { align: 'center' });
+  doc.setCharSpace(0);
+  y = 96;
+
+  // Overline + headline
   doc.setFont('helvetica', 'bold');
-  doc.setFontSize(22);
+  doc.setFontSize(9);
+  doc.setTextColor(...GOLD_HOVER);
+  doc.setCharSpace(1.5);
+  doc.text('YOUR RESULTS', pageW / 2, y, { align: 'center' });
+  doc.setCharSpace(0);
+  y += 26;
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(28);
   doc.setTextColor(...NAVY);
   doc.text('Biblical Stewardship Score', pageW / 2, y, { align: 'center' });
-  y += 15;
+  y += 18;
   if (firstName) {
     doc.setFont('helvetica', 'normal');
     doc.setFontSize(11);
-    doc.setTextColor(...GRAY);
+    doc.setTextColor(...INK_MUTED);
     doc.text('Prepared for ' + firstName, pageW / 2, y, { align: 'center' });
+    y += 12;
   }
-  y += 30;
+  y += 22;
 
-  // ── Score card ──
+  // Score card
+  const scoreCardH = 116;
+  drawElevatedShadow(margin, y, contentW, scoreCardH, 12);
   doc.setFillColor(...NAVY);
-  doc.roundedRect(margin, y, contentW, 90, 8, 8, 'F');
-  doc.setFont('helvetica', 'bold');
-  doc.setFontSize(42);
-  doc.setTextColor(...WHITE);
-  doc.text(String(totalScore), pageW / 2 - 15, y + 50, { align: 'right' });
-  doc.setFontSize(18);
-  doc.setTextColor(173, 181, 189);
-  doc.text('/48', pageW / 2 + 5, y + 50);
-  // Grade pill
+  doc.roundedRect(margin, y, contentW, scoreCardH, 12, 12, 'F');
   doc.setFillColor(...GOLD);
+  setOpacity(0.10);
+  doc.ellipse(pageW / 2, y + 8, contentW * 0.42, 26, 'F');
+  setOpacity(1);
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(56);
+  doc.setTextColor(...WHITE);
+  doc.text(String(totalScore), pageW / 2 - 18, y + 64, { align: 'right' });
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(22);
+  doc.setTextColor(...WHITE);
+  setOpacity(0.55);
+  doc.text('/48', pageW / 2 + 6, y + 64);
+  setOpacity(1);
+  // Grade pill: gold-pale bg, navy text
   const gradeText = tier.grade + ' \u2014 ' + tier.label;
-  const gradeW = doc.getTextWidth(gradeText) * 0.55 + 24;
-  doc.roundedRect(pageW / 2 - gradeW / 2, y + 60, gradeW, 22, 11, 11, 'F');
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(9);
-  doc.setTextColor(...WHITE);
-  doc.text(gradeText, pageW / 2, y + 74, { align: 'center' });
-  y += 110;
+  const gradePillW = doc.getTextWidth(gradeText) + 24;
+  const gradePillX = pageW / 2 - gradePillW / 2;
+  const gradePillY = y + 80;
+  doc.setFillColor(...GOLD_PALE);
+  doc.roundedRect(gradePillX, gradePillY, gradePillW, 22, 11, 11, 'F');
+  doc.setTextColor(...NAVY);
+  doc.text(gradeText, pageW / 2, gradePillY + 14, { align: 'center' });
+  y += scoreCardH + 28;
 
-  // ── Category bars ──
+  // Category bars
   function drawCategoryBar(label, score, max, color, yPos) {
+    const cardH = 60;
+    drawCardShadow(margin, yPos, contentW, cardH, 10);
+    doc.setFillColor(...BG);
+    doc.setDrawColor(...WHISPER);
+    doc.setLineWidth(0.6);
+    doc.roundedRect(margin, yPos, contentW, cardH, 10, 10, 'FD');
     doc.setFont('helvetica', 'bold');
     doc.setFontSize(11);
-    doc.setTextColor(...TEXT);
-    doc.text(label, margin, yPos);
+    doc.setTextColor(...NAVY);
+    doc.text(label, margin + 18, yPos + 24);
     doc.setFont('helvetica', 'normal');
     doc.setFontSize(10);
-    doc.setTextColor(...GRAY);
-    doc.text(score + '/' + max, margin + contentW, yPos, { align: 'right' });
-    yPos += 10;
-    // Track
-    doc.setFillColor(233, 236, 239);
-    doc.roundedRect(margin, yPos, contentW, 8, 4, 4, 'F');
-    // Fill
+    doc.setTextColor(...INK_MUTED);
+    doc.text(score + '/' + max, pageW - margin - 18, yPos + 24, { align: 'right' });
+    const trackY = yPos + 38;
+    const trackX = margin + 18;
+    const trackW = contentW - 36;
+    doc.setFillColor(...BG_WARM);
+    doc.roundedRect(trackX, trackY, trackW, 5, 2.5, 2.5, 'F');
     doc.setFillColor(...color);
-    const fillW = Math.max(8, (score / max) * contentW);
-    doc.roundedRect(margin, yPos, fillW, 8, 4, 4, 'F');
-    return yPos + 22;
+    const fillW = Math.max(5, (score / max) * trackW);
+    doc.roundedRect(trackX, trackY, fillW, 5, 2.5, 2.5, 'F');
+    return yPos + cardH + 10;
   }
 
   y = drawCategoryBar('Theological Foundation', cat1, 20, NAVY, y);
   y = drawCategoryBar('Practical Alignment', cat2, 28, GOLD, y);
-  y += 10;
+  y += 22;
 
-  // ── What Your Score Means ──
-  checkPage(120);
+  // What Your Score Means
+  checkPage(140);
   doc.setFont('helvetica', 'bold');
-  doc.setFontSize(14);
-  doc.setTextColor(...NAVY);
-  doc.text('What Your Score Means', margin, y);
-  y += 18;
-  doc.setFont('helvetica', 'normal');
-  doc.setFontSize(10);
-  doc.setTextColor(...TEXT);
-  const meaningLines = doc.splitTextToSize(tier.meaning, contentW);
-  doc.text(meaningLines, margin, y);
-  y += meaningLines.length * 14 + 20;
-
-  // ── Priorities ──
-  checkPage(40);
-  doc.setFont('helvetica', 'bold');
-  doc.setFontSize(14);
-  doc.setTextColor(...NAVY);
-  doc.text('Your Top Priorities', margin, y);
+  doc.setFontSize(9);
+  doc.setTextColor(...GOLD_HOVER);
+  doc.setCharSpace(1.5);
+  doc.text('WHAT YOUR SCORE MEANS', margin, y);
+  doc.setCharSpace(0);
   y += 20;
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(11);
+  doc.setTextColor(...INK);
+  const meaningLines = doc.splitTextToSize(tier.meaning, contentW);
+  doc.text(meaningLines, margin, y, { lineHeightFactor: 1.55 });
+  y += meaningLines.length * 16 + 30;
+
+  // Priorities
+  checkPage(60);
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(9);
+  doc.setTextColor(...GOLD_HOVER);
+  doc.setCharSpace(1.5);
+  doc.text('YOUR TOP PRIORITIES', margin, y);
+  doc.setCharSpace(0);
+  y += 22;
 
   const lowScores = [];
   answers.forEach((score, i) => { if (score <= 2) lowScores.push({ index: i, score }); });
 
   if (lowScores.length === 0) {
     doc.setFont('helvetica', 'normal');
-    doc.setFontSize(10);
-    doc.setTextColor(...TEXT);
-    doc.text('Your foundation is strong. A comprehensive review would help you optimize what you\u2019ve already built.', margin, y);
-    y += 24;
+    doc.setFontSize(11);
+    doc.setTextColor(...INK);
+    const strongLines = doc.splitTextToSize('Your foundation is strong. A comprehensive review would help you optimize what you\u2019ve already built.', contentW);
+    doc.text(strongLines, margin, y, { lineHeightFactor: 1.55 });
+    y += strongLines.length * 16 + 12;
   } else {
     lowScores.sort((a, b) => a.score - b.score);
     const topP = lowScores.slice(0, 3);
     topP.forEach(({ index }) => {
       const p = priorityStatements[index];
-      checkPage(60);
-      // Gold left border
-      doc.setFillColor(...GOLD);
-      doc.rect(margin, y - 2, 3, 40, 'F');
-      doc.setFont('helvetica', 'bold');
-      doc.setFontSize(10);
-      doc.setTextColor(...NAVY);
-      doc.text(p.title, margin + 12, y + 10);
       doc.setFont('helvetica', 'normal');
-      doc.setFontSize(9);
-      doc.setTextColor(...GRAY);
-      const bodyLines = doc.splitTextToSize(p.body, contentW - 16);
-      doc.text(bodyLines, margin + 12, y + 22);
-      y += 24 + bodyLines.length * 12 + 12;
+      doc.setFontSize(10);
+      const bodyLines = doc.splitTextToSize(p.body, contentW - 40);
+      const cardH = 22 + bodyLines.length * 13 + 18;
+      checkPage(cardH + 12);
+      doc.setFillColor(...BG);
+      doc.setDrawColor(...WHISPER);
+      doc.setLineWidth(0.6);
+      doc.roundedRect(margin, y, contentW, cardH, 10, 10, 'FD');
+      doc.setFillColor(...GOLD);
+      doc.roundedRect(margin + 12, y + 14, 2.5, cardH - 28, 1.25, 1.25, 'F');
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(11);
+      doc.setTextColor(...NAVY);
+      doc.text(p.title, margin + 24, y + 22);
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(10);
+      doc.setTextColor(...INK_MUTED);
+      doc.text(bodyLines, margin + 24, y + 38, { lineHeightFactor: 1.5 });
+      y += cardH + 10;
     });
   }
+  y += 12;
 
-  // ── Your Answers: Biblical Perspective ──
+  // Biblical context for each question
   const biblicalContext = [
     { why: "Psalm 119:105 says, \u201CYour word is a lamp to my feet and a light to my path.\u201D When Scripture shapes your financial worldview rather than culture or opinion, your decisions are anchored to something that doesn\u2019t shift with markets or trends." },
     { why: "Psalm 24:1 declares, \u201CThe earth is the LORD\u2019s, and everything in it.\u201D Recognizing God\u2019s ownership changes everything downstream \u2014 how you plan, spend, give, and hold your wealth. Stewardship, not ownership, is the biblical posture." },
@@ -1141,106 +1347,138 @@ function downloadPDF() {
 
   addFooter();
   doc.addPage();
-  y = 50;
+  fillPageBg();
+  y = 56;
   doc.setFont('helvetica', 'bold');
-  doc.setFontSize(14);
+  doc.setFontSize(9);
+  doc.setTextColor(...GOLD_HOVER);
+  doc.setCharSpace(1.5);
+  doc.text('YOUR ANSWERS', margin, y);
+  doc.setCharSpace(0);
+  y += 14;
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(22);
   doc.setTextColor(...NAVY);
-  doc.text('Your Answers', margin, y);
-  y += 18;
+  doc.text('Question by Question', margin, y + 12);
+  y += 38;
 
   questions.forEach((q, i) => {
     const answerVal = answers[i];
     const chosenText = q.options[answerVal - 1];
     const scoreLabel = answerVal <= 2 ? 'Area for Growth' : (answerVal === 3 ? 'On Track' : 'Strong');
-    const scoreColor = answerVal <= 2 ? [214, 48, 49] : (answerVal === 3 ? GOLD : [39, 174, 96]);
+    const scoreColor = answerVal <= 2 ? [221, 91, 0] : (answerVal === 3 ? GOLD : [21, 142, 61]);
+    const scoreBg = answerVal <= 2 ? [253, 234, 220] : (answerVal === 3 ? GOLD_PALE : [220, 244, 226]);
 
-    // Check if we need a new page (estimate ~90pt per question block)
-    checkPage(100);
+    // Pre-measure
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(11);
+    const qLines = doc.splitTextToSize(q.text, contentW - 32);
+    doc.setFontSize(10);
+    const ansLines = doc.splitTextToSize(chosenText, contentW - 32);
+    doc.setFontSize(9);
+    const ctxLines = doc.splitTextToSize(biblicalContext[i].why, contentW - 32);
+    const cardH = 32 + qLines.length * 14 + 18 + ansLines.length * 13 + 14 + ctxLines.length * 13 + 22;
+    checkPage(cardH + 12);
 
-    // Category + Question number
+    // Whisper-bordered card
+    doc.setFillColor(...BG);
+    doc.setDrawColor(...WHISPER);
+    doc.setLineWidth(0.6);
+    doc.roundedRect(margin, y, contentW, cardH, 10, 10, 'FD');
+
+    // Category + Q#
     doc.setFont('helvetica', 'bold');
     doc.setFontSize(8);
-    doc.setTextColor(...GOLD);
-    doc.text(q.category.toUpperCase() + '  \u2022  QUESTION ' + (i + 1), margin, y);
-    y += 14;
+    doc.setTextColor(...GOLD_HOVER);
+    doc.setCharSpace(1);
+    doc.text(q.category.toUpperCase() + '   Q' + (i + 1), margin + 16, y + 18);
+    doc.setCharSpace(0);
+
+    // Score pill (top right)
+    const scoreText = scoreLabel + '  ' + answerVal + '/4';
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(7.5);
+    const sw = doc.getTextWidth(scoreText) + 14;
+    const sx = pageW - margin - 16 - sw;
+    const sy = y + 8;
+    doc.setFillColor(...scoreBg);
+    doc.roundedRect(sx, sy, sw, 14, 7, 7, 'F');
+    doc.setTextColor(...scoreColor);
+    doc.text(scoreText, sx + sw / 2, sy + 9.5, { align: 'center' });
 
     // Question text
+    let cy = y + 38;
     doc.setFont('helvetica', 'bold');
-    doc.setFontSize(10);
+    doc.setFontSize(11);
     doc.setTextColor(...NAVY);
-    const qLines = doc.splitTextToSize(q.text, contentW);
-    doc.text(qLines, margin, y);
-    y += qLines.length * 13 + 6;
+    doc.text(qLines, margin + 16, cy);
+    cy += qLines.length * 14 + 6;
 
-    // Answer + score indicator
-    doc.setFont('helvetica', 'normal');
-    doc.setFontSize(9);
-    doc.setTextColor(...TEXT);
-    doc.text('Your answer:', margin, y);
+    // YOUR ANSWER label
     doc.setFont('helvetica', 'bold');
-    doc.setFontSize(8);
-    doc.setTextColor(...scoreColor);
-    doc.text(scoreLabel + ' (' + answerVal + '/4)', margin + contentW, y, { align: 'right' });
-    y += 12;
+    doc.setFontSize(7.5);
+    doc.setTextColor(...INK_MUTED);
+    doc.setCharSpace(1);
+    doc.text('YOUR ANSWER', margin + 16, cy + 4);
+    doc.setCharSpace(0);
+    cy += 14;
+    // Answer text
     doc.setFont('helvetica', 'normal');
-    doc.setFontSize(9);
-    doc.setTextColor(...GRAY);
-    const ansLines = doc.splitTextToSize(chosenText, contentW - 8);
-    doc.text(ansLines, margin + 8, y);
-    y += ansLines.length * 11 + 6;
+    doc.setFontSize(10);
+    doc.setTextColor(...INK);
+    doc.text(ansLines, margin + 16, cy, { lineHeightFactor: 1.45 });
+    cy += ansLines.length * 13 + 8;
 
     // Biblical context
     doc.setFont('helvetica', 'italic');
-    doc.setFontSize(8.5);
-    doc.setTextColor(90, 108, 125);
-    const ctxLines = doc.splitTextToSize(biblicalContext[i].why, contentW - 8);
-    doc.text(ctxLines, margin + 8, y);
-    y += ctxLines.length * 11 + 16;
+    doc.setFontSize(9);
+    doc.setTextColor(90, 100, 115);
+    doc.text(ctxLines, margin + 16, cy, { lineHeightFactor: 1.5 });
 
-    // Subtle divider between questions
-    if (i < questions.length - 1) {
-      doc.setDrawColor(222, 226, 230);
-      doc.line(margin + 20, y - 8, pageW - margin - 20, y - 8);
-    }
+    y += cardH + 10;
   });
 
-  y += 10;
+  y += 12;
 
-  // ── CTA ──
-  checkPage(120);
-  y += 10;
+  // CTA card — elevated navy with gold-pale accent
+  const ctaH = 140;
+  checkPage(ctaH + 30);
+  y += 6;
+  drawElevatedShadow(margin, y, contentW, ctaH, 14);
   doc.setFillColor(...NAVY);
-  doc.roundedRect(margin, y, contentW, 126, 8, 8, 'F');
-  doc.setFont('helvetica', 'bold');
-  doc.setFontSize(14);
-  doc.setTextColor(...WHITE);
-  doc.text('Want to close the gaps?', pageW / 2, y + 24, { align: 'center' });
-  doc.setFont('helvetica', 'normal');
-  doc.setFontSize(9);
-  doc.setTextColor(173, 181, 189);
-  const ctaLines = doc.splitTextToSize('A Biblical Wealth Clarity Call is a focused conversation where we review your financial situation through a biblical lens. No sales pitch. No pressure.', contentW - 40);
-  doc.text(ctaLines, pageW / 2, y + 40, { align: 'center' });
-
-  // Clickable button
-  const btnW = 220;
-  const btnH = 28;
-  const btnX = pageW / 2 - btnW / 2;
-  const btnY = y + 40 + ctaLines.length * 11 + 8;
+  doc.roundedRect(margin, y, contentW, ctaH, 14, 14, 'F');
   doc.setFillColor(...GOLD);
-  doc.roundedRect(btnX, btnY, btnW, btnH, 14, 14, 'F');
+  setOpacity(0.10);
+  doc.ellipse(pageW - margin - 50, y + ctaH - 12, 90, 32, 'F');
+  setOpacity(1);
+  // Headline
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(20);
+  doc.setTextColor(...WHITE);
+  doc.text('Want to close the gaps?', pageW / 2, y + 36, { align: 'center' });
+  // Body
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(10.5);
+  doc.setTextColor(...WHITE);
+  setOpacity(0.72);
+  const ctaLines = doc.splitTextToSize('A Stewardship Clarity Call is a focused conversation where we review your financial situation through a biblical lens.', contentW - 80);
+  doc.text(ctaLines, pageW / 2, y + 56, { align: 'center', lineHeightFactor: 1.5 });
+  setOpacity(1);
+
+  // Button
+  const btnW = 250;
+  const btnH = 34;
+  const btnX = pageW / 2 - btnW / 2;
+  const btnY = y + 56 + ctaLines.length * 14 + 10;
+  doc.setFillColor(...GOLD);
+  doc.roundedRect(btnX, btnY, btnW, btnH, 4, 4, 'F');
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(10);
   doc.setTextColor(...WHITE);
-  doc.textWithLink('Book a Biblical Wealth Clarity Call', pageW / 2, btnY + 18, { align: 'center', url: 'https://calendly.com/andrew-zoll/clarity-call' });
-  // Make the entire button area clickable
+  doc.textWithLink('Book a Stewardship Clarity Call', pageW / 2, btnY + 21, { align: 'center', url: 'https://calendly.com/andrew-zoll/clarity-call' });
   doc.link(btnX, btnY, btnW, btnH, { url: 'https://calendly.com/andrew-zoll/clarity-call' });
-  // Link text below button
-  doc.setFont('helvetica', 'normal');
-  doc.setFontSize(8);
-  doc.setTextColor(...GOLD);
-  doc.textWithLink('calendly.com/andrew-zoll/clarity-call', pageW / 2, btnY + btnH + 14, { align: 'center', url: 'https://calendly.com/andrew-zoll/clarity-call' });
 
-  // ── Footer on last page ──
+  // Footer on last page
   addFooter();
 
   doc.save('Biblical-Stewardship-Scorecard.pdf');
