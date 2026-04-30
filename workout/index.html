@@ -476,6 +476,8 @@ function Workout({ session }) {
     return isNaN(v) ? 0 : Math.max(0, Math.min(5, v));
   });
   const [setLogs, setSetLogs] = useState({});
+  const [warmupLog, setWarmupLog] = useState({ done: false, completedAt: null });
+  const [finisherLog, setFinisherLog] = useState({ done: false, completedAt: null });
   const [selLift, setSelLift] = useState(TRACKABLE_LIFTS[0]);
   const [progMetric, setProgMetric] = useState("1rm");
   const [loading, setLoading] = useState(true);
@@ -501,12 +503,12 @@ function Workout({ session }) {
   // Hydrate today's per-set logs from existing session, or seed empty per the plan.
   useEffect(() => {
     const next = {};
+    const saved = (todaySess && todaySess.exercises) || [];
     cp.exercises.forEach((ex, i) => {
-      const existing = todaySess && todaySess.exercises && todaySess.exercises[i];
-      if (existing && existing.name === ex.name) {
+      const existing = saved.find(e => e && e.name === ex.name);
+      if (existing) {
         const logs = readSetLogs(existing);
         const target = parseInt(ex.sets, 10) || logs.length || 1;
-        // Pad if plan now has more sets than the saved record.
         next[i] = logs.length >= target
           ? logs
           : [...logs, ...Array.from({ length: target - logs.length }, () => ({
@@ -520,6 +522,10 @@ function Workout({ session }) {
       }
     });
     setSetLogs(next);
+    const wm = saved.find(e => e && e.name === "__warmup__");
+    const fn = saved.find(e => e && e.name === "__finisher__");
+    setWarmupLog(wm ? { done: !!wm.done, completedAt: wm.completedAt || null } : { done: false, completedAt: null });
+    setFinisherLog(fn ? { done: !!fn.done, completedAt: fn.completedAt || null } : { done: false, completedAt: null });
   }, [cp.day, todaySess && todaySess.date]); // eslint-disable-line
 
   const isExerciseDone = (i) => {
@@ -531,22 +537,27 @@ function Workout({ session }) {
   const streak = getStreak(sessions, proteinLog);
   const progData = buildProgressionData(sessions, selLift, progMetric);
 
-  // Persist session whenever per-set logs change
+  // Persist session whenever per-set logs (or warmup/finisher) change
   const persistTimer = useRef(null);
   useEffect(() => {
     if (loading) return;
-    const dirty = Object.values(setLogs).some(arr =>
+    const setsTouched = Object.values(setLogs).some(arr =>
       Array.isArray(arr) && arr.some(s => s && (s.status !== "pending" || (s.reps != null && s.reps !== "") || (s.weight != null && s.weight !== "")))
     );
+    const dirty = setsTouched || warmupLog.done || finisherLog.done;
     if (!dirty && !todaySess) return;
     clearTimeout(persistTimer.current);
     persistTimer.current = setTimeout(() => {
       const next = {
         date: today, day: cp.day, label: cp.label, intensity: cp.intensity,
-        exercises: cp.exercises.map((ex, i) => ({
-          name: ex.name, sets: ex.sets, reps: ex.reps,
-          setLogs: setLogs[i] || [],
-        })),
+        exercises: [
+          ...cp.exercises.map((ex, i) => ({
+            name: ex.name, sets: ex.sets, reps: ex.reps,
+            setLogs: setLogs[i] || [],
+          })),
+          { name: "__warmup__", done: warmupLog.done, completedAt: warmupLog.completedAt },
+          { name: "__finisher__", done: finisherLog.done, completedAt: finisherLog.completedAt },
+        ],
       };
       upsertSession(userId, next);
       setSessions(prev => {
@@ -555,7 +566,7 @@ function Workout({ session }) {
       });
     }, 500);
     return () => clearTimeout(persistTimer.current);
-  }, [setLogs]); // eslint-disable-line
+  }, [setLogs, warmupLog, finisherLog]); // eslint-disable-line
 
   function updateSet(exIdx, setIdx, updates) {
     setSetLogs(prev => {
@@ -588,6 +599,16 @@ function Workout({ session }) {
         completedAt: null,
       } : s) };
     });
+  }
+  function toggleWarmup() {
+    setWarmupLog(p => p.done
+      ? { done: false, completedAt: null }
+      : { done: true, completedAt: new Date().toISOString() });
+  }
+  function toggleFinisher() {
+    setFinisherLog(p => p.done
+      ? { done: false, completedAt: null }
+      : { done: true, completedAt: new Date().toISOString() });
   }
   function togglePro(d) {
     const next = !proteinLog[d];
@@ -683,7 +704,15 @@ function Workout({ session }) {
 
             <div style={{ ...card, display:"flex", gap:14, alignItems:"center", marginBottom:8 }}>
               <div style={{ fontSize:10, color:C.fgSubtle, letterSpacing:"0.12em", textTransform:"uppercase", minWidth:55, flexShrink:0, fontWeight:600 }}>Warmup</div>
-              <div style={{ fontSize:14, color:C.fgMuted }}>{cp.warmup}</div>
+              <div style={{ fontSize:14, color:C.fgMuted, flex:1 }}>{cp.warmup}</div>
+              <div onClick={toggleWarmup}
+                style={{ width:28, height:28, border:`1px solid ${warmupLog.done?C.greenLight:C.border}`,
+                  borderRadius:5, background: warmupLog.done?C.greenSoft:"transparent",
+                  cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"center",
+                  transition:"all 150ms", flexShrink:0 }}
+                title={warmupLog.done && warmupLog.completedAt ? `Completed ${new Date(warmupLog.completedAt).toLocaleString()}` : "Mark complete"}>
+                {warmupLog.done && <div style={{ fontSize:14, color:C.greenLight, lineHeight:1 }}>✓</div>}
+              </div>
             </div>
 
             <div style={{ border:`1px solid ${C.borderSoft}`, borderRadius:8, overflow:"hidden", marginBottom:8 }}>
@@ -767,7 +796,15 @@ function Workout({ session }) {
 
             <div style={{ ...card, display:"flex", gap:14, alignItems:"center" }}>
               <div style={{ fontSize:10, color:C.fgSubtle, letterSpacing:"0.12em", textTransform:"uppercase", minWidth:55, flexShrink:0, fontWeight:600 }}>Finisher</div>
-              <div style={{ fontSize:14, color:C.fgMuted }}>{cp.finisher}</div>
+              <div style={{ fontSize:14, color:C.fgMuted, flex:1 }}>{cp.finisher}</div>
+              <div onClick={toggleFinisher}
+                style={{ width:28, height:28, border:`1px solid ${finisherLog.done?C.greenLight:C.border}`,
+                  borderRadius:5, background: finisherLog.done?C.greenSoft:"transparent",
+                  cursor:"pointer", display:"flex", alignItems:"center", justifyContent:"center",
+                  transition:"all 150ms", flexShrink:0 }}
+                title={finisherLog.done && finisherLog.completedAt ? `Completed ${new Date(finisherLog.completedAt).toLocaleString()}` : "Mark complete"}>
+                {finisherLog.done && <div style={{ fontSize:14, color:C.greenLight, lineHeight:1 }}>✓</div>}
+              </div>
             </div>
 
             <div style={{ ...card, marginTop:14, display:"flex", alignItems:"center", justifyContent:"space-between" }}>
@@ -894,7 +931,10 @@ function Workout({ session }) {
                     const iC = IC[s.intensity]||C.fgSubtle;
                     const iB2 = IB[s.intensity]||"transparent";
                     const phit = !!proteinLog[s.date];
+                    const wm = s.exercises.find(e => e && e.name === "__warmup__");
+                    const fn = s.exercises.find(e => e && e.name === "__finisher__");
                     const tracked = s.exercises
+                      .filter(e => e && !String(e.name || "").startsWith("__"))
                       .map(e => { const logs = readSetLogs(e); return { ex: e, logs, cs: numericCompletedSets(logs) }; })
                       .filter(t => t.cs.length > 0);
                     const sessionVolume = tracked.reduce((acc, t) => acc + computeVolume(t.logs), 0);
@@ -905,6 +945,8 @@ function Workout({ session }) {
                           <div style={{ fontSize:16, color:C.fg, fontWeight:600, letterSpacing:"-0.01em" }}>{s.label}</div>
                           <Pill color={iC} bg={iB2}>{s.intensity}</Pill>
                           {phit && <Pill color={C.greenLight} bg={C.greenSoft}>Protein ✓</Pill>}
+                          {wm && wm.done && <Pill color={C.navyAccent} bg={C.navyAccentSoft}>Warmup ✓</Pill>}
+                          {fn && fn.done && <Pill color={C.navyAccent} bg={C.navyAccentSoft}>Finisher ✓</Pill>}
                           {sessionVolume > 0 && (
                             <div style={{ marginLeft:"auto", fontSize:11, color:C.fgFaint, fontWeight:500 }}>
                               Volume {Math.round(sessionVolume).toLocaleString()} lbs
