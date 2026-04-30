@@ -1,0 +1,1541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Biblical Stewardship Scorecard | Andrew Zoll</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      /* Brand (RWM) */
+      --navy: #1B3A5C;
+      --navy-deep: #132942;
+      --gold: #C8962E;
+      --gold-hover: #B58428;
+      --gold-pale: #FDF3E0;
+
+      /* Notion warmth */
+      --bg: #ffffff;
+      --bg-warm: #f6f5f4;
+      --ink: rgba(0,0,0,0.95);
+      --ink-muted: #615d59;
+      --ink-faint: #a39e98;
+      --whisper: rgba(0,0,0,0.10);
+
+      /* Stripe-tinted shadows (using navy as the brand-tint) */
+      --shadow-card:
+        rgba(27,58,92,0.04) 0px 4px 18px,
+        rgba(27,58,92,0.027) 0px 2.025px 7.846875px,
+        rgba(27,58,92,0.02) 0px 0.8px 2.925px,
+        rgba(27,58,92,0.01) 0px 0.175px 1.040625px;
+      --shadow-elevated:
+        rgba(27,58,92,0.25) 0px 30px 45px -30px,
+        rgba(0,0,0,0.10) 0px 18px 36px -18px;
+
+      /* Radii */
+      --r-button: 4px;
+      --r-input: 4px;
+      --r-card: 12px;
+      --r-feature: 16px;
+      --r-pill: 9999px;
+
+      --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
+      font-feature-settings: 'cv11', 'ss01', 'cv02';
+      color: var(--ink);
+      background: var(--bg-warm);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+    }
+
+    .scorecard-container {
+      max-width: 680px;
+      margin: 0 auto;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background: var(--bg);
+    }
+
+    /* ── Header ── */
+    .sc-header {
+      background: var(--navy);
+      padding: 18px 24px;
+      text-align: center;
+    }
+    .sc-header-logo {
+      color: var(--bg);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      opacity: 0.92;
+    }
+
+    /* ── Screens ── */
+    .sc-screen {
+      display: none;
+      flex: 1;
+      padding: 56px 32px 64px;
+      animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .sc-screen.active { display: flex; flex-direction: column; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Landing ── */
+    .landing-badge {
+      display: inline-block;
+      background: var(--gold-pale);
+      color: var(--gold-hover);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 1.25px;
+      text-transform: uppercase;
+      padding: 5px 12px;
+      border-radius: var(--r-pill);
+      margin-bottom: 28px;
+      align-self: flex-start;
+    }
+    .landing-headline {
+      font-size: 44px;
+      font-weight: 300;
+      color: var(--navy);
+      line-height: 1.05;
+      letter-spacing: -1.2px;
+      margin-bottom: 16px;
+    }
+    .landing-subhead {
+      font-size: 19px;
+      font-weight: 400;
+      color: var(--ink-muted);
+      margin-bottom: 36px;
+      line-height: 1.45;
+      letter-spacing: -0.2px;
+    }
+    .landing-body {
+      font-size: 16px;
+      color: var(--ink);
+      margin-bottom: 18px;
+      line-height: 1.65;
+    }
+    .landing-body strong {
+      color: var(--navy);
+      font-weight: 600;
+    }
+    .landing-cta-wrap {
+      margin-top: 36px;
+      text-align: center;
+    }
+
+    /* ── Buttons ── */
+    .btn-primary {
+      display: inline-block;
+      background: var(--gold);
+      color: var(--bg);
+      font-family: inherit;
+      font-size: 16px;
+      font-weight: 500;
+      padding: 14px 32px;
+      border: 1px solid transparent;
+      border-radius: var(--r-button);
+      cursor: pointer;
+      transition: background var(--transition), box-shadow var(--transition), transform 0.1s ease;
+      text-decoration: none;
+      width: 100%;
+      max-width: 380px;
+      letter-spacing: -0.1px;
+      box-shadow:
+        rgba(27,58,92,0.15) 0px 4px 12px -2px,
+        rgba(0,0,0,0.06) 0px 2px 4px -1px;
+    }
+    .btn-primary:hover {
+      background: var(--gold-hover);
+      box-shadow:
+        rgba(27,58,92,0.25) 0px 8px 20px -4px,
+        rgba(0,0,0,0.08) 0px 4px 8px -2px;
+    }
+    .btn-primary:active { transform: scale(0.98); }
+    .btn-primary:focus-visible {
+      outline: 2px solid var(--gold);
+      outline-offset: 2px;
+    }
+    .btn-primary:disabled {
+      background: var(--ink-faint);
+      box-shadow: none;
+      cursor: not-allowed;
+    }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: none;
+      border: none;
+      color: var(--ink-muted);
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      padding: 8px 0;
+      transition: color var(--transition);
+    }
+    .btn-secondary:hover { color: var(--navy); }
+    .btn-secondary svg { width: 16px; height: 16px; }
+
+    /* ── Progress Bar ── */
+    .progress-wrap {
+      padding: 24px 32px 0;
+      background: var(--bg);
+    }
+    .progress-label {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--ink-muted);
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+    .progress-bar-track {
+      height: 4px;
+      background: var(--bg-warm);
+      border-radius: var(--r-pill);
+      overflow: hidden;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      background: var(--gold);
+      border-radius: var(--r-pill);
+      transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* ── Question Screen ── */
+    .question-category {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 1.25px;
+      text-transform: uppercase;
+      color: var(--gold-hover);
+      margin-bottom: 14px;
+    }
+    .question-text {
+      font-size: 26px;
+      font-weight: 400;
+      color: var(--navy);
+      line-height: 1.30;
+      letter-spacing: -0.5px;
+      margin-bottom: 32px;
+    }
+    .answer-options { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .answer-option {
+      position: relative;
+      display: block;
+      width: 100%;
+      text-align: left;
+      background: var(--bg);
+      border: 1px solid var(--whisper);
+      border-radius: 8px;
+      padding: 16px 20px;
+      font-family: inherit;
+      font-size: 15px;
+      line-height: 1.5;
+      color: var(--ink);
+      cursor: pointer;
+      transition:
+        border-color var(--transition),
+        background var(--transition),
+        box-shadow var(--transition);
+    }
+    .answer-option:hover {
+      background: var(--bg-warm);
+      border-color: rgba(0,0,0,0.18);
+    }
+    .answer-option.selected {
+      border-color: var(--gold);
+      background: var(--gold-pale);
+      box-shadow:
+        rgba(200,150,46,0.12) 0px 4px 12px -2px,
+        rgba(200,150,46,0.20) 0px 0px 0px 1px;
+      font-weight: 500;
+      color: var(--navy);
+    }
+    .answer-option.selected::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 8px;
+      bottom: 8px;
+      width: 3px;
+      background: var(--gold);
+      border-radius: var(--r-pill);
+    }
+    .answer-option:focus-visible {
+      outline: 2px solid var(--gold);
+      outline-offset: 2px;
+    }
+
+    .question-nav {
+      margin-top: auto;
+      padding-top: 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    #btnNext {
+      width: auto !important;
+      max-width: none !important;
+      padding: 12px 28px !important;
+      font-size: 15px !important;
+    }
+
+    /* ── Email Gate ── */
+    .email-gate-icon {
+      width: 56px;
+      height: 56px;
+      background: var(--gold-pale);
+      border-radius: var(--r-pill);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 28px;
+      border: 1px solid rgba(200,150,46,0.20);
+    }
+    .email-gate-icon svg { width: 24px; height: 24px; color: var(--gold-hover); }
+    .email-headline {
+      font-size: 32px;
+      font-weight: 300;
+      color: var(--navy);
+      text-align: center;
+      letter-spacing: -0.7px;
+      line-height: 1.15;
+      margin-bottom: 14px;
+    }
+    .email-body {
+      font-size: 15px;
+      color: var(--ink-muted);
+      text-align: center;
+      margin-bottom: 36px;
+      line-height: 1.6;
+      max-width: 480px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .form-group {
+      margin-bottom: 18px;
+    }
+    .form-label {
+      display: block;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--ink);
+      margin-bottom: 6px;
+      letter-spacing: -0.1px;
+    }
+    .form-input {
+      width: 100%;
+      padding: 12px 14px;
+      font-family: inherit;
+      font-size: 15px;
+      border: 1px solid var(--whisper);
+      border-radius: var(--r-input);
+      outline: none;
+      transition: border-color var(--transition), box-shadow var(--transition);
+      color: var(--ink);
+      background: var(--bg);
+    }
+    .form-input:focus {
+      border-color: var(--gold);
+      box-shadow: rgba(200,150,46,0.20) 0px 0px 0px 3px;
+    }
+    .form-input::placeholder { color: var(--ink-faint); }
+    .form-error {
+      font-size: 13px;
+      color: #C0392B;
+      margin-top: 6px;
+      display: none;
+    }
+    .email-fine-print {
+      font-size: 12px;
+      color: var(--ink-muted);
+      text-align: center;
+      margin-top: 20px;
+      line-height: 1.6;
+      max-width: 460px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .email-submit-wrap {
+      margin-top: 28px;
+      text-align: center;
+    }
+
+    /* ── Results ── */
+    .results-header {
+      text-align: center;
+      margin-bottom: 36px;
+    }
+    .results-overline {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--gold-hover);
+      margin-bottom: 10px;
+    }
+    .results-title {
+      font-size: 36px;
+      font-weight: 300;
+      color: var(--navy);
+      letter-spacing: -0.9px;
+      line-height: 1.1;
+    }
+
+    .score-card {
+      background: var(--navy);
+      border-radius: var(--r-feature);
+      padding: 40px 28px;
+      text-align: center;
+      margin-bottom: 32px;
+      box-shadow: var(--shadow-elevated);
+      position: relative;
+      overflow: hidden;
+    }
+    .score-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at top, rgba(200,150,46,0.10), transparent 60%);
+      pointer-events: none;
+    }
+    .score-number {
+      position: relative;
+      font-size: 72px;
+      font-weight: 700;
+      color: var(--bg);
+      line-height: 1;
+      letter-spacing: -2.5px;
+      font-feature-settings: 'tnum';
+    }
+    .score-total {
+      font-size: 22px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.55);
+      letter-spacing: -0.5px;
+    }
+    .score-grade {
+      position: relative;
+      display: inline-block;
+      background: var(--gold-pale);
+      color: var(--navy);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      padding: 5px 14px;
+      border-radius: var(--r-pill);
+      margin-top: 16px;
+    }
+
+    .category-section {
+      background: var(--bg);
+      border: 1px solid var(--whisper);
+      border-radius: var(--r-card);
+      padding: 22px 24px;
+      margin-bottom: 12px;
+      box-shadow: var(--shadow-card);
+    }
+    .category-label {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--navy);
+      margin-bottom: 4px;
+      letter-spacing: -0.1px;
+    }
+    .category-score-text {
+      font-size: 13px;
+      color: var(--ink-muted);
+      margin-bottom: 14px;
+      font-feature-settings: 'tnum';
+    }
+    .bar-track {
+      height: 6px;
+      background: var(--bg-warm);
+      border-radius: var(--r-pill);
+      overflow: hidden;
+    }
+    .bar-fill {
+      height: 100%;
+      border-radius: var(--r-pill);
+      transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .bar-fill.theology { background: var(--navy); }
+    .bar-fill.practical { background: var(--gold); }
+
+    .results-section {
+      margin: 40px 0;
+    }
+    .results-section-title {
+      font-size: 20px;
+      font-weight: 500;
+      color: var(--navy);
+      margin-bottom: 14px;
+      letter-spacing: -0.3px;
+    }
+    .results-section p {
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--ink);
+    }
+
+    .priority-card {
+      position: relative;
+      background: var(--bg);
+      border: 1px solid var(--whisper);
+      border-radius: var(--r-card);
+      padding: 18px 22px 18px 26px;
+      margin-bottom: 10px;
+      transition: box-shadow var(--transition);
+    }
+    .priority-card::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 14px;
+      bottom: 14px;
+      width: 3px;
+      background: var(--gold);
+      border-radius: var(--r-pill);
+    }
+    .priority-card:hover {
+      box-shadow: var(--shadow-card);
+    }
+    .priority-card strong {
+      display: block;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--navy);
+      margin-bottom: 4px;
+      letter-spacing: -0.1px;
+    }
+    .priority-card p {
+      font-size: 14px;
+      color: var(--ink-muted);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    .cta-section {
+      background: var(--navy);
+      border-radius: var(--r-feature);
+      padding: 40px 28px;
+      text-align: center;
+      margin: 32px 0 16px;
+      box-shadow: var(--shadow-elevated);
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-section::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at bottom right, rgba(200,150,46,0.12), transparent 60%);
+      pointer-events: none;
+    }
+    .cta-headline {
+      position: relative;
+      font-size: 26px;
+      font-weight: 300;
+      color: var(--bg);
+      letter-spacing: -0.5px;
+      line-height: 1.2;
+      margin-bottom: 14px;
+    }
+    .cta-body {
+      position: relative;
+      font-size: 15px;
+      color: rgba(255,255,255,0.72);
+      line-height: 1.6;
+      margin-bottom: 28px;
+      max-width: 440px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .cta-section .btn-primary {
+      position: relative;
+    }
+
+    .disclosure {
+      font-size: 11px;
+      color: var(--ink-muted);
+      line-height: 1.7;
+      padding: 28px 0;
+      border-top: 1px solid var(--whisper);
+      margin-top: 24px;
+    }
+    .disclosure a { color: var(--ink-muted); text-decoration: underline; text-decoration-color: var(--whisper); }
+
+    /* ── Responsive ── */
+    @media (max-width: 540px) {
+      .sc-screen { padding: 36px 22px 48px; }
+      .progress-wrap { padding: 18px 22px 0; }
+      .landing-headline { font-size: 32px; letter-spacing: -0.85px; }
+      .landing-subhead { font-size: 17px; }
+      .question-text { font-size: 21px; letter-spacing: -0.35px; }
+      .results-title { font-size: 28px; letter-spacing: -0.65px; }
+      .email-headline { font-size: 26px; }
+      .score-number { font-size: 60px; letter-spacing: -2px; }
+      .score-card { padding: 32px 22px; }
+      .cta-section { padding: 32px 22px; }
+      .cta-headline { font-size: 22px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="scorecard-container">
+  <div class="sc-header">
+    <div class="sc-header-logo">Andrew Zoll</div>
+  </div>
+
+  <!-- PROGRESS BAR (hidden on landing/email/results) -->
+  <div class="progress-wrap" id="progressWrap" style="display:none;">
+    <div class="progress-label" id="progressLabel">Question 1 of 12</div>
+    <div class="progress-bar-track">
+      <div class="progress-bar-fill" id="progressFill" style="width:10%"></div>
+    </div>
+  </div>
+
+  <!-- ════════════ SCREEN: LANDING ════════════ -->
+  <div class="sc-screen active" id="screenLanding">
+    <span class="landing-badge">Free Assessment</span>
+    <h1 class="landing-headline">How Well Are You Stewarding God's Wealth?</h1>
+    <p class="landing-subhead">12 questions. 3 minutes. A clear picture of where your finances align with your convictions and where the gaps are.</p>
+    <p class="landing-body">You've done well financially. But doing well and stewarding well are not the same thing.</p>
+    <p class="landing-body">This scorecard measures your financial life against biblical principles of stewardship. Not budgeting tips. Not investment advice. A diagnostic that asks whether your money reflects what you say you believe.</p>
+    <p class="landing-body">You'll receive a personalized score across two categories: <strong>Theological Foundation</strong> (do your financial convictions come from Scripture or culture?) and <strong>Practical Alignment</strong> (does your financial structure match those convictions?).</p>
+    <p class="landing-body">At the end, you'll know exactly where you stand and what to address first.</p>
+    <div class="landing-cta-wrap">
+      <button class="btn-primary" onclick="startAssessment()">Take the Scorecard</button>
+    </div>
+    <div class="disclosure" style="margin-top:40px;">
+      This assessment is for educational purposes only and does not constitute financial, tax, or legal advice. No specific investment recommendations are provided. Securities offered through Kestra Investment Services, LLC (Kestra IS), member FINRA/SIPC. Investment advisory services offered through Kestra Advisory Services, LLC (Kestra AS), an affiliate of Kestra IS. Ryleigh Wealth Management and any other entity listed herein are not affiliated with Kestra IS or Kestra AS. Ryleigh Wealth Management does not offer tax or legal advice. Investor Disclosures: <a href="https://www.kestrafinancial.com/disclosures" target="_blank" rel="noopener" style="color:var(--gray-600);">https://www.kestrafinancial.com/disclosures</a>
+    </div>
+  </div>
+
+  <!-- ════════════ SCREEN: QUESTION ════════════ -->
+  <div class="sc-screen" id="screenQuestion">
+    <div class="question-category" id="qCategory"></div>
+    <h2 class="question-text" id="qText"></h2>
+    <ul class="answer-options" id="qOptions"></ul>
+    <div class="question-nav">
+      <button class="btn-secondary" id="btnBack" onclick="goBack()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        Back
+      </button>
+      <button class="btn-primary" id="btnNext" style="width:auto;padding:14px 32px;font-size:15px;" onclick="goNext()" disabled>Next</button>
+    </div>
+  </div>
+
+  <!-- ════════════ SCREEN: EMAIL GATE ════════════ -->
+  <div class="sc-screen" id="screenEmail">
+    <div class="email-gate-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+    </div>
+    <h2 class="email-headline">Your results are ready.</h2>
+    <p class="email-body">Enter your email to see your full scorecard with your grade, category breakdown, and specific next steps.<br><br>You'll also receive a copy in your inbox so you can revisit it later.</p>
+    <form id="emailForm" onsubmit="submitEmail(event)">
+      <div class="form-group">
+        <label class="form-label" for="firstName">First Name</label>
+        <input class="form-input" type="text" id="firstName" placeholder="Your first name" required>
+        <div class="form-error" id="nameError">Please enter your first name.</div>
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="emailAddress">Email Address</label>
+        <input class="form-input" type="email" id="emailAddress" placeholder="you@example.com" required>
+        <div class="form-error" id="emailError">Please enter a valid email address.</div>
+      </div>
+      <div class="email-submit-wrap">
+        <button class="btn-primary" type="submit">See My Results</button>
+      </div>
+    </form>
+    <p class="email-fine-print">Your information will never be sold. You'll receive your scorecard results and occasional emails about biblical stewardship. You can unsubscribe anytime.</p>
+  </div>
+
+  <!-- ════════════ SCREEN: RESULTS ════════════ -->
+  <div class="sc-screen" id="screenResults">
+    <div class="results-header">
+      <div class="results-overline">Your Results</div>
+      <h2 class="results-title">Biblical Stewardship Score</h2>
+    </div>
+
+    <div class="score-card">
+      <div class="score-number"><span id="rScore">0</span><span class="score-total">/48</span></div>
+      <div class="score-grade" id="rGrade"></div>
+    </div>
+
+    <div class="category-section">
+      <div class="category-label">Theological Foundation</div>
+      <div class="category-score-text"><span id="rCat1">0</span>/20</div>
+      <div class="bar-track"><div class="bar-fill theology" id="rBar1" style="width:0%"></div></div>
+    </div>
+    <div class="category-section">
+      <div class="category-label">Practical Alignment</div>
+      <div class="category-score-text"><span id="rCat2">0</span>/28</div>
+      <div class="bar-track"><div class="bar-fill practical" id="rBar2" style="width:0%"></div></div>
+    </div>
+
+    <div class="results-section">
+      <h3 class="results-section-title">What Your Score Means</h3>
+      <p id="rMeaning"></p>
+    </div>
+
+    <div class="results-section">
+      <h3 class="results-section-title">Your Top Priorities</h3>
+      <div id="rPriorities"></div>
+    </div>
+
+    <div class="cta-section">
+      <h3 class="cta-headline">Want to close the gaps?</h3>
+      <p class="cta-body">A Stewardship Clarity Call is a focused conversation where we review your financial situation through a biblical lens. We'll look honestly at where you stand and what it would take to move from confusion to confidence.</p>
+      <a class="btn-primary" href="https://calendly.com/andrew-zoll/clarity-call" target="_blank" rel="noopener" id="bookingLink">Book a Stewardship Clarity Call</a>
+    </div>
+
+    <div style="text-align:center; margin-bottom:24px;">
+      <button class="btn-secondary" onclick="downloadPDF()" style="font-size:15px; color:var(--navy); font-weight:600;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download PDF of Your Results
+      </button>
+    </div>
+
+    <div class="disclosure">
+      This assessment is for educational purposes only and does not constitute financial, tax, or legal advice. No specific investment recommendations are provided. Securities offered through Kestra Investment Services, LLC (Kestra IS), member FINRA/SIPC. Investment advisory services offered through Kestra Advisory Services, LLC (Kestra AS), an affiliate of Kestra IS. Ryleigh Wealth Management and any other entity listed herein are not affiliated with Kestra IS or Kestra AS. Ryleigh Wealth Management does not offer tax or legal advice. Investor Disclosures: <a href="https://www.kestrafinancial.com/disclosures" target="_blank" rel="noopener" style="color:var(--gray-600);">https://www.kestrafinancial.com/disclosures</a>
+    </div>
+  </div>
+</div>
+
+<script src="https://unpkg.com/jspdf@2.5.2/dist/jspdf.umd.min.js"></script>
+<script>window.jspdf || document.write('<script src="jspdf.umd.min.js"><\/script>')</script>
+<script>
+// ══════════════════════════════════════════════
+// DATA
+// ══════════════════════════════════════════════
+const questions = [
+  {
+    category: "Theological Foundation",
+    text: "What shapes your view of money most?",
+    options: [
+      "Cultural norms and what feels responsible",
+      "Advice from family, friends, or financial media",
+      "General Christian principles I\u2019ve picked up over the years",
+      "Specific biblical texts and convictions I can articulate"
+    ]
+  },
+  {
+    category: "Theological Foundation",
+    text: "When you think about your wealth, which statement feels most honest?",
+    options: [
+      "I earned this and I\u2019m responsible for protecting it",
+      "I know God is involved, but I mostly make financial decisions on my own terms",
+      "I believe God owns it all, though my decisions don\u2019t always reflect that",
+      "I actively manage money as a steward accountable to God, and I make decisions accordingly"
+    ]
+  },
+  {
+    category: "Theological Foundation",
+    text: "How would you describe your approach to generosity?",
+    options: [
+      "I give when I feel moved to, but there\u2019s no real plan behind it",
+      "I give a set amount, but I\u2019ve never examined why that amount",
+      "I\u2019ve thought carefully about giving, but I\u2019m not confident my approach is biblically grounded",
+      "My giving reflects a deliberate conviction rooted in Scripture, and I revisit it regularly"
+    ]
+  },
+  {
+    category: "Theological Foundation",
+    text: "If your pastor asked how your finances honor God, how would you feel?",
+    options: [
+      "Uncomfortable. I haven\u2019t thought about it in those terms",
+      "Uncertain. I\u2019d want to give a good answer but I\u2019m not sure I could",
+      "Somewhat confident. I have a general framework but gaps I\u2019m aware of",
+      "Confident. I could walk through my reasoning and the principles behind it"
+    ]
+  },
+  {
+    category: "Theological Foundation",
+    text: "How do you think about the relationship between financial success and faithfulness?",
+    options: [
+      "Financial success is a sign of God\u2019s blessing and approval",
+      "I don\u2019t think about it much. I just try to be wise",
+      "I know they\u2019re not the same thing, but I struggle to separate them emotionally",
+      "I understand that faithfulness and financial outcomes are distinct, and I plan accordingly"
+    ]
+  },
+  {
+    category: "Practical Alignment",
+    text: "Do you have a written financial plan that accounts for your values, not just your goals?",
+    options: [
+      "No, I don\u2019t have a written plan at all",
+      "I have a loose plan, but it\u2019s mostly about retirement numbers and savings targets",
+      "I have a plan that touches on values, but it hasn\u2019t been updated or reviewed recently",
+      "I have a current, written plan that explicitly integrates my faith convictions with my financial strategy"
+    ]
+  },
+  {
+    category: "Practical Alignment",
+    text: "How would you describe your relationship with debt?",
+    options: [
+      "I don\u2019t think about debt in moral or spiritual terms. It\u2019s just a financial tool to me",
+      "I have debt but I\u2019ve never evaluated it against biblical principles",
+      "I\u2019ve thought about what Scripture says about debt, but I still carry some I\u2019m not fully at peace with",
+      "I have a clear, biblically informed position on debt that shapes my borrowing decisions"
+    ]
+  },
+  {
+    category: "Practical Alignment",
+    text: "How consistently do your day-to-day financial decisions reflect your stated values?",
+    options: [
+      "I haven\u2019t really connected my daily spending to my values",
+      "I try, but most financial decisions are made on autopilot or convenience",
+      "Some decisions reflect my values, but there are areas where I know there\u2019s a disconnect",
+      "My spending, saving, and giving consistently reflect the convictions I hold"
+    ]
+  },
+  {
+    category: "Practical Alignment",
+    text: "If something happened to you tomorrow, how prepared is your family?",
+    options: [
+      "They\u2019d be scrambling. Important documents, accounts, and plans are scattered or incomplete",
+      "The basics are in place (life insurance, a will), but my spouse would have a lot to figure out",
+      "My family is reasonably prepared, but there are known gaps I haven\u2019t addressed",
+      "My estate plan is current, my spouse knows the full picture, and someone trustworthy could step in to help"
+    ]
+  },
+  {
+    category: "Practical Alignment",
+    text: "How confident are you that your current tax strategy is optimized?",
+    options: [
+      "I don\u2019t really have a tax strategy. I just file what my CPA prepares",
+      "I take the standard deductions and credits, but I suspect I\u2019m leaving money on the table",
+      "I\u2019ve done some planning, but I\u2019m not sure it accounts for my full situation (business income, investments, giving)",
+      "My tax strategy is integrated with my investment, giving, and estate plans and reviewed annually"
+    ]
+  },
+  {
+    category: "Practical Alignment",
+    text: "How intentional is your investment strategy?",
+    options: [
+      "I have money in accounts but I\u2019m not sure what it\u2019s invested in or why",
+      "I follow general advice (target-date funds, index funds) without much customization",
+      "I have a strategy, but it\u2019s not connected to a broader financial plan or my values",
+      "My investments are deliberately structured to align with my goals, time horizon, risk tolerance, and convictions"
+    ]
+  },
+  {
+    category: "Practical Alignment",
+    text: "When was the last time you reviewed your financial plan with someone you trust?",
+    options: [
+      "I\u2019ve never had a formal review",
+      "More than two years ago",
+      "Within the last year, but it was surface-level",
+      "Within the last year, and it was a thorough review of my full financial picture"
+    ]
+  }
+];
+
+const gradeTiers = [
+  { min: 41, max: 48, grade: "A", label: "Faithful Steward",
+    meaning: "You\u2019re in a strong position. Your financial life reflects real theological conviction and practical follow-through. That doesn\u2019t mean there\u2019s nothing to refine, but the foundation is solid. A second set of eyes often catches blind spots in even strong plans, and confirms the structure is doing what you think it\u2019s doing. If you\u2019d like that kind of review, I\u2019d welcome the conversation." },
+  { min: 33, max: 40, grade: "B", label: "Intentional but Incomplete",
+    meaning: "You\u2019ve done meaningful work here. Your convictions are real and your financial life reflects them in significant ways. The gaps that remain tend to be the ones that compound over time: tax inefficiency, estate planning delays, or a giving strategy that hasn\u2019t been stress-tested against your actual financial picture. Closing those gaps is what brings your conviction and your structure into the same conversation." },
+  { min: 24, max: 32, grade: "C", label: "Good Intentions, Gaps in Execution",
+    meaning: "You care about stewarding well. That\u2019s clear. The gap is between what you believe and how your financial structure actually operates. This is a common starting point. It usually means you\u2019ve never had someone sit down with you and connect the theological dots to the financial ones. That\u2019s exactly what a Stewardship Clarity Call is designed to do." },
+  { min: 16, max: 23, grade: "D", label: "Significant Misalignment",
+    meaning: "There\u2019s a meaningful distance between your faith convictions and your financial reality. That\u2019s not a character judgment. It usually means no one has ever helped you build the bridge between Scripture and strategy. What\u2019s missing isn\u2019t faithfulness. What\u2019s missing is a clear path forward, and that\u2019s something we can build. This is fixable, and it\u2019s worth fixing before the gaps create real consequences for your family." },
+  { min: 12, max: 15, grade: "F", label: "Foundation Needed",
+    meaning: "Honest answer: your financial life and your faith life are running on separate tracks. That\u2019s a more common starting point than you\u2019d think. The good news is that building a biblical financial foundation doesn\u2019t require starting over. It requires starting with the right conversation. I\u2019d encourage you to book a call and let me show you what this looks like when it\u2019s done well." }
+];
+
+const priorityStatements = [
+  { title: "Build a biblical framework for financial decisions.", body: "Your money philosophy is shaped more by culture than Scripture. Start by studying what the Bible actually says about wealth, stewardship, and provision." },
+  { title: "Shift from ownership to stewardship.", body: "The way you think about whose money this is affects every decision downstream. A stewardship mindset changes how you plan, give, save, and spend." },
+  { title: "Develop a deliberate giving strategy.", body: "Reactive generosity feels spiritual but isn\u2019t sustainable. Define your conviction, set a plan, and revisit it as your life changes." },
+  { title: "Get clarity on how your finances honor God.", body: "If you can\u2019t articulate the connection between your faith and your financial decisions, that connection probably doesn\u2019t exist yet. This is worth building." },
+  { title: "Separate faithfulness from financial outcomes.", body: "Equating prosperity with God\u2019s approval (or hardship with His disapproval) leads to bad theology and bad financial decisions." },
+  { title: "Create a written financial plan that integrates your values.", body: "A plan that only tracks numbers without accounting for convictions is incomplete. Your plan should reflect what you believe, not just what you want." },
+  { title: "Examine your relationship with debt through a biblical lens.", body: "Debt is one of the most discussed financial topics in Scripture, yet most believers have never evaluated their borrowing against biblical principles. Your approach to debt should be intentional and informed by conviction, not just convenience." },
+  { title: "Close the gap between your values and your daily financial behavior.", body: "It\u2019s common to hold strong convictions about stewardship while your actual spending, saving, and giving run on autopilot. Aligning the two requires intentional systems, not just good intentions." },
+  { title: "Protect your family with a current estate plan.", body: "This is one of the most neglected areas of stewardship. If your spouse would be scrambling, that\u2019s a gap you can close now." },
+  { title: "Review your tax strategy.", body: "It\u2019s common for tax, investment, and giving strategies to operate in silos. A comprehensive review can reveal opportunities to coordinate them." },
+  { title: "Align your investments with a real strategy.", body: "Money sitting in accounts without a deliberate structure is money working against you. Your investments should be connected to your goals, timeline, and convictions." },
+  { title: "Schedule a financial review.", body: "The fact that you haven\u2019t had a thorough review recently means decisions are being made (or avoided) without full information. This is the single easiest gap to close." }
+];
+
+// ══════════════════════════════════════════════
+// STATE
+// ══════════════════════════════════════════════
+let currentQuestion = 0;
+const answers = new Array(12).fill(null); // 0-indexed, stores 1-4
+
+// ══════════════════════════════════════════════
+// NAVIGATION
+// ══════════════════════════════════════════════
+function showScreen(id) {
+  document.querySelectorAll('.sc-screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function startAssessment() {
+  currentQuestion = 0;
+  renderQuestion();
+  document.getElementById('progressWrap').style.display = 'block';
+  showScreen('screenQuestion');
+}
+
+function renderQuestion() {
+  const q = questions[currentQuestion];
+  document.getElementById('qCategory').textContent = q.category;
+  document.getElementById('qText').textContent = q.text;
+
+  const optList = document.getElementById('qOptions');
+  optList.innerHTML = '';
+  q.options.forEach((opt, i) => {
+    const li = document.createElement('li');
+    const btn = document.createElement('button');
+    btn.className = 'answer-option' + (answers[currentQuestion] === i + 1 ? ' selected' : '');
+    btn.textContent = opt;
+    btn.onclick = () => selectAnswer(i + 1);
+    li.appendChild(btn);
+    optList.appendChild(li);
+  });
+
+  // Progress
+  document.getElementById('progressLabel').textContent = `Question ${currentQuestion + 1} of 12`;
+  document.getElementById('progressFill').style.width = `${((currentQuestion + 1) / 12) * 100}%`;
+
+  // Back button
+  document.getElementById('btnBack').style.visibility = currentQuestion === 0 ? 'hidden' : 'visible';
+
+  // Next button
+  const btnNext = document.getElementById('btnNext');
+  btnNext.disabled = answers[currentQuestion] === null;
+  btnNext.textContent = currentQuestion === 11 ? 'See Results' : 'Next';
+}
+
+function selectAnswer(value) {
+  answers[currentQuestion] = value;
+  document.querySelectorAll('.answer-option').forEach((btn, i) => {
+    btn.classList.toggle('selected', i + 1 === value);
+  });
+  document.getElementById('btnNext').disabled = false;
+}
+
+function goNext() {
+  if (answers[currentQuestion] === null) return;
+  if (currentQuestion < 11) {
+    currentQuestion++;
+    renderQuestion();
+    showScreen('screenQuestion');
+  } else {
+    // Go to email gate
+    document.getElementById('progressWrap').style.display = 'none';
+    showScreen('screenEmail');
+  }
+}
+
+function goBack() {
+  if (currentQuestion > 0) {
+    currentQuestion--;
+    renderQuestion();
+    showScreen('screenQuestion');
+  }
+}
+
+// ══════════════════════════════════════════════
+// EMAIL SUBMISSION
+// ══════════════════════════════════════════════
+function submitEmail(e) {
+  e.preventDefault();
+  const name = document.getElementById('firstName').value.trim();
+  const email = document.getElementById('emailAddress').value.trim();
+
+  let valid = true;
+  if (!name) {
+    document.getElementById('nameError').style.display = 'block';
+    valid = false;
+  } else {
+    document.getElementById('nameError').style.display = 'none';
+  }
+  if (!email || !email.includes('@') || !email.includes('.')) {
+    document.getElementById('emailError').style.display = 'block';
+    valid = false;
+  } else {
+    document.getElementById('emailError').style.display = 'none';
+  }
+  if (!valid) return;
+
+  // Calculate score before sending to Mailchimp
+  const totalScore = answers.reduce((a, b) => a + b, 0);
+  const cat1 = answers.slice(0, 5).reduce((a, b) => a + b, 0);
+  const cat2 = answers.slice(5).reduce((a, b) => a + b, 0);
+  const tier = gradeTiers.find(t => totalScore >= t.min && totalScore <= t.max) || gradeTiers[gradeTiers.length - 1];
+
+  // ─── MAILCHIMP INTEGRATION ───
+  // To get these values:
+  // 1. Go to Mailchimp → Audience → Signup forms → Embedded forms
+  // 2. Copy the form action URL, which looks like:
+  //    https://XXXXX.usX.list-manage.com/subscribe/post?u=XXXXXXXXX&id=XXXXXXXXX
+  // 3. Replace the values below with yours.
+  // 4. In Mailchimp, create merge tags for SCORE, GRADE, CAT1, CAT2 under
+  //    Audience → Settings → Audience fields and *|MERGE|* tags
+  const MAILCHIMP_URL = 'https://ryleighwm.us4.list-manage.com/subscribe/post-json';
+  const MAILCHIMP_U = '2eb7d0c1b3419f0b9bf268d01';
+  const MAILCHIMP_ID = '6e456e6462';
+
+  const params = new URLSearchParams({
+    u: MAILCHIMP_U,
+    id: MAILCHIMP_ID,
+    FNAME: name,
+    EMAIL: email,
+    SCORE: String(totalScore),
+    GRADE: tier.grade + ' — ' + tier.label,
+    CAT1: String(cat1),
+    CAT2: String(cat2),
+  });
+
+  // Mailchimp JSONP request (bypasses CORS)
+  const callbackName = 'mc_callback_' + Date.now();
+  window[callbackName] = function(resp) {
+    delete window[callbackName];
+    if (resp.result === 'error' && !resp.msg.includes('already subscribed')) {
+      console.warn('Mailchimp error:', resp.msg);
+    }
+  };
+  const script = document.createElement('script');
+  script.src = MAILCHIMP_URL + '?' + params.toString() + '&c=' + callbackName;
+  document.body.appendChild(script);
+  // ───────────────────────────────────
+
+  showResults();
+}
+
+// ══════════════════════════════════════════════
+// RESULTS
+// ══════════════════════════════════════════════
+function showResults() {
+  const totalScore = answers.reduce((a, b) => a + b, 0);
+  const cat1 = answers.slice(0, 5).reduce((a, b) => a + b, 0);
+  const cat2 = answers.slice(5).reduce((a, b) => a + b, 0);
+
+  // Grade
+  const tier = gradeTiers.find(t => totalScore >= t.min && totalScore <= t.max) || gradeTiers[gradeTiers.length - 1];
+
+  // Render score
+  document.getElementById('rScore').textContent = totalScore;
+  document.getElementById('rGrade').textContent = `${tier.grade} \u2014 ${tier.label}`;
+
+  // Category bars
+  document.getElementById('rCat1').textContent = cat1;
+  document.getElementById('rCat2').textContent = cat2;
+  setTimeout(() => {
+    document.getElementById('rBar1').style.width = `${(cat1 / 20) * 100}%`;
+    document.getElementById('rBar2').style.width = `${(cat2 / 28) * 100}%`;
+  }, 100);
+
+  // Meaning
+  document.getElementById('rMeaning').textContent = tier.meaning;
+
+  // Priorities
+  const prioritiesContainer = document.getElementById('rPriorities');
+  prioritiesContainer.innerHTML = '';
+
+  // Find lowest-scored answers (1s and 2s)
+  const lowScores = [];
+  answers.forEach((score, i) => {
+    if (score <= 2) lowScores.push({ index: i, score });
+  });
+
+  if (lowScores.length === 0) {
+    const card = document.createElement('div');
+    card.className = 'priority-card';
+    card.innerHTML = '<p>Your foundation is strong. A comprehensive review would help you optimize what you\u2019ve already built.</p>';
+    prioritiesContainer.appendChild(card);
+  } else {
+    // Sort by score ascending (lowest first), take top 3
+    lowScores.sort((a, b) => a.score - b.score);
+    const topPriorities = lowScores.slice(0, 3);
+    topPriorities.forEach(({ index }) => {
+      const p = priorityStatements[index];
+      const card = document.createElement('div');
+      card.className = 'priority-card';
+      card.innerHTML = `<strong>${p.title}</strong><p>${p.body}</p>`;
+      prioritiesContainer.appendChild(card);
+    });
+  }
+
+  showScreen('screenResults');
+}
+
+// ══════════════════════════════════════════════
+// PDF GENERATION
+// ══════════════════════════════════════════════
+function downloadPDF() {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ unit: 'pt', format: 'letter' });
+  const pageW = doc.internal.pageSize.getWidth();
+  const pageH = doc.internal.pageSize.getHeight();
+  const margin = 56;
+  const contentW = pageW - margin * 2;
+  let y = 56;
+
+  // Design tokens (Stripe + Notion hybrid, RWM brand)
+  const NAVY = [27, 58, 92];
+  const GOLD = [200, 150, 46];
+  const GOLD_HOVER = [181, 132, 40];
+  const GOLD_PALE = [253, 243, 224];
+  const INK = [13, 13, 13];
+  const INK_MUTED = [97, 93, 89];
+  const WHISPER = [228, 226, 224];
+  const BG = [255, 255, 255];
+  const BG_WARM = [246, 245, 244];
+  const WHITE = [255, 255, 255];
+
+  function setOpacity(o) { doc.setGState(new doc.GState({ opacity: o })); }
+  function fillPageBg() { doc.setFillColor(...BG_WARM); doc.rect(0, 0, pageW, pageH, 'F'); }
+  function drawCardShadow(x, yPos, w, h, r) {
+    doc.setFillColor(27, 58, 92);
+    setOpacity(0.05);
+    doc.roundedRect(x, yPos + 4, w, h, r, r, 'F');
+    setOpacity(0.04);
+    doc.roundedRect(x - 1, yPos + 7, w + 2, h, r, r, 'F');
+    setOpacity(1);
+  }
+  function drawElevatedShadow(x, yPos, w, h, r) {
+    doc.setFillColor(27, 58, 92);
+    setOpacity(0.10);
+    doc.roundedRect(x - 2, yPos + 10, w + 4, h, r, r, 'F');
+    setOpacity(0.06);
+    doc.roundedRect(x - 5, yPos + 16, w + 10, h, r, r, 'F');
+    setOpacity(1);
+  }
+
+  const totalScore = answers.reduce((a, b) => a + b, 0);
+  const cat1 = answers.slice(0, 5).reduce((a, b) => a + b, 0);
+  const cat2 = answers.slice(5).reduce((a, b) => a + b, 0);
+  const tier = gradeTiers.find(t => totalScore >= t.min && totalScore <= t.max) || gradeTiers[gradeTiers.length - 1];
+  const firstName = document.getElementById('firstName').value.trim();
+
+  let footerDrawn = false;
+
+  function checkPage(needed) {
+    const bottomMargin = !footerDrawn ? 90 : 56;
+    if (y + needed > pageH - bottomMargin) {
+      if (!footerDrawn) { addFooter(); }
+      doc.addPage();
+      fillPageBg();
+      y = 56;
+    }
+  }
+
+  function addFooter() {
+    if (footerDrawn) return;
+    footerDrawn = true;
+    const disclosure = 'This assessment is for educational purposes only and does not constitute financial, tax, or legal advice. No specific investment recommendations are provided. Securities offered through Kestra Investment Services, LLC (Kestra IS), member FINRA/SIPC. Investment advisory services offered through Kestra Advisory Services, LLC (Kestra AS), an affiliate of Kestra IS. Ryleigh Wealth Management and any other entity listed herein are not affiliated with Kestra IS or Kestra AS. Ryleigh Wealth Management does not offer tax or legal advice. Investor Disclosures: https://www.kestrafinancial.com/disclosures';
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(7);
+    doc.setTextColor(...INK_MUTED);
+    const lines = doc.splitTextToSize(disclosure, contentW);
+    const footerY = pageH - 36 - (lines.length * 8.5);
+    doc.setDrawColor(...WHISPER);
+    doc.setLineWidth(0.5);
+    doc.line(margin, footerY - 14, pageW - margin, footerY - 14);
+    doc.text(lines, margin, footerY, { lineHeightFactor: 1.5 });
+  }
+
+  fillPageBg();
+
+  // Header band
+  doc.setFillColor(...NAVY);
+  doc.rect(0, 0, pageW, 50, 'F');
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(11);
+  doc.setTextColor(...WHITE);
+  doc.setCharSpace(2);
+  doc.text('ANDREW ZOLL', pageW / 2, 31, { align: 'center' });
+  doc.setCharSpace(0);
+  y = 96;
+
+  // Overline + headline
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(9);
+  doc.setTextColor(...GOLD_HOVER);
+  doc.setCharSpace(1.5);
+  doc.text('YOUR RESULTS', pageW / 2, y, { align: 'center' });
+  doc.setCharSpace(0);
+  y += 26;
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(28);
+  doc.setTextColor(...NAVY);
+  doc.text('Biblical Stewardship Score', pageW / 2, y, { align: 'center' });
+  y += 18;
+  if (firstName) {
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(11);
+    doc.setTextColor(...INK_MUTED);
+    doc.text('Prepared for ' + firstName, pageW / 2, y, { align: 'center' });
+    y += 12;
+  }
+  y += 22;
+
+  // Score card
+  const scoreCardH = 116;
+  drawElevatedShadow(margin, y, contentW, scoreCardH, 12);
+  doc.setFillColor(...NAVY);
+  doc.roundedRect(margin, y, contentW, scoreCardH, 12, 12, 'F');
+  doc.setFillColor(...GOLD);
+  setOpacity(0.10);
+  doc.ellipse(pageW / 2, y + 8, contentW * 0.42, 26, 'F');
+  setOpacity(1);
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(56);
+  doc.setTextColor(...WHITE);
+  doc.text(String(totalScore), pageW / 2 - 18, y + 64, { align: 'right' });
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(22);
+  doc.setTextColor(...WHITE);
+  setOpacity(0.55);
+  doc.text('/48', pageW / 2 + 6, y + 64);
+  setOpacity(1);
+  // Grade pill: gold-pale bg, navy text
+  const gradeText = tier.grade + ' \u2014 ' + tier.label;
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(9);
+  const gradePillW = doc.getTextWidth(gradeText) + 24;
+  const gradePillX = pageW / 2 - gradePillW / 2;
+  const gradePillY = y + 80;
+  doc.setFillColor(...GOLD_PALE);
+  doc.roundedRect(gradePillX, gradePillY, gradePillW, 22, 11, 11, 'F');
+  doc.setTextColor(...NAVY);
+  doc.text(gradeText, pageW / 2, gradePillY + 14, { align: 'center' });
+  y += scoreCardH + 28;
+
+  // Category bars
+  function drawCategoryBar(label, score, max, color, yPos) {
+    const cardH = 60;
+    drawCardShadow(margin, yPos, contentW, cardH, 10);
+    doc.setFillColor(...BG);
+    doc.setDrawColor(...WHISPER);
+    doc.setLineWidth(0.6);
+    doc.roundedRect(margin, yPos, contentW, cardH, 10, 10, 'FD');
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(11);
+    doc.setTextColor(...NAVY);
+    doc.text(label, margin + 18, yPos + 24);
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(10);
+    doc.setTextColor(...INK_MUTED);
+    doc.text(score + '/' + max, pageW - margin - 18, yPos + 24, { align: 'right' });
+    const trackY = yPos + 38;
+    const trackX = margin + 18;
+    const trackW = contentW - 36;
+    doc.setFillColor(...BG_WARM);
+    doc.roundedRect(trackX, trackY, trackW, 5, 2.5, 2.5, 'F');
+    doc.setFillColor(...color);
+    const fillW = Math.max(5, (score / max) * trackW);
+    doc.roundedRect(trackX, trackY, fillW, 5, 2.5, 2.5, 'F');
+    return yPos + cardH + 10;
+  }
+
+  y = drawCategoryBar('Theological Foundation', cat1, 20, NAVY, y);
+  y = drawCategoryBar('Practical Alignment', cat2, 28, GOLD, y);
+  y += 22;
+
+  // What Your Score Means
+  checkPage(140);
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(9);
+  doc.setTextColor(...GOLD_HOVER);
+  doc.setCharSpace(1.5);
+  doc.text('WHAT YOUR SCORE MEANS', margin, y);
+  doc.setCharSpace(0);
+  y += 20;
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(11);
+  doc.setTextColor(...INK);
+  const meaningLines = doc.splitTextToSize(tier.meaning, contentW);
+  doc.text(meaningLines, margin, y, { lineHeightFactor: 1.55 });
+  y += meaningLines.length * 16 + 30;
+
+  // Priorities
+  checkPage(60);
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(9);
+  doc.setTextColor(...GOLD_HOVER);
+  doc.setCharSpace(1.5);
+  doc.text('YOUR TOP PRIORITIES', margin, y);
+  doc.setCharSpace(0);
+  y += 22;
+
+  const lowScores = [];
+  answers.forEach((score, i) => { if (score <= 2) lowScores.push({ index: i, score }); });
+
+  if (lowScores.length === 0) {
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(11);
+    doc.setTextColor(...INK);
+    const strongLines = doc.splitTextToSize('Your foundation is strong. A comprehensive review would help you optimize what you\u2019ve already built.', contentW);
+    doc.text(strongLines, margin, y, { lineHeightFactor: 1.55 });
+    y += strongLines.length * 16 + 12;
+  } else {
+    lowScores.sort((a, b) => a.score - b.score);
+    const topP = lowScores.slice(0, 3);
+    topP.forEach(({ index }) => {
+      const p = priorityStatements[index];
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(10);
+      const bodyLines = doc.splitTextToSize(p.body, contentW - 40);
+      const cardH = 22 + bodyLines.length * 13 + 18;
+      checkPage(cardH + 12);
+      doc.setFillColor(...BG);
+      doc.setDrawColor(...WHISPER);
+      doc.setLineWidth(0.6);
+      doc.roundedRect(margin, y, contentW, cardH, 10, 10, 'FD');
+      doc.setFillColor(...GOLD);
+      doc.roundedRect(margin + 12, y + 14, 2.5, cardH - 28, 1.25, 1.25, 'F');
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(11);
+      doc.setTextColor(...NAVY);
+      doc.text(p.title, margin + 24, y + 22);
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(10);
+      doc.setTextColor(...INK_MUTED);
+      doc.text(bodyLines, margin + 24, y + 38, { lineHeightFactor: 1.5 });
+      y += cardH + 10;
+    });
+  }
+  y += 12;
+
+  // Biblical context for each question
+  const biblicalContext = [
+    {
+      what: "This question identifies the source of your financial worldview. The framework you operate from shapes every downstream decision: what you save, what you spend, what you give, and how confidently you do any of it.",
+      why: "Psalm 119:105 says, \u201CYour word is a lamp to my feet and a light to my path.\u201D When Scripture shapes your financial worldview rather than culture or opinion, your decisions are anchored to something that doesn\u2019t shift with markets or trends."
+    },
+    {
+      what: "Ownership versus stewardship is the foundational distinction in biblical finance. How you answer this question shapes whether your wealth feels like a possession to defend or a trust to manage well.",
+      why: "Psalm 24:1 declares, \u201CThe earth is the LORD\u2019s, and everything in it.\u201D Recognizing God\u2019s ownership changes everything downstream: how you plan, spend, give, and hold your wealth. Stewardship, not ownership, is the biblical posture."
+    },
+    {
+      what: "Generosity reveals theology in action. A deliberate giving strategy is a direct expression of what you actually believe about money\u2019s purpose.",
+      why: "2 Corinthians 9:7 teaches, \u201CGod loves a cheerful giver.\u201D Generosity rooted in conviction rather than emotion is sustainable and transformative. A deliberate giving strategy ensures your generosity reflects your theology, not just your mood."
+    },
+    {
+      what: "The clarity of your answer is a proxy for the clarity of your convictions. Most people have never been asked this question, which is exactly why the gap between belief and practice goes unnoticed.",
+      why: "Romans 14:12 reminds us, \u201CEach of us will give an account of himself to God.\u201D The ability to articulate how your finances honor God isn\u2019t about performance. It\u2019s about having done the work of connecting your faith to your financial life."
+    },
+    {
+      what: "Conflating wealth with God\u2019s approval is one of the most common spiritual traps in personal finance. Untangling them protects your faith from market cycles and your finances from emotional decisions.",
+      why: "Ecclesiastes 9:11 observes that \u201Ctime and chance happen to them all.\u201D Equating wealth with God\u2019s favor or hardship with His disapproval leads to a fragile faith. Biblical stewardship separates faithfulness from financial outcomes."
+    },
+    {
+      what: "A plan that ignores your values is just a math exercise. Integrating convictions into a written plan is what turns a portfolio into stewardship.",
+      why: "Proverbs 21:5 says, \u201CThe plans of the diligent lead surely to abundance.\u201D A written plan that integrates your values ensures your financial structure reflects your convictions, not just your goals. Without it, good intentions remain unrealized."
+    },
+    {
+      what: "Debt has a moral dimension Scripture takes seriously. Whether you\u2019ve evaluated your borrowing through that lens determines whether you control debt or it controls you.",
+      why: "Proverbs 22:7 warns, \u201CThe borrower is slave to the lender.\u201D Scripture speaks directly and frequently about debt. A biblically informed approach to borrowing protects your freedom, your family, and your ability to steward generously."
+    },
+    {
+      what: "Beliefs rarely translate to behavior automatically. The gap between what you say you value and what your spending actually shows is where real stewardship work happens.",
+      why: "James 1:22 instructs, \u201CBe doers of the word, and not hearers only.\u201D It\u2019s possible to hold strong convictions about stewardship while your daily spending runs on autopilot. Aligning behavior with belief is where theology meets practice."
+    },
+    {
+      what: "Estate readiness is one of the most neglected areas of stewardship for high-income families. The work you don\u2019t do here becomes a burden your family inherits at the worst possible moment.",
+      why: "Proverbs 13:22 says, \u201CA good man leaves an inheritance to his children\u2019s children.\u201D Estate planning is stewardship that extends beyond your lifetime. If your family would be scrambling, that\u2019s a gap Scripture calls you to close."
+    },
+    {
+      what: "Tax strategy directly affects how much capital you have available for saving, giving, and investing. Treating taxes as a once-a-year filing instead of an ongoing strategy leaves resources on the table.",
+      why: "Luke 16:10 teaches, \u201COne who is faithful in a very little is also faithful in much.\u201D Your tax strategy is a stewardship decision. Overpaying due to poor coordination means fewer resources available for the purposes God has placed on your heart."
+    },
+    {
+      what: "Investments built on autopilot rarely match the goals or convictions of the person who owns them. Intentionality here determines whether your wealth is working toward your purposes or drifting on default settings.",
+      why: "Ecclesiastes 11:2 advises, \u201CDivide your portion to seven, or even to eight.\u201D Intentional investment is biblical wisdom applied to wealth. Your investments should serve your God-given goals and convictions, not sit unexamined."
+    },
+    {
+      what: "Plans degrade. A plan that hasn\u2019t been reviewed in over a year is almost certainly out of sync with your current life, taxes, and goals, even if nothing dramatic has changed.",
+      why: "Proverbs 15:22 says, \u201CWithout counsel plans fail, but with many advisers they succeed.\u201D Regular review with a trusted guide ensures your plan stays current and your decisions are made with full information, not assumptions."
+    }
+  ];
+
+  addFooter();
+  doc.addPage();
+  fillPageBg();
+  y = 56;
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(9);
+  doc.setTextColor(...GOLD_HOVER);
+  doc.setCharSpace(1.5);
+  doc.text('YOUR ANSWERS', margin, y);
+  doc.setCharSpace(0);
+  y += 14;
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(22);
+  doc.setTextColor(...NAVY);
+  doc.text('Question by Question', margin, y + 12);
+  y += 38;
+
+  questions.forEach((q, i) => {
+    const answerVal = answers[i];
+    const chosenText = q.options[answerVal - 1];
+    const scoreLabel = answerVal <= 2 ? 'Area for Growth' : (answerVal === 3 ? 'On Track' : 'Strong');
+    const scoreColor = answerVal <= 2 ? [221, 91, 0] : (answerVal === 3 ? GOLD : [21, 142, 61]);
+    const scoreBg = answerVal <= 2 ? [253, 234, 220] : (answerVal === 3 ? GOLD_PALE : [220, 244, 226]);
+
+    // Pre-measure
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(11);
+    const qLines = doc.splitTextToSize(q.text, contentW - 32);
+    doc.setFontSize(10);
+    const ansLines = doc.splitTextToSize(chosenText, contentW - 32);
+    doc.setFontSize(10);
+    const whatLines = doc.splitTextToSize(biblicalContext[i].what, contentW - 32);
+    doc.setFontSize(9);
+    const ctxLines = doc.splitTextToSize(biblicalContext[i].why, contentW - 32);
+    const cardH = 32 + qLines.length * 14 + 18 + ansLines.length * 13 + 18 + whatLines.length * 13 + 14 + ctxLines.length * 13 + 22;
+    checkPage(cardH + 12);
+
+    // Whisper-bordered card
+    doc.setFillColor(...BG);
+    doc.setDrawColor(...WHISPER);
+    doc.setLineWidth(0.6);
+    doc.roundedRect(margin, y, contentW, cardH, 10, 10, 'FD');
+
+    // Category + Q#
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(8);
+    doc.setTextColor(...GOLD_HOVER);
+    doc.setCharSpace(1);
+    doc.text(q.category.toUpperCase() + '   Q' + (i + 1), margin + 16, y + 18);
+    doc.setCharSpace(0);
+
+    // Score pill (top right)
+    const scoreText = scoreLabel + '  ' + answerVal + '/4';
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(7.5);
+    const sw = doc.getTextWidth(scoreText) + 14;
+    const sx = pageW - margin - 16 - sw;
+    const sy = y + 8;
+    doc.setFillColor(...scoreBg);
+    doc.roundedRect(sx, sy, sw, 14, 7, 7, 'F');
+    doc.setTextColor(...scoreColor);
+    doc.text(scoreText, sx + sw / 2, sy + 9.5, { align: 'center' });
+
+    // Question text
+    let cy = y + 38;
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(11);
+    doc.setTextColor(...NAVY);
+    doc.text(qLines, margin + 16, cy);
+    cy += qLines.length * 14 + 6;
+
+    // YOUR ANSWER label
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(7.5);
+    doc.setTextColor(...INK_MUTED);
+    doc.setCharSpace(1);
+    doc.text('YOUR ANSWER', margin + 16, cy + 4);
+    doc.setCharSpace(0);
+    cy += 14;
+    // Answer text
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(10);
+    doc.setTextColor(...INK);
+    doc.text(ansLines, margin + 16, cy, { lineHeightFactor: 1.45 });
+    cy += ansLines.length * 13 + 12;
+
+    // WHY THIS MATTERS label + body
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(7.5);
+    doc.setTextColor(...INK_MUTED);
+    doc.setCharSpace(1);
+    doc.text('WHY THIS MATTERS', margin + 16, cy);
+    doc.setCharSpace(0);
+    cy += 12;
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(10);
+    doc.setTextColor(...INK);
+    doc.text(whatLines, margin + 16, cy, { lineHeightFactor: 1.5 });
+    cy += whatLines.length * 13 + 10;
+
+    // Biblical reflection (italic, faint)
+    doc.setFont('helvetica', 'italic');
+    doc.setFontSize(9);
+    doc.setTextColor(90, 100, 115);
+    doc.text(ctxLines, margin + 16, cy, { lineHeightFactor: 1.5 });
+
+    y += cardH + 10;
+  });
+
+  y += 12;
+
+  // CTA card — elevated navy with gold-pale accent
+  const ctaH = 140;
+  checkPage(ctaH + 30);
+  y += 6;
+  drawElevatedShadow(margin, y, contentW, ctaH, 14);
+  doc.setFillColor(...NAVY);
+  doc.roundedRect(margin, y, contentW, ctaH, 14, 14, 'F');
+  doc.setFillColor(...GOLD);
+  setOpacity(0.10);
+  doc.ellipse(pageW - margin - 50, y + ctaH - 12, 90, 32, 'F');
+  setOpacity(1);
+  // Headline
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(20);
+  doc.setTextColor(...WHITE);
+  doc.text('Want to close the gaps?', pageW / 2, y + 36, { align: 'center' });
+  // Body
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(10.5);
+  doc.setTextColor(...WHITE);
+  setOpacity(0.72);
+  const ctaLines = doc.splitTextToSize('A Stewardship Clarity Call is a focused conversation where we review your financial situation through a biblical lens.', contentW - 80);
+  doc.text(ctaLines, pageW / 2, y + 56, { align: 'center', lineHeightFactor: 1.5 });
+  setOpacity(1);
+
+  // Button
+  const btnW = 250;
+  const btnH = 34;
+  const btnX = pageW / 2 - btnW / 2;
+  const btnY = y + 56 + ctaLines.length * 14 + 10;
+  doc.setFillColor(...GOLD);
+  doc.roundedRect(btnX, btnY, btnW, btnH, 4, 4, 'F');
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(10);
+  doc.setTextColor(...WHITE);
+  doc.textWithLink('Book a Stewardship Clarity Call', pageW / 2, btnY + 21, { align: 'center', url: 'https://calendly.com/andrew-zoll/clarity-call' });
+  doc.link(btnX, btnY, btnW, btnH, { url: 'https://calendly.com/andrew-zoll/clarity-call' });
+
+  // Footer on last page
+  addFooter();
+
+  doc.save('Biblical-Stewardship-Scorecard.pdf');
+}
+</script>
+
+</body>
+</html>
