@@ -768,10 +768,10 @@ const questions = [
     category: "Theological Foundation",
     text: "If your pastor asked how your finances honor God, how would you feel?",
     options: [
-      "Uncomfortable \u2014 I haven\u2019t thought about it in those terms",
-      "Uncertain \u2014 I\u2019d want to give a good answer but I\u2019m not sure I could",
-      "Somewhat confident \u2014 I have a general framework but gaps I\u2019m aware of",
-      "Confident \u2014 I could walk through my reasoning and the principles behind it"
+      "Uncomfortable. I haven\u2019t thought about it in those terms",
+      "Uncertain. I\u2019d want to give a good answer but I\u2019m not sure I could",
+      "Somewhat confident. I have a general framework but gaps I\u2019m aware of",
+      "Confident. I could walk through my reasoning and the principles behind it"
     ]
   },
   {
@@ -779,7 +779,7 @@ const questions = [
     text: "How do you think about the relationship between financial success and faithfulness?",
     options: [
       "Financial success is a sign of God\u2019s blessing and approval",
-      "I don\u2019t think about it much \u2014 I just try to be wise",
+      "I don\u2019t think about it much. I just try to be wise",
       "I know they\u2019re not the same thing, but I struggle to separate them emotionally",
       "I understand that faithfulness and financial outcomes are distinct, and I plan accordingly"
     ]
@@ -788,7 +788,7 @@ const questions = [
     category: "Practical Alignment",
     text: "Do you have a written financial plan that accounts for your values, not just your goals?",
     options: [
-      "No \u2014 I don\u2019t have a written plan at all",
+      "No, I don\u2019t have a written plan at all",
       "I have a loose plan, but it\u2019s mostly about retirement numbers and savings targets",
       "I have a plan that touches on values, but it hasn\u2019t been updated or reviewed recently",
       "I have a current, written plan that explicitly integrates my faith convictions with my financial strategy"
@@ -798,7 +798,7 @@ const questions = [
     category: "Practical Alignment",
     text: "How would you describe your relationship with debt?",
     options: [
-      "I don\u2019t think about debt in moral or spiritual terms \u2014 it\u2019s just a financial tool",
+      "I don\u2019t think about debt in moral or spiritual terms. It\u2019s just a financial tool to me",
       "I have debt but I\u2019ve never evaluated it against biblical principles",
       "I\u2019ve thought about what Scripture says about debt, but I still carry some I\u2019m not fully at peace with",
       "I have a clear, biblically informed position on debt that shapes my borrowing decisions"
@@ -818,7 +818,7 @@ const questions = [
     category: "Practical Alignment",
     text: "If something happened to you tomorrow, how prepared is your family?",
     options: [
-      "They\u2019d be scrambling \u2014 important documents, accounts, and plans are scattered or incomplete",
+      "They\u2019d be scrambling. Important documents, accounts, and plans are scattered or incomplete",
       "The basics are in place (life insurance, a will), but my spouse would have a lot to figure out",
       "My family is reasonably prepared, but there are known gaps I haven\u2019t addressed",
       "My estate plan is current, my spouse knows the full picture, and someone trustworthy could step in to help"
@@ -828,7 +828,7 @@ const questions = [
     category: "Practical Alignment",
     text: "How confident are you that your current tax strategy is optimized?",
     options: [
-      "I don\u2019t really have a tax strategy \u2014 I just file what my CPA prepares",
+      "I don\u2019t really have a tax strategy. I just file what my CPA prepares",
       "I take the standard deductions and credits, but I suspect I\u2019m leaving money on the table",
       "I\u2019ve done some planning, but I\u2019m not sure it accounts for my full situation (business income, investments, giving)",
       "My tax strategy is integrated with my investment, giving, and estate plans and reviewed annually"
@@ -1331,18 +1331,54 @@ function downloadPDF() {
 
   // Biblical context for each question
   const biblicalContext = [
-    { why: "Psalm 119:105 says, \u201CYour word is a lamp to my feet and a light to my path.\u201D When Scripture shapes your financial worldview rather than culture or opinion, your decisions are anchored to something that doesn\u2019t shift with markets or trends." },
-    { why: "Psalm 24:1 declares, \u201CThe earth is the LORD\u2019s, and everything in it.\u201D Recognizing God\u2019s ownership changes everything downstream \u2014 how you plan, spend, give, and hold your wealth. Stewardship, not ownership, is the biblical posture." },
-    { why: "2 Corinthians 9:7 teaches, \u201CGod loves a cheerful giver.\u201D Generosity rooted in conviction rather than emotion is sustainable and transformative. A deliberate giving strategy ensures your generosity reflects your theology, not just your mood." },
-    { why: "Romans 14:12 reminds us, \u201CEach of us will give an account of himself to God.\u201D The ability to articulate how your finances honor God isn\u2019t about performance \u2014 it\u2019s about having done the work of connecting your faith to your financial life." },
-    { why: "Ecclesiastes 9:11 observes that \u201Ctime and chance happen to them all.\u201D Equating wealth with God\u2019s favor or hardship with His disapproval leads to a fragile faith. Biblical stewardship separates faithfulness from financial outcomes." },
-    { why: "Proverbs 21:5 says, \u201CThe plans of the diligent lead surely to abundance.\u201D A written plan that integrates your values ensures your financial structure reflects your convictions \u2014 not just your goals. Without it, good intentions remain unrealized." },
-    { why: "Proverbs 22:7 warns, \u201CThe borrower is slave to the lender.\u201D Scripture speaks directly and frequently about debt. A biblically informed approach to borrowing protects your freedom, your family, and your ability to steward generously." },
-    { why: "James 1:22 instructs, \u201CBe doers of the word, and not hearers only.\u201D It\u2019s possible to hold strong convictions about stewardship while your daily spending runs on autopilot. Aligning behavior with belief is where theology meets practice." },
-    { why: "Proverbs 13:22 says, \u201CA good man leaves an inheritance to his children\u2019s children.\u201D Estate planning is stewardship that extends beyond your lifetime. If your family would be scrambling, that\u2019s a gap Scripture calls you to close." },
-    { why: "Luke 16:10 teaches, \u201COne who is faithful in a very little is also faithful in much.\u201D Your tax strategy is a stewardship decision. Overpaying due to poor coordination means fewer resources available for the purposes God has placed on your heart." },
-    { why: "Ecclesiastes 11:2 advises, \u201CDivide your portion to seven, or even to eight.\u201D Intentional investment is biblical wisdom applied to wealth. Your investments should serve your God-given goals and convictions, not sit unexamined." },
-    { why: "Proverbs 15:22 says, \u201CWithout counsel plans fail, but with many advisers they succeed.\u201D Regular review with a trusted guide ensures your plan stays current and your decisions are made with full information, not assumptions." }
+    {
+      what: "This question identifies the source of your financial worldview. The framework you operate from shapes every downstream decision: what you save, what you spend, what you give, and how confidently you do any of it.",
+      why: "Psalm 119:105 says, \u201CYour word is a lamp to my feet and a light to my path.\u201D When Scripture shapes your financial worldview rather than culture or opinion, your decisions are anchored to something that doesn\u2019t shift with markets or trends."
+    },
+    {
+      what: "Ownership versus stewardship is the foundational distinction in biblical finance. How you answer this question shapes whether your wealth feels like a possession to defend or a trust to manage well.",
+      why: "Psalm 24:1 declares, \u201CThe earth is the LORD\u2019s, and everything in it.\u201D Recognizing God\u2019s ownership changes everything downstream: how you plan, spend, give, and hold your wealth. Stewardship, not ownership, is the biblical posture."
+    },
+    {
+      what: "Generosity reveals theology in action. A deliberate giving strategy is a direct expression of what you actually believe about money\u2019s purpose.",
+      why: "2 Corinthians 9:7 teaches, \u201CGod loves a cheerful giver.\u201D Generosity rooted in conviction rather than emotion is sustainable and transformative. A deliberate giving strategy ensures your generosity reflects your theology, not just your mood."
+    },
+    {
+      what: "The clarity of your answer is a proxy for the clarity of your convictions. Most people have never been asked this question, which is exactly why the gap between belief and practice goes unnoticed.",
+      why: "Romans 14:12 reminds us, \u201CEach of us will give an account of himself to God.\u201D The ability to articulate how your finances honor God isn\u2019t about performance. It\u2019s about having done the work of connecting your faith to your financial life."
+    },
+    {
+      what: "Conflating wealth with God\u2019s approval is one of the most common spiritual traps in personal finance. Untangling them protects your faith from market cycles and your finances from emotional decisions.",
+      why: "Ecclesiastes 9:11 observes that \u201Ctime and chance happen to them all.\u201D Equating wealth with God\u2019s favor or hardship with His disapproval leads to a fragile faith. Biblical stewardship separates faithfulness from financial outcomes."
+    },
+    {
+      what: "A plan that ignores your values is just a math exercise. Integrating convictions into a written plan is what turns a portfolio into stewardship.",
+      why: "Proverbs 21:5 says, \u201CThe plans of the diligent lead surely to abundance.\u201D A written plan that integrates your values ensures your financial structure reflects your convictions, not just your goals. Without it, good intentions remain unrealized."
+    },
+    {
+      what: "Debt has a moral dimension Scripture takes seriously. Whether you\u2019ve evaluated your borrowing through that lens determines whether you control debt or it controls you.",
+      why: "Proverbs 22:7 warns, \u201CThe borrower is slave to the lender.\u201D Scripture speaks directly and frequently about debt. A biblically informed approach to borrowing protects your freedom, your family, and your ability to steward generously."
+    },
+    {
+      what: "Beliefs rarely translate to behavior automatically. The gap between what you say you value and what your spending actually shows is where real stewardship work happens.",
+      why: "James 1:22 instructs, \u201CBe doers of the word, and not hearers only.\u201D It\u2019s possible to hold strong convictions about stewardship while your daily spending runs on autopilot. Aligning behavior with belief is where theology meets practice."
+    },
+    {
+      what: "Estate readiness is one of the most neglected areas of stewardship for high-income families. The work you don\u2019t do here becomes a burden your family inherits at the worst possible moment.",
+      why: "Proverbs 13:22 says, \u201CA good man leaves an inheritance to his children\u2019s children.\u201D Estate planning is stewardship that extends beyond your lifetime. If your family would be scrambling, that\u2019s a gap Scripture calls you to close."
+    },
+    {
+      what: "Tax strategy directly affects how much capital you have available for saving, giving, and investing. Treating taxes as a once-a-year filing instead of an ongoing strategy leaves resources on the table.",
+      why: "Luke 16:10 teaches, \u201COne who is faithful in a very little is also faithful in much.\u201D Your tax strategy is a stewardship decision. Overpaying due to poor coordination means fewer resources available for the purposes God has placed on your heart."
+    },
+    {
+      what: "Investments built on autopilot rarely match the goals or convictions of the person who owns them. Intentionality here determines whether your wealth is working toward your purposes or drifting on default settings.",
+      why: "Ecclesiastes 11:2 advises, \u201CDivide your portion to seven, or even to eight.\u201D Intentional investment is biblical wisdom applied to wealth. Your investments should serve your God-given goals and convictions, not sit unexamined."
+    },
+    {
+      what: "Plans degrade. A plan that hasn\u2019t been reviewed in over a year is almost certainly out of sync with your current life, taxes, and goals, even if nothing dramatic has changed.",
+      why: "Proverbs 15:22 says, \u201CWithout counsel plans fail, but with many advisers they succeed.\u201D Regular review with a trusted guide ensures your plan stays current and your decisions are made with full information, not assumptions."
+    }
   ];
 
   addFooter();
@@ -1375,9 +1411,11 @@ function downloadPDF() {
     const qLines = doc.splitTextToSize(q.text, contentW - 32);
     doc.setFontSize(10);
     const ansLines = doc.splitTextToSize(chosenText, contentW - 32);
+    doc.setFontSize(10);
+    const whatLines = doc.splitTextToSize(biblicalContext[i].what, contentW - 32);
     doc.setFontSize(9);
     const ctxLines = doc.splitTextToSize(biblicalContext[i].why, contentW - 32);
-    const cardH = 32 + qLines.length * 14 + 18 + ansLines.length * 13 + 14 + ctxLines.length * 13 + 22;
+    const cardH = 32 + qLines.length * 14 + 18 + ansLines.length * 13 + 18 + whatLines.length * 13 + 14 + ctxLines.length * 13 + 22;
     checkPage(cardH + 12);
 
     // Whisper-bordered card
@@ -1427,9 +1465,23 @@ function downloadPDF() {
     doc.setFontSize(10);
     doc.setTextColor(...INK);
     doc.text(ansLines, margin + 16, cy, { lineHeightFactor: 1.45 });
-    cy += ansLines.length * 13 + 8;
+    cy += ansLines.length * 13 + 12;
 
-    // Biblical context
+    // WHY THIS MATTERS label + body
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(7.5);
+    doc.setTextColor(...INK_MUTED);
+    doc.setCharSpace(1);
+    doc.text('WHY THIS MATTERS', margin + 16, cy);
+    doc.setCharSpace(0);
+    cy += 12;
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(10);
+    doc.setTextColor(...INK);
+    doc.text(whatLines, margin + 16, cy, { lineHeightFactor: 1.5 });
+    cy += whatLines.length * 13 + 10;
+
+    // Biblical reflection (italic, faint)
     doc.setFont('helvetica', 'italic');
     doc.setFontSize(9);
     doc.setTextColor(90, 100, 115);
