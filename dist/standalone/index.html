@@ -838,11 +838,15 @@ button, input, select, textarea {
   margin-top: 0.5rem;
 }
 .hero-cta-row .btn-secondary-outline {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 48px;
+  padding: 0 1.5rem;
   font-family: 'Inter', sans-serif;
   font-size: 1rem;
-  font-weight: 500;
-  padding: 0.85rem 1.6rem;
+  font-weight: 600;
+  line-height: 1.2;
   border: 1px solid rgba(255,255,255,0.45);
   border-radius: 4px;
   color: #ffffff;
@@ -1173,11 +1177,14 @@ section h2 {
 /* ========================================================================== */
 
 .process {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
   gap: 1.5rem;
 }
 .step {
+  flex: 0 1 320px;
+  max-width: 360px;
   padding: 2rem;
   border-left: 4px solid var(--primary);
   background: #fafafa;
@@ -1248,13 +1255,20 @@ section h2 {
   padding-top: 1.75rem !important;
   padding-bottom: 1.5rem !important;
 }
-#credibility h2 { margin-bottom: 1.25rem; }
-#credibility ul.checklist { margin: 0 0 1rem; }
+#credibility h2 { margin-bottom: 1.5rem; }
+#credibility ul.checklist {
+  max-width: 760px;
+  margin: 0 auto 1rem;
+  padding: 1.75rem 2rem 1.75rem 2.5rem;
+}
 #credibility ul.checklist li {
   display: block;                 /* override global flex for this list */
   line-height: 1.6;
   margin-bottom: .75rem;
+  position: relative;
+  padding-left: 0.25rem;
 }
+#credibility ul.checklist li:last-child { margin-bottom: 0; }
 #credibility ul.checklist li::before {
   margin-right: .5rem;
   position: relative;
@@ -1444,7 +1458,8 @@ input {
   justify-content: center;
 }
 .value-item {
-  flex: 1 1 250px;
+  flex: 0 1 280px;
+  max-width: 320px;
   background: #fafafa;
   border-radius: 6px;
   padding: 1.5rem;
