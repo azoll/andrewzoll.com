@@ -9,7 +9,7 @@ Two self-contained files for Polina to drop onto the RyleighWM site.
 | `index.html` | Main landing page (hero, scorecard CTA, services, FAQs, schedule, free downloads, book email form) |
 | `scorecard.html` | The Biblical Stewardship Scorecard assessment app |
 
-Both files are fully self-contained: CSS is inlined in `<style>` tags and JS is inlined in `<script>` tags. No build step. Drop them on the server and they run.
+Both files are fully self-contained: CSS is inlined in `<style>` tags, JS is inlined in `<script>` tags. No build step. Drop them on the server and they run.
 
 ## Recommended placement
 
@@ -24,38 +24,37 @@ If `scorecard.html` lives at a different URL, update the `<a href="scorecard.htm
 
 ## Image and asset hosting
 
-All images, logos, and the "5 Lies" PDF download are served from the canonical GitHub repo:
+All images, logos, and the "5 Lies" PDF are served from the canonical GitHub repo:
 
 ```
 https://raw.githubusercontent.com/azoll/andrewzoll.com/main/rwm/...
 ```
 
-This means **the page does not need any image files copied to the RyleighWM server**. As long as the GitHub repo stays public, image URLs keep working.
+Polina does not need to copy any image files to the RyleighWM server. As long as the GitHub repo stays public, image URLs keep working.
 
-If you'd like a more performant CDN-backed alternative, replace `https://raw.githubusercontent.com/azoll/andrewzoll.com/main/rwm/` with `https://cdn.jsdelivr.net/gh/azoll/andrewzoll.com@main/rwm/` everywhere. jsDelivr serves the same files from a global CDN, no other changes needed.
+If you'd like CDN performance, replace `https://raw.githubusercontent.com/azoll/andrewzoll.com/main/rwm/` with `https://cdn.jsdelivr.net/gh/azoll/andrewzoll.com@main/rwm/` everywhere. jsDelivr serves the same files from a global CDN, no other changes needed.
 
-## External services (work as-is, but routed to Andrew's accounts)
+## External services
 
-These will function on RyleighWM's site without code changes, but submissions/events go to **Andrew's accounts**, not the firm's:
+These all route to Andrew's accounts intentionally — this is Andrew's content on the RyleighWM site, so submissions and tracking should land with Andrew. Listed here for reference only:
 
-| Service | Where it goes | Action if RWM wants its own |
-|---|---|---|
-| ConvertKit book form | Andrew's list (form id `8106721`) | Replace `https://app.kit.com/forms/8106721/subscriptions` in `index.html` with RWM's form action |
-| Mailchimp scorecard signup | Andrew's list (constants `MAILCHIMP_U` and `MAILCHIMP_ID` in `scorecard.html`) | Update those two constants in `scorecard.html` |
-| Calendly | `calendly.com/andrew-zoll/clarity-call` | Update all `calendly.com/andrew-zoll/clarity-call` links in both files |
-| Meta Pixel | Andrew's pixel id `1447544912815924` | Replace the pixel id in both files (4 occurrences total) |
-| Google Fonts (Inter) | Google CDN | Works as-is, no action |
-| jsPDF (PDF download library) | unpkg CDN | Works as-is, no action |
+- **ConvertKit book form** (`form id 8106721`) — book PDF signups
+- **Mailchimp scorecard signup** — scorecard results emails
+- **Calendly** (`calendly.com/andrew-zoll/clarity-call`) — Stewardship Clarity Call booking
+- **Meta Pixel** (`id 1447544912815924`) — conversion tracking
 
-## Things that are Andrew-specific (not just service routing)
+## PDF download on the scorecard
 
-These are content choices, not config. Decide before publishing:
+The scorecard generates the results PDF entirely in the browser using jsPDF (loaded from the unpkg CDN, with a GitHub-hosted fallback). No server side processing. The standalone `scorecard.html` produces the PDF on click anywhere it's hosted, as long as the user has JavaScript enabled.
 
-- **Bio and personal voice** — `index.html` is written first-person as Andrew ("I'm Andrew Zoll," "I left full-time ministry," "I have four kids"). The scorecard PDF and CTAs say "Prepared for [name]" with `ANDREW ZOLL` as the header wordmark. If RyleighWM publishes this under the firm's name rather than Andrew's, the voice will read oddly.
-- **Andrew's social links** — the LinkedIn and Facebook icons in the bio section link to Andrew's personal profiles.
-- **Author/book** — links to Amazon and the ConvertKit form push Andrew's book *How to Master Your Money God's Way*.
-- **The puppy-financing LinkedIn anecdote** in the FAQ links to Andrew's personal LinkedIn post.
-- **Compliance disclosure** — the Kestra disclosure text mentions Ryleigh Wealth Management directly, so it's already correct for RWM context. Still worth running past compliance before publishing on the firm's domain.
+## Calendly widget requirements
+
+The schedule section uses Calendly's official inline widget. The standalone file already includes Calendly's widget CSS and JS (`https://assets.calendly.com/assets/external/widget.css` and `widget.js`) right above the embed div. Both load asynchronously and are required for the widget to render.
+
+If the widget ever doesn't load, the most common causes are:
+1. The user's browser is blocking third-party requests to `assets.calendly.com`.
+2. A page-level Content Security Policy disallows external scripts.
+3. The Calendly account is paused or the event link has changed.
 
 ## In-page anchors
 
@@ -64,9 +63,9 @@ Both files use `#schedule`, `#book`, `#scorecard`, `#faqs`, etc. for in-page nav
 ## Browser support
 
 - Modern Chrome / Safari / Firefox / Edge: all features work.
-- The scorecard requires JavaScript enabled (it's a multi-step interactive assessment).
-- The PDF download in the scorecard uses jsPDF; it generates client-side and requires a desktop or modern mobile browser. iOS Safari has occasional download quirks; users on older iOS may need to long-press the PDF link.
+- The scorecard requires JavaScript enabled.
+- The PDF download generates client-side; iOS Safari may occasionally need a long-press on the resulting link to trigger the download.
 
-## Notes on canonical update flow
+## Update flow
 
-If Andrew updates the source files in this repo, the assets (images / 5 Lies PDF) auto-update on Polina's pages because they're served from GitHub. **The two HTML files do not auto-update.** When the source HTML changes, regenerate these standalone files (or send Polina a refreshed copy).
+If Andrew updates the source files in this repo, the assets (images / 5 Lies PDF / jsPDF fallback) auto-update on Polina's pages because they're served from GitHub. **The two HTML files do not auto-update.** When the source HTML changes, regenerate these standalone files and send Polina a refreshed copy.
