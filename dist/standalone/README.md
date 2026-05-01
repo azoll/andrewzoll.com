@@ -24,13 +24,13 @@ If `scorecard.html` lives at a different URL, update the `<a href="scorecard.htm
 
 ## Image and asset hosting
 
-All images and assets are served from Andrew's live site:
+All images and assets are served from Andrew's public GitHub repo:
 
 ```
-https://andrewzoll.com/rwm/...
+https://raw.githubusercontent.com/azoll/andrewzoll.com/main/rwm/...
 ```
 
-Polina does not need to copy any image files to the RyleighWM server. As long as andrewzoll.com is up, image URLs keep working.
+Polina does not need to copy any image files to the RyleighWM server. As long as the GitHub repo stays public, image URLs keep working.
 
 ## External services
 
