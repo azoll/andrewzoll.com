@@ -2213,17 +2213,19 @@ h3 {
 /* 19f) SCROLL REVEAL                                                         */
 /* ========================================================================== */
 .reveal {
-  opacity: 0;
-  transform: translateY(18px);
   transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: opacity, transform;
 }
-.reveal.is-visible {
+.js-reveal-enabled .reveal {
+  opacity: 0;
+  transform: translateY(18px);
+}
+.js-reveal-enabled .reveal.is-visible {
   opacity: 1;
   transform: translateY(0);
 }
 @media (prefers-reduced-motion: reduce) {
-  .reveal { opacity: 1; transform: none; transition: none; }
+  .js-reveal-enabled .reveal { opacity: 1; transform: none; transition: none; }
 }
 
 /* "What this covers" pill list under How We Help */
@@ -2875,19 +2877,35 @@ document.addEventListener('DOMContentLoaded', function () {
 <script>
 document.addEventListener('DOMContentLoaded', function () {
   if (!('IntersectionObserver' in window)) return;
-  const targets = document.querySelectorAll(
-    'section:not(.hero):not(.trust-bar), .card, .media-card, .step, .scorecard-grid, .about-grid'
-  );
-  targets.forEach(el => el.classList.add('reveal'));
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('is-visible');
-        io.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
-  targets.forEach(el => io.observe(el));
+  try {
+    const targets = document.querySelectorAll(
+      'section:not(.hero):not(.trust-bar), .card, .media-card, .step, .scorecard-grid, .about-grid'
+    );
+    document.documentElement.classList.add('js-reveal-enabled');
+    targets.forEach(el => el.classList.add('reveal'));
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    targets.forEach(el => io.observe(el));
+
+    // Safety fallback: if any .reveal elements remain hidden after 2s, force-show.
+    setTimeout(() => {
+      document.querySelectorAll('.reveal:not(.is-visible)').forEach(el => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight && rect.bottom > 0) {
+          el.classList.add('is-visible');
+        }
+      });
+    }, 2000);
+  } catch (e) {
+    document.documentElement.classList.remove('js-reveal-enabled');
+    document.querySelectorAll('.reveal').forEach(el => el.classList.add('is-visible'));
+  }
 });
 </script>
 </body>
