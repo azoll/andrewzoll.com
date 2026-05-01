@@ -588,6 +588,179 @@
     }
     .disclosure a { color: var(--ink-muted); text-decoration: underline; text-decoration-color: var(--whisper); }
 
+    /* ── Trust bar on landing ── */
+    .landing-hero {
+      padding: 16px 0 40px;
+      border-bottom: 1px solid var(--whisper);
+      margin-bottom: 36px;
+    }
+    .sc-trust-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 0.55rem 1rem;
+      margin: 28px 0 32px;
+      padding: 14px 0;
+      border-top: 1px solid var(--whisper);
+      border-bottom: 1px solid var(--whisper);
+    }
+    .sc-trust-item {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--navy);
+      letter-spacing: -0.05px;
+      white-space: nowrap;
+    }
+    .sc-trust-dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--gold);
+      flex-shrink: 0;
+    }
+    .landing-body-wrap { margin-top: 8px; }
+
+    /* ── Headshot + signature on results CTA ── */
+    .cta-headshot {
+      position: relative;
+      width: 76px;
+      height: 76px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin: 0 auto 16px;
+      display: block;
+      border: 2px solid rgba(200,150,46,0.35);
+      box-shadow: 0 8px 24px -8px rgba(0,0,0,0.45);
+    }
+    .cta-signature {
+      position: relative;
+      margin-top: 18px;
+      font-size: 13px;
+      color: rgba(255,255,255,0.6);
+      letter-spacing: 0.2px;
+      font-style: italic;
+    }
+
+    /* ── Schedule (Calendly) ── */
+    .sc-schedule {
+      margin: 24px 0 32px;
+      padding-top: 24px;
+      border-top: 1px solid var(--whisper);
+      scroll-margin-top: 24px;
+    }
+    .sc-schedule-overline,
+    .sc-faq-overline {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      color: var(--gold-hover);
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    .sc-schedule-title,
+    .sc-faq-title {
+      font-size: 26px;
+      font-weight: 300;
+      letter-spacing: -0.6px;
+      color: var(--navy);
+      text-align: center;
+      margin-bottom: 12px;
+    }
+    .sc-schedule-body {
+      font-size: 15px;
+      line-height: 1.55;
+      color: var(--ink-muted);
+      text-align: center;
+      max-width: 480px;
+      margin: 0 auto 20px;
+    }
+    .sc-schedule .calendly-inline-widget {
+      border-radius: var(--r-card);
+      overflow: hidden;
+    }
+
+    /* ── FAQ ── */
+    .sc-faq {
+      margin: 16px 0 32px;
+      padding-top: 28px;
+      border-top: 1px solid var(--whisper);
+    }
+    .sc-faq-item {
+      background: var(--bg);
+      border: 1px solid var(--whisper);
+      border-radius: var(--r-card);
+      padding: 0;
+      margin-bottom: 8px;
+      overflow: hidden;
+      transition: box-shadow var(--transition);
+    }
+    .sc-faq-item[open] {
+      box-shadow: var(--shadow-card);
+    }
+    .sc-faq-item summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 16px 20px;
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--navy);
+      letter-spacing: -0.1px;
+      position: relative;
+      padding-right: 44px;
+      user-select: none;
+    }
+    .sc-faq-item summary::-webkit-details-marker { display: none; }
+    .sc-faq-item summary::after {
+      content: '+';
+      position: absolute;
+      right: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 20px;
+      font-weight: 300;
+      color: var(--gold-hover);
+      transition: transform var(--transition);
+    }
+    .sc-faq-item[open] summary::after {
+      content: '\2212';
+    }
+    .sc-faq-body {
+      padding: 0 20px 18px;
+    }
+    .sc-faq-body p {
+      font-size: 14px;
+      line-height: 1.65;
+      color: var(--ink-muted);
+      margin: 0;
+    }
+
+    /* ── Staggered reveal on results screen ── */
+    .results-stagger > * {
+      opacity: 0;
+      transform: translateY(10px);
+      animation: scResultReveal 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    .results-stagger > *:nth-child(1) { animation-delay: 0.05s; }
+    .results-stagger > *:nth-child(2) { animation-delay: 0.20s; }
+    .results-stagger > *:nth-child(3) { animation-delay: 0.30s; }
+    .results-stagger > *:nth-child(4) { animation-delay: 0.40s; }
+    .results-stagger > *:nth-child(5) { animation-delay: 0.50s; }
+    .results-stagger > *:nth-child(6) { animation-delay: 0.60s; }
+    .results-stagger > *:nth-child(7) { animation-delay: 0.70s; }
+    .results-stagger > *:nth-child(8) { animation-delay: 0.80s; }
+    .results-stagger > *:nth-child(n+9) { animation-delay: 0.90s; }
+    @keyframes scResultReveal {
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .results-stagger > * {
+        animation: none;
+        opacity: 1;
+        transform: none;
+      }
+    }
+
     /* ── Responsive ── */
     @media (max-width: 540px) {
       .sc-screen { padding: 36px 22px 48px; }
@@ -601,16 +774,16 @@
       .score-card { padding: 32px 22px; }
       .cta-section { padding: 32px 22px; }
       .cta-headline { font-size: 22px; }
+      .sc-trust-bar { gap: 0.4rem 0.7rem; }
+      .sc-trust-item { font-size: 12px; }
+      .sc-schedule-title, .sc-faq-title { font-size: 22px; }
+      .cta-headshot { width: 64px; height: 64px; }
     }
   </style>
 </head>
 <body>
 
 <div class="scorecard-container">
-  <div class="sc-header">
-    <div class="sc-header-logo">Andrew Zoll</div>
-  </div>
-
   <!-- PROGRESS BAR (hidden on landing/email/results) -->
   <div class="progress-wrap" id="progressWrap" style="display:none;">
     <div class="progress-label" id="progressLabel">Question 1 of 12</div>
@@ -621,18 +794,35 @@
 
   <!-- ════════════ SCREEN: LANDING ════════════ -->
   <div class="sc-screen active" id="screenLanding">
-    <span class="landing-badge">Free Assessment</span>
-    <h1 class="landing-headline">How Well Are You Stewarding God's Wealth?</h1>
-    <p class="landing-subhead">12 questions. 3 minutes. A clear picture of where your finances align with your convictions and where the gaps are.</p>
-    <p class="landing-body">You've done well financially. But doing well and stewarding well are not the same thing.</p>
-    <p class="landing-body">This scorecard measures your financial life against biblical principles of stewardship. Not budgeting tips. Not investment advice. A diagnostic that asks whether your money reflects what you say you believe.</p>
-    <p class="landing-body">You'll receive a personalized score across two categories: <strong>Theological Foundation</strong> (do your financial convictions come from Scripture or culture?) and <strong>Practical Alignment</strong> (does your financial structure match those convictions?).</p>
-    <p class="landing-body">At the end, you'll know exactly where you stand and what to address first.</p>
-    <div class="landing-cta-wrap">
-      <button class="btn-primary" onclick="startAssessment()">Take the Scorecard</button>
+    <div class="landing-hero">
+      <span class="landing-badge">Free Biblical Stewardship Assessment</span>
+      <h1 class="landing-headline">How Well Are You Stewarding God's Wealth?</h1>
+      <p class="landing-subhead">12 questions. 3 minutes. A clear picture of where your finances align with your convictions and where the gaps are.</p>
+
+      <div class="sc-trust-bar" aria-label="Credentials">
+        <div class="sc-trust-item">CRPC&trade; Fiduciary Advisor</div>
+        <span class="sc-trust-dot" aria-hidden="true"></span>
+        <div class="sc-trust-item">10+ Years in Pastoral Ministry</div>
+        <span class="sc-trust-dot" aria-hidden="true"></span>
+        <div class="sc-trust-item">Author</div>
+        <span class="sc-trust-dot" aria-hidden="true"></span>
+        <div class="sc-trust-item">Registered Investment Advisor</div>
+      </div>
+
+      <div class="landing-cta-wrap">
+        <button class="btn-primary" onclick="startAssessment()">Take the Scorecard</button>
+      </div>
     </div>
+
+    <div class="landing-body-wrap">
+      <p class="landing-body">You've done well financially. Doing well and stewarding well are not the same thing.</p>
+      <p class="landing-body">This scorecard measures your financial life against biblical principles of stewardship. Not budgeting tips. Not investment advice. A diagnostic that asks whether your money reflects what you say you believe.</p>
+      <p class="landing-body">You'll receive a personalized score across two categories: <strong>Theological Foundation</strong> (do your financial convictions come from Scripture or culture?) and <strong>Practical Alignment</strong> (does your financial structure match those convictions?).</p>
+      <p class="landing-body">At the end, you'll know exactly where you stand and what to address first.</p>
+    </div>
+
     <div class="disclosure" style="margin-top:40px;">
-      This assessment is for educational purposes only and does not constitute financial, tax, or legal advice. No specific investment recommendations are provided. Securities offered through Kestra Investment Services, LLC (Kestra IS), member FINRA/SIPC. Investment advisory services offered through Kestra Advisory Services, LLC (Kestra AS), an affiliate of Kestra IS. Ryleigh Wealth Management and any other entity listed herein are not affiliated with Kestra IS or Kestra AS. Ryleigh Wealth Management does not offer tax or legal advice. Investor Disclosures: <a href="https://www.kestrafinancial.com/disclosures" target="_blank" rel="noopener" style="color:var(--gray-600);">https://www.kestrafinancial.com/disclosures</a>
+      This assessment is for educational purposes only and does not constitute financial, tax, or legal advice. No specific investment recommendations are provided. Securities offered through Kestra Investment Services, LLC (Kestra IS), member FINRA/SIPC. Investment advisory services offered through Kestra Advisory Services, LLC (Kestra AS), an affiliate of Kestra IS. Ryleigh Wealth Management and any other entity listed herein are not affiliated with Kestra IS or Kestra AS. Ryleigh Wealth Management does not offer tax or legal advice. Investor Disclosures: <a href="https://www.kestrafinancial.com/disclosures" target="_blank" rel="noopener" style="color:var(--ink-muted);">https://www.kestrafinancial.com/disclosures</a>
     </div>
   </div>
 
@@ -709,9 +899,11 @@
     </div>
 
     <div class="cta-section">
+      <img class="cta-headshot" src="https://raw.githubusercontent.com/azoll/andrewzoll.com/main/rwm/assets/headshot.jpeg" alt="Andrew Zoll" loading="lazy">
       <h3 class="cta-headline">Want to close the gaps?</h3>
       <p class="cta-body">A Stewardship Clarity Call is a focused conversation where we review your financial situation through a biblical lens. We'll look honestly at where you stand and what it would take to move from confusion to confidence.</p>
-      <a class="btn-primary" href="https://calendly.com/andrew-zoll/clarity-call" target="_blank" rel="noopener" id="bookingLink">Book a Stewardship Clarity Call</a>
+      <a class="btn-primary" href="#sc-schedule" id="bookingLink">Book a Stewardship Clarity Call</a>
+      <p class="cta-signature">&mdash; Andrew Zoll, CRPC&trade;</p>
     </div>
 
     <div style="text-align:center; margin-bottom:24px;">
@@ -721,8 +913,59 @@
       </button>
     </div>
 
+    <!-- Inline Calendly booking -->
+    <div class="sc-schedule" id="sc-schedule">
+      <div class="sc-schedule-overline">SCHEDULE NOW</div>
+      <h3 class="sc-schedule-title">Pick a time that works for you.</h3>
+      <p class="sc-schedule-body">Twenty-five minutes, focused on your situation. No pressure, no sales pitch.</p>
+      <link rel="stylesheet" href="https://assets.calendly.com/assets/external/widget.css">
+      <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
+      <div class="calendly-inline-widget" data-url="https://calendly.com/andrew-zoll/clarity-call?hide_gdpr_banner=1&amp;primary_color=C8962E" style="min-width:320px;height:680px;"></div>
+    </div>
+
+    <!-- Common questions -->
+    <div class="sc-faq">
+      <div class="sc-faq-overline">COMMON QUESTIONS</div>
+      <h3 class="sc-faq-title">Before You Book</h3>
+
+      <details class="sc-faq-item">
+        <summary>What does the call actually cover?</summary>
+        <div class="sc-faq-body">
+          <p>We'll talk through your scorecard results, the biggest gaps you noticed, and what a next faithful step could look like for your family. By the end, you'll have a clearer picture of where you stand and whether deeper work together makes sense.</p>
+        </div>
+      </details>
+
+      <details class="sc-faq-item">
+        <summary>Is this a sales call?</summary>
+        <div class="sc-faq-body">
+          <p>No. The call is a conversation, not a pitch. If we both think working together would serve your family well, we can talk about next steps. If not, you walk away with clarity and a faithful next step you can take on your own.</p>
+        </div>
+      </details>
+
+      <details class="sc-faq-item">
+        <summary>Do I need to prepare anything?</summary>
+        <div class="sc-faq-body">
+          <p>A general knowledge of your financial position is plenty. No paperwork, no spreadsheets. Bringing your scorecard results helps but isn't required.</p>
+        </div>
+      </details>
+
+      <details class="sc-faq-item">
+        <summary>Will I be added to a list?</summary>
+        <div class="sc-faq-body">
+          <p>Submitting your email for the scorecard signs you up for occasional notes on biblical stewardship. You can unsubscribe at any time. Booking the call doesn't add you to anything else.</p>
+        </div>
+      </details>
+
+      <details class="sc-faq-item">
+        <summary>What if my spouse and I aren't on the same page financially?</summary>
+        <div class="sc-faq-body">
+          <p>More common than you'd think. Money reveals differences in values, fears, and communication, not just math. The healthiest plans are built when husband and wife are moving in the same direction, and these conversations tend to strengthen marriages rather than strain them.</p>
+        </div>
+      </details>
+    </div>
+
     <div class="disclosure">
-      This assessment is for educational purposes only and does not constitute financial, tax, or legal advice. No specific investment recommendations are provided. Securities offered through Kestra Investment Services, LLC (Kestra IS), member FINRA/SIPC. Investment advisory services offered through Kestra Advisory Services, LLC (Kestra AS), an affiliate of Kestra IS. Ryleigh Wealth Management and any other entity listed herein are not affiliated with Kestra IS or Kestra AS. Ryleigh Wealth Management does not offer tax or legal advice. Investor Disclosures: <a href="https://www.kestrafinancial.com/disclosures" target="_blank" rel="noopener" style="color:var(--gray-600);">https://www.kestrafinancial.com/disclosures</a>
+      This assessment is for educational purposes only and does not constitute financial, tax, or legal advice. No specific investment recommendations are provided. Securities offered through Kestra Investment Services, LLC (Kestra IS), member FINRA/SIPC. Investment advisory services offered through Kestra Advisory Services, LLC (Kestra AS), an affiliate of Kestra IS. Ryleigh Wealth Management and any other entity listed herein are not affiliated with Kestra IS or Kestra AS. Ryleigh Wealth Management does not offer tax or legal advice. Investor Disclosures: <a href="https://www.kestrafinancial.com/disclosures" target="_blank" rel="noopener" style="color:var(--ink-muted);">https://www.kestrafinancial.com/disclosures</a>
     </div>
   </div>
 </div>
@@ -1041,6 +1284,21 @@ function submitEmail(e) {
 // ══════════════════════════════════════════════
 // RESULTS
 // ══════════════════════════════════════════════
+function animateCount(el, target, duration) {
+  if (!el) return;
+  const startTime = performance.now();
+  const start = 0;
+  const easeOutCubic = (t) => 1 - Math.pow(1 - t, 3);
+  function frame(now) {
+    const elapsed = now - startTime;
+    const t = Math.min(1, elapsed / duration);
+    const value = Math.round(start + (target - start) * easeOutCubic(t));
+    el.textContent = value;
+    if (t < 1) requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+}
+
 function showResults() {
   const totalScore = answers.reduce((a, b) => a + b, 0);
   const cat1 = answers.slice(0, 5).reduce((a, b) => a + b, 0);
@@ -1049,17 +1307,8 @@ function showResults() {
   // Grade
   const tier = gradeTiers.find(t => totalScore >= t.min && totalScore <= t.max) || gradeTiers[gradeTiers.length - 1];
 
-  // Render score
-  document.getElementById('rScore').textContent = totalScore;
+  // Render grade text
   document.getElementById('rGrade').textContent = `${tier.grade} \u2014 ${tier.label}`;
-
-  // Category bars
-  document.getElementById('rCat1').textContent = cat1;
-  document.getElementById('rCat2').textContent = cat2;
-  setTimeout(() => {
-    document.getElementById('rBar1').style.width = `${(cat1 / 20) * 100}%`;
-    document.getElementById('rBar2').style.width = `${(cat2 / 28) * 100}%`;
-  }, 100);
 
   // Meaning
   document.getElementById('rMeaning').textContent = tier.meaning;
@@ -1080,7 +1329,6 @@ function showResults() {
     card.innerHTML = '<p>Your foundation is strong. A comprehensive review would help you optimize what you\u2019ve already built.</p>';
     prioritiesContainer.appendChild(card);
   } else {
-    // Sort by score ascending (lowest first), take top 3
     lowScores.sort((a, b) => a.score - b.score);
     const topPriorities = lowScores.slice(0, 3);
     topPriorities.forEach(({ index }) => {
@@ -1092,7 +1340,46 @@ function showResults() {
     });
   }
 
+  // Reset numeric displays before reveal
+  document.getElementById('rScore').textContent = '0';
+  document.getElementById('rCat1').textContent = '0';
+  document.getElementById('rCat2').textContent = '0';
+  document.getElementById('rBar1').style.width = '0%';
+  document.getElementById('rBar2').style.width = '0%';
+
+  // Trigger staggered reveal animation by re-applying the class
+  const resultsEl = document.getElementById('screenResults');
+  resultsEl.classList.remove('results-stagger');
+
   showScreen('screenResults');
+
+  // Force reflow so the animation restarts on subsequent reveals
+  void resultsEl.offsetWidth;
+  resultsEl.classList.add('results-stagger');
+
+  // Animate score number, then category bars (after the score card finishes revealing)
+  const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const scoreEl = document.getElementById('rScore');
+  const cat1El = document.getElementById('rCat1');
+  const cat2El = document.getElementById('rCat2');
+
+  if (reduceMotion) {
+    scoreEl.textContent = totalScore;
+    cat1El.textContent = cat1;
+    cat2El.textContent = cat2;
+    document.getElementById('rBar1').style.width = `${(cat1 / 20) * 100}%`;
+    document.getElementById('rBar2').style.width = `${(cat2 / 28) * 100}%`;
+  } else {
+    setTimeout(() => animateCount(scoreEl, totalScore, 1200), 350);
+    setTimeout(() => {
+      animateCount(cat1El, cat1, 1100);
+      document.getElementById('rBar1').style.width = `${(cat1 / 20) * 100}%`;
+    }, 700);
+    setTimeout(() => {
+      animateCount(cat2El, cat2, 1100);
+      document.getElementById('rBar2').style.width = `${(cat2 / 28) * 100}%`;
+    }, 850);
+  }
 }
 
 // ══════════════════════════════════════════════
