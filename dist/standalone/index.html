@@ -484,7 +484,6 @@ document.addEventListener("DOMContentLoaded", function () {
       class="simple-ck-form mc-book-form"
       id="mc-book-form"
       name="mc-book-form"
-      target="_blank"
       novalidate
     >
       <div class="form-row">
@@ -508,7 +507,14 @@ document.addEventListener("DOMContentLoaded", function () {
       <button type="submit" name="subscribe" class="btn">Send me the Book</button>
 
       <p class="form-footnote">You&rsquo;ll get the PDF free and occasional emails on mastering your money God&rsquo;s way. Unsubscribe any time.</p>
+
+      <p class="mc-book-error" role="alert" aria-live="polite"></p>
     </form>
+
+    <div class="mc-book-success" hidden>
+      <h3 class="mc-book-success-title">Check your inbox.</h3>
+      <p class="mc-book-success-body">Your free copy of <em>How to Master Your Money God&rsquo;s Way</em> is on the way. If it doesn&rsquo;t arrive in a few minutes, check your spam folder.</p>
+    </div>
 
   </div>
 
@@ -1827,6 +1833,37 @@ input {
   text-align: center;
   margin-top: .5rem;
 }
+.simple-ck-form .mc-book-error {
+  font-size: 0.9rem;
+  color: #c0392b;
+  text-align: center;
+  margin-top: 0.5rem;
+  min-height: 1em;
+}
+.mc-book-success {
+  text-align: center;
+  padding: 2rem 1.5rem;
+  background: #f6f5f4;
+  border: 1px solid rgba(0,0,0,0.10);
+  border-radius: 12px;
+  max-width: 480px;
+  margin: 0 auto;
+  box-shadow:
+    rgba(27,58,92,0.04) 0px 4px 18px,
+    rgba(27,58,92,0.02) 0px 1px 3px;
+}
+.mc-book-success-title {
+  font-size: 1.5rem;
+  font-weight: 300;
+  letter-spacing: -0.5px;
+  color: #1B3A5C;
+  margin-bottom: 0.5rem;
+}
+.mc-book-success-body {
+  font-size: 1rem;
+  line-height: 1.55;
+  color: #4a4a4a;
+}
 
 
 /* ========================================================================== */
@@ -2662,11 +2699,60 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }, { capture: true });
 
-  // Mailchimp book form submit → Lead
-  const ckForm = document.getElementById('mc-book-form');
-  if (ckForm) {
-    ckForm.addEventListener('submit', function () {
-      track('Lead', { source: 'Mailchimp Book Form (LM_Book)', product: 'How to Master Your Money God\'s Way' });
+  // Mailchimp book form: inline JSONP submission with "Check your inbox" confirmation
+  const bookForm = document.getElementById('mc-book-form');
+  const bookSuccess = document.querySelector('.mc-book-success');
+  const bookError = bookForm ? bookForm.querySelector('.mc-book-error') : null;
+  if (bookForm) {
+    bookForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (bookError) bookError.textContent = '';
+
+      const fname = (bookForm.querySelector('#mce-FNAME-book') || {}).value || '';
+      const email = (bookForm.querySelector('#mce-EMAIL-book') || {}).value || '';
+      const honeypot = (bookForm.querySelector('input[name="b_2eb7d0c1b3419f0b9bf268d01_6e456e6462"]') || {}).value || '';
+
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        if (bookError) bookError.textContent = 'Please enter a valid email address.';
+        return;
+      }
+      if (honeypot) return; // bot
+
+      const submitBtn = bookForm.querySelector('button[type="submit"]');
+      const originalLabel = submitBtn ? submitBtn.textContent : '';
+      if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Sending…'; }
+
+      const params = new URLSearchParams({
+        u: '2eb7d0c1b3419f0b9bf268d01',
+        id: '6e456e6462',
+        f_id: '00b69ce2f0',
+        tags: '4590301',
+        FNAME: fname,
+        EMAIL: email
+      });
+      const callbackName = 'mc_book_cb_' + Date.now();
+      const cleanup = () => {
+        delete window[callbackName];
+        if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = originalLabel; }
+      };
+      window[callbackName] = function (resp) {
+        cleanup();
+        const ok = resp && (resp.result === 'success' || (resp.msg || '').toLowerCase().includes('already subscribed'));
+        if (ok) {
+          track('Lead', { source: 'Mailchimp Book Form (LM_Book)', product: "How to Master Your Money God's Way" });
+          bookForm.hidden = true;
+          if (bookSuccess) bookSuccess.hidden = false;
+        } else if (bookError) {
+          bookError.textContent = (resp && resp.msg) ? String(resp.msg).replace(/<[^>]+>/g, '') : 'Something went wrong. Please try again.';
+        }
+      };
+      const script = document.createElement('script');
+      script.src = 'https://ryleighwm.us4.list-manage.com/subscribe/post-json?' + params.toString() + '&c=' + callbackName;
+      script.onerror = function () {
+        cleanup();
+        if (bookError) bookError.textContent = 'Network error. Please try again.';
+      };
+      document.body.appendChild(script);
     });
   }
 
