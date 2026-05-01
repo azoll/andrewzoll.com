@@ -477,19 +477,35 @@ document.addEventListener("DOMContentLoaded", function () {
   <div class="book">
     <img src="https://raw.githubusercontent.com/azoll/andrewzoll.com/main/rwm/assets/book-cover.jpeg" alt="Book cover: How to Master Your Money God’s Way" loading="lazy" width="300" height="400">
 
-    <!-- PLAIN HTML CONVERTKIT FORM (no scripts, no inline CSS) -->
-    <form action="https://app.kit.com/forms/8106721/subscriptions" method="post" class="simple-ck-form" novalidate>
+    <!-- Mailchimp embedded subscribe form (LM_Book) -->
+    <form
+      action="https://ryleighwm.us4.list-manage.com/subscribe/post?u=2eb7d0c1b3419f0b9bf268d01&amp;id=6e456e6462&amp;f_id=00b69ce2f0"
+      method="post"
+      class="simple-ck-form mc-book-form"
+      id="mc-book-form"
+      name="mc-book-form"
+      target="_blank"
+      novalidate
+    >
       <div class="form-row">
-        <label for="first_name">First Name</label>
-        <input id="first_name" name="fields[first_name]" type="text" autocomplete="given-name" placeholder="First Name" required>
+        <label for="mce-FNAME-book">First Name</label>
+        <input id="mce-FNAME-book" name="FNAME" type="text" autocomplete="given-name" placeholder="First Name">
       </div>
 
       <div class="form-row">
-        <label for="email_address">Email Address</label>
-        <input id="email_address" name="email_address" type="email" autocomplete="email" placeholder="Email Address" required>
+        <label for="mce-EMAIL-book">Email Address</label>
+        <input id="mce-EMAIL-book" name="EMAIL" type="email" autocomplete="email" placeholder="Email Address" required>
       </div>
 
-      <button type="submit" class="btn">Send me the Book</button>
+      <!-- LM_Book tag -->
+      <input type="hidden" name="tags" value="4590301">
+
+      <!-- Mailchimp anti-bot honeypot (must be empty) -->
+      <div aria-hidden="true" style="position:absolute; left:-5000px;">
+        <input type="text" name="b_2eb7d0c1b3419f0b9bf268d01_6e456e6462" tabindex="-1" value="">
+      </div>
+
+      <button type="submit" name="subscribe" class="btn">Send me the Book</button>
 
       <p class="form-footnote">You&rsquo;ll get the PDF free and occasional emails on mastering your money God&rsquo;s way. Unsubscribe any time.</p>
     </form>
@@ -2646,11 +2662,11 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }, { capture: true });
 
-  // ConvertKit form submit → Lead
-  const ckForm = document.querySelector('form[action*="app.kit.com/forms/8106721/subscriptions"]');
+  // Mailchimp book form submit → Lead
+  const ckForm = document.getElementById('mc-book-form');
   if (ckForm) {
     ckForm.addEventListener('submit', function () {
-      track('Lead', { source: 'ConvertKit Book Form', product: 'How to Master Your Money God\'s Way' });
+      track('Lead', { source: 'Mailchimp Book Form (LM_Book)', product: 'How to Master Your Money God\'s Way' });
     });
   }
 

@@ -1005,10 +1005,15 @@ function submitEmail(e) {
   const MAILCHIMP_URL = 'https://ryleighwm.us4.list-manage.com/subscribe/post-json';
   const MAILCHIMP_U = '2eb7d0c1b3419f0b9bf268d01';
   const MAILCHIMP_ID = '6e456e6462';
+  const MAILCHIMP_F_ID = '00b59ce2f0';
+  // Numeric tag id for LM_Scorecard. Triggers the scorecard welcome sequence in Mailchimp.
+  const MAILCHIMP_TAG = '4590303';
 
   const params = new URLSearchParams({
     u: MAILCHIMP_U,
     id: MAILCHIMP_ID,
+    f_id: MAILCHIMP_F_ID,
+    tags: MAILCHIMP_TAG,
     FNAME: name,
     EMAIL: email,
     SCORE: String(totalScore),
