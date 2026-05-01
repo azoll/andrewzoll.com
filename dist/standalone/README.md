@@ -24,15 +24,13 @@ If `scorecard.html` lives at a different URL, update the `<a href="scorecard.htm
 
 ## Image and asset hosting
 
-All images, logos, and the "5 Lies" PDF are served from the canonical GitHub repo:
+All images and assets are served from Andrew's live site:
 
 ```
-https://raw.githubusercontent.com/azoll/andrewzoll.com/main/rwm/...
+https://andrewzoll.com/rwm/...
 ```
 
-Polina does not need to copy any image files to the RyleighWM server. As long as the GitHub repo stays public, image URLs keep working.
-
-If you'd like CDN performance, replace `https://raw.githubusercontent.com/azoll/andrewzoll.com/main/rwm/` with `https://cdn.jsdelivr.net/gh/azoll/andrewzoll.com@main/rwm/` everywhere. jsDelivr serves the same files from a global CDN, no other changes needed.
+Polina does not need to copy any image files to the RyleighWM server. As long as andrewzoll.com is up, image URLs keep working.
 
 ## External services
 
