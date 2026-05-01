@@ -13,14 +13,14 @@ Both files are fully self-contained: CSS is inlined in `<style>` tags, JS is inl
 
 ## Recommended placement
 
-Put both files in the same directory on the RyleighWM site so the in-page link from `index.html` to `scorecard.html` resolves naturally. Example:
+The two files are designed to live at:
 
 ```
-/                  → index.html
-/scorecard         → scorecard.html  (or /scorecard.html)
+/andrew-zoll/                  → index.html  (main landing page)
+/andrew-zoll/scorecard/        → scorecard.html  (or scorecard/index.html)
 ```
 
-If `scorecard.html` lives at a different URL, update the `<a href="scorecard.html">` in `index.html` to match.
+The "Take the Scorecard" buttons in `index.html` point to the absolute URL `https://www.ryleighwm.com/andrew-zoll/scorecard/`. If the scorecard ends up at a different path, update the two `<a href="https://www.ryleighwm.com/andrew-zoll/scorecard/">` links in `index.html` to match.
 
 ## Image and asset hosting
 
