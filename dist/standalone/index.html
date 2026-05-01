@@ -467,32 +467,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
 <!-- IF I EVER WRITE BLOGS, THIS IS THE SECTION FOR MY BLOGS -->
 
-<section class="lead-magnet-grid">
-  <h2 class="section-heading-centered">Free Downloads</h2>
-  
-  <div class="lead-magnet-cards">
-
-    <div class="lead-magnet-card">
-      <h3>How to Master Your Money God&rsquo;s Way</h3>
-      <img src="https://raw.githubusercontent.com/azoll/andrewzoll.com/main/rwm/assets/book-cover-1.jpeg" alt="Master Your Money God's Way Cover">
-      <p>This 130-page ebook walks you through ten essential biblical truths about money, stewardship, and legacy. It&rsquo;s rich, theological, and immensely practical.</p>
-      <a href="#book" class="btn">Get the Book</a>
-    </div>
-
-    <div class="lead-magnet-card">
-      <h3>5 Lies Christians Believe About Money</h3>
-      <img src="https://raw.githubusercontent.com/azoll/andrewzoll.com/main/rwm/assets/5-lies-cover.jpg" alt="5 Lies Christians Believe Cover">
-      <p>This short, punchy PDF tackles five of the most common myths faithful families believe about money and replaces them with biblical truth.</p>
-      <a href="https://raw.githubusercontent.com/azoll/andrewzoll.com/main/rwm/downloads/5-Lies-Christians-Believe-About-Money.pdf" 
-   download="5-Lies-Christians-Believe-About-Money.pdf" 
-   class="btn">
-   Download the PDF
-</a>
-    </div>
-
-  </div>
-</section>
-
 <section id="book" class="section book-offer">
   <div class="container">
     <h2 class="section-heading-centered">Get my Book: Free PDF or Buy it on Amazon</h2>
@@ -2061,7 +2035,6 @@ h3 {
 /* 19e) CARD SYSTEM UNIFICATION (Stripe + Notion treatment)                   */
 /* ========================================================================== */
 .card,
-.lead-magnet-card,
 .media-card,
 #credibility ul.checklist,
 .accordion-item,
@@ -2077,7 +2050,6 @@ h3 {
   transition: box-shadow 0.25s ease, transform 0.25s ease;
 }
 .card:hover,
-.lead-magnet-card:hover,
 .media-card:hover {
   box-shadow:
     rgba(27,58,92,0.10) 0px 12px 32px -8px,
@@ -2145,58 +2117,6 @@ h3 {
   font-size: 0.92rem;
   color: #1B3A5C;
   font-weight: 500;
-}
-
-/* ========================================================================== */
-/* 20) LEAD MAGNETS                                                           */
-/* ========================================================================== */
-
-.lead-magnet-grid {
-  padding: 4rem 1rem;
-  width: 100%;                 /* full width */
-  margin: 0;                   /* remove cap */
-}
-.lead-magnet-cards {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 2rem;
-  justify-content: center;
-}
-.lead-magnet-card {
-  flex: 1 1 45%;
-  background: #ffffff;
-  padding: 2rem;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-  text-align: center;
-  max-width: 500px;
-}
-.lead-magnet-card h3 {
-  font-size: 1.5rem;
-  margin-bottom: 0.5rem;
-}
-.lead-magnet-subtitle {
-  font-size: 1.1rem;
-  font-weight: 500;
-  color: #555;
-  margin-bottom: 1rem;
-}
-.lead-magnet-card img {
-  width: 100%;
-  max-width: 240px;
-  height: auto;
-  margin: 1rem auto;
-  border-radius: 6px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-}
-.lead-magnet-card p {
-  font-size: 1.05rem;
-  line-height: 1.6;
-  margin-bottom: 1.25rem;
-}
-@media (max-width: 768px) {
-  .lead-magnet-card { flex: 1 1 100%; }
 }
 
 /* ========================================================================== */
@@ -2363,8 +2283,7 @@ body > section:not(.hero):not(.no-alt):nth-of-type(even) {
 section,
 .hero-2,
 .schedule,
-.about-intro,
-.lead-magnet-grid {
+.about-intro {
   width: 100%;
   max-width: none;
   margin: 0;
@@ -2380,7 +2299,6 @@ section,
 .target-audience-row,
 .about-grid,            /* treat this as an inner row to center */
 .value-columns,         /* cap the What You’ll Get cards */
-.lead-magnet-cards,
 .media-grid,
 .custom-form,
 form {
@@ -2769,7 +2687,7 @@ document.addEventListener('DOMContentLoaded', function () {
 document.addEventListener('DOMContentLoaded', function () {
   if (!('IntersectionObserver' in window)) return;
   const targets = document.querySelectorAll(
-    'section:not(.hero):not(.trust-bar), .card, .lead-magnet-card, .media-card, .step, .scorecard-grid, .about-grid'
+    'section:not(.hero):not(.trust-bar), .card, .media-card, .step, .scorecard-grid, .about-grid'
   );
   targets.forEach(el => el.classList.add('reveal'));
   const io = new IntersectionObserver((entries) => {
