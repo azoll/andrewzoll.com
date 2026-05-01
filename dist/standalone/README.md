@@ -36,8 +36,8 @@ Polina does not need to copy any image files to the RyleighWM server. As long as
 
 These all route to Andrew's accounts intentionally — this is Andrew's content on the RyleighWM site, so submissions and tracking should land with Andrew. Listed here for reference only:
 
-- **ConvertKit book form** (`form id 8106721`) — book PDF signups
-- **Mailchimp scorecard signup** — scorecard results emails
+- **Mailchimp book form** (audience `6e456e6462`, tag `LM_Book` `4590301`) — book PDF signups
+- **Mailchimp scorecard form** (same audience, tag `LM_Scorecard` `4590303`) — scorecard results emails
 - **Calendly** (`calendly.com/andrew-zoll/clarity-call`) — Stewardship Clarity Call booking
 - **Meta Pixel** (`id 1447544912815924`) — conversion tracking
 
