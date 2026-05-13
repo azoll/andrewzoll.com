@@ -32,7 +32,7 @@ function BookingSheetNew({ open, onClose }) {
             </div>
             <div style={bs.summaryRow}>
               <div style={bs.summaryLabel}>Fee</div>
-              <div style={bs.summaryValue}>$1,000 flat, invoiced after the call</div>
+              <div style={bs.summaryValue}>$997 flat, invoiced after the call</div>
             </div>
           </div>
 

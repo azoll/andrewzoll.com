@@ -3,7 +3,7 @@ const { useState: useStateFAQ } = React;
 function FAQNew() {
   const [open, setOpen] = useStateFAQ(0);
   const qs = [
-    { q:'How much does the audit cost?', a:'The audit is $1,000, flat. That covers the 30-minute call and the written plan you get within 48 hours. If you want help implementing the plan afterward, that is separate work and priced based on scope. The plan is yours to keep either way.' },
+    { q:'How much does the audit cost?', a:'The audit is $997, flat. That covers the 30-minute call and the written plan you get within 48 hours. If you want help implementing the plan afterward, that is separate work and priced based on scope. The plan is yours to keep either way.' },
     { q:'Who is this for?', a:'Small business owners who are losing time and momentum to repetitive admin, missed follow-ups, slow quoting, scheduling friction, inbox drag, or manual reporting. The best fit is a 1 to 15 person business where the owner is still close enough to the work to know where things get stuck.' },
     { q:'Do I need to know anything about AI?', a:'No. The audit is not about making you an AI expert. It is about finding practical places where simple tools can reduce repetitive work, improve follow-up, and make the business easier to run.' },
     { q:'What if AI is not the right answer for my business?', a:'Then I will say so. Sometimes the best fix is a better process, a template, a checklist, or a simpler tool. I am not trying to force AI where it does not belong.' },

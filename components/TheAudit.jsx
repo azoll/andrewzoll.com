@@ -38,7 +38,7 @@ function TheAudit({ onBook }) {
               <div style={ta.priceEyebrow}>The audit</div>
               <div style={ta.priceRow}>
                 <span style={ta.priceDollar}>$</span>
-                <span style={ta.price}>1,000</span>
+                <span style={ta.price}>997</span>
               </div>
               <div style={ta.priceNote}>Flat fee. 30 minutes on a call, a written plan in your inbox within 48 hours, and a ranked list of the leaks worth fixing first.</div>
               <div style={ta.priceRule}/>
