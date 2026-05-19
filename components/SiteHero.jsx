@@ -25,7 +25,7 @@ function SiteHero({ onBook, tweaks }) {
         </h1>
 
         <p style={{...hs.lead, color:muted}} className="az-hero-lead">
-          A 45-minute call. A 48-hour ranked plan that names specific AI tools and estimated hours saved per week. A 30-minute walkthrough. $1,000 flat, built for small businesses with 5 to 50 employees and a team.
+          A 45-minute call. A 48-hour ranked plan that names specific AI tools and estimated hours saved per week. A 30-minute walkthrough. $997 flat, built for small businesses with 5 to 50 employees and a team.
         </p>
 
         <div style={hs.ctas} className="az-hero-ctas">
