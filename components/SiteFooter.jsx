@@ -14,6 +14,7 @@ function SiteFooter() {
               <a href="#how" style={ft.link}>How it works</a>
               <a href="#faq" style={ft.link}>FAQ</a>
               <a href="#about" style={ft.link}>About</a>
+              <a href="/blog/" style={ft.link}>Blog</a>
             </div>
             <div style={ft.col}>
               <div style={ft.colTitle}>Contact</div>

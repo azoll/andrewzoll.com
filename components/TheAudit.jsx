@@ -1,9 +1,9 @@
 function TheAudit({ onBook }) {
   const included = [
-    'A 30-minute working session on Zoom',
+    'A 45-minute discovery call on Google Meet (recorded so I catch every detail)',
     'A written plan delivered within 48 hours',
-    'Three to five specific, ordered fixes',
-    'Tool names, no jargon, no black boxes',
+    'A 30-minute walkthrough call where I present the plan and answer the why behind each fix',
+    'Four ranked Quick Wins with specific tool names — no jargon, no black boxes',
     'Estimated time saved and business impact for each fix',
     'You own the plan whether we work together after or not',
   ];
@@ -40,7 +40,9 @@ function TheAudit({ onBook }) {
                 <span style={ta.priceDollar}>$</span>
                 <span style={ta.price}>997</span>
               </div>
-              <div style={ta.priceNote}>Flat fee. 30 minutes on a call, a written plan in your inbox within 48 hours, and a ranked list of the leaks worth fixing first.</div>
+              <div style={ta.priceNote}>Flat fee. A 45-minute discovery call, a written plan in your inbox within 48 hours, and a 30-minute walkthrough call to talk through it.</div>
+              <div style={ta.priceRule}/>
+              <div style={ta.priceFine}><strong style={{color:'#fff'}}>Guarantee:</strong> If the plan does not identify at least 5 hours per week of automatable work, you do not pay.</div>
               <div style={ta.priceRule}/>
               <div style={ta.priceFine}>If you want help putting the plan in place after that, implementation is separate and priced based on scope.</div>
             </div>
