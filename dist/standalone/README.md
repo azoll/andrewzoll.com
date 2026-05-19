@@ -16,11 +16,11 @@ Both files are fully self-contained: CSS is inlined in `<style>` tags, JS is inl
 The two files are designed to live at:
 
 ```
-/andrew-zoll/                  → index.html  (main landing page)
-/andrew-zoll/scorecard/        → scorecard.html  (or scorecard/index.html)
+/andrew-zoll                   → index.html  (main landing page)
+/andrew-zoll-scorecard         → scorecard.html  (or scorecard/index.html)
 ```
 
-The "Take the Scorecard" buttons in `index.html` point to the absolute URL `https://www.ryleighwm.com/andrew-zoll/scorecard/`. If the scorecard ends up at a different path, update the two `<a href="https://www.ryleighwm.com/andrew-zoll/scorecard/">` links in `index.html` to match.
+The "Take the Scorecard" buttons in `index.html` point to the absolute URL `https://www.ryleighwm.com/andrew-zoll-scorecard`. If the scorecard ends up at a different path, update the two `<a href="https://www.ryleighwm.com/andrew-zoll-scorecard">` links in `index.html` to match.
 
 ## Image and asset hosting
 
