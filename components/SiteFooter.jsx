@@ -10,11 +10,12 @@ function SiteFooter() {
           <div style={ft.cols} className="az-footer-cols">
             <div style={ft.col}>
               <div style={ft.colTitle}>Site</div>
-              <a href="#audit" style={ft.link}>The audit</a>
-              <a href="#how" style={ft.link}>How it works</a>
+              <a href="/audit/" style={ft.link}>The audit</a>
+              <a href="/services/" style={ft.link}>Services</a>
+              <a href="/os-builder/" style={ft.link}>OS Builder</a>
+              <a href="/blog/" style={ft.link}>Blog</a>
               <a href="#faq" style={ft.link}>FAQ</a>
               <a href="#about" style={ft.link}>About</a>
-              <a href="/blog/" style={ft.link}>Blog</a>
             </div>
             <div style={ft.col}>
               <div style={ft.colTitle}>Contact</div>

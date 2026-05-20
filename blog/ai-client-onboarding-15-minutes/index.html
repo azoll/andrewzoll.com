@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <meta name="publish-date" content="2026-07-27"/>
+  <title>How to Onboard a New Client in 15 Minutes With AI · Andrew Zoll</title>
+  <meta name="description" content="The owner-time spent onboarding a new client is wildly higher than most owners realize. Here is the AI workflow that compresses it to 15 minutes, using Claude, Make.com, Notion, and a contract trigger."/>
+  <link rel="canonical" href="https://andrewzoll.com/blog/ai-client-onboarding-15-minutes/"/>
+  <meta property="og:type" content="article"/>
+  <meta property="og:title" content="How to Onboard a New Client in 15 Minutes With AI"/>
+  <meta property="og:description" content="A practical workflow that compresses client onboarding from hours to 15 minutes of owner time. Tools, prompts, and the full build."/>
+  <meta property="og:url" content="https://andrewzoll.com/blog/ai-client-onboarding-15-minutes/"/>
+  <meta property="og:image" content="https://andrewzoll.com/assets/logo-primary.png"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <link rel="icon" href="/assets/favicon-primary.png"/>
+  <link rel="stylesheet" href="/colors_and_type.css"/>
+  <style>
+    html,body{margin:0;padding:0;background:#fff;color:#0B1A36;font-family:Inter,sans-serif;-webkit-font-smoothing:antialiased;}
+    *{box-sizing:border-box;}
+    .nav{display:flex;justify-content:space-between;align-items:center;padding:24px;border-bottom:1px solid #E8E9EB;}
+    .nav a{font-size:14px;font-weight:500;color:#0B1A36;text-decoration:none;}
+    .nav .logo img{height:24px;display:block;}
+    .wrap{max-width:760px;margin:0 auto;padding:64px 24px 100px;}
+    .crumb{font-size:13px;color:#888C94;margin-bottom:24px;}
+    .crumb a{color:#2F5D3E;text-decoration:none;}
+    .eyebrow{font-size:12px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:#2F5D3E;margin-bottom:20px;}
+    h1{font-size:clamp(34px,5vw,52px);font-weight:700;line-height:1.05;letter-spacing:-0.03em;margin:0 0 28px;color:#0B1A36;}
+    .meta{font-size:13px;color:#888C94;margin-bottom:48px;}
+    article p{font-size:18px;line-height:1.65;color:#0B1A36;margin:0 0 22px;}
+    article h2{font-size:28px;font-weight:700;line-height:1.2;letter-spacing:-0.02em;margin:56px 0 20px;color:#0B1A36;}
+    article h3{font-size:20px;font-weight:600;margin:32px 0 12px;}
+    article strong{font-weight:600;}
+    article ul, article ol{font-size:18px;line-height:1.7;color:#0B1A36;margin:0 0 22px;padding-left:22px;}
+    article li{margin-bottom:8px;}
+    .cta-band{margin:72px 0 0;padding:40px 32px;background:#0B1A36;color:#fff;border-radius:12px;}
+    .cta-band h3{font-size:24px;font-weight:700;margin:0 0 12px;letter-spacing:-0.02em;}
+    .cta-band p{color:rgba(255,255,255,0.75);font-size:16px;line-height:1.55;margin:0 0 24px;}
+    .cta-band a{display:inline-block;background:#2F5D3E;color:#fff;text-decoration:none;font-weight:600;font-size:15px;padding:14px 24px;border-radius:6px;}
+    .footer{padding:48px 24px;text-align:center;font-size:12px;color:#888C94;border-top:1px solid #E8E9EB;}
+  </style>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Article","headline":"How to Onboard a New Client in 15 Minutes With AI","description":"A practical AI workflow that compresses client onboarding from hours to 15 minutes of owner time.","author":{"@type":"Person","name":"Andrew Zoll","url":"https://andrewzoll.com/"},"publisher":{"@type":"Person","name":"Andrew Zoll"},"mainEntityOfPage":"https://andrewzoll.com/blog/ai-client-onboarding-15-minutes/","datePublished":"2026-07-27"}
+  </script>
+</head>
+<body>
+  <div class="nav">
+    <a href="/" class="logo"><img src="/assets/logo-primary.png" alt="Andrew Zoll"/></a>
+    <a href="/#book">Book the audit →</a>
+  </div>
+  <div class="wrap">
+    <div class="crumb"><a href="/blog/">← Blog</a></div>
+    <div class="eyebrow">AI Workflows · Operations</div>
+    <h1>How to Onboard a New Client in 15 Minutes With AI</h1>
+    <div class="meta">By Andrew Zoll · July 27, 2026</div>
+
+    <article>
+      <p>Client onboarding is the workflow most owners underestimate. The contract gets signed, the celebration lasts an hour, and then the back-end work begins. The intake form. The kickoff scheduling. The internal Slack channel. The project folder. The asset collection email. The first invoice. The team handoff.</p>
+
+      <p>Most service businesses spend 90 to 180 minutes of owner or admin time onboarding each new client. Doing 6 to 10 onboardings a month is 9 to 30 hours of work that has nothing to do with the actual service the client signed up for.</p>
+
+      <p>This workflow takes that to under 15 minutes of owner time per client. Here is the build.</p>
+
+      <h2>The Trigger</h2>
+
+      <p>Onboarding starts when the contract is signed. Use whatever tool you already have for contracts. PandaDoc, DocuSign, HelloSign, or HubSpot's built-in signature feature all work. The signed-contract event is the trigger for everything that follows.</p>
+
+      <p>In Make.com, create a new scenario triggered by "Document Signed" or equivalent in your contract tool. The first step of the scenario pulls the client's name, email, company, contract value, project type, and contract terms.</p>
+
+      <h2>Step 1: Create the Client Record</h2>
+
+      <p>The signed contract should immediately become a record in your CRM and your project tool. The Make.com scenario fires three modules in parallel:</p>
+
+      <ul>
+        <li><strong>HubSpot:</strong> create or update the contact, mark the deal as Closed Won, set the deal stage to "Onboarding."</li>
+        <li><strong>Notion:</strong> create a new project page using a template, populate the title, client name, and project type.</li>
+        <li><strong>Airtable:</strong> add a row to the active-clients table with the contract details.</li>
+      </ul>
+
+      <p>Time elapsed: 30 seconds. Owner involvement: zero.</p>
+
+      <h2>Step 2: Send the Intake Form</h2>
+
+      <p>Most service businesses have an intake form they ask new clients to fill out. The current process is "owner remembers to email them the Tally link." The automated version: Make.com sends a templated welcome email immediately after the contract is signed, with a personalized intake form link.</p>
+
+      <p>The intake form should ask for everything the team needs to start work. For a digital agency: brand assets, target audience, competitor list, success metrics, decision-maker contacts. For a financial services firm: previous account statements, beneficiary information, risk tolerance. For a marketing service: existing creative, brand guidelines, target market.</p>
+
+      <p>The welcome email is drafted once by Anthropic Claude in your voice and stored as a Make.com template. Each client gets the same email with their name and project type personalized. The email contains a single Tally or Typeform link that the client fills out in 10 to 15 minutes.</p>
+
+      <h2>Step 3: Schedule the Kickoff Call</h2>
+
+      <p>In the same welcome email, include a Calendly link for the kickoff call. The Calendly event type is named "Project Kickoff" and is set to 45 minutes. The link is pre-populated with the client's email so the booking is friction-free.</p>
+
+      <p>When the client books the kickoff, Make.com hears the event via Calendly's webhook and updates the project Notion page with the kickoff date. It also adds the meeting to the assigned team member's calendar.</p>
+
+      <h2>Step 4: Generate the Kickoff Brief</h2>
+
+      <p>This is the highest-value AI step in the workflow. The day before the kickoff call, Make.com fires a scenario that pulls:</p>
+
+      <ul>
+        <li>The signed contract terms</li>
+        <li>The intake form responses</li>
+        <li>The original sales discovery call transcript from Fathom</li>
+        <li>The proposal that was sent</li>
+        <li>Any notes the owner left in HubSpot during the sales process</li>
+      </ul>
+
+      <p>It passes all of this to Anthropic Claude with a prompt that says: "Draft a 1-page kickoff brief for the project team. Include the client's primary goal, the agreed scope, the decision-makers, any risks or red flags from the sales process, the success criteria, and the first three milestones. Use my standard kickoff brief template."</p>
+
+      <p>Claude returns a structured brief. Make.com adds it to the top of the Notion project page and emails the assigned team members. The kickoff call now starts with everyone on the same page. The owner does not have to brief the team.</p>
+
+      <h2>Step 5: Run the Kickoff Call</h2>
+
+      <p>The 45-minute kickoff call is one of the only two human touchpoints in this workflow. It is recorded with Fathom. The owner walks the client through the project plan, confirms timelines, and answers any questions.</p>
+
+      <p>After the call, Fathom generates a summary. Make.com fires another scenario that takes the Fathom summary and Claude rewrites it as a "Kickoff Confirmation" email in the owner's voice. The email goes to the client within 30 minutes of the call ending, confirming everything that was agreed.</p>
+
+      <h2>Step 6: Generate the First Invoice</h2>
+
+      <p>If your contract structure is a deposit plus milestones, Make.com fires the first invoice automatically when the kickoff call completes. The invoice is generated in QuickBooks, Stripe, or your accounting tool, populated with the contract terms, and sent to the client with a one-click payment link.</p>
+
+      <p>The owner reviews the invoice for 30 seconds in their inbox and clicks send. Or, if you have set up auto-send, the invoice goes out without owner involvement at all.</p>
+
+      <h2>Step 7: Notify the Team</h2>
+
+      <p>The final automated step is the internal handoff. Make.com sends a Slack message to the project channel with the client name, the kickoff brief link, the first milestone deadline, and a reminder of the assigned team members. If you do not use Slack, Notion's @ mentions or a templated email serve the same role.</p>
+
+      <p>The team now has everything they need to start work on Monday.</p>
+
+      <h2>What the Owner Actually Does</h2>
+
+      <p>In the entire onboarding workflow, the owner's involvement is:</p>
+
+      <ul>
+        <li>Reviewing the kickoff brief generated by Claude (2 to 3 minutes)</li>
+        <li>Running the 45-minute kickoff call (this is the work, not the automation)</li>
+        <li>Reviewing and sending the first invoice (30 seconds)</li>
+        <li>Glancing at the post-call confirmation email before it goes out (90 seconds)</li>
+      </ul>
+
+      <p>Total owner time outside the kickoff call itself: under 15 minutes. The kickoff call is 45 minutes of actual relationship work, which is the part that should stay human.</p>
+
+      <h2>The Stack</h2>
+
+      <ul>
+        <li><strong>Contract tool:</strong> PandaDoc, DocuSign, or HubSpot Signatures (whatever you already use)</li>
+        <li><strong>Intake form:</strong> Tally or Typeform</li>
+        <li><strong>Scheduling:</strong> Calendly</li>
+        <li><strong>CRM:</strong> HubSpot or Pipedrive</li>
+        <li><strong>Project workspace:</strong> Notion or Airtable</li>
+        <li><strong>AI brief and email drafting:</strong> Anthropic Claude</li>
+        <li><strong>Call transcription:</strong> Fathom</li>
+        <li><strong>Invoicing:</strong> QuickBooks, Xero, or Stripe Invoicing</li>
+        <li><strong>Team handoff:</strong> Slack or email</li>
+        <li><strong>Orchestration:</strong> Make.com</li>
+      </ul>
+
+      <p>Monthly cost for the stack at small business scale: $250 to $450 depending on team size. Setup cost if you build it yourself: 30 to 50 hours. Setup cost if implemented through the <a href="/services/" style="color:#2F5D3E;">implementation engagement</a>: under 10 hours of owner time across 4 weeks.</p>
+
+      <h2>What This Saves</h2>
+
+      <p>For a service business onboarding 8 clients per month at 2 hours of owner time each, the workflow recovers 14 to 15 hours of owner time monthly. That is roughly 175 hours per year of work freed for sales, service delivery, or rest.</p>
+
+      <p>The qualitative wins matter as much. Clients onboard faster, which means revenue starts faster. The team gets a real brief instead of a chaotic kickoff. Nothing falls through the cracks because the workflow runs whether the owner is paying attention or not.</p>
+
+      <p>The first onboarding through the new system feels strange because so little is happening manually. By the fifth client, the new pattern is the obvious one. Going back is unimaginable.</p>
+
+      <h2>Where AI Falls Short</h2>
+
+      <p>Two parts of onboarding still belong to humans.</p>
+
+      <p><strong>The relationship-setting moment of the kickoff call.</strong> Tone, trust, alignment on values. These are not workflow problems. They are the actual work.</p>
+
+      <p><strong>Edge-case client needs.</strong> The client who has a non-standard contract, the one who wants to negotiate the scope mid-onboarding, the one with a legal review process. These break the automation in small ways. The owner needs to be able to step in and run a manual onboarding when needed. Build the system to support that exception rather than fight it.</p>
+
+      <h2>The Honest Limit</h2>
+
+      <p>This workflow does not turn a bad sales process into a good one. If you are signing the wrong clients, automating onboarding makes the wrong-fit problem worse. The right place to fix that is upstream in qualification, not downstream in operations.</p>
+
+      <p>But for owners who are signing the right clients and losing weekly hours to the back-end onboarding work, this workflow is one of the highest-ROI builds I deploy.</p>
+
+      <div class="cta-band">
+        <h3>Map this workflow to your business.</h3>
+        <p>The <a href="/audit/" style="color:#5E9573;">$997 AI Efficiency Audit</a> identifies whether onboarding is in your top 3 highest-ROI workflows and gives you the specific build plan. For most service businesses, it ranks in the top 5.</p>
+        <a href="/#book">Book your AI Efficiency Audit →</a>
+      </div>
+    </article>
+  </div>
+  <div class="footer">© 2026 Andrew Zoll · AI Efficiency Audits · Pueblo, CO</div>
+</body>
+</html>

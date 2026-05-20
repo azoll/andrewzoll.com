@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <meta name="publish-date" content="2026-06-01"/>
+  <title>Zapier vs. Make.com vs. n8n: Which Automation Tool Should a Small Business Buy? · Andrew Zoll</title>
+  <meta name="description" content="A side-by-side comparison of Zapier, Make.com, and n8n for small business owners. Pricing, learning curve, AI-friendliness, and which one fits your stack. From someone who builds in all three."/>
+  <link rel="canonical" href="https://andrewzoll.com/blog/zapier-vs-make-vs-n8n/"/>
+  <meta property="og:type" content="article"/>
+  <meta property="og:title" content="Zapier vs. Make.com vs. n8n: Which Automation Tool Should a Small Business Buy?"/>
+  <meta property="og:description" content="A direct comparison from someone who builds in all three. Pricing, learning curve, AI features, and the right pick for your business."/>
+  <meta property="og:url" content="https://andrewzoll.com/blog/zapier-vs-make-vs-n8n/"/>
+  <meta property="og:image" content="https://andrewzoll.com/assets/logo-primary.png"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <link rel="icon" href="/assets/favicon-primary.png"/>
+  <link rel="stylesheet" href="/colors_and_type.css"/>
+  <style>
+    html,body{margin:0;padding:0;background:#fff;color:#0B1A36;font-family:Inter,sans-serif;-webkit-font-smoothing:antialiased;}
+    *{box-sizing:border-box;}
+    .nav{display:flex;justify-content:space-between;align-items:center;padding:24px;border-bottom:1px solid #E8E9EB;}
+    .nav a{font-size:14px;font-weight:500;color:#0B1A36;text-decoration:none;}
+    .nav .logo img{height:24px;display:block;}
+    .wrap{max-width:760px;margin:0 auto;padding:64px 24px 100px;}
+    .crumb{font-size:13px;color:#888C94;margin-bottom:24px;}
+    .crumb a{color:#2F5D3E;text-decoration:none;}
+    .eyebrow{font-size:12px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:#2F5D3E;margin-bottom:20px;}
+    h1{font-size:clamp(34px,5vw,52px);font-weight:700;line-height:1.05;letter-spacing:-0.03em;margin:0 0 28px;color:#0B1A36;}
+    .meta{font-size:13px;color:#888C94;margin-bottom:48px;}
+    article p{font-size:18px;line-height:1.65;color:#0B1A36;margin:0 0 22px;}
+    article h2{font-size:28px;font-weight:700;line-height:1.2;letter-spacing:-0.02em;margin:56px 0 20px;color:#0B1A36;}
+    article h3{font-size:20px;font-weight:600;margin:32px 0 12px;}
+    article strong{font-weight:600;}
+    article ul, article ol{font-size:18px;line-height:1.7;color:#0B1A36;margin:0 0 22px;padding-left:22px;}
+    article li{margin-bottom:8px;}
+    article table{width:100%;border-collapse:collapse;margin:24px 0 32px;font-size:15px;}
+    article th, article td{padding:14px 16px;border-bottom:1px solid #E8E9EB;text-align:left;vertical-align:top;}
+    article th{background:#FAFAFA;font-weight:600;}
+    .verdict{background:#FAFAFA;border-left:3px solid #2F5D3E;padding:18px 22px;margin:24px 0;font-size:17px;line-height:1.6;}
+    .verdict strong{color:#2F5D3E;}
+    .cta-band{margin:72px 0 0;padding:40px 32px;background:#0B1A36;color:#fff;border-radius:12px;}
+    .cta-band h3{font-size:24px;font-weight:700;margin:0 0 12px;letter-spacing:-0.02em;}
+    .cta-band p{color:rgba(255,255,255,0.75);font-size:16px;line-height:1.55;margin:0 0 24px;}
+    .cta-band a{display:inline-block;background:#2F5D3E;color:#fff;text-decoration:none;font-weight:600;font-size:15px;padding:14px 24px;border-radius:6px;}
+    .footer{padding:48px 24px;text-align:center;font-size:12px;color:#888C94;border-top:1px solid #E8E9EB;}
+  </style>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Article","headline":"Zapier vs. Make.com vs. n8n: Which Automation Tool Should a Small Business Buy?","description":"A side-by-side comparison of Zapier, Make.com, and n8n for small business owners.","author":{"@type":"Person","name":"Andrew Zoll","url":"https://andrewzoll.com/"},"publisher":{"@type":"Person","name":"Andrew Zoll"},"mainEntityOfPage":"https://andrewzoll.com/blog/zapier-vs-make-vs-n8n/","datePublished":"2026-06-01"}
+  </script>
+</head>
+<body>
+  <div class="nav">
+    <a href="/" class="logo"><img src="/assets/logo-primary.png" alt="Andrew Zoll"/></a>
+    <a href="/#book">Book the audit →</a>
+  </div>
+  <div class="wrap">
+    <div class="crumb"><a href="/blog/">← Blog</a></div>
+    <div class="eyebrow">AI Tools · Buyer Guide</div>
+    <h1>Zapier vs. Make.com vs. n8n: Which Automation Tool Should a Small Business Actually Buy?</h1>
+    <div class="meta">By Andrew Zoll · June 1, 2026</div>
+
+    <article>
+      <p>Every AI audit I deliver eventually arrives at the same question. The owner reads the ranked plan, gets to the implementation step, and asks which tool actually wires this together. The answer is almost always one of three names: Zapier, Make.com, or n8n. They look similar on the marketing pages. They are not similar to use, to price, or to scale.</p>
+
+      <p>Here is the honest comparison from someone who has built workflows in all three for actual paying customers.</p>
+
+      <h2>The Short Version</h2>
+
+      <p>If you have never built an automation before and you want something working in the next hour, buy <strong>Zapier</strong>. If you have built one before and you are willing to spend a Saturday learning a better tool, buy <strong>Make.com</strong>. If you have an in-house technical person or want full control over your data, run <strong>n8n</strong> on a small server you own.</p>
+
+      <p>For most small businesses with 5 to 50 employees, the right answer is Make.com. It is cheaper than Zapier at any meaningful volume, more powerful for branching logic, and the visual builder keeps complex workflows readable.</p>
+
+      <h2>Side-by-Side Comparison</h2>
+
+      <table>
+        <tr><th>&nbsp;</th><th>Zapier</th><th>Make.com</th><th>n8n</th></tr>
+        <tr><td>Pricing (entry)</td><td>$20/mo (Starter)</td><td>$9/mo (Core)</td><td>Free (self-hosted)</td></tr>
+        <tr><td>Pricing (10k ops/mo)</td><td>~$73/mo</td><td>~$16/mo</td><td>Server cost only ($5-20/mo)</td></tr>
+        <tr><td>Learning curve</td><td>Easiest</td><td>Moderate</td><td>Steepest</td></tr>
+        <tr><td>Branching logic</td><td>Limited</td><td>Excellent</td><td>Excellent</td></tr>
+        <tr><td>Visual builder</td><td>Linear steps</td><td>True flowchart</td><td>True flowchart</td></tr>
+        <tr><td>App count</td><td>7,000+</td><td>1,800+</td><td>400+ (plus HTTP)</td></tr>
+        <tr><td>Data residency</td><td>Their servers</td><td>Their servers</td><td>Your server</td></tr>
+        <tr><td>AI integrations</td><td>Strong (built in)</td><td>Strong (built in)</td><td>Strong (manual)</td></tr>
+        <tr><td>Best for</td><td>First-time builders</td><td>Volume + complexity</td><td>Technical teams</td></tr>
+      </table>
+
+      <h2>Zapier: The Easiest On-Ramp, the Most Expensive at Scale</h2>
+
+      <p>Zapier is the default for a reason. If you have never automated anything in your business, you can sit down at lunch and have a working "new HubSpot deal sends a Slack message" automation by the end of the meal. The app catalog is enormous. The interface is built for non-technical people.</p>
+
+      <p>The trap is pricing. Zapier charges per "task," which means every individual action in your automation. A simple three-step Zap that fires 1,000 times a month uses 3,000 tasks. By the time you are at $73 per month, you are also at $73 per month at 4,000 tasks, and at 50,000 tasks the bill is over $700.</p>
+
+      <p>For low-volume use cases, this never matters. For any small business that automates real customer-facing workflows, you hit the price wall fast. I have seen owners paying $400 per month for what would cost $20 in Make.com.</p>
+
+      <h2>Make.com: The Power-User Pick</h2>
+
+      <p>Make.com (formerly Integromat) is what I recommend in 70 percent of audits. The visual builder uses an actual flowchart instead of Zapier's linear stack, which makes complex workflows readable. Branching, parallel execution, and error handling are first-class features instead of paywalled add-ons.</p>
+
+      <p>The pricing is the killer feature. Make charges per "operation" but each operation is cheaper than a Zapier task, and you can run more operations on a cheaper plan. Real-world cost for the same workflow is usually 40 to 60 percent less than Zapier.</p>
+
+      <p>The cost is the learning curve. Make's visual builder takes a few hours to internalize. Once it clicks, you build faster than you ever did in Zapier. Before it clicks, you will be frustrated.</p>
+
+      <h2>n8n: The Self-Hosted Pick</h2>
+
+      <p>n8n is the open-source option. You run it on a server you own (a $5 to $20 per month VPS is more than enough for most small businesses), and you are not paying per task or per operation at all. The only cost is the server.</p>
+
+      <p>The reason most small businesses do not pick n8n is operational. Someone has to set up the server, keep it patched, manage backups, and debug it when it breaks. If you do not have a technical person in-house or on retainer, n8n is a false savings. The hours you spend keeping it running will cost more than the Make.com subscription you avoided.</p>
+
+      <p>The reason some small businesses absolutely should pick n8n is data sensitivity. If your workflows touch financial, medical, legal, or any other sensitive data, running on your own server is the cleanest path to compliance. The data never leaves your infrastructure. For trades and standard service businesses, this rarely matters. For accountants, attorneys, and medical practices, it sometimes does.</p>
+
+      <h2>AI Integration: All Three Are Competent</h2>
+
+      <p>All three tools have first-class integration with Anthropic Claude and OpenAI GPT-4o. You can pass data to a model, get a structured response back, and write the result to your CRM or database in any of them.</p>
+
+      <p>The differences are minor. Zapier has the cleanest UI for adding an AI step. Make.com gives you more control over the prompt structure and response parsing. n8n requires you to call the API directly with HTTP nodes, which is fine if you have done it before and frustrating if you have not.</p>
+
+      <p>For a typical workflow that uses Claude to draft a follow-up email or extract data from a quote request, the experience in Zapier or Make.com is indistinguishable from the user's perspective.</p>
+
+      <h2>The Pricing Math, with Real Numbers</h2>
+
+      <p>Take a follow-up automation that fires five times per prospect across a 14-day sequence, and assume you handle 100 prospects per month. That is 500 sequence runs, each with about 6 operations (CRM lookup, AI personalization, email send, log result, branch on reply, end). 3,000 operations per month total.</p>
+
+      <ul>
+        <li><strong>Zapier:</strong> 3,000 tasks. The $73 Professional plan covers 2,000 tasks, so you need the $128 plan. Annual cost: $1,536.</li>
+        <li><strong>Make.com:</strong> 3,000 operations. The $16 Core plan covers 10,000 operations. Annual cost: $192.</li>
+        <li><strong>n8n:</strong> Unlimited operations on a $10/mo VPS. Annual cost: $120 plus your time to maintain.</li>
+      </ul>
+
+      <p>Over a year, the Make.com customer saves $1,344 versus Zapier and gets a more capable tool. That is what I mean by "boring math wins."</p>
+
+      <h2>How to Decide, Concretely</h2>
+
+      <p>Three signals point you to Zapier:</p>
+
+      <ul>
+        <li>You have never automated anything and want to feel a small win this week.</li>
+        <li>Your monthly volume is under 500 tasks, where Zapier's free tier is fine.</li>
+        <li>You need an integration that only exists in Zapier (rare, but happens with niche industry tools).</li>
+      </ul>
+
+      <p>Three signals point you to Make.com:</p>
+
+      <ul>
+        <li>You have built at least one automation before and feel constrained by Zapier's linear builder.</li>
+        <li>Your monthly volume is above 500 operations and growing.</li>
+        <li>Your workflows have branching, parallel paths, or any "if this then split into three" logic.</li>
+      </ul>
+
+      <p>Three signals point you to n8n:</p>
+
+      <ul>
+        <li>You have a developer on staff or on retainer.</li>
+        <li>Your workflows handle sensitive data you cannot store on a third-party server.</li>
+        <li>You expect to scale to high-volume automation (50,000+ operations per month) where SaaS pricing breaks.</li>
+      </ul>
+
+      <h2>What I Default To</h2>
+
+      <p>In audits, my default recommendation is Make.com unless the owner tells me they have never automated anything before, in which case I start them on Zapier with a clear note that they will migrate within a year. For technical teams or data-sensitive workflows, I move them to n8n. I have never had a customer regret the Make.com pick.</p>
+
+      <p>The tool matters less than committing to the workflow. The fastest path to ROI in any of these is to pick one, build one workflow that saves an hour a week, and let the savings fund the next workflow.</p>
+
+      <div class="cta-band">
+        <h3>Want a specific tool recommendation for your business?</h3>
+        <p>The <a href="/audit/" style="color:#5E9573;">$997 AI Efficiency Audit</a> names the exact orchestration tool you should buy and the workflows worth building in it. Most plans include 3 to 5 workflows ranked by hours saved per week.</p>
+        <a href="/#book">Book your AI Efficiency Audit →</a>
+      </div>
+    </article>
+  </div>
+  <div class="footer">© 2026 Andrew Zoll · AI Efficiency Audits · Pueblo, CO</div>
+</body>
+</html>

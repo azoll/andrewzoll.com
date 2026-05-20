@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <meta name="publish-date" content="2026-06-29"/>
+  <title>How to Build an AI Agent for Your Business Without Hiring a Developer · Andrew Zoll</title>
+  <meta name="description" content="A practical guide to building a real AI agent for your business as a non-technical owner. Tools, structure, and the order of operations. Uses Claude, GPT-4o, Make.com, and a single afternoon."/>
+  <link rel="canonical" href="https://andrewzoll.com/blog/build-ai-agent-without-developer/"/>
+  <meta property="og:type" content="article"/>
+  <meta property="og:title" content="How to Build an AI Agent for Your Business Without Hiring a Developer"/>
+  <meta property="og:description" content="A practical guide for non-technical owners. The tools, the structure, and the single-afternoon build that gets you a working agent."/>
+  <meta property="og:url" content="https://andrewzoll.com/blog/build-ai-agent-without-developer/"/>
+  <meta property="og:image" content="https://andrewzoll.com/assets/logo-primary.png"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <link rel="icon" href="/assets/favicon-primary.png"/>
+  <link rel="stylesheet" href="/colors_and_type.css"/>
+  <style>
+    html,body{margin:0;padding:0;background:#fff;color:#0B1A36;font-family:Inter,sans-serif;-webkit-font-smoothing:antialiased;}
+    *{box-sizing:border-box;}
+    .nav{display:flex;justify-content:space-between;align-items:center;padding:24px;border-bottom:1px solid #E8E9EB;}
+    .nav a{font-size:14px;font-weight:500;color:#0B1A36;text-decoration:none;}
+    .nav .logo img{height:24px;display:block;}
+    .wrap{max-width:760px;margin:0 auto;padding:64px 24px 100px;}
+    .crumb{font-size:13px;color:#888C94;margin-bottom:24px;}
+    .crumb a{color:#2F5D3E;text-decoration:none;}
+    .eyebrow{font-size:12px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:#2F5D3E;margin-bottom:20px;}
+    h1{font-size:clamp(34px,5vw,52px);font-weight:700;line-height:1.05;letter-spacing:-0.03em;margin:0 0 28px;color:#0B1A36;}
+    .meta{font-size:13px;color:#888C94;margin-bottom:48px;}
+    article p{font-size:18px;line-height:1.65;color:#0B1A36;margin:0 0 22px;}
+    article h2{font-size:28px;font-weight:700;line-height:1.2;letter-spacing:-0.02em;margin:56px 0 20px;color:#0B1A36;}
+    article h3{font-size:20px;font-weight:600;margin:32px 0 12px;}
+    article strong{font-weight:600;}
+    article ul, article ol{font-size:18px;line-height:1.7;color:#0B1A36;margin:0 0 22px;padding-left:22px;}
+    article li{margin-bottom:8px;}
+    article code{font-family:ui-monospace,SF Mono,Menlo,monospace;background:#F4F4F5;padding:2px 6px;border-radius:4px;font-size:15px;}
+    .cta-band{margin:72px 0 0;padding:40px 32px;background:#0B1A36;color:#fff;border-radius:12px;}
+    .cta-band h3{font-size:24px;font-weight:700;margin:0 0 12px;letter-spacing:-0.02em;}
+    .cta-band p{color:rgba(255,255,255,0.75);font-size:16px;line-height:1.55;margin:0 0 24px;}
+    .cta-band a{display:inline-block;background:#2F5D3E;color:#fff;text-decoration:none;font-weight:600;font-size:15px;padding:14px 24px;border-radius:6px;}
+    .footer{padding:48px 24px;text-align:center;font-size:12px;color:#888C94;border-top:1px solid #E8E9EB;}
+  </style>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Article","headline":"How to Build an AI Agent for Your Business Without Hiring a Developer","description":"A practical step-by-step guide for non-technical owners to build a working AI agent in a single afternoon.","author":{"@type":"Person","name":"Andrew Zoll","url":"https://andrewzoll.com/"},"publisher":{"@type":"Person","name":"Andrew Zoll"},"mainEntityOfPage":"https://andrewzoll.com/blog/build-ai-agent-without-developer/","datePublished":"2026-06-29"}
+  </script>
+</head>
+<body>
+  <div class="nav">
+    <a href="/" class="logo"><img src="/assets/logo-primary.png" alt="Andrew Zoll"/></a>
+    <a href="/#book">Book the audit →</a>
+  </div>
+  <div class="wrap">
+    <div class="crumb"><a href="/blog/">← Blog</a></div>
+    <div class="eyebrow">AI Build Guide</div>
+    <h1>How to Build an AI Agent for Your Business Without Hiring a Developer</h1>
+    <div class="meta">By Andrew Zoll · June 29, 2026</div>
+
+    <article>
+      <p>"AI agent" is one of those terms that means seven different things depending on who is selling. For a non-technical small business owner, the useful definition is this: an AI agent is a piece of automation that reads context, makes a decision, and takes an action. It does not need to be conversational. It does not need to live in a chat window. It just needs to do the small piece of judgment work you would otherwise do yourself.</p>
+
+      <p>This guide walks through building one. No code. No developer. One afternoon. The example is an inbound-lead triage agent because it is the most common one I deploy, but the same pattern works for follow-up, quoting, invoice review, and a dozen other use cases.</p>
+
+      <h2>What the Agent Will Do</h2>
+
+      <p>Every time a new lead form is submitted on your website, the agent will:</p>
+
+      <ol>
+        <li>Read the form contents.</li>
+        <li>Classify the lead as Hot, Warm, or Cold based on rules you set.</li>
+        <li>Pull the prospect's company info from a quick web lookup if available.</li>
+        <li>For Hot leads, send an SMS to the owner and create a HubSpot deal in the Priority pipeline.</li>
+        <li>For Warm leads, draft a personalized email response in your voice and queue it as a Gmail draft.</li>
+        <li>For Cold leads, log the entry and send an auto-response acknowledging receipt.</li>
+      </ol>
+
+      <p>That is a real agent. It reads context, makes a judgment, and takes a different action based on what it sees. There is no code involved.</p>
+
+      <h2>The Tools You Need</h2>
+
+      <ul>
+        <li><strong>Make.com</strong> ($16/month Core plan): the orchestration layer that wires everything together.</li>
+        <li><strong>Anthropic Claude</strong> via API (a few dollars per month at low volume): the reasoning engine.</li>
+        <li><strong>A web form tool</strong> like Tally, Typeform, or your existing website form: the trigger.</li>
+        <li><strong>HubSpot, Pipedrive, or Airtable</strong>: the place where leads get logged.</li>
+        <li><strong>Gmail</strong>: where draft responses get queued.</li>
+        <li><strong>Twilio</strong> ($1/month plus a few cents per SMS): the alerting channel for Hot leads.</li>
+      </ul>
+
+      <p>Total monthly cost for this agent at low volume: under $30. Total setup time the first time: 3 to 5 hours.</p>
+
+      <h2>Step 1: Map the Decision Logic Before You Open Anything</h2>
+
+      <p>The single biggest mistake non-technical builders make is opening Make.com first. Open a Notion page or a sheet of paper first. Write out exactly what the agent should decide.</p>
+
+      <p>For the lead triage agent:</p>
+
+      <ul>
+        <li><strong>Hot:</strong> Company size in target range, role is decision-maker (owner, founder, VP+), specific problem mentioned in the form, requested a call.</li>
+        <li><strong>Warm:</strong> Company in adjacent industry, role is influencer or unclear, general inquiry, no urgency.</li>
+        <li><strong>Cold:</strong> Solo operator, unrelated industry, generic message, or obvious spam.</li>
+      </ul>
+
+      <p>Get the rules in writing. They will become the prompt you give to Claude. If you cannot write them down, the agent cannot apply them. This is the single highest-leverage step in the whole build.</p>
+
+      <h2>Step 2: Set Up Your Trigger</h2>
+
+      <p>In Make.com, create a new scenario. Add a Tally or Typeform module as the trigger ("Watch Submissions" or equivalent). Connect your form. Run a test submission and verify Make.com sees the data.</p>
+
+      <p>If your existing website form does not support Make.com directly, you can use a webhook trigger and have the form POST to a unique URL Make.com gives you. Most form tools support this in their settings under "integrations" or "webhooks."</p>
+
+      <h2>Step 3: Add the Claude Classification Step</h2>
+
+      <p>Add a new module after the trigger. Search for "Anthropic Claude" and pick "Create a Prompt Completion" or "Send Messages." You will need an Anthropic API key, which you get from <code>console.anthropic.com</code>. Put a few dollars on the account.</p>
+
+      <p>The prompt you send to Claude is the most important part of the build. Here is the structure:</p>
+
+      <ol>
+        <li><strong>Role:</strong> "You are a sales triage assistant for [your business name]. You classify inbound leads as Hot, Warm, or Cold."</li>
+        <li><strong>Rules:</strong> Paste your Hot/Warm/Cold rules from Step 1.</li>
+        <li><strong>Input:</strong> The form submission data, pulled from the previous module via Make.com's data mapping.</li>
+        <li><strong>Output format:</strong> "Return a JSON object with two fields: classification (Hot, Warm, or Cold) and reason (one sentence)."</li>
+      </ol>
+
+      <p>Test this step. Submit a few sample leads through your form and watch what Claude returns. Adjust the rules until the classifications match what you would do yourself.</p>
+
+      <h2>Step 4: Add the Router</h2>
+
+      <p>In Make.com, add a Router module after the Claude step. The Router lets your scenario split into three paths based on the classification field Claude returned.</p>
+
+      <p>Path 1 (Hot), Path 2 (Warm), Path 3 (Cold). Set the filter on each path to check the classification value. Test each path with sample data.</p>
+
+      <h2>Step 5: Build the Three Action Paths</h2>
+
+      <h3>Hot Path</h3>
+
+      <p>Add a Twilio module: "Send an SMS." Configure it to send a message to your phone with the lead name, company, the reason Claude flagged them as Hot, and a link to view the form submission.</p>
+
+      <p>Add a HubSpot module: "Create a Deal." Map the lead data into the deal record. Set the pipeline to Priority and the deal stage to "Inbound Lead."</p>
+
+      <h3>Warm Path</h3>
+
+      <p>Add a second Claude step. The prompt this time: "Draft a personalized email response to the following inbound lead. Voice samples: [paste 5 to 10 of your real emails]. The email should acknowledge their specific question, offer one piece of value, and suggest a 15-minute call. Keep it under 100 words. Sign off as [your name]."</p>
+
+      <p>Add a Gmail module: "Create a Draft." Map the Claude output into the email body. Set the recipient to the lead's email address.</p>
+
+      <h3>Cold Path</h3>
+
+      <p>Add a Gmail module: "Send an Email." Use a pre-written auto-response template thanking them for reaching out and acknowledging you will be in touch within a week. Add an Airtable or HubSpot module to log the lead with classification "Cold" for future review.</p>
+
+      <h2>Step 6: Test, Test, Test</h2>
+
+      <p>Submit 10 to 15 fake form entries across the Hot, Warm, and Cold spectrum. Watch how the agent handles each one. Look for misclassifications and fix the rules. Look for failed steps and fix the connections. Look for awkward email drafts and improve the voice samples.</p>
+
+      <p>The first hour of testing surfaces 80 percent of the issues. The next hour catches the edge cases. By the end of the afternoon, the agent runs cleanly enough to deploy.</p>
+
+      <h2>Step 7: Turn It On and Monitor for a Week</h2>
+
+      <p>Activate the scenario. Watch the first 10 real leads come through. Compare the agent's classifications to what you would have done. Compare the drafted emails to what you would have written. Refine the prompts based on what you see.</p>
+
+      <p>After two weeks of real traffic, you will have either a tool you trust or a list of clear improvements to make. Either outcome is a win because you now have a working agent and you know how to extend it.</p>
+
+      <h2>What Counts as an Agent Versus a Workflow</h2>
+
+      <p>The technical purists will tell you what I described above is "just a workflow with AI in it," not a real agent. They are partly right. A real autonomous agent makes multi-step decisions, plans its own actions, and uses tools dynamically.</p>
+
+      <p>For 95 percent of small business use cases, the workflow-with-AI version is what you actually want. It is predictable. It is debuggable. It does not surprise you. Real autonomous agents are still rough enough that deploying one in a customer-facing role will cost you trust faster than it saves you time.</p>
+
+      <p>If you reach the point where you genuinely need true multi-agent reasoning, the right move is the <a href="/os-builder/" style="color:#2F5D3E;">OS Builder</a>. That is the productized $5,000 build of a multi-agent operating system on top of Anthropic Claude and OpenAI GPT-4o, with persistent business context and proper routing. Most owners do not need it yet.</p>
+
+      <h2>The Honest Limits</h2>
+
+      <p>Two things this approach will not do.</p>
+
+      <p><strong>It will not handle phone calls in real time.</strong> Voice agents are a separate category requiring different tools (Vapi, Voiceflow, Bland, etc.). The lead-triage pattern works for forms, email, SMS, and async channels.</p>
+
+      <p><strong>It will not learn from feedback automatically.</strong> If you want the agent to improve over time without your involvement, that requires more infrastructure than a Make.com scenario can hold. The lightweight version is to set a weekly 10-minute review block to scan the logs and update the prompt manually. That keeps the agent calibrated without overcomplicating the build.</p>
+
+      <h2>Why This Matters</h2>
+
+      <p>The reason to build the first agent is not the time it saves on that specific workflow. It is the unlock of understanding how the pieces fit together. Once you have built one agent that classifies, decides, and acts, you can build the next one in two hours instead of five. The third one takes 45 minutes. By agent five, you are no longer building. You are arranging.</p>
+
+      <p>This is the lever that separates owners who use AI to save 2 hours a week from owners who use AI to save 12.</p>
+
+      <div class="cta-band">
+        <h3>Want the specific agent for your business mapped out?</h3>
+        <p>The <a href="/audit/" style="color:#5E9573;">$997 AI Efficiency Audit</a> identifies the top 3 to 5 places in your business where an agent would pay back fastest, names the tools, and gives you the order to build. Or if you want it built for you, the <a href="/os-builder/" style="color:#5E9573;">$5,000 OS Builder</a> is the productized multi-agent path.</p>
+        <a href="/#book">Book your AI Efficiency Audit →</a>
+      </div>
+    </article>
+  </div>
+  <div class="footer">© 2026 Andrew Zoll · AI Efficiency Audits · Pueblo, CO</div>
+</body>
+</html>

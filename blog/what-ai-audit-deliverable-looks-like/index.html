@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <meta name="publish-date" content="2026-07-06"/>
+  <title>What a Real AI Audit Deliverable Looks Like (Annotated Sample Plan) · Andrew Zoll</title>
+  <meta name="description" content="A walkthrough of an actual AI audit deliverable. What is on each page, why it is there, and how to read it. Includes the ranked plan structure, hours-saved math, and tool recommendations."/>
+  <link rel="canonical" href="https://andrewzoll.com/blog/what-ai-audit-deliverable-looks-like/"/>
+  <meta property="og:type" content="article"/>
+  <meta property="og:title" content="What a Real AI Audit Deliverable Looks Like (Annotated Sample Plan)"/>
+  <meta property="og:description" content="An annotated walkthrough of an actual AI audit deliverable. Page by page, what is there and why."/>
+  <meta property="og:url" content="https://andrewzoll.com/blog/what-ai-audit-deliverable-looks-like/"/>
+  <meta property="og:image" content="https://andrewzoll.com/assets/logo-primary.png"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <link rel="icon" href="/assets/favicon-primary.png"/>
+  <link rel="stylesheet" href="/colors_and_type.css"/>
+  <style>
+    html,body{margin:0;padding:0;background:#fff;color:#0B1A36;font-family:Inter,sans-serif;-webkit-font-smoothing:antialiased;}
+    *{box-sizing:border-box;}
+    .nav{display:flex;justify-content:space-between;align-items:center;padding:24px;border-bottom:1px solid #E8E9EB;}
+    .nav a{font-size:14px;font-weight:500;color:#0B1A36;text-decoration:none;}
+    .nav .logo img{height:24px;display:block;}
+    .wrap{max-width:760px;margin:0 auto;padding:64px 24px 100px;}
+    .crumb{font-size:13px;color:#888C94;margin-bottom:24px;}
+    .crumb a{color:#2F5D3E;text-decoration:none;}
+    .eyebrow{font-size:12px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:#2F5D3E;margin-bottom:20px;}
+    h1{font-size:clamp(34px,5vw,52px);font-weight:700;line-height:1.05;letter-spacing:-0.03em;margin:0 0 28px;color:#0B1A36;}
+    .meta{font-size:13px;color:#888C94;margin-bottom:48px;}
+    article p{font-size:18px;line-height:1.65;color:#0B1A36;margin:0 0 22px;}
+    article h2{font-size:28px;font-weight:700;line-height:1.2;letter-spacing:-0.02em;margin:56px 0 20px;color:#0B1A36;}
+    article h3{font-size:20px;font-weight:600;margin:32px 0 12px;}
+    article strong{font-weight:600;}
+    article ul, article ol{font-size:18px;line-height:1.7;color:#0B1A36;margin:0 0 22px;padding-left:22px;}
+    article li{margin-bottom:8px;}
+    .sample{background:#FAFAFA;border:1px solid #E8E9EB;border-radius:12px;padding:28px 32px;margin:24px 0;font-family:ui-monospace,SF Mono,Menlo,monospace;font-size:14px;line-height:1.55;color:#0B1A36;}
+    .sample .row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #E8E9EB;}
+    .sample .row:last-child{border-bottom:none;}
+    .sample .label{font-weight:600;color:#888C94;}
+    .annotation{background:#F0F7F3;border-left:3px solid #2F5D3E;padding:14px 18px;margin:16px 0;font-size:15px;line-height:1.55;color:#0B1A36;}
+    .cta-band{margin:72px 0 0;padding:40px 32px;background:#0B1A36;color:#fff;border-radius:12px;}
+    .cta-band h3{font-size:24px;font-weight:700;margin:0 0 12px;letter-spacing:-0.02em;}
+    .cta-band p{color:rgba(255,255,255,0.75);font-size:16px;line-height:1.55;margin:0 0 24px;}
+    .cta-band a{display:inline-block;background:#2F5D3E;color:#fff;text-decoration:none;font-weight:600;font-size:15px;padding:14px 24px;border-radius:6px;}
+    .footer{padding:48px 24px;text-align:center;font-size:12px;color:#888C94;border-top:1px solid #E8E9EB;}
+  </style>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Article","headline":"What a Real AI Audit Deliverable Looks Like (Annotated Sample Plan)","description":"An annotated walkthrough of an actual AI audit deliverable.","author":{"@type":"Person","name":"Andrew Zoll","url":"https://andrewzoll.com/"},"publisher":{"@type":"Person","name":"Andrew Zoll"},"mainEntityOfPage":"https://andrewzoll.com/blog/what-ai-audit-deliverable-looks-like/","datePublished":"2026-07-06"}
+  </script>
+</head>
+<body>
+  <div class="nav">
+    <a href="/" class="logo"><img src="/assets/logo-primary.png" alt="Andrew Zoll"/></a>
+    <a href="/#book">Book the audit →</a>
+  </div>
+  <div class="wrap">
+    <div class="crumb"><a href="/blog/">← Blog</a></div>
+    <div class="eyebrow">Behind the Audit</div>
+    <h1>What a Real AI Audit Deliverable Looks Like (Annotated Sample Plan)</h1>
+    <div class="meta">By Andrew Zoll · July 6, 2026</div>
+
+    <article>
+      <p>Every buyer asks the same question before they book the audit: "What do I actually get?" The honest answer is a 2 to 3 page written plan delivered within 48 hours of the discovery call. That answer is too short to be useful, so this post is the long version with a real sample.</p>
+
+      <p>What follows is the structure of every audit deliverable I produce, with annotations explaining why each piece exists. The example is anonymized from a real audit for a 14-person digital agency, with permission.</p>
+
+      <h2>The Deliverable Has Three Sections</h2>
+
+      <p>Every audit plan follows the same three-section shape: Executive Summary, Ranked Workflows, and Implementation Order. Same structure every time, so buyers know exactly what to expect.</p>
+
+      <h2>Section 1: Executive Summary (Half a Page)</h2>
+
+      <div class="sample">
+        <div class="row"><span class="label">Business:</span><span>14-person digital agency, Denver CO</span></div>
+        <div class="row"><span class="label">Audit date:</span><span>June 12, 2026</span></div>
+        <div class="row"><span class="label">Owner time on paperwork today:</span><span>~22 hrs/week</span></div>
+        <div class="row"><span class="label">Estimated time recoverable:</span><span>11 to 14 hrs/week</span></div>
+        <div class="row"><span class="label">Estimated annual labor value freed:</span><span>$42,000 to $54,000</span></div>
+        <div class="row"><span class="label">Top 3 workflows by hours saved:</span><span>Proposal drafting, follow-up, weekly reporting</span></div>
+        <div class="row"><span class="label">Total estimated implementation cost:</span><span>$8,500 - $12,000 (one-time) + $250/mo tooling</span></div>
+        <div class="row"><span class="label">Payback period:</span><span>2 to 3 months</span></div>
+      </div>
+
+      <div class="annotation">
+        <strong>Why this section exists:</strong> The owner needs to know the bottom-line math before reading anything else. If the payback period is longer than 6 months, they should know that on page 1, not page 3. In this case, the math is strong and the rest of the document explains why.
+      </div>
+
+      <h2>Section 2: Ranked Workflows (1 to 2 Pages)</h2>
+
+      <p>The core of the deliverable. Every workflow worth automating, ranked by hours saved per week, with the specific tools and the cost estimate.</p>
+
+      <div class="sample">
+<strong>#1 — Proposal drafting and review</strong><br/>
+Hours saved per week: <strong>5 to 7</strong><br/>
+Tools: Anthropic Claude (drafting), Make.com (orchestration), Notion (template library), HubSpot (CRM trigger), PandaDoc (proposal document)<br/>
+Setup cost: $3,200 - $4,500<br/>
+Monthly tooling cost: $80<br/><br/>
+
+What this replaces: the 90-minute proposal you currently write from scratch for each prospect. The agent reads the discovery call notes (Fathom transcript), pulls relevant case studies from your Notion library, drafts a structured proposal in your voice, and queues it in PandaDoc for one-click review and send. Owner edits drop from 90 minutes to 5 to 10 minutes per proposal.<br/><br/>
+
+Why this is #1: highest volume (8 to 12 proposals/week) times highest current cost per task (90 min). Math: 10 proposals/week × 80 min saved = 13 hrs/week. Conservative estimate of 5 to 7 hrs accounts for the new minimum review time.
+      </div>
+
+      <div class="annotation">
+        <strong>Why this section exists:</strong> Owners need to know what gets built, with what tools, for what cost, in what order. Every line item is a buildable thing. No abstractions, no "we will leverage AI to streamline." Specific tools and specific time estimates only.
+      </div>
+
+      <div class="sample">
+<strong>#2 — Follow-up sequence automation</strong><br/>
+Hours saved per week: <strong>3 to 4</strong><br/>
+Tools: HubSpot (trigger), Anthropic Claude (personalization), Gmail API (send), Twilio (SMS touch), Make.com (orchestration)<br/>
+Setup cost: $2,200 - $3,200<br/>
+Monthly tooling cost: $45<br/><br/>
+
+A 5-touch sequence over 14 days fires on every "Proposal Sent" stage change in HubSpot. Each touch is personalized by Claude based on the original call notes and any objections raised. SMS touch via Twilio at day 9. Sequence cancels on prospect reply. Expected close-rate lift: 8 to 14 points.<br/><br/>
+
+Why this is #2: high downstream revenue impact (close-rate lift), moderate hours saved on the manual follow-up that currently does not happen. Most of this value is in deals you currently lose, not time recovered.
+      </div>
+
+      <div class="annotation">
+        <strong>Why "downstream revenue impact" matters:</strong> Some workflows save hours. Some make money. Some do both. The audit calls out both axes so the owner can rank by what they care about. Most owners under-weight revenue lift in their gut ranking. The audit forces them to see it.
+      </div>
+
+      <div class="sample">
+<strong>#3 — Weekly summary digest</strong><br/>
+Hours saved per week: <strong>2 to 3</strong><br/>
+Tools: HubSpot (CRM data), QuickBooks (revenue data), Notion (project status), Anthropic Claude (writeup), Gmail (delivery), Make.com (orchestration)<br/>
+Setup cost: $1,200 - $1,800<br/>
+Monthly tooling cost: $30<br/><br/>
+
+Every Monday at 7 AM, an automated 200-word executive summary lands in the owner's inbox. Last week's revenue, pipeline movement, top 3 deals to focus on, project health flags. Claude writes the prose from structured inputs pulled by Make.com.<br/><br/>
+
+Why this is #3: smaller hours-saved math, but the qualitative impact is large. The owner stops carrying "what is the state of the business this week" as a background process. That mental capacity moves to forward-looking work.
+      </div>
+
+      <div class="sample">
+<strong>#4 — Client onboarding intake automation</strong><br/>
+Hours saved per week: <strong>1 to 2</strong><br/>
+Tools: Tally (form), Calendly (kickoff scheduling), HubSpot (record), Notion (project workspace), Make.com<br/>
+Setup cost: $1,500 - $2,000<br/>
+Monthly tooling cost: $40<br/><br/>
+
+Replaces the 45-minute onboarding kickoff form back-and-forth. New client signs the contract, automated workflow sends the intake form, books the kickoff via Calendly, creates the project workspace in Notion populated with the intake answers, notifies the account team. Owner involvement drops to "review and approve" instead of "do the work."
+      </div>
+
+      <h2>Section 3: Implementation Order (Half a Page)</h2>
+
+      <p>The audit closes with the order to build, and why. This is where the audit becomes a plan instead of a list.</p>
+
+      <div class="sample">
+<strong>Build order:</strong><br/>
+1. Weekly summary digest (Workflow #3) — 5-7 days<br/>
+2. Follow-up sequence automation (Workflow #2) — 10-14 days<br/>
+3. Proposal drafting (Workflow #1) — 21-28 days<br/>
+4. Client onboarding intake (Workflow #4) — 7-10 days, runs parallel to #3<br/><br/>
+
+<strong>Why this order, not by hours saved:</strong><br/>
+The weekly summary is the simplest workflow and the lowest-risk first build. It introduces the team to Make.com and Claude in a low-stakes context. By the time #2 starts, the owner knows what these tools do.<br/><br/>
+
+The follow-up sequence is next because it has the highest downstream revenue impact and a clear measurement window (7-14 day close-rate comparison).<br/><br/>
+
+Proposal drafting is last because it is the most complex build and benefits from the team having 4 to 6 weeks of Make.com familiarity before tackling it.<br/><br/>
+
+Onboarding intake runs parallel to the proposal build because it has no dependency on the other workflows.
+      </div>
+
+      <div class="annotation">
+        <strong>The most important paragraph in the document:</strong> the "why this order" rationale. Owners who skip this paragraph try to build the highest-impact workflow first, fail because they do not understand the tools yet, and quit. The build order is engineered to teach the tools while delivering value.
+      </div>
+
+      <h2>What the Audit Does Not Include</h2>
+
+      <p>The audit is a plan, not an implementation. The deliverable does not include:</p>
+
+      <ul>
+        <li>The built workflows themselves (those are a separate engagement)</li>
+        <li>Vendor introductions or affiliate links</li>
+        <li>A slide deck or polished PowerPoint</li>
+        <li>Long-form strategy discussion of "AI's role in modern business"</li>
+        <li>Charts. There are no charts. The deliverable is text.</li>
+      </ul>
+
+      <p>The omissions are deliberate. Every page of the deliverable is something the owner can act on. Strategy commentary, vendor pitches, and pretty graphics are friction.</p>
+
+      <h2>The Walkthrough Call</h2>
+
+      <p>The deliverable arrives within 48 hours of the discovery call. Two days after that, we book a 30-minute walkthrough call where I read the document with the owner and answer questions. Owners always have questions. The walkthrough is where the plan becomes operational rather than just informational.</p>
+
+      <p>The plan is yours after the walkthrough whether you implement with me, your in-house team, or another vendor. The deliverable is the asset. Implementation is a separate decision.</p>
+
+      <h2>What Sets This Apart</h2>
+
+      <p>Most "AI consulting" deliverables I have seen as a buyer or a competitor are one of three things: a slide deck of trending tools, a vague strategy document, or a partner-led roadmap built for a much larger company. The audit is none of those.</p>
+
+      <p>It is a build list. Specific tools, specific hours, specific order. Every number is defensible. Every recommendation is reversible if it does not work. The owner reads it, decides whether to act, and acts. That is the whole engagement.</p>
+
+      <div class="cta-band">
+        <h3>Get this exact deliverable for your business.</h3>
+        <p>The <a href="/audit/" style="color:#5E9573;">$997 AI Efficiency Audit</a> produces this same 2 to 3 page plan, customized to your business, in 48 hours. If it does not find 5 hours per week of automatable work, you do not pay.</p>
+        <a href="/#book">Book your AI Efficiency Audit →</a>
+      </div>
+    </article>
+  </div>
+  <div class="footer">© 2026 Andrew Zoll · AI Efficiency Audits · Pueblo, CO</div>
+</body>
+</html>

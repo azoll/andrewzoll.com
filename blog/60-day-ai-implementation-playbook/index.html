@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <meta name="publish-date" content="2026-08-17"/>
+  <title>From Audit to Build: The 60-Day AI Implementation Playbook · Andrew Zoll</title>
+  <meta name="description" content="A week-by-week 60-day playbook for going from an AI audit plan to a deployed, working AI system in your small business. Tools, milestones, and the order to build."/>
+  <link rel="canonical" href="https://andrewzoll.com/blog/60-day-ai-implementation-playbook/"/>
+  <meta property="og:type" content="article"/>
+  <meta property="og:title" content="From Audit to Build: The 60-Day AI Implementation Playbook"/>
+  <meta property="og:description" content="The week-by-week playbook for going from audit plan to a deployed, working AI system in 60 days."/>
+  <meta property="og:url" content="https://andrewzoll.com/blog/60-day-ai-implementation-playbook/"/>
+  <meta property="og:image" content="https://andrewzoll.com/assets/logo-primary.png"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <link rel="icon" href="/assets/favicon-primary.png"/>
+  <link rel="stylesheet" href="/colors_and_type.css"/>
+  <style>
+    html,body{margin:0;padding:0;background:#fff;color:#0B1A36;font-family:Inter,sans-serif;-webkit-font-smoothing:antialiased;}
+    *{box-sizing:border-box;}
+    .nav{display:flex;justify-content:space-between;align-items:center;padding:24px;border-bottom:1px solid #E8E9EB;}
+    .nav a{font-size:14px;font-weight:500;color:#0B1A36;text-decoration:none;}
+    .nav .logo img{height:24px;display:block;}
+    .wrap{max-width:760px;margin:0 auto;padding:64px 24px 100px;}
+    .crumb{font-size:13px;color:#888C94;margin-bottom:24px;}
+    .crumb a{color:#2F5D3E;text-decoration:none;}
+    .eyebrow{font-size:12px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:#2F5D3E;margin-bottom:20px;}
+    h1{font-size:clamp(34px,5vw,52px);font-weight:700;line-height:1.05;letter-spacing:-0.03em;margin:0 0 28px;color:#0B1A36;}
+    .meta{font-size:13px;color:#888C94;margin-bottom:48px;}
+    article p{font-size:18px;line-height:1.65;color:#0B1A36;margin:0 0 22px;}
+    article h2{font-size:28px;font-weight:700;line-height:1.2;letter-spacing:-0.02em;margin:56px 0 20px;color:#0B1A36;}
+    article h3{font-size:20px;font-weight:600;margin:32px 0 12px;}
+    article strong{font-weight:600;}
+    article ul, article ol{font-size:18px;line-height:1.7;color:#0B1A36;margin:0 0 22px;padding-left:22px;}
+    article li{margin-bottom:8px;}
+    .week-card{background:#FAFAFA;border:1px solid #E8E9EB;border-radius:12px;padding:24px 28px;margin:20px 0;}
+    .week-card .label{font-size:12px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:#2F5D3E;margin-bottom:8px;}
+    .week-card h3{margin:0 0 12px;}
+    .week-card p{font-size:16px;line-height:1.55;margin:0 0 12px;}
+    .week-card ul{font-size:16px;margin:0;}
+    .cta-band{margin:72px 0 0;padding:40px 32px;background:#0B1A36;color:#fff;border-radius:12px;}
+    .cta-band h3{font-size:24px;font-weight:700;margin:0 0 12px;letter-spacing:-0.02em;}
+    .cta-band p{color:rgba(255,255,255,0.75);font-size:16px;line-height:1.55;margin:0 0 24px;}
+    .cta-band a{display:inline-block;background:#2F5D3E;color:#fff;text-decoration:none;font-weight:600;font-size:15px;padding:14px 24px;border-radius:6px;}
+    .footer{padding:48px 24px;text-align:center;font-size:12px;color:#888C94;border-top:1px solid #E8E9EB;}
+  </style>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Article","headline":"From Audit to Build: The 60-Day AI Implementation Playbook","description":"The week-by-week playbook for going from audit plan to deployed AI system in 60 days.","author":{"@type":"Person","name":"Andrew Zoll","url":"https://andrewzoll.com/"},"publisher":{"@type":"Person","name":"Andrew Zoll"},"mainEntityOfPage":"https://andrewzoll.com/blog/60-day-ai-implementation-playbook/","datePublished":"2026-08-17"}
+  </script>
+</head>
+<body>
+  <div class="nav">
+    <a href="/" class="logo"><img src="/assets/logo-primary.png" alt="Andrew Zoll"/></a>
+    <a href="/#book">Book the audit →</a>
+  </div>
+  <div class="wrap">
+    <div class="crumb"><a href="/blog/">← Blog</a></div>
+    <div class="eyebrow">Implementation Playbook</div>
+    <h1>From Audit to Build: The 60-Day AI Implementation Playbook</h1>
+    <div class="meta">By Andrew Zoll · August 17, 2026</div>
+
+    <article>
+      <p>You bought the audit. The plan arrived. You read it once and then it sat. Three weeks later you have done nothing with it because the plan does not tell you what to do on Tuesday morning, week two.</p>
+
+      <p>This post fixes that. It is the week-by-week implementation playbook that takes you from the audit deliverable to a working AI system in 60 days. The plan you got tells you what to build. This tells you when and in what order to do the work.</p>
+
+      <h2>The Premise</h2>
+
+      <p>Two assumptions baked into the playbook.</p>
+
+      <p><strong>One: you are implementing your top 2 workflows, not all five.</strong> The audit usually identifies 4 to 6 workflows worth building. Trying to build all of them in 60 days is the failure mode that kills most implementations. Pick the top 2 by hours saved per week. Defer the rest to Q2 of next year.</p>
+
+      <p><strong>Two: you can spend 3 to 5 hours per week on this.</strong> If you cannot commit that, the timeline stretches. If you can commit more, the timeline compresses. The math below assumes the modest commitment, which is what most owners can actually sustain.</p>
+
+      <h2>Week 1: Setup and Foundation</h2>
+
+      <div class="week-card">
+        <div class="label">Week 1 · 4 hours</div>
+        <h3>Get the tools you do not have</h3>
+        <p>Sign up for the tools your audit named that you do not already use. Most builds need some subset of:</p>
+        <ul>
+          <li>Make.com (Core plan, $16/month)</li>
+          <li>Anthropic Claude API access (console.anthropic.com, fund with $50)</li>
+          <li>The CRM upgrade if your audit named one (HubSpot Starter, Pipedrive, or Follow Up Boss for real estate)</li>
+          <li>Fathom for call transcription if you do client calls (free for individuals)</li>
+          <li>Twilio if SMS is in the workflow ($1/month plus per-message)</li>
+        </ul>
+        <p>Bookmark the dashboards. Note your login credentials in a password manager. This work feels boring but the setup overhead trips up most owners later if it is not done up front.</p>
+      </div>
+
+      <h2>Week 2: Map Workflow 1 in Detail</h2>
+
+      <div class="week-card">
+        <div class="label">Week 2 · 4 hours</div>
+        <h3>Document the current workflow before you automate it</h3>
+        <p>Open a Notion page or a Google Doc. Write the current state of Workflow 1 in detail. Every step, every decision point, every tool that touches it, every person involved.</p>
+        <p>This sounds boring. It is the single highest-leverage hour of the entire 60 days. Owners who skip this step automate the wrong thing because they did not notice what the workflow actually does.</p>
+        <p>The output of week 2 is a written description of the current state and a written description of the future state. Show both to a peer or your spouse and ask them to spot the differences. Refine until obvious.</p>
+      </div>
+
+      <h2>Weeks 3 and 4: Build Workflow 1</h2>
+
+      <div class="week-card">
+        <div class="label">Weeks 3-4 · 8 to 10 hours</div>
+        <h3>Build, test, refine</h3>
+        <p>Open Make.com. Create the scenario for Workflow 1 step by step. Reference the audit plan for the tools, the prompt structure, and the connections.</p>
+        <p>Build the trigger first. Get it firing on real data. Build the AI step next. Test it with 5 to 10 sample inputs. Build the output step. Test end-to-end with 5 fake runs.</p>
+        <p>Expect 60 percent of your time to go to debugging connections and field mappings, not to AI logic. This is normal. Make.com has a learning curve. The second workflow takes half the time because you already know the patterns.</p>
+        <p>By end of week 4, the workflow is firing on real production data. It may still need refinement. That is week 5.</p>
+      </div>
+
+      <h2>Week 5: Refine Workflow 1 on Real Usage</h2>
+
+      <div class="week-card">
+        <div class="label">Week 5 · 3 hours</div>
+        <h3>Let it run, watch what breaks</h3>
+        <p>Workflow 1 has been live for a week. Look at every actual output it produced. For each output, ask three questions:</p>
+        <ul>
+          <li>Did the AI step produce something close to what you would have produced manually?</li>
+          <li>Did the output reach the right destination in the right format?</li>
+          <li>Would the customer (or your team) be able to tell this was AI-generated?</li>
+        </ul>
+        <p>For each "no," refine the prompt, fix the connection, or improve the voice samples. Most workflows need 3 to 5 cycles of refinement before they are production-ready.</p>
+        <p>End of week 5: Workflow 1 is working well enough that you trust it to run unattended.</p>
+      </div>
+
+      <h2>Week 6: Map Workflow 2</h2>
+
+      <div class="week-card">
+        <div class="label">Week 6 · 3 hours</div>
+        <h3>Same exercise, second workflow</h3>
+        <p>Repeat week 2 for Workflow 2. Document current state, document target state. Faster this time because you have done it before.</p>
+        <p>Bonus: now that Workflow 1 is running, you have proof to your team that the approach works. If Workflow 2 touches a team member's work, share Workflow 1 with them first and let them see the upside before you ask for their help on the next one.</p>
+      </div>
+
+      <h2>Weeks 7 and 8: Build Workflow 2</h2>
+
+      <div class="week-card">
+        <div class="label">Weeks 7-8 · 6 to 8 hours</div>
+        <h3>Build faster because you know the tools</h3>
+        <p>Workflow 2 takes 40 to 60 percent less time than Workflow 1 because you already know how Make.com handles errors, how Anthropic Claude responds to your prompt patterns, and how your CRM's API behaves.</p>
+        <p>Build, test on sample data, deploy to real data. Same pattern. By end of week 8, both workflows are live.</p>
+      </div>
+
+      <h2>Week 9: Refine Workflow 2 and Document Everything</h2>
+
+      <div class="week-card">
+        <div class="label">Week 9 · 4 hours</div>
+        <h3>Stabilize and write it down</h3>
+        <p>Repeat the refinement loop from week 5 on Workflow 2.</p>
+        <p>Then write a one-page document for each workflow explaining what it does, what tools it depends on, how to log into Make.com, and what to do if it breaks. Save these documents in Notion or your team wiki.</p>
+        <p>This documentation is what turns the workflows from "fragile owner-built thing" into "team-owned operational asset." Skipping this step means the workflows die when you take a vacation.</p>
+      </div>
+
+      <h2>Final Phase: Measure and Decide What's Next</h2>
+
+      <div class="week-card">
+        <div class="label">Days 60-90 · 2 hours</div>
+        <h3>Measure the actual ROI</h3>
+        <p>The audit estimated hours saved per week. Did the deployed workflows hit those estimates? Track for 30 days after Workflow 2 stabilizes.</p>
+        <p>Common findings: Workflow 1 hits 80 to 110 percent of estimated savings. Workflow 2 hits 70 to 100 percent. Total recovered owner time: usually 6 to 12 hours per week from the top 2 workflows.</p>
+        <p>With the math validated, decide whether to:</p>
+        <ul>
+          <li>Build Workflow 3 (most owners do)</li>
+          <li>Hire someone to build the remaining workflows from your audit plan</li>
+          <li>Upgrade to a multi-agent system via the OS Builder (right move if you have 3+ workflows running)</li>
+        </ul>
+      </div>
+
+      <h2>The Critical Discipline</h2>
+
+      <p>The single thing that separates 60-day implementations that succeed from those that stall: the owner did not try to build all the workflows at once.</p>
+
+      <p>Owners who succeed pick 2 workflows and finish them. Owners who fail pick 5 workflows and finish 0. The math is unintuitive. Two complete workflows are worth more than five 30-percent-done workflows because the partial ones do not generate any value while the complete ones generate immediate weekly savings.</p>
+
+      <p>If you take nothing else from this playbook: build less than you think you should.</p>
+
+      <h2>What to Do If You Get Stuck</h2>
+
+      <p>Three common stuck points and their fixes.</p>
+
+      <p><strong>Stuck point 1: the AI step is not producing what you want.</strong> The fix is almost always more context in the prompt. Add voice samples. Add an example of a good output. Add your business background. Most "AI not working" issues are "prompt not detailed enough" issues.</p>
+
+      <p><strong>Stuck point 2: the connection between tools is broken.</strong> Make.com's error logs are excellent. Read them. The fix is usually a missing field mapping or an expired API token. Search the Make.com community forum with the exact error message before you ask anyone for help.</p>
+
+      <p><strong>Stuck point 3: the workflow runs but you do not trust it.</strong> This is almost always a voice or judgment issue. The output is technically correct but feels off. Build a human-review gate. Have the system queue drafts for approval instead of sending automatically. Trust is earned through 50 to 100 reviewed outputs, then you can relax the gate.</p>
+
+      <h2>When to Pay Someone Instead</h2>
+
+      <p>If after week 2 you find yourself dreading the build, pay someone to do it. The math on owner time vs. implementation cost is brutal. A $5,000 to $8,000 implementation engagement that saves you 10 hours per week is paying for itself in roughly 6 weeks at a $75 blended cost of time, faster if you spend the recovered time on revenue-generating work.</p>
+
+      <p>The <a href="/services/" style="color:#2F5D3E;">implementation engagement</a> exists for owners who want the audit plan turned into a working system without burning their own evenings on Make.com debugging. The <a href="/os-builder/" style="color:#2F5D3E;">OS Builder</a> at $5,000 is the productized version for owners ready to go straight to a multi-agent system instead of building workflow-by-workflow.</p>
+
+      <h2>The Honest Truth About 60 Days</h2>
+
+      <p>60 days is enough to deploy 2 workflows well. It is not enough to deploy 5. It is more than enough if you only deploy 1, which is sometimes the right call.</p>
+
+      <p>The first workflow you build is the most important one. It teaches you the tools, builds your confidence, and produces measurable time savings that make the next one obvious. If you can only commit to one, pick the highest-ROI workflow from your audit and run it through this playbook.</p>
+
+      <p>The second workflow takes half the time and pays back double. By the time you finish, you are operating differently. The audit was the diagnostic. The implementation is what changes the business.</p>
+
+      <div class="cta-band">
+        <h3>Start with the audit if you have not yet.</h3>
+        <p>The <a href="/audit/" style="color:#5E9573;">$997 AI Efficiency Audit</a> produces the ranked plan that this 60-day playbook executes on. Without the plan, you are guessing at which workflows to build. With it, the order is obvious.</p>
+        <a href="/#book">Book your AI Efficiency Audit →</a>
+      </div>
+    </article>
+  </div>
+  <div class="footer">© 2026 Andrew Zoll · AI Efficiency Audits · Pueblo, CO</div>
+</body>
+</html>

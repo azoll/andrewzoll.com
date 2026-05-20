@@ -48,7 +48,9 @@ function SiteNav({ onBook, tweaks }) {
         </a>
         <div style={nv.links} className="az-desktop-nav">
           <a onClick={()=>scrollTo('audit')} style={linkStyle}>The audit</a>
-          <a onClick={()=>scrollTo('how')} style={linkStyle}>How it works</a>
+          <a href="/services/" style={{...linkStyle, textDecoration:'none'}}>Services</a>
+          <a href="/os-builder/" style={{...linkStyle, textDecoration:'none'}}>OS Builder</a>
+          <a href="/blog/" style={{...linkStyle, textDecoration:'none'}}>Blog</a>
           <a onClick={()=>scrollTo('faq')} style={linkStyle}>FAQ</a>
           <a onClick={()=>scrollTo('about')} style={linkStyle}>About</a>
         </div>
@@ -70,7 +72,9 @@ function SiteNav({ onBook, tweaks }) {
       {mobileOpen && (
         <div style={nv.mobileSheet}>
           <a onClick={()=>scrollTo('audit')} style={nv.mobileLink}>The audit</a>
-          <a onClick={()=>scrollTo('how')} style={nv.mobileLink}>How it works</a>
+          <a href="/services/" style={nv.mobileLink}>Services</a>
+          <a href="/os-builder/" style={nv.mobileLink}>OS Builder</a>
+          <a href="/blog/" style={nv.mobileLink}>Blog</a>
           <a onClick={()=>scrollTo('faq')} style={nv.mobileLink}>FAQ</a>
           <a onClick={()=>scrollTo('about')} style={nv.mobileLink}>About</a>
           <button onClick={()=>{setMobileOpen(false);onBook();}} style={nv.mobileCta} className="az-btn-primary">Book the audit <span className="az-arrow">→</span></button>
