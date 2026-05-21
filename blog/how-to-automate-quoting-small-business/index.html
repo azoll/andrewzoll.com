@@ -37,15 +37,52 @@
     .cta-band p{color:rgba(255,255,255,0.75);font-size:16px;line-height:1.55;margin:0 0 24px;}
     .cta-band a{display:inline-block;background:#2F5D3E;color:#fff;text-decoration:none;font-weight:600;font-size:15px;padding:14px 24px;border-radius:6px;}
     .footer{padding:48px 24px;text-align:center;font-size:12px;color:#888C94;border-top:1px solid #E8E9EB;}
-  </style>
+      .az-nav{display:flex;align-items:center;justify-content:space-between;gap:16px;max-width:1200px;margin:0 auto;padding:16px 24px;border-bottom:1px solid #E8E9EB;background:#fff;}
+    .az-nav-logo img{height:28px;display:block;}
+    .az-nav-links{display:flex;gap:32px;}
+    .az-nav-links a{font-size:14px;font-weight:500;color:#0B1A36;text-decoration:none;transition:color 180ms;}
+    .az-nav-links a:hover{color:#2F5D3E;}
+    .az-nav-right{display:flex;align-items:center;gap:10px;}
+    .az-nav-cta{font-family:inherit;font-size:13px;font-weight:600;padding:10px 18px;background:#2F5D3E;color:#fff;text-decoration:none;border-radius:6px;white-space:nowrap;display:inline-block;letter-spacing:-0.005em;}
+    .az-nav-cta:hover{background:#244B32;}
+    .az-nav-menu-btn{display:none;width:40px;height:40px;background:transparent;border:none;border-radius:6px;cursor:pointer;color:#0B1A36;align-items:center;justify-content:center;}
+    .az-nav-mobile{display:none;flex-direction:column;background:#fff;border-bottom:1px solid #E8E9EB;padding:8px 24px 16px;}
+    .az-nav-mobile.open{display:flex;}
+    .az-nav-mobile a{font-size:16px;font-weight:500;color:#0B1A36;padding:14px 0;border-bottom:1px solid #F4F4F5;text-decoration:none;}
+    .az-nav-mobile a:last-of-type{border-bottom:none;}
+    .az-nav-mobile .az-nav-cta{margin-top:12px;padding:14px 20px;font-size:15px;text-align:center;}
+    @media (max-width:760px){.az-nav-links,.az-nav-desktop-cta{display:none;}.az-nav-menu-btn{display:inline-flex;}}
+</style>
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"Article","headline":"How to Automate Quoting in a Small Business: A Practical Playbook","description":"A step-by-step playbook for cutting quote turnaround from days to minutes using AI tools small businesses can buy today.","image":"https://andrewzoll.com/assets/logo-primary.png","author":{"@type":"Person","name":"Andrew Zoll","url":"https://andrewzoll.com/","image":"https://andrewzoll.com/assets/andrew-headshot.png","jobTitle":"AI Efficiency Consultant","description":"Andrew Zoll runs $997 AI Efficiency Audits for small businesses with 5 to 50 employees and is the founder of FieldCommand, a CRM for trade contractors. He writes from inside deployed AI implementations, not theory.","sameAs":["https://www.linkedin.com/in/andrewzoll/","https://portfolio.andrewzoll.com/"]},"publisher":{"@type":"Organization","name":"Andrew Zoll - AI Efficiency Audits","url":"https://andrewzoll.com/","logo":{"@type":"ImageObject","url":"https://andrewzoll.com/assets/logo-primary.png"}},"datePublished":"2026-05-20","dateModified":"2026-05-21","mainEntityOfPage":{"@type":"WebPage","@id":"https://andrewzoll.com/blog/how-to-automate-quoting-small-business/"},"isPartOf":{"@type":"Blog","name":"Andrew Zoll on AI for Small Business","url":"https://andrewzoll.com/blog/"}}
   </script>
 </head>
 <body>
-  <div class="nav">
-    <a href="/" class="logo"><img src="/assets/logo-primary.png" alt="Andrew Zoll"/></a>
-    <a href="/#book">Book the audit →</a>
+  <nav class="az-nav">
+    <a href="/" class="az-nav-logo" aria-label="Andrew Zoll - home"><img src="/assets/logo-primary.png" alt="Andrew Zoll"/></a>
+    <div class="az-nav-links">
+      <a href="/#audit">The audit</a>
+      <a href="/services/">Services</a>
+      <a href="/os-builder/">OS Builder</a>
+      <a href="/blog/">Blog</a>
+      <a href="/#faq">FAQ</a>
+      <a href="/#about">About</a>
+    </div>
+    <div class="az-nav-right">
+      <a href="/#book" class="az-nav-cta az-nav-desktop-cta">Book the audit →</a>
+      <button class="az-nav-menu-btn" aria-label="Menu" aria-expanded="false" onclick="var m=document.getElementById('az-nav-mobile');var open=m.classList.toggle('open');this.setAttribute('aria-expanded',open);">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="3" y1="7" x2="21" y2="7"/><line x1="3" y1="17" x2="21" y2="17"/></svg>
+      </button>
+    </div>
+  </nav>
+  <div class="az-nav-mobile" id="az-nav-mobile">
+    <a href="/#audit">The audit</a>
+    <a href="/services/">Services</a>
+    <a href="/os-builder/">OS Builder</a>
+    <a href="/blog/">Blog</a>
+    <a href="/#faq">FAQ</a>
+    <a href="/#about">About</a>
+    <a href="/#book" class="az-nav-cta">Book the audit →</a>
   </div>
   <div class="wrap">
     <div class="crumb"><a href="/blog/">← Blog</a></div>
