@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>How Therapy Practices Could Benefit from an AI Audit · Andrew Zoll</title>
+  <meta name="description" content="A practical look at where AI fits inside a therapy practice. Notes, intake, insurance, no-show follow-ups, and HIPAA-fit tools, with a $997 flat-fee assessment in 48 hours."/>
+  <link rel="canonical" href="https://andrewzoll.com/blog/how-therapy-practices-benefit-ai-audit/"/>
+  <meta property="og:type" content="article"/>
+  <meta property="og:title" content="How Therapy Practices Could Benefit from an AI Audit"/>
+  <meta property="og:description" content="Where AI saves time inside a therapy practice without touching clinical judgment. A $997 flat-fee assessment in 48 hours."/>
+  <meta property="og:url" content="https://andrewzoll.com/blog/how-therapy-practices-benefit-ai-audit/"/>
+  <meta property="og:image" content="https://andrewzoll.com/assets/logo-primary.png"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="How Therapy Practices Could Benefit from an AI Audit"/>
+  <meta name="twitter:description" content="Where AI saves time inside a therapy practice without touching clinical judgment."/>
+  <link rel="icon" href="/assets/favicon-primary.png"/>
+  <link rel="stylesheet" href="/colors_and_type.css"/>
+  <style>
+    html,body{margin:0;padding:0;background:#fff;color:#0B1A36;font-family:Inter,sans-serif;-webkit-font-smoothing:antialiased;}
+    *{box-sizing:border-box;}
+    .nav{display:flex;justify-content:space-between;align-items:center;padding:24px;border-bottom:1px solid #E8E9EB;}
+    .nav a{font-size:14px;font-weight:500;color:#0B1A36;text-decoration:none;}
+    .nav .logo img{height:24px;display:block;}
+    .wrap{max-width:760px;margin:0 auto;padding:64px 24px 100px;}
+    .crumb{font-size:13px;color:#888C94;margin-bottom:24px;}
+    .crumb a{color:#2F5D3E;text-decoration:none;}
+    .eyebrow{font-size:12px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:#2F5D3E;margin-bottom:20px;}
+    h1{font-size:clamp(34px,5vw,52px);font-weight:700;line-height:1.05;letter-spacing:-0.03em;margin:0 0 28px;color:#0B1A36;}
+    .meta{font-size:13px;color:#888C94;margin-bottom:48px;}
+    article p{font-size:18px;line-height:1.65;color:#0B1A36;margin:0 0 22px;}
+    article h2{font-size:28px;font-weight:700;line-height:1.2;letter-spacing:-0.02em;margin:56px 0 20px;color:#0B1A36;}
+    article h3{font-size:21px;font-weight:600;line-height:1.3;letter-spacing:-0.015em;margin:36px 0 14px;color:#0B1A36;}
+    article strong{font-weight:600;}
+    .cta-band{margin:72px 0 0;padding:40px 32px;background:#0B1A36;color:#fff;border-radius:12px;}
+    .cta-band h3{font-size:24px;font-weight:700;margin:0 0 12px;letter-spacing:-0.02em;color:#fff;}
+    .cta-band p{color:rgba(255,255,255,0.75);font-size:16px;line-height:1.55;margin:0 0 24px;}
+    .cta-band a{display:inline-block;background:#2F5D3E;color:#fff;text-decoration:none;font-weight:600;font-size:15px;padding:14px 24px;border-radius:6px;}
+    .footer{padding:48px 24px;text-align:center;font-size:12px;color:#888C94;border-top:1px solid #E8E9EB;}
+      .az-nav{display:flex;align-items:center;justify-content:space-between;gap:16px;max-width:1200px;margin:0 auto;padding:16px 24px;border-bottom:1px solid #E8E9EB;background:#fff;}
+    .az-nav-logo img{height:28px;display:block;}
+    .az-nav-links{display:flex;gap:32px;}
+    .az-nav-links a{font-size:14px;font-weight:500;color:#0B1A36;text-decoration:none;transition:color 180ms;}
+    .az-nav-links a:hover{color:#2F5D3E;}
+    .az-nav-right{display:flex;align-items:center;gap:10px;}
+    .az-nav-cta{font-family:inherit;font-size:13px;font-weight:600;padding:10px 18px;background:#2F5D3E;color:#fff;text-decoration:none;border-radius:6px;white-space:nowrap;display:inline-block;letter-spacing:-0.005em;}
+    .az-nav-cta:hover{background:#244B32;}
+    .az-nav-menu-btn{display:none;width:40px;height:40px;background:transparent;border:none;border-radius:6px;cursor:pointer;color:#0B1A36;align-items:center;justify-content:center;}
+    .az-nav-mobile{display:none;flex-direction:column;background:#fff;border-bottom:1px solid #E8E9EB;padding:8px 24px 16px;}
+    .az-nav-mobile.open{display:flex;}
+    .az-nav-mobile a{font-size:16px;font-weight:500;color:#0B1A36;padding:14px 0;border-bottom:1px solid #F4F4F5;text-decoration:none;}
+    .az-nav-mobile a:last-of-type{border-bottom:none;}
+    .az-nav-mobile .az-nav-cta{margin-top:12px;padding:14px 20px;font-size:15px;text-align:center;}
+    @media (max-width:760px){.az-nav-links,.az-nav-desktop-cta{display:none;}.az-nav-menu-btn{display:inline-flex;}}
+    article a{color:#2F5D3E;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px;text-decoration-color:rgba(47,93,62,0.45);transition:text-decoration-color 180ms,color 180ms;border-bottom:none;}
+    article a:hover{color:#244B32;text-decoration-color:#244B32;}
+</style>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Article","headline":"How Therapy Practices Could Benefit from an AI Audit","description":"A practical look at where AI fits inside a therapy practice. Notes, intake, insurance, no-show follow-ups, and HIPAA-fit tools, with a $997 flat-fee assessment in 48 hours.","image":"https://andrewzoll.com/assets/logo-primary.png","author":{"@type":"Person","name":"Andrew Zoll","url":"https://andrewzoll.com/","image":"https://andrewzoll.com/assets/andrew-headshot.png","jobTitle":"AI Efficiency Consultant","description":"Andrew Zoll runs $997 AI Efficiency Assessments for small businesses with 5 to 50 employees, including solo and group therapy practices. He writes from inside deployed AI implementations, not theory.","sameAs":["https://www.linkedin.com/in/andrewzoll/","https://portfolio.andrewzoll.com/"]},"publisher":{"@type":"Organization","name":"Andrew Zoll - AI Efficiency Audits","url":"https://andrewzoll.com/","logo":{"@type":"ImageObject","url":"https://andrewzoll.com/assets/logo-primary.png"}},"datePublished":"2026-05-04","dateModified":"2026-05-04","mainEntityOfPage":{"@type":"WebPage","@id":"https://andrewzoll.com/blog/how-therapy-practices-benefit-ai-audit/"},"isPartOf":{"@type":"Blog","name":"Andrew Zoll on AI for Small Business","url":"https://andrewzoll.com/blog/"}}
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What does an AI audit for a therapy practice cost?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The assessment is $997 flat. That covers a 45-minute discovery call, a written plan delivered within 48 hours, and a 30-minute walkthrough call. There is no retainer and no scoping fee on top of that."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How long does the assessment take?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Roughly one week start to finish. The discovery call is 45 minutes, the written plan arrives within 48 hours of the call, and the walkthrough is 30 minutes. Total clinician or owner time on the assessment is under two hours."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What does the deliverable include?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A 2 to 3 page ranked plan. Each line item names the specific AI or workflow tool, the task it replaces or supports, the estimated hours per week saved, and the implementation order. HIPAA-fit tools are flagged. Tools that require a Business Associate Agreement are called out so you do not have to chase that down yourself."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is this HIPAA compliant?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The assessment process itself does not require any patient information. The discovery call covers workflows, not cases. The plan recommends tools that can be configured for HIPAA compliance, including which vendors will sign a Business Associate Agreement under 45 CFR Part 164. Implementation of any tool that touches protected health information is your responsibility to configure with a signed BAA before any PHI is processed."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does AI replace the therapist?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. Never. AI does not replace clinical judgment, diagnostic decisions, treatment planning decisions, or the therapeutic relationship. Every workflow recommended in the assessment is designed to draft, summarize, or prepare material that the clinician then reviews, edits, and approves. The clinician decides. The tool prepares."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What if I am a solo therapist?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Solo practices fit when the owner is doing meaningful administrative work that pulls time away from sessions. Note-drafting pre-pass, intake processing, insurance verification, and reminder sequences all return time to a solo clinician. If the practice is fully outsourced for admin already, the assessment is a weaker fit."
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <nav class="az-nav">
+    <a href="/" class="az-nav-logo" aria-label="Andrew Zoll - home"><img src="/assets/logo-primary.png" alt="Andrew Zoll"/></a>
+    <div class="az-nav-links">
+      <a href="/#audit">The audit</a>
+      <a href="/services/">Services</a>
+      <a href="/os-builder/">OS Builder</a>
+      <a href="/blog/">Blog</a>
+      <a href="/#faq">FAQ</a>
+      <a href="/#about">About</a>
+    </div>
+    <div class="az-nav-right">
+      <a href="/#book" class="az-nav-cta az-nav-desktop-cta">Book the audit →</a>
+      <button class="az-nav-menu-btn" aria-label="Menu" aria-expanded="false" onclick="var m=document.getElementById('az-nav-mobile');var open=m.classList.toggle('open');this.setAttribute('aria-expanded',open);">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="3" y1="7" x2="21" y2="7"/><line x1="3" y1="17" x2="21" y2="17"/></svg>
+      </button>
+    </div>
+  </nav>
+  <div class="az-nav-mobile" id="az-nav-mobile">
+    <a href="/#audit">The audit</a>
+    <a href="/services/">Services</a>
+    <a href="/os-builder/">OS Builder</a>
+    <a href="/blog/">Blog</a>
+    <a href="/#faq">FAQ</a>
+    <a href="/#about">About</a>
+    <a href="/#book" class="az-nav-cta">Book the audit →</a>
+  </div>
+  <div class="wrap">
+    <div class="crumb"><a href="/blog/">← Blog</a></div>
+    <div class="eyebrow">AI for Therapy Practices</div>
+    <h1>How Therapy Practices Could Benefit from an AI Audit</h1>
+    <div class="meta">By <a href="/" rel="author" style="color:#2F5D3E;text-decoration:none;">Andrew Zoll</a>, AI Efficiency Consultant · Published May 21, 2026 · Last reviewed May 21, 2026</div>
+
+    <article>
+      <p>If you run a therapy practice, the part of the week that drains you is usually not the sessions. The sessions are the work you trained for. The drain is everything around them. Notes that pile up after a full caseload. Intake forms that need a careful read before the first appointment. Insurance verification on a new client. The voicemail from a no-show who needs a gentle follow-up. The treatment plan you have been meaning to update for three weeks.</p>
+
+      <p>Clinicians went into therapy to do therapy. The administrative weight around the work is what burns people out, and it is the part of the practice where careful AI use can return real hours without touching the clinical relationship.</p>
+
+      <p>This piece is a practical look at where an AI assessment fits inside a solo or small group therapy practice. It is written for owners and clinicians who are AI-curious but cautious, which is the right posture in healthcare. Nothing in here recommends letting AI make clinical decisions. That is a line that does not move.</p>
+
+      <h2>What an AI assessment actually covers for a therapy practice</h2>
+
+      <p>The format is the same across every practice I assess. A 45-minute discovery call. A written plan in your inbox within 48 hours. A 30-minute walkthrough call to answer questions and decide on implementation order. The price is $997 flat.</p>
+
+      <p>On the discovery call, we do not discuss patients. We discuss workflows. How does a new client get from a first phone call to a first session? What happens after the session ends? How do notes get written, reviewed, and filed? How does insurance get verified and billed? Where does your week disappear? The call is recorded with your consent so I can produce the written plan from the transcript, not from memory.</p>
+
+      <p>The deliverable is 2 to 3 pages. Each recommendation names a specific tool, the workflow it supports, an estimated number of hours per week saved, and the order to implement. Tools that require a Business Associate Agreement are flagged so you know which ones can touch protected health information and which ones cannot. The plan is yours to keep regardless of what happens next.</p>
+
+      <h2>Seven AI workflows that fit a therapy practice</h2>
+
+      <p>These are the patterns that show up across solo practices and small group practices. Not every practice needs all of them, and the assessment ranks them by fit. The ones listed here are workflows where AI prepares material and the clinician decides what to do with it.</p>
+
+      <h3>1. Note-drafting pre-pass</h3>
+
+      <p>Session notes are the single largest administrative time-sink in most therapy practices. A HIPAA-fit note-drafting tool with a signed Business Associate Agreement can produce a first-pass draft of a progress note from a recorded session or from a clinician's voice memo. The clinician then reads, edits, and finalizes the note. AI does not sign off on a note. AI does not decide what to include. The clinician reviews every word before anything is saved to the chart. Practices that adopt this pattern report 30 to 60 minutes per day returned, depending on caseload.</p>
+
+      <h3>2. Intake form processing and risk flagging</h3>
+
+      <p>New-client intake packets carry a lot of useful signal that often gets skimmed under time pressure. An AI pre-read can summarize a completed intake, surface scoring on standardized measures, and flag responses that warrant clinical attention before the first session. Anything clinically significant routes to a human gate. The clinician sees the flag and decides what to do. The tool does not contact the patient, escalate on its own, or make any clinical determination.</p>
+
+      <h3>3. Insurance verification and benefits check</h3>
+
+      <p>Insurance verification eats hours per week in a billing-heavy practice. AI-assisted tooling, combined with payer portals that already exist, can pre-populate verification requests, summarize benefits responses into a one-line clinician brief, and flag prior-authorization requirements. The biller or owner still reviews each verification before sharing with the patient. The reduction in copy-paste work is significant.</p>
+
+      <h3>4. Appointment reminders and no-show follow-up sequences</h3>
+
+      <p>A no-show is not just lost revenue. It is also a clinical signal that often deserves a thoughtful follow-up. A reminder and follow-up sequence, built on a HIPAA-fit platform with a signed BAA, can send reminders, capture rescheduling requests, and route any concerning replies straight to the clinician for a personal response. The patient never gets an AI-written clinical reply. The patient gets a logistics message or a human one.</p>
+
+      <h3>5. Treatment plan template generation</h3>
+
+      <p>Treatment plans benefit from a strong starting template that the clinician then customizes. AI can produce a draft template aligned to a diagnostic picture or a chosen modality, and the clinician edits, removes, and adds based on the actual person in front of them. The template is scaffolding. The plan is clinical work.</p>
+
+      <h3>6. Outcome measure summarization across sessions</h3>
+
+      <p>Practices that use standardized outcome measures (PHQ-9, GAD-7, and so on) collect a lot of data over time and rarely have the time to look at trends across a caseload. AI can produce a per-client summary of measure trajectories and a practice-wide view of outcomes. The clinician interprets the data. The summary just makes it visible.</p>
+
+      <h3>7. Practice operational reporting</h3>
+
+      <p>Utilization rates, no-show rates, revenue per clinician, billing reconciliation, and aging receivables are operational questions, not clinical ones. AI is well-suited to pull these from your practice management system and produce a weekly one-page summary for the owner. This is the lowest-risk category in the list because no PHI is required to answer most of these questions.</p>
+
+      <h2>The HIPAA reality</h2>
+
+      <p>HIPAA is not optional, and it is not a footnote. Any AI workflow that touches protected health information requires a Business Associate Agreement with the vendor before any PHI is processed. Several of the most popular consumer AI tools cannot be used as-is in a covered practice because they do not offer a BAA on their consumer tier. This is the single most common mistake I see clinicians making with AI right now.</p>
+
+      <p>The assessment is explicit about which tools can be configured for HIPAA compliance under 45 CFR Part 164 and which cannot. The plan does not recommend "use ChatGPT for notes" as a generic suggestion. It names specific products that offer a BAA, flags the configuration requirements, and rules out tools that do not meet the standard.</p>
+
+      <p>And to be clear on the deeper point: AI never replaces clinical judgment. It drafts, summarizes, and prepares material. The clinician reads, edits, and decides. That ordering is non-negotiable in any workflow worth recommending. A practice that lets AI make clinical calls is not a practice I would assess for. Thankfully, that is not what most clinicians are asking for. Most clinicians are asking for their evenings back.</p>
+
+      <h2>What the assessment deliverable looks like</h2>
+
+      <p>The output is a ranked plan, not a strategy deck. Each recommended fix carries a specific tool name, a per-week hour estimate, an implementation difficulty rating, a HIPAA-fit notation, and a position in the implementation order. The order matters because some fixes depend on others being in place first. You would not stand up an insurance verification workflow before your billing data is clean, and you would not roll out a note-drafting tool before the BAA is signed.</p>
+
+      <p>If you want to see what one of these plans looks like in detail, the post on <a href="/blog/what-ai-audit-deliverable-looks-like/">what an AI audit deliverable looks like</a> walks through the structure. The post on <a href="/blog/ai-customer-follow-up-automation/">AI customer follow-up automation</a> covers the reminder and follow-up category in more depth, and <a href="/blog/why-diy-ai-projects-stall/">why DIY AI projects stall</a> covers the predictable reasons solo attempts at this work tend to lose momentum.</p>
+
+      <h2>Who this is not for</h2>
+
+      <p>The assessment is not built for everyone. Three groups should skip it.</p>
+
+      <p>First, anyone looking to automate clinical judgment. Diagnostic decisions, treatment planning decisions, crisis assessment, and the therapeutic relationship itself are off the table. If that is the goal, I am not the right consultant.</p>
+
+      <p>Second, enterprise behavioral health systems with an existing IT department and an AI vendor roster. The assessment is built for owner-operator practices, typically solo clinicians or groups of 2 to 10 clinicians, where the owner is also wearing the operations hat. Larger systems need a different kind of engagement.</p>
+
+      <p>Third, anyone hoping for an AI therapist. That is a different product from a different industry, and it is not what an efficiency assessment offers. The clinician remains the clinician here.</p>
+
+      <p>For everyone else, particularly solo and small group practices feeling the weight of the administrative load, an AI assessment is a low-commitment way to find out exactly where AI fits and where it does not, in writing, in 48 hours, for a fixed fee.</p>
+
+      <div class="author-bio" style="margin:72px 0 0;padding:28px;border:1px solid #E8E9EB;border-radius:12px;display:flex;gap:20px;align-items:flex-start;background:#FAFAF8;">
+        <img src="/assets/andrew-headshot.png" alt="Andrew Zoll, AI Efficiency Consultant" width="72" height="72" style="width:72px;height:72px;border-radius:50%;flex-shrink:0;object-fit:cover;"/>
+        <div>
+          <div style="font-size:11px;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:#888C94;margin-bottom:6px;">About the author</div>
+          <div style="font-size:17px;font-weight:600;color:#0B1A36;margin-bottom:8px;"><a href="/" style="color:inherit;text-decoration:none;" rel="author">Andrew Zoll</a> · AI Efficiency Consultant</div>
+          <p style="font-size:15px;line-height:1.6;color:#4A5160;margin:0 0 12px;">CEO of FieldCommand and an active AI implementation practitioner. Andrew runs $997 AI Efficiency Assessments for small businesses with 5 to 50 employees, including solo and small group therapy practices. Every claim on this blog comes from a real implementation, not a theory.</p>
+          <div style="font-size:13px;color:#888C94;"><a href="https://www.linkedin.com/in/andrewzoll/" style="color:#2F5D3E;text-decoration:none;" rel="noopener">LinkedIn</a> · <a href="https://portfolio.andrewzoll.com/" style="color:#2F5D3E;text-decoration:none;" rel="noopener">Portfolio</a> · <a href="/audit/" style="color:#2F5D3E;text-decoration:none;">Book an assessment</a></div>
+        </div>
+      </div>
+
+      <div class="cta-band">
+        <h3>Get your therapy practice hours back</h3>
+        <p>If your evenings are filled with notes, intake forms, and insurance follow-ups, the assessment is built for you. 45 minutes on a call. 48 hours later, you have the plan. 30 minutes to walk through it. See the full <a href="/services/" style="color:#fff;text-decoration:underline;">services</a> menu or the <a href="/os-builder/" style="color:#fff;text-decoration:underline;">OS Builder</a> option if you want implementation help after the plan lands.</p>
+        <a href="/#book">Book your AI Efficiency Assessment →</a>
+      </div>
+    </article>
+  </div>
+  <div class="footer">© 2026 Andrew Zoll · AI Efficiency Audits · Pueblo, CO</div>
+</body>
+</html>

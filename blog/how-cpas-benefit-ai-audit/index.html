@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>How CPAs Could Benefit from an AI Audit · Andrew Zoll</title>
+  <meta name="description" content="A $997 AI Efficiency Assessment for CPAs covers document chase, client follow-up, bookkeeping reconciliation, and tax-return pre-review without touching judgment on the return."/>
+  <link rel="canonical" href="https://andrewzoll.com/blog/how-cpas-benefit-ai-audit/"/>
+  <meta property="og:type" content="article"/>
+  <meta property="og:title" content="How CPAs Could Benefit from an AI Audit"/>
+  <meta property="og:description" content="What an AI Efficiency Assessment looks like for a solo CPA or a 3 to 15 person firm. Specific workflows, hour estimates, and the data-handling story the deliverable has to include."/>
+  <meta property="og:url" content="https://andrewzoll.com/blog/how-cpas-benefit-ai-audit/"/>
+  <meta property="og:image" content="https://andrewzoll.com/assets/logo-primary.png"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="How CPAs Could Benefit from an AI Audit"/>
+  <meta name="twitter:description" content="A $997 AI Efficiency Assessment built around the reality of CPA practice: tax-season inbox load, document chase, and IRS Pub 4557 data handling."/>
+  <link rel="icon" href="/assets/favicon-primary.png"/>
+  <link rel="stylesheet" href="/colors_and_type.css"/>
+  <style>
+    html,body{margin:0;padding:0;background:#fff;color:#0B1A36;font-family:Inter,sans-serif;-webkit-font-smoothing:antialiased;}
+    *{box-sizing:border-box;}
+    .nav{display:flex;justify-content:space-between;align-items:center;padding:24px;border-bottom:1px solid #E8E9EB;}
+    .nav a{font-size:14px;font-weight:500;color:#0B1A36;text-decoration:none;}
+    .nav .logo img{height:24px;display:block;}
+    .wrap{max-width:760px;margin:0 auto;padding:64px 24px 100px;}
+    .crumb{font-size:13px;color:#888C94;margin-bottom:24px;}
+    .crumb a{color:#2F5D3E;text-decoration:none;}
+    .eyebrow{font-size:12px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:#2F5D3E;margin-bottom:20px;}
+    h1{font-size:clamp(34px,5vw,52px);font-weight:700;line-height:1.05;letter-spacing:-0.03em;margin:0 0 28px;color:#0B1A36;}
+    .meta{font-size:13px;color:#888C94;margin-bottom:48px;}
+    article p{font-size:18px;line-height:1.65;color:#0B1A36;margin:0 0 22px;}
+    article h2{font-size:28px;font-weight:700;line-height:1.2;letter-spacing:-0.02em;margin:56px 0 20px;color:#0B1A36;}
+    article h3{font-size:21px;font-weight:600;line-height:1.25;letter-spacing:-0.01em;margin:36px 0 14px;color:#0B1A36;}
+    article strong{font-weight:600;}
+    .cta-band{margin:72px 0 0;padding:40px 32px;background:#0B1A36;color:#fff;border-radius:12px;}
+    .cta-band h3{font-size:24px;font-weight:700;margin:0 0 12px;letter-spacing:-0.02em;color:#fff;}
+    .cta-band p{color:rgba(255,255,255,0.75);font-size:16px;line-height:1.55;margin:0 0 24px;}
+    .cta-band a{display:inline-block;background:#2F5D3E;color:#fff;text-decoration:none;font-weight:600;font-size:15px;padding:14px 24px;border-radius:6px;margin-right:10px;}
+    .cta-band a.secondary{background:transparent;border:1px solid rgba(255,255,255,0.4);}
+    .footer{padding:48px 24px;text-align:center;font-size:12px;color:#888C94;border-top:1px solid #E8E9EB;}
+    .az-nav{display:flex;align-items:center;justify-content:space-between;gap:16px;max-width:1200px;margin:0 auto;padding:16px 24px;border-bottom:1px solid #E8E9EB;background:#fff;}
+    .az-nav-logo img{height:28px;display:block;}
+    .az-nav-links{display:flex;gap:32px;}
+    .az-nav-links a{font-size:14px;font-weight:500;color:#0B1A36;text-decoration:none;transition:color 180ms;}
+    .az-nav-links a:hover{color:#2F5D3E;}
+    .az-nav-right{display:flex;align-items:center;gap:10px;}
+    .az-nav-cta{font-family:inherit;font-size:13px;font-weight:600;padding:10px 18px;background:#2F5D3E;color:#fff;text-decoration:none;border-radius:6px;white-space:nowrap;display:inline-block;letter-spacing:-0.005em;}
+    .az-nav-cta:hover{background:#244B32;}
+    .az-nav-menu-btn{display:none;width:40px;height:40px;background:transparent;border:none;border-radius:6px;cursor:pointer;color:#0B1A36;align-items:center;justify-content:center;}
+    .az-nav-mobile{display:none;flex-direction:column;background:#fff;border-bottom:1px solid #E8E9EB;padding:8px 24px 16px;}
+    .az-nav-mobile.open{display:flex;}
+    .az-nav-mobile a{font-size:16px;font-weight:500;color:#0B1A36;padding:14px 0;border-bottom:1px solid #F4F4F5;text-decoration:none;}
+    .az-nav-mobile a:last-of-type{border-bottom:none;}
+    .az-nav-mobile .az-nav-cta{margin-top:12px;padding:14px 20px;font-size:15px;text-align:center;}
+    @media (max-width:760px){.az-nav-links,.az-nav-desktop-cta{display:none;}.az-nav-menu-btn{display:inline-flex;}}
+    article a{color:#2F5D3E;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px;text-decoration-color:rgba(47,93,62,0.45);transition:text-decoration-color 180ms,color 180ms;border-bottom:none;}
+    article a:hover{color:#244B32;text-decoration-color:#244B32;}
+  </style>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"Article","headline":"How CPAs Could Benefit from an AI Audit","description":"A $997 AI Efficiency Assessment for CPAs covers document chase, client follow-up, bookkeeping reconciliation, and tax-return pre-review without touching judgment on the return.","image":"https://andrewzoll.com/assets/logo-primary.png","author":{"@type":"Person","name":"Andrew Zoll","url":"https://andrewzoll.com/","image":"https://andrewzoll.com/assets/andrew-headshot.png","jobTitle":"AI Efficiency Consultant","description":"Andrew Zoll runs $997 AI Efficiency Audits for small businesses and professional-services firms with 5 to 50 employees. He writes from inside deployed AI implementations, not theory.","sameAs":["https://www.linkedin.com/in/andrewzoll/","https://portfolio.andrewzoll.com/"]},"publisher":{"@type":"Organization","name":"Andrew Zoll - AI Efficiency Audits","url":"https://andrewzoll.com/","logo":{"@type":"ImageObject","url":"https://andrewzoll.com/assets/logo-primary.png"}},"datePublished":"2026-05-11","dateModified":"2026-05-11","mainEntityOfPage":{"@type":"WebPage","@id":"https://andrewzoll.com/blog/how-cpas-benefit-ai-audit/"},"isPartOf":{"@type":"Blog","name":"Andrew Zoll on AI for Small Business","url":"https://andrewzoll.com/blog/"}}
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What does an AI audit for a CPA practice cost?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The AI Efficiency Assessment is $997 flat. Same scope, same deliverable, same price for a solo CPA as for a 15-person firm. There is no scoping retainer and no upsell during the call."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How long does the assessment take?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Three touchpoints across roughly one week. A 45-minute discovery call, a 48-hour turnaround on the written plan, and a 30-minute walkthrough call. Owner time on the engagement side is under two hours."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What does the deliverable include?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A 2 to 3 page ranked plan with 3 to 5 specific fixes. Each fix names the AI tool, the workflow it replaces, the estimated hours per week saved, the implementation difficulty, and the recommended order. You keep the plan whether you implement with me or your own team."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What about client tax data and IRS Pub 4557 compliance?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Every recommendation in a CPA-firm assessment includes an explicit data-handling note. The plan respects IRS Pub 4557 written information security plan requirements, AICPA practice management guidance, and your state board ethics rules. Workflows that would route taxpayer data into a non-compliant tool are rejected at the planning stage, not after you have already built them."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What if I am a solo CPA?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Solo CPAs with an active book of 40 or more recurring clients are a strong fit. Solo CPAs running purely seasonal tax prep with no advisory or year-round work usually do not have enough process surface area to clear the 5-hour weekly savings threshold. We will say so on the discovery call rather than take your fee."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the difference between an AI audit and an AI consultant?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "An AI consultant typically sells a retainer and an open-ended engagement. The assessment is a fixed-fee diagnostic with a 48-hour deliverable. You receive a ranked plan and you decide whether to implement it yourself, hand it to staff, or hire help. There is no retainer attached to the assessment fee."
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <nav class="az-nav">
+    <a href="/" class="az-nav-logo" aria-label="Andrew Zoll - home"><img src="/assets/logo-primary.png" alt="Andrew Zoll"/></a>
+    <div class="az-nav-links">
+      <a href="/#audit">The audit</a>
+      <a href="/services/">Services</a>
+      <a href="/os-builder/">OS Builder</a>
+      <a href="/blog/">Blog</a>
+      <a href="/#faq">FAQ</a>
+      <a href="/#about">About</a>
+    </div>
+    <div class="az-nav-right">
+      <a href="/#book" class="az-nav-cta az-nav-desktop-cta">Book the audit →</a>
+      <button class="az-nav-menu-btn" aria-label="Menu" aria-expanded="false" onclick="var m=document.getElementById('az-nav-mobile');var open=m.classList.toggle('open');this.setAttribute('aria-expanded',open);">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="3" y1="7" x2="21" y2="7"/><line x1="3" y1="17" x2="21" y2="17"/></svg>
+      </button>
+    </div>
+  </nav>
+  <div class="az-nav-mobile" id="az-nav-mobile">
+    <a href="/#audit">The audit</a>
+    <a href="/services/">Services</a>
+    <a href="/os-builder/">OS Builder</a>
+    <a href="/blog/">Blog</a>
+    <a href="/#faq">FAQ</a>
+    <a href="/#about">About</a>
+    <a href="/#book" class="az-nav-cta">Book the audit →</a>
+  </div>
+  <div class="wrap">
+    <div class="crumb"><a href="/blog/">← Blog</a></div>
+    <div class="eyebrow">AI Assessment · CPAs</div>
+    <h1>How CPAs Could Benefit from an AI Audit</h1>
+    <div class="meta">By <a href="/" rel="author" style="color:#2F5D3E;text-decoration:none;">Andrew Zoll</a>, AI Efficiency Consultant · Published May 21, 2026</div>
+
+    <article>
+      <p>If you run a CPA practice with 3 to 15 people, your year has two modes. From January through April you triage a tax-season inbox that never empties, chase 1099s and K-1s and broker statements from clients who promise they sent them, and reconcile bookkeeping files in the evenings after the partner work is done. From May through December you try to remember that you also have an advisory practice, and you wonder why the planning conversations you meant to have in June are still waiting in August.</p>
+
+      <p>The pattern is the same whether you are solo with 80 returns and a handful of monthly bookkeeping clients, or a 12-person firm with a manager, two seniors, and four staff accountants. The work that pays you well, which is advisory and complex returns, gets crowded out by the work that has to happen, which is collection, communication, and reconciliation. AI tools can move a meaningful share of the second category off your plate without touching the judgment on the first.</p>
+
+      <p>This is what an AI Efficiency Assessment looks like when it is built around the reality of CPA practice, what it covers, what it does not, and the data-handling story that any honest plan has to include.</p>
+
+      <h2>What an AI assessment actually covers for a CPA practice</h2>
+
+      <p>The assessment is a $997 fixed-fee diagnostic. It is not a retainer, not a strategy deck, and not a vendor procurement process. The engagement has three touchpoints.</p>
+
+      <p>First is a 45-minute discovery call. We walk through your client roster shape, your tech stack, your tax-season choke points, and the workflows that consume the most partner time today. Bring a recent week's calendar and a list of the three tasks you wish you could hand to someone else. That is enough.</p>
+
+      <p>Second is the written plan, delivered within 48 hours. It is 2 to 3 pages. Each recommendation names the specific AI tool, the workflow it replaces, the estimated hours per week saved, the implementation difficulty, and the order to implement. Every line item includes a data-handling note that addresses whether taxpayer information ever touches the tool, and if so, how.</p>
+
+      <p>Third is a 30-minute walkthrough call. I hand you the plan and answer the questions that come up when you actually read it. You decide whether to implement it with your own team, with me, or not at all. The plan is yours either way.</p>
+
+      <h2>Seven AI workflows that fit a CPA firm</h2>
+
+      <p>The assessment is workflow-specific, not theoretical. Here are the workflows that show up most often in CPA-practice plans, with the tools and hour ranges I usually see.</p>
+
+      <h3>1. Document collection and chase</h3>
+
+      <p>The single largest time sink in a typical tax-season week is chasing missing 1099s, K-1s, broker 1099-Bs, mortgage 1098s, and HSA statements. The fix is a structured intake portal plus an automated reminder cadence. <a href="https://www.taxdome.com" target="_blank" rel="noopener">TaxDome</a>, <a href="https://liscio.me" target="_blank" rel="noopener">Liscio</a>, and <a href="https://www.canopytax.com" target="_blank" rel="noopener">Canopy</a> all handle this; the assessment helps you pick the one that fits your stack and configures the prompt cadence so you stop sending one-off emails. Typical recovery is 4 to 7 hours per week during peak season.</p>
+
+      <h3>2. Client communication templates and follow-up sequences</h3>
+
+      <p>Most firms write the same five emails 80 times a year. Engagement renewals, extension reminders, estimated-payment nudges, "we received your documents" confirmations, and "your return is ready for review" notices. <a href="https://www.anthropic.com/claude" target="_blank" rel="noopener">Claude</a> drafts the template library against your tone in an afternoon, and a tool like <a href="https://www.taxdome.com" target="_blank" rel="noopener">TaxDome</a> or your existing CRM handles the trigger. Typical recovery is 2 to 4 hours per week year-round.</p>
+
+      <h3>3. Bookkeeping reconciliation pre-pass</h3>
+
+      <p>For firms that run monthly bookkeeping, an AI pre-pass against the prior month's general ledger catches the obvious anomalies before a human touches the file. Uncategorized transactions, duplicate vendors, account-mapping drift, and missing receipts surface as a flagged list rather than as findings buried in the file. Tools that work today include <a href="https://www.keeper.app" target="_blank" rel="noopener">Keeper</a> and a custom Claude workflow over an exported QBO trial balance. Typical recovery is 30 to 60 minutes per client per month, which compounds quickly across a book.</p>
+
+      <h3>4. Tax-return preparation pre-review (drafting only)</h3>
+
+      <p>This is the recommendation that gets the most pushback, and rightly so. AI does not sign returns. AI does not exercise professional judgment. What AI does well is flag inconsistencies between the prior-year return and the current-year inputs, catch missing schedules, and produce a pre-review checklist for the preparer. The preparer still owns every line. Typical recovery is 15 to 30 minutes per return during peak, which adds up to 20 or more hours across a season.</p>
+
+      <h3>5. Advisory call prep from prior-year files</h3>
+
+      <p>Before a year-end planning call with an existing client, a partner usually spends 20 to 40 minutes pulling the prior return, scanning for changes, and writing notes. Claude with access to a redacted summary of the prior return produces a structured prep brief in two minutes. The partner reviews and edits rather than starts cold. Typical recovery is 1 to 3 hours per week during planning season.</p>
+
+      <h3>6. New-client onboarding workflow</h3>
+
+      <p>Every new client requires the same sequence. Engagement letter, prior-year return request, document checklist, portal invitation, intake call scheduling, and tax organizer delivery. A tool like <a href="https://www.make.com" target="_blank" rel="noopener">Make.com</a> chains these steps so the first email after the signed engagement letter triggers the entire downstream sequence automatically. Typical recovery is 45 to 90 minutes per new client.</p>
+
+      <h3>7. Engagement letter generation</h3>
+
+      <p>Engagement letters drift across a firm without a structured template. Claude generates the right letter from a short structured prompt that captures client type, services included, fee structure, and exclusions. The output is a draft for partner review, not a final document. Typical recovery is 15 to 30 minutes per engagement, plus consistency benefits that are harder to quantify but very real.</p>
+
+      <h2>The regulated-data reality</h2>
+
+      <p>None of this works if the data-handling story is sloppy. CPAs are subject to <a href="https://www.irs.gov/pub/irs-pdf/p4557.pdf" target="_blank" rel="noopener">IRS Publication 4557</a>, which requires a written information security plan covering how taxpayer data is collected, stored, transmitted, and accessed. State boards add their own ethics rules. The AICPA practice management standards layer on top. Any AI workflow inside a CPA firm has to clear all three.</p>
+
+      <p>In practice this means three rules show up in every CPA-firm plan I write.</p>
+
+      <p>First, taxpayer data does not enter a consumer AI tool. Free ChatGPT, free Claude.ai, and any tool whose terms allow training on submitted data are out. Enterprise tiers with a no-training contractual commitment are in. The assessment specifies which tier of which tool you need for each workflow.</p>
+
+      <p>Second, redaction happens before AI sees the file. When a workflow does require AI to touch return content, the inputs are redacted at the field level. Names, SSNs, EINs, and account numbers are stripped or tokenized. The assessment specifies the redaction step as part of the workflow, not as an afterthought.</p>
+
+      <p>Third, the data-handling note appears next to every recommendation. You should never have to ask "is this safe?" because the plan answered the question on the same page as the fix.</p>
+
+      <h2>What the deliverable looks like</h2>
+
+      <p>The plan is a ranked list of 3 to 5 fixes. Each fix includes the specific tool, the workflow it replaces, the hours per week recovered, the implementation difficulty on a 1 to 5 scale, the data-handling note, and the recommended position in the implementation order. The order matters because the wrong sequence wastes weeks; the right sequence stacks each fix on the one before it.</p>
+
+      <p>A typical CPA-firm plan ranks the document collection workflow first because it pays back fastest and has the lowest data-handling exposure. The bookkeeping pre-pass usually comes second because it lives in a contained tool surface. The tax-return pre-review usually comes last because the data-handling design takes the most care. The exact order depends on what your week actually looks like, which is what the discovery call is for.</p>
+
+      <p>For a fuller walkthrough of the deliverable format with sample content, see <a href="/blog/what-ai-audit-deliverable-looks-like/">what an AI audit deliverable actually looks like</a>.</p>
+
+      <h2>Who this is not for</h2>
+
+      <p>Three groups should pass on the assessment.</p>
+
+      <p>First, solo CPAs who only do seasonal tax prep with no advisory work or recurring engagements. The process surface area is too thin for the 5-hour weekly savings threshold to land outside of peak season, and a $997 assessment that pays back across three months is not a fit for the rest of the year.</p>
+
+      <p>Second, firms larger than about 25 employees with an AI consultant or implementation partner already engaged. At that size, you have a different layer of advisory in place and the assessment does not stack well on top of it.</p>
+
+      <p>Third, anyone hoping AI will replace professional judgment on returns or audit work. It will not. It does not. The assessment will tell you that on the discovery call rather than waste your time and mine.</p>
+
+      <p>If you have read this far and you have already tried three tools that did not stick, the reason is almost always not the tool. The reason is the workflow design around the tool. For more on why that pattern repeats, see <a href="/blog/why-diy-ai-projects-stall/">why DIY AI projects stall</a>. For the specific case of follow-up automation, which is one of the highest-value lanes in a CPA practice, see <a href="/blog/ai-customer-follow-up-automation/">AI customer follow-up automation</a>.</p>
+
+      <div class="cta-band">
+        <h3>Book a CPA-focused assessment</h3>
+        <p>45 minutes on a call. 48 hours later, you have the plan. 30 minutes to walk through it. $997 flat, no retainer, and the plan is yours either way. Built around the reality of taxpayer data and IRS Pub 4557 compliance, not around generic SMB advice.</p>
+        <a href="/#book">Book the assessment →</a>
+        <a href="/services/" class="secondary">See services</a>
+      </div>
+
+      <div class="author-bio" style="margin:72px 0 0;padding:28px;border:1px solid #E8E9EB;border-radius:12px;display:flex;gap:20px;align-items:flex-start;background:#FAFAF8;">
+        <img src="/assets/andrew-headshot.png" alt="Andrew Zoll, AI Efficiency Consultant" width="72" height="72" style="width:72px;height:72px;border-radius:50%;flex-shrink:0;object-fit:cover;"/>
+        <div>
+          <div style="font-size:11px;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:#888C94;margin-bottom:6px;">About the author</div>
+          <div style="font-size:17px;font-weight:600;color:#0B1A36;margin-bottom:8px;"><a href="/" style="color:inherit;text-decoration:none;" rel="author">Andrew Zoll</a> · AI Efficiency Consultant</div>
+          <p style="font-size:15px;line-height:1.6;color:#4A5160;margin:0 0 12px;">CEO of FieldCommand and a working financial advisor at Ryleigh Wealth Management. Andrew runs $997 AI Efficiency Assessments for owner-operator businesses and professional-services firms with 5 to 50 employees. For firms that want help implementing the plan, the <a href="/os-builder/" style="color:#2F5D3E;text-decoration:none;">OS Builder</a> engagement is the next step.</p>
+          <div style="font-size:13px;color:#888C94;"><a href="https://www.linkedin.com/in/andrewzoll/" style="color:#2F5D3E;text-decoration:none;" rel="noopener">LinkedIn</a> · <a href="https://portfolio.andrewzoll.com/" style="color:#2F5D3E;text-decoration:none;" rel="noopener">Portfolio</a> · <a href="/audit/" style="color:#2F5D3E;text-decoration:none;">Book an assessment</a></div>
+        </div>
+      </div>
+    </article>
+  </div>
+  <div class="footer">© 2026 Andrew Zoll · AI Efficiency Audits · Pueblo, CO</div>
+</body>
+</html>
