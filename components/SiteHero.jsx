@@ -25,7 +25,7 @@ function SiteHero({ onBook, tweaks }) {
         </h1>
 
         <p style={{...hs.lead, color:muted}} className="az-hero-lead">
-          A 45-minute call. A 48-hour ranked plan that names specific AI tools and estimated hours saved per week. A 30-minute walkthrough. $997 flat, built for small businesses with 5 to 50 employees and a team.
+          A 45-minute call. A 45-hour ranked plan that names specific AI tools and estimated hours saved per week. A 30-minute walkthrough. $997 flat, built for small businesses with 5 to 50 employees and a team.
         </p>
 
         <div style={hs.ctas} className="az-hero-ctas">
@@ -39,7 +39,7 @@ function SiteHero({ onBook, tweaks }) {
 
         <div style={{...hs.meta, color: dark ? 'rgba(255,255,255,0.5)' : '#888C94', borderTopColor: ruleColor}} className="az-hero-meta">
           <div style={hs.metaItem}><span style={{...hs.metaKey, color: dark ? 'rgba(255,255,255,0.4)' : '#B6B9BF'}}>01</span> 45-min discovery call</div>
-          <div style={hs.metaItem}><span style={{...hs.metaKey, color: dark ? 'rgba(255,255,255,0.4)' : '#B6B9BF'}}>02</span> Ranked plan in 48 hrs</div>
+          <div style={hs.metaItem}><span style={{...hs.metaKey, color: dark ? 'rgba(255,255,255,0.4)' : '#B6B9BF'}}>02</span> Ranked plan in 45 hrs</div>
           <div style={hs.metaItem}><span style={{...hs.metaKey, color: dark ? 'rgba(255,255,255,0.4)' : '#B6B9BF'}}>03</span> 5+ hrs/wk or no charge</div>
         </div>
       </div>

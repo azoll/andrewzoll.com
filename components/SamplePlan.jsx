@@ -27,7 +27,7 @@ function SamplePlan() {
               </div>
               <div style={sp.coverBottom} data-spgrid="cover-bottom">
                 <div><div style={sp.coverLbl}>Prepared For</div><div style={sp.coverVal}>Ridgeline Dental</div></div>
-                <div><div style={sp.coverLbl}>Engagement</div><div style={sp.coverVal}>48-hour delivery</div></div>
+                <div><div style={sp.coverLbl}>Engagement</div><div style={sp.coverVal}>45-hour delivery</div></div>
                 <div><div style={sp.coverLbl}>Prepared By</div><div style={sp.coverVal}>Andrew Zoll</div></div>
               </div>
             </div>

@@ -19,16 +19,16 @@ function BookingSheetNew({ open, onClose }) {
 
         <div style={bs.body}>
           <div style={bs.eyebrow}>Book the audit</div>
-          <h2 style={bs.h2}>30 minutes on the calendar.<br/>A plan in your inbox 48 hours later.</h2>
+          <h2 style={bs.h2}>45 minutes on the calendar.<br/>A plan in your inbox 45 hours later.</h2>
 
           <div style={bs.summary}>
             <div style={bs.summaryRow}>
               <div style={bs.summaryLabel}>Session</div>
-              <div style={bs.summaryValue}>30 minutes on Google Meet</div>
+              <div style={bs.summaryValue}>45 minutes on Google Meet</div>
             </div>
             <div style={bs.summaryRow}>
               <div style={bs.summaryLabel}>Deliverable</div>
-              <div style={bs.summaryValue}>Written plan within 48 hours</div>
+              <div style={bs.summaryValue}>Written plan within 45 hours</div>
             </div>
             <div style={bs.summaryRow}>
               <div style={bs.summaryLabel}>Fee</div>
