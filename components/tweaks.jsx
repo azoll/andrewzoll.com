@@ -5,7 +5,7 @@ const { useState: useStateSite, useEffect: useEffectSite } = React;
    ========================================================== */
 const TWEAKS = /*EDITMODE-BEGIN*/{
   "darkHero": true,
-  "heroHeadline": "A $997 plan that finds 5+ hours a week, or you do not pay.",
+  "heroHeadline": "Which task should you automate first?",
   "accentCta": true
 }/*EDITMODE-END*/;
 
