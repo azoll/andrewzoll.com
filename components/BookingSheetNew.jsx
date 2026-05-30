@@ -12,13 +12,13 @@ function BookingSheetNew({ open, onClose }) {
   return (
     <>
       <div style={bs.scrim} onClick={onClose}/>
-      <div style={bs.modal} role="dialog" aria-modal="true" aria-label="Book the audit">
+      <div style={bs.modal} role="dialog" aria-modal="true" aria-label="Book the assessment">
         <button onClick={onClose} style={bs.close} aria-label="Close">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
         </button>
 
         <div style={bs.body}>
-          <div style={bs.eyebrow}>Book the audit</div>
+          <div style={bs.eyebrow}>Book the assessment</div>
           <h2 style={bs.h2}>45 minutes on the calendar.<br/>A plan in your inbox 45 hours later.</h2>
 
           <div style={bs.summary}>

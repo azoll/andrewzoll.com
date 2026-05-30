@@ -17,7 +17,7 @@ function SiteHero({ onBook, tweaks }) {
       <div style={hs.inner}>
         <div style={{...hs.eyebrow, color:eyebrow}}>
           <span style={{...hs.eyebrowDot, background:eyebrow}}/>
-          AI Efficiency Audits
+          AI Efficiency Assessments
         </div>
 
         <h1 style={{...hs.h1}} className="az-hero-h1">
@@ -30,7 +30,7 @@ function SiteHero({ onBook, tweaks }) {
 
         <div style={hs.ctas} className="az-hero-ctas">
           <button onClick={onBook} style={{...hs.primary, background:ctaBg, color:ctaFg}} className="az-btn-primary">
-            Book the audit <span className="az-arrow" style={{marginLeft:8}}>→</span>
+            Book the assessment <span className="az-arrow" style={{marginLeft:8}}>→</span>
           </button>
           <a href="#audit" onClick={(e)=>{e.preventDefault();document.getElementById('audit')?.scrollIntoView({behavior:'smooth'});}} style={{...hs.ghost, color:ghostFg, borderBottomColor: dark ? 'rgba(255,255,255,0.3)' : '#D4D6DA'}}>
             See what you get

@@ -5,12 +5,12 @@ function SiteFooter() {
         <div style={ft.top} className="az-footer-top">
           <div>
             <img src="../assets/logo-primary.png" alt="" style={{height:26, marginBottom:14, display:'block'}}/>
-            <div style={ft.desc}>AI Efficiency Audits for small-business owners who want their week back.</div>
+            <div style={ft.desc}>AI Efficiency Assessments for small-business owners who want their week back.</div>
           </div>
           <div style={ft.cols} className="az-footer-cols">
             <div style={ft.col}>
               <div style={ft.colTitle}>Site</div>
-              <a href="/audit/" style={ft.link}>The audit</a>
+              <a href="/audit/" style={ft.link}>The assessment</a>
               <a href="/services/" style={ft.link}>Services</a>
               <a href="/os-builder/" style={ft.link}>OS Builder</a>
               <a href="/blog/" style={ft.link}>Blog</a>
@@ -24,7 +24,7 @@ function SiteFooter() {
           </div>
         </div>
         <div style={ft.bottom}>
-          <div style={ft.copy}>© 2026 Andrew Zoll · AI Efficiency Audits</div>
+          <div style={ft.copy}>© 2026 Andrew Zoll · AI Efficiency Assessments</div>
           <div style={ft.copy}>Pueblo, CO</div>
         </div>
       </div>

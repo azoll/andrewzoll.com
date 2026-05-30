@@ -11,7 +11,7 @@ function TheAudit({ onBook }) {
     <section id="audit" style={ta.root}>
       <div style={ta.inner}>
         <div style={ta.head} className="az-reveal">
-          <div style={ta.eyebrow}>The audit</div>
+          <div style={ta.eyebrow}>The assessment</div>
           <h2 style={ta.h2} className="az-h2">One session.<br/>A leak-finding plan you can use.</h2>
           <p style={ta.lead}>
             I look at how you actually work: email, scheduling, quotes, reporting, follow-ups, and the admin that keeps pulling you away from higher-value work. Then I show you where simple automation can remove the repetitive parts and where your business is quietly leaking time and money.
@@ -30,12 +30,12 @@ function TheAudit({ onBook }) {
                 </li>
               ))}
             </ul>
-            <button onClick={onBook} style={ta.cta} className="az-btn-primary">Book the audit <span className="az-arrow" style={{marginLeft:8}}>→</span></button>
+            <button onClick={onBook} style={ta.cta} className="az-btn-primary">Book the assessment <span className="az-arrow" style={{marginLeft:8}}>→</span></button>
           </div>
 
           <div style={ta.right} className="az-reveal" data-reveal-delay="120">
             <div style={ta.priceCard} className="az-card-hover az-price-card">
-              <div style={ta.priceEyebrow}>The audit</div>
+              <div style={ta.priceEyebrow}>The assessment</div>
               <div style={ta.priceRow}>
                 <span style={ta.priceDollar}>$</span>
                 <span style={ta.price}>997</span>

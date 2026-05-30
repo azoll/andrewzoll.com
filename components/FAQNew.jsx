@@ -3,11 +3,11 @@ const { useState: useStateFAQ } = React;
 function FAQNew() {
   const [open, setOpen] = useStateFAQ(0);
   const qs = [
-    { q:'How much does the audit cost?', a:'The audit is $997, flat. That covers the 45-minute call and the written plan you get within 45 hours. If you want help implementing the plan afterward, that is separate work and priced based on scope. The plan is yours to keep either way.' },
+    { q:'How much does the assessment cost?', a:'The assessment is $997, flat. That covers the 45-minute call and the written plan you get within 45 hours. If you want help implementing the plan afterward, that is separate work and priced based on scope. The plan is yours to keep either way.' },
     { q:'Who is this for?', a:'Small business owners who are losing time and momentum to repetitive admin, missed follow-ups, slow quoting, scheduling friction, inbox drag, or manual reporting. The best fit is a 1 to 15 person business where the owner is still close enough to the work to know where things get stuck.' },
-    { q:'Do I need to know anything about AI?', a:'No. The audit is not about making you an AI expert. It is about finding practical places where simple tools can reduce repetitive work, improve follow-up, and make the business easier to run.' },
+    { q:'Do I need to know anything about AI?', a:'No. The assessment is not about making you an AI expert. It is about finding practical places where simple tools can reduce repetitive work, improve follow-up, and make the business easier to run.' },
     { q:'What if AI is not the right answer for my business?', a:'Then I will say so. Sometimes the best fix is a better process, a template, a checklist, or a simpler tool. I am not trying to force AI where it does not belong.' },
-    { q:'Do you do the implementation for me?', a:'Yes, when it makes sense. The audit is the first step. If you want help putting the plan in place, implementation is separate and priced based on the scope of the work.' },
+    { q:'Do you do the implementation for me?', a:'Yes, when it makes sense. The assessment is the first step. If you want help putting the plan in place, implementation is separate and priced based on the scope of the work.' },
     { q:'How do you handle my data?', a:'I only ask for what is needed to understand the workflow. Do not send sensitive client, customer, medical, financial, or employee information unless we have agreed on how it will be handled. The goal is to map the process, not collect private data.' },
   ];
   return (

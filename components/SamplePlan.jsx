@@ -16,12 +16,12 @@ function SamplePlan() {
               <div style={sp.coverTop}>
                 <div style={sp.coverBrand}>
                   <img src="../assets/logo-icon-primary.png" alt="" style={{width:28, height:28, borderRadius:5}}/>
-                  <span style={sp.coverBrandText}>Andrew Zoll · AI Efficiency Audits</span>
+                  <span style={sp.coverBrandText}>Andrew Zoll · AI Efficiency Assessments</span>
                 </div>
                 <div style={sp.coverDate}>Assessment Date<strong>April 14, 2026</strong></div>
               </div>
               <div style={sp.coverMid}>
-                <span style={sp.coverEyebrow}>AI Efficiency Audit</span>
+                <span style={sp.coverEyebrow}>AI Efficiency Assessment</span>
                 <h3 style={sp.coverHeadline}>Eight hours back, every week.</h3>
                 <p style={sp.coverTagline}>Four quick wins, a four-day plan, and the math behind it.</p>
               </div>

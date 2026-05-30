@@ -25,7 +25,7 @@ function AboutInline() {
 
               <p>I didn't come up through a traditional tech path. I learned by doing, breaking things, and rebuilding them better. AI just made that faster. I use it aggressively, but I don't trust it. Everything gets tested until it works in the real world.</p>
 
-              <p>The audits came out of frustration. Most business owners either ignore AI or use it in ways that create more work, not less. Meanwhile, I was using it to remove hours from my own workflows. The gap was obvious.</p>
+              <p>The assessments came out of frustration. Most business owners either ignore AI or use it in ways that create more work, not less. Meanwhile, I was using it to remove hours from my own workflows. The gap was obvious.</p>
 
               <p>So I stopped talking about tools and started fixing systems.</p>
             </div>

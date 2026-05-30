@@ -11,7 +11,7 @@ function CTABand({ onBook }) {
           <p style={cb.lead}>A 45-minute call. A ranked plan in 45 hours. The plan is yours either way.</p>
         </div>
         <div style={cb.ctas} className="az-reveal" data-reveal-delay="200">
-          <button onClick={onBook} style={cb.primary} className="az-btn-primary">Book the audit <span className="az-arrow" style={{marginLeft:8}}>→</span></button>
+          <button onClick={onBook} style={cb.primary} className="az-btn-primary">Book the assessment <span className="az-arrow" style={{marginLeft:8}}>→</span></button>
           <div style={cb.phoneLine}>
             <span style={cb.phonePrefix}>Prefer to talk first?</span>{' '}
             <a href="tel:+17199645175" style={cb.phoneLink}>(719) 964-5175</a>

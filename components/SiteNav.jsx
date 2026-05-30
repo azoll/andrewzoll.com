@@ -47,7 +47,7 @@ function SiteNav({ onBook, tweaks }) {
           <img src={logoSrc} alt="Andrew Zoll" style={{height:28, display:'block'}}/>
         </a>
         <div style={nv.links} className="az-desktop-nav">
-          <a onClick={()=>scrollTo('audit')} style={linkStyle}>The audit</a>
+          <a onClick={()=>scrollTo('audit')} style={linkStyle}>The assessment</a>
           <a href="/services/" style={{...linkStyle, textDecoration:'none'}}>Services</a>
           <a href="/os-builder/" style={{...linkStyle, textDecoration:'none'}}>OS Builder</a>
           <a href="/blog/" style={{...linkStyle, textDecoration:'none'}}>Blog</a>
@@ -55,7 +55,7 @@ function SiteNav({ onBook, tweaks }) {
           <a onClick={()=>scrollTo('about')} style={linkStyle}>About</a>
         </div>
         <div style={{display:'flex', alignItems:'center', gap:10}}>
-          <button onClick={onBook} style={ctaStyle} className="az-desktop-cta az-btn-primary">Book the audit <span className="az-arrow" style={{marginLeft:6}}>→</span></button>
+          <button onClick={onBook} style={ctaStyle} className="az-desktop-cta az-btn-primary">Book the assessment <span className="az-arrow" style={{marginLeft:6}}>→</span></button>
           <button
             onClick={()=>setMobileOpen(v=>!v)}
             aria-label="Menu"
@@ -71,13 +71,13 @@ function SiteNav({ onBook, tweaks }) {
       </div>
       {mobileOpen && (
         <div style={nv.mobileSheet}>
-          <a onClick={()=>scrollTo('audit')} style={nv.mobileLink}>The audit</a>
+          <a onClick={()=>scrollTo('audit')} style={nv.mobileLink}>The assessment</a>
           <a href="/services/" style={nv.mobileLink}>Services</a>
           <a href="/os-builder/" style={nv.mobileLink}>OS Builder</a>
           <a href="/blog/" style={nv.mobileLink}>Blog</a>
           <a onClick={()=>scrollTo('faq')} style={nv.mobileLink}>FAQ</a>
           <a onClick={()=>scrollTo('about')} style={nv.mobileLink}>About</a>
-          <button onClick={()=>{setMobileOpen(false);onBook();}} style={nv.mobileCta} className="az-btn-primary">Book the audit <span className="az-arrow">→</span></button>
+          <button onClick={()=>{setMobileOpen(false);onBook();}} style={nv.mobileCta} className="az-btn-primary">Book the assessment <span className="az-arrow">→</span></button>
         </div>
       )}
     </nav>

@@ -1,7 +1,7 @@
 function HowItWorksNew() {
   const steps = [
     { n:'01', t:'The call', d:'45 minutes on Google Meet. I ask about your week, where work gets stuck, what repeats, and where follow-ups or admin are costing you.', time:'45 min' },
-    { n:'02', t:'The audit', d:'I map your actual workflow and identify the three to five places simple automation can remove repetition, tighten follow-up, or reduce operational drag.', time:'Offline' },
+    { n:'02', t:'The assessment', d:'I map your actual workflow and identify the three to five places simple automation can remove repetition, tighten follow-up, or reduce operational drag.', time:'Offline' },
     { n:'03', t:'The plan', d:'A written document in your inbox. Ranked by time saved, business impact, and ease of implementation. Tools named, steps listed.', time:'Within 45 hrs' },
     { n:'04', t:'Your call', d:'Take the plan and run with it yourself. Or, if you want help putting it in place, we can talk about implementation.', time:'You decide' },
   ];
