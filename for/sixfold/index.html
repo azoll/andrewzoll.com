@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Built for Sixfold · Andrew Zoll</title>
+  <meta name="description" content="A page Andrew Zoll built for the Sixfold team, applying for the Forward Deployed Engineer role. Work done the agentic way, pointed at underwriting."/>
+  <!-- Private: shared by link only. Do not index. -->
+  <meta name="robots" content="noindex, nofollow"/>
+  <link rel="icon" href="/assets/favicon-primary.png"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <style>
+    :root{
+      --magenta:#DB358C; --magenta-dk:#B82877; --pink:#FFD8EE; --pink-soft:#FFF0F8;
+      --ink:#161518; --slate:#2E3141; --muted:#6B6E7B; --line:#EDE6EC; --paper:#FAF9F5;
+    }
+    html,body{margin:0;padding:0;background:#fff;color:var(--ink);font-family:Inter,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;-webkit-font-smoothing:antialiased;}
+    *{box-sizing:border-box;}
+    .topbar{height:5px;background:linear-gradient(90deg,#F6A8D4,#DB358C);}
+    .nav{display:flex;justify-content:space-between;align-items:center;padding:18px 26px;border-bottom:1px solid var(--line);background:#fff;position:sticky;top:0;z-index:10;}
+    .brand{display:flex;align-items:center;gap:10px;font-size:15px;font-weight:700;color:var(--ink);text-decoration:none;letter-spacing:.01em;}
+    .brand .mark{width:15px;height:15px;background:linear-gradient(135deg,#F6A8D4,#DB358C);clip-path:polygon(50% 0,93% 25%,93% 75%,50% 100%,7% 75%,7% 25%);display:inline-block;}
+    .nav-cta{background:var(--magenta);color:#fff !important;padding:9px 16px;border-radius:6px;font-weight:600;font-size:13px;text-decoration:none;}
+    .nav-cta:hover{background:var(--magenta-dk);}
+    .wrap{max-width:780px;margin:0 auto;padding:58px 24px 100px;}
+    .pill{display:inline-flex;align-items:center;gap:8px;background:var(--pink-soft);border:1px solid var(--pink);color:var(--magenta-dk);font-size:12px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;padding:7px 14px;border-radius:999px;margin-bottom:24px;}
+    h1{font-size:clamp(38px,6vw,62px);font-weight:800;line-height:1.02;letter-spacing:-0.03em;margin:0 0 22px;}
+    h1 .mag{color:var(--magenta);} h1 .blk{color:var(--ink);}
+    .lead{font-size:19px;line-height:1.6;color:var(--slate);margin:0 0 14px;}
+    .subnote{font-size:13.5px;color:var(--muted);margin:0 0 36px;}
+    section h2{font-size:27px;font-weight:700;line-height:1.2;letter-spacing:-0.02em;margin:54px 0 16px;color:var(--ink);}
+    section p{font-size:17px;line-height:1.65;color:var(--slate);margin:0 0 16px;}
+    section p.muted{color:var(--muted);}
+    ul{font-size:16.5px;line-height:1.6;color:var(--slate);margin:0 0 16px;padding-left:0;list-style:none;}
+    ul li{margin-bottom:11px;padding-left:26px;position:relative;}
+    ul li::before{content:"";position:absolute;left:0;top:8px;width:11px;height:11px;background:linear-gradient(135deg,#F6A8D4,#DB358C);clip-path:polygon(50% 0,93% 25%,93% 75%,50% 100%,7% 75%,7% 25%);}
+    .receipt{border:1px solid var(--line);border-radius:14px;padding:22px 24px;margin:0 0 14px;background:#fff;box-shadow:0 1px 3px rgba(219,53,140,0.04);}
+    .receipt .tag{font-size:12px;font-weight:600;letter-spacing:0.13em;text-transform:uppercase;color:var(--magenta-dk);margin-bottom:6px;}
+    .receipt h3{margin:0 0 8px;font-size:19px;color:var(--ink);font-weight:700;}
+    .receipt p{font-size:15.5px;line-height:1.6;color:var(--slate);margin:0 0 10px;}
+    .receipt a{font-size:14px;font-weight:600;color:var(--magenta);text-decoration:none;border-bottom:1px solid rgba(219,53,140,0.35);}
+    .receipt a:hover{color:var(--magenta-dk);}
+    .spec{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:20px 22px;margin:6px 0 14px;font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;font-size:13px;line-height:1.7;color:var(--slate);overflow-x:auto;}
+    .spec .c{color:var(--muted);} .spec .m{color:var(--magenta);} .spec .k{color:var(--slate);font-weight:600;}
+    .caption{font-size:14px;color:var(--muted);line-height:1.55;margin:0 0 16px;}
+    .band{background:linear-gradient(135deg,var(--pink-soft),#fff);border:1px solid var(--pink);border-radius:14px;padding:26px 28px;margin:48px 0 0;}
+    .band p{margin:0 0 14px;font-size:17px;color:var(--slate);}
+    .band p strong{color:var(--ink);}
+    .band .links a{display:inline-block;margin:0 18px 10px 0;font-weight:600;color:var(--magenta);border-bottom:1px solid rgba(219,53,140,0.35);font-size:15px;text-decoration:none;}
+    .band .cta{background:var(--magenta);color:#fff !important;text-decoration:none;padding:13px 22px;font-weight:600;font-size:15px;border-radius:6px;display:inline-block;margin-top:8px;}
+    .band .cta:hover{background:var(--magenta-dk);}
+    .foot{font-size:13px;color:#B6B2BA;margin-top:40px;text-align:center;}
+    ::selection{background:var(--pink);color:var(--ink);}
+  </style>
+</head>
+<body>
+  <div class="topbar"></div>
+  <nav class="nav">
+    <a class="brand" href="https://andrewzoll.com"><span class="mark"></span> Andrew Zoll</a>
+    <a class="nav-cta" href="mailto:andrew@andrewzoll.com">andrew@andrewzoll.com</a>
+  </nav>
+
+  <div class="wrap">
+    <span class="pill">⚡ Built for the Sixfold team</span>
+    <h1><span class="mag">You said: show us work done this way.</span> <span class="blk">So I built you this page.</span></h1>
+    <p class="lead">I'm Andrew Zoll. Your FDE post asks for someone whose default workflow is Claude Code, who orchestrates parallel agents, treats specs and prompts as a craft, and lives in evals, tool use, and context engineering. That's not a wishlist for me. That's how I built everything below.</p>
+    <p class="subnote">A candidate's pitch for your Forward Deployed Engineer role, built in your brand on purpose. Not affiliated with Sixfold. Just me, showing the work.</p>
+
+    <section>
+      <h2>How I actually work</h2>
+      <p>Your "About You" list reads like a description of my Tuesday, so let me just answer it point by point:</p>
+      <ul>
+        <li><strong>Agentic coding is the default.</strong> Claude Code is where I work. I orchestrate parallel agents in builder / reviewer / validator triads, and a validator agent grades the builder's output before anything ships.</li>
+        <li><strong>Specs and prompts as a primary craft.</strong> My agent system is spec-first: every skill carries frontmatter that pins its scope, its tools, and its model tier. Context engineering is the actual work.</li>
+        <li><strong>Evals, not vibes.</strong> I drove Veritas from a ~30% false-positive rate to under 5% by building a fixture suite and reading failures, not by swapping models.</li>
+        <li><strong>Leverage over heroics.</strong> When I see the same problem twice, it becomes a platform primitive. That's why one router serves 14 callsites instead of 14 one-offs.</li>
+        <li><strong>Switching altitudes.</strong> Six years translating regulated, technical concepts for non-technical clients. "What does this mean for the renewal" and "what's the right primitive here" in the same afternoon is the job I already do.</li>
+      </ul>
+      <div class="spec">
+<span class="c"># a real skill spec from my agent OS — context engineering, pinned</span><br/>
+<span class="k">name:</span> fc-validator<br/>
+<span class="k">model:</span> <span class="m">sonnet</span>      <span class="c"># cheap tier for review; opus only when it earns it</span><br/>
+<span class="k">tools:</span> [read, grep, eval_suite]<br/>
+<span class="k">scope:</span> <span class="m">"grade the builder agent's output against the spec; block on regressions"</span>
+      </div>
+      <p class="caption">One skill of a couple dozen. The point isn't this file. It's that "spec-driven development, evals, tool use, context engineering" is a system I already run daily, not a phrase from your JD I'm repeating back.</p>
+    </section>
+
+    <section>
+      <h2>What I've shipped this way</h2>
+      <div class="receipt">
+        <div class="tag">Built solo, agent-first</div>
+        <h3>FieldCommand</h3>
+        <p>A multi-tenant B2B SaaS, 187,745 lines of TypeScript, shipped solo through agentic coding. Four AI features in production behind per-tenant feature flags, a two-tier model router across 14 callsites so cheap work stays cheap, three LLM providers wired in.</p>
+        <a href="https://app.fieldcommand.io">app.fieldcommand.io &rarr;</a>
+      </div>
+      <div class="receipt">
+        <div class="tag">Evals over a regulated-doc problem</div>
+        <h3>Veritas</h3>
+        <p>An AI that reads a legal filing, retrieves the cited source, and returns a structured verdict on whether it actually supports the claim. Zod schemas, prompt caching, cost caps. False positives dragged from ~30% to under 5% by reading failures. Your product surfaces cited insights for underwriters. Same shape.</p>
+        <a href="https://veritaslaw.app">veritaslaw.app &rarr;</a>
+      </div>
+      <div class="receipt">
+        <div class="tag">Parallel agents, daily, 14+ months</div>
+        <h3>AndrewOS</h3>
+        <p>The agent operating system I run across two businesses: arena-based delegation, builder/reviewer/validator triads, explicit model tiering, human gates. The orchestration layer your JD describes, in production use, not a demo.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>How I'd point it at underwriting</h2>
+      <p>An FDE's job, as your post frames it: own the customer relationship, plug Sixfold into their stack, ship the integration work yourself, then turn the recurring patterns into platform primitives. I've done the shape of that already, just with electricians and lawyers instead of carriers.</p>
+      <ul>
+        <li>The customer-deployment loop is what I do: I drove to a FieldCommand customer's kitchen table, found a tenant-data-isolation bug live, and shipped the fix within the hour.</li>
+        <li>Submission triage, risk-against-appetite, cited insights: that's document understanding plus structured output plus a human in the loop. I've shipped exactly that stack.</li>
+        <li>"See the same problem twice, reach for a platform move" is already how I build. The feature-flag gate and the model router both started as one customer's problem.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>The honest part</h2>
+      <p>I haven't worked in insurance. Your post says that's a plus, not a requirement, and I'd be learning underwriting on day one. What I wouldn't be learning is the agentic-engineering practice the role is built around. I've been living in it for over a year.</p>
+      <p>On travel: I'm remote-first in Colorado, and I'm glad to travel to customer sites when the work calls for it. I'd want to talk through the real cadence, but it's not a blocker.</p>
+    </section>
+
+    <div class="band">
+      <p><strong>If this resonates, I'd love fifteen minutes.</strong> Reply wherever I sent you this link, or reach me directly.</p>
+      <div class="links">
+        <a href="https://veritaslaw.app">Veritas (live)</a>
+        <a href="https://app.fieldcommand.io">FieldCommand (live)</a>
+        <a href="https://portfolio.andrewzoll.com">Portfolio</a>
+        <a href="https://github.com/azoll">GitHub</a>
+      </div>
+      <a class="cta" href="mailto:andrew@andrewzoll.com">andrew@andrewzoll.com</a>
+    </div>
+
+    <p class="foot">Built for Sixfold by Andrew Zoll. Private link, not indexed. Just for you.</p>
+  </div>
+</body>
+</html>
