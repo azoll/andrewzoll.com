@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Built for Fieldguide · Andrew Zoll</title>
+  <meta name="description" content="A page Andrew Zoll built for the Fieldguide team, applying for the AI Engineer role. The verification loop he's already shipped, re-pointed at audit evidence."/>
+  <!-- Private: shared by link only. Do not index. -->
+  <meta name="robots" content="noindex, nofollow"/>
+  <link rel="icon" href="/assets/favicon-primary.png"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <style>
+    :root{
+      --bg:#131A21; --surface:#151C24; --surface2:#1A232D; --border:#29333D;
+      --white:#FFFFFF; --body:#B8BEC4; --muted:#7D848B;
+      --green:#36853A; --green-br:#5FB463; --green-soft:rgba(54,133,58,0.14);
+    }
+    html,body{margin:0;padding:0;background:var(--bg);color:var(--body);font-family:Inter,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;-webkit-font-smoothing:antialiased;}
+    *{box-sizing:border-box;}
+    .nav{display:flex;justify-content:space-between;align-items:center;padding:18px 26px;border-bottom:1px solid var(--border);background:rgba(19,26,33,0.92);position:sticky;top:0;backdrop-filter:saturate(140%) blur(6px);z-index:10;}
+    .brand{display:flex;align-items:center;gap:10px;font-size:15px;font-weight:700;color:var(--white);letter-spacing:.01em;text-decoration:none;}
+    .brand .mark{width:14px;height:14px;background:var(--green);transform:skewX(-12deg);border-radius:2px;display:inline-block;}
+    .nav-cta{background:var(--green);color:#fff !important;padding:9px 16px;border-radius:6px;font-weight:600;font-size:13px;text-decoration:none;}
+    .nav-cta:hover{background:#2c6e30;}
+    .wrap{max-width:780px;margin:0 auto;padding:60px 24px 100px;}
+    .pill{display:inline-flex;align-items:center;gap:8px;background:var(--green-soft);border:1px solid rgba(54,133,58,0.4);color:var(--green-br);font-size:12px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;padding:6px 13px;border-radius:999px;margin-bottom:22px;}
+    .pill .dot{width:7px;height:7px;border-radius:50%;background:var(--green-br);display:inline-block;}
+    h1{font-size:clamp(36px,5.6vw,58px);font-weight:800;line-height:1.04;letter-spacing:-0.03em;margin:0 0 22px;color:var(--white);}
+    .lead{font-size:19px;line-height:1.6;color:var(--body);margin:0 0 14px;}
+    .subnote{font-size:13.5px;color:var(--muted);margin:0 0 40px;}
+    section h2{font-size:27px;font-weight:700;line-height:1.2;letter-spacing:-0.02em;margin:56px 0 18px;color:var(--white);}
+    section p{font-size:17px;line-height:1.65;color:var(--body);margin:0 0 18px;}
+    section p.muted{color:var(--muted);}
+    section ul{font-size:17px;line-height:1.7;color:var(--body);margin:0 0 18px;padding-left:22px;}
+    section ul li{margin-bottom:10px;}
+    section ul li::marker{color:var(--green-br);}
+    .receipt{border:1px solid var(--border);border-radius:12px;padding:22px 24px;margin:0 0 16px;background:var(--surface);}
+    .receipt .tag{font-size:12px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
+    .receipt h3{margin:0 0 8px;font-size:19px;color:var(--white);font-weight:700;}
+    .receipt p{font-size:15.5px;line-height:1.6;color:var(--body);margin:0 0 10px;}
+    .receipt a{font-size:14px;font-weight:600;color:var(--green-br);text-decoration:none;border-bottom:1px solid rgba(95,180,99,0.4);}
+    .receipt a:hover{border-bottom-color:var(--green-br);}
+    .agentbar{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted);margin:8px 0 6px;font-weight:600;letter-spacing:0.04em;}
+    .agentbar .dot{width:7px;height:7px;border-radius:50%;background:var(--green-br);display:inline-block;}
+    .demo{background:#0E141A;border:1px solid var(--border);color:#C7CDD3;border-radius:12px;padding:22px 24px;margin:0 0 14px;font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;font-size:13.5px;line-height:1.65;overflow-x:auto;}
+    .demo .k{color:#7D848B;}
+    .demo .g{color:#5FB463;}
+    .demo .w{color:#E0A95E;}
+    .caption{font-size:14px;color:var(--muted);line-height:1.55;margin:0 0 18px;}
+    .price-band{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:26px 28px;margin:48px 0 0;}
+    .price-band p{margin:0 0 14px;font-size:17px;color:var(--body);}
+    .price-band p strong{color:var(--white);}
+    .price-band .links a{display:inline-block;margin:0 18px 10px 0;font-weight:600;color:var(--green-br);border-bottom:1px solid rgba(95,180,99,0.4);font-size:15px;text-decoration:none;}
+    .price-band .cta{background:var(--green);color:#fff !important;text-decoration:none;padding:13px 22px;font-weight:600;font-size:15px;border-radius:6px;display:inline-block;margin-top:8px;}
+    .price-band .cta:hover{background:#2c6e30;}
+    .foot{font-size:13px;color:#5B6066;margin-top:40px;text-align:center;}
+    ::selection{background:rgba(54,133,58,0.35);color:#fff;}
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <a class="brand" href="https://andrewzoll.com"><span class="mark"></span> Andrew Zoll</a>
+    <a class="nav-cta" href="mailto:andrew@andrewzoll.com">andrew@andrewzoll.com</a>
+  </nav>
+
+  <div class="wrap">
+    <span class="pill"><span class="dot"></span> Built for the Fieldguide team</span>
+    <h1>You asked for someone who's shipped AI in production. So I shipped you a page.</h1>
+    <p class="lead">I'm Andrew Zoll. I build AI products that read messy documents, check them against a source of truth, and tell you when they're wrong. That's a large part of what audit software has to do too. Here's the work, and here's exactly how I'd point it at Fieldguide.</p>
+    <p class="subnote">This is a candidate's pitch for your AI Engineer role, built in your design language on purpose. Not affiliated with Fieldguide. Just me, doing my homework.</p>
+
+    <section>
+      <h2>Why this page exists</h2>
+      <p>Most applicants send a resume and hope. I'd rather just show you. Your AI Engineer post says "capability over years," which is the most honest line I've read in a job description in a while, so I'm taking you at your word and leading with capability.</p>
+      <p class="muted">I've got a resume too. It's at the bottom. But the resume is the boring version of this page.</p>
+    </section>
+
+    <section>
+      <h2>What I've actually shipped</h2>
+
+      <div class="receipt">
+        <div class="tag">Verification over regulated documents</div>
+        <h3>Veritas</h3>
+        <p>An AI tool that checks whether the citations in a legal filing actually support the proposition they're attached to. Built solo. Structured Zod verdict schemas, prompt caching, hard cost caps. The first version hallucinated about 30 percent of the time. I read every failure by hand and dragged the false-positive rate under 5 percent. That loop, ship then measure then read the failures then tighten the spec, is most of the job.</p>
+        <a href="https://veritaslaw.app">veritaslaw.app &rarr;</a>
+      </div>
+
+      <div class="receipt">
+        <div class="tag">Production AI, cost-aware, multi-tenant</div>
+        <h3>FieldCommand</h3>
+        <p>A multi-tenant B2B SaaS, 187,745 lines of TypeScript, shipped solo. Four AI features run in production behind per-tenant feature flags. A two-tier model router across 14 callsites sends cheap work to a cheap model and hard reasoning to a premium one, because cost intuition is part of shipping AI, not an afterthought.</p>
+        <a href="https://app.fieldcommand.io">app.fieldcommand.io &rarr;</a>
+      </div>
+
+      <div class="receipt">
+        <div class="tag">Agent systems, daily, for 14+ months</div>
+        <h3>AndrewOS</h3>
+        <p>An agent operating system I run every day across two businesses. Builder, reviewer, and validator agents in triads, with explicit model tiering and human gates. Not a weekend demo. The thing I actually work inside of.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>How I'd point this at audit</h2>
+      <p>Here's the part where I show I understand what Fieldguide does, not just that I can write the code.</p>
+      <p>An audit conclusion is a proposition. The workpaper evidence is the source. The reviewer's question never really changes: does the evidence actually support the conclusion, and is the standard cited correctly? That is Veritas, re-pointed from case law to audit evidence and the standards underneath it. Same shape every time:</p>
+      <ul>
+        <li>Break the conclusion into atomic assertions.</li>
+        <li>Retrieve the evidence that's supposed to support each one.</li>
+        <li>Force a structured verdict, not prose.</li>
+        <li>Cap the reasoning, and never let confidence outrun the evidence.</li>
+        <li>Route the gray ones to a human, which in audit is not optional.</li>
+      </ul>
+
+      <div class="agentbar"><span class="dot"></span> Field Agent · verdict</div>
+      <div class="demo">
+<span class="k">// illustrative — the shape, not your real evidence model</span><br/>
+assertion: <span class="g">"FY25 revenue is complete and recognized in the correct period"</span><br/>
+evidence: [invoice_sample, cutoff_testing, contract_terms]<br/>
+verdict: {<br/>
+&nbsp;&nbsp;support: <span class="w">"partial"</span>,<br/>
+&nbsp;&nbsp;gap: <span class="g">"cutoff testing missing for final 5 days of period"</span>,<br/>
+&nbsp;&nbsp;standard_cite: <span class="g">"ASC 606 reference present and on-point"</span>,<br/>
+&nbsp;&nbsp;confidence: 0.61,<br/>
+&nbsp;&nbsp;route: <span class="w">"human_review"</span><br/>
+}
+      </div>
+      <p class="caption">Illustrative only. The point isn't that I already know your evidence model or your standards library. I don't, yet. The point is that the disciplined, eval-driven verification loop this requires is one I've already built and shipped twice, and I'd be honest about confidence and hand the close calls to a reviewer instead of pretending the model is sure.</p>
+    </section>
+
+    <section>
+      <h2>The honest part</h2>
+      <p>I haven't done audit. On day one I'd be learning your standards, your evidence model, and how your customers actually work. I'd rather say that now than fake it in an interview.</p>
+      <p>What I wouldn't be learning is how to ship a careful, eval-driven AI product over high-stakes documents where being wrong has real consequences. I've done that. The clients were lawyers and contractors instead of auditors, but the discipline is the same one your platform lives or dies on.</p>
+    </section>
+
+    <div class="price-band">
+      <p><strong>If this resonates, I'd love fifteen minutes.</strong> Reply wherever I sent you this link, or reach me directly.</p>
+      <div class="links">
+        <a href="https://veritaslaw.app">Veritas (live)</a>
+        <a href="https://app.fieldcommand.io">FieldCommand (live)</a>
+        <a href="https://portfolio.andrewzoll.com">Portfolio</a>
+        <a href="https://github.com/andrewzoll">GitHub</a>
+      </div>
+      <a class="cta" href="mailto:andrew@andrewzoll.com">andrew@andrewzoll.com</a>
+    </div>
+
+    <p class="foot">Built for Fieldguide by Andrew Zoll. Private link, not indexed. Just for you.</p>
+  </div>
+</body>
+</html>

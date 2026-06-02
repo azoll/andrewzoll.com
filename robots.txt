@@ -1,5 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /for/
 
 # AI / LLM crawlers — explicit allow for retrieval
 User-agent: GPTBot
