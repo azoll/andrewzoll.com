@@ -40,15 +40,37 @@
     h1 .verb{color:var(--orange);display:inline-block;position:relative;}
     /* centered Cresta-style hero */
     .hero .inner{text-align:center;}
-    /* animated emblem: Cresta radar-ripple + word-specific icon */
-    .emblem{position:relative;width:122px;height:122px;margin:0 auto 28px;display:flex;align-items:center;justify-content:center;}
-    .emblem .core{position:relative;z-index:2;width:76px;height:76px;border-radius:50%;border:1.5px solid rgba(255,255,255,0.92);display:flex;align-items:center;justify-content:center;box-shadow:0 0 26px rgba(255,255,255,0.13);}
-    .emblem .core svg{width:30px;height:30px;fill:none;stroke:#fff;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;transition:opacity .18s ease;}
-    .emblem .ripple{position:absolute;top:50%;left:50%;width:76px;height:76px;margin:-38px 0 0 -38px;border-radius:50%;border:1.6px solid var(--orange);opacity:0;}
-    .emblem.pulse .ripple{animation:ripple 1.5s ease-out;}
-    .emblem.pulse .ripple:nth-child(2){animation-delay:.14s;}
-    .emblem.pulse .ripple:nth-child(3){animation-delay:.28s;}
-    @keyframes ripple{0%{opacity:.65;transform:scale(.72);}100%{opacity:0;transform:scale(2.5);}}
+    /* animated word-emblem: a distinct color-matched scene per verb (Cresta-style) */
+    .emblem{position:relative;width:134px;height:116px;margin:0 auto 22px;}
+    .emblem .scene{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .45s ease;}
+    .emblem .scene.active{opacity:1;}
+    .emblem .scene svg{width:106px;height:106px;overflow:visible;}
+    .emblem .bar,.emblem .node,.emblem .ring{transform-box:fill-box;transform-origin:center;}
+    /* build: orange cube, gentle bob + rotate */
+    .scene[data-verb="build"].active svg{animation:bob 3.4s ease-in-out infinite;}
+    @keyframes bob{0%,100%{transform:translateY(0) rotate(0deg);}50%{transform:translateY(-6px) rotate(4deg);}}
+    /* deploy: blue equalizer bars */
+    .scene[data-verb="deploy"].active .bar{animation:eq 1.1s ease-in-out infinite;}
+    .scene[data-verb="deploy"].active .bar:nth-child(2){animation-delay:.07s;}
+    .scene[data-verb="deploy"].active .bar:nth-child(3){animation-delay:.15s;}
+    .scene[data-verb="deploy"].active .bar:nth-child(4){animation-delay:.30s;}
+    .scene[data-verb="deploy"].active .bar:nth-child(5){animation-delay:.18s;}
+    .scene[data-verb="deploy"].active .bar:nth-child(6){animation-delay:.34s;}
+    .scene[data-verb="deploy"].active .bar:nth-child(7){animation-delay:.12s;}
+    @keyframes eq{0%,100%{transform:scaleY(.28);}50%{transform:scaleY(1);}}
+    /* evaluate: violet pulsing node cluster */
+    .scene[data-verb="evaluate"].active .node{animation:nodepulse 1.7s ease-in-out infinite;}
+    .scene[data-verb="evaluate"].active .node:nth-child(3){animation-delay:.2s;}
+    .scene[data-verb="evaluate"].active .node:nth-child(4){animation-delay:.4s;}
+    .scene[data-verb="evaluate"].active .node:nth-child(5){animation-delay:.6s;}
+    .scene[data-verb="evaluate"].active .node:nth-child(6){animation-delay:.8s;}
+    .scene[data-verb="evaluate"].active .node:nth-child(7){animation-delay:.5s;}
+    @keyframes nodepulse{0%,100%{opacity:.45;transform:scale(.8);}50%{opacity:1;transform:scale(1.12);}}
+    /* own: mint radiating rings */
+    .scene[data-verb="own"].active .ring{animation:radiate 1.9s ease-out infinite;}
+    .scene[data-verb="own"].active .ring:nth-child(2){animation-delay:.6s;}
+    .scene[data-verb="own"].active .ring:nth-child(3){animation-delay:1.2s;}
+    @keyframes radiate{0%{opacity:.7;transform:scale(.4);}100%{opacity:0;transform:scale(1.3);}}
     /* rotating verb: gradient orange, slide + cross-fade, no layout jump */
     .rot{position:relative;display:inline-block;text-align:center;vertical-align:baseline;}
     .rot .sizer{visibility:hidden;}
@@ -137,7 +159,7 @@
       .receipt{transition:none !important;}
       #spot,#float,#progress{display:none !important;}
       .rot .word{transition:none !important;}
-      .emblem.pulse .ripple{animation:none !important;}
+      .emblem .scene svg,.emblem .bar,.emblem .node,.emblem .ring{animation:none !important;}
       .hero::before{animation:none !important;}
     }
   </style>
@@ -157,8 +179,10 @@
       <div id="spot"></div>
       <div class="inner">
         <div class="emblem" id="emblem" aria-hidden="true">
-          <span class="ripple"></span><span class="ripple"></span><span class="ripple"></span>
-          <span class="core"><svg id="emblemIcon" viewBox="0 0 24 24"></svg></span>
+          <div class="scene" data-verb="build"><svg viewBox="0 0 110 110" fill="none" stroke="#FF9E45" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"><path d="M55 20 86 38 86 72 55 90 24 72 24 38Z"/><path d="M55 20V54M55 54 24 38M55 54 86 38"/></svg></div>
+          <div class="scene" data-verb="deploy"><svg viewBox="0 0 110 110" fill="none"><circle cx="14" cy="55" r="11" stroke="#6FA8FF" stroke-width="2.4"/><circle cx="96" cy="55" r="11" stroke="#6FA8FF" stroke-width="2.4"/><g fill="#6FA8FF"><rect class="bar" x="32" y="44" width="3.6" height="22" rx="1.8"/><rect class="bar" x="39.5" y="44" width="3.6" height="22" rx="1.8"/><rect class="bar" x="47" y="44" width="3.6" height="22" rx="1.8"/><rect class="bar" x="54.5" y="44" width="3.6" height="22" rx="1.8"/><rect class="bar" x="62" y="44" width="3.6" height="22" rx="1.8"/><rect class="bar" x="69.5" y="44" width="3.6" height="22" rx="1.8"/><rect class="bar" x="77" y="44" width="3.6" height="22" rx="1.8"/></g></svg></div>
+          <div class="scene" data-verb="evaluate"><svg viewBox="0 0 110 110" fill="none"><g stroke="#B18CFF" stroke-width="2" opacity="0.45"><line x1="55" y1="55" x2="30" y2="33"/><line x1="55" y1="55" x2="82" y2="35"/><line x1="55" y1="55" x2="33" y2="81"/><line x1="55" y1="55" x2="80" y2="79"/><line x1="55" y1="55" x2="55" y2="24"/></g><circle class="node" cx="55" cy="55" r="9" fill="#B18CFF"/><circle class="node" cx="30" cy="33" r="6" fill="#B18CFF"/><circle class="node" cx="82" cy="35" r="6" fill="#B18CFF"/><circle class="node" cx="33" cy="81" r="6" fill="#B18CFF"/><circle class="node" cx="80" cy="79" r="6" fill="#B18CFF"/><circle class="node" cx="55" cy="24" r="5" fill="#B18CFF"/></svg></div>
+          <div class="scene" data-verb="own"><svg viewBox="0 0 110 110" fill="none"><circle class="ring" cx="55" cy="55" r="20" stroke="#46D6B0" stroke-width="2.4"/><circle class="ring" cx="55" cy="55" r="20" stroke="#46D6B0" stroke-width="2.4"/><circle class="ring" cx="55" cy="55" r="20" stroke="#46D6B0" stroke-width="2.4"/><circle cx="55" cy="55" r="15" stroke="#fff" stroke-width="2.2"/></svg></div>
         </div>
         <h1>I <span class="rot" data-rot aria-label="build, deploy, evaluate, and own AI agents"><span class="sizer">evaluate</span><span class="slot"></span></span> AI agents.<br>That's the whole job.</h1>
         <p class="lead reveal-words" style="transition-delay:.1s">I'm Andrew Zoll. Forward Deployed PMs build AI agents in a customer's world and own the outcome. I've spent six years owning senior client relationships in a regulated industry, and I build and ship AI agents myself. You forward-deploy PMs into the field. <b>This page is me, already in yours.</b></p>
@@ -318,45 +342,48 @@
         h.querySelectorAll('.w').forEach(function(s){ s.style.transitionDelay = (i++ * 0.03) + 's'; });
       });
 
-      // rotating verb + radar-ripple emblem (Cresta signature), word-specific icon
+      // rotating verb + per-verb animated emblem scene (Cresta signature)
       var rot = document.querySelector('[data-rot]');
       var emblem = document.getElementById('emblem');
-      var iconEl = document.getElementById('emblemIcon');
-      var icons = {
-        build: '<path d="M12 2.5 21 7v10l-9 4.5L3 17V7l9-4.5Z"></path><path d="M3 7l9 4.5L21 7M12 11.5V21.5"></path>',
-        deploy: '<path d="M12 3c2.6 2 4 5 4 8l-4 3-4-3c0-3 1.4-6 4-8Z"></path><circle cx="12" cy="9" r="1.6"></circle><path d="M8.4 16c-1.6.8-2 3.6-2 3.6s2.8-.5 3.6-2M15.6 16c1.6.8 2 3.6 2 3.6s-2.8-.5-3.6-2"></path>',
-        evaluate: '<circle cx="10.5" cy="10.5" r="6"></circle><path d="M20 20l-4.6-4.6M8 10.5l2 2 3.6-3.6"></path>',
-        own: '<path d="M6.5 21V3.5M6.5 3.5h10l-2.2 3.9 2.2 3.9h-10"></path>'
+      var colors = {
+        build: 'linear-gradient(95deg,#FFC07A,#FF8A3D)',
+        deploy: 'linear-gradient(95deg,#A9CBFF,#5B9BFF)',
+        evaluate: 'linear-gradient(95deg,#CFBCFF,#9D78FF)',
+        own: 'linear-gradient(95deg,#8BF0DA,#34CBA8)'
       };
+      var activateScene = function(v){
+        if(!emblem) return;
+        var scenes = emblem.querySelectorAll('.scene');
+        for(var k=0;k<scenes.length;k++){ scenes[k].classList.toggle('active', scenes[k].getAttribute('data-verb') === v); }
+      };
+      var colorWord = function(el, v){ el.style.backgroundImage = colors[v]; };
       if(rot && !window.__rotStarted){
         window.__rotStarted = true;
         var verbs = ['build','deploy','evaluate','own'];
         var slot = rot.querySelector('.slot');
         slot.innerHTML = '<span class="word">build</span>';
         var word = slot.querySelector('.word');
-        if(iconEl) iconEl.innerHTML = icons.build;
+        colorWord(word, 'build');
+        activateScene('build');
         if(!reduce){
           var idx = 0;
-          if(emblem) emblem.classList.add('pulse');
           setInterval(function(){
             idx = (idx + 1) % verbs.length;
             var v = verbs[idx];
-            // fade current word out and up
             word.classList.remove('pre');
             word.classList.add('out');
-            // pulse the emblem ripple
-            if(emblem){ emblem.classList.remove('pulse'); void emblem.offsetWidth; emblem.classList.add('pulse'); }
             setTimeout(function(){
-              // swap text + icon while invisible, reposition below
+              // swap text + color + emblem scene while the word is invisible
               word.textContent = v;
+              colorWord(word, v);
+              activateScene(v);
               word.classList.remove('out');
               word.classList.add('pre');
               void word.offsetWidth;
-              if(iconEl){ iconEl.style.opacity = '0'; setTimeout(function(){ iconEl.innerHTML = icons[v]; iconEl.style.opacity = '1'; }, 70); }
               // rise + fade in (setTimeout, not rAF, so it fires even in a background tab)
               setTimeout(function(){ word.classList.remove('pre'); }, 20);
-            }, 420);
-          }, 2400);
+            }, 430);
+          }, 2600);
         }
       }
 
