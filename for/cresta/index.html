@@ -53,9 +53,9 @@
     .rot{position:relative;display:inline-block;text-align:center;vertical-align:baseline;}
     .rot .sizer{visibility:hidden;}
     .rot .slot{position:absolute;inset:0;}
-    .rot .word{position:absolute;left:50%;top:0;transform:translateX(-50%);white-space:nowrap;background:linear-gradient(95deg,#FFC07A,#FF8A3D);-webkit-background-clip:text;background-clip:text;color:transparent;transition:opacity .42s ease,transform .42s ease;}
+    .rot .word{position:absolute;left:50%;top:0;transform:translateX(-50%);white-space:nowrap;opacity:1;background:linear-gradient(95deg,#FFC07A,#FF8A3D);-webkit-background-clip:text;background-clip:text;color:transparent;transition:opacity .4s ease,transform .4s ease;}
     .rot .word.out{opacity:0;transform:translateX(-50%) translateY(-0.5em);}
-    .rot .word.in{opacity:0;transform:translateX(-50%) translateY(0.5em);}
+    .rot .word.pre{opacity:0;transform:translateX(-50%) translateY(0.5em);transition:none;}
     .lead{font-size:20px;line-height:1.55;color:#D6DAEC;margin:0 0 16px;}
     .lead b{color:#fff;font-weight:600;}
     .subnote{font-size:13.5px;color:#9AA0C2;margin:0;}
@@ -328,10 +328,12 @@
         evaluate: '<circle cx="10.5" cy="10.5" r="6"></circle><path d="M20 20l-4.6-4.6M8 10.5l2 2 3.6-3.6"></path>',
         own: '<path d="M6.5 21V3.5M6.5 3.5h10l-2.2 3.9 2.2 3.9h-10"></path>'
       };
-      if(rot){
+      if(rot && !window.__rotStarted){
+        window.__rotStarted = true;
         var verbs = ['build','deploy','evaluate','own'];
         var slot = rot.querySelector('.slot');
         slot.innerHTML = '<span class="word">build</span>';
+        var word = slot.querySelector('.word');
         if(iconEl) iconEl.innerHTML = icons.build;
         if(!reduce){
           var idx = 0;
@@ -339,16 +341,22 @@
           setInterval(function(){
             idx = (idx + 1) % verbs.length;
             var v = verbs[idx];
-            var cur = slot.querySelector('.word');
-            if(cur) cur.classList.add('out');
-            var nx = document.createElement('span'); nx.className = 'word in'; nx.textContent = v;
-            slot.appendChild(nx);
-            void nx.offsetWidth;
-            setTimeout(function(){ nx.classList.remove('in'); }, 30);
-            setTimeout(function(){ if(cur && cur.parentNode) cur.parentNode.removeChild(cur); }, 480);
-            if(iconEl){ iconEl.style.opacity = '0'; setTimeout(function(){ iconEl.innerHTML = icons[v]; iconEl.style.opacity = '1'; }, 200); }
+            // fade current word out and up
+            word.classList.remove('pre');
+            word.classList.add('out');
+            // pulse the emblem ripple
             if(emblem){ emblem.classList.remove('pulse'); void emblem.offsetWidth; emblem.classList.add('pulse'); }
-          }, 2200);
+            setTimeout(function(){
+              // swap text + icon while invisible, reposition below
+              word.textContent = v;
+              word.classList.remove('out');
+              word.classList.add('pre');
+              void word.offsetWidth;
+              if(iconEl){ iconEl.style.opacity = '0'; setTimeout(function(){ iconEl.innerHTML = icons[v]; iconEl.style.opacity = '1'; }, 70); }
+              // rise + fade in
+              requestAnimationFrame(function(){ word.classList.remove('pre'); });
+            }, 420);
+          }, 2400);
         }
       }
 
