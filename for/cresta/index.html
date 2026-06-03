@@ -131,6 +131,59 @@
     .reveal{opacity:0;transform:translateY(18px);transition:opacity .65s cubic-bezier(.2,.6,.2,1),transform .65s cubic-bezier(.2,.6,.2,1);}
     .reveal.in{opacity:1;transform:none;}
 
+    /* ---- callouts & section whimsy ---- */
+    /* pulsing status dot before each section heading */
+    section h2{position:relative;}
+    section h2::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--blue);margin-right:10px;vertical-align:middle;transform:translateY(-2px);box-shadow:0 0 0 0 rgba(32,90,227,0.5);animation:hpulse 2.6s ease-out infinite;}
+    @keyframes hpulse{0%{box-shadow:0 0 0 0 rgba(32,90,227,0.45);}70%{box-shadow:0 0 0 8px rgba(32,90,227,0);}100%{box-shadow:0 0 0 0 rgba(32,90,227,0);}}
+
+    /* big ghost index numerals on the JD map rows */
+    .map{counter-reset:jd;}
+    .map .row{counter-increment:jd;position:relative;overflow:hidden;}
+    .map .row::after{content:counter(jd,decimal-leading-zero);position:absolute;right:2px;top:50%;transform:translateY(-50%) scale(.8);font-family:'DM Sans',sans-serif;font-weight:700;font-size:56px;line-height:1;color:rgba(32,90,227,0.06);pointer-events:none;letter-spacing:-0.04em;opacity:0;transition:transform .6s cubic-bezier(.2,.7,.3,1.4),opacity .6s ease;z-index:0;}
+    .map .row.in::after{opacity:1;transform:translateY(-50%) scale(1);}
+    .map .body{position:relative;z-index:1;}
+
+    /* marker-highlight sweep on punchy closing lines */
+    .mark-hl{background:linear-gradient(transparent 62%, rgba(255,158,69,0.40) 0);background-size:0% 100%;background-repeat:no-repeat;background-position:0 0;transition:background-size .85s cubic-bezier(.4,.7,.3,1) .15s;padding:0 1px;font-weight:600;color:var(--ink);}
+    .mark-hl.in{background-size:100% 100%;}
+
+    /* honest-part callout block */
+    .note{position:relative;background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--orange);border-radius:14px;padding:26px 30px 24px;overflow:hidden;}
+    .note p{margin:0;}
+    .note .q{position:absolute;top:-26px;right:16px;font-family:'DM Sans',sans-serif;font-weight:700;font-size:140px;line-height:1;color:rgba(255,158,69,0.13);pointer-events:none;user-select:none;}
+
+    /* receipt header: mini animated emblem + metric chip */
+    .receipt{position:relative;overflow:hidden;}
+    .receipt::before{content:"";position:absolute;left:0;top:0;height:100%;width:3px;background:var(--blue);opacity:0;border-radius:16px 0 0 16px;transition:opacity .2s ease;}
+    .receipt:hover::before{opacity:.55;}
+    .receipt[data-accent="violet"]::before{background:#9D78FF;}
+    .receipt[data-accent="mint"]::before{background:#34CBA8;}
+    .receipt .rhead{display:flex;align-items:center;gap:12px;margin-bottom:11px;}
+    .receipt .rhead .tag{margin-bottom:0;}
+    .receipt .rmark{width:38px;height:38px;flex-shrink:0;}
+    .receipt .rmark svg{width:38px;height:38px;overflow:visible;display:block;}
+    .receipt .rmark .bar,.receipt .rmark .node,.receipt .rmark .ring{transform-box:fill-box;transform-origin:center;}
+    .receipt .rmark .bar{animation:eq 1.1s ease-in-out infinite;}
+    .receipt .rmark .bar:nth-child(2){animation-delay:.07s;}
+    .receipt .rmark .bar:nth-child(3){animation-delay:.15s;}
+    .receipt .rmark .bar:nth-child(4){animation-delay:.30s;}
+    .receipt .rmark .bar:nth-child(5){animation-delay:.18s;}
+    .receipt .rmark .bar:nth-child(6){animation-delay:.34s;}
+    .receipt .rmark .bar:nth-child(7){animation-delay:.12s;}
+    .receipt .rmark .node{animation:nodepulse 1.7s ease-in-out infinite;}
+    .receipt .rmark .node:nth-child(3){animation-delay:.2s;}
+    .receipt .rmark .node:nth-child(4){animation-delay:.4s;}
+    .receipt .rmark .node:nth-child(5){animation-delay:.6s;}
+    .receipt .rmark .node:nth-child(6){animation-delay:.8s;}
+    .receipt .rmark .node:nth-child(7){animation-delay:.5s;}
+    .receipt .rmark .ring{animation:radiate 2.2s ease-out infinite;}
+    .receipt .rmark .ring:nth-child(2){animation-delay:.73s;}
+    .receipt .rmark .ring:nth-child(3){animation-delay:1.46s;}
+    .receipt .chip{margin-left:auto;font-family:'DM Sans',sans-serif;font-weight:600;font-size:12px;letter-spacing:.01em;padding:5px 11px;border-radius:999px;background:rgba(32,90,227,0.09);color:var(--blue);white-space:nowrap;font-variant-numeric:tabular-nums;}
+    .receipt[data-accent="violet"] .chip{background:rgba(157,120,255,0.15);color:#7c52e0;}
+    .receipt[data-accent="mint"] .chip{background:rgba(52,203,168,0.16);color:#1f9c7f;}
+
     /* ============ whimsy layer ============ */
     #progress{position:fixed;top:0;left:0;height:3px;width:0;background:var(--blue);z-index:30;transition:width .1s linear;}
     #float{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
@@ -162,7 +215,13 @@
       .emblem .scene,.emblem .home{transition:none !important;}
       .emblem .scene svg,.emblem .bar,.emblem .node,.emblem .ring{animation:none !important;}
       .hero::before{animation:none !important;}
+      section h2::before{animation:none !important;}
+      .map .row::after{opacity:1 !important;transform:translateY(-50%) scale(1) !important;}
+      .mark-hl{background-size:100% 100% !important;transition:none !important;}
+      .receipt .rmark .bar,.receipt .rmark .node,.receipt .rmark .ring{animation:none !important;}
     }
+
+    @media (max-width:640px){ .map .row::after{display:none;} }
   </style>
 </head>
 <body>
@@ -204,14 +263,14 @@
           <div class="check"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11"/><path d="M6 12.5 L10.5 17 L18 7.5"/></svg></div>
           <div class="body">
             <div class="jd">"Design, build, test and iterate on AI agents using internal tools and the latest technologies"</div>
-            <div class="me">I build AI agents for real. AndrewOS runs builder/reviewer/validator agent triads where a validator grades the builder and blocks bad output before it ships. FieldCommand has four AI features live in production behind per-tenant flags with a two-tier model router. I don't theorize about agents. I run them daily.</div>
+            <div class="me">I build AI agents for real. AndrewOS runs builder/reviewer/validator agent triads where a validator grades the builder and blocks bad output before it ships. FieldCommand has four AI features live in production behind per-tenant flags with a two-tier model router. I don't theorize about agents. <span class="mark-hl">I run them daily.</span></div>
           </div>
         </div>
         <div class="row reveal">
           <div class="check"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11"/><path d="M6 12.5 L10.5 17 L18 7.5"/></svg></div>
           <div class="body">
             <div class="jd">"Own the deployment lifecycle, from pre-sale scoping and kickoff to launch and post-go-live optimization"</div>
-            <div class="me">This is my whole career. As a financial advisor I scoped, kicked off, launched, and optimized for clients for six years, owning the relationship from first meeting through ongoing iteration. The artifact was a financial plan instead of an agent. The motion is identical.</div>
+            <div class="me">This is my whole career. As a financial advisor I scoped, kicked off, launched, and optimized for clients for six years, owning the relationship from first meeting through ongoing iteration. The artifact was a financial plan instead of an agent. <span class="mark-hl">The motion is identical.</span></div>
           </div>
         </div>
         <div class="row reveal">
@@ -240,20 +299,32 @@
 
     <section>
       <h2 class="reveal">What I've shipped this way</h2>
-      <div class="receipt reveal">
-        <div class="tag">An AI verifier, in production</div>
+      <div class="receipt reveal" data-accent="violet">
+        <div class="rhead">
+          <span class="rmark" aria-hidden="true"><svg viewBox="0 0 110 110" fill="none"><g stroke="#B18CFF" stroke-width="2.4" opacity="0.45"><line x1="55" y1="55" x2="30" y2="33"/><line x1="55" y1="55" x2="82" y2="35"/><line x1="55" y1="55" x2="33" y2="81"/><line x1="55" y1="55" x2="80" y2="79"/><line x1="55" y1="55" x2="55" y2="24"/></g><circle class="node" cx="55" cy="55" r="9" fill="#B18CFF"/><circle class="node" cx="30" cy="33" r="6" fill="#B18CFF"/><circle class="node" cx="82" cy="35" r="6" fill="#B18CFF"/><circle class="node" cx="33" cy="81" r="6" fill="#B18CFF"/><circle class="node" cx="80" cy="79" r="6" fill="#B18CFF"/><circle class="node" cx="55" cy="24" r="5" fill="#B18CFF"/></svg></span>
+          <span class="tag">An AI verifier, in production</span>
+          <span class="chip">~30% &rarr; &lt;5% FP</span>
+        </div>
         <h3>Veritas</h3>
         <p>Live at veritaslaw.app. Reads a claim, retrieves the source, returns a structured verdict on whether it holds up. Zod schemas, prompt caching, cost caps. False-positive rate driven from ~30% to under 5% by empirical failure analysis.</p>
         <a href="https://veritaslaw.app">veritaslaw.app <span class="arr">&rarr;</span></a>
       </div>
       <div class="receipt reveal">
-        <div class="tag">Production AI, multi-tenant, built solo</div>
+        <div class="rhead">
+          <span class="rmark" aria-hidden="true"><svg viewBox="0 0 110 110" fill="none"><circle cx="14" cy="55" r="11" stroke="#6FA8FF" stroke-width="2.4"/><circle cx="96" cy="55" r="11" stroke="#6FA8FF" stroke-width="2.4"/><g fill="#6FA8FF"><rect class="bar" x="32" y="44" width="3.6" height="22" rx="1.8"/><rect class="bar" x="39.5" y="44" width="3.6" height="22" rx="1.8"/><rect class="bar" x="47" y="44" width="3.6" height="22" rx="1.8"/><rect class="bar" x="54.5" y="44" width="3.6" height="22" rx="1.8"/><rect class="bar" x="62" y="44" width="3.6" height="22" rx="1.8"/><rect class="bar" x="69.5" y="44" width="3.6" height="22" rx="1.8"/><rect class="bar" x="77" y="44" width="3.6" height="22" rx="1.8"/></g></svg></span>
+          <span class="tag">Production AI, multi-tenant, built solo</span>
+          <span class="chip">187,745 lines</span>
+        </div>
         <h3>FieldCommand</h3>
         <p>A multi-tenant B2B SaaS, <span class="nm" data-countup data-from="0" data-to="187745">187,745</span> lines of TypeScript, built solo. Four AI features in production behind per-tenant feature flags, a two-tier model router that sends cheap work to a cheap model, three providers wired in.</p>
         <a href="https://app.fieldcommand.io">app.fieldcommand.io <span class="arr">&rarr;</span></a>
       </div>
-      <div class="receipt reveal">
-        <div class="tag">Agent guardrails, daily</div>
+      <div class="receipt reveal" data-accent="mint">
+        <div class="rhead">
+          <span class="rmark" aria-hidden="true"><svg viewBox="0 0 110 110" fill="none"><circle class="ring" cx="55" cy="55" r="20" stroke="#46D6B0" stroke-width="2.6"/><circle class="ring" cx="55" cy="55" r="20" stroke="#46D6B0" stroke-width="2.6"/><circle class="ring" cx="55" cy="55" r="20" stroke="#46D6B0" stroke-width="2.6"/></svg></span>
+          <span class="tag">Agent guardrails, daily</span>
+          <span class="chip">build &middot; review &middot; validate</span>
+        </div>
         <h3>AndrewOS</h3>
         <p>An agent operating system I run across two businesses: builder/reviewer/validator triads where the validator grades the builder and blocks before anything ships, plus human gates. Forward-deployed agents, in daily use, with the guardrails that keep them honest.</p>
       </div>
@@ -261,7 +332,10 @@
 
     <section>
       <h2 class="reveal">The honest part</h2>
-      <p class="reveal">Your post asks for five or more years in consulting, implementations, product, or customer success, working with AI-first products. I clear that: six years owning client implementations and relationships, plus the AI products I build and ship now. I'm not a career PM with a decade of the title. I'm a builder who's spent years in the field owning outcomes for people who were paying attention. That's the Forward Deployed shape.</p>
+      <div class="note reveal">
+        <span class="q" aria-hidden="true">&ldquo;</span>
+        <p>Your post asks for five or more years in consulting, implementations, product, or customer success, working with AI-first products. I clear that: six years owning client implementations and relationships, plus the AI products I build and ship now. I'm not a career PM with a decade of the title. I'm a builder who's spent years in the field owning outcomes for people who were paying attention. <span class="mark-hl">That's the Forward Deployed shape.</span></p>
+      </div>
     </section>
 
     <div class="band reveal">
@@ -301,7 +375,7 @@
         requestAnimationFrame(step);
       }
       if(!('IntersectionObserver' in window) || reduce){
-        document.querySelectorAll('.reveal, .reveal-words').forEach(function(el){ el.classList.add('in'); });
+        document.querySelectorAll('.reveal, .reveal-words, .mark-hl').forEach(function(el){ el.classList.add('in'); });
         document.querySelectorAll('[data-countup],[data-countdown]').forEach(animateCount);
         return;
       }
@@ -314,7 +388,7 @@
           }
         });
       }, { threshold: 0.2 });
-      document.querySelectorAll('.reveal, .reveal-words, [data-countup], [data-countdown]').forEach(function(el){ io.observe(el); });
+      document.querySelectorAll('.reveal, .reveal-words, .mark-hl, [data-countup], [data-countdown]').forEach(function(el){ io.observe(el); });
     })();
   </script>
 
