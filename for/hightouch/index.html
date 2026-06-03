@@ -236,7 +236,7 @@
       <div id="spot"></div>
       <div class="inner">
         <h1>Agents that own the full loop, with a human on the trigger.<br>That's how I already run two businesses.</h1>
-        <p class="lead reveal-words" style="transition-delay:.1s">I'm Andrew Zoll. Agentic Personalization wants agents that own the whole loop, <span class="rot" data-rot aria-label="audience, variants, experiment, optimize"><span class="word">audience</span></span> through optimize, with a human review before launch. I run exactly that today: builder, reviewer, and validator agents where the validator blocks bad output before it ships, plus human gates. <b>This page is that loop, pointed at your role.</b></p>
+        <p class="lead reveal-words" style="transition-delay:.1s">I'm Andrew Zoll. Builder, reviewer, and validator agents, where the validator blocks bad output before it ships, are how I run two businesses today. <b>This page is that loop, pointed at your role.</b></p>
         <p class="subnote reveal" style="transition-delay:.18s">A candidate's pitch for your Lead Product Manager, Agentic Personalization role, built in your design language on purpose. Not affiliated with Hightouch. Just me, showing the work.</p>
       </div>
     </div>
@@ -474,11 +474,12 @@
       }
       if(reduce){
         nodes.forEach(function(el){ el.classList.add('active'); });
-      } else if(rot && !window.__rotStarted){
+      } else if(!window.__rotStarted){
         window.__rotStarted = true;
-        var word = rot.querySelector('.word');
+        var word = rot ? rot.querySelector('.word') : null;
         setActive(0);
         var swapWord = function(v){
+          if(!word) return;
           word.classList.remove('pre');
           word.classList.add('out');
           setTimeout(function(){
