@@ -31,7 +31,9 @@
     .nav-cta .chev{font-weight:700;opacity:.7;}
     .nav-cta:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(39,39,42,0.22);}
 
-    .wrap{max-width:840px;margin:0 auto;padding:46px 24px 100px;}
+    .wrap{max-width:920px;margin:0 auto;padding:58px 24px 100px;}
+    /* signature wide moments break out of the readable column for rhythm */
+    .wide{position:relative;left:50%;transform:translateX(-50%);width:min(1120px,calc(100vw - 40px));}
     .eyebrow{font-size:12px;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:var(--indigo);margin-bottom:20px;}
 
     /* signature light hero with subtle indigo-tinted mesh */
@@ -259,22 +261,25 @@
   </nav>
 
   <div class="wrap">
+    <div class="wide">
     <p class="eyebrow reveal">Built for the Clarium team</p>
 
     <div class="hero reveal">
       <div class="mesh"></div>
       <div id="spot"></div>
       <div class="inner">
-        <h1>Every record comes in messy. I build the pipeline that sends it out clean.<br><span class="h1-sub">Classification, entity resolution, and an eval harness that treats silent bugs as real failures.</span></h1>
-        <p class="lead reveal-words" style="transition-delay:.1s">I'm Andrew Zoll. Your Data Products team enriches every product flowing through a hospital's supply chain, deterministic logic plus LLMs, with eval harnesses watching the quality. I build exactly that: production Python and SQL, classifiers that fuse rules and models, and a verifier whose false-positive rate I drove from 30% to under 5% by reading failures one at a time. <b>This page is that work, pointed at your team.</b></p>
-        <p class="subnote reveal" style="transition-delay:.18s">A candidate's pitch for Clarium's Data Products / Applied AI team, built in your design language on purpose. A candidate's pitch, not affiliated with Clarium. Just me, showing the work.</p>
+        <h1>Every record comes in messy. I build the pipeline that sends it out clean.<br><span class="h1-sub">Classify, entity-resolve, and an eval harness that treats silent bugs as real failures.</span></h1>
+        <p class="lead reveal-words" style="transition-delay:.1s">I'm Andrew Zoll. I build production pipelines that classify and enrich messy records with deterministic logic plus LLMs, and the eval harnesses that catch the silent bugs. <b>This page is that work, pointed at your team.</b></p>
+        <p class="subnote reveal" style="transition-delay:.18s">A candidate's pitch for Clarium's Data Products / Applied AI team, built in your design language on purpose. Not affiliated with Clarium.</p>
       </div>
+    </div>
     </div>
 
     <!-- ===== signature animated enrichment pipeline ===== -->
+    <div class="wide">
     <div class="pipe-card reveal">
       <p class="pc-head">The enrichment pipeline your team owns</p>
-      <p class="pc-sub">A messy product record flows in. Classify and entity-resolve it with deterministic logic plus LLMs, then an eval harness checks the result and catches the silent bug before it ships. A clean, verified record comes out.</p>
+      <p class="pc-sub">A messy record flows in. Classify and entity-resolve it, then an eval harness catches the silent bug before a clean, verified record ships.</p>
       <p class="pc-now">Now running: <b id="pc-stage">ingest raw record</b></p>
       <div class="pipe" id="pipe" data-phase="0" aria-hidden="true">
         <div class="track">
@@ -310,10 +315,13 @@
         </div>
       </div>
     </div>
+    </div>
 
+    <div class="wide">
     <div class="stat reveal" data-countdown data-from="30" data-to="5">
       <div class="num">30%<span class="arrow">&rarr;</span><span class="val">5</span>%<span class="fp">FP</span></div>
-      <div class="lbl">I drove Veritas's false-positive rate from about 30% to <b>under 5%</b> by reading failures one at a time. That's an eval-harness result: label sets, regression checks, and the discipline that decides whether enriched data ships or holds.</div>
+      <div class="lbl">I drove Veritas's false-positive rate from ~30% to <b>under 5%</b> by reading failures one at a time. That's the eval-harness loop: label sets, regression checks, ship or hold.</div>
+    </div>
     </div>
 
     <section>
@@ -322,36 +330,29 @@
         <div class="row reveal">
           <div class="check"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11"/><path d="M6 12.5 L10.5 17 L18 7.5"/></svg></div>
           <div class="body">
-            <div class="jd">"Strong production Python and SQL: data pipelines, PostgreSQL, CI/CD, production observability."</div>
-            <div class="me">FieldCommand is a multi-tenant B2B SaaS on PostgreSQL and Supabase, built solo, with automated data pipelines wiring Stripe billing, CRM data, AI services, and operational reporting together. Production code, real SQL, real observability. <span class="mark-hl">Not a notebook demo.</span></div>
+            <div class="jd">"Strong production Python and SQL: data pipelines, PostgreSQL, observability."</div>
+            <div class="me">FieldCommand is a multi-tenant SaaS on PostgreSQL and Supabase, built solo, with live pipelines wiring Stripe, CRM, and AI services together. <span class="mark-hl">Real SQL, not a notebook demo.</span></div>
           </div>
         </div>
         <div class="row reveal">
           <div class="check"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11"/><path d="M6 12.5 L10.5 17 L18 7.5"/></svg></div>
           <div class="body">
             <div class="jd">"Classification and entity resolution combining deterministic logic and LLMs."</div>
-            <div class="me">Veritas is exactly this shape: it classifies an AI claim against its source using deterministic rules plus LLMs, then returns a structured verdict with a confidence cap, schema-enforced with Zod. The fuse-rules-and-models pattern is what I already build. <span class="mark-hl">It's the whole product.</span></div>
+            <div class="me">Veritas is exactly this: it classifies a claim against its source with deterministic rules plus LLMs, returning a schema-enforced verdict. <span class="mark-hl">The fuse-rules-and-models pattern is the whole product.</span></div>
           </div>
         </div>
         <div class="row reveal">
           <div class="check"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11"/><path d="M6 12.5 L10.5 17 L18 7.5"/></svg></div>
           <div class="body">
             <div class="jd">"Evaluation harnesses, label sets, regression suites to measure quality."</div>
-            <div class="me">Veritas is itself an eval harness. I cut its false-positive rate from ~30% to under 5% by empirical failure analysis: building label sets, reading failures one at a time, and turning each one into a regression check. You use Braintrust; I built the equivalent by hand and know exactly why it matters.</div>
+            <div class="me">Veritas is itself an eval harness: I cut its false-positive rate from ~30% to under 5% with label sets and regression checks, one failure at a time. You use Braintrust; I built the equivalent by hand.</div>
           </div>
         </div>
         <div class="row reveal">
           <div class="check"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11"/><path d="M6 12.5 L10.5 17 L18 7.5"/></svg></div>
           <div class="body">
             <div class="jd">"A non-negotiable commitment to data quality: treat silent bugs as real failures."</div>
-            <div class="me">Six years as a financial advisor under continuous FINRA and SEC supervision taught me that an unverified number is a liability, not a nice-to-have. AndrewOS bakes that in: a validator agent grades output and <b>blocks bad results before they ship</b>. A silent bug is a real bug. <span class="mark-hl">I don't ship data I can't defend.</span></div>
-          </div>
-        </div>
-        <div class="row reveal">
-          <div class="check"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11"/><path d="M6 12.5 L10.5 17 L18 7.5"/></svg></div>
-          <div class="body">
-            <div class="jd">"Comfort in ambiguity: scope, plan, and execute without hand-holding."</div>
-            <div class="me">Veritas, FieldCommand, and AndrewOS each went from nothing to shipped, solo. No roadmap handed down, no team to inherit. Scoping an ambiguous problem, planning it, and executing is the only way I've ever worked.</div>
+            <div class="me">Six years under FINRA and SEC supervision taught me an unverified number is a liability. AndrewOS bakes it in: a validator <b>blocks bad results before they ship</b>. <span class="mark-hl">A silent bug is a real bug.</span></div>
           </div>
         </div>
       </div>
@@ -366,7 +367,7 @@
           <span class="chip">~30% &rarr; &lt;5% FP</span>
         </div>
         <h3>Veritas</h3>
-        <p>Live at veritaslaw.app. It classifies and verifies an AI claim against its source using deterministic logic plus LLMs, and returns a structured verdict with a confidence cap. Zod schemas, prompt caching, cost caps. False-positive rate driven from ~30% to under 5% by empirical failure analysis, one case at a time. This is your classification-plus-eval workflow, already built.</p>
+        <p>Live at veritaslaw.app. Classifies a claim against its source with deterministic logic plus LLMs, returning a structured verdict with a confidence cap. Zod schemas, prompt caching, cost caps. False-positive rate driven from ~30% to under 5%. Your classification-plus-eval workflow, already built.</p>
         <a href="https://veritaslaw.app">veritaslaw.app <span class="arr">&rarr;</span></a>
       </div>
       <div class="receipt reveal">
@@ -376,7 +377,7 @@
           <span class="chip">187,745 lines</span>
         </div>
         <h3>FieldCommand</h3>
-        <p>A multi-tenant B2B SaaS, <span class="nm" data-countup data-from="0" data-to="187745">187,745</span> lines of TypeScript, built solo on PostgreSQL and Supabase. Automated data pipelines connecting Stripe billing, CRM data, AI services, and operational reporting, with RBAC, tenant isolation, and audit-ready data handling. Four AI features in production behind per-tenant flags, routed through a two-tier model router.</p>
+        <p>A multi-tenant B2B SaaS, <span class="nm" data-countup data-from="0" data-to="187745">187,745</span> lines of TypeScript, built solo on PostgreSQL and Supabase. Data pipelines wiring Stripe, CRM, and AI services, with RBAC, tenant isolation, and audit-ready handling. Four AI features in production behind per-tenant flags.</p>
         <a href="https://app.fieldcommand.io">app.fieldcommand.io <span class="arr">&rarr;</span></a>
       </div>
       <div class="receipt reveal" data-accent="ink">
@@ -386,7 +387,7 @@
           <span class="chip">build &middot; review &middot; validate</span>
         </div>
         <h3>AndrewOS</h3>
-        <p>An agent operating system I run across two businesses: builder, reviewer, and validator triads where the validator <b>grades output and blocks bad results before they ship</b>. It's the same discipline an enrichment pipeline needs, a quality gate standing between a plausible answer and a shipped one, running in daily production.</p>
+        <p>An agent OS I run across two businesses: builder, reviewer, and validator triads where the validator <b>grades output and blocks bad results before they ship</b>. The quality gate an enrichment pipeline needs, in daily production.</p>
       </div>
     </section>
 
@@ -394,7 +395,7 @@
       <h2 class="reveal">The honest part</h2>
       <div class="note reveal">
         <span class="q" aria-hidden="true">&ldquo;</span>
-        <p>I'm a Python and SQL builder who has shipped production data and eval systems solo, but I should name the gaps. I haven't used Braintrust, Temporal, or Snowflake by name; I built the equivalent eval harness inside Veritas by hand, so the concepts transfer and the tools are a short ramp. I haven't worked in healthcare supply chain; what I bring instead is six years under FINRA and SEC supervision, where treating a silent bug as a real failure wasn't a value, it was the law. <span class="mark-hl">The data-quality obsession is already wired in. The rest is learnable.</span></p>
+        <p>I'm a Python and SQL builder who ships production data and eval systems solo, zero to one. The named gaps: I haven't used Braintrust, Temporal, or Snowflake by name, though I built the equivalent eval harness by hand, and healthcare is new to me. What isn't new is the data-quality obsession: six years under FINRA and SEC supervision, where a silent bug wasn't a bad look, it was a violation. <span class="mark-hl">That part's already wired in.</span></p>
       </div>
     </section>
 
