@@ -16,76 +16,113 @@
     html,body{margin:0;padding:0;background:#fff;color:var(--ink);font-family:'Yrsa',Georgia,serif;-webkit-font-smoothing:antialiased;}
     *{box-sizing:border-box;}
     .ui{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;}
+
+    /* animated brand stripe (echoes Dynamo's hatched logo) */
+    .stripe{height:5px;background:repeating-linear-gradient(115deg,var(--ink) 0 3px,#fff 3px 8px);background-size:200% 100%;animation:slide 9s linear infinite;}
+    @keyframes slide{to{background-position:200% 0;}}
+
     .nav{display:flex;justify-content:space-between;align-items:center;padding:18px 26px;border-bottom:1px solid var(--line);background:#fff;position:sticky;top:0;z-index:10;font-family:'Inter',sans-serif;}
     .brand{display:flex;align-items:center;gap:10px;font-size:15px;font-weight:700;color:var(--ink);text-decoration:none;}
-    .brand .mark{width:16px;height:14px;background:repeating-linear-gradient(115deg,var(--ink) 0 2px,transparent 2px 4px);display:inline-block;}
-    .nav-cta{background:var(--ink2);color:#fff !important;padding:9px 18px;border-radius:999px;font-weight:600;font-size:13px;text-decoration:none;}
-    .nav-cta:hover{background:#000;}
+    .brand .mark{width:16px;height:14px;background:repeating-linear-gradient(115deg,var(--ink) 0 2px,transparent 2px 4px);display:inline-block;transition:transform .4s ease;}
+    .brand:hover .mark{transform:rotate(-8deg) scale(1.1);}
+    .nav-cta{background:var(--ink2);color:#fff !important;padding:9px 18px;border-radius:999px;font-weight:600;font-size:13px;text-decoration:none;transition:transform .15s ease,background .15s ease;}
+    .nav-cta:hover{background:#000;transform:translateY(-1px);}
     .wrap{max-width:780px;margin:0 auto;padding:58px 24px 100px;}
     .eyebrow{font-family:'Inter',sans-serif;font-size:12px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted2);margin-bottom:22px;}
     h1{font-family:'Inter',sans-serif;font-size:clamp(36px,5.4vw,56px);font-weight:700;line-height:1.05;letter-spacing:-0.025em;margin:0 0 22px;color:var(--ink);}
     .lead{font-size:21px;line-height:1.55;color:var(--ink2);margin:0 0 14px;}
-    .subnote{font-family:'Inter',sans-serif;font-size:13.5px;color:var(--muted2);margin:0 0 38px;}
+    .subnote{font-family:'Inter',sans-serif;font-size:13.5px;color:var(--muted2);margin:0 0 8px;}
+
+    /* signature animated stat */
+    .stat{margin:40px 0 8px;padding:26px 28px;border:1px solid var(--line);border-radius:14px;background:var(--paper);display:flex;align-items:baseline;gap:18px;flex-wrap:wrap;}
+    .stat .num{font-family:'Inter',sans-serif;font-weight:800;font-size:clamp(44px,8vw,72px);line-height:1;letter-spacing:-0.04em;color:var(--ink);font-variant-numeric:tabular-nums;}
+    .stat .num .pct{font-size:0.5em;font-weight:700;color:var(--muted);}
+    .stat .lbl{font-family:'Inter',sans-serif;font-size:15px;line-height:1.4;color:var(--muted);max-width:300px;}
+    .stat .lbl b{color:var(--ink);font-weight:700;}
+
     section h2{font-family:'Inter',sans-serif;font-size:13px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink);margin:54px 0 18px;padding-bottom:10px;border-bottom:1px solid var(--line);}
     section p{font-size:18px;line-height:1.6;color:var(--ink2);margin:0 0 16px;}
     section p.muted{color:var(--muted);}
     .map .row{display:flex;gap:14px;padding:15px 0;border-bottom:1px solid var(--line);}
     .map .row:last-child{border-bottom:0;}
-    .map .check{font-family:'Inter',sans-serif;color:var(--ink);font-weight:700;flex-shrink:0;margin-top:2px;}
+    .map .check{font-family:'Inter',sans-serif;color:var(--ink);font-weight:700;flex-shrink:0;margin-top:2px;display:inline-block;transition:transform .45s cubic-bezier(.2,.7,.3,1.4);transform:scale(0);}
+    .map .row.in .check{transform:scale(1);}
     .map .body .jd{font-family:'Inter',sans-serif;font-size:14px;font-weight:600;color:var(--muted);margin-bottom:5px;}
     .map .body .me{font-size:17px;line-height:1.5;color:var(--ink);}
-    .receipt{border:1px solid var(--line);border-radius:12px;padding:20px 22px;margin:0 0 14px;background:#fff;}
+    .receipt{border:1px solid var(--line);border-radius:12px;padding:20px 22px;margin:0 0 14px;background:#fff;transition:transform .2s ease,box-shadow .2s ease;}
+    .receipt:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(10,10,10,0.07);}
     .receipt .tag{font-family:'Inter',sans-serif;font-size:11.5px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted2);margin-bottom:6px;}
     .receipt h3{font-family:'Inter',sans-serif;margin:0 0 8px;font-size:18px;color:var(--ink);font-weight:700;}
     .receipt p{font-size:16px;line-height:1.5;color:var(--ink2);margin:0 0 10px;}
+    .receipt p .nm{font-variant-numeric:tabular-nums;font-weight:600;}
     .receipt a{font-family:'Inter',sans-serif;font-size:13.5px;font-weight:600;color:var(--ink);text-decoration:none;border-bottom:1px solid var(--ink);}
+    .receipt a .arr{display:inline-block;transition:transform .15s ease;}
+    .receipt a:hover .arr{transform:translateX(4px);}
     .band{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:26px 28px;margin:48px 0 0;}
     .band p{margin:0 0 14px;font-size:18px;color:var(--ink2);}
     .band p strong{color:var(--ink);}
-    .band .links a{font-family:'Inter',sans-serif;display:inline-block;margin:0 18px 10px 0;font-weight:600;color:var(--ink);border-bottom:1px solid var(--ink);font-size:14.5px;text-decoration:none;}
-    .band .cta{font-family:'Inter',sans-serif;background:var(--ink2);color:#fff !important;text-decoration:none;padding:13px 24px;font-weight:600;font-size:15px;border-radius:999px;display:inline-block;margin-top:8px;}
-    .band .cta:hover{background:#000;}
+    .band .links a{font-family:'Inter',sans-serif;display:inline-block;margin:0 18px 10px 0;font-weight:600;color:var(--ink);border-bottom:1px solid var(--ink);font-size:14.5px;text-decoration:none;transition:opacity .15s ease;}
+    .band .links a:hover{opacity:.6;}
+    .band .cta{font-family:'Inter',sans-serif;background:var(--ink2);color:#fff !important;text-decoration:none;padding:13px 24px;font-weight:600;font-size:15px;border-radius:999px;display:inline-block;margin-top:8px;transition:transform .15s ease,background .15s ease;}
+    .band .cta:hover{background:#000;transform:translateY(-1px);}
     .foot{font-family:'Inter',sans-serif;font-size:13px;color:#A8A8A8;margin-top:40px;text-align:center;}
     ::selection{background:#FFDEDE;color:var(--ink);}
+
+    /* scroll-reveal */
+    .reveal{opacity:0;transform:translateY(18px);transition:opacity .65s cubic-bezier(.2,.6,.2,1),transform .65s cubic-bezier(.2,.6,.2,1);}
+    .reveal.in{opacity:1;transform:none;}
+
+    @media (prefers-reduced-motion: reduce){
+      .stripe{animation:none;}
+      .reveal{opacity:1 !important;transform:none !important;transition:none !important;}
+      .map .check{transform:scale(1) !important;transition:none !important;}
+      .receipt{transition:none !important;}
+    }
   </style>
 </head>
 <body>
+  <div class="stripe"></div>
   <nav class="nav">
     <a class="brand" href="https://andrewzoll.com"><span class="mark"></span> Andrew Zoll</a>
     <a class="nav-cta" href="mailto:andrew@andrewzoll.com">andrew@andrewzoll.com</a>
   </nav>
 
   <div class="wrap">
-    <p class="eyebrow">Built for the Dynamo AI team</p>
-    <h1>You're hiring a PM for AI guardrails in regulated industries. I've lived both sides of that.</h1>
-    <p class="lead">I'm Andrew Zoll. I spent six years under FINRA and SEC supervision, including years selling insurance, two of your core verticals. And I built Veritas, an AI verifier that catches hallucinations and that I dragged from a 30 percent false-positive rate to under 5 percent. Your JD is the intersection of those two things.</p>
-    <p class="subnote">A candidate's pitch for your Product Manager, AI role, built in your style on purpose. Not affiliated with Dynamo AI. Just me, showing the work.</p>
+    <p class="eyebrow reveal">Built for the Dynamo AI team</p>
+    <h1 class="reveal" style="transition-delay:.05s">You're hiring a PM for AI guardrails in regulated industries. I've lived both sides of that.</h1>
+    <p class="lead reveal" style="transition-delay:.12s">I'm Andrew Zoll. I spent six years under FINRA and SEC supervision, including years selling insurance, two of your core verticals. And I built Veritas, an AI verifier that catches hallucinations and that I dragged from a 30 percent false-positive rate to under 5 percent. Your JD is the intersection of those two things.</p>
+    <p class="subnote reveal" style="transition-delay:.18s">A candidate's pitch for your Product Manager, AI role, built in your style on purpose. Not affiliated with Dynamo AI. Just me, showing the work.</p>
+
+    <div class="stat reveal" data-countdown data-from="30" data-to="5">
+      <div class="num"><span class="val">30</span><span class="pct">% FP</span></div>
+      <div class="lbl">Veritas false-positive rate, after I read the failures one at a time. <b>From ~30% to under 5%.</b> That loop is the whole job.</div>
+    </div>
 
     <section>
-      <h2>What your JD asks for, line by line</h2>
+      <h2 class="reveal">What your JD asks for, line by line</h2>
       <div class="map">
-        <div class="row">
+        <div class="row reveal">
           <div class="check ui">&check;</div>
           <div class="body">
             <div class="jd">"Define and lead product strategy for redteaming, guardrails, and observability"</div>
             <div class="me">I built Veritas, a guardrail-shaped product: it checks an AI claim against the source and returns a structured verdict with a confidence cap. Hallucination checks and confidence thresholds aren't a roadmap item for me; they're what I already shipped.</div>
           </div>
         </div>
-        <div class="row">
+        <div class="row reveal">
           <div class="check ui">&check;</div>
           <div class="body">
             <div class="jd">"Engage enterprise partners in regulated industries to pilot and deploy"</div>
             <div class="me">Finance and insurance are two of your four verticals, and they're where I come from. I operated for years under continuous SEC supervision and sold life and health insurance. I don't need a translator for your customers' compliance posture. I am that customer.</div>
           </div>
         </div>
-        <div class="row">
+        <div class="row reveal">
           <div class="check ui">&check;</div>
           <div class="body">
             <div class="jd">"Monitor AI regulatory and compliance landscapes"</div>
             <div class="me">Audit-grade discipline is a habit, not a skill I'd acquire. Recordkeeping, suitability, evidence, and "prove it" are how I operated every day in a regulated practice.</div>
           </div>
         </div>
-        <div class="row">
+        <div class="row reveal">
           <div class="check ui">&check;</div>
           <div class="body">
             <div class="jd">"Passion for AI safety and trustworthy AI"</div>
@@ -96,20 +133,20 @@
     </section>
 
     <section>
-      <h2>What I've shipped this way</h2>
-      <div class="receipt">
+      <h2 class="reveal">What I've shipped this way</h2>
+      <div class="receipt reveal">
         <div class="tag">A guardrail, in production</div>
         <h3>Veritas</h3>
         <p>An AI verifier (live at veritaslaw.app) that reads a claim, retrieves the source, and returns a structured verdict on whether it holds up. Zod schemas, prompt caching, cost caps. False-positive rate driven from ~30% to under 5% by empirical failure analysis. This is the hallucination-check and eval discipline your platform is built on.</p>
-        <a href="https://veritaslaw.app">veritaslaw.app &rarr;</a>
+        <a href="https://veritaslaw.app">veritaslaw.app <span class="arr">&rarr;</span></a>
       </div>
-      <div class="receipt">
+      <div class="receipt reveal">
         <div class="tag">Production AI, cost-aware, multi-tenant</div>
         <h3>FieldCommand</h3>
-        <p>A multi-tenant B2B SaaS, 187,745 lines of TypeScript, built solo. Four AI features in production behind per-tenant feature flags, a two-tier model router, three providers wired. The product judgment of where AI is safe to run and where it isn't.</p>
-        <a href="https://app.fieldcommand.io">app.fieldcommand.io &rarr;</a>
+        <p>A multi-tenant B2B SaaS, <span class="nm" data-countup data-from="0" data-to="187745">187,745</span> lines of TypeScript, built solo. Four AI features in production behind per-tenant feature flags, a two-tier model router, three providers wired. The product judgment of where AI is safe to run and where it isn't.</p>
+        <a href="https://app.fieldcommand.io">app.fieldcommand.io <span class="arr">&rarr;</span></a>
       </div>
-      <div class="receipt">
+      <div class="receipt reveal">
         <div class="tag">Agent guardrails, daily</div>
         <h3>AndrewOS</h3>
         <p>An agent operating system I run across two businesses: builder/reviewer/validator triads where the validator grades the builder and blocks before anything ships, plus human gates. Guardrails and human-in-the-loop, in daily production use.</p>
@@ -117,11 +154,11 @@
     </section>
 
     <section>
-      <h2>The honest part</h2>
-      <p>Your post asks for one or more years in product management, which I clear. I don't have a decade of formal PM title behind me. What I have is the rarer combination your role actually needs: I build eval-driven AI, and I've spent years inside the regulated industries you sell into. Most PMs have one of those. I have both.</p>
+      <h2 class="reveal">The honest part</h2>
+      <p class="reveal">Your post asks for one or more years in product management, which I clear. I don't have a decade of formal PM title behind me. What I have is the rarer combination your role actually needs: I build eval-driven AI, and I've spent years inside the regulated industries you sell into. Most PMs have one of those. I have both.</p>
     </section>
 
-    <div class="band">
+    <div class="band reveal">
       <p><strong>If this resonates, I'd love fifteen minutes.</strong> Reply wherever I sent you this link, or reach me directly.</p>
       <div class="links">
         <a href="https://veritaslaw.app">Veritas (live)</a>
@@ -132,7 +169,47 @@
       <a class="cta" href="mailto:andrew@andrewzoll.com">andrew@andrewzoll.com</a>
     </div>
 
-    <p class="foot">Built for Dynamo AI by Andrew Zoll. Private link, not indexed. Just for you.</p>
+    <p class="foot reveal">Built for Dynamo AI by Andrew Zoll. Private link, not indexed. Just for you.</p>
   </div>
+
+  <script>
+    (function(){
+      var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      function ease(t){ return 1 - Math.pow(1 - t, 3); }
+      function animateCount(el){
+        var from = parseFloat(el.getAttribute('data-from'));
+        var to = parseFloat(el.getAttribute('data-to'));
+        var isDown = el.hasAttribute('data-countdown');
+        var target = isDown ? el.querySelector('.val') : el;
+        var dur = 1200, start = null;
+        function fmt(n){ return Math.round(n).toLocaleString('en-US'); }
+        if(reduce){ target.textContent = fmt(to); return; }
+        function step(ts){
+          if(!start) start = ts;
+          var p = Math.min(1, (ts - start) / dur);
+          var v = from + (to - from) * ease(p);
+          target.textContent = fmt(v);
+          if(p < 1) requestAnimationFrame(step);
+          else target.textContent = fmt(to);
+        }
+        requestAnimationFrame(step);
+      }
+      if(!('IntersectionObserver' in window) || reduce){
+        document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('in'); });
+        document.querySelectorAll('[data-countup],[data-countdown]').forEach(animateCount);
+        return;
+      }
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){
+          if(e.isIntersecting){
+            e.target.classList.add('in');
+            if(e.target.hasAttribute('data-countup') || e.target.hasAttribute('data-countdown')) animateCount(e.target);
+            io.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.2 });
+      document.querySelectorAll('.reveal, [data-countup], [data-countdown]').forEach(function(el){ io.observe(el); });
+    })();
+  </script>
 </body>
 </html>
