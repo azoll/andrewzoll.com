@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Built for TLDR · Andrew Zoll</title>
+  <meta name="description" content="A page Andrew Zoll built for the TLDR team, applying for Senior Software Engineer, Applied AI. You want Claude Skills and autonomous ops agents. He already built that."/>
+  <!-- Private: shared by link only. Do not index. -->
+  <meta name="robots" content="noindex, nofollow"/>
+  <link rel="icon" href="/assets/favicon-primary.png"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <style>
+    :root{
+      --blue:#2563EB; --blue-dk:#1D4FD7; --blue-soft:#EEF3FF;
+      --ink:#0B0B0C; --slate:#33343A; --muted:#5B5B61; --line:#E8E8EA; --paper:#FAFAFB;
+    }
+    html,body{margin:0;padding:0;background:#fff;color:var(--ink);font-family:Inter,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;-webkit-font-smoothing:antialiased;}
+    *{box-sizing:border-box;}
+    .topbar{height:4px;background:var(--blue);}
+    .nav{display:flex;justify-content:space-between;align-items:center;padding:18px 26px;border-bottom:1px solid var(--line);background:#fff;position:sticky;top:0;z-index:10;}
+    .brand{display:flex;align-items:center;gap:10px;font-size:15px;font-weight:700;color:var(--ink);text-decoration:none;letter-spacing:.01em;}
+    .brand .mark{width:14px;height:14px;background:var(--blue);border-radius:3px;display:inline-block;}
+    .nav-cta{background:var(--blue);color:#fff !important;padding:9px 16px;border-radius:6px;font-weight:600;font-size:13px;text-decoration:none;}
+    .nav-cta:hover{background:var(--blue-dk);}
+    .wrap{max-width:780px;margin:0 auto;padding:58px 24px 100px;}
+    .eyebrow{font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;font-size:12px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--blue);margin-bottom:22px;}
+    h1{font-size:clamp(36px,5.6vw,56px);font-weight:800;line-height:1.05;letter-spacing:-0.03em;margin:0 0 22px;}
+    .lead{font-size:19px;line-height:1.6;color:var(--slate);margin:0 0 14px;}
+    .subnote{font-size:13.5px;color:var(--muted);margin:0 0 38px;}
+    section h2{font-size:13px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink);margin:54px 0 18px;padding-bottom:10px;border-bottom:1px solid var(--line);}
+    section p{font-size:17px;line-height:1.65;color:var(--slate);margin:0 0 16px;}
+    section p.muted{color:var(--muted);}
+    .map{margin:0 0 18px;}
+    .map .row{padding:14px 0;border-bottom:1px solid var(--line);}
+    .map .row:last-child{border-bottom:0;}
+    .map .jd{font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;font-size:13px;color:var(--blue);margin-bottom:5px;}
+    .map .me{font-size:16px;line-height:1.55;color:var(--ink);}
+    .spec{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:20px 22px;margin:6px 0 14px;font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;font-size:13px;line-height:1.7;color:var(--slate);overflow-x:auto;}
+    .spec .c{color:var(--muted);} .spec .b{color:var(--blue);} .spec .k{color:var(--ink);font-weight:600;}
+    .caption{font-size:14px;color:var(--muted);line-height:1.55;margin:0 0 16px;}
+    .receipt{border:1px solid var(--line);border-radius:12px;padding:20px 22px;margin:0 0 14px;background:#fff;}
+    .receipt .tag{font-family:ui-monospace,monospace;font-size:11.5px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
+    .receipt h3{margin:0 0 8px;font-size:18px;color:var(--ink);font-weight:700;}
+    .receipt p{font-size:15px;line-height:1.55;color:var(--slate);margin:0 0 10px;}
+    .receipt a{font-size:13.5px;font-weight:600;color:var(--blue);text-decoration:none;border-bottom:1px solid rgba(37,99,235,0.3);}
+    .receipt a:hover{color:var(--blue-dk);}
+    .band{background:var(--blue-soft);border:1px solid #DCE6FF;border-radius:12px;padding:26px 28px;margin:48px 0 0;}
+    .band p{margin:0 0 14px;font-size:17px;color:var(--slate);}
+    .band p strong{color:var(--ink);}
+    .band .links a{display:inline-block;margin:0 18px 10px 0;font-weight:600;color:var(--blue);border-bottom:1px solid rgba(37,99,235,0.3);font-size:15px;text-decoration:none;}
+    .band .cta{background:var(--blue);color:#fff !important;text-decoration:none;padding:13px 22px;font-weight:600;font-size:15px;border-radius:6px;display:inline-block;margin-top:8px;}
+    .band .cta:hover{background:var(--blue-dk);}
+    .foot{font-size:13px;color:#B6B6BC;margin-top:40px;text-align:center;}
+    ::selection{background:var(--blue-soft);color:var(--ink);}
+  </style>
+</head>
+<body>
+  <div class="topbar"></div>
+  <nav class="nav">
+    <a class="brand" href="https://andrewzoll.com"><span class="mark"></span> Andrew Zoll</a>
+    <a class="nav-cta" href="mailto:andrew@andrewzoll.com">andrew@andrewzoll.com</a>
+  </nav>
+
+  <div class="wrap">
+    <p class="eyebrow">Built for the TLDR team</p>
+    <h1>I read your JD and realized you're describing the thing I already built.</h1>
+    <p class="lead">I'm Andrew Zoll. You want modular Claude Skills, autonomous agents for sales, marketing, and ops, and a setup where non-technical teammates run workflows themselves. That's AndrewOS. I've run it across two businesses for over a year. Here's the work.</p>
+    <p class="subnote">A candidate's pitch for your Senior Software Engineer, Applied AI role, built in your style on purpose. Not affiliated with TLDR. Just me, showing the work.</p>
+
+    <section>
+      <h2>What your JD describes, line by line</h2>
+      <div class="map">
+        <div class="row">
+          <div class="jd">"modular Claude Skills that integrate with core systems"</div>
+          <div class="me">AndrewOS is 24 Claude Skills, packaged as an installable plugin. Each one carries frontmatter that pins its scope, its tools, and its model tier (opus / sonnet / haiku). That's the catalog you're asking someone to start.</div>
+        </div>
+        <div class="row">
+          <div class="jd">"autonomous AI agents for sales, marketing, and operations"</div>
+          <div class="me">My agents run autonomous LinkedIn content production, prospecting, content distribution, and scheduled retrospective loops across two businesses. Not a prototype. My actual daily operations.</div>
+        </div>
+        <div class="row">
+          <div class="jd">"non-technical teammates building workflows independently"</div>
+          <div class="me">The system is folder-based and spec-first so the operator gives a goal, not code. I productize this exact thing as a $5K "OS Builder" for other small-business owners.</div>
+        </div>
+        <div class="row">
+          <div class="jd">"composable systems where AI tool outputs feed into other tools"</div>
+          <div class="me">Arena-based delegation with validation chains. career-ops, one of my skill suites, pipes a job scan into scoring into a report into a tailored CV, end to end, with no hand-holding between steps.</div>
+        </div>
+        <div class="row">
+          <div class="jd">"systems that know when to escalate"</div>
+          <div class="me">Every arena has human gates, and a builder / reviewer / validator triad where the validator grades the builder and blocks on a regression before anything ships. Escalation is a design principle, not an afterthought.</div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>A real skill, not a description of one</h2>
+      <div class="spec">
+<span class="c"># one of ~24 skills in AndrewOS — frontmatter pins context + cost</span><br/>
+<span class="k">name:</span> aos-retrospective<br/>
+<span class="k">model:</span> <span class="b">opus</span>        <span class="c"># judgment work earns the premium tier</span><br/>
+<span class="k">tools:</span> [read, write, search]<br/>
+<span class="k">schedule:</span> <span class="b">weekly</span>     <span class="c"># runs itself, surfaces what changed + what to fix</span><br/>
+<span class="k">scope:</span> <span class="b">"review the week across arenas; escalate decisions to me"</span>
+      </div>
+      <p class="caption">The cheap skills (content drafting, scheduling) run on haiku; the judgment skills run on opus. That cost instinct is in the frontmatter, not bolted on after. It's the same discipline as the two-tier model router I built into FieldCommand.</p>
+    </section>
+
+    <section>
+      <h2>What I've shipped this way</h2>
+      <div class="receipt">
+        <div class="tag">The agent OS itself</div>
+        <h3>AndrewOS</h3>
+        <p>An agent operating system: arena-based delegation, 24 model-tiered skills, builder/reviewer/validator triads, scheduled loops, human gates. Runs marketing, content, and operations across two businesses. 14+ months in daily use.</p>
+      </div>
+      <div class="receipt">
+        <div class="tag">A skill suite anyone can install</div>
+        <h3>career-ops</h3>
+        <p>An AI job-search pipeline shipped as installable Claude skills: zero-token portal scanning, A–G offer scoring, tailored CV generation, pattern analysis. The "non-technical operator runs the workflow" model, productized.</p>
+        <a href="https://github.com/azoll">github.com/azoll &rarr;</a>
+      </div>
+      <div class="receipt">
+        <div class="tag">Production AI, multi-tenant</div>
+        <h3>FieldCommand &amp; Veritas</h3>
+        <p>FieldCommand: a multi-tenant SaaS, 187,745 lines of TypeScript, four AI features behind flags, a two-tier model router. Veritas: an AI verifier I drove from ~30% to under 5% false positives by reading failures.</p>
+        <a href="https://app.fieldcommand.io">app.fieldcommand.io</a> &nbsp; <a href="https://veritaslaw.app">veritaslaw.app</a>
+      </div>
+    </section>
+
+    <section>
+      <h2>The honest part</h2>
+      <p>Most of my "show me the work" pages have to name a domain gap. This one doesn't. The role is building internal AI tooling and autonomous ops agents, and that is precisely what my agent work is, not a stretch from it. I haven't run it at a 7-million-subscriber newsletter's scale yet. But the patterns are the patterns, and I'd rather start from a working catalog than a blank repo.</p>
+    </section>
+
+    <div class="band">
+      <p><strong>If this resonates, I'd love fifteen minutes.</strong> Reply wherever I sent you this link, or reach me directly.</p>
+      <div class="links">
+        <a href="https://github.com/azoll">GitHub</a>
+        <a href="https://app.fieldcommand.io">FieldCommand (live)</a>
+        <a href="https://veritaslaw.app">Veritas (live)</a>
+        <a href="https://portfolio.andrewzoll.com">Portfolio</a>
+      </div>
+      <a class="cta" href="mailto:andrew@andrewzoll.com">andrew@andrewzoll.com</a>
+    </div>
+
+    <p class="foot">Built for TLDR by Andrew Zoll. Private link, not indexed. Just for you.</p>
+  </div>
+</body>
+</html>
