@@ -38,11 +38,24 @@
     .hero .inner{position:relative;z-index:2;}
     h1{font-size:clamp(34px,5.2vw,54px);font-weight:700;line-height:1.07;letter-spacing:-0.02em;margin:0 0 24px;color:#fff;}
     h1 .verb{color:var(--orange);display:inline-block;position:relative;}
-    /* rotating verb */
-    .rot{display:inline-block;position:relative;color:var(--orange);min-width:0;}
-    .rot .slot{display:inline-block;transition:opacity .35s ease,transform .35s ease;}
-    .rot .slot.out{opacity:0;transform:translateY(-12px);}
-    .rot .slot.in-up{opacity:0;transform:translateY(12px);}
+    /* centered Cresta-style hero */
+    .hero .inner{text-align:center;}
+    /* animated emblem: Cresta radar-ripple + word-specific icon */
+    .emblem{position:relative;width:122px;height:122px;margin:0 auto 28px;display:flex;align-items:center;justify-content:center;}
+    .emblem .core{position:relative;z-index:2;width:76px;height:76px;border-radius:50%;border:1.5px solid rgba(255,255,255,0.92);display:flex;align-items:center;justify-content:center;box-shadow:0 0 26px rgba(255,255,255,0.13);}
+    .emblem .core svg{width:30px;height:30px;fill:none;stroke:#fff;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;transition:opacity .18s ease;}
+    .emblem .ripple{position:absolute;top:50%;left:50%;width:76px;height:76px;margin:-38px 0 0 -38px;border-radius:50%;border:1.6px solid var(--orange);opacity:0;}
+    .emblem.pulse .ripple{animation:ripple 1.5s ease-out;}
+    .emblem.pulse .ripple:nth-child(2){animation-delay:.14s;}
+    .emblem.pulse .ripple:nth-child(3){animation-delay:.28s;}
+    @keyframes ripple{0%{opacity:.65;transform:scale(.72);}100%{opacity:0;transform:scale(2.5);}}
+    /* rotating verb: gradient orange, slide + cross-fade, no layout jump */
+    .rot{position:relative;display:inline-block;text-align:center;vertical-align:baseline;}
+    .rot .sizer{visibility:hidden;}
+    .rot .slot{position:absolute;inset:0;}
+    .rot .word{position:absolute;left:50%;top:0;transform:translateX(-50%);white-space:nowrap;background:linear-gradient(95deg,#FFC07A,#FF8A3D);-webkit-background-clip:text;background-clip:text;color:transparent;transition:opacity .42s ease,transform .42s ease;}
+    .rot .word.out{opacity:0;transform:translateX(-50%) translateY(-0.5em);}
+    .rot .word.in{opacity:0;transform:translateX(-50%) translateY(0.5em);}
     .lead{font-size:20px;line-height:1.55;color:#D6DAEC;margin:0 0 16px;}
     .lead b{color:#fff;font-weight:600;}
     .subnote{font-size:13.5px;color:#9AA0C2;margin:0;}
@@ -123,7 +136,8 @@
       .map .check path{stroke-dashoffset:0 !important;}
       .receipt{transition:none !important;}
       #spot,#float,#progress{display:none !important;}
-      .rot .slot{transition:none !important;}
+      .rot .word{transition:none !important;}
+      .emblem.pulse .ripple{animation:none !important;}
       .hero::before{animation:none !important;}
     }
   </style>
@@ -142,7 +156,11 @@
     <div class="hero reveal">
       <div id="spot"></div>
       <div class="inner">
-        <h1>I <span class="rot" data-rot aria-label="build deploy evaluate own">build</span> AI agents. That's the whole job.</h1>
+        <div class="emblem" id="emblem" aria-hidden="true">
+          <span class="ripple"></span><span class="ripple"></span><span class="ripple"></span>
+          <span class="core"><svg id="emblemIcon" viewBox="0 0 24 24"></svg></span>
+        </div>
+        <h1>I <span class="rot" data-rot aria-label="build, deploy, evaluate, and own AI agents"><span class="sizer">evaluate</span><span class="slot"></span></span> AI agents.<br>That's the whole job.</h1>
         <p class="lead reveal-words" style="transition-delay:.1s">I'm Andrew Zoll. Forward Deployed PMs build AI agents in a customer's world and own the outcome. I've spent six years owning senior client relationships in a regulated industry, and I build and ship AI agents myself. You forward-deploy PMs into the field. <b>This page is me, already in yours.</b></p>
         <p class="subnote reveal" style="transition-delay:.18s">A candidate's pitch for your Forward Deployed Product Manager, AI Agent role, built in your design language on purpose. Not affiliated with Cresta. Just me, showing the work.</p>
       </div>
@@ -300,25 +318,36 @@
         h.querySelectorAll('.w').forEach(function(s){ s.style.transitionDelay = (i++ * 0.03) + 's'; });
       });
 
-      // rotating verb in hero headline (Cresta signature)
+      // rotating verb + radar-ripple emblem (Cresta signature), word-specific icon
       var rot = document.querySelector('[data-rot]');
+      var emblem = document.getElementById('emblem');
+      var iconEl = document.getElementById('emblemIcon');
+      var icons = {
+        build: '<path d="M12 2.5 21 7v10l-9 4.5L3 17V7l9-4.5Z"></path><path d="M3 7l9 4.5L21 7M12 11.5V21.5"></path>',
+        deploy: '<path d="M12 3c2.6 2 4 5 4 8l-4 3-4-3c0-3 1.4-6 4-8Z"></path><circle cx="12" cy="9" r="1.6"></circle><path d="M8.4 16c-1.6.8-2 3.6-2 3.6s2.8-.5 3.6-2M15.6 16c1.6.8 2 3.6 2 3.6s-2.8-.5-3.6-2"></path>',
+        evaluate: '<circle cx="10.5" cy="10.5" r="6"></circle><path d="M20 20l-4.6-4.6M8 10.5l2 2 3.6-3.6"></path>',
+        own: '<path d="M6.5 21V3.5M6.5 3.5h10l-2.2 3.9 2.2 3.9h-10"></path>'
+      };
       if(rot){
         var verbs = ['build','deploy','evaluate','own'];
-        if(reduce){
-          rot.textContent = 'build';
-        } else {
+        var slot = rot.querySelector('.slot');
+        slot.innerHTML = '<span class="word">build</span>';
+        if(iconEl) iconEl.innerHTML = icons.build;
+        if(!reduce){
           var idx = 0;
-          rot.innerHTML = '<span class="slot">build</span>';
+          if(emblem) emblem.classList.add('pulse');
           setInterval(function(){
             idx = (idx + 1) % verbs.length;
-            var cur = rot.querySelector('.slot');
-            cur.classList.add('out');
-            var next = document.createElement('span');
-            next.className = 'slot in-up'; next.textContent = verbs[idx];
-            rot.appendChild(next);
-            requestAnimationFrame(function(){ requestAnimationFrame(function(){ next.classList.remove('in-up'); }); });
-            setTimeout(function(){ if(cur && cur.parentNode) cur.parentNode.removeChild(cur); }, 380);
-          }, 1800);
+            var v = verbs[idx];
+            var cur = slot.querySelector('.word');
+            if(cur) cur.classList.add('out');
+            var nx = document.createElement('span'); nx.className = 'word in'; nx.textContent = v;
+            slot.appendChild(nx);
+            requestAnimationFrame(function(){ requestAnimationFrame(function(){ nx.classList.remove('in'); }); });
+            setTimeout(function(){ if(cur && cur.parentNode) cur.parentNode.removeChild(cur); }, 480);
+            if(iconEl){ iconEl.style.opacity = '0'; setTimeout(function(){ iconEl.innerHTML = icons[v]; iconEl.style.opacity = '1'; }, 200); }
+            if(emblem){ emblem.classList.remove('pulse'); void emblem.offsetWidth; emblem.classList.add('pulse'); }
+          }, 2200);
         }
       }
 
