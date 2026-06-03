@@ -343,7 +343,8 @@
             if(cur) cur.classList.add('out');
             var nx = document.createElement('span'); nx.className = 'word in'; nx.textContent = v;
             slot.appendChild(nx);
-            requestAnimationFrame(function(){ requestAnimationFrame(function(){ nx.classList.remove('in'); }); });
+            void nx.offsetWidth;
+            setTimeout(function(){ nx.classList.remove('in'); }, 30);
             setTimeout(function(){ if(cur && cur.parentNode) cur.parentNode.removeChild(cur); }, 480);
             if(iconEl){ iconEl.style.opacity = '0'; setTimeout(function(){ iconEl.innerHTML = icons[v]; iconEl.style.opacity = '1'; }, 200); }
             if(emblem){ emblem.classList.remove('pulse'); void emblem.offsetWidth; emblem.classList.add('pulse'); }
