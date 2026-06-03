@@ -41,10 +41,10 @@
     /* centered Cresta-style hero */
     .hero .inner{text-align:center;}
     /* animated word-emblem: a distinct color-matched scene per verb (Cresta-style) */
-    .emblem{position:relative;width:134px;height:116px;margin:0 auto 22px;}
+    .emblem{position:relative;width:188px;height:162px;margin:0 auto 18px;}
     .emblem .scene{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .45s ease;}
     .emblem .scene.active{opacity:1;}
-    .emblem .scene svg{width:106px;height:106px;overflow:visible;}
+    .emblem .scene svg{width:152px;height:152px;overflow:visible;}
     .emblem .bar,.emblem .node,.emblem .ring{transform-box:fill-box;transform-origin:center;}
     /* build: orange cube, gentle bob + rotate */
     .scene[data-verb="build"].active svg{animation:bob 3.4s ease-in-out infinite;}
@@ -72,12 +72,10 @@
     .scene[data-verb="own"].active .ring:nth-child(3){animation-delay:1.2s;}
     @keyframes radiate{0%{opacity:.7;transform:scale(.4);}100%{opacity:0;transform:scale(1.3);}}
     /* rotating verb: gradient orange, slide + cross-fade, no layout jump */
-    .rot{position:relative;display:inline-block;text-align:center;vertical-align:baseline;}
-    .rot .sizer{visibility:hidden;}
-    .rot .slot{position:absolute;inset:0;}
-    .rot .word{position:absolute;left:50%;top:0;transform:translateX(-50%);white-space:nowrap;opacity:1;background:linear-gradient(95deg,#FFC07A,#FF8A3D);-webkit-background-clip:text;background-clip:text;color:transparent;transition:opacity .4s ease,transform .4s ease;}
-    .rot .word.out{opacity:0;transform:translateX(-50%) translateY(-0.5em);}
-    .rot .word.pre{opacity:0;transform:translateX(-50%) translateY(0.5em);transition:none;}
+    .rot{display:inline-block;position:relative;}
+    .rot .word{display:inline-block;white-space:nowrap;opacity:1;background:linear-gradient(95deg,#FFC07A,#FF8A3D);-webkit-background-clip:text;background-clip:text;color:transparent;transition:opacity .24s ease,transform .24s ease;}
+    .rot .word.out{opacity:0;transform:translateY(-0.42em);}
+    .rot .word.pre{opacity:0;transform:translateY(0.42em);transition:none;}
     .lead{font-size:20px;line-height:1.55;color:#D6DAEC;margin:0 0 16px;}
     .lead b{color:#fff;font-weight:600;}
     .subnote{font-size:13.5px;color:#9AA0C2;margin:0;}
@@ -184,7 +182,7 @@
           <div class="scene" data-verb="evaluate"><svg viewBox="0 0 110 110" fill="none"><g stroke="#B18CFF" stroke-width="2" opacity="0.45"><line x1="55" y1="55" x2="30" y2="33"/><line x1="55" y1="55" x2="82" y2="35"/><line x1="55" y1="55" x2="33" y2="81"/><line x1="55" y1="55" x2="80" y2="79"/><line x1="55" y1="55" x2="55" y2="24"/></g><circle class="node" cx="55" cy="55" r="9" fill="#B18CFF"/><circle class="node" cx="30" cy="33" r="6" fill="#B18CFF"/><circle class="node" cx="82" cy="35" r="6" fill="#B18CFF"/><circle class="node" cx="33" cy="81" r="6" fill="#B18CFF"/><circle class="node" cx="80" cy="79" r="6" fill="#B18CFF"/><circle class="node" cx="55" cy="24" r="5" fill="#B18CFF"/></svg></div>
           <div class="scene" data-verb="own"><svg viewBox="0 0 110 110" fill="none"><circle class="ring" cx="55" cy="55" r="20" stroke="#46D6B0" stroke-width="2.4"/><circle class="ring" cx="55" cy="55" r="20" stroke="#46D6B0" stroke-width="2.4"/><circle class="ring" cx="55" cy="55" r="20" stroke="#46D6B0" stroke-width="2.4"/><circle cx="55" cy="55" r="15" stroke="#fff" stroke-width="2.2"/></svg></div>
         </div>
-        <h1>I <span class="rot" data-rot aria-label="build, deploy, evaluate, and own AI agents"><span class="sizer">evaluate</span><span class="slot"></span></span> AI agents.<br>That's the whole job.</h1>
+        <h1><span class="rot" data-rot aria-label="build, deploy, evaluate, and own AI agents"><span class="word">build</span></span> AI agents.<br>That's the whole job.</h1>
         <p class="lead reveal-words" style="transition-delay:.1s">I'm Andrew Zoll. Forward Deployed PMs build AI agents in a customer's world and own the outcome. I've spent six years owning senior client relationships in a regulated industry, and I build and ship AI agents myself. You forward-deploy PMs into the field. <b>This page is me, already in yours.</b></p>
         <p class="subnote reveal" style="transition-delay:.18s">A candidate's pitch for your Forward Deployed Product Manager, AI Agent role, built in your design language on purpose. Not affiliated with Cresta. Just me, showing the work.</p>
       </div>
@@ -360,9 +358,7 @@
       if(rot && !window.__rotStarted){
         window.__rotStarted = true;
         var verbs = ['build','deploy','evaluate','own'];
-        var slot = rot.querySelector('.slot');
-        slot.innerHTML = '<span class="word">build</span>';
-        var word = slot.querySelector('.word');
+        var word = rot.querySelector('.word');
         colorWord(word, 'build');
         activateScene('build');
         if(!reduce){
@@ -382,7 +378,7 @@
               void word.offsetWidth;
               // rise + fade in (setTimeout, not rAF, so it fires even in a background tab)
               setTimeout(function(){ word.classList.remove('pre'); }, 20);
-            }, 430);
+            }, 250);
           }, 2600);
         }
       }
