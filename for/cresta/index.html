@@ -353,8 +353,8 @@
               word.classList.add('pre');
               void word.offsetWidth;
               if(iconEl){ iconEl.style.opacity = '0'; setTimeout(function(){ iconEl.innerHTML = icons[v]; iconEl.style.opacity = '1'; }, 70); }
-              // rise + fade in
-              requestAnimationFrame(function(){ word.classList.remove('pre'); });
+              // rise + fade in (setTimeout, not rAF, so it fires even in a background tab)
+              setTimeout(function(){ word.classList.remove('pre'); }, 20);
             }, 420);
           }, 2400);
         }
