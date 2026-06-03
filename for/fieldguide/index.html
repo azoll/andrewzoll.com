@@ -23,12 +23,14 @@
     .brand .mark{width:14px;height:14px;background:var(--green);transform:skewX(-12deg);border-radius:2px;display:inline-block;}
     .nav-cta{background:var(--green);color:#fff !important;padding:9px 16px;border-radius:6px;font-weight:600;font-size:13px;text-decoration:none;}
     .nav-cta:hover{background:#2c6e30;}
-    .wrap{max-width:780px;margin:0 auto;padding:60px 24px 100px;}
+    .wrap{max-width:920px;margin:0 auto;padding:60px 24px 100px;}
+    /* signature wide moments break out of the readable column for rhythm */
+    .wide{position:relative;left:50%;transform:translateX(-50%);width:min(1120px,calc(100vw - 40px));}
     .pill{display:inline-flex;align-items:center;gap:8px;background:var(--green-soft);border:1px solid rgba(54,133,58,0.4);color:var(--green-br);font-size:12px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;padding:6px 13px;border-radius:999px;margin-bottom:22px;}
     .pill .dot{width:7px;height:7px;border-radius:50%;background:var(--green-br);display:inline-block;}
     h1{font-size:clamp(36px,5.6vw,58px);font-weight:800;line-height:1.04;letter-spacing:-0.03em;margin:0 0 22px;color:var(--white);}
-    .lead{font-size:19px;line-height:1.6;color:var(--body);margin:0 0 14px;}
-    .subnote{font-size:13.5px;color:var(--muted);margin:0 0 40px;}
+    .lead{font-size:19px;line-height:1.6;color:var(--body);margin:0 0 14px;max-width:660px;}
+    .subnote{font-size:13.5px;color:var(--muted);margin:0 0 40px;max-width:680px;}
     section h2{font-size:27px;font-weight:700;line-height:1.2;letter-spacing:-0.02em;margin:56px 0 18px;color:var(--white);}
     section p{font-size:17px;line-height:1.65;color:var(--body);margin:0 0 18px;}
     section p.muted{color:var(--muted);}
@@ -121,10 +123,12 @@
   </nav>
 
   <div class="wrap">
+    <div class="wide">
     <span class="pill reveal" style="transition-delay:.05s"><span class="dot"></span> Built for the Fieldguide team</span>
     <h1 data-words>You asked for someone who's shipped AI in production. So I shipped you a page.</h1>
     <p class="lead reveal" style="transition-delay:.18s">I'm Andrew Zoll. I build AI products that read messy documents, check them against a source of truth, and tell you when they're wrong. That's a large part of what audit software has to do too. Here's the work, and here's exactly how I'd point it at Fieldguide.</p>
     <p class="subnote reveal" style="transition-delay:.18s">This is a candidate's pitch for your AI Engineer role, built in your design language on purpose. Not affiliated with Fieldguide. Just me, doing my homework.</p>
+    </div>
 
     <div class="stat reveal" data-countdown data-from="30" data-to="5">
       <div class="statnum"><span class="val">30</span><span class="statpct">% FP</span></div>
@@ -173,6 +177,7 @@
         <li class="reveal">Route the gray ones to a human, which in audit is not optional.</li>
       </ul>
 
+      <div class="wide">
       <div class="agentbar"><span class="dot"></span> Field Agent · verdict</div>
       <div class="demo">
 <span class="k">// illustrative — the shape, not your real evidence model</span><br/>
@@ -185,6 +190,7 @@ verdict: {<br/>
 &nbsp;&nbsp;confidence: 0.61,<br/>
 &nbsp;&nbsp;route: <span class="w">"human_review"</span><br/>
 }
+      </div>
       </div>
       <p class="caption">Illustrative only. The point isn't that I already know your evidence model or your standards library. I don't, yet. The point is that the disciplined, eval-driven verification loop this requires is one I've already built and shipped twice, and I'd be honest about confidence and hand the close calls to a reviewer instead of pretending the model is sure.</p>
     </section>

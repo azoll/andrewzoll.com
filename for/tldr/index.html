@@ -23,11 +23,13 @@
     .brand .mark{width:14px;height:14px;background:var(--blue);border-radius:3px;display:inline-block;}
     .nav-cta{background:var(--blue);color:#fff !important;padding:9px 16px;border-radius:6px;font-weight:600;font-size:13px;text-decoration:none;}
     .nav-cta:hover{background:var(--blue-dk);}
-    .wrap{max-width:780px;margin:0 auto;padding:58px 24px 100px;}
+    .wrap{max-width:920px;margin:0 auto;padding:58px 24px 100px;}
+    /* signature wide moments break out of the readable column for rhythm */
+    .wide{position:relative;left:50%;transform:translateX(-50%);width:min(1120px,calc(100vw - 40px));}
     .eyebrow{font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;font-size:12px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--blue);margin-bottom:22px;}
     h1{font-size:clamp(36px,5.6vw,56px);font-weight:800;line-height:1.05;letter-spacing:-0.03em;margin:0 0 22px;}
-    .lead{font-size:19px;line-height:1.6;color:var(--slate);margin:0 0 14px;}
-    .subnote{font-size:13.5px;color:var(--muted);margin:0 0 38px;}
+    .lead{font-size:19px;line-height:1.6;color:var(--slate);margin:0 0 14px;max-width:660px;}
+    .subnote{font-size:13.5px;color:var(--muted);margin:0 0 38px;max-width:680px;}
     section h2{font-size:13px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink);margin:54px 0 18px;padding-bottom:10px;border-bottom:1px solid var(--line);}
     section p{font-size:17px;line-height:1.65;color:var(--slate);margin:0 0 16px;}
     section p.muted{color:var(--muted);}
@@ -112,10 +114,12 @@
   </nav>
 
   <div class="wrap">
+    <div class="wide">
     <p class="eyebrow reveal" style="transition-delay:.05s">Built for the TLDR team</p>
     <h1 data-words>I read your JD and realized you're describing the thing I already built.</h1>
     <p class="lead reveal" style="transition-delay:.18s">I'm Andrew Zoll. You want modular Claude Skills, autonomous agents for sales, marketing, and ops, and a setup where non-technical teammates run workflows themselves. That's AndrewOS. I've run it across two businesses for over a year. Here's the work.</p>
     <p class="subnote reveal">A candidate's pitch for your Senior Software Engineer, Applied AI role, built in your style on purpose. Not affiliated with TLDR. Just me, showing the work.</p>
+    </div>
 
     <div class="stat reveal" data-countdown data-from="30" data-to="5">
       <div class="statnum"><span class="val">30</span><span class="statpct">% FP</span></div>
@@ -150,6 +154,7 @@
 
     <section>
       <h2 class="reveal">A real skill, not a description of one</h2>
+      <div class="wide">
       <div class="spec reveal">
 <span class="c"># one of ~24 skills in AndrewOS — frontmatter pins context + cost</span><br/>
 <span class="k">name:</span> aos-retrospective<br/>
@@ -157,6 +162,7 @@
 <span class="k">tools:</span> [read, write, search]<br/>
 <span class="k">schedule:</span> <span class="b">weekly</span>     <span class="c"># runs itself, surfaces what changed + what to fix</span><br/>
 <span class="k">scope:</span> <span class="b">"review the week across arenas; escalate decisions to me"</span>
+      </div>
       </div>
       <p class="caption">The cheap skills (content drafting, scheduling) run on haiku; the judgment skills run on opus. That cost instinct is in the frontmatter, not bolted on after. It's the same discipline as the two-tier model router I built into FieldCommand.</p>
     </section>

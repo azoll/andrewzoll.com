@@ -21,12 +21,14 @@
     .brand .mark{width:14px;height:14px;background:var(--indigo);border-radius:4px;display:inline-block;}
     .nav-cta{background:var(--indigo);color:#fff !important;padding:10px 20px;border-radius:999px;font-weight:600;font-size:13px;text-decoration:none;}
     .nav-cta:hover{background:var(--indigo-dk);}
-    .wrap{max-width:780px;margin:0 auto;padding:58px 24px 100px;}
+    .wrap{max-width:920px;margin:0 auto;padding:58px 24px 100px;}
+    /* signature wide moments break out of the readable column for rhythm */
+    .wide{position:relative;left:50%;transform:translateX(-50%);width:min(1120px,calc(100vw - 40px));}
     .pill{display:inline-flex;align-items:center;gap:8px;background:var(--indigo-soft);border:1px solid #DDE0FF;color:var(--indigo-dk);font-size:12px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;padding:7px 14px;border-radius:999px;margin-bottom:24px;}
     h1{font-size:clamp(36px,5.4vw,56px);font-weight:800;line-height:1.05;letter-spacing:-0.025em;margin:0 0 22px;}
     h1 .hl{color:var(--indigo);}
-    .lead{font-size:19px;line-height:1.6;color:var(--slate);margin:0 0 14px;}
-    .subnote{font-size:13.5px;color:var(--muted);margin:0 0 38px;}
+    .lead{font-size:19px;line-height:1.6;color:var(--slate);margin:0 0 14px;max-width:660px;}
+    .subnote{font-size:13.5px;color:var(--muted);margin:0 0 38px;max-width:680px;}
     section h2{font-size:13px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink);margin:54px 0 18px;padding-bottom:10px;border-bottom:1px solid var(--line);}
     section p{font-size:17px;line-height:1.65;color:var(--slate);margin:0 0 16px;}
     section p.muted{color:var(--muted);}
@@ -98,14 +100,18 @@
   </nav>
 
   <div class="wrap">
+    <div class="wide">
     <span class="pill reveal" style="transition-delay:.05s">Built for the Bestow team</span>
     <h1 data-words>You're hiring an AI-native PM who understands life insurance. <span class="hl">I'm both halves.</span></h1>
     <p class="lead reveal" style="transition-delay:.18s">I'm Andrew Zoll. I spent years selling life and health insurance under FINRA and SEC supervision, then spent the last year building AI products with agents as my daily workflow. Your JD asks for exactly that combination, and it's rarer than it should be. Here's the work.</p>
     <p class="subnote reveal">A candidate's pitch for your Senior Product Manager role, built in your style on purpose. Not affiliated with Bestow. Just me, showing the work.</p>
+    </div>
 
+    <div class="wide">
     <div class="stat reveal" data-countdown data-from="30" data-to="5">
       <div class="statnum"><span class="val">30</span><span class="statpct">% FP</span></div>
       <div class="statlbl">Veritas false-positive rate, after I read the failures one at a time. <b>From ~30% to under 5%.</b> That loop is the whole job.</div>
+    </div>
     </div>
 
     <section>

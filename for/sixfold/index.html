@@ -23,12 +23,14 @@
     .brand .mark{width:15px;height:15px;background:linear-gradient(135deg,#F6A8D4,#DB358C);clip-path:polygon(50% 0,93% 25%,93% 75%,50% 100%,7% 75%,7% 25%);display:inline-block;}
     .nav-cta{background:var(--magenta);color:#fff !important;padding:9px 16px;border-radius:6px;font-weight:600;font-size:13px;text-decoration:none;}
     .nav-cta:hover{background:var(--magenta-dk);}
-    .wrap{max-width:780px;margin:0 auto;padding:58px 24px 100px;}
+    .wrap{max-width:920px;margin:0 auto;padding:58px 24px 100px;}
+    /* signature wide moments break out of the readable column for rhythm */
+    .wide{position:relative;left:50%;transform:translateX(-50%);width:min(1120px,calc(100vw - 40px));}
     .pill{display:inline-flex;align-items:center;gap:8px;background:var(--pink-soft);border:1px solid var(--pink);color:var(--magenta-dk);font-size:12px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;padding:7px 14px;border-radius:999px;margin-bottom:24px;}
     h1{font-size:clamp(38px,6vw,62px);font-weight:800;line-height:1.02;letter-spacing:-0.03em;margin:0 0 22px;}
     h1 .mag{color:var(--magenta);} h1 .blk{color:var(--ink);}
-    .lead{font-size:19px;line-height:1.6;color:var(--slate);margin:0 0 14px;}
-    .subnote{font-size:13.5px;color:var(--muted);margin:0 0 36px;}
+    .lead{font-size:19px;line-height:1.6;color:var(--slate);margin:0 0 14px;max-width:660px;}
+    .subnote{font-size:13.5px;color:var(--muted);margin:0 0 36px;max-width:680px;}
     section h2{font-size:27px;font-weight:700;line-height:1.2;letter-spacing:-0.02em;margin:54px 0 16px;color:var(--ink);}
     section p{font-size:17px;line-height:1.65;color:var(--slate);margin:0 0 16px;}
     section p.muted{color:var(--muted);}
@@ -107,10 +109,12 @@
   </nav>
 
   <div class="wrap">
+    <div class="wide">
     <span class="pill reveal" style="transition-delay:.05s">⚡ Built for the Sixfold team</span>
     <h1 data-words><span class="mag">You said: show us work done this way.</span> <span class="blk">So I built you this page.</span></h1>
     <p class="lead reveal" style="transition-delay:.18s">I'm Andrew Zoll. Your FDE post asks for someone whose default workflow is Claude Code, who orchestrates parallel agents, treats specs and prompts as a craft, and lives in evals, tool use, and context engineering. That's not a wishlist for me. That's how I built everything below.</p>
     <p class="subnote reveal">A candidate's pitch for your Forward Deployed Engineer role, built in your brand on purpose. Not affiliated with Sixfold. Just me, showing the work.</p>
+    </div>
 
     <div class="stat reveal" data-countdown data-from="30" data-to="5">
       <div class="statnum"><span class="val">30</span><span class="statpct">% FP</span></div>
@@ -127,12 +131,14 @@
         <li class="reveal"><strong>Leverage over heroics.</strong> When I see the same problem twice, it becomes a platform primitive. That's why one router serves 14 callsites instead of 14 one-offs.</li>
         <li class="reveal"><strong>Switching altitudes.</strong> Six years translating regulated, technical concepts for non-technical clients. "What does this mean for the renewal" and "what's the right primitive here" in the same afternoon is the job I already do.</li>
       </ul>
+      <div class="wide">
       <div class="spec">
 <span class="c"># a real skill spec from my agent OS — context engineering, pinned</span><br/>
 <span class="k">name:</span> fc-validator<br/>
 <span class="k">model:</span> <span class="m">sonnet</span>      <span class="c"># cheap tier for review; opus only when it earns it</span><br/>
 <span class="k">tools:</span> [read, grep, eval_suite]<br/>
 <span class="k">scope:</span> <span class="m">"grade the builder agent's output against the spec; block on regressions"</span>
+      </div>
       </div>
       <p class="caption">One skill of a couple dozen. The point isn't this file. It's that "spec-driven development, evals, tool use, context engineering" is a system I already run daily, not a phrase from your JD I'm repeating back.</p>
     </section>

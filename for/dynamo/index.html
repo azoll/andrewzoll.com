@@ -27,11 +27,13 @@
     .brand:hover .mark{transform:rotate(-8deg) scale(1.1);}
     .nav-cta{background:var(--ink2);color:#fff !important;padding:9px 18px;border-radius:999px;font-weight:600;font-size:13px;text-decoration:none;transition:transform .15s ease,background .15s ease;}
     .nav-cta:hover{background:#000;transform:translateY(-1px);}
-    .wrap{max-width:780px;margin:0 auto;padding:58px 24px 100px;}
+    .wrap{max-width:920px;margin:0 auto;padding:58px 24px 100px;}
+    /* signature wide moments break out of the readable column for rhythm */
+    .wide{position:relative;left:50%;transform:translateX(-50%);width:min(1120px,calc(100vw - 40px));}
     .eyebrow{font-family:'Inter',sans-serif;font-size:12px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted2);margin-bottom:22px;}
     h1{font-family:'Inter',sans-serif;font-size:clamp(36px,5.4vw,56px);font-weight:700;line-height:1.05;letter-spacing:-0.025em;margin:0 0 22px;color:var(--ink);}
-    .lead{font-size:21px;line-height:1.55;color:var(--ink2);margin:0 0 14px;}
-    .subnote{font-family:'Inter',sans-serif;font-size:13.5px;color:var(--muted2);margin:0 0 8px;}
+    .lead{font-size:21px;line-height:1.55;color:var(--ink2);margin:0 0 14px;max-width:660px;}
+    .subnote{font-family:'Inter',sans-serif;font-size:13.5px;color:var(--muted2);margin:0 0 8px;max-width:680px;}
 
     /* signature animated stat */
     .stat{margin:40px 0 8px;padding:26px 28px;border:1px solid var(--line);border-radius:14px;background:var(--paper);display:flex;align-items:baseline;gap:18px;flex-wrap:wrap;}
@@ -119,14 +121,18 @@
   </nav>
 
   <div class="wrap">
+    <div class="wide">
     <p class="eyebrow reveal">Built for the Dynamo AI team</p>
     <h1 data-words>You're hiring a PM for AI guardrails in regulated industries. I've lived both sides of that.</h1>
     <p class="lead reveal" style="transition-delay:.12s">I'm Andrew Zoll. I spent six years under FINRA and SEC supervision, including years selling insurance, two of your core verticals. And I built Veritas, an AI verifier that catches hallucinations and that I dragged from a 30 percent false-positive rate to under 5 percent. Your JD is the intersection of those two things.</p>
     <p class="subnote reveal" style="transition-delay:.18s">A candidate's pitch for your Product Manager, AI role, built in your style on purpose. Not affiliated with Dynamo AI. Just me, showing the work.</p>
+    </div>
 
+    <div class="wide">
     <div class="stat reveal" data-countdown data-from="30" data-to="5">
       <div class="num"><span class="val">30</span><span class="pct">% FP</span></div>
       <div class="lbl">Veritas false-positive rate, after I read the failures one at a time. <b>From ~30% to under 5%.</b> That loop is the whole job.</div>
+    </div>
     </div>
 
     <section>
