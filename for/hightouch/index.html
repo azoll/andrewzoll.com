@@ -44,6 +44,7 @@
     .hero #spot{position:absolute;width:520px;height:520px;border-radius:50%;pointer-events:none;background:radial-gradient(circle,rgba(118,91,240,0.16),transparent 60%);transform:translate(-50%,-50%);opacity:0;transition:opacity .5s ease;z-index:1;}
     .hero .inner{position:relative;z-index:2;}
     h1{font-size:clamp(34px,5.3vw,56px);font-weight:800;line-height:1.04;letter-spacing:-0.03em;margin:0 0 22px;color:var(--ink);}
+    h1 .h1-sub{display:inline-block;margin-top:.32em;font-size:0.66em;color:var(--purple);}
     .rot{display:inline-block;position:relative;}
     .rot .word{display:inline-block;white-space:nowrap;opacity:1;color:var(--purple);transition:opacity .24s ease,transform .24s ease;}
     .rot .word.out{opacity:0;transform:translateY(-0.42em);}
@@ -235,7 +236,7 @@
       <div class="mesh"></div>
       <div id="spot"></div>
       <div class="inner">
-        <h1>Agents that own the full loop, with a human on the trigger.<br>That's how I already run two businesses.</h1>
+        <h1>Agents that own the full loop, with a human on the trigger.<br><span class="h1-sub">That's how I already run two businesses.</span></h1>
         <p class="lead reveal-words" style="transition-delay:.1s">I'm Andrew Zoll. Builder, reviewer, and validator agents, where the validator blocks bad output before it ships, are how I run two businesses today. <b>This page is that loop, pointed at your role.</b></p>
         <p class="subnote reveal" style="transition-delay:.18s">A candidate's pitch for your Lead Product Manager, Agentic Personalization role, built in your design language on purpose. Not affiliated with Hightouch. Just me, showing the work.</p>
       </div>
