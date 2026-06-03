@@ -28,7 +28,9 @@
     .nav-cta .chev{font-weight:700;opacity:.7;}
     .nav-cta:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(20,18,19,0.22);}
 
-    .wrap{max-width:840px;margin:0 auto;padding:46px 24px 100px;}
+    .wrap{max-width:920px;margin:0 auto;padding:46px 24px 100px;}
+    /* signature wide moments break out of the readable column for rhythm */
+    .wide{position:relative;left:50%;transform:translateX(-50%);width:min(1120px,calc(100vw - 40px));}
     .eyebrow{font-size:12px;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:var(--purple);margin-bottom:20px;}
 
     /* signature light hero with soft warm gradient mesh */
@@ -51,7 +53,7 @@
     .rot .word.pre{opacity:0;transform:translateY(0.42em);transition:none;}
     .lead{font-size:20px;line-height:1.55;color:var(--body);margin:0 0 16px;max-width:660px;}
     .lead b{color:var(--ink);font-weight:600;}
-    .subnote{font-size:13.5px;color:#8A8688;margin:0;}
+    .subnote{font-size:13.5px;color:#8A8688;margin:0;max-width:680px;}
 
     /* ===== signature: animated closed-loop diagram ===== */
     .loop-card{margin:38px 0 8px;border:1px solid var(--line);border-radius:20px;background:#fff;padding:30px 30px 26px;position:relative;overflow:hidden;}
@@ -230,6 +232,7 @@
   </nav>
 
   <div class="wrap">
+    <div class="wide">
     <p class="eyebrow reveal">Built for the Hightouch team</p>
 
     <div class="hero reveal">
@@ -241,8 +244,10 @@
         <p class="subnote reveal" style="transition-delay:.18s">A candidate's pitch for your Lead Product Manager, Agentic Personalization role, built in your design language on purpose. Not affiliated with Hightouch. Just me, showing the work.</p>
       </div>
     </div>
+    </div>
 
     <!-- ===== signature animated closed-loop diagram ===== -->
+    <div class="wide">
     <div class="loop-card reveal">
       <p class="lc-head">The loop your role owns</p>
       <p class="lc-sub">Agents identify the audience, generate variants from past performance, configure and launch the experiment, then reallocate on significance. One continuously-improving loop. A human reviews before it goes live.</p>
@@ -297,6 +302,7 @@
           <div class="gate-note">The marker is the <b>human review before launch</b>. Run it 50+ times a quarter instead of 8.</div>
         </div>
       </div>
+    </div>
     </div>
 
     <div class="stat reveal" data-countdown data-from="30" data-to="5">
