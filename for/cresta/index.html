@@ -1,0 +1,400 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Built for Cresta · Andrew Zoll</title>
+  <meta name="description" content="A page Andrew Zoll built for the Cresta team, applying for Forward Deployed Product Manager, AI Agent. A builder who ships AI agents and owns client outcomes in the field."/>
+  <meta name="robots" content="noindex, nofollow"/>
+  <link rel="icon" href="/assets/favicon-primary.png"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root{
+      --blue:#205AE3; --ink:#25252A; --body:#3D3D47; --line:#E7EAF4; --surface:#F4F6FC; --orange:#FF9E45;
+    }
+    html,body{margin:0;padding:0;background:#fff;color:var(--body);font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;-webkit-font-smoothing:antialiased;}
+    *{box-sizing:border-box;}
+    h1,h2,h3,.dm{font-family:'DM Sans','Inter',sans-serif;}
+
+    .nav{display:flex;justify-content:space-between;align-items:center;padding:18px 26px;border-bottom:1px solid var(--line);background:#fff;position:sticky;top:0;z-index:10;}
+    .brand{display:flex;align-items:center;gap:11px;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:700;color:var(--ink);text-decoration:none;}
+    /* circular swirl logo nod */
+    .brand .mark{width:20px;height:20px;border-radius:50%;background:conic-gradient(from 0deg,#205AE3,#FF9E45,#2B2F52,#205AE3);display:inline-block;transition:transform .7s cubic-bezier(.2,.7,.3,1.4);position:relative;cursor:pointer;}
+    .brand .mark::after{content:"";position:absolute;inset:5px;border-radius:50%;background:#fff;}
+    .brand:hover .mark{transform:rotate(40deg);}
+    .nav-cta{background:var(--blue);color:#fff !important;padding:9px 18px;border-radius:999px;font-family:'DM Sans',sans-serif;font-weight:600;font-size:13px;text-decoration:none;transition:transform .15s ease,box-shadow .15s ease;display:inline-flex;align-items:center;gap:9px;}
+    .nav-cta .badge{width:18px;height:18px;border-radius:50%;background:rgba(255,255,255,0.22);display:inline-flex;align-items:center;justify-content:center;font-size:11px;}
+    .nav-cta:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(32,90,227,0.32);}
+
+    .wrap{max-width:820px;margin:0 auto;padding:46px 24px 100px;}
+    .eyebrow{font-size:12px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--blue);margin-bottom:20px;}
+
+    /* signature dark hero panel */
+    .hero{position:relative;border-radius:28px;padding:54px 48px 50px;overflow:hidden;background:linear-gradient(135deg,#2B2F52,#11132B 60%,#1B2150);}
+    .hero::before{content:"";position:absolute;top:-120px;left:-90px;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,rgba(120,150,255,0.35),transparent 65%);pointer-events:none;}
+    .hero #spot{position:absolute;width:520px;height:520px;border-radius:50%;pointer-events:none;background:radial-gradient(circle,rgba(255,255,255,0.06),transparent 62%);transform:translate(-50%,-50%);opacity:0;transition:opacity .5s ease;mix-blend-mode:screen;z-index:1;}
+    .hero .inner{position:relative;z-index:2;}
+    h1{font-size:clamp(34px,5.2vw,54px);font-weight:700;line-height:1.07;letter-spacing:-0.02em;margin:0 0 24px;color:#fff;}
+    h1 .verb{color:var(--orange);display:inline-block;position:relative;}
+    /* rotating verb */
+    .rot{display:inline-block;position:relative;color:var(--orange);min-width:0;}
+    .rot .slot{display:inline-block;transition:opacity .35s ease,transform .35s ease;}
+    .rot .slot.out{opacity:0;transform:translateY(-12px);}
+    .rot .slot.in-up{opacity:0;transform:translateY(12px);}
+    .lead{font-size:20px;line-height:1.55;color:#D6DAEC;margin:0 0 16px;}
+    .lead b{color:#fff;font-weight:600;}
+    .subnote{font-size:13.5px;color:#9AA0C2;margin:0;}
+
+    /* signature stat card */
+    .stat{margin:38px 0 8px;padding:28px 30px;border:1px solid var(--line);border-radius:16px;background:var(--surface);display:flex;align-items:baseline;gap:20px;flex-wrap:wrap;position:relative;}
+    .stat .num{font-family:'DM Sans',sans-serif;font-weight:700;font-size:clamp(40px,7.5vw,64px);line-height:1;letter-spacing:-0.035em;color:var(--ink);font-variant-numeric:tabular-nums;display:flex;align-items:baseline;gap:6px;}
+    .stat .num .arrow{color:var(--blue);font-size:0.6em;}
+    .stat .num .fp{font-size:0.32em;font-weight:600;color:var(--body);letter-spacing:0;}
+    .stat .lbl{font-size:15px;line-height:1.45;color:var(--body);max-width:330px;}
+    .stat .lbl b{color:var(--ink);font-weight:600;}
+
+    section h2{font-family:'DM Sans',sans-serif;font-size:13px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--blue);margin:56px 0 18px;padding-bottom:10px;border-bottom:1px solid var(--line);}
+    section p{font-size:18px;line-height:1.6;color:var(--body);margin:0 0 16px;}
+    section p b{color:var(--ink);}
+
+    .map .row{display:flex;gap:14px;padding:16px 0;border-bottom:1px solid var(--line);}
+    .map .row:last-child{border-bottom:0;}
+    .map .check{flex-shrink:0;margin-top:2px;display:inline-block;transition:transform .45s cubic-bezier(.2,.7,.3,1.4);transform:scale(0);}
+    .map .row.in .check{transform:scale(1);}
+    .map .check svg{width:22px;height:22px;display:block;overflow:visible;}
+    .map .check circle{fill:rgba(32,90,227,0.1);}
+    .map .check path{stroke:var(--blue);stroke-width:2.6;fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:32;stroke-dashoffset:32;transition:stroke-dashoffset .55s ease .14s;}
+    .map .row.in .check path{stroke-dashoffset:0;}
+    .map .body .jd{font-size:14px;font-weight:500;color:var(--blue);margin-bottom:6px;font-style:italic;}
+    .map .body .me{font-size:17px;line-height:1.55;color:var(--ink);}
+
+    .receipt{border:1px solid var(--line);border-radius:16px;padding:22px 24px;margin:0 0 14px;background:#fff;transition:transform .2s ease,box-shadow .2s ease;}
+    .receipt:hover{transform:translateY(-3px);box-shadow:0 16px 38px rgba(32,90,227,0.1);}
+    .receipt .tag{font-size:11.5px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--blue);margin-bottom:7px;}
+    .receipt h3{margin:0 0 9px;font-size:19px;color:var(--ink);font-weight:700;}
+    .receipt p{font-size:16px;line-height:1.55;color:var(--body);margin:0 0 12px;}
+    .receipt p .nm{font-variant-numeric:tabular-nums;font-weight:600;color:var(--ink);}
+    .receipt a{font-family:'DM Sans',sans-serif;font-size:13.5px;font-weight:600;color:var(--blue);text-decoration:none;display:inline-flex;align-items:center;gap:7px;}
+    .receipt a .arr{display:inline-block;transition:transform .15s ease;}
+    .receipt a:hover .arr{transform:translateX(4px);}
+
+    .band{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:30px 32px;margin:50px 0 0;}
+    .band p{margin:0 0 16px;font-size:18px;color:var(--body);}
+    .band p strong{color:var(--ink);}
+    .band .links a{font-family:'DM Sans',sans-serif;display:inline-block;margin:0 18px 10px 0;font-weight:600;color:var(--blue);font-size:14.5px;text-decoration:none;border-bottom:1px solid rgba(32,90,227,0.35);transition:opacity .15s ease;}
+    .band .links a:hover{opacity:.65;}
+    .band .cta{font-family:'DM Sans',sans-serif;background:var(--blue);color:#fff !important;text-decoration:none;padding:13px 14px 13px 24px;font-weight:600;font-size:15px;border-radius:999px;display:inline-flex;align-items:center;gap:11px;margin-top:8px;transition:transform .15s ease,box-shadow .15s ease;}
+    .band .cta .badge{width:24px;height:24px;border-radius:50%;background:rgba(255,255,255,0.22);display:inline-flex;align-items:center;justify-content:center;font-size:13px;}
+    .band .cta:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(32,90,227,0.34);}
+
+    .foot{font-size:13px;color:#9AA0C2;margin-top:42px;text-align:center;}
+    ::selection{background:#D5E0FB;color:var(--ink);}
+
+    /* scroll-reveal */
+    .reveal{opacity:0;transform:translateY(18px);transition:opacity .65s cubic-bezier(.2,.6,.2,1),transform .65s cubic-bezier(.2,.6,.2,1);}
+    .reveal.in{opacity:1;transform:none;}
+
+    /* ============ whimsy layer ============ */
+    #progress{position:fixed;top:0;left:0;height:3px;width:0;background:var(--blue);z-index:30;transition:width .1s linear;}
+    #float{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
+    .fl{position:absolute;width:34px;height:34px;border-radius:50%;background:conic-gradient(from 0deg,var(--blue),transparent 75%);opacity:0.06;animation:drift linear infinite;}
+    @keyframes drift{0%{transform:translateY(22px) rotate(0deg);}50%{transform:translateY(-22px) rotate(40deg);}100%{transform:translateY(22px) rotate(0deg);}}
+    .nav,.wrap{position:relative;z-index:2;}
+    /* word-by-word reveal */
+    h1 .verb{will-change:transform;}
+    .reveal-words .w{display:inline-block;opacity:0;transform:translateY(20px);transition:opacity .5s cubic-bezier(.2,.7,.3,1),transform .5s cubic-bezier(.2,.7,.3,1);}
+    .reveal-words.in .w{opacity:1;transform:none;}
+    .nav-cta,.band .cta{will-change:transform;}
+    .receipt{transform-style:preserve-3d;will-change:transform;}
+    /* stat pulse-ring */
+    .stat.pulse::after{content:"";position:absolute;inset:-1px;border-radius:16px;border:2px solid var(--blue);opacity:0;animation:ring .75s ease-out;}
+    @keyframes ring{0%{opacity:.45;transform:scale(1);}100%{opacity:0;transform:scale(1.04);}}
+    /* easter egg */
+    .brand.spin .mark{transform:rotate(720deg) scale(1.1);}
+
+    @media (max-width:640px){ .hero{padding:38px 26px 36px;} .wrap{padding:34px 18px 80px;} }
+
+    @media (prefers-reduced-motion: reduce){
+      .reveal{opacity:1 !important;transform:none !important;transition:none !important;}
+      .reveal-words .w{opacity:1 !important;transform:none !important;}
+      .map .check{transform:scale(1) !important;transition:none !important;}
+      .map .check path{stroke-dashoffset:0 !important;}
+      .receipt{transition:none !important;}
+      #spot,#float,#progress{display:none !important;}
+      .rot .slot{transition:none !important;}
+      .hero::before{animation:none !important;}
+    }
+  </style>
+</head>
+<body>
+  <div id="progress"></div>
+  <div id="float"></div>
+  <nav class="nav">
+    <a class="brand" href="https://andrewzoll.com"><span class="mark" id="swirl" title="psst"></span> Andrew Zoll</a>
+    <a class="nav-cta" href="mailto:andrew@andrewzoll.com">andrew@andrewzoll.com <span class="badge">&#8599;</span></a>
+  </nav>
+
+  <div class="wrap">
+    <p class="eyebrow reveal">Built for the Cresta team</p>
+
+    <div class="hero reveal">
+      <div id="spot"></div>
+      <div class="inner">
+        <h1>I <span class="rot" data-rot aria-label="build deploy evaluate own">build</span> AI agents. That's the whole job.</h1>
+        <p class="lead reveal-words" style="transition-delay:.1s">I'm Andrew Zoll. Forward Deployed PMs build AI agents in a customer's world and own the outcome. I've spent six years owning senior client relationships in a regulated industry, and I build and ship AI agents myself. You forward-deploy PMs into the field. <b>This page is me, already in yours.</b></p>
+        <p class="subnote reveal" style="transition-delay:.18s">A candidate's pitch for your Forward Deployed Product Manager, AI Agent role, built in your design language on purpose. Not affiliated with Cresta. Just me, showing the work.</p>
+      </div>
+    </div>
+
+    <div class="stat reveal" data-countdown data-from="30" data-to="5">
+      <div class="num">30%<span class="arrow">&rarr;</span><span class="val">5</span>%<span class="fp">FP</span></div>
+      <div class="lbl">I drove Veritas's false-positive rate from about 30% to <b>under 5%</b> by reading failures one at a time. That eval-and-ship-or-don't discipline is exactly how you keep an agent trustworthy in production.</div>
+    </div>
+
+    <section>
+      <h2 class="reveal">What your JD asks for, line by line</h2>
+      <div class="map">
+        <div class="row reveal">
+          <div class="check"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11"/><path d="M6 12.5 L10.5 17 L18 7.5"/></svg></div>
+          <div class="body">
+            <div class="jd">"Design, build, test and iterate on AI agents using internal tools and the latest technologies"</div>
+            <div class="me">I build AI agents for real. AndrewOS runs builder/reviewer/validator agent triads where a validator grades the builder and blocks bad output before it ships. FieldCommand has four AI features live in production behind per-tenant flags with a two-tier model router. I don't theorize about agents. I run them daily.</div>
+          </div>
+        </div>
+        <div class="row reveal">
+          <div class="check"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11"/><path d="M6 12.5 L10.5 17 L18 7.5"/></svg></div>
+          <div class="body">
+            <div class="jd">"Own the deployment lifecycle, from pre-sale scoping and kickoff to launch and post-go-live optimization"</div>
+            <div class="me">This is my whole career. As a financial advisor I scoped, kicked off, launched, and optimized for clients for six years, owning the relationship from first meeting through ongoing iteration. The artifact was a financial plan instead of an agent. The motion is identical.</div>
+          </div>
+        </div>
+        <div class="row reveal">
+          <div class="check"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11"/><path d="M6 12.5 L10.5 17 L18 7.5"/></svg></div>
+          <div class="body">
+            <div class="jd">"Lead customer relationships and act as the primary point of contact, including senior customer stakeholders"</div>
+            <div class="me">Six years of being the person a household trusts with its money, under continuous SEC supervision. I'm comfortable being the single throat to choke for an outcome that matters to someone.</div>
+          </div>
+        </div>
+        <div class="row reveal">
+          <div class="check"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11"/><path d="M6 12.5 L10.5 17 L18 7.5"/></svg></div>
+          <div class="body">
+            <div class="jd">"Define evaluation frameworks for AI product quality, accuracy, safety, hallucination risk, and use them to make ship/no-ship decisions"</div>
+            <div class="me">Veritas is that framework, built and shipped. It checks an AI claim against its source and returns a structured verdict with a confidence cap. Hallucination risk and ship/no-ship aren't new concepts to me. They're what I already do.</div>
+          </div>
+        </div>
+        <div class="row reveal">
+          <div class="check"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11"/><path d="M6 12.5 L10.5 17 L18 7.5"/></svg></div>
+          <div class="body">
+            <div class="jd">"Facilitate workshops and design sessions with customer stakeholders to align on use cases, workflows, and success criteria"</div>
+            <div class="me">Every client review I ran for six years was exactly this: align on goals, map the workflow, define what success looks like, and leave with a plan everyone signed off on.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="reveal">What I've shipped this way</h2>
+      <div class="receipt reveal">
+        <div class="tag">An AI verifier, in production</div>
+        <h3>Veritas</h3>
+        <p>Live at veritaslaw.app. Reads a claim, retrieves the source, returns a structured verdict on whether it holds up. Zod schemas, prompt caching, cost caps. False-positive rate driven from ~30% to under 5% by empirical failure analysis.</p>
+        <a href="https://veritaslaw.app">veritaslaw.app <span class="arr">&rarr;</span></a>
+      </div>
+      <div class="receipt reveal">
+        <div class="tag">Production AI, multi-tenant, built solo</div>
+        <h3>FieldCommand</h3>
+        <p>A multi-tenant B2B SaaS, <span class="nm" data-countup data-from="0" data-to="187745">187,745</span> lines of TypeScript, built solo. Four AI features in production behind per-tenant feature flags, a two-tier model router that sends cheap work to a cheap model, three providers wired in.</p>
+        <a href="https://app.fieldcommand.io">app.fieldcommand.io <span class="arr">&rarr;</span></a>
+      </div>
+      <div class="receipt reveal">
+        <div class="tag">Agent guardrails, daily</div>
+        <h3>AndrewOS</h3>
+        <p>An agent operating system I run across two businesses: builder/reviewer/validator triads where the validator grades the builder and blocks before anything ships, plus human gates. Forward-deployed agents, in daily use, with the guardrails that keep them honest.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="reveal">The honest part</h2>
+      <p class="reveal">Your post asks for five or more years in consulting, implementations, product, or customer success, working with AI-first products. I clear that: six years owning client implementations and relationships, plus the AI products I build and ship now. I'm not a career PM with a decade of the title. I'm a builder who's spent years in the field owning outcomes for people who were paying attention. That's the Forward Deployed shape.</p>
+    </section>
+
+    <div class="band reveal">
+      <p><strong>If this resonates, I'd love fifteen minutes.</strong> Reply wherever I sent you this link, or reach me directly.</p>
+      <div class="links">
+        <a href="https://veritaslaw.app">Veritas (live)</a>
+        <a href="https://app.fieldcommand.io">FieldCommand (live)</a>
+        <a href="https://portfolio.andrewzoll.com">Portfolio</a>
+        <a href="https://github.com/azoll">GitHub</a>
+      </div>
+      <a class="cta" href="mailto:andrew@andrewzoll.com">andrew@andrewzoll.com <span class="badge">&#8599;</span></a>
+    </div>
+
+    <p class="foot reveal">Built for Cresta by Andrew Zoll. Private link, not indexed. Just for you.</p>
+  </div>
+
+  <script>
+    (function(){
+      var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      function ease(t){ return 1 - Math.pow(1 - t, 3); }
+      function animateCount(el){
+        var from = parseFloat(el.getAttribute('data-from'));
+        var to = parseFloat(el.getAttribute('data-to'));
+        var isDown = el.hasAttribute('data-countdown');
+        var target = isDown ? el.querySelector('.val') : el;
+        var dur = 1200, start = null;
+        function fmt(n){ return Math.round(n).toLocaleString('en-US'); }
+        if(reduce){ target.textContent = fmt(to); return; }
+        function step(ts){
+          if(!start) start = ts;
+          var p = Math.min(1, (ts - start) / dur);
+          var v = from + (to - from) * ease(p);
+          target.textContent = fmt(v);
+          if(p < 1) requestAnimationFrame(step);
+          else target.textContent = fmt(to);
+        }
+        requestAnimationFrame(step);
+      }
+      if(!('IntersectionObserver' in window) || reduce){
+        document.querySelectorAll('.reveal, .reveal-words').forEach(function(el){ el.classList.add('in'); });
+        document.querySelectorAll('[data-countup],[data-countdown]').forEach(animateCount);
+        return;
+      }
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){
+          if(e.isIntersecting){
+            e.target.classList.add('in');
+            if(e.target.hasAttribute('data-countup') || e.target.hasAttribute('data-countdown')) animateCount(e.target);
+            io.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.2 });
+      document.querySelectorAll('.reveal, .reveal-words, [data-countup], [data-countdown]').forEach(function(el){ io.observe(el); });
+    })();
+  </script>
+
+  <script>
+    /* ============ whimsy layer ============ */
+    (function(){
+      var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      // word-by-word reveal on .reveal-words leads
+      document.querySelectorAll('.reveal-words').forEach(function(h){
+        var nodes = Array.prototype.slice.call(h.childNodes);
+        h.textContent = '';
+        nodes.forEach(function(node){
+          if(node.nodeType === 3){
+            node.textContent.trim().split(/\s+/).forEach(function(w, i){
+              if(!w) return;
+              var s = document.createElement('span'); s.className = 'w'; s.textContent = w;
+              h.appendChild(s); h.appendChild(document.createTextNode(' '));
+            });
+          } else {
+            // preserve <b> emphasis as one reveal unit
+            node.classList && node.classList.add('w');
+            h.appendChild(node); h.appendChild(document.createTextNode(' '));
+          }
+        });
+        var i = 0;
+        h.querySelectorAll('.w').forEach(function(s){ s.style.transitionDelay = (i++ * 0.03) + 's'; });
+      });
+
+      // rotating verb in hero headline (Cresta signature)
+      var rot = document.querySelector('[data-rot]');
+      if(rot){
+        var verbs = ['build','deploy','evaluate','own'];
+        if(reduce){
+          rot.textContent = 'build';
+        } else {
+          var idx = 0;
+          rot.innerHTML = '<span class="slot">build</span>';
+          setInterval(function(){
+            idx = (idx + 1) % verbs.length;
+            var cur = rot.querySelector('.slot');
+            cur.classList.add('out');
+            var next = document.createElement('span');
+            next.className = 'slot in-up'; next.textContent = verbs[idx];
+            rot.appendChild(next);
+            requestAnimationFrame(function(){ requestAnimationFrame(function(){ next.classList.remove('in-up'); }); });
+            setTimeout(function(){ if(cur && cur.parentNode) cur.parentNode.removeChild(cur); }, 380);
+          }, 1800);
+        }
+      }
+
+      if(reduce) return;
+      var fine = window.matchMedia('(pointer:fine)').matches;
+
+      // scroll progress bar
+      var bar = document.getElementById('progress');
+      if(bar){
+        var onScroll = function(){
+          var d = document.documentElement, max = d.scrollHeight - d.clientHeight;
+          bar.style.width = (max > 0 ? (d.scrollTop / max * 100) : 0) + '%';
+        };
+        window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
+      }
+
+      // cursor spotlight, only over the dark hero panel (light glow)
+      var spot = document.getElementById('spot'), hero = document.querySelector('.hero');
+      if(spot && hero && fine){
+        hero.addEventListener('mousemove', function(e){
+          var r = hero.getBoundingClientRect();
+          spot.style.left = (e.clientX - r.left) + 'px'; spot.style.top = (e.clientY - r.top) + 'px'; spot.style.opacity = '1';
+        }, { passive: true });
+        hero.addEventListener('mouseleave', function(){ spot.style.opacity = '0'; });
+      }
+
+      // floating swirl particles
+      var fc = document.getElementById('float');
+      if(fc){
+        var L = [8,22,40,62,80,90], T = [14,60,30,75,20,55], D = [17,23,20,26,18,22];
+        for(var i = 0; i < 6; i++){
+          var el = document.createElement('div'); el.className = 'fl';
+          el.style.left = L[i] + '%'; el.style.top = T[i] + '%';
+          el.style.animationDuration = D[i] + 's'; el.style.animationDelay = (-i * 2) + 's';
+          fc.appendChild(el);
+        }
+      }
+
+      // magnetic buttons
+      document.querySelectorAll('.nav-cta, .band .cta').forEach(function(b){
+        if(!fine) return;
+        b.addEventListener('mousemove', function(e){
+          var r = b.getBoundingClientRect();
+          b.style.transform = 'translate(' + ((e.clientX - r.left - r.width/2) * 0.3) + 'px,' + ((e.clientY - r.top - r.height/2) * 0.5) + 'px)';
+        });
+        b.addEventListener('mouseleave', function(){ b.style.transform = ''; });
+      });
+
+      // 3D tilt cards
+      if(fine){
+        document.querySelectorAll('.receipt').forEach(function(c){
+          c.addEventListener('mousemove', function(e){
+            var r = c.getBoundingClientRect();
+            var px = (e.clientX - r.left) / r.width - 0.5, py = (e.clientY - r.top) / r.height - 0.5;
+            c.style.transform = 'translateY(-3px) perspective(820px) rotateX(' + (-py * 4) + 'deg) rotateY(' + (px * 5) + 'deg)';
+          });
+          c.addEventListener('mouseleave', function(){ c.style.transform = ''; });
+        });
+      }
+
+      // stat pulse-ring when it lands
+      document.querySelectorAll('.stat').forEach(function(s){
+        var io = new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ setTimeout(function(){ s.classList.add('pulse'); }, 1150); io.unobserve(s); } }); }, { threshold: 0.4 });
+        io.observe(s);
+      });
+
+      // easter egg: click the swirl logo -> it spins
+      var swirl = document.getElementById('swirl'), brand = document.querySelector('.brand');
+      if(swirl){
+        swirl.addEventListener('click', function(ev){
+          ev.preventDefault();
+          if(brand) brand.classList.add('spin');
+          setTimeout(function(){ if(brand) brand.classList.remove('spin'); }, 800);
+        });
+      }
+    })();
+  </script>
+</body>
+</html>
