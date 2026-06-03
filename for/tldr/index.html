@@ -53,6 +53,26 @@
     .band .cta:hover{background:var(--blue-dk);}
     .foot{font-size:13px;color:#B6B6BC;margin-top:40px;text-align:center;}
     ::selection{background:var(--blue-soft);color:var(--ink);}
+
+    .reveal{opacity:0;transform:translateY(18px);transition:opacity .65s cubic-bezier(.2,.6,.2,1),transform .65s cubic-bezier(.2,.6,.2,1);}
+    .reveal.in{opacity:1;transform:none;}
+    @media (prefers-reduced-motion: reduce){
+      .reveal{opacity:1 !important;transform:none !important;transition:none !important;}
+    }
+    .receipt{transition:transform .2s ease,box-shadow .2s ease;}
+    .receipt:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(37,99,235,0.10);}
+    .nm{font-variant-numeric:tabular-nums;}
+    .stat{border:1px solid #DCE6FF;border-radius:12px;padding:22px 24px;margin:0 0 38px;background:var(--blue-soft);}
+    .statnum{font-variant-numeric:tabular-nums;display:flex;align-items:baseline;gap:6px;}
+    .statnum .val{font-size:clamp(40px,7vw,60px);font-weight:800;line-height:1;letter-spacing:-0.03em;color:var(--blue);}
+    .statpct{font-size:20px;font-weight:700;color:var(--blue);letter-spacing:-0.01em;}
+    .statlbl{font-size:14.5px;line-height:1.55;color:var(--muted);margin-top:12px;}
+    .statlbl b{color:var(--ink);}
+    @keyframes topbarslide{0%{background-position:0% 50%;}100%{background-position:200% 50%;}}
+    .topbar{background:linear-gradient(90deg,var(--blue-dk),var(--blue),#5B86F5,var(--blue),var(--blue-dk));background-size:200% 100%;animation:topbarslide 9s linear infinite;}
+    @media (prefers-reduced-motion: reduce){
+      .topbar{animation:none;}
+    }
   </style>
 </head>
 <body>
@@ -63,31 +83,36 @@
   </nav>
 
   <div class="wrap">
-    <p class="eyebrow">Built for the TLDR team</p>
-    <h1>I read your JD and realized you're describing the thing I already built.</h1>
-    <p class="lead">I'm Andrew Zoll. You want modular Claude Skills, autonomous agents for sales, marketing, and ops, and a setup where non-technical teammates run workflows themselves. That's AndrewOS. I've run it across two businesses for over a year. Here's the work.</p>
-    <p class="subnote">A candidate's pitch for your Senior Software Engineer, Applied AI role, built in your style on purpose. Not affiliated with TLDR. Just me, showing the work.</p>
+    <p class="eyebrow reveal" style="transition-delay:.05s">Built for the TLDR team</p>
+    <h1 class="reveal" style="transition-delay:.12s">I read your JD and realized you're describing the thing I already built.</h1>
+    <p class="lead reveal" style="transition-delay:.18s">I'm Andrew Zoll. You want modular Claude Skills, autonomous agents for sales, marketing, and ops, and a setup where non-technical teammates run workflows themselves. That's AndrewOS. I've run it across two businesses for over a year. Here's the work.</p>
+    <p class="subnote reveal">A candidate's pitch for your Senior Software Engineer, Applied AI role, built in your style on purpose. Not affiliated with TLDR. Just me, showing the work.</p>
+
+    <div class="stat reveal" data-countdown data-from="30" data-to="5">
+      <div class="statnum"><span class="val">30</span><span class="statpct">% FP</span></div>
+      <div class="statlbl">Veritas false-positive rate, after I read the failures one at a time. <b>From ~30% to under 5%.</b> That loop is the whole job.</div>
+    </div>
 
     <section>
-      <h2>What your JD describes, line by line</h2>
+      <h2 class="reveal">What your JD describes, line by line</h2>
       <div class="map">
-        <div class="row">
+        <div class="row reveal">
           <div class="jd">"modular Claude Skills that integrate with core systems"</div>
           <div class="me">AndrewOS is 24 Claude Skills, packaged as an installable plugin. Each one carries frontmatter that pins its scope, its tools, and its model tier (opus / sonnet / haiku). That's the catalog you're asking someone to start.</div>
         </div>
-        <div class="row">
+        <div class="row reveal">
           <div class="jd">"autonomous AI agents for sales, marketing, and operations"</div>
           <div class="me">My agents run autonomous LinkedIn content production, prospecting, content distribution, and scheduled retrospective loops across two businesses. Not a prototype. My actual daily operations.</div>
         </div>
-        <div class="row">
+        <div class="row reveal">
           <div class="jd">"non-technical teammates building workflows independently"</div>
           <div class="me">The system is folder-based and spec-first so the operator gives a goal, not code. I productize this exact thing as a $5K "OS Builder" for other small-business owners.</div>
         </div>
-        <div class="row">
+        <div class="row reveal">
           <div class="jd">"composable systems where AI tool outputs feed into other tools"</div>
           <div class="me">Arena-based delegation with validation chains: one skill's structured output becomes the next skill's input, with a validator gate between them. The same composition runs FieldCommand's reporting, where a natural-language request becomes a parsed query, becomes a data pull, becomes a narrated summary.</div>
         </div>
-        <div class="row">
+        <div class="row reveal">
           <div class="jd">"systems that know when to escalate"</div>
           <div class="me">Every arena has human gates, and a builder / reviewer / validator triad where the validator grades the builder and blocks on a regression before anything ships. Escalation is a design principle, not an afterthought.</div>
         </div>
@@ -95,8 +120,8 @@
     </section>
 
     <section>
-      <h2>A real skill, not a description of one</h2>
-      <div class="spec">
+      <h2 class="reveal">A real skill, not a description of one</h2>
+      <div class="spec reveal">
 <span class="c"># one of ~24 skills in AndrewOS — frontmatter pins context + cost</span><br/>
 <span class="k">name:</span> aos-retrospective<br/>
 <span class="k">model:</span> <span class="b">opus</span>        <span class="c"># judgment work earns the premium tier</span><br/>
@@ -108,19 +133,19 @@
     </section>
 
     <section>
-      <h2>What I've shipped this way</h2>
-      <div class="receipt">
+      <h2 class="reveal">What I've shipped this way</h2>
+      <div class="receipt reveal">
         <div class="tag">The agent OS itself</div>
         <h3>AndrewOS</h3>
         <p>An agent operating system: arena-based delegation, 24 model-tiered skills, builder/reviewer/validator triads, scheduled loops, human gates. Runs marketing, content, and operations across two businesses. 14+ months in daily use.</p>
       </div>
-      <div class="receipt">
+      <div class="receipt reveal">
         <div class="tag">Production AI, multi-tenant</div>
         <h3>FieldCommand</h3>
-        <p>A multi-tenant B2B SaaS, 187,745 lines of TypeScript, built solo through agentic coding. Four AI features in production behind per-tenant feature flags, a two-tier model router across 14 callsites so the cheap work stays cheap, three LLM providers wired in.</p>
+        <p>A multi-tenant B2B SaaS, <span class="nm" data-countup data-from="0" data-to="187745">187,745</span> lines of TypeScript, built solo through agentic coding. Four AI features in production behind per-tenant feature flags, a two-tier model router across 14 callsites so the cheap work stays cheap, three LLM providers wired in.</p>
         <a href="https://app.fieldcommand.io">app.fieldcommand.io &rarr;</a>
       </div>
-      <div class="receipt">
+      <div class="receipt reveal">
         <div class="tag">Eval-driven verification</div>
         <h3>Veritas</h3>
         <p>An AI verifier (live at veritaslaw.app) that reads a document, retrieves the cited source, and returns a structured verdict on whether it holds up. Drove the false-positive rate from ~30% to under 5% by building a fixture suite and reading failures, not swapping models.</p>
@@ -129,11 +154,11 @@
     </section>
 
     <section>
-      <h2>The honest part</h2>
-      <p>Most of my "show me the work" pages have to name a domain gap. This one doesn't. The role is building internal AI tooling and autonomous ops agents, and that is precisely what my agent work is, not a stretch from it. I haven't run it at a 7-million-subscriber newsletter's scale yet. But the patterns are the patterns, and I'd rather start from a working catalog than a blank repo.</p>
+      <h2 class="reveal">The honest part</h2>
+      <p class="reveal">Most of my "show me the work" pages have to name a domain gap. This one doesn't. The role is building internal AI tooling and autonomous ops agents, and that is precisely what my agent work is, not a stretch from it. I haven't run it at a 7-million-subscriber newsletter's scale yet. But the patterns are the patterns, and I'd rather start from a working catalog than a blank repo.</p>
     </section>
 
-    <div class="band">
+    <div class="band reveal">
       <p><strong>If this resonates, I'd love fifteen minutes.</strong> Reply wherever I sent you this link, or reach me directly.</p>
       <div class="links">
         <a href="https://github.com/azoll">GitHub</a>
@@ -144,7 +169,46 @@
       <a class="cta" href="mailto:andrew@andrewzoll.com">andrew@andrewzoll.com</a>
     </div>
 
-    <p class="foot">Built for TLDR by Andrew Zoll. Private link, not indexed. Just for you.</p>
+    <p class="foot reveal">Built for TLDR by Andrew Zoll. Private link, not indexed. Just for you.</p>
   </div>
+  <script>
+    (function(){
+      var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      function ease(t){ return 1 - Math.pow(1 - t, 3); }
+      function animateCount(el){
+        var from = parseFloat(el.getAttribute('data-from'));
+        var to = parseFloat(el.getAttribute('data-to'));
+        var isDown = el.hasAttribute('data-countdown');
+        var target = isDown ? el.querySelector('.val') : el;
+        var dur = 1200, start = null;
+        function fmt(n){ return Math.round(n).toLocaleString('en-US'); }
+        if(reduce){ target.textContent = fmt(to); return; }
+        function step(ts){
+          if(!start) start = ts;
+          var p = Math.min(1, (ts - start) / dur);
+          var v = from + (to - from) * ease(p);
+          target.textContent = fmt(v);
+          if(p < 1) requestAnimationFrame(step);
+          else target.textContent = fmt(to);
+        }
+        requestAnimationFrame(step);
+      }
+      if(!('IntersectionObserver' in window) || reduce){
+        document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('in'); });
+        document.querySelectorAll('[data-countup],[data-countdown]').forEach(animateCount);
+        return;
+      }
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){
+          if(e.isIntersecting){
+            e.target.classList.add('in');
+            if(e.target.hasAttribute('data-countup') || e.target.hasAttribute('data-countdown')) animateCount(e.target);
+            io.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.2 });
+      document.querySelectorAll('.reveal, [data-countup], [data-countdown]').forEach(function(el){ io.observe(el); });
+    })();
+  </script>
 </body>
 </html>

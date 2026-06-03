@@ -56,6 +56,33 @@
     .price-band .cta:hover{background:#2c6e30;}
     .foot{font-size:13px;color:#5B6066;margin-top:40px;text-align:center;}
     ::selection{background:rgba(54,133,58,0.35);color:#fff;}
+
+    /* scroll-reveal */
+    .reveal{opacity:0;transform:translateY(18px);transition:opacity .65s cubic-bezier(.2,.6,.2,1),transform .65s cubic-bezier(.2,.6,.2,1);}
+    .reveal.in{opacity:1;transform:none;}
+    @media (prefers-reduced-motion: reduce){
+      .reveal{opacity:1 !important;transform:none !important;transition:none !important;}
+    }
+
+    /* card hover micro-interaction */
+    .receipt{transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease;}
+    .receipt:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(0,0,0,0.45);border-color:rgba(95,180,99,0.45);}
+
+    /* signature stat block — brand-matched dark card */
+    .stat{background:var(--surface2);border:1px solid var(--border);border-left:3px solid var(--green-br);border-radius:12px;padding:22px 24px;margin:18px 0 40px;}
+    .statnum{font-variant-numeric:tabular-nums;display:flex;align-items:baseline;gap:4px;font-weight:800;letter-spacing:-0.02em;color:var(--green-br);line-height:1;}
+    .statnum .val{font-size:clamp(44px,8vw,64px);}
+    .statpct{font-size:18px;font-weight:700;color:var(--muted);letter-spacing:0.02em;}
+    .statlbl{font-size:15px;line-height:1.6;color:var(--body);margin-top:12px;}
+    .statlbl b{color:var(--white);font-weight:700;}
+    .nm{font-variant-numeric:tabular-nums;}
+
+    /* subtle infinite animation on the brand stripe */
+    @keyframes markSlide{0%{transform:skewX(-12deg) translateY(0);opacity:1;}50%{transform:skewX(-12deg) translateY(-1px);opacity:.7;}100%{transform:skewX(-12deg) translateY(0);opacity:1;}}
+    .brand .mark{animation:markSlide 3.4s ease-in-out infinite;}
+    @media (prefers-reduced-motion: reduce){
+      .brand .mark{animation:none;}
+    }
   </style>
 </head>
 <body>
@@ -65,35 +92,40 @@
   </nav>
 
   <div class="wrap">
-    <span class="pill"><span class="dot"></span> Built for the Fieldguide team</span>
-    <h1>You asked for someone who's shipped AI in production. So I shipped you a page.</h1>
-    <p class="lead">I'm Andrew Zoll. I build AI products that read messy documents, check them against a source of truth, and tell you when they're wrong. That's a large part of what audit software has to do too. Here's the work, and here's exactly how I'd point it at Fieldguide.</p>
-    <p class="subnote">This is a candidate's pitch for your AI Engineer role, built in your design language on purpose. Not affiliated with Fieldguide. Just me, doing my homework.</p>
+    <span class="pill reveal" style="transition-delay:.05s"><span class="dot"></span> Built for the Fieldguide team</span>
+    <h1 class="reveal" style="transition-delay:.12s">You asked for someone who's shipped AI in production. So I shipped you a page.</h1>
+    <p class="lead reveal" style="transition-delay:.18s">I'm Andrew Zoll. I build AI products that read messy documents, check them against a source of truth, and tell you when they're wrong. That's a large part of what audit software has to do too. Here's the work, and here's exactly how I'd point it at Fieldguide.</p>
+    <p class="subnote reveal" style="transition-delay:.18s">This is a candidate's pitch for your AI Engineer role, built in your design language on purpose. Not affiliated with Fieldguide. Just me, doing my homework.</p>
+
+    <div class="stat reveal" data-countdown data-from="30" data-to="5">
+      <div class="statnum"><span class="val">30</span><span class="statpct">% FP</span></div>
+      <div class="statlbl">Veritas false-positive rate, after I read the failures one at a time. <b>From ~30% to under 5%.</b> That loop is the whole job.</div>
+    </div>
 
     <section>
-      <h2>Why this page exists</h2>
+      <h2 class="reveal">Why this page exists</h2>
       <p>Most applicants send a resume and hope. I'd rather just show you. Your AI Engineer post says "capability over years," which is the most honest line I've read in a job description in a while, so I'm taking you at your word and leading with capability.</p>
       <p class="muted">I've got a resume too. It's at the bottom. But the resume is the boring version of this page.</p>
     </section>
 
     <section>
-      <h2>What I've actually shipped</h2>
+      <h2 class="reveal">What I've actually shipped</h2>
 
-      <div class="receipt">
+      <div class="receipt reveal">
         <div class="tag">Verification over regulated documents</div>
         <h3>Veritas</h3>
         <p>An AI tool that checks whether the citations in a legal filing actually support the proposition they're attached to. Built solo. Structured Zod verdict schemas, prompt caching, hard cost caps. The first version hallucinated about 30 percent of the time. I read every failure by hand and dragged the false-positive rate under 5 percent. That loop, ship then measure then read the failures then tighten the spec, is most of the job.</p>
         <a href="https://veritaslaw.app">veritaslaw.app &rarr;</a>
       </div>
 
-      <div class="receipt">
+      <div class="receipt reveal">
         <div class="tag">Production AI, cost-aware, multi-tenant</div>
         <h3>FieldCommand</h3>
-        <p>A multi-tenant B2B SaaS, 187,745 lines of TypeScript, shipped solo. Four AI features run in production behind per-tenant feature flags. A two-tier model router across 14 callsites sends cheap work to a cheap model and hard reasoning to a premium one, because cost intuition is part of shipping AI, not an afterthought.</p>
+        <p>A multi-tenant B2B SaaS, <span class="nm" data-countup data-from="0" data-to="187745">187,745</span> lines of TypeScript, shipped solo. Four AI features run in production behind per-tenant feature flags. A two-tier model router across 14 callsites sends cheap work to a cheap model and hard reasoning to a premium one, because cost intuition is part of shipping AI, not an afterthought.</p>
         <a href="https://app.fieldcommand.io">app.fieldcommand.io &rarr;</a>
       </div>
 
-      <div class="receipt">
+      <div class="receipt reveal">
         <div class="tag">Agent systems, daily, for 14+ months</div>
         <h3>AndrewOS</h3>
         <p>An agent operating system I run every day across two businesses. Builder, reviewer, and validator agents in triads, with explicit model tiering and human gates. Not a weekend demo. The thing I actually work inside of.</p>
@@ -101,15 +133,15 @@
     </section>
 
     <section>
-      <h2>How I'd point this at audit</h2>
+      <h2 class="reveal">How I'd point this at audit</h2>
       <p>Here's the part where I show I understand what Fieldguide does, not just that I can write the code.</p>
       <p>An audit conclusion is a proposition. The workpaper evidence is the source. The reviewer's question never really changes: does the evidence actually support the conclusion, and is the standard cited correctly? That is Veritas, re-pointed from case law to audit evidence and the standards underneath it. Same shape every time:</p>
       <ul>
-        <li>Break the conclusion into atomic assertions.</li>
-        <li>Retrieve the evidence that's supposed to support each one.</li>
-        <li>Force a structured verdict, not prose.</li>
-        <li>Cap the reasoning, and never let confidence outrun the evidence.</li>
-        <li>Route the gray ones to a human, which in audit is not optional.</li>
+        <li class="reveal">Break the conclusion into atomic assertions.</li>
+        <li class="reveal">Retrieve the evidence that's supposed to support each one.</li>
+        <li class="reveal">Force a structured verdict, not prose.</li>
+        <li class="reveal">Cap the reasoning, and never let confidence outrun the evidence.</li>
+        <li class="reveal">Route the gray ones to a human, which in audit is not optional.</li>
       </ul>
 
       <div class="agentbar"><span class="dot"></span> Field Agent · verdict</div>
@@ -129,12 +161,12 @@ verdict: {<br/>
     </section>
 
     <section>
-      <h2>The honest part</h2>
+      <h2 class="reveal">The honest part</h2>
       <p>I haven't done audit. On day one I'd be learning your standards, your evidence model, and how your customers actually work. I'd rather say that now than fake it in an interview.</p>
       <p>What I wouldn't be learning is how to ship a careful, eval-driven AI product over high-stakes documents where being wrong has real consequences. I've done that. The clients were lawyers and contractors instead of auditors, but the discipline is the same one your platform lives or dies on.</p>
     </section>
 
-    <div class="price-band">
+    <div class="price-band reveal">
       <p><strong>If this resonates, I'd love fifteen minutes.</strong> Reply wherever I sent you this link, or reach me directly.</p>
       <div class="links">
         <a href="https://veritaslaw.app">Veritas (live)</a>
@@ -145,7 +177,46 @@ verdict: {<br/>
       <a class="cta" href="mailto:andrew@andrewzoll.com">andrew@andrewzoll.com</a>
     </div>
 
-    <p class="foot">Built for Fieldguide by Andrew Zoll. Private link, not indexed. Just for you.</p>
+    <p class="foot reveal">Built for Fieldguide by Andrew Zoll. Private link, not indexed. Just for you.</p>
   </div>
+  <script>
+    (function(){
+      var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      function ease(t){ return 1 - Math.pow(1 - t, 3); }
+      function animateCount(el){
+        var from = parseFloat(el.getAttribute('data-from'));
+        var to = parseFloat(el.getAttribute('data-to'));
+        var isDown = el.hasAttribute('data-countdown');
+        var target = isDown ? el.querySelector('.val') : el;
+        var dur = 1200, start = null;
+        function fmt(n){ return Math.round(n).toLocaleString('en-US'); }
+        if(reduce){ target.textContent = fmt(to); return; }
+        function step(ts){
+          if(!start) start = ts;
+          var p = Math.min(1, (ts - start) / dur);
+          var v = from + (to - from) * ease(p);
+          target.textContent = fmt(v);
+          if(p < 1) requestAnimationFrame(step);
+          else target.textContent = fmt(to);
+        }
+        requestAnimationFrame(step);
+      }
+      if(!('IntersectionObserver' in window) || reduce){
+        document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('in'); });
+        document.querySelectorAll('[data-countup],[data-countdown]').forEach(animateCount);
+        return;
+      }
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){
+          if(e.isIntersecting){
+            e.target.classList.add('in');
+            if(e.target.hasAttribute('data-countup') || e.target.hasAttribute('data-countdown')) animateCount(e.target);
+            io.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.2 });
+      document.querySelectorAll('.reveal, [data-countup], [data-countdown]').forEach(function(el){ io.observe(el); });
+    })();
+  </script>
 </body>
 </html>

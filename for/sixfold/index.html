@@ -52,6 +52,22 @@
     .band .cta:hover{background:var(--magenta-dk);}
     .foot{font-size:13px;color:#B6B2BA;margin-top:40px;text-align:center;}
     ::selection{background:var(--pink);color:var(--ink);}
+    .nm{font-variant-numeric:tabular-nums;}
+    .stat{display:block;border:1px solid var(--pink);background:linear-gradient(135deg,var(--pink-soft),#fff);border-radius:14px;padding:22px 24px;margin:0 0 36px;}
+    .statnum{font-size:clamp(40px,7vw,58px);font-weight:800;line-height:1;letter-spacing:-0.03em;color:var(--magenta);font-variant-numeric:tabular-nums;}
+    .statpct{font-size:clamp(18px,3vw,24px);font-weight:700;color:var(--magenta-dk);margin-left:4px;letter-spacing:-0.01em;}
+    .statlbl{margin-top:10px;font-size:14.5px;line-height:1.55;color:var(--muted);}
+    .statlbl b{color:var(--ink);font-weight:700;}
+    .reveal{opacity:0;transform:translateY(18px);transition:opacity .65s cubic-bezier(.2,.6,.2,1),transform .65s cubic-bezier(.2,.6,.2,1);}
+    .reveal.in{opacity:1;transform:none;}
+    .receipt{transition:transform .2s ease,box-shadow .2s ease;}
+    .receipt:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(219,53,140,0.18);}
+    @keyframes topbarSlide{0%{background-position:0% 50%;}100%{background-position:200% 50%;}}
+    .topbar{background:linear-gradient(90deg,#F6A8D4,#DB358C,#F6A8D4);background-size:200% 100%;animation:topbarSlide 9s linear infinite;}
+    @media (prefers-reduced-motion: reduce){
+      .reveal{opacity:1 !important;transform:none !important;transition:none !important;}
+      .topbar{animation:none !important;}
+    }
   </style>
 </head>
 <body>
@@ -62,20 +78,25 @@
   </nav>
 
   <div class="wrap">
-    <span class="pill">⚡ Built for the Sixfold team</span>
-    <h1><span class="mag">You said: show us work done this way.</span> <span class="blk">So I built you this page.</span></h1>
-    <p class="lead">I'm Andrew Zoll. Your FDE post asks for someone whose default workflow is Claude Code, who orchestrates parallel agents, treats specs and prompts as a craft, and lives in evals, tool use, and context engineering. That's not a wishlist for me. That's how I built everything below.</p>
-    <p class="subnote">A candidate's pitch for your Forward Deployed Engineer role, built in your brand on purpose. Not affiliated with Sixfold. Just me, showing the work.</p>
+    <span class="pill reveal" style="transition-delay:.05s">⚡ Built for the Sixfold team</span>
+    <h1 class="reveal" style="transition-delay:.12s"><span class="mag">You said: show us work done this way.</span> <span class="blk">So I built you this page.</span></h1>
+    <p class="lead reveal" style="transition-delay:.18s">I'm Andrew Zoll. Your FDE post asks for someone whose default workflow is Claude Code, who orchestrates parallel agents, treats specs and prompts as a craft, and lives in evals, tool use, and context engineering. That's not a wishlist for me. That's how I built everything below.</p>
+    <p class="subnote reveal">A candidate's pitch for your Forward Deployed Engineer role, built in your brand on purpose. Not affiliated with Sixfold. Just me, showing the work.</p>
+
+    <div class="stat reveal" data-countdown data-from="30" data-to="5">
+      <div class="statnum"><span class="val">30</span><span class="statpct">% FP</span></div>
+      <div class="statlbl">Veritas false-positive rate, after I read the failures one at a time. <b>From ~30% to under 5%.</b> That loop is the whole job.</div>
+    </div>
 
     <section>
-      <h2>How I actually work</h2>
+      <h2 class="reveal">How I actually work</h2>
       <p>Your "About You" list reads like a description of my Tuesday, so let me just answer it point by point:</p>
       <ul>
-        <li><strong>Agentic coding is the default.</strong> Claude Code is where I work. I orchestrate parallel agents in builder / reviewer / validator triads, and a validator agent grades the builder's output before anything ships.</li>
-        <li><strong>Specs and prompts as a primary craft.</strong> My agent system is spec-first: every skill carries frontmatter that pins its scope, its tools, and its model tier. Context engineering is the actual work.</li>
-        <li><strong>Evals, not vibes.</strong> I drove Veritas from a ~30% false-positive rate to under 5% by building a fixture suite and reading failures, not by swapping models.</li>
-        <li><strong>Leverage over heroics.</strong> When I see the same problem twice, it becomes a platform primitive. That's why one router serves 14 callsites instead of 14 one-offs.</li>
-        <li><strong>Switching altitudes.</strong> Six years translating regulated, technical concepts for non-technical clients. "What does this mean for the renewal" and "what's the right primitive here" in the same afternoon is the job I already do.</li>
+        <li class="reveal"><strong>Agentic coding is the default.</strong> Claude Code is where I work. I orchestrate parallel agents in builder / reviewer / validator triads, and a validator agent grades the builder's output before anything ships.</li>
+        <li class="reveal"><strong>Specs and prompts as a primary craft.</strong> My agent system is spec-first: every skill carries frontmatter that pins its scope, its tools, and its model tier. Context engineering is the actual work.</li>
+        <li class="reveal"><strong>Evals, not vibes.</strong> I drove Veritas from a ~30% false-positive rate to under 5% by building a fixture suite and reading failures, not by swapping models.</li>
+        <li class="reveal"><strong>Leverage over heroics.</strong> When I see the same problem twice, it becomes a platform primitive. That's why one router serves 14 callsites instead of 14 one-offs.</li>
+        <li class="reveal"><strong>Switching altitudes.</strong> Six years translating regulated, technical concepts for non-technical clients. "What does this mean for the renewal" and "what's the right primitive here" in the same afternoon is the job I already do.</li>
       </ul>
       <div class="spec">
 <span class="c"># a real skill spec from my agent OS — context engineering, pinned</span><br/>
@@ -88,20 +109,20 @@
     </section>
 
     <section>
-      <h2>What I've shipped this way</h2>
-      <div class="receipt">
+      <h2 class="reveal">What I've shipped this way</h2>
+      <div class="receipt reveal">
         <div class="tag">Built solo, agent-first</div>
         <h3>FieldCommand</h3>
-        <p>A multi-tenant B2B SaaS, 187,745 lines of TypeScript, shipped solo through agentic coding. Four AI features in production behind per-tenant feature flags, a two-tier model router across 14 callsites so cheap work stays cheap, three LLM providers wired in.</p>
+        <p>A multi-tenant B2B SaaS, <span class="nm" data-countup data-from="0" data-to="187745">187,745</span> lines of TypeScript, shipped solo through agentic coding. Four AI features in production behind per-tenant feature flags, a two-tier model router across 14 callsites so cheap work stays cheap, three LLM providers wired in.</p>
         <a href="https://app.fieldcommand.io">app.fieldcommand.io &rarr;</a>
       </div>
-      <div class="receipt">
+      <div class="receipt reveal">
         <div class="tag">Evals over a regulated-doc problem</div>
         <h3>Veritas</h3>
         <p>An AI that reads a legal filing, retrieves the cited source, and returns a structured verdict on whether it actually supports the claim. Zod schemas, prompt caching, cost caps. False positives dragged from ~30% to under 5% by reading failures. Your product surfaces cited insights for underwriters. Same shape.</p>
         <a href="https://veritaslaw.app">veritaslaw.app &rarr;</a>
       </div>
-      <div class="receipt">
+      <div class="receipt reveal">
         <div class="tag">Parallel agents, daily, 14+ months</div>
         <h3>AndrewOS</h3>
         <p>The agent operating system I run across two businesses: arena-based delegation, builder/reviewer/validator triads, explicit model tiering, human gates. The orchestration layer your JD describes, in production use, not a demo.</p>
@@ -109,22 +130,22 @@
     </section>
 
     <section>
-      <h2>How I'd point it at underwriting</h2>
+      <h2 class="reveal">How I'd point it at underwriting</h2>
       <p>An FDE's job, as your post frames it: own the customer relationship, plug Sixfold into their stack, ship the integration work yourself, then turn the recurring patterns into platform primitives. I've done the shape of that already, just with electricians and lawyers instead of carriers.</p>
       <ul>
-        <li>The customer-deployment loop is what I do: I drove to a FieldCommand customer's kitchen table, found a tenant-data-isolation bug live, and shipped the fix within the hour.</li>
-        <li>Submission triage, risk-against-appetite, cited insights: that's document understanding plus structured output plus a human in the loop. I've shipped exactly that stack.</li>
-        <li>"See the same problem twice, reach for a platform move" is already how I build. The feature-flag gate and the model router both started as one customer's problem.</li>
+        <li class="reveal">The customer-deployment loop is what I do: I drove to a FieldCommand customer's kitchen table, found a tenant-data-isolation bug live, and shipped the fix within the hour.</li>
+        <li class="reveal">Submission triage, risk-against-appetite, cited insights: that's document understanding plus structured output plus a human in the loop. I've shipped exactly that stack.</li>
+        <li class="reveal">"See the same problem twice, reach for a platform move" is already how I build. The feature-flag gate and the model router both started as one customer's problem.</li>
       </ul>
     </section>
 
     <section>
-      <h2>The honest part</h2>
+      <h2 class="reveal">The honest part</h2>
       <p>I'm not new to insurance. A large part of my advisory practice was life and health, so the industry and its regulatory weight are familiar ground. Commercial underwriting is a different line and I'd ramp on your specifics, but I'm not starting from zero on the domain. What I wouldn't be learning at all is the agentic-engineering practice the role is built around. I've been living in that for over a year.</p>
       <p>On travel: I'm remote-first in Colorado, and I'm glad to travel to customer sites when the work calls for it. I'd want to talk through the real cadence, but it's not a blocker.</p>
     </section>
 
-    <div class="band">
+    <div class="band reveal">
       <p><strong>If this resonates, I'd love fifteen minutes.</strong> Reply wherever I sent you this link, or reach me directly.</p>
       <div class="links">
         <a href="https://veritaslaw.app">Veritas (live)</a>
@@ -135,7 +156,46 @@
       <a class="cta" href="mailto:andrew@andrewzoll.com">andrew@andrewzoll.com</a>
     </div>
 
-    <p class="foot">Built for Sixfold by Andrew Zoll. Private link, not indexed. Just for you.</p>
+    <p class="foot reveal">Built for Sixfold by Andrew Zoll. Private link, not indexed. Just for you.</p>
   </div>
+<script>
+  (function(){
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    function ease(t){ return 1 - Math.pow(1 - t, 3); }
+    function animateCount(el){
+      var from = parseFloat(el.getAttribute('data-from'));
+      var to = parseFloat(el.getAttribute('data-to'));
+      var isDown = el.hasAttribute('data-countdown');
+      var target = isDown ? el.querySelector('.val') : el;
+      var dur = 1200, start = null;
+      function fmt(n){ return Math.round(n).toLocaleString('en-US'); }
+      if(reduce){ target.textContent = fmt(to); return; }
+      function step(ts){
+        if(!start) start = ts;
+        var p = Math.min(1, (ts - start) / dur);
+        var v = from + (to - from) * ease(p);
+        target.textContent = fmt(v);
+        if(p < 1) requestAnimationFrame(step);
+        else target.textContent = fmt(to);
+      }
+      requestAnimationFrame(step);
+    }
+    if(!('IntersectionObserver' in window) || reduce){
+      document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('in'); });
+      document.querySelectorAll('[data-countup],[data-countdown]').forEach(animateCount);
+      return;
+    }
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){
+          e.target.classList.add('in');
+          if(e.target.hasAttribute('data-countup') || e.target.hasAttribute('data-countdown')) animateCount(e.target);
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.2 });
+    document.querySelectorAll('.reveal, [data-countup], [data-countdown]').forEach(function(el){ io.observe(el); });
+  })();
+</script>
 </body>
 </html>

@@ -48,6 +48,19 @@
     .band .cta:hover{background:var(--indigo-dk);}
     .foot{font-size:13px;color:#B6BAC4;margin-top:40px;text-align:center;}
     ::selection{background:var(--blue-soft);color:var(--ink);}
+    .nm{font-variant-numeric:tabular-nums;}
+    .stat{border:1px solid #DDE0FF;border-radius:16px;padding:22px 24px;margin:0 0 38px;background:linear-gradient(135deg,var(--indigo-soft),#fff);}
+    .statnum{font-variant-numeric:tabular-nums;font-size:clamp(40px,7vw,58px);font-weight:800;line-height:1;color:var(--indigo);letter-spacing:-0.02em;}
+    .statpct{font-size:0.42em;font-weight:700;color:var(--indigo-dk);margin-left:6px;letter-spacing:0.02em;}
+    .statlbl{font-size:14px;line-height:1.55;color:var(--muted);margin-top:12px;}
+    .statlbl b{color:var(--ink);font-weight:700;}
+    .receipt{transition:transform .2s ease,box-shadow .2s ease;}
+    .receipt:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(94,101,251,0.14);}
+    .reveal{opacity:0;transform:translateY(18px);transition:opacity .65s cubic-bezier(.2,.6,.2,1),transform .65s cubic-bezier(.2,.6,.2,1);}
+    .reveal.in{opacity:1;transform:none;}
+    @media (prefers-reduced-motion: reduce){
+      .reveal{opacity:1 !important;transform:none !important;transition:none !important;}
+    }
   </style>
 </head>
 <body>
@@ -57,31 +70,36 @@
   </nav>
 
   <div class="wrap">
-    <span class="pill">Built for the Bestow team</span>
-    <h1>You're hiring an AI-native PM who understands life insurance. <span class="hl">I'm both halves.</span></h1>
-    <p class="lead">I'm Andrew Zoll. I spent years selling life and health insurance under FINRA and SEC supervision, then spent the last year building AI products with agents as my daily workflow. Your JD asks for exactly that combination, and it's rarer than it should be. Here's the work.</p>
-    <p class="subnote">A candidate's pitch for your Senior Product Manager role, built in your style on purpose. Not affiliated with Bestow. Just me, showing the work.</p>
+    <span class="pill reveal" style="transition-delay:.05s">Built for the Bestow team</span>
+    <h1 class="reveal" style="transition-delay:.12s">You're hiring an AI-native PM who understands life insurance. <span class="hl">I'm both halves.</span></h1>
+    <p class="lead reveal" style="transition-delay:.18s">I'm Andrew Zoll. I spent years selling life and health insurance under FINRA and SEC supervision, then spent the last year building AI products with agents as my daily workflow. Your JD asks for exactly that combination, and it's rarer than it should be. Here's the work.</p>
+    <p class="subnote reveal">A candidate's pitch for your Senior Product Manager role, built in your style on purpose. Not affiliated with Bestow. Just me, showing the work.</p>
+
+    <div class="stat reveal" data-countdown data-from="30" data-to="5">
+      <div class="statnum"><span class="val">30</span><span class="statpct">% FP</span></div>
+      <div class="statlbl">Veritas false-positive rate, after I read the failures one at a time. <b>From ~30% to under 5%.</b> That loop is the whole job.</div>
+    </div>
 
     <section>
-      <h2>What your JD asks for, and what I bring</h2>
+      <h2 class="reveal">What your JD asks for, and what I bring</h2>
       <div class="map">
-        <div class="row">
+        <div class="row reveal">
           <div class="jd">"Model AI-native working habits for the broader team"</div>
           <div class="me">I built AndrewOS, an agent operating system I run every day across two businesses. Agentic coding isn't a habit I'd adopt at Bestow; it's already how I work, and it's why I shipped four production AI apps solo in about six months.</div>
         </div>
-        <div class="row">
+        <div class="row reveal">
           <div class="jd">"Leverage AI tools and agentic workflows as a core part of product development"</div>
           <div class="me">I built FieldCommand, a multi-tenant SaaS, owning the full arc from spec to roadmap to release through Claude Code, including four AI features I gated behind flags by deciding where AI improves the outcome and where deterministic logic is safer.</div>
         </div>
-        <div class="row">
+        <div class="row reveal">
           <div class="jd">"Launch products in weeks instead of years"</div>
           <div class="me">That line is your pitch to carriers, and it's also just my track record. Four shipped AI products in six months, solo, is the velocity that line describes.</div>
         </div>
-        <div class="row">
+        <div class="row reveal">
           <div class="jd">"Define success metrics and build data-driven feedback loops"</div>
           <div class="me">With Veritas I let the evaluation data set the roadmap, driving a false-positive rate from about 30 percent to under 5 percent by reading failures. At my advisory practice I owned a 7 percent visitor-to-lead funnel end to end.</div>
         </div>
-        <div class="row">
+        <div class="row reveal">
           <div class="jd">A life-insurance platform serving life carriers</div>
           <div class="me">I sold life and health insurance for years. I know the buyer, the suitability discipline, and the regulatory weight your customers operate under. That's not a domain I'd ramp on. It's where I come from.</div>
         </div>
@@ -89,19 +107,19 @@
     </section>
 
     <section>
-      <h2>What I've shipped this way</h2>
-      <div class="receipt">
+      <h2 class="reveal">What I've shipped this way</h2>
+      <div class="receipt reveal">
         <div class="tag">Full product arc, AI-native</div>
         <h3>FieldCommand</h3>
-        <p>A multi-tenant B2B SaaS, 187,745 lines of TypeScript, where I own strategy, roadmap, spec, and delivery. Four AI features in production behind per-tenant feature flags, a two-tier model router so cost stays sane. Built solo through agentic coding.</p>
+        <p>A multi-tenant B2B SaaS, <span class="nm" data-countup data-from="0" data-to="187745">187,745</span> lines of TypeScript, where I own strategy, roadmap, spec, and delivery. Four AI features in production behind per-tenant feature flags, a two-tier model router so cost stays sane. Built solo through agentic coding.</p>
         <a href="https://app.fieldcommand.io">app.fieldcommand.io &rarr;</a>
       </div>
-      <div class="receipt">
+      <div class="receipt reveal">
         <div class="tag">AI-native working habits, in production</div>
         <h3>AndrewOS</h3>
         <p>An agent operating system: model-tiered skills, builder/reviewer/validator triads, scheduled loops, human gates. It runs marketing, content, and ops across two businesses, 14+ months in daily use. The "AI-native team habits" your JD wants, already running.</p>
       </div>
-      <div class="receipt">
+      <div class="receipt reveal">
         <div class="tag">Eval-driven product decisions</div>
         <h3>Veritas</h3>
         <p>An AI verifier (live at veritaslaw.app) whose roadmap is driven by evaluation data. Drove the false-positive rate from ~30% to under 5% by reading failures, not swapping models. The measurable, data-driven feedback loop a real PM runs.</p>
@@ -110,12 +128,12 @@
     </section>
 
     <section>
-      <h2>The honest part</h2>
+      <h2 class="reveal">The honest part</h2>
       <p>I don't have five years with a formal Product Manager title. What I have is ownership: I've taken AI products from spec to roadmap to live release, by myself, and made the real product calls along the way. And I've personally sold the kind of product your customers exist to distribute.</p>
       <p>If founder-operator product ownership plus genuine life-insurance fluency reads as the more interesting version of "5+ years," I'd love fifteen minutes.</p>
     </section>
 
-    <div class="band">
+    <div class="band reveal">
       <p><strong>If this resonates, let's talk.</strong> Reply wherever I sent you this link, or reach me directly.</p>
       <div class="links">
         <a href="https://app.fieldcommand.io">FieldCommand (live)</a>
@@ -126,7 +144,46 @@
       <a class="cta" href="mailto:andrew@andrewzoll.com">andrew@andrewzoll.com</a>
     </div>
 
-    <p class="foot">Built for Bestow by Andrew Zoll. Private link, not indexed. Just for you.</p>
+    <p class="foot reveal">Built for Bestow by Andrew Zoll. Private link, not indexed. Just for you.</p>
   </div>
+  <script>
+    (function(){
+      var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      function ease(t){ return 1 - Math.pow(1 - t, 3); }
+      function animateCount(el){
+        var from = parseFloat(el.getAttribute('data-from'));
+        var to = parseFloat(el.getAttribute('data-to'));
+        var isDown = el.hasAttribute('data-countdown');
+        var target = isDown ? el.querySelector('.val') : el;
+        var dur = 1200, start = null;
+        function fmt(n){ return Math.round(n).toLocaleString('en-US'); }
+        if(reduce){ target.textContent = fmt(to); return; }
+        function step(ts){
+          if(!start) start = ts;
+          var p = Math.min(1, (ts - start) / dur);
+          var v = from + (to - from) * ease(p);
+          target.textContent = fmt(v);
+          if(p < 1) requestAnimationFrame(step);
+          else target.textContent = fmt(to);
+        }
+        requestAnimationFrame(step);
+      }
+      if(!('IntersectionObserver' in window) || reduce){
+        document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('in'); });
+        document.querySelectorAll('[data-countup],[data-countdown]').forEach(animateCount);
+        return;
+      }
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){
+          if(e.isIntersecting){
+            e.target.classList.add('in');
+            if(e.target.hasAttribute('data-countup') || e.target.hasAttribute('data-countdown')) animateCount(e.target);
+            io.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.2 });
+      document.querySelectorAll('.reveal, [data-countup], [data-countdown]').forEach(function(el){ io.observe(el); });
+    })();
+  </script>
 </body>
 </html>
