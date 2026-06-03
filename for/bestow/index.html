@@ -58,12 +58,40 @@
     .receipt:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(94,101,251,0.14);}
     .reveal{opacity:0;transform:translateY(18px);transition:opacity .65s cubic-bezier(.2,.6,.2,1),transform .65s cubic-bezier(.2,.6,.2,1);}
     .reveal.in{opacity:1;transform:none;}
+
+    /* ============ whimsy layer ============ */
+    #progress{position:fixed;top:0;left:0;height:3px;width:0;background:var(--indigo);z-index:30;transition:width .1s linear;}
+    #spot{position:fixed;width:520px;height:520px;border-radius:50%;pointer-events:none;z-index:1;background:radial-gradient(circle,rgba(94,101,251,0.08),transparent 62%);transform:translate(-50%,-50%);opacity:0;transition:opacity .5s ease;mix-blend-mode:multiply;}
+    #float{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
+    .fl{position:absolute;width:42px;height:42px;background:var(--indigo);border-radius:8px;opacity:0.06;animation:drift linear infinite;}
+    @keyframes drift{0%{transform:translateY(22px) rotate(0deg);}50%{transform:translateY(-22px) rotate(9deg);}100%{transform:translateY(22px) rotate(0deg);}}
+    .nav,.wrap{position:relative;z-index:2;}
+    /* word-by-word headline */
+    h1 .w{display:inline-block;opacity:0;transform:translateY(24px) rotate(2.5deg);transition:opacity .5s cubic-bezier(.2,.7,.3,1),transform .5s cubic-bezier(.2,.7,.3,1);}
+    h1.in .w{opacity:1;transform:none;}
+    .nav-cta,.band .cta{will-change:transform;}
+    .receipt{transform-style:preserve-3d;will-change:transform;}
+    /* stat pulse-ring on land */
+    .stat{position:relative;}
+    .stat.pulse::after{content:"";position:absolute;inset:-1px;border-radius:16px;border:2px solid var(--indigo);opacity:0;animation:ring .75s ease-out;}
+    @keyframes ring{0%{opacity:.45;transform:scale(1);}100%{opacity:0;transform:scale(1.045);}}
+    /* easter-egg flourish */
+    .brand.spin .mark{transform:rotate(360deg) scale(1.25);}
+    .brand .mark{transition:transform .6s cubic-bezier(.2,.7,.3,1.4);}
+
     @media (prefers-reduced-motion: reduce){
       .reveal{opacity:1 !important;transform:none !important;transition:none !important;}
+      .receipt{transition:none !important;}
+      #spot,#float,#progress{display:none !important;}
+      h1 .w{opacity:1 !important;transform:none !important;}
+      .fl{animation:none !important;}
     }
   </style>
 </head>
 <body>
+  <div id="progress"></div>
+  <div id="spot"></div>
+  <div id="float"></div>
   <nav class="nav">
     <a class="brand" href="https://andrewzoll.com"><span class="mark"></span> ANDREW ZOLL</a>
     <a class="nav-cta" href="mailto:andrew@andrewzoll.com">andrew@andrewzoll.com</a>
@@ -71,7 +99,7 @@
 
   <div class="wrap">
     <span class="pill reveal" style="transition-delay:.05s">Built for the Bestow team</span>
-    <h1 class="reveal" style="transition-delay:.12s">You're hiring an AI-native PM who understands life insurance. <span class="hl">I'm both halves.</span></h1>
+    <h1 data-words>You're hiring an AI-native PM who understands life insurance. <span class="hl">I'm both halves.</span></h1>
     <p class="lead reveal" style="transition-delay:.18s">I'm Andrew Zoll. I spent years selling life and health insurance under FINRA and SEC supervision, then spent the last year building AI products with agents as my daily workflow. Your JD asks for exactly that combination, and it's rarer than it should be. Here's the work.</p>
     <p class="subnote reveal">A candidate's pitch for your Senior Product Manager role, built in your style on purpose. Not affiliated with Bestow. Just me, showing the work.</p>
 
@@ -183,6 +211,110 @@
         });
       }, { threshold: 0.2 });
       document.querySelectorAll('.reveal, [data-countup], [data-countdown]').forEach(function(el){ io.observe(el); });
+    })();
+  </script>
+
+  <script>
+    /* ============ whimsy layer ============ */
+    (function(){
+      var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      // headline word-by-word (preserve inline highlight spans)
+      document.querySelectorAll('h1[data-words]').forEach(function(h){
+        var nodes = Array.prototype.slice.call(h.childNodes);
+        h.textContent = '';
+        var i = 0;
+        function addWord(text, container){
+          var s = document.createElement('span');
+          s.className = 'w'; s.textContent = text;
+          s.style.transitionDelay = (i * 0.045) + 's'; i++;
+          container.appendChild(s); container.appendChild(document.createTextNode(' '));
+        }
+        nodes.forEach(function(n){
+          if(n.nodeType === 3){
+            n.textContent.trim().split(/\s+/).filter(Boolean).forEach(function(w){ addWord(w, h); });
+          } else {
+            var keep = n.cloneNode(false); // keep element (e.g. .hl) as wrapper
+            keep.textContent = '';
+            (n.textContent.trim().split(/\s+/).filter(Boolean)).forEach(function(w){ addWord(w, keep); });
+            h.appendChild(keep);
+          }
+        });
+        if(reduce){ h.classList.add('in'); return; }
+        var io = new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ h.classList.add('in'); io.unobserve(h); } }); }, { threshold: 0.25 });
+        io.observe(h);
+      });
+
+      if(reduce) return;
+      var fine = window.matchMedia('(pointer:fine)').matches;
+
+      // scroll progress bar
+      var bar = document.getElementById('progress');
+      if(bar){
+        var onScroll = function(){
+          var d = document.documentElement, max = d.scrollHeight - d.clientHeight;
+          bar.style.width = (max > 0 ? (d.scrollTop / max * 100) : 0) + '%';
+        };
+        window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
+      }
+
+      // cursor spotlight (desktop)
+      var spot = document.getElementById('spot');
+      if(spot && fine){
+        window.addEventListener('mousemove', function(e){
+          spot.style.left = e.clientX + 'px'; spot.style.top = e.clientY + 'px'; spot.style.opacity = '1';
+        }, { passive: true });
+      }
+
+      // floating periwinkle squares
+      var fc = document.getElementById('float');
+      if(fc){
+        var L = [8,22,40,62,80,90], T = [14,60,30,75,20,55], D = [16,22,19,25,18,21];
+        for(var i = 0; i < 6; i++){
+          var el = document.createElement('div'); el.className = 'fl';
+          el.style.left = L[i] + '%'; el.style.top = T[i] + '%';
+          el.style.animationDuration = D[i] + 's'; el.style.animationDelay = (-i * 2) + 's';
+          fc.appendChild(el);
+        }
+      }
+
+      // magnetic buttons
+      document.querySelectorAll('.nav-cta, .band .cta').forEach(function(b){
+        if(!fine) return;
+        b.addEventListener('mousemove', function(e){
+          var r = b.getBoundingClientRect();
+          b.style.transform = 'translate(' + ((e.clientX - r.left - r.width/2) * 0.3) + 'px,' + ((e.clientY - r.top - r.height/2) * 0.5) + 'px)';
+        });
+        b.addEventListener('mouseleave', function(){ b.style.transform = ''; });
+      });
+
+      // 3D tilt cards
+      if(fine){
+        document.querySelectorAll('.receipt').forEach(function(c){
+          c.addEventListener('mousemove', function(e){
+            var r = c.getBoundingClientRect();
+            var px = (e.clientX - r.left) / r.width - 0.5, py = (e.clientY - r.top) / r.height - 0.5;
+            c.style.transform = 'translateY(-3px) perspective(820px) rotateX(' + (-py * 4) + 'deg) rotateY(' + (px * 5) + 'deg)';
+          });
+          c.addEventListener('mouseleave', function(){ c.style.transform = ''; });
+        });
+      }
+
+      // stat pulse-ring when it lands
+      document.querySelectorAll('.stat').forEach(function(s){
+        var io = new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ setTimeout(function(){ s.classList.add('pulse'); }, 1150); io.unobserve(s); } }); }, { threshold: 0.4 });
+        io.observe(s);
+      });
+
+      // easter egg: double-click the brand mark/logo -> spin + scale
+      var brand = document.querySelector('.brand');
+      if(brand){
+        brand.addEventListener('dblclick', function(e){
+          e.preventDefault();
+          brand.classList.add('spin');
+          setTimeout(function(){ brand.classList.remove('spin'); }, 900);
+        });
+      }
     })();
   </script>
 </body>

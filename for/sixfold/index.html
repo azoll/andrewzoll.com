@@ -63,15 +63,44 @@
     .receipt{transition:transform .2s ease,box-shadow .2s ease;}
     .receipt:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(219,53,140,0.18);}
     @keyframes topbarSlide{0%{background-position:0% 50%;}100%{background-position:200% 50%;}}
-    .topbar{background:linear-gradient(90deg,#F6A8D4,#DB358C,#F6A8D4);background-size:200% 100%;animation:topbarSlide 9s linear infinite;}
+    .topbar{background:linear-gradient(90deg,#F6A8D4,#DB358C,#F6A8D4);background-size:200% 100%;animation:topbarSlide 9s linear infinite;cursor:pointer;}
+
+    /* ============ whimsy layer ============ */
+    #progress{position:fixed;top:0;left:0;height:3px;width:0;background:var(--magenta);z-index:30;transition:width .1s linear;}
+    #spot{position:fixed;width:520px;height:520px;border-radius:50%;pointer-events:none;z-index:1;background:radial-gradient(circle,rgba(219,53,140,0.08),transparent 62%);transform:translate(-50%,-50%);opacity:0;transition:opacity .5s ease;mix-blend-mode:multiply;}
+    #float{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
+    .fl{position:absolute;width:18px;height:18px;background:linear-gradient(135deg,#F6A8D4,#DB358C);clip-path:polygon(50% 0,93% 25%,93% 75%,50% 100%,7% 75%,7% 25%);opacity:0.06;animation:drift linear infinite;}
+    @keyframes drift{0%{transform:translateY(24px) rotate(0deg);}50%{transform:translateY(-24px) rotate(14deg);}100%{transform:translateY(24px) rotate(0deg);}}
+    .topbar,.nav,.wrap{position:relative;z-index:2;}
+    /* word-by-word headline (springier for the playful brand) */
+    h1 .w{display:inline-block;opacity:0;transform:translateY(26px) rotate(3deg) scale(.96);transition:opacity .5s cubic-bezier(.34,1.56,.46,1),transform .5s cubic-bezier(.34,1.56,.46,1);}
+    h1.in .w{opacity:1;transform:none;}
+    .nav-cta,.band .cta{will-change:transform;}
+    .receipt{transform-style:preserve-3d;will-change:transform;}
+    /* stat pulse-ring on land */
+    .stat{position:relative;}
+    .stat.pulse::after{content:"";position:absolute;inset:-1px;border-radius:14px;border:2px solid var(--magenta);opacity:0;animation:ring .75s ease-out;}
+    @keyframes ring{0%{opacity:.5;transform:scale(1);}100%{opacity:0;transform:scale(1.05);}}
+    /* easter-egg flourish */
+    .topbar.flourish{animation:topbarSlide .5s linear 2;}
+    .brand .mark{transition:transform .5s cubic-bezier(.34,1.56,.46,1);}
+    .brand.spin .mark{transform:rotate(360deg) scale(1.18);}
+
     @media (prefers-reduced-motion: reduce){
       .reveal{opacity:1 !important;transform:none !important;transition:none !important;}
       .topbar{animation:none !important;}
+      .receipt{transition:none !important;}
+      #spot,#float,#progress{display:none !important;}
+      h1 .w{opacity:1 !important;transform:none !important;}
+      .fl{animation:none !important;}
     }
   </style>
 </head>
 <body>
-  <div class="topbar"></div>
+  <div id="progress"></div>
+  <div id="spot"></div>
+  <div id="float"></div>
+  <div class="topbar" title="psst"></div>
   <nav class="nav">
     <a class="brand" href="https://andrewzoll.com"><span class="mark"></span> Andrew Zoll</a>
     <a class="nav-cta" href="mailto:andrew@andrewzoll.com">andrew@andrewzoll.com</a>
@@ -79,7 +108,7 @@
 
   <div class="wrap">
     <span class="pill reveal" style="transition-delay:.05s">⚡ Built for the Sixfold team</span>
-    <h1 class="reveal" style="transition-delay:.12s"><span class="mag">You said: show us work done this way.</span> <span class="blk">So I built you this page.</span></h1>
+    <h1 data-words><span class="mag">You said: show us work done this way.</span> <span class="blk">So I built you this page.</span></h1>
     <p class="lead reveal" style="transition-delay:.18s">I'm Andrew Zoll. Your FDE post asks for someone whose default workflow is Claude Code, who orchestrates parallel agents, treats specs and prompts as a craft, and lives in evals, tool use, and context engineering. That's not a wishlist for me. That's how I built everything below.</p>
     <p class="subnote reveal">A candidate's pitch for your Forward Deployed Engineer role, built in your brand on purpose. Not affiliated with Sixfold. Just me, showing the work.</p>
 
@@ -197,5 +226,112 @@
     document.querySelectorAll('.reveal, [data-countup], [data-countdown]').forEach(function(el){ io.observe(el); });
   })();
 </script>
+
+  <script>
+    /* ============ whimsy layer ============ */
+    (function(){
+      var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      // headline word-by-word — preserve inner color spans (.mag / .blk)
+      document.querySelectorAll('h1[data-words]').forEach(function(h){
+        var idx = 0;
+        function wrapText(text, parent){
+          text.trim().split(/\s+/).forEach(function(word){
+            if(!word) return;
+            var s = document.createElement('span');
+            s.className = 'w'; s.textContent = word;
+            s.style.transitionDelay = (idx++ * 0.045) + 's';
+            parent.appendChild(s); parent.appendChild(document.createTextNode(' '));
+          });
+        }
+        var kids = Array.prototype.slice.call(h.childNodes);
+        kids.forEach(function(node){
+          if(node.nodeType === 3){ // text node
+            var span = document.createElement('span');
+            wrapText(node.textContent, span);
+            h.replaceChild(span, node);
+          } else if(node.nodeType === 1){ // element (e.g. .mag/.blk)
+            var raw = node.textContent;
+            node.textContent = '';
+            wrapText(raw, node);
+          }
+        });
+        if(reduce){ h.classList.add('in'); return; }
+        var io = new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ h.classList.add('in'); io.unobserve(h); } }); }, { threshold: 0.25 });
+        io.observe(h);
+      });
+
+      if(reduce) return;
+      var fine = window.matchMedia('(pointer:fine)').matches;
+
+      // scroll progress bar
+      var bar = document.getElementById('progress');
+      if(bar){
+        var onScroll = function(){
+          var d = document.documentElement, max = d.scrollHeight - d.clientHeight;
+          bar.style.width = (max > 0 ? (d.scrollTop / max * 100) : 0) + '%';
+        };
+        window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
+      }
+
+      // cursor spotlight (desktop)
+      var spot = document.getElementById('spot');
+      if(spot && fine){
+        window.addEventListener('mousemove', function(e){
+          spot.style.left = e.clientX + 'px'; spot.style.top = e.clientY + 'px'; spot.style.opacity = '1';
+        }, { passive: true });
+      }
+
+      // floating magenta hexagons
+      var fc = document.getElementById('float');
+      if(fc){
+        var L = [8,22,40,62,80,90], T = [14,60,30,75,20,55], D = [16,22,19,25,18,21];
+        for(var i = 0; i < 6; i++){
+          var el = document.createElement('div'); el.className = 'fl';
+          el.style.left = L[i] + '%'; el.style.top = T[i] + '%';
+          el.style.animationDuration = D[i] + 's'; el.style.animationDelay = (-i * 2) + 's';
+          fc.appendChild(el);
+        }
+      }
+
+      // magnetic buttons (springier travel for the playful brand)
+      document.querySelectorAll('.nav-cta, .band .cta').forEach(function(b){
+        if(!fine) return;
+        b.style.transition = 'transform .2s cubic-bezier(.34,1.56,.46,1), background .15s ease';
+        b.addEventListener('mousemove', function(e){
+          var r = b.getBoundingClientRect();
+          b.style.transform = 'translate(' + ((e.clientX - r.left - r.width/2) * 0.35) + 'px,' + ((e.clientY - r.top - r.height/2) * 0.55) + 'px)';
+        });
+        b.addEventListener('mouseleave', function(){ b.style.transform = ''; });
+      });
+
+      // 3D tilt cards
+      if(fine){
+        document.querySelectorAll('.receipt').forEach(function(c){
+          c.addEventListener('mousemove', function(e){
+            var r = c.getBoundingClientRect();
+            var px = (e.clientX - r.left) / r.width - 0.5, py = (e.clientY - r.top) / r.height - 0.5;
+            c.style.transform = 'translateY(-3px) perspective(820px) rotateX(' + (-py * 5) + 'deg) rotateY(' + (px * 6) + 'deg)';
+          });
+          c.addEventListener('mouseleave', function(){ c.style.transform = ''; });
+        });
+      }
+
+      // stat pulse-ring when it lands
+      document.querySelectorAll('.stat').forEach(function(s){
+        var io = new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ setTimeout(function(){ s.classList.add('pulse'); }, 1150); io.unobserve(s); } }); }, { threshold: 0.4 });
+        io.observe(s);
+      });
+
+      // easter egg: click the topbar -> flourish + logo spin
+      var topbar = document.querySelector('.topbar'), brand = document.querySelector('.brand');
+      if(topbar){
+        topbar.addEventListener('click', function(){
+          topbar.classList.add('flourish'); if(brand) brand.classList.add('spin');
+          setTimeout(function(){ topbar.classList.remove('flourish'); if(brand) brand.classList.remove('spin'); }, 1000);
+        });
+      }
+    })();
+  </script>
 </body>
 </html>
