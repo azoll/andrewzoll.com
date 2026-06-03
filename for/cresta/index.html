@@ -385,11 +385,11 @@
             var nextIdx = (idx + 1) % verbs.length;
             if(cur) cur.classList.remove('in');         // retract current symbol back into the circle
             swapWord(verbs[nextIdx]);                    // text animates right as the symbol retracts
-            setTimeout(function(){                        // after the retract completes, emerge the next symbol
+            setTimeout(function(){                        // after a brief beat on the empty white circle, emerge the next symbol
               idx = nextIdx;
               var nx = sceneFor(verbs[idx]);
               if(nx) nx.classList.add('in');
-            }, 540);
+            }, 780);
           }, 5000);
         }
       }
