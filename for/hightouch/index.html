@@ -60,8 +60,7 @@
     .loop{position:relative;width:300px;height:300px;flex-shrink:0;}
     .loop svg{width:300px;height:300px;display:block;overflow:visible;}
     .loop .ringline{fill:none;stroke:rgba(118,91,240,0.20);stroke-width:2;}
-    .loop .arc-active{fill:none;stroke:var(--purple);stroke-width:2.4;stroke-linecap:round;stroke-dasharray:60 690;animation:arcrun 8s linear infinite;}
-    @keyframes arcrun{to{stroke-dashoffset:-750;}}
+    .loop .comet-tail{fill:none;stroke-width:3.4;stroke-linecap:round;}
     .loop .node circle{fill:#fff;stroke:rgba(118,91,240,0.40);stroke-width:2;transition:fill .35s ease,stroke .35s ease,r .35s ease;}
     .loop .node.active circle{fill:var(--purple);stroke:var(--purple);}
     .loop .node text{font-family:'Hanken Grotesk',sans-serif;font-weight:700;font-size:12.5px;fill:var(--ink);transition:fill .35s ease;}
@@ -75,8 +74,8 @@
     .loop .token .halo{fill:rgba(118,91,240,0.18);}
     /* human-review gate marker */
     .loop .gate rect{fill:var(--ink);}
-    .loop .gate .pulse{fill:none;stroke:var(--mint-d);stroke-width:2;opacity:0;animation:gatepulse 8s ease-out infinite;}
-    @keyframes gatepulse{0%,62%{opacity:0;transform:scale(.5);}66%{opacity:.9;transform:scale(.6);}80%{opacity:0;transform:scale(1.6);}100%{opacity:0;}}
+    .loop .gate .pulse{fill:none;stroke:var(--mint-d);stroke-width:2;opacity:0;transform-box:fill-box;transform-origin:center;animation:gatepulse 8s ease-out infinite;}
+    @keyframes gatepulse{0%,84%{opacity:0;transform:scale(.5);}88%{opacity:.9;transform:scale(.7);}96%{opacity:0;transform:scale(1.8);}100%{opacity:0;}}
     .loop .gate{transform-box:fill-box;transform-origin:center;}
     .loop .gatelabel{font-family:'Hanken Grotesk',sans-serif;font-weight:600;font-size:10.5px;fill:var(--ink);}
     .loop-legend{font-size:14px;line-height:1.6;color:var(--body);max-width:240px;}
@@ -214,7 +213,7 @@
       .map .row::after{opacity:1 !important;transform:translateY(-50%) scale(1) !important;}
       .mark-hl{background-size:100% 100% !important;transition:none !important;}
       .receipt .rmark .bar,.receipt .rmark .node-d,.receipt .rmark .ring-d{animation:none !important;}
-      .loop .arc-active,.loop .token,.loop .gate .pulse{animation:none !important;}
+      .loop .token,.loop .gate .pulse{animation:none !important;}
       .loop .node circle{fill:var(--purple) !important;stroke:var(--purple) !important;}
       .loop .node text{fill:var(--purple-d) !important;}
       .loop .node .dot{fill:#fff !important;}
@@ -250,8 +249,13 @@
         <div class="loop" aria-hidden="true">
           <svg viewBox="0 0 300 300">
             <!-- ring -->
+            <defs>
+              <linearGradient id="cometTail" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0" stop-color="#765BF0" stop-opacity="0"/>
+                <stop offset="1" stop-color="#765BF0" stop-opacity="0.85"/>
+              </linearGradient>
+            </defs>
             <circle class="ringline" cx="150" cy="150" r="118"/>
-            <circle class="arc-active" cx="150" cy="150" r="118"/>
             <!-- nodes: clockwise Audience(top) Variants(right) Experiment(bottom) Optimize(left) -->
             <g class="node" data-node="0" transform="translate(150,32)">
               <circle r="13"/><circle class="dot" r="3.5"/>
@@ -276,8 +280,9 @@
               <path d="M-4 0 L-1 3 L4.5 -3.5" fill="none" stroke="#E3FCEE" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
               <text class="gatelabel" text-anchor="middle" y="-16">human review</text>
             </g>
-            <!-- orbiting token -->
+            <!-- orbiting comet: glowing head + faded trail, locked together as one object -->
             <g class="token">
+              <path class="comet-tail" d="M59.6 74.1 A118 118 0 0 1 150 32" stroke="url(#cometTail)"/>
               <circle class="halo" cx="150" cy="32" r="10"/>
               <circle cx="150" cy="32" r="5"/>
             </g>
