@@ -42,7 +42,8 @@
     .hero .inner{text-align:center;}
     /* animated word-emblem: a distinct color-matched scene per verb (Cresta-style) */
     .emblem{position:relative;width:188px;height:162px;margin:0 auto 18px;}
-    .emblem .home{position:absolute;top:50%;left:50%;width:52px;height:52px;margin:-26px 0 0 -26px;border-radius:50%;border:2px solid rgba(255,255,255,0.92);box-shadow:0 0 22px rgba(255,255,255,0.14);z-index:1;}
+    .emblem .home{position:absolute;top:50%;left:50%;width:52px;height:52px;margin:-26px 0 0 -26px;border-radius:50%;border:2px solid rgba(255,255,255,0.92);box-shadow:0 0 22px rgba(255,255,255,0.14);z-index:1;transition:opacity .34s ease,transform .46s cubic-bezier(.2,.8,.3,1.25);}
+    .emblem.busy .home{opacity:0;transform:scale(1.55);}
     .emblem .scene{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0;transform:scale(0);transform-origin:center;z-index:2;transition:opacity .42s ease,transform .5s cubic-bezier(.2,.8,.3,1.25);}
     .emblem .scene.in{opacity:1;transform:scale(1);}
     .emblem .scene svg{width:152px;height:152px;overflow:visible;}
@@ -158,7 +159,7 @@
       .receipt{transition:none !important;}
       #spot,#float,#progress{display:none !important;}
       .rot .word{transition:none !important;}
-      .emblem .scene{transition:none !important;}
+      .emblem .scene,.emblem .home{transition:none !important;}
       .emblem .scene svg,.emblem .bar,.emblem .node,.emblem .ring{animation:none !important;}
       .hero::before{animation:none !important;}
     }
@@ -362,8 +363,8 @@
         colorWord(word, verbs[0]);
         var first = sceneFor(verbs[0]);
         if(first){
-          if(reduce){ first.classList.add('in'); }
-          else { setTimeout(function(){ first.classList.add('in'); }, 80); } // emerge from the white circle on load
+          if(reduce){ first.classList.add('in'); if(emblem) emblem.classList.add('busy'); }
+          else { setTimeout(function(){ first.classList.add('in'); if(emblem) emblem.classList.add('busy'); }, 80); } // white circle morphs into the first symbol
         }
         if(!reduce){
           // animate the word out, swap text/color, animate back in (~0.5s, snappy)
@@ -383,12 +384,14 @@
           setInterval(function(){
             var cur = sceneFor(verbs[idx]);
             var nextIdx = (idx + 1) % verbs.length;
-            if(cur) cur.classList.remove('in');         // retract current symbol back into the circle
-            swapWord(verbs[nextIdx]);                    // text animates right as the symbol retracts
-            setTimeout(function(){                        // after a brief beat on the empty white circle, emerge the next symbol
+            if(cur) cur.classList.remove('in');         // symbol shrinks back to center
+            if(emblem) emblem.classList.remove('busy'); // and reforms into the white circle
+            swapWord(verbs[nextIdx]);                    // text animates right as the symbol becomes the circle
+            setTimeout(function(){                        // after a brief beat on the bare white circle, morph into the next symbol
               idx = nextIdx;
               var nx = sceneFor(verbs[idx]);
               if(nx) nx.classList.add('in');
+              if(emblem) emblem.classList.add('busy');   // white circle blooms into the next symbol
             }, 780);
           }, 5000);
         }
