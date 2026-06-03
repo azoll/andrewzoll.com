@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Built for Dynamo AI · Andrew Zoll</title>
+  <meta name="description" content="A page Andrew Zoll built for the Dynamo AI team, applying for Product Manager, AI. A regulated-industry insider who builds eval-driven, trustworthy AI."/>
+  <meta name="robots" content="noindex, nofollow"/>
+  <link rel="icon" href="/assets/favicon-primary.png"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Yrsa:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root{
+      --ink:#0A0A0A; --ink2:#1E1E1E; --muted:#5A5A5A; --muted2:#767676; --line:#E5E5E5; --paper:#FAFAFA;
+    }
+    html,body{margin:0;padding:0;background:#fff;color:var(--ink);font-family:'Yrsa',Georgia,serif;-webkit-font-smoothing:antialiased;}
+    *{box-sizing:border-box;}
+    .ui{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;}
+    .nav{display:flex;justify-content:space-between;align-items:center;padding:18px 26px;border-bottom:1px solid var(--line);background:#fff;position:sticky;top:0;z-index:10;font-family:'Inter',sans-serif;}
+    .brand{display:flex;align-items:center;gap:10px;font-size:15px;font-weight:700;color:var(--ink);text-decoration:none;}
+    .brand .mark{width:16px;height:14px;background:repeating-linear-gradient(115deg,var(--ink) 0 2px,transparent 2px 4px);display:inline-block;}
+    .nav-cta{background:var(--ink2);color:#fff !important;padding:9px 18px;border-radius:999px;font-weight:600;font-size:13px;text-decoration:none;}
+    .nav-cta:hover{background:#000;}
+    .wrap{max-width:780px;margin:0 auto;padding:58px 24px 100px;}
+    .eyebrow{font-family:'Inter',sans-serif;font-size:12px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted2);margin-bottom:22px;}
+    h1{font-family:'Inter',sans-serif;font-size:clamp(36px,5.4vw,56px);font-weight:700;line-height:1.05;letter-spacing:-0.025em;margin:0 0 22px;color:var(--ink);}
+    .lead{font-size:21px;line-height:1.55;color:var(--ink2);margin:0 0 14px;}
+    .subnote{font-family:'Inter',sans-serif;font-size:13.5px;color:var(--muted2);margin:0 0 38px;}
+    section h2{font-family:'Inter',sans-serif;font-size:13px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink);margin:54px 0 18px;padding-bottom:10px;border-bottom:1px solid var(--line);}
+    section p{font-size:18px;line-height:1.6;color:var(--ink2);margin:0 0 16px;}
+    section p.muted{color:var(--muted);}
+    .map .row{display:flex;gap:14px;padding:15px 0;border-bottom:1px solid var(--line);}
+    .map .row:last-child{border-bottom:0;}
+    .map .check{font-family:'Inter',sans-serif;color:var(--ink);font-weight:700;flex-shrink:0;margin-top:2px;}
+    .map .body .jd{font-family:'Inter',sans-serif;font-size:14px;font-weight:600;color:var(--muted);margin-bottom:5px;}
+    .map .body .me{font-size:17px;line-height:1.5;color:var(--ink);}
+    .receipt{border:1px solid var(--line);border-radius:12px;padding:20px 22px;margin:0 0 14px;background:#fff;}
+    .receipt .tag{font-family:'Inter',sans-serif;font-size:11.5px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted2);margin-bottom:6px;}
+    .receipt h3{font-family:'Inter',sans-serif;margin:0 0 8px;font-size:18px;color:var(--ink);font-weight:700;}
+    .receipt p{font-size:16px;line-height:1.5;color:var(--ink2);margin:0 0 10px;}
+    .receipt a{font-family:'Inter',sans-serif;font-size:13.5px;font-weight:600;color:var(--ink);text-decoration:none;border-bottom:1px solid var(--ink);}
+    .band{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:26px 28px;margin:48px 0 0;}
+    .band p{margin:0 0 14px;font-size:18px;color:var(--ink2);}
+    .band p strong{color:var(--ink);}
+    .band .links a{font-family:'Inter',sans-serif;display:inline-block;margin:0 18px 10px 0;font-weight:600;color:var(--ink);border-bottom:1px solid var(--ink);font-size:14.5px;text-decoration:none;}
+    .band .cta{font-family:'Inter',sans-serif;background:var(--ink2);color:#fff !important;text-decoration:none;padding:13px 24px;font-weight:600;font-size:15px;border-radius:999px;display:inline-block;margin-top:8px;}
+    .band .cta:hover{background:#000;}
+    .foot{font-family:'Inter',sans-serif;font-size:13px;color:#A8A8A8;margin-top:40px;text-align:center;}
+    ::selection{background:#FFDEDE;color:var(--ink);}
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <a class="brand" href="https://andrewzoll.com"><span class="mark"></span> Andrew Zoll</a>
+    <a class="nav-cta" href="mailto:andrew@andrewzoll.com">andrew@andrewzoll.com</a>
+  </nav>
+
+  <div class="wrap">
+    <p class="eyebrow">Built for the Dynamo AI team</p>
+    <h1>You're hiring a PM for AI guardrails in regulated industries. I've lived both sides of that.</h1>
+    <p class="lead">I'm Andrew Zoll. I spent six years under FINRA and SEC supervision, including years selling insurance, two of your core verticals. And I built Veritas, an AI verifier that catches hallucinations and that I dragged from a 30 percent false-positive rate to under 5 percent. Your JD is the intersection of those two things.</p>
+    <p class="subnote">A candidate's pitch for your Product Manager, AI role, built in your style on purpose. Not affiliated with Dynamo AI. Just me, showing the work.</p>
+
+    <section>
+      <h2>What your JD asks for, line by line</h2>
+      <div class="map">
+        <div class="row">
+          <div class="check ui">&check;</div>
+          <div class="body">
+            <div class="jd">"Define and lead product strategy for redteaming, guardrails, and observability"</div>
+            <div class="me">I built Veritas, a guardrail-shaped product: it checks an AI claim against the source and returns a structured verdict with a confidence cap. Hallucination checks and confidence thresholds aren't a roadmap item for me; they're what I already shipped.</div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="check ui">&check;</div>
+          <div class="body">
+            <div class="jd">"Engage enterprise partners in regulated industries to pilot and deploy"</div>
+            <div class="me">Finance and insurance are two of your four verticals, and they're where I come from. I operated for years under continuous SEC supervision and sold life and health insurance. I don't need a translator for your customers' compliance posture. I am that customer.</div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="check ui">&check;</div>
+          <div class="body">
+            <div class="jd">"Monitor AI regulatory and compliance landscapes"</div>
+            <div class="me">Audit-grade discipline is a habit, not a skill I'd acquire. Recordkeeping, suitability, evidence, and "prove it" are how I operated every day in a regulated practice.</div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="check ui">&check;</div>
+          <div class="body">
+            <div class="jd">"Passion for AI safety and trustworthy AI"</div>
+            <div class="me">Veritas exists because I care that AI doesn't confidently lie. I drove its false-positive rate under 5 percent by reading failures one at a time, not by hoping a bigger model fixed it. That's the whole job, as far as I'm concerned.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>What I've shipped this way</h2>
+      <div class="receipt">
+        <div class="tag">A guardrail, in production</div>
+        <h3>Veritas</h3>
+        <p>An AI verifier (live at veritaslaw.app) that reads a claim, retrieves the source, and returns a structured verdict on whether it holds up. Zod schemas, prompt caching, cost caps. False-positive rate driven from ~30% to under 5% by empirical failure analysis. This is the hallucination-check and eval discipline your platform is built on.</p>
+        <a href="https://veritaslaw.app">veritaslaw.app &rarr;</a>
+      </div>
+      <div class="receipt">
+        <div class="tag">Production AI, cost-aware, multi-tenant</div>
+        <h3>FieldCommand</h3>
+        <p>A multi-tenant B2B SaaS, 187,745 lines of TypeScript, built solo. Four AI features in production behind per-tenant feature flags, a two-tier model router, three providers wired. The product judgment of where AI is safe to run and where it isn't.</p>
+        <a href="https://app.fieldcommand.io">app.fieldcommand.io &rarr;</a>
+      </div>
+      <div class="receipt">
+        <div class="tag">Agent guardrails, daily</div>
+        <h3>AndrewOS</h3>
+        <p>An agent operating system I run across two businesses: builder/reviewer/validator triads where the validator grades the builder and blocks before anything ships, plus human gates. Guardrails and human-in-the-loop, in daily production use.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>The honest part</h2>
+      <p>Your post asks for one or more years in product management, which I clear. I don't have a decade of formal PM title behind me. What I have is the rarer combination your role actually needs: I build eval-driven AI, and I've spent years inside the regulated industries you sell into. Most PMs have one of those. I have both.</p>
+    </section>
+
+    <div class="band">
+      <p><strong>If this resonates, I'd love fifteen minutes.</strong> Reply wherever I sent you this link, or reach me directly.</p>
+      <div class="links">
+        <a href="https://veritaslaw.app">Veritas (live)</a>
+        <a href="https://app.fieldcommand.io">FieldCommand (live)</a>
+        <a href="https://portfolio.andrewzoll.com">Portfolio</a>
+        <a href="https://github.com/azoll">GitHub</a>
+      </div>
+      <a class="cta" href="mailto:andrew@andrewzoll.com">andrew@andrewzoll.com</a>
+    </div>
+
+    <p class="foot">Built for Dynamo AI by Andrew Zoll. Private link, not indexed. Just for you.</p>
+  </div>
+</body>
+</html>
