@@ -224,6 +224,27 @@
     }
 
     @media (max-width:640px){ .map .row::after{display:none;} }
+
+    /* ============ signature: deployment-lifecycle outcome climb ============ */
+    .anim-cap{font-size:14px;font-style:italic;color:#9AA0C2;line-height:1.55;margin:18px 0 0;max-width:680px;}
+    .cycle{border:1px solid var(--line);border-radius:14px;background:linear-gradient(180deg,#fff,var(--surface));padding:28px 28px 26px;}
+    .cycle-top{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin-bottom:18px;flex-wrap:wrap;}
+    .cycle .metric-lbl{font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:0.09em;text-transform:uppercase;color:var(--body);margin-bottom:7px;}
+    .cycle .metric-val{display:flex;align-items:baseline;gap:2px;font-weight:800;letter-spacing:-0.03em;color:var(--blue);transition:color .4s ease;}
+    .cycle .mnum{font-size:clamp(42px,7vw,58px);line-height:1;font-variant-numeric:tabular-nums;}
+    .cycle .mpct{font-size:22px;font-weight:700;}
+    .cycle.owned .metric-val{color:var(--orange);}
+    .cycle .tuned{font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;font-size:13px;color:var(--body);}
+    .cycle .tuned-k{color:#9AA0C2;}
+    .cycle .tuned-v{color:var(--ink);font-weight:600;}
+    .cycle .bartrack{height:10px;border-radius:999px;background:var(--line);overflow:hidden;margin:0 0 18px;}
+    .cycle .barfill{height:100%;width:0;border-radius:999px;background:linear-gradient(90deg,var(--blue),#5B86F5);transition:width .9s cubic-bezier(.3,.6,.3,1);}
+    .cycle.owned .barfill{background:linear-gradient(90deg,var(--blue),var(--orange));}
+    .cycle .deploys{display:flex;gap:10px;flex-wrap:wrap;}
+    .cycle .dchip{font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;font-size:12.5px;font-weight:600;padding:7px 14px;border-radius:999px;border:1px solid var(--line);color:var(--body);background:#fff;transition:border-color .3s ease,background .3s ease,color .3s ease;}
+    .cycle .dchip.active{border-color:var(--blue);background:var(--blue);color:#fff;}
+    .cycle .dchip.owned{border-color:var(--orange);background:var(--orange);color:#fff;}
+    @media (prefers-reduced-motion: reduce){ .cycle .barfill{transition:none;} .cycle .metric-val{transition:none;} }
   </style>
 </head>
 <body>
@@ -255,10 +276,28 @@
     </div>
     </div>
 
-    <div class="stat reveal" data-countdown data-from="30" data-to="5">
-      <div class="num">30%<span class="arrow">&rarr;</span><span class="val">5</span>%<span class="fp">FP</span></div>
-      <div class="lbl">I drove Veritas's false-positive rate from about 30% to <b>under 5%</b> by reading failures one at a time. That eval-and-ship-or-don't discipline is exactly how you keep an agent trustworthy in production.</div>
-    </div>
+    <section>
+      <h2 class="reveal">Deploy, measure, own the outcome</h2>
+      <div class="wide">
+      <div class="cycle reveal" aria-label="Animation: an AI agent is deployed into a customer's contact center across several releases; the auto-resolution rate climbs from 64% to 93% as each deploy is tuned, until the outcome is owned.">
+        <div class="cycle-top">
+          <div class="metric">
+            <div class="metric-lbl">auto-resolution rate</div>
+            <div class="metric-val"><span class="mnum">0</span><span class="mpct">%</span></div>
+          </div>
+          <div class="tuned"><span class="tuned-k">tuned:</span> <span class="tuned-v">scoping the deploy</span></div>
+        </div>
+        <div class="bartrack"><div class="barfill"></div></div>
+        <div class="deploys">
+          <div class="dchip" data-d="0">deploy v1</div>
+          <div class="dchip" data-d="1">v2</div>
+          <div class="dchip" data-d="2">v3</div>
+          <div class="dchip" data-d="3">v4 · owned</div>
+        </div>
+      </div>
+      </div>
+      <p class="anim-cap">Forward-deployed means owning the number, not handing off a demo. Each release is scoped, shipped, measured, and tuned until the outcome holds. That lifecycle is the whole job.</p>
+    </section>
 
     <section>
       <h2 class="reveal">What your JD asks for, line by line</h2>
@@ -300,6 +339,11 @@
         </div>
       </div>
     </section>
+
+    <div class="stat reveal" data-countdown data-from="30" data-to="5">
+      <div class="num">30%<span class="arrow">&rarr;</span><span class="val">5</span>%<span class="fp">FP</span></div>
+      <div class="lbl">I drove Veritas's false-positive rate from about 30% to <b>under 5%</b> by reading failures one at a time. That eval-and-ship-or-don't discipline is exactly how you keep an agent trustworthy in production.</div>
+    </div>
 
     <section>
       <h2 class="reveal">What I've shipped this way</h2>
@@ -547,6 +591,64 @@
           setTimeout(function(){ if(brand) brand.classList.remove('spin'); }, 800);
         });
       }
+    })();
+  </script>
+
+  <script>
+    /* ============ deployment-lifecycle outcome climb ============ */
+    (function(){
+      var c = document.querySelector('.cycle');
+      if(!c) return;
+      var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var mnum = c.querySelector('.mnum'), bar = c.querySelector('.barfill'), tunedV = c.querySelector('.tuned-v'), chips = c.querySelectorAll('.dchip');
+      var steps = [
+        { v:64, t:'intent routing' },
+        { v:79, t:'fallback prompts' },
+        { v:88, t:'tool calls' },
+        { v:93, t:'outcome owned', owned:true }
+      ];
+      // counter via setTimeout (NOT rAF — survives a backgrounded tab)
+      var countTimer = null;
+      function countTo(from, to){
+        if(countTimer) clearTimeout(countTimer);
+        var cur = from, stepv = Math.max(1, Math.round((to - from) / 14));
+        (function s(){ cur += stepv; if(cur >= to) cur = to; mnum.textContent = cur; if(cur < to) countTimer = setTimeout(s, 45); })();
+      }
+      function applyStep(i){
+        var st = steps[i];
+        chips.forEach(function(ch, idx){
+          ch.classList.remove('active','owned');
+          if(idx < i) ch.classList.add('active');
+          else if(idx === i) ch.classList.add(st.owned ? 'owned' : 'active');
+        });
+        tunedV.textContent = st.t;
+        c.classList.toggle('owned', !!st.owned);
+        bar.style.width = st.v + '%';        // inline width (not a class) so it always applies
+        countTo(i === 0 ? 0 : steps[i-1].v, st.v);
+      }
+      function finalState(){
+        chips.forEach(function(ch, idx){ ch.classList.toggle('active', idx < steps.length-1); });
+        chips[steps.length-1].classList.add('owned');
+        c.classList.add('owned'); tunedV.textContent = steps[steps.length-1].t;
+        mnum.textContent = '93'; bar.style.width = '93%';
+      }
+      if(reduce){ finalState(); return; }
+      var i = 0, timers = [];
+      function clearT(){ timers.forEach(clearTimeout); timers = []; if(countTimer){ clearTimeout(countTimer); countTimer = null; } }
+      function reset(){
+        chips.forEach(function(ch){ ch.classList.remove('active','owned'); });
+        c.classList.remove('owned'); bar.style.width = '0%'; mnum.textContent = '0'; tunedV.textContent = 'scoping the deploy';
+      }
+      function tick(){
+        applyStep(i);
+        i++;
+        if(i < steps.length){ timers.push(setTimeout(tick, 1700)); }
+        else { timers.push(setTimeout(function(){ i = 0; reset(); timers.push(setTimeout(tick, 650)); }, 2600)); }
+      }
+      var io = new IntersectionObserver(function(es){
+        es.forEach(function(e){ if(e.isIntersecting){ clearT(); reset(); timers.push(setTimeout(tick, 450)); io.unobserve(c); } });
+      }, { threshold: 0.3 });
+      io.observe(c);
     })();
   </script>
 </body>
