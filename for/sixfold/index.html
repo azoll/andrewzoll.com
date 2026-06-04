@@ -96,6 +96,48 @@
       h1 .w{opacity:1 !important;transform:none !important;}
       .fl{animation:none !important;}
     }
+
+    /* ============ signature: parallel-agent orchestration ============ */
+    .anim-cap{font-size:14px;font-style:italic;color:#9A9AA1;line-height:1.55;margin:18px 0 0;max-width:680px;}
+    .orch{--ok:#1FA463;--amber:#D9821B;border:1px solid var(--line);border-radius:14px;background:linear-gradient(180deg,#fff,#FFFCFE);padding:26px 26px 24px;display:grid;grid-template-columns:auto 28px 1fr 28px auto;align-items:center;gap:0;}
+    .orch .col-in,.orch .col-out{display:flex;flex-direction:column;align-items:stretch;justify-content:center;}
+    .orch .conn{display:flex;align-items:center;justify-content:center;color:var(--line);font-size:22px;font-weight:700;transition:color .4s ease;}
+    .orch .conn.lit{color:var(--magenta);}
+    .orch .node{border:2px solid var(--line);border-radius:11px;background:var(--paper);padding:14px 16px;text-align:center;transition:border-color .4s ease,background .4s ease,box-shadow .4s ease,transform .4s ease;}
+    .orch .node .nlbl{font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:0.08em;text-transform:uppercase;font-weight:600;color:var(--muted);transition:color .4s ease;}
+    .orch .node .nval{font-family:Inter,sans-serif;font-size:14.5px;font-weight:700;color:var(--ink);margin-top:6px;line-height:1.3;transition:color .4s ease;}
+    .orch .node.in.lit{border-color:var(--magenta);background:var(--pink-soft);box-shadow:0 0 0 5px rgba(219,53,140,0.10);}
+    .orch .node.in.lit .nlbl{color:var(--magenta-dk);}
+    .orch .node.out.lit{border-color:var(--magenta);background:var(--magenta);transform:scale(1.02);box-shadow:0 8px 24px rgba(219,53,140,0.28);}
+    .orch .node.out.lit .nlbl{color:var(--pink);}
+    .orch .node.out.lit .nval{color:#fff;}
+    .orch .lanes{display:flex;flex-direction:column;gap:10px;}
+    .orch .lane{display:flex;align-items:center;gap:12px;border:1px solid var(--line);border-radius:10px;background:var(--paper);padding:11px 14px;transition:border-color .35s ease,background .35s ease,box-shadow .35s ease;}
+    .orch .lane .lname{font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;font-size:12px;font-weight:600;color:var(--muted);min-width:118px;transition:color .35s ease;}
+    .orch .lane .lstatus{flex:1;font-family:Inter,sans-serif;font-size:13.5px;color:var(--muted);display:flex;align-items:center;gap:8px;min-height:18px;}
+    .orch .lane .shim{flex:1;height:9px;border-radius:5px;background:linear-gradient(90deg,#f3e6ef,#f7d6ea,#f3e6ef);background-size:200% 100%;animation:orchShim 1.05s linear infinite;display:none;}
+    @keyframes orchShim{0%{background-position:200% 0;}100%{background-position:-200% 0;}}
+    .orch .lane .ic{width:18px;height:18px;border-radius:50%;display:none;align-items:center;justify-content:center;color:#fff;font-size:11px;flex-shrink:0;}
+    .orch .lane .ic.ok{background:var(--ok);} .orch .lane .ic.flag{background:var(--amber);}
+    .orch .lane .restext{display:none;}
+    .orch .lane.running{border-color:var(--magenta);background:var(--pink-soft);box-shadow:0 0 0 4px rgba(219,53,140,0.08);}
+    .orch .lane.running .lname{color:var(--magenta-dk);}
+    .orch .lane.running .shim{display:block;}
+    .orch .lane.resolved{border-color:var(--line);background:#fff;}
+    .orch .lane.resolved .lname{color:var(--ink);}
+    .orch .lane.resolved .ic{display:inline-flex;}
+    .orch .lane.resolved .resext,.orch .lane.resolved .restext{display:inline;}
+    .orch .lane.resolved .restext{color:var(--ink);font-weight:600;}
+    .orch .lane.resolved.flagged .restext{color:var(--amber);}
+    @media (prefers-reduced-motion: reduce){
+      .orch .lane .shim{animation:none;}
+      .orch .node,.orch .lane,.orch .conn{transition:none;}
+    }
+    @media (max-width:720px){
+      .orch{grid-template-columns:1fr;gap:10px;}
+      .orch .conn{transform:rotate(90deg);height:20px;}
+      .orch .lane .lname{min-width:96px;}
+    }
   </style>
 </head>
 <body>
@@ -116,10 +158,40 @@
     <p class="subnote reveal">A candidate's pitch for your Forward Deployed Engineer role, built in your brand on purpose. Not affiliated with Sixfold. Just me, showing the work.</p>
     </div>
 
-    <div class="stat reveal" data-countdown data-from="30" data-to="5">
-      <div class="statnum"><span class="val">30</span><span class="statpct">% FP</span></div>
-      <div class="statlbl">Veritas false-positive rate, after I read the failures one at a time. <b>From ~30% to under 5%.</b> That loop is the whole job.</div>
-    </div>
+    <section>
+      <h2 class="reveal">One case, agents in parallel</h2>
+      <div class="wide">
+      <div class="orch reveal" aria-label="Animation: one underwriting case fans out to four agents that run in parallel — medical history, financials, risk class, prior claims — each resolving to a finding, then merging into one cited recommendation routed to human review.">
+        <div class="col-in">
+          <div class="node in" data-in><div class="nlbl">case</div><div class="nval">underwriting case</div></div>
+        </div>
+        <div class="conn" data-c="in">&rsaquo;</div>
+        <div class="lanes">
+          <div class="lane" data-lane="0">
+            <span class="lname">medical history</span>
+            <span class="lstatus"><span class="shim"></span><span class="ic ok">&#10003;</span><span class="restext">running&hellip;</span></span>
+          </div>
+          <div class="lane" data-lane="1">
+            <span class="lname">financials</span>
+            <span class="lstatus"><span class="shim"></span><span class="ic flag">!</span><span class="restext">running&hellip;</span></span>
+          </div>
+          <div class="lane" data-lane="2">
+            <span class="lname">risk class</span>
+            <span class="lstatus"><span class="shim"></span><span class="ic ok">&#10003;</span><span class="restext">running&hellip;</span></span>
+          </div>
+          <div class="lane" data-lane="3">
+            <span class="lname">prior claims</span>
+            <span class="lstatus"><span class="shim"></span><span class="ic ok">&#10003;</span><span class="restext">running&hellip;</span></span>
+          </div>
+        </div>
+        <div class="conn" data-c="out">&rsaquo;</div>
+        <div class="col-out">
+          <div class="node out" data-out><div class="nlbl">decision</div><div class="nval">cited recommendation &rarr; human review</div></div>
+        </div>
+      </div>
+      </div>
+      <p class="anim-cap">One underwriting case, four agents working at once, then merged into a cited recommendation a human signs off on. Orchestrating parallel agents is not a wishlist line for me, it is the default.</p>
+    </section>
 
     <section>
       <h2 class="reveal">How I actually work</h2>
@@ -173,6 +245,11 @@
         <li class="reveal">"See the same problem twice, reach for a platform move" is already how I build. The feature-flag gate and the model router both started as one customer's problem.</li>
       </ul>
     </section>
+
+    <div class="stat reveal" data-countdown data-from="30" data-to="5">
+      <div class="statnum"><span class="val">30</span><span class="statpct">% FP</span></div>
+      <div class="statlbl">Veritas false-positive rate, after I read the failures one at a time. <b>From ~30% to under 5%.</b> That loop is the whole job.</div>
+    </div>
 
     <section>
       <h2 class="reveal">The honest part</h2>
@@ -337,6 +414,96 @@
           setTimeout(function(){ topbar.classList.remove('flourish'); if(brand) brand.classList.remove('spin'); }, 1000);
         });
       }
+    })();
+  </script>
+
+  <script>
+    /* ============ parallel-agent orchestration timeline ============ */
+    (function(){
+      var orch = document.querySelector('.orch');
+      if(!orch) return;
+      var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var inNode = orch.querySelector('[data-in]');
+      var outNode = orch.querySelector('[data-out]');
+      var connIn = orch.querySelector('[data-c="in"]');
+      var connOut = orch.querySelector('[data-c="out"]');
+      var lanes = orch.querySelectorAll('.lane');
+      // each lane: its resolved finding text + whether it is a flag (amber) or pass (ok)
+      var findings = [
+        {text:'clear', flag:false},
+        {text:'DTI flagged', flag:true},
+        {text:'preferred', flag:false},
+        {text:'clean', flag:false}
+      ];
+      function setText(lane, t){ lane.querySelector('.restext').innerHTML = t; }
+      function reset(){
+        inNode.classList.remove('lit');
+        outNode.classList.remove('lit');
+        connIn.classList.remove('lit');
+        connOut.classList.remove('lit');
+        lanes.forEach(function(lane){
+          lane.classList.remove('running','resolved','flagged');
+          setText(lane, 'running&hellip;');
+        });
+      }
+      function resolved(){
+        // static end-state for reduced motion: everything resolved + decision filled
+        inNode.classList.add('lit');
+        connIn.classList.add('lit');
+        connOut.classList.add('lit');
+        outNode.classList.add('lit');
+        lanes.forEach(function(lane, i){
+          lane.classList.remove('running');
+          lane.classList.add('resolved');
+          if(findings[i].flag) lane.classList.add('flagged');
+          setText(lane, findings[i].text);
+        });
+      }
+      if(reduce){ resolved(); return; }
+
+      var timers = [];
+      function clearTimers(){ timers.forEach(clearTimeout); timers = []; }
+
+      // steps drive the loop; the parallel fan-out is handled inside the 'fan' step.
+      var steps = [
+        {fn:function(){ // fan out: case lights, all four lanes go RUNNING within ~120ms stagger
+          reset();
+          inNode.classList.add('lit');
+          connIn.classList.add('lit');
+          lanes.forEach(function(lane, i){
+            timers.push(setTimeout(function(){ lane.classList.add('running'); }, i * 40));
+          });
+        }, d:1500},
+        {fn:function(){ // all four resolve nearly together
+          lanes.forEach(function(lane, i){
+            timers.push(setTimeout(function(){
+              lane.classList.remove('running');
+              lane.classList.add('resolved');
+              if(findings[i].flag) lane.classList.add('flagged');
+              setText(lane, findings[i].text);
+            }, i * 30));
+          });
+        }, d:1300},
+        {fn:function(){ // fan in: decision node fills magenta
+          connOut.classList.add('lit');
+          outNode.classList.add('lit');
+        }, d:1400},
+        {fn:function(){ /* hold on the decision, then loop restarts via reset in step 0 */ }, d:600}
+      ];
+
+      var i = 0, started = false;
+      function tick(){
+        var st = steps[i];
+        st.fn();
+        i = (i + 1) % steps.length;
+        timers.push(setTimeout(tick, st.d));
+      }
+      var io = new IntersectionObserver(function(es){
+        es.forEach(function(e){
+          if(e.isIntersecting && !started){ started = true; tick(); io.unobserve(orch); }
+        });
+      }, { threshold: 0.3 });
+      io.observe(orch);
     })();
   </script>
 </body>

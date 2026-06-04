@@ -60,6 +60,30 @@
     .receipt:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(94,101,251,0.14);}
     .reveal{opacity:0;transform:translateY(18px);transition:opacity .65s cubic-bezier(.2,.6,.2,1),transform .65s cubic-bezier(.2,.6,.2,1);}
     .reveal.in{opacity:1;transform:none;}
+    .anim-cap{font-size:14px;font-style:italic;color:#9A9AA1;line-height:1.55;margin:18px 0 0;max-width:680px;}
+
+    /* ============ signature: weeks-not-years speed race ============ */
+    .race{border:1px solid var(--line);border-radius:14px;background:linear-gradient(180deg,#fff,#FBFBFF);padding:26px;position:relative;overflow:hidden;}
+    .lane{margin:0 0 22px;}
+    .lane:last-of-type{margin-bottom:0;}
+    .lane-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:0 0 9px;}
+    .lane-label{font-size:15px;font-weight:600;color:var(--ink);letter-spacing:-0.01em;}
+    .lane-meta{font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;font-size:12px;font-weight:600;letter-spacing:0.04em;color:var(--muted);white-space:nowrap;}
+    .lane.ai .lane-meta{color:var(--indigo);}
+    .track{position:relative;height:16px;border-radius:999px;background:var(--indigo-soft);overflow:hidden;}
+    .lane.trad .track{background:#EEF0F3;}
+    .barfill{position:absolute;top:0;left:0;height:100%;width:0;border-radius:999px;}
+    .lane.ai .barfill{background:linear-gradient(90deg,var(--indigo),#7A80FF);}
+    .lane.trad .barfill{background:linear-gradient(90deg,#C3C8D2,#AEB4C0);}
+    .barfill.go-ai{width:100%;transition:width 1.7s cubic-bezier(.25,.6,.25,1);}
+    .barfill.go-trad{width:100%;transition:width 7s linear;}
+    .chip{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;letter-spacing:0.02em;color:var(--indigo);background:var(--indigo-soft);border:1px solid #DDE0FF;padding:3px 11px;border-radius:999px;margin-left:10px;opacity:0;transform:translateY(4px);transition:opacity .4s ease,transform .4s ease;vertical-align:middle;}
+    .chip.show{opacity:1;transform:none;}
+    .clock{font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;font-size:13px;font-weight:600;color:var(--muted);margin:20px 0 0;padding-top:18px;border-top:1px solid var(--line);letter-spacing:0.03em;}
+    .clock .num{color:var(--indigo);font-variant-numeric:tabular-nums;}
+    @media (prefers-reduced-motion: reduce){
+      .barfill,.chip{transition:none !important;}
+    }
 
     /* ============ whimsy layer ============ */
     #progress{position:fixed;top:0;left:0;height:3px;width:0;background:var(--indigo);z-index:30;transition:width .1s linear;}
@@ -107,12 +131,29 @@
     <p class="subnote reveal">A candidate's pitch for your Senior Product Manager role, built in your style on purpose. Not affiliated with Bestow. Just me, showing the work.</p>
     </div>
 
-    <div class="wide">
-    <div class="stat reveal" data-countdown data-from="30" data-to="5">
-      <div class="statnum"><span class="val">30</span><span class="statpct">% FP</span></div>
-      <div class="statlbl">Veritas false-positive rate, after I read the failures one at a time. <b>From ~30% to under 5%.</b> That loop is the whole job.</div>
-    </div>
-    </div>
+    <section>
+      <h2 class="reveal">Weeks, not years</h2>
+      <div class="wide">
+      <div class="race reveal" aria-label="Animation: an AI-native insurance build fills to launched in weeks while a traditional build is still crawling toward ~18 months.">
+        <div class="lane ai">
+          <div class="lane-head">
+            <span class="lane-label">AI-native buildout<span class="chip" data-chip>&#10003; launched</span></span>
+            <span class="lane-meta">weeks</span>
+          </div>
+          <div class="track"><div class="barfill" data-bar="ai"></div></div>
+        </div>
+        <div class="lane trad">
+          <div class="lane-head">
+            <span class="lane-label">Traditional buildout</span>
+            <span class="lane-meta">~18 months</span>
+          </div>
+          <div class="track"><div class="barfill" data-bar="trad"></div></div>
+        </div>
+        <div class="clock">elapsed: <span class="num" data-clock>0</span> months</div>
+      </div>
+      </div>
+      <p class="anim-cap">Same insurance product. The AI-native build ships in weeks while the traditional one is still in committee. That speed is the JD's "weeks instead of years," and it is already how I work.</p>
+    </section>
 
     <section>
       <h2 class="reveal">What your JD asks for, and what I bring</h2>
@@ -139,6 +180,13 @@
         </div>
       </div>
     </section>
+
+    <div class="wide">
+    <div class="stat reveal" data-countdown data-from="30" data-to="5">
+      <div class="statnum"><span class="val">30</span><span class="statpct">% FP</span></div>
+      <div class="statlbl">Veritas false-positive rate, after I read the failures one at a time. <b>From ~30% to under 5%.</b> That loop is the whole job.</div>
+    </div>
+    </div>
 
     <section>
       <h2 class="reveal">What I've shipped this way</h2>
@@ -321,6 +369,78 @@
           setTimeout(function(){ brand.classList.remove('spin'); }, 900);
         });
       }
+    })();
+  </script>
+
+  <script>
+    /* ============ weeks-not-years speed race ============ */
+    (function(){
+      var race = document.querySelector('.race');
+      if(!race) return;
+      var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var aiBar = race.querySelector('[data-bar="ai"]');
+      var tradBar = race.querySelector('[data-bar="trad"]');
+      var chip = race.querySelector('[data-chip]');
+      var clock = race.querySelector('[data-clock]');
+      var TRAD_MS = 7000, MAX_MONTHS = 18;
+
+      if(reduce){
+        aiBar.style.width = '100%';
+        tradBar.style.width = '12%';
+        chip.classList.add('show');
+        clock.textContent = '~18';
+        return;
+      }
+
+      var raf = null, timers = [];
+      function clearAll(){
+        if(raf) cancelAnimationFrame(raf);
+        raf = null;
+        timers.forEach(clearTimeout);
+        timers = [];
+      }
+      function run(){
+        clearAll();
+        // reset
+        aiBar.classList.remove('go-ai');
+        tradBar.classList.remove('go-trad');
+        aiBar.style.width = '0%';
+        tradBar.style.width = '0%';
+        chip.classList.remove('show');
+        clock.textContent = '0';
+        // force reflow so the transition restarts cleanly
+        void race.offsetWidth;
+        // kick the bars (inline width wins over the class, so drive it here;
+        // the .go-* classes supply the per-lane transition timing)
+        aiBar.classList.add('go-ai');
+        tradBar.classList.add('go-trad');
+        aiBar.style.width = '100%';
+        tradBar.style.width = '100%';
+        // AI lane "launched" chip after its fast fill completes
+        timers.push(setTimeout(function(){ chip.classList.add('show'); }, 1800));
+        // month counter ramps 0 -> ~18 across the slow lane's duration
+        var start = null;
+        function tickClock(ts){
+          if(start === null) start = ts;
+          var p = Math.min(1, (ts - start) / TRAD_MS);
+          clock.textContent = Math.round(p * MAX_MONTHS);
+          if(p < 1){ raf = requestAnimationFrame(tickClock); }
+          else {
+            clock.textContent = MAX_MONTHS;
+            // hold, then loop
+            timers.push(setTimeout(run, 1200));
+          }
+        }
+        raf = requestAnimationFrame(tickClock);
+      }
+
+      var started = false;
+      var io = new IntersectionObserver(function(es){
+        es.forEach(function(e){
+          if(e.isIntersecting && !started){ started = true; run(); io.unobserve(race); }
+        });
+      }, { threshold: 0.3 });
+      io.observe(race);
     })();
   </script>
 </body>
