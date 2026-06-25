@@ -62,6 +62,22 @@
   .prompt-body{margin:0;padding:1.1rem 1.25rem;font-family:var(--font-mono);font-size:.9rem;line-height:1.66;color:var(--ink-soft);white-space:pre-wrap;border-left:2px solid var(--gold);}
   .prompt-body b{color:var(--gold-bright);font-weight:600;}
 
+  .matrix-wrap{overflow-x:auto;margin:1.4rem 0 1.1rem;-webkit-overflow-scrolling:touch;}
+  .matrix{width:100%;border-collapse:collapse;font-size:.9rem;min-width:640px;}
+  .matrix th,.matrix td{text-align:left;padding:.72rem .85rem;border-bottom:1px solid var(--brd);vertical-align:top;line-height:1.42;}
+  .matrix thead th{font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);font-weight:700;border-bottom:1px solid var(--brd-strong);}
+  .matrix tbody th{font-weight:700;color:var(--gold-bright);white-space:nowrap;}
+  .matrix td{color:var(--ink-soft);}
+  .matrix tbody tr:last-child th,.matrix tbody tr:last-child td{border-bottom:0;}
+  .pick{list-style:none;padding:0;margin:1.2rem 0 0;display:grid;gap:.7rem;}
+  .pick li{padding-left:1.35rem;position:relative;color:var(--ink-soft);font-size:.97rem;line-height:1.5;}
+  .pick li::before{content:"";position:absolute;left:0;top:.55em;width:8px;height:8px;border-radius:50%;background:var(--gold);}
+  .pick b{color:var(--ink);}
+  .setup-steps{counter-reset:s;list-style:none;padding:0;margin:1.4rem 0 0;display:grid;gap:12px;}
+  .setup-steps li{counter-increment:s;display:grid;grid-template-columns:auto 1fr;gap:1.1rem;align-items:start;border:1px solid var(--brd);border-radius:12px;padding:1rem 1.2rem;background:var(--panel);}
+  .setup-steps li::before{content:counter(s);font-family:var(--font-serif);font-size:1.5rem;font-weight:500;color:var(--gold-bright);line-height:1.1;}
+  .setup-steps b{color:var(--ink);}
+
   footer{border-top:1px solid var(--brd);margin-top:3rem;padding-top:1.8rem;color:var(--muted);font-size:.92rem;display:flex;flex-wrap:wrap;gap:.4rem 1.5rem;align-items:center;}
   footer b{color:var(--ink-soft);font-weight:600;}
   .backlink{display:inline-block;margin-left:auto;color:var(--gold);text-decoration:none;font-weight:600;}
@@ -97,6 +113,8 @@
   </div>
 
   <nav class="toc">
+    <a href="#where">Where it lives</a>
+    <a href="#setup">Set it up</a>
     <a href="#start">Start here</a>
     <a href="#halo">Halo Services</a>
     <a href="#adamah">Adamah</a>
@@ -106,6 +124,65 @@
     <a href="#group">Across the group</a>
     <a href="#seats">One per seat</a>
   </nav>
+
+  <!-- WHERE IT LIVES -->
+  <section class="group" id="where">
+    <div class="group-head"><h2>Where it lives</h2><span class="tagline">pick the home before you build</span></div>
+    <hr class="group-rule" />
+    <p style="color:var(--ink-soft);font-size:1rem;margin:0 0 .4rem;max-width:64ch;">Your OS needs a home: one place your prompts, your standards, and your notes live. Most people freeze right here. Do not. Here is the honest comparison of the three real options.</p>
+    <div class="matrix-wrap">
+      <table class="matrix">
+        <thead>
+          <tr><th>Option</th><th>Best for</th><th>Setup</th><th>Undo history</th><th>Team use</th><th>AI can act on it</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th>Plain folder<br/><span style="font-weight:400;color:var(--muted);font-size:.82rem">on your computer + iCloud or Dropbox</span></th>
+            <td>Starting today with zero new tools</td>
+            <td>Minutes</td>
+            <td>No. The last save wins</td>
+            <td>Clunky. You share the folder</td>
+            <td>Limited. You copy and paste</td>
+          </tr>
+          <tr>
+            <th>Obsidian<br/><span style="font-weight:400;color:var(--muted);font-size:.82rem">a free markdown notebook</span></th>
+            <td>People who think in notes and links</td>
+            <td>About an hour</td>
+            <td>Light, with a synced folder</td>
+            <td>Light sharing</td>
+            <td>Some. It is just text files</td>
+          </tr>
+          <tr>
+            <th>GitHub repo<br/><span style="font-weight:400;color:var(--muted);font-size:.82rem">version-controlled files</span></th>
+            <td>Several leaders who want real delegation</td>
+            <td>A day to learn, then easy</td>
+            <td>Full. Every change tracked and reversible</td>
+            <td>Built for it. Review and approve changes</td>
+            <td>Yes. Agents read, write, and get reviewed</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <ul class="pick">
+      <li><b>Want to start today with nothing new to learn?</b> Use a plain folder. Even simpler, start in a single Claude project.</li>
+      <li><b>Already live in your notes and like connecting ideas?</b> Use Obsidian.</li>
+      <li><b>Several leaders will use it, and you want history plus AI doing real work safely?</b> Use GitHub. It is what I run mine on.</li>
+    </ul>
+    <p style="color:var(--muted);font-size:.92rem;margin:1.3rem 0 0;">You are not locked in. Most people start in a folder and move up to GitHub once it earns its keep. Moving up is mostly copy and paste.</p>
+  </section>
+
+  <!-- SET IT UP -->
+  <section class="group" id="setup">
+    <div class="group-head"><h2>Set it up</h2><span class="tagline">five steps, about an afternoon</span></div>
+    <hr class="group-rule" />
+    <ol class="setup-steps">
+      <li><div><b>Pick the home.</b> Use the table above. If you cannot decide, start with a plain folder and move it later.</div></li>
+      <li><div><b>Make one folder or note per arena.</b> Halo, Adamah, Sychar, Mellevet, Vaza, then Finance, then anything at home that matters.</div></li>
+      <li><div><b>Add two files at the top.</b> One called standards (how you like things done: your margin floor, your operators, your rules). One called prompts (the ones from this pack you actually use).</div></li>
+      <li><div><b>Run the keystone brief every morning.</b> Every time you correct the AI, write the fix into your standards file. That file is the memory, and it makes tomorrow sharper than today.</div></li>
+      <li><div><b>Add one new prompt or one new arena each week.</b> That is the whole method. Small, steady, and it compounds.</div></li>
+    </ol>
+  </section>
 
   <!-- START -->
   <section class="group" id="start">
