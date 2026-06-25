@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Personal OS · Starter Prompt Pack · Built for Nate Vaughn</title>
+<meta name="description" content="Copy-paste AI prompts Andrew Zoll prepared for the Halo leadership team, built around Halo, Adamah, Sychar, Mellevet, and Vaza." />
+<meta name="robots" content="noindex, nofollow" />
+<link rel="icon" href="/assets/favicon-primary.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --bg:#090c16; --panel:rgba(255,255,255,.035); --brd:rgba(255,255,255,.09);
+    --brd-strong:rgba(246,214,144,.35); --ink:#F4F1EA; --ink-soft:#CFCABF;
+    --muted:#8a92a4; --gold:#E6B45C; --gold-bright:#F6D690; --gold-soft:rgba(230,180,92,.13);
+    --font-sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+    --font-serif:'Fraunces','Iowan Old Style',Georgia,'Times New Roman',serif;
+    --font-mono:ui-monospace,'SF Mono','SFMono-Regular',Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-sans);
+    -webkit-font-smoothing:antialiased;line-height:1.5;
+    background-image:
+      radial-gradient(800px 500px at 85% -5%, rgba(230,180,92,.10), transparent 60%),
+      radial-gradient(900px 600px at 0% 100%, rgba(96,128,176,.07), transparent 60%);
+    background-attachment:fixed;
+  }
+  .wrap{max-width:880px;margin:0 auto;padding:clamp(32px,6vw,72px) clamp(20px,5vw,40px) 80px;}
+
+  header{border-bottom:1px solid var(--brd);padding-bottom:2rem;margin-bottom:2.4rem;}
+  .eyebrow{font-size:.78rem;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);font-weight:700;margin:0 0 1rem;}
+  h1.doc-title{font-family:var(--font-serif);font-weight:500;letter-spacing:-.02em;line-height:1.02;font-size:clamp(2.2rem,6vw,3.6rem);margin:0;}
+  h1.doc-title .of{color:var(--gold-bright);font-style:italic;}
+  .doc-sub{font-size:clamp(1rem,1.8vw,1.2rem);color:var(--ink-soft);margin:1.1rem 0 0;max-width:60ch;}
+
+  .howto{background:var(--panel);border:1px solid var(--brd);border-radius:14px;padding:1.2rem 1.4rem;margin-bottom:2.6rem;}
+  .howto h2{font-size:.74rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);font-weight:700;margin:0 0 .7rem;}
+  .howto ol{margin:0;padding-left:1.2rem;color:var(--ink-soft);font-size:.98rem;}
+  .howto li{margin:.35rem 0;}
+  .howto b{color:var(--ink);}
+
+  .toc{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:3rem;}
+  .toc a{font-size:.82rem;color:var(--ink-soft);text-decoration:none;border:1px solid var(--brd);border-radius:999px;padding:.4rem .9rem;transition:.18s;}
+  .toc a:hover{border-color:var(--brd-strong);color:var(--gold-bright);background:var(--gold-soft);}
+
+  section.group{margin:0 0 3rem;scroll-margin-top:20px;}
+  .group-head{display:flex;align-items:baseline;gap:.8rem;margin:0 0 .4rem;}
+  .group-head h2{font-size:clamp(1.4rem,3vw,1.9rem);font-weight:800;letter-spacing:-.015em;margin:0;}
+  .group-head .tagline{font-size:.95rem;color:var(--muted);}
+  .group-rule{height:1px;background:linear-gradient(90deg,var(--brd-strong),transparent);margin:.7rem 0 1.6rem;border:0;}
+
+  .prompt{border:1px solid var(--brd);border-radius:14px;overflow:hidden;background:rgba(0,0,0,.28);margin-bottom:18px;}
+  .prompt-head{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.7rem .8rem .7rem 1.1rem;background:rgba(255,255,255,.03);border-bottom:1px solid var(--brd);}
+  .prompt-tag{font-size:.92rem;font-weight:700;color:var(--ink);letter-spacing:-.01em;}
+  .copy{font-family:var(--font-sans);font-size:.74rem;font-weight:600;letter-spacing:.04em;color:var(--ink-soft);background:rgba(255,255,255,.04);border:1px solid var(--brd);border-radius:8px;padding:.4rem .85rem;cursor:pointer;transition:.18s;white-space:nowrap;}
+  .copy:hover{border-color:var(--brd-strong);color:var(--gold-bright);background:var(--gold-soft);}
+  .copy.done{color:var(--gold-bright);border-color:var(--brd-strong);background:var(--gold-soft);}
+  .prompt-body{margin:0;padding:1.1rem 1.25rem;font-family:var(--font-mono);font-size:.9rem;line-height:1.66;color:var(--ink-soft);white-space:pre-wrap;border-left:2px solid var(--gold);}
+  .prompt-body b{color:var(--gold-bright);font-weight:600;}
+
+  footer{border-top:1px solid var(--brd);margin-top:3rem;padding-top:1.8rem;color:var(--muted);font-size:.92rem;display:flex;flex-wrap:wrap;gap:.4rem 1.5rem;align-items:center;}
+  footer b{color:var(--ink-soft);font-weight:600;}
+  .backlink{display:inline-block;margin-left:auto;color:var(--gold);text-decoration:none;font-weight:600;}
+  .backlink:hover{color:var(--gold-bright);}
+
+  @media print{
+    body{background:#fff;color:#111;}
+    .toc,.copy,.howto{display:none;}
+    .prompt,.prompt-body{border-color:#ccc;color:#111;background:#fff;}
+    .prompt-body{border-left:2px solid #c9a14a;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <a href="../" style="display:inline-block;margin-bottom:1.6rem;color:var(--gold);text-decoration:none;font-size:.86rem;font-weight:600;letter-spacing:.02em;">&larr; Back to the presentation</a>
+
+  <header>
+    <p class="eyebrow">Personal OS &middot; for Nate Vaughn &amp; the Halo leadership team</p>
+    <h1 class="doc-title">Starter Prompt <span class="of">Pack</span></h1>
+    <p class="doc-sub">Real starting points for Halo, Adamah, Sychar, Mellevet, and Vaza. Copy any one, paste it into Claude, fill the brackets, and you are running. Nothing here is a generic example.</p>
+  </header>
+
+  <div class="howto">
+    <h2>How to use this</h2>
+    <ol>
+      <li>Paste a prompt into <b>Claude</b> (or ChatGPT). Fill anything in <b>[brackets]</b> with your real numbers and lists.</li>
+      <li>Tell it your standards once (your margin floor, your crews, your operators). It will remember inside that conversation.</li>
+      <li>Start with the <b>keystone brief</b> and run it every morning for a week before you add anything else.</li>
+      <li>When a prompt earns its keep, save it. That saved set becomes the first room of your Personal OS.</li>
+    </ol>
+  </div>
+
+  <nav class="toc">
+    <a href="#start">Start here</a>
+    <a href="#halo">Halo Services</a>
+    <a href="#adamah">Adamah</a>
+    <a href="#sychar">Sychar</a>
+    <a href="#mellevet">Mellevet</a>
+    <a href="#vaza">Vaza</a>
+    <a href="#group">Across the group</a>
+    <a href="#seats">One per seat</a>
+  </nav>
+
+  <!-- START -->
+  <section class="group" id="start">
+    <div class="group-head"><h2>Start here</h2><span class="tagline">the one that runs your morning</span></div>
+    <hr class="group-rule" />
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-tag">Chief of Staff: your daily one-page brief</span><button class="copy" data-copy>Copy</button></div>
+<pre class="prompt-body">You are my chief of staff. I own five companies in the San Juan Basin:
+Halo (oilfield services and pipeline), Adamah (excavation and reclamation),
+Sychar (utility and civil), Mellevet (safety and compliance), Vaza (metal fab).
+
+Every morning, give me a one-page brief in four sections:
+1. Fires. Anything that will cost money or stop work today.
+2. Decisions. The calls that need me, each with your recommendation.
+3. Money. Jobs to bill, invoices past due, POs to approve.
+4. People. Crews short, certs expiring, follow-ups I owe.
+
+Lead with what is on fire. Keep it to one page. I will paste in the job
+board, my inbox, and the AR aging. Ask me for whatever you still need. <b>[paste]</b></pre>
+    </div>
+  </section>
+
+  <!-- HALO -->
+  <section class="group" id="halo">
+    <div class="group-head"><h2>Halo Services</h2><span class="tagline">oilfield services, pipeline, plant</span></div>
+    <hr class="group-rule" />
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-tag">A second set of eyes on a bid</span><button class="copy" data-copy>Copy</button></div>
+<pre class="prompt-body">Act as my senior estimator for Halo Services. I will paste a bid
+invitation and our draft estimate for an oilfield job.
+
+Check it for:
+- Scope we missed: mobilization, testing, tie-ins, traffic control
+- Margin under our 18% floor <b>[set your real number]</b>
+- Crew or equipment we did not account for
+- Anything that exposes us if the operator changes scope mid-job
+
+Give me go / no-go, the three biggest risks, and the questions to ask
+the operator before I sign. Here is the bid: <b>[paste]</b></pre>
+    </div>
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-tag">Field tickets to invoice, fast</span><button class="copy" data-copy>Copy</button></div>
+<pre class="prompt-body">Act as my field-ticket clerk. I will paste today's signed tickets from
+Halo, Adamah, and Sychar jobs.
+
+For each ticket: confirm hours, equipment, and materials are filled in
+and add up; flag any missing a signature or a billing code; roll up labor
+and equipment hours by job and by company; list which tickets are ready
+to invoice today.
+
+Then tell me which jobs are running over their estimated hours, worst
+first. Here are the tickets: <b>[paste]</b></pre>
+    </div>
+  </section>
+
+  <!-- ADAMAH -->
+  <section class="group" id="adamah">
+    <div class="group-head"><h2>Adamah</h2><span class="tagline">excavation, roads, ponds, reclamation</span></div>
+    <hr class="group-rule" />
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-tag">Keep the iron running</span><button class="copy" data-copy>Copy</button></div>
+<pre class="prompt-body">Act as the maintenance coordinator for Adamah's heavy equipment fleet:
+excavators, dozers, loaders, haul trucks, and the mobile mechanic.
+
+From the hours and usage log I paste:
+- List machines due or overdue for service, by priority
+- Tell me what parts to stage so the mechanic does not make two trips
+- Flag which jobs are at risk this week if a machine goes down
+- Give me a simple PM schedule for the next 30 days
+
+Here is the equipment list and current hours: <b>[paste]</b></pre>
+    </div>
+  </section>
+
+  <!-- SYCHAR -->
+  <section class="group" id="sychar">
+    <div class="group-head"><h2>Sychar</h2><span class="tagline">utility installation, lift stations, civil</span></div>
+    <hr class="group-rule" />
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-tag">Inspections and permits, ahead of the crew</span><button class="copy" data-copy>Copy</button></div>
+<pre class="prompt-body">Act as my project coordinator for Sychar's utility and civil jobs (water,
+sewer, lift stations, subgrade).
+
+From the job list I paste:
+- Build the inspection and permit schedule, with who to call and when
+- Flag any work that cannot start until an inspection clears
+- List materials and submittals with long lead times
+- Tell me which jobs are at risk of missing their date, and why
+
+Here are the active jobs: <b>[paste]</b></pre>
+    </div>
+  </section>
+
+  <!-- MELLEVET -->
+  <section class="group" id="mellevet">
+    <div class="group-head"><h2>Mellevet</h2><span class="tagline">safety, compliance, training, inspections</span></div>
+    <hr class="group-rule" />
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-tag">The compliance watch list</span><button class="copy" data-copy>Copy</button></div>
+<pre class="prompt-body">You run compliance for our group. We are a DOT-regulated carrier and our
+crews work OSHA and operator-qualification sites.
+
+From the roster I paste, build a compliance watch list:
+- CDLs, medical cards, and driver files expiring in 60 days
+- Operator qualifications and safety certs due, by crew
+- DVIRs or incidents this week that need follow-up
+- Training to schedule before the next hitch
+
+Sort by what puts us out of compliance first, and draft the reminder
+email to each supervisor. Here is the roster and cert list: <b>[paste]</b></pre>
+    </div>
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-tag">Turn an incident into a clean report</span><button class="copy" data-copy>Copy</button></div>
+<pre class="prompt-body">Help me document a field incident for Mellevet's records. I will tell you
+what happened in plain words.
+
+Turn it into a clean, factual incident report: what happened, when, who
+was involved, contributing factors, corrective action, and what we change
+so it does not repeat. Neutral language, no blame, defensible to OSHA.
+
+Ask me for anything missing before you write it. Here is what happened: <b>[describe]</b></pre>
+    </div>
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-tag">A 5-minute toolbox talk</span><button class="copy" data-copy>Copy</button></div>
+<pre class="prompt-body">Write a 5-minute toolbox talk for our crews on <b>[trenching and excavation
+safety / hydrogen sulfide / hot work and welding / DOT pre-trip]</b>.
+
+Plain language a working hand will respect, specific to San Juan Basin
+oilfield and civil work. Give me five talking points, three questions to
+ask the crew, and a one-line sign-off sheet.</pre>
+    </div>
+  </section>
+
+  <!-- VAZA -->
+  <section class="group" id="vaza">
+    <div class="group-head"><h2>Vaza</h2><span class="tagline">metal fabrication, prefab, design</span></div>
+    <hr class="group-rule" />
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-tag">Shop work orders and material takeoff</span><button class="copy" data-copy>Copy</button></div>
+<pre class="prompt-body">Act as the shop coordinator for Vaza (metal fab and prefab).
+
+From the drawings or cut list I paste:
+- Build a material takeoff: steel, plate, pipe, consumables
+- Flag long-lead items to order today
+- Sequence the work orders so the shop is not waiting on material
+- Estimate shop hours per assembly
+
+Here is the job: <b>[paste]</b></pre>
+    </div>
+  </section>
+
+  <!-- GROUP -->
+  <section class="group" id="group">
+    <div class="group-head"><h2>Across the group</h2><span class="tagline">money, people, and your inbox</span></div>
+    <hr class="group-rule" />
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-tag">The weekly money rollup</span><button class="copy" data-copy>Copy</button></div>
+<pre class="prompt-body">You are my controller across all five companies. Every Friday, from the
+numbers I paste, give me one rollup:
+- Cash position by company and combined
+- AR aging: who owes us, how old, who to call first
+- AP and POs due next week
+- Any company trending under on margin this month
+- The three money decisions that need me
+
+Flag anything unusual versus last week. Plain numbers, no jargon.
+Here is this week's data: <b>[paste]</b></pre>
+    </div>
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-tag">Collections without burning the relationship</span><button class="copy" data-copy>Copy</button></div>
+<pre class="prompt-body">Be my collections clerk. From the AR aging I paste, group what is owed by
+how late it is.
+
+For everything over 30 days, draft a short, firm, friendly email to the
+operator or GC asking for payment status and a date. Keep the relationship
+intact but be direct. Then tell me which three I should call instead of
+email. Here is the aging: <b>[paste]</b></pre>
+    </div>
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-tag">Inbox triage, ruthless</span><button class="copy" data-copy>Copy</button></div>
+<pre class="prompt-body">Triage my inbox. I will paste my last 30 emails across all five companies.
+
+Sort each into: needs me today, delegate (say to whom), reply later, or
+ignore. For the "needs me today" ones, draft a two-line reply I can
+approve. Be ruthless. Here they are: <b>[paste]</b></pre>
+    </div>
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-tag">A job post a working hand will read</span><button class="copy" data-copy>Copy</button></div>
+<pre class="prompt-body">Write a job posting for a <b>[welder / equipment operator / pipeline laborer
+/ safety tech]</b> for <b>[Halo / Adamah / Sychar / Vaza]</b> in the San Juan Basin.
+
+Plain language, no corporate fluff: pay range, schedule, what the work is,
+and what we require (certs, CDL, experience). Then give me five phone-screen
+questions to separate the real ones from the rest.</pre>
+    </div>
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-tag">One page before any meeting</span><button class="copy" data-copy>Copy</button></div>
+<pre class="prompt-body">I have a meeting with <b>[operator / GC / vendor]</b> at <b>[time]</b>. Here is the
+history and the thread.
+
+Give me a one-page prep: what they want, what I want, the three things to
+get decided, the likely objections, and my walk-away. End with the first
+sentence I should open with. Here is the context: <b>[paste]</b></pre>
+    </div>
+  </section>
+
+  <!-- SEATS -->
+  <section class="group" id="seats">
+    <div class="group-head"><h2>One for each seat</h2><span class="tagline">hand these to your leaders</span></div>
+    <hr class="group-rule" />
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-tag">Owner</span><button class="copy" data-copy>Copy</button></div>
+<pre class="prompt-body">Be my chief of staff. One page each morning: fires, decisions you need
+from me, money, and people, across all five companies. I will paste the
+job board, my inbox, and the AR aging. <b>[paste]</b></pre>
+    </div>
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-tag">Ops / GM</span><button class="copy" data-copy>Copy</button></div>
+<pre class="prompt-body">Be my dispatcher. From today's job board and crew list, tell me where I
+am short on people or equipment, what to move, and which job is at risk if
+I do nothing. Here it is: <b>[paste]</b></pre>
+    </div>
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-tag">Safety lead</span><button class="copy" data-copy>Copy</button></div>
+<pre class="prompt-body">Be my compliance watch. From this roster, list every CDL, cert, and
+operator qualification expiring in 60 days, worst first, and draft the
+reminder email to each supervisor. Here is the roster: <b>[paste]</b></pre>
+    </div>
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-tag">Office / finance</span><button class="copy" data-copy>Copy</button></div>
+<pre class="prompt-body">Be my AR clerk. From this aging report, tell me who to call first today,
+draft each collection email, and total what we should collect this week.
+Here is the aging: <b>[paste]</b></pre>
+    </div>
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-tag">Estimator</span><button class="copy" data-copy>Copy</button></div>
+<pre class="prompt-body">Be a second set of eyes on this bid. Find the scope I missed, tell me if
+margin is under our floor, and list the three questions to ask before I
+sign. Here is the bid: <b>[paste]</b></pre>
+    </div>
+  </section>
+
+  <footer>
+    <span><b>Andrew Zoll</b></span>
+    <span>andrew@andrewzoll.com</span>
+    <span>andrewzoll.com</span>
+    <a class="backlink" href="../">Back to the presentation &rarr;</a>
+  </footer>
+
+</div>
+
+<script>
+  document.addEventListener('click', function(e){
+    var b = e.target.closest('[data-copy]');
+    if (!b) return;
+    var wrap = b.closest('.prompt');
+    var body = wrap && wrap.querySelector('.prompt-body');
+    if (!body) return;
+    var text = body.textContent.trim();
+    var done = function(){ b.textContent = 'Copied'; b.classList.add('done'); setTimeout(function(){ b.textContent = 'Copy'; b.classList.remove('done'); }, 1500); };
+    if (navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(text).then(done, done); }
+    else { var ta = document.createElement('textarea'); ta.value = text; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); } catch(_){} ta.remove(); done(); }
+  });
+</script>
+</body>
+</html>
