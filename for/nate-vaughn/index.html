@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Personal OS · Built for Nate Vaughn · Andrew Zoll</title>
+<meta name="description" content="A Personal OS blueprint Andrew Zoll prepared for Nate Vaughn and the Halo leadership team: how an AI operating system multiplies an owner-operator across his companies." />
+<meta name="robots" content="noindex, nofollow" />
+<link rel="icon" href="/assets/favicon-primary.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --bg:#090c16;
+    --bg-2:#0b0f1d;
+    --panel:rgba(255,255,255,.035);
+    --panel-2:rgba(255,255,255,.055);
+    --brd:rgba(255,255,255,.09);
+    --brd-strong:rgba(246,214,144,.35);
+    --ink:#F4F1EA;
+    --ink-soft:#CFCABF;
+    --muted:#8a92a4;
+    --gold:#E6B45C;
+    --gold-bright:#F6D690;
+    --gold-soft:rgba(230,180,92,.13);
+    --slate:#7d93b2;
+    --maxw:1140px;
+    --radius:16px;
+    --font-sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+    --font-serif:'Fraunces','Iowan Old Style',Georgia,'Times New Roman',serif;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;height:100%;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--font-sans);
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+    overflow:hidden;
+  }
+  body::before{
+    content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+    background:
+      radial-gradient(900px 600px at 78% 8%, rgba(230,180,92,.10), transparent 60%),
+      radial-gradient(1100px 800px at 12% 92%, rgba(96,128,176,.08), transparent 60%),
+      linear-gradient(160deg,#0a0e1a 0%, #090c16 55%, #07090f 100%);
+  }
+  body::after{
+    content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.5;
+    background:radial-gradient(120% 120% at 50% 50%, transparent 62%, rgba(0,0,0,.55) 100%);
+  }
+
+  /* ---------- Deck + slides ---------- */
+  .deck{position:fixed;inset:0;z-index:1;}
+  .slide{
+    position:absolute;inset:0;
+    display:grid;align-content:center;
+    padding:clamp(34px,6vh,76px) clamp(30px,7.5vw,128px);
+    opacity:0;visibility:hidden;
+    transform:translateY(10px) scale(.994);
+    transition:opacity .5s ease, transform .55s cubic-bezier(.2,.7,.2,1);
+  }
+  .slide.active{opacity:1;visibility:visible;transform:none;}
+  .slide-inner{width:100%;max-width:var(--maxw);margin:0 auto;position:relative;}
+
+  /* staggered reveal of top-level blocks */
+  .slide-inner>*{opacity:0;transform:translateY(16px);transition:opacity .55s cubic-bezier(.2,.7,.2,1), transform .55s cubic-bezier(.2,.7,.2,1);}
+  .slide.active .slide-inner>*{opacity:1;transform:none;}
+  .slide.active .slide-inner>*:nth-child(1){transition-delay:.06s}
+  .slide.active .slide-inner>*:nth-child(2){transition-delay:.14s}
+  .slide.active .slide-inner>*:nth-child(3){transition-delay:.22s}
+  .slide.active .slide-inner>*:nth-child(4){transition-delay:.30s}
+  .slide.active .slide-inner>*:nth-child(5){transition-delay:.38s}
+  .slide.active .slide-inner>*:nth-child(6){transition-delay:.46s}
+  .slide.active .slide-inner>*:nth-child(7){transition-delay:.54s}
+  .slide.active .slide-inner>*:nth-child(8){transition-delay:.62s}
+  .slide.active .slide-inner>*:nth-child(9){transition-delay:.70s}
+  .slide.active .slide-inner>*:nth-child(10){transition-delay:.78s}
+
+  /* ---------- Typography ---------- */
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:.6em;
+    font-size:clamp(.7rem,1vw,.84rem);font-weight:600;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--gold);margin:0 0 1.4rem;
+  }
+  .eyebrow::before{content:"";width:26px;height:1px;background:linear-gradient(90deg,var(--gold),transparent);}
+  .eyebrow.center{justify-content:center;}
+  .eyebrow.center::before{display:none;}
+
+  h1.title{
+    font-family:var(--font-sans);font-weight:800;letter-spacing:-.025em;line-height:1.04;
+    font-size:clamp(2rem,4.6vw,3.5rem);margin:0 0 1.1rem;color:var(--ink);
+  }
+  .statement{
+    font-weight:800;letter-spacing:-.022em;line-height:1.08;
+    font-size:clamp(1.85rem,4.6vw,3.5rem);margin:0;color:var(--ink);
+  }
+  .statement .hl{color:var(--gold-bright);}
+  .serif{font-family:var(--font-serif);font-weight:500;letter-spacing:-.01em;}
+  .lead{
+    font-size:clamp(1.04rem,1.7vw,1.34rem);line-height:1.55;color:var(--ink-soft);
+    max-width:64ch;margin:1.25rem 0 0;font-weight:400;
+  }
+  .lead.tight{margin-top:1rem;}
+  .sub{font-size:clamp(1rem,1.6vw,1.28rem);color:var(--muted);line-height:1.5;margin:1.1rem 0 0;max-width:60ch;}
+  p.note{font-size:clamp(.92rem,1.3vw,1.05rem);color:var(--muted);margin:1.4rem 0 0;}
+  strong.gold{color:var(--gold-bright);font-weight:600;}
+  .inlink{color:var(--gold-bright);text-decoration:none;border-bottom:1px solid rgba(246,214,144,.4);padding-bottom:1px;transition:.18s;}
+  .inlink:hover{border-color:var(--gold-bright);color:#fff;}
+  .big-quote-source{margin-top:1.6rem;color:var(--gold);font-size:clamp(.8rem,1.1vw,.95rem);letter-spacing:.16em;text-transform:uppercase;font-weight:600;}
+
+  /* ---------- Cover ---------- */
+  .cover .slide-inner{text-align:left;}
+  .cover-mark{font-size:clamp(.72rem,1vw,.86rem);letter-spacing:.28em;text-transform:uppercase;color:var(--muted);font-weight:600;margin:0 0 2.2rem;}
+  .cover-title{
+    font-family:var(--font-serif);font-weight:500;letter-spacing:-.02em;line-height:.98;
+    font-size:clamp(3.2rem,9vw,7rem);margin:0;color:var(--ink);
+  }
+  .cover-title .of{color:var(--gold-bright);font-style:italic;}
+  .cover-sub{font-size:clamp(1.15rem,2.1vw,1.7rem);color:var(--ink-soft);margin:1.5rem 0 0;font-weight:400;max-width:30ch;line-height:1.3;}
+  .cover-meta{display:flex;flex-wrap:wrap;gap:.6rem 1.6rem;margin-top:2.6rem;color:var(--muted);font-size:clamp(.85rem,1.2vw,1rem);}
+  .cover-meta b{color:var(--ink-soft);font-weight:600;}
+  .cover-rule{width:54px;height:2px;background:linear-gradient(90deg,var(--gold),transparent);margin:2.2rem 0 0;border:0;}
+
+  /* halo art */
+  .halo{position:absolute;pointer-events:none;z-index:0;}
+  .cover .halo{top:50%;right:-6%;width:min(54vh,560px);transform:translateY(-50%);opacity:.9;}
+  .divider .halo{top:50%;left:50%;width:min(70vh,640px);transform:translate(-50%,-50%);opacity:.8;}
+  .closing .halo{top:50%;left:50%;width:min(64vh,560px);transform:translate(-50%,-50%);opacity:.75;}
+  .spin{transform-box:fill-box;transform-origin:center;animation:spin 60s linear infinite;}
+  .spin.rev{animation-duration:90s;animation-direction:reverse;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+
+  /* ---------- Divider ---------- */
+  .divider .slide-inner{text-align:center;}
+  .divider .eyebrow{justify-content:center;}
+  .divider .eyebrow::before{display:none;}
+  .divider-title{font-family:var(--font-serif);font-weight:500;letter-spacing:-.02em;line-height:1.02;font-size:clamp(2.4rem,6vw,4.6rem);margin:.4rem 0 0;}
+  .divider-sub{font-size:clamp(1.05rem,1.8vw,1.4rem);color:var(--muted);margin:1.4rem auto 0;max-width:46ch;line-height:1.45;}
+
+  /* ---------- Cards / grids ---------- */
+  .grid{display:grid;gap:18px;margin-top:2rem;}
+  .g2{grid-template-columns:repeat(2,1fr);}
+  .g3{grid-template-columns:repeat(3,1fr);}
+  .card{
+    background:var(--panel);border:1px solid var(--brd);border-radius:var(--radius);
+    padding:clamp(18px,2.2vw,28px);position:relative;
+  }
+  .card h3{font-size:clamp(1.05rem,1.7vw,1.32rem);margin:.2rem 0 .5rem;font-weight:700;letter-spacing:-.01em;color:var(--ink);}
+  .card p{font-size:clamp(.92rem,1.3vw,1.04rem);color:var(--ink-soft);line-height:1.5;margin:0;}
+  .num{
+    display:inline-grid;place-items:center;width:38px;height:38px;border-radius:11px;
+    background:var(--gold-soft);border:1px solid var(--brd-strong);color:var(--gold-bright);
+    font-weight:800;font-size:1.05rem;margin-bottom:.7rem;
+  }
+  .card .kick{font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);font-weight:700;}
+
+  /* feature list */
+  .flist{list-style:none;padding:0;margin:1.9rem 0 0;display:grid;gap:1.05rem;}
+  .flist li{display:grid;grid-template-columns:auto 1fr;gap:1rem;align-items:start;font-size:clamp(1rem,1.5vw,1.2rem);color:var(--ink-soft);line-height:1.45;}
+  .flist .dot{margin-top:.55em;width:9px;height:9px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 4px var(--gold-soft);}
+  .flist b{color:var(--ink);font-weight:700;}
+
+  /* two column compare */
+  .compare{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:2rem;}
+  .compare .col{border-radius:var(--radius);padding:clamp(20px,2.4vw,30px);border:1px solid var(--brd);}
+  .compare .before{background:rgba(255,255,255,.02);}
+  .compare .after{background:linear-gradient(180deg,rgba(230,180,92,.08),rgba(230,180,92,.02));border-color:var(--brd-strong);}
+  .compare .lab{font-size:.74rem;letter-spacing:.2em;text-transform:uppercase;font-weight:700;margin-bottom:1rem;}
+  .compare .before .lab{color:var(--muted);}
+  .compare .after .lab{color:var(--gold-bright);}
+  .compare ul{margin:0;padding:0;list-style:none;display:grid;gap:.75rem;}
+  .compare li{font-size:clamp(.95rem,1.35vw,1.12rem);color:var(--ink-soft);line-height:1.4;padding-left:1.4rem;position:relative;}
+  .compare li::before{content:"";position:absolute;left:0;top:.55em;width:7px;height:7px;border-radius:2px;}
+  .compare .before li::before{background:var(--muted);}
+  .compare .after li::before{background:var(--gold);}
+
+  /* ---------- Org chart ---------- */
+  .org{margin-top:2.1rem;display:grid;justify-items:center;gap:0;}
+  .org-node{
+    background:var(--panel-2);border:1px solid var(--brd);border-radius:12px;
+    padding:.85rem 1.3rem;text-align:center;min-width:min(360px,72vw);
+  }
+  .org-node .t{display:block;font-weight:700;font-size:clamp(.98rem,1.4vw,1.16rem);color:var(--ink);}
+  .org-node .d{display:block;font-size:clamp(.78rem,1.05vw,.92rem);color:var(--muted);margin-top:.18rem;}
+  .org-node.you{border-color:var(--brd-strong);background:linear-gradient(180deg,rgba(230,180,92,.14),rgba(230,180,92,.03));}
+  .org-node.you .t{color:var(--gold-bright);}
+  .org-conn{width:1px;height:26px;background:linear-gradient(180deg,var(--brd-strong),var(--brd));}
+  .org-row{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;}
+  .org-row .org-node{min-width:auto;padding:.7rem 1rem;}
+  .org-chips{display:flex;gap:9px;flex-wrap:wrap;justify-content:center;max-width:760px;}
+  .chip{font-size:clamp(.74rem,1vw,.88rem);color:var(--ink-soft);background:var(--panel);border:1px solid var(--brd);border-radius:999px;padding:.42rem .9rem;}
+
+  /* ---------- Arena tiles ---------- */
+  .arenas{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:2rem;}
+  .arena{border:1px solid var(--brd);border-radius:13px;padding:1rem 1.05rem;background:var(--panel);}
+  .arena .ic{font-size:1.3rem;line-height:1;margin-bottom:.55rem;display:block;}
+  .arena .nm{display:block;font-weight:700;font-size:clamp(.92rem,1.25vw,1.05rem);color:var(--ink);}
+  .arena .ds{display:block;font-size:clamp(.76rem,1vw,.88rem);color:var(--muted);margin-top:.2rem;line-height:1.35;}
+  .arena.alt{background:linear-gradient(180deg,rgba(230,180,92,.09),rgba(230,180,92,.02));border-color:var(--brd-strong);}
+
+  /* ---------- Flow ---------- */
+  .flow{display:flex;align-items:stretch;gap:10px;flex-wrap:wrap;margin-top:2.2rem;}
+  .flow-step{flex:1 1 150px;border:1px solid var(--brd);border-radius:13px;padding:1.05rem 1rem;background:var(--panel);min-width:140px;}
+  .flow-step .s{font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);font-weight:700;}
+  .flow-step .h{font-weight:700;font-size:clamp(.95rem,1.3vw,1.1rem);margin-top:.35rem;color:var(--ink);}
+  .flow-step .p{font-size:clamp(.78rem,1.02vw,.9rem);color:var(--muted);margin-top:.4rem;line-height:1.4;}
+  .flow-arrow{align-self:center;color:var(--gold);font-size:1.3rem;opacity:.7;}
+
+  /* ---------- Scripture ---------- */
+  .verse-wrap{margin-top:1.4rem;}
+  .verse{
+    font-family:var(--font-serif);font-weight:400;font-style:italic;
+    font-size:clamp(1.4rem,2.9vw,2.3rem);line-height:1.25;color:var(--ink);
+    border-left:2px solid var(--gold);padding-left:1.3rem;max-width:24ch;margin:0;
+  }
+  .verse-ref{display:block;font-family:var(--font-sans);font-style:normal;font-weight:600;font-size:clamp(.78rem,1.05vw,.92rem);letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-top:1.1rem;padding-left:1.3rem;}
+  .principle{margin-top:1.6rem;}
+  .principle h2{font-size:clamp(1.25rem,2.1vw,1.7rem);font-weight:800;letter-spacing:-.015em;margin:0 0 .7rem;color:var(--ink);}
+  .principle p{font-size:clamp(1rem,1.45vw,1.18rem);color:var(--ink-soft);line-height:1.55;margin:0;max-width:46ch;}
+  .split{display:grid;grid-template-columns:1.05fr 1fr;gap:clamp(28px,5vw,72px);align-items:center;}
+
+  /* constitution */
+  .const{margin-top:1.9rem;border:1px solid var(--brd-strong);border-radius:var(--radius);overflow:hidden;background:linear-gradient(180deg,rgba(230,180,92,.06),rgba(255,255,255,.01));}
+  .const li{display:grid;grid-template-columns:auto 1fr;gap:1rem;align-items:center;padding:1rem clamp(18px,2.4vw,30px);border-top:1px solid var(--brd);font-size:clamp(1rem,1.5vw,1.2rem);color:var(--ink);}
+  .const li:first-child{border-top:0;}
+  .const li .rn{font-family:var(--font-serif);font-weight:500;color:var(--gold-bright);font-size:1.2rem;min-width:1.6ch;}
+  .const{list-style:none;padding:0;}
+
+  /* steps */
+  .steps{margin-top:2rem;display:grid;gap:14px;}
+  .step{display:grid;grid-template-columns:auto 1fr;gap:1.2rem;align-items:start;border:1px solid var(--brd);border-radius:13px;padding:1.05rem 1.2rem;background:var(--panel);}
+  .step .n{font-family:var(--font-serif);font-size:1.7rem;font-weight:500;color:var(--gold-bright);line-height:1;min-width:1.4ch;}
+  .step .b h3{margin:0 0 .25rem;font-size:clamp(1rem,1.45vw,1.18rem);font-weight:700;color:var(--ink);}
+  .step .b p{margin:0;font-size:clamp(.88rem,1.2vw,1rem);color:var(--muted);line-height:1.45;}
+
+  /* timeline 30/60/90 */
+  .phases{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:2rem;}
+  .phase{border:1px solid var(--brd);border-radius:var(--radius);padding:clamp(18px,2.2vw,26px);background:var(--panel);position:relative;}
+  .phase .ph{font-size:.74rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);font-weight:700;}
+  .phase h3{font-size:clamp(1.1rem,1.8vw,1.4rem);margin:.3rem 0 .9rem;font-weight:800;color:var(--ink);letter-spacing:-.01em;}
+  .phase ul{margin:0;padding:0;list-style:none;display:grid;gap:.6rem;}
+  .phase li{font-size:clamp(.86rem,1.2vw,1rem);color:var(--ink-soft);line-height:1.4;padding-left:1.2rem;position:relative;}
+  .phase li::before{content:"";position:absolute;left:0;top:.55em;width:6px;height:6px;border-radius:50%;background:var(--gold);}
+  .phase.mid{background:linear-gradient(180deg,rgba(230,180,92,.07),rgba(230,180,92,.01));}
+
+  /* ---------- Prompt blocks ---------- */
+  .prompt{border:1px solid var(--brd);border-radius:14px;overflow:hidden;background:rgba(0,0,0,.30);margin-top:1.5rem;}
+  .prompt-head{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.6rem .8rem .6rem 1rem;background:rgba(255,255,255,.03);border-bottom:1px solid var(--brd);}
+  .prompt-tag{font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);font-weight:700;}
+  .copy{font-family:var(--font-sans);font-size:.72rem;font-weight:600;letter-spacing:.04em;color:var(--ink-soft);background:rgba(255,255,255,.04);border:1px solid var(--brd);border-radius:7px;padding:.34rem .75rem;cursor:pointer;transition:.18s;white-space:nowrap;}
+  .copy:hover{border-color:var(--brd-strong);color:var(--gold-bright);background:var(--gold-soft);}
+  .copy.done{color:var(--gold-bright);border-color:var(--brd-strong);background:var(--gold-soft);}
+  .prompt-body{margin:0;padding:1rem 1.2rem;font-family:ui-monospace,'SF Mono','SFMono-Regular',Menlo,Consolas,monospace;font-size:clamp(.72rem,1.02vw,.94rem);line-height:1.62;color:var(--ink-soft);white-space:pre-wrap;border-left:2px solid var(--gold);}
+  .prompt-body b{color:var(--gold-bright);font-weight:600;}
+  .pnote{font-size:clamp(.85rem,1.2vw,1rem);color:var(--muted);margin-top:1.1rem;}
+  .seats{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:1.9rem;}
+  .seat{border:1px solid var(--brd);border-radius:12px;padding:.95rem 1.05rem;background:var(--panel);}
+  .seat .role{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);font-weight:700;display:flex;justify-content:space-between;align-items:center;gap:.6rem;}
+  .seat .pq{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:clamp(.78rem,1.05vw,.92rem);color:var(--ink-soft);line-height:1.46;margin-top:.5rem;}
+  .seat .copy{padding:.18rem .5rem;font-size:.64rem;}
+
+  /* ---------- HUD ---------- */
+  .progress{position:fixed;top:0;left:0;right:0;height:3px;z-index:30;background:rgba(255,255,255,.05);}
+  .progress-bar{height:100%;width:2.8%;background:linear-gradient(90deg,var(--gold),var(--gold-bright));transition:width .4s cubic-bezier(.2,.7,.2,1);box-shadow:0 0 14px rgba(230,180,92,.5);}
+  .hud{position:fixed;right:clamp(18px,3vw,40px);bottom:clamp(14px,2.6vh,28px);z-index:30;display:flex;align-items:center;gap:12px;}
+  .counter{font-size:.82rem;color:var(--muted);font-variant-numeric:tabular-nums;letter-spacing:.05em;}
+  .counter b{color:var(--ink-soft);font-weight:600;}
+  .navbtn{width:38px;height:38px;border-radius:50%;border:1px solid var(--brd);background:rgba(255,255,255,.03);color:var(--ink-soft);font-size:1.05rem;cursor:pointer;display:grid;place-items:center;transition:.2s;backdrop-filter:blur(6px);}
+  .navbtn:hover{border-color:var(--brd-strong);color:var(--gold-bright);background:var(--gold-soft);}
+  .brandfoot{position:fixed;left:clamp(18px,3vw,40px);bottom:clamp(15px,2.6vh,28px);z-index:30;display:flex;align-items:center;gap:.7rem;font-size:.76rem;color:var(--muted);letter-spacing:.04em;transition:opacity .4s;}
+  .brandfoot .bf-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);}
+  .brandfoot .bf-act{color:var(--gold);letter-spacing:.14em;text-transform:uppercase;font-weight:600;}
+  .hint{position:fixed;left:50%;bottom:clamp(15px,2.6vh,28px);transform:translateX(-50%);z-index:30;font-size:.78rem;color:var(--muted);letter-spacing:.05em;display:flex;align-items:center;gap:.5rem;animation:pulse 2.6s ease-in-out infinite;}
+  .hint kbd{font-family:var(--font-sans);border:1px solid var(--brd);border-radius:6px;padding:.1rem .45rem;color:var(--ink-soft);font-size:.72rem;}
+  @keyframes pulse{0%,100%{opacity:.45}50%{opacity:.9}}
+
+  @media (max-width:760px){
+    .g2,.g3,.compare,.phases,.split{grid-template-columns:1fr;}
+    .arenas{grid-template-columns:repeat(2,1fr);}
+    .cover .halo,.divider .halo{opacity:.4;}
+    .verse{max-width:none;}
+  }
+
+  @media print{
+    @page{size:1280px 720px;margin:0;}
+    html,body{overflow:visible;height:auto;background:#090c16;}
+    .hud,.progress,.hint,.brandfoot{display:none!important;}
+    .deck{position:static;}
+    .slide{position:relative;inset:auto;opacity:1!important;visibility:visible!important;transform:none!important;width:1280px;height:720px;page-break-after:always;break-after:page;}
+    .slide-inner>*{opacity:1!important;transform:none!important;}
+    .spin{animation:none!important;}
+  }
+</style>
+<noscript><style>.slide{position:relative!important;opacity:1!important;visibility:visible!important;transform:none!important;height:100vh;}.slide-inner>*{opacity:1!important;transform:none!important;}</style></noscript>
+</head>
+<body>
+
+<!-- shared SVG defs for halo art -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <radialGradient id="hg" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="rgba(246,214,144,.30)"/>
+      <stop offset="48%" stop-color="rgba(230,180,92,.07)"/>
+      <stop offset="100%" stop-color="rgba(230,180,92,0)"/>
+    </radialGradient>
+  </defs>
+</svg>
+
+<div class="progress"><div class="progress-bar" id="bar"></div></div>
+
+<div class="deck" id="deck">
+
+  <!-- 1 · COVER -->
+  <section class="slide cover active" data-bare>
+    <svg class="halo" viewBox="0 0 400 400" aria-hidden="true">
+      <circle cx="200" cy="200" r="190" fill="url(#hg)"/>
+      <g class="spin"><circle cx="200" cy="200" r="120" fill="none" stroke="rgba(246,214,144,.5)" stroke-width="1.2" stroke-dasharray="3 10"/></g>
+      <circle cx="200" cy="200" r="150" fill="none" stroke="rgba(230,180,92,.26)" stroke-width="1"/>
+      <g class="spin rev"><circle cx="200" cy="200" r="178" fill="none" stroke="rgba(230,180,92,.16)" stroke-width="1" stroke-dasharray="1 14"/></g>
+    </svg>
+    <div class="slide-inner">
+      <p class="cover-mark">Prepared for Nate Vaughn &amp; the Halo leadership team</p>
+      <h1 class="cover-title">Personal <span class="of">OS</span></h1>
+      <p class="cover-sub">Multiply your output without multiplying yourself.</p>
+      <hr class="cover-rule"/>
+      <div class="cover-meta">
+        <span><b>A working blueprint</b> for owner-operators</span>
+        <span>Built from a real system, not a theory</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2 · HOOK -->
+  <section class="slide" data-act="I · The Constraint">
+    <div class="slide-inner">
+      <p class="eyebrow">Act I · The Constraint</p>
+      <p class="statement">You don't have a time problem.<br/>You have a <span class="hl">you</span> problem.</p>
+      <p class="lead">Across every company you own, the same thing is true. The decisions that matter most still route through one person. You. That is not a flaw in how you lead. It is the natural ceiling of being the most capable person in the room.</p>
+    </div>
+  </section>
+
+  <!-- 3 · BOTTLENECK -->
+  <section class="slide" data-act="I · The Constraint">
+    <div class="slide-inner">
+      <p class="eyebrow">The shape of the problem</p>
+      <h1 class="title">Every business you own shares one bottleneck</h1>
+      <div class="org" style="margin-top:1.4rem">
+        <div class="org-row" style="margin-bottom:0">
+          <div class="org-node"><span class="t">Halo Services</span></div>
+          <div class="org-node"><span class="t">Adamah</span></div>
+          <div class="org-node"><span class="t">Sychar</span></div>
+          <div class="org-node"><span class="t">Mellevet</span></div>
+          <div class="org-node"><span class="t">Vaza</span></div>
+        </div>
+        <div class="org-conn"></div>
+        <div class="org-node you"><span class="t">You</span><span class="d">every decision, every approval, every stall</span></div>
+      </div>
+      <p class="lead">Five companies, one bottleneck. Owning all of them doesn't give you more leverage by default. It gives you more inboxes. More approvals. More good work that goes quiet the moment you look away.</p>
+    </div>
+  </section>
+
+  <!-- 4 · WHY HIRING DOESN'T FIX IT -->
+  <section class="slide" data-act="I · The Constraint">
+    <div class="slide-inner">
+      <p class="eyebrow">The usual answer, and its ceiling</p>
+      <h1 class="title">"Just hire more people" runs into a wall</h1>
+      <ul class="flist">
+        <li><span class="dot"></span><span>People add <b>coordination cost</b>, not just capacity. Ten people need managing, aligning, and correcting.</span></li>
+        <li><span class="dot"></span><span>You can hire hands. <b>You cannot hire your judgment.</b> The calls only you can make stay on your desk.</span></li>
+        <li><span class="dot"></span><span>Every new hire is <b>one more person waiting on you</b> to unblock them.</span></li>
+      </ul>
+      <p class="note">Headcount scales the work. It does not scale you.</p>
+    </div>
+  </section>
+
+  <!-- 5 · WHAT'S SCARCE -->
+  <section class="slide" data-act="I · The Constraint">
+    <div class="slide-inner">
+      <p class="eyebrow">The one asset you can't buy more of</p>
+      <p class="statement">Your <span class="hl">attention</span> and your <span class="hl">judgment</span>.</p>
+      <p class="lead">Money replenishes. Staff turns over. Markets move and come back. The one non-renewable resource in your entire portfolio is the number of good decisions you can personally make in a day. Everything you build should protect that number.</p>
+    </div>
+  </section>
+
+  <!-- 6 · THE REFRAME -->
+  <section class="slide" data-act="I · The Constraint">
+    <div class="slide-inner">
+      <p class="eyebrow">The shift</p>
+      <h1 class="title">Stop being your company's best operator.<br/>Become its architect.</h1>
+      <div class="compare">
+        <div class="col before">
+          <div class="lab">The best doer</div>
+          <ul>
+            <li>The business is capped at his own two hands.</li>
+            <li>Growth means more hours from one person.</li>
+            <li>When he stops, the work stops.</li>
+          </ul>
+        </div>
+        <div class="col after">
+          <div class="lab">The architect</div>
+          <ul>
+            <li>Builds the system that does the work.</li>
+            <li>Growth means a better system, not more hours.</li>
+            <li>The work runs whether he is watching or not.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7 · ACT II DIVIDER -->
+  <section class="slide divider" data-bare>
+    <svg class="halo" viewBox="0 0 400 400" aria-hidden="true">
+      <circle cx="200" cy="200" r="190" fill="url(#hg)"/>
+      <g class="spin"><circle cx="200" cy="200" r="135" fill="none" stroke="rgba(246,214,144,.4)" stroke-width="1" stroke-dasharray="2 12"/></g>
+      <circle cx="200" cy="200" r="165" fill="none" stroke="rgba(230,180,92,.18)" stroke-width="1"/>
+    </svg>
+    <div class="slide-inner">
+      <p class="eyebrow center">Act II</p>
+      <h2 class="divider-title">A Personal Operating System</h2>
+      <p class="divider-sub">Not an app. Not a tool. An operating layer for your life and your businesses.</p>
+    </div>
+  </section>
+
+  <!-- 8 · DEFINITION -->
+  <section class="slide" data-act="II · What It Is">
+    <div class="slide-inner">
+      <p class="eyebrow">The definition</p>
+      <h1 class="title">What it actually is</h1>
+      <p class="lead" style="max-width:60ch">A Personal OS is a structured system where artificial intelligence runs the <strong class="gold">execution</strong> of your work, and you run the <strong class="gold">judgment</strong>.</p>
+      <ul class="flist" style="margin-top:1.4rem">
+        <li><span class="dot"></span><span>It has a <b>memory</b>, so it never forgets a standard you set.</span></li>
+        <li><span class="dot"></span><span>It has a <b>chain of command</b>, so one instruction becomes finished work.</span></li>
+        <li><span class="dot"></span><span>It has <b>guardrails</b>, so nothing important happens without you.</span></li>
+        <li><span class="dot"></span><span>It <b>works while you sleep</b>, and reports back when you wake up.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 9 · CORE PRINCIPLE -->
+  <section class="slide" data-act="II · What It Is">
+    <div class="slide-inner">
+      <p class="eyebrow">The core principle</p>
+      <p class="statement">AI runs your <span class="hl">weak seats</span>.<br/>You run your <span class="hl">strong</span> ones.</p>
+      <div class="compare" style="margin-top:2.2rem">
+        <div class="col before">
+          <div class="lab">Hand it to the system</div>
+          <ul>
+            <li>Drafting, research, scheduling, follow-up</li>
+            <li>Inbox triage and coordination</li>
+            <li>The work that drains you and doesn't need your soul</li>
+          </ul>
+        </div>
+        <div class="col after">
+          <div class="lab">Keep it for yourself</div>
+          <ul>
+            <li>Strategy and vision</li>
+            <li>Key relationships and hard calls</li>
+            <li>The work only you can carry</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10 · THREE PILLARS -->
+  <section class="slide" data-act="II · What It Is">
+    <div class="slide-inner">
+      <p class="eyebrow">The foundation it stands on</p>
+      <h1 class="title">Three pillars</h1>
+      <div class="grid g3">
+        <div class="card">
+          <span class="num">1</span>
+          <h3>Structure</h3>
+          <p>Your world, mapped into clear domains the system can understand and act inside.</p>
+        </div>
+        <div class="card">
+          <span class="num">2</span>
+          <h3>Delegation</h3>
+          <p>AI agents that execute real work end to end, not assistants that only answer questions.</p>
+        </div>
+        <div class="card">
+          <span class="num">3</span>
+          <h3>Human gatekeeping</h3>
+          <p>Nothing irreversible happens without you. You are the final authority, always.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11 · ORG CHART OF ONE -->
+  <section class="slide" data-act="II · What It Is">
+    <div class="slide-inner">
+      <p class="eyebrow">The big idea</p>
+      <h1 class="title">An entire org, reporting to one person</h1>
+      <div class="org">
+        <div class="org-node you"><span class="t">You</span><span class="d">vision &amp; final authority</span></div>
+        <div class="org-conn"></div>
+        <div class="org-node"><span class="t">Chief of Staff agent</span><span class="d">takes one instruction, runs the whole play</span></div>
+        <div class="org-conn"></div>
+        <div class="org-row">
+          <div class="org-node"><span class="t">Arena manager</span></div>
+          <div class="org-node"><span class="t">Arena manager</span></div>
+          <div class="org-node"><span class="t">Arena manager</span></div>
+        </div>
+        <div class="org-conn"></div>
+        <div class="org-chips">
+          <span class="chip">research agent</span><span class="chip">drafting agent</span><span class="chip">outreach agent</span><span class="chip">scheduling agent</span><span class="chip">analysis agent</span><span class="chip">review agent</span>
+        </div>
+      </div>
+      <p class="note">You give one instruction at the top. The system breaks it down, assigns it, executes it, and hands you back the result and the decisions. Not the busywork.</p>
+    </div>
+  </section>
+
+  <!-- 12 · BEFORE / AFTER DAY -->
+  <section class="slide" data-act="II · What It Is">
+    <div class="slide-inner">
+      <p class="eyebrow">What changes day to day</p>
+      <h1 class="title">A Tuesday, before and after</h1>
+      <div class="compare">
+        <div class="col before">
+          <div class="lab">Before</div>
+          <ul>
+            <li>140 emails and nine fires before lunch.</li>
+            <li>Three things you meant to follow up on, and didn't.</li>
+            <li>Decisions buried under tasks.</li>
+            <li>You end the day busy and behind.</li>
+          </ul>
+        </div>
+        <div class="col after">
+          <div class="lab">After</div>
+          <ul>
+            <li>One morning brief on a single screen.</li>
+            <li>The routine work already drafted or done.</li>
+            <li>Five real decisions waiting for a yes or no.</li>
+            <li>You end the day ahead.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 13 · ACT III DIVIDER -->
+  <section class="slide divider" data-bare>
+    <svg class="halo" viewBox="0 0 400 400" aria-hidden="true">
+      <circle cx="200" cy="200" r="190" fill="url(#hg)"/>
+      <g class="spin"><circle cx="200" cy="200" r="135" fill="none" stroke="rgba(246,214,144,.4)" stroke-width="1" stroke-dasharray="2 12"/></g>
+      <circle cx="200" cy="200" r="165" fill="none" stroke="rgba(230,180,92,.18)" stroke-width="1"/>
+    </svg>
+    <div class="slide-inner">
+      <p class="eyebrow center">Act III · The Blueprint</p>
+      <h2 class="divider-title">How It's Structured</h2>
+      <p class="divider-sub">Six parts. Each one you can build, one at a time.</p>
+    </div>
+  </section>
+
+  <!-- 14 · ARENAS -->
+  <section class="slide" data-act="III · The Blueprint">
+    <div class="slide-inner">
+      <p class="eyebrow">Part 1</p>
+      <h1 class="title">Arenas: divide your world into domains</h1>
+      <p class="lead tight">Each company is an arena. So is your finance office, your family, and your faith. Each has its own context, its own rules, and its own agents. The system always knows which world it is operating in, so a Mellevet compliance task never gets answered with Vaza shop logic.</p>
+      <div class="arenas">
+        <div class="arena"><span class="ic">⚙️</span><span class="nm">Halo Services</span><span class="ds">roustabout, pipeline, plant</span></div>
+        <div class="arena"><span class="ic">🚜</span><span class="nm">Adamah</span><span class="ds">excavation, roads, reclamation</span></div>
+        <div class="arena"><span class="ic">🚰</span><span class="nm">Sychar</span><span class="ds">utility, civil, subgrade</span></div>
+        <div class="arena"><span class="ic">🦺</span><span class="nm">Mellevet</span><span class="ds">safety, compliance, training</span></div>
+        <div class="arena"><span class="ic">🔧</span><span class="nm">Vaza</span><span class="ds">metal fab, prefab, design</span></div>
+        <div class="arena alt"><span class="ic">💰</span><span class="nm">Finance &amp; admin</span><span class="ds">cash, AR, payroll, all five</span></div>
+        <div class="arena alt"><span class="ic">🏠</span><span class="nm">Family</span><span class="ds">presence, rhythms</span></div>
+        <div class="arena alt"><span class="ic">✝️</span><span class="nm">Faith</span><span class="ds">worship, giving, rest</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 15 · SKILLS -->
+  <section class="slide" data-act="III · The Blueprint">
+    <div class="slide-inner">
+      <p class="eyebrow">Part 2</p>
+      <h1 class="title">Skills: repeatable plays, run on command</h1>
+      <p class="lead">A skill is a play your system knows how to run start to finish. Build the prospect list. Draft the weekly update. Prep tomorrow's meeting. Triage the inbox. Reconcile the report.</p>
+      <p class="lead tight">You define it once, in plain language. The system then runs it the same way every time, to your standard, at two in the afternoon or two in the morning. The quality stops depending on who is having a good day.</p>
+    </div>
+  </section>
+
+  <!-- 16 · MEMORY -->
+  <section class="slide" data-act="III · The Blueprint">
+    <div class="slide-inner">
+      <p class="eyebrow">Part 3</p>
+      <h1 class="title">Memory: it remembers so you don't have to</h1>
+      <p class="lead">Every preference, decision, and standard you give the system is written down, kept, and reused. Tell it once how you like a proposal written, and it never asks again.</p>
+      <p class="lead tight">The system gets sharper the longer it runs, because it is compounding everything it learns about how you work. Nothing important lives only in your head anymore, which means nothing important leaves when a person does.</p>
+    </div>
+  </section>
+
+  <!-- 17 · DECISION QUEUE -->
+  <section class="slide" data-act="III · The Blueprint">
+    <div class="slide-inner">
+      <p class="eyebrow">Part 4</p>
+      <p class="statement">The system does the <span class="hl">tasks</span>.<br/>You make the <span class="hl">calls</span>.</p>
+      <p class="lead">Instead of a to-do list that grows faster than you can clear it, you get a short queue of decisions only you can make. Everything else is already handled, or already moving. This is the heart of the whole thing. You stop managing tasks and start spending your day on judgment.</p>
+    </div>
+  </section>
+
+  <!-- 18 · OBSERVABILITY -->
+  <section class="slide" data-act="III · The Blueprint">
+    <div class="slide-inner">
+      <p class="eyebrow">Part 5</p>
+      <h1 class="title">One screen for the state of everything</h1>
+      <p class="lead">A live dashboard shows what every agent is doing, what is waiting on you, what shipped today, and what is stuck. The whole portfolio, at a glance.</p>
+      <p class="lead tight">And every agent shows its work. You can open any decision the system made and see exactly what it did and why. You are never asked to trust a black box. You are handed an audit trail.</p>
+    </div>
+  </section>
+
+  <!-- 19 · GUARDRAILS -->
+  <section class="slide" data-act="III · The Blueprint">
+    <div class="slide-inner">
+      <p class="eyebrow">Part 6</p>
+      <h1 class="title">Guardrails: safety lives in the system, not in good intentions</h1>
+      <ul class="flist">
+        <li><span class="dot"></span><span>Anything <b>irreversible</b>, sending, spending, deleting, publishing, is gated behind your approval.</span></li>
+        <li><span class="dot"></span><span>Permission lives at the <b>key level</b>, not in a polite instruction the AI could misread. It physically cannot do what it has no key for.</span></li>
+        <li><span class="dot"></span><span>The system <b>proposes</b>. You <b>dispose</b>. Code checks the work, you make the call.</span></li>
+      </ul>
+      <p class="note">A rule the machine can ignore is not a safeguard. Real safety is built in, not asked for.</p>
+    </div>
+  </section>
+
+  <!-- 20 · DAY IN THE LIFE FLOW -->
+  <section class="slide" data-act="III · The Blueprint">
+    <div class="slide-inner">
+      <p class="eyebrow">How it runs, start to finish</p>
+      <h1 class="title">A single loop, every day</h1>
+      <div class="flow">
+        <div class="flow-step"><span class="s">Morning</span><span class="h">The brief</span><span class="p">One page: what moved, what's waiting, what matters today.</span></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step"><span class="s">Daytime</span><span class="h">Execution</span><span class="p">Agents run the routine work across every arena.</span></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step"><span class="s">As needed</span><span class="h">Decisions</span><span class="p">Only the calls that need you are surfaced.</span></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step"><span class="s">You</span><span class="h">Decide</span><span class="p">Yes, no, or adjust. Seconds, not hours.</span></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step"><span class="s">Evening</span><span class="h">Sweep</span><span class="p">It cleans up, updates memory, and resets for tomorrow.</span></div>
+      </div>
+      <p class="note">The loop tightens over time. The more it runs, the less it needs you for anything but the decisions.</p>
+    </div>
+  </section>
+
+  <!-- 21 · ACT IV DIVIDER (BIBLICAL) -->
+  <section class="slide divider" data-bare>
+    <svg class="halo" viewBox="0 0 400 400" aria-hidden="true">
+      <circle cx="200" cy="200" r="195" fill="url(#hg)"/>
+      <g class="spin"><circle cx="200" cy="200" r="120" fill="none" stroke="rgba(246,214,144,.5)" stroke-width="1.1" stroke-dasharray="1 11"/></g>
+      <circle cx="200" cy="200" r="150" fill="none" stroke="rgba(230,180,92,.24)" stroke-width="1"/>
+      <g class="spin rev"><circle cx="200" cy="200" r="180" fill="none" stroke="rgba(230,180,92,.14)" stroke-width="1" stroke-dasharray="2 16"/></g>
+    </svg>
+    <div class="slide-inner">
+      <p class="eyebrow center">Act IV · The Foundation</p>
+      <h2 class="divider-title serif">Building It on the<br/>Right Foundation</h2>
+      <p class="divider-sub">Biblical principles for putting a powerful tool in its proper place. You named your companies Adamah and Sychar. You already build this way.</p>
+    </div>
+  </section>
+
+  <!-- 22 · PRINCIPLE 1 -->
+  <section class="slide" data-act="IV · The Foundation">
+    <div class="slide-inner">
+      <div class="split">
+        <div class="verse-wrap">
+          <p class="verse">Be fruitful and multiply... and have dominion.</p>
+          <span class="verse-ref">Genesis 1:28 &middot; 2:15</span>
+        </div>
+        <div class="principle">
+          <h2>1. The tool serves the man</h2>
+          <p>Man is given dominion to work and keep creation, and tools are how he does it. AI is a tool. A powerful one, but a tool. The man serves God. The tool serves the man. The moment that order flips, you have built the wrong thing.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 23 · PRINCIPLE 2 -->
+  <section class="slide" data-act="IV · The Foundation">
+    <div class="slide-inner">
+      <div class="split">
+        <div class="verse-wrap">
+          <p class="verse">So God created man in his own image.</p>
+          <span class="verse-ref">Genesis 1:27</span>
+        </div>
+        <div class="principle">
+          <h2>2. The image of God is not transferable</h2>
+          <p>Judgment, conscience, and moral responsibility belong to image-bearers. A machine can calculate, but it cannot bear the image, cannot be held accountable, and will never stand before God. So the call that carries moral weight is always a person's. You never delegate the things that make you responsible.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 24 · PRINCIPLE 3 -->
+  <section class="slide" data-act="IV · The Foundation">
+    <div class="slide-inner">
+      <div class="split">
+        <div class="verse-wrap">
+          <p class="verse">Let each one of you speak the truth.</p>
+          <span class="verse-ref">Ephesians 4:25 &middot; Proverbs 12:22</span>
+        </div>
+        <div class="principle">
+          <h2>3. Truth, never deception</h2>
+          <p>The system never fabricates, never manipulates, and never pretends to be a human when it is not. If it cannot verify a thing, it says so plainly. Truth is not a feature you switch on. It is a fixed setting the system is built around, because lying lips are an abomination to the Lord.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 25 · PRINCIPLE 4 -->
+  <section class="slide" data-act="IV · The Foundation">
+    <div class="slide-inner">
+      <div class="split">
+        <div class="verse-wrap">
+          <p class="verse">In an abundance of counselors there is safety.</p>
+          <span class="verse-ref">Proverbs 11:14 &middot; 15:22</span>
+        </div>
+        <div class="principle">
+          <h2>4. Counsel freely, command never</h2>
+          <p>AI is a tireless counselor. It can hold more information than any board you could assemble and surface what you would have missed. But counsel is not command. You weigh it, test it against wisdom and Scripture, and then you decide. The advisor advises. The man governs.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 26 · PRINCIPLE 5 -->
+  <section class="slide" data-act="IV · The Foundation">
+    <div class="slide-inner">
+      <div class="split">
+        <div class="verse-wrap">
+          <p class="verse">The Sabbath was made for man, not man for the Sabbath.</p>
+          <span class="verse-ref">Mark 2:27 &middot; Exodus 20:8</span>
+        </div>
+        <div class="principle">
+          <h2>5. The man is not the machine</h2>
+          <p>The system works around the clock so that you do not have to. The goal is not to make a man grind like a machine. It is to free him to rest, to worship, and to be present with his family. Build it so it serves your life. Never so it consumes it.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 27 · PRINCIPLE 6 -->
+  <section class="slide" data-act="IV · The Foundation">
+    <div class="slide-inner">
+      <div class="split">
+        <div class="verse-wrap">
+          <p class="verse">Whatever you do, work heartily, as for the Lord.</p>
+          <span class="verse-ref">Colossians 3:23</span>
+        </div>
+        <div class="principle">
+          <h2>6. Excellence as worship</h2>
+          <p>Built rightly, a Personal OS is not about ego or empire. It is a way to do more good work with the time and gifts you have been entrusted. It is stewardship of the talents in your hand, carried out with excellence, offered as worship to the One who gave them.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 28 · CONSTITUTION -->
+  <section class="slide" data-act="IV · The Foundation">
+    <div class="slide-inner">
+      <p class="eyebrow">One page to govern it all</p>
+      <h1 class="title">A constitution for AI in your house</h1>
+      <ul class="const">
+        <li><span class="rn">I</span><span>The tool serves the man. The man serves God.</span></li>
+        <li><span class="rn">II</span><span>A person makes every decision that carries moral weight.</span></li>
+        <li><span class="rn">III</span><span>No deception. Ever.</span></li>
+        <li><span class="rn">IV</span><span>Counsel freely. Command never.</span></li>
+        <li><span class="rn">V</span><span>It works so that you can rest.</span></li>
+        <li><span class="rn">VI</span><span>Build with excellence, as worship.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 29 · ACT V DIVIDER -->
+  <section class="slide divider" data-bare>
+    <svg class="halo" viewBox="0 0 400 400" aria-hidden="true">
+      <circle cx="200" cy="200" r="190" fill="url(#hg)"/>
+      <g class="spin"><circle cx="200" cy="200" r="135" fill="none" stroke="rgba(246,214,144,.4)" stroke-width="1" stroke-dasharray="2 12"/></g>
+      <circle cx="200" cy="200" r="165" fill="none" stroke="rgba(230,180,92,.18)" stroke-width="1"/>
+    </svg>
+    <div class="slide-inner">
+      <p class="eyebrow center">Act V · The Path</p>
+      <h2 class="divider-title">You Can Start This Month</h2>
+      <p class="divider-sub">You don't need a big budget or a tech team. You need a decision and one domain.</p>
+    </div>
+  </section>
+
+  <!-- 30 · 5 STEP BUILD -->
+  <section class="slide" data-act="V · The Path">
+    <div class="slide-inner">
+      <p class="eyebrow">The build sequence</p>
+      <h1 class="title">How to build your first Personal OS</h1>
+      <div class="steps">
+        <div class="step"><span class="n">1</span><div class="b"><h3>Map your arenas</h3><p>Write down every domain you carry. Every company, plus health, family, finance, faith.</p></div></div>
+        <div class="step"><span class="n">2</span><div class="b"><h3>Capture your judgment</h3><p>Get your standards and decisions out of your head and onto paper. This becomes the memory.</p></div></div>
+        <div class="step"><span class="n">3</span><div class="b"><h3>Stand up one agent</h3><p>Pick your single highest-friction task and let AI run it end to end. Prove it.</p></div></div>
+        <div class="step"><span class="n">4</span><div class="b"><h3>Give it memory</h3><p>Write down what works so the next run is better than the last. Now it compounds.</p></div></div>
+        <div class="step"><span class="n">5</span><div class="b"><h3>Expand one arena at a time</h3><p>Win in one domain, then replicate the pattern into the next.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 31 · START WITH ONE -->
+  <section class="slide" data-act="V · The Path">
+    <div class="slide-inner">
+      <p class="eyebrow">The first move</p>
+      <p class="statement">Don't build the empire.<br/>Build the <span class="hl">first room</span>.</p>
+      <p class="lead">Pick the single domain that drains you most. Stand up the system there and prove it in thirty days. Then let that win pay for the next one. The whole thing compounds out of one good decision, made once, this month.</p>
+    </div>
+  </section>
+
+  <!-- PROMPTS · INTRO -->
+  <section class="slide" data-act="V · The Path">
+    <div class="slide-inner">
+      <p class="eyebrow">Equip &middot; Starter prompts</p>
+      <h1 class="title">Prompts built for your world</h1>
+      <p class="lead">These are starting points, not examples. Paste any one into Claude this week and you are running. Each is written around Halo, Adamah, Sychar, Mellevet, and Vaza, and each is copy-ready.</p>
+      <p class="pnote">The full library lives in the <a class="inlink" href="prompts/">starter prompt pack</a>. Here are the ones to begin with.</p>
+    </div>
+  </section>
+
+  <!-- PROMPTS · KEYSTONE -->
+  <section class="slide" data-act="V · The Path">
+    <div class="slide-inner">
+      <p class="eyebrow">Prompt 1 &middot; Chief of Staff &middot; the keystone</p>
+      <div class="prompt">
+        <div class="prompt-head"><span class="prompt-tag">Your daily one-page brief</span><button class="copy" data-copy>Copy</button></div>
+<pre class="prompt-body">You are my chief of staff. I own five companies in the San Juan Basin:
+Halo (oilfield services and pipeline), Adamah (excavation and reclamation),
+Sychar (utility and civil), Mellevet (safety and compliance), Vaza (metal fab).
+
+Every morning, give me a one-page brief in four sections:
+1. Fires. Anything that will cost money or stop work today.
+2. Decisions. The calls that need me, each with your recommendation.
+3. Money. Jobs to bill, invoices past due, POs to approve.
+4. People. Crews short, certs expiring, follow-ups I owe.
+
+Lead with what is on fire. Keep it to one page. I will paste in the job
+board, my inbox, and the AR aging. Ask me for whatever you still need. <b>[paste]</b></pre>
+      </div>
+      <p class="pnote">Everything else hangs off this one. Build it first.</p>
+    </div>
+  </section>
+
+  <!-- PROMPTS · HALO BID -->
+  <section class="slide" data-act="V · The Path">
+    <div class="slide-inner">
+      <p class="eyebrow">Prompt 2 &middot; Halo Services &middot; estimating</p>
+      <div class="prompt">
+        <div class="prompt-head"><span class="prompt-tag">Second set of eyes on a bid</span><button class="copy" data-copy>Copy</button></div>
+<pre class="prompt-body">Act as my senior estimator for Halo Services. I will paste a bid
+invitation and our draft estimate for an oilfield job.
+
+Check it for:
+- Scope we missed: mobilization, testing, tie-ins, traffic control
+- Margin under our 18% floor <b>[set your real number]</b>
+- Crew or equipment we did not account for
+- Anything that exposes us if the operator changes scope mid-job
+
+Give me go / no-go, the three biggest risks, and the questions to ask
+the operator before I sign. Here is the bid: <b>[paste]</b></pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROMPTS · MELLEVET COMPLIANCE -->
+  <section class="slide" data-act="V · The Path">
+    <div class="slide-inner">
+      <p class="eyebrow">Prompt 3 &middot; Mellevet &middot; compliance</p>
+      <div class="prompt">
+        <div class="prompt-head"><span class="prompt-tag">The compliance watch list</span><button class="copy" data-copy>Copy</button></div>
+<pre class="prompt-body">You run compliance for our group. We are a DOT-regulated carrier and our
+crews work OSHA and operator-qualification sites.
+
+From the roster I paste, build a compliance watch list:
+- CDLs, medical cards, and driver files expiring in 60 days
+- Operator qualifications and safety certs due, by crew
+- DVIRs or incidents this week that need follow-up
+- Training to schedule before the next hitch
+
+Sort by what puts us out of compliance first, and draft the reminder
+email to each supervisor. Here is the roster and cert list: <b>[paste]</b></pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROMPTS · FINANCE ROLLUP -->
+  <section class="slide" data-act="V · The Path">
+    <div class="slide-inner">
+      <p class="eyebrow">Prompt 4 &middot; All five companies &middot; money</p>
+      <div class="prompt">
+        <div class="prompt-head"><span class="prompt-tag">The weekly money rollup</span><button class="copy" data-copy>Copy</button></div>
+<pre class="prompt-body">You are my controller across all five companies. Every Friday, from the
+numbers I paste, give me one rollup:
+- Cash position by company and combined
+- AR aging: who owes us, how old, who to call first
+- AP and POs due next week
+- Any company trending under on margin this month
+- The three money decisions that need me
+
+Flag anything unusual versus last week. Plain numbers, no jargon.
+Here is this week's data: <b>[paste]</b></pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROMPTS · ONE PER SEAT -->
+  <section class="slide" data-act="V · The Path">
+    <div class="slide-inner">
+      <p class="eyebrow">Prompts &middot; one for each seat</p>
+      <h1 class="title">Everyone in this room leaves with one</h1>
+      <div class="seats">
+        <div class="seat"><span class="role">Owner<button class="copy" data-copy>Copy</button></span><p class="pq">Be my chief of staff. One page each morning: fires, decisions you need from me, money, and people, across all five companies.</p></div>
+        <div class="seat"><span class="role">Ops / GM<button class="copy" data-copy>Copy</button></span><p class="pq">Be my dispatcher. From today's job board and crew list, tell me where I am short on people or equipment, and what to move.</p></div>
+        <div class="seat"><span class="role">Safety lead<button class="copy" data-copy>Copy</button></span><p class="pq">Be my compliance watch. List every CDL, cert, and operator qualification expiring in 60 days, worst first, with the reminder emails drafted.</p></div>
+        <div class="seat"><span class="role">Office / finance<button class="copy" data-copy>Copy</button></span><p class="pq">Be my AR clerk. From this aging report, tell me who to call first today and draft each collection email.</p></div>
+        <div class="seat" style="grid-column:1/-1"><span class="role">Estimator<button class="copy" data-copy>Copy</button></span><p class="pq">Be a second set of eyes on this bid. Find the scope I missed and tell me if margin is under our floor before I sign.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 32 · 30 60 90 -->
+  <section class="slide" data-act="V · The Path">
+    <div class="slide-inner">
+      <p class="eyebrow">A 90-day on-ramp</p>
+      <h1 class="title">What the first quarter looks like</h1>
+      <div class="phases">
+        <div class="phase">
+          <span class="ph">Days 1 to 30</span>
+          <h3>Prove it</h3>
+          <ul>
+            <li>Map your arenas on one page.</li>
+            <li>Automate one painful weekly task.</li>
+            <li>Get the morning brief running.</li>
+          </ul>
+        </div>
+        <div class="phase mid">
+          <span class="ph">Days 31 to 60</span>
+          <h3>Expand it</h3>
+          <ul>
+            <li>Add a Chief of Staff layer.</li>
+            <li>Move three more plays into the system.</li>
+            <li>Stand up the single-screen dashboard.</li>
+          </ul>
+        </div>
+        <div class="phase">
+          <span class="ph">Days 61 to 90</span>
+          <h3>Compound it</h3>
+          <ul>
+            <li>Bring a second company in.</li>
+            <li>Lock in guardrails and memory discipline.</li>
+            <li>Hand the routine to the OS for good.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 33 · 12 MONTH PICTURE -->
+  <section class="slide" data-act="V · The Path">
+    <div class="slide-inner">
+      <p class="eyebrow">Where this goes</p>
+      <h1 class="title">Twelve months in</h1>
+      <p class="lead">The routine running of several companies happens without you touching it. The reports write themselves. The follow-ups follow up. The pipeline stays warm whether you looked at it today or not.</p>
+      <p class="lead tight">Your calendar holds only the things that need you. Vision. Key relationships. Your family. Your faith. You did not add hours to your week. You multiplied the ones you already had.</p>
+    </div>
+  </section>
+
+  <!-- 34 · INVITATION -->
+  <section class="slide" data-act="V · The Path">
+    <div class="slide-inner">
+      <p class="eyebrow">The invitation</p>
+      <p class="statement serif" style="font-weight:500">"Be fruitful and multiply."</p>
+      <p class="lead">This is the oldest command given to man, and it is the whole point of a Personal OS. Multiply your output, your reach, and your impact, without burning out the one life you were given to steward. The technology is finally good enough. The only thing left is the decision to build.</p>
+    </div>
+  </section>
+
+  <!-- 35 · CLOSING -->
+  <section class="slide closing" data-bare>
+    <svg class="halo" viewBox="0 0 400 400" aria-hidden="true">
+      <circle cx="200" cy="200" r="195" fill="url(#hg)"/>
+      <g class="spin"><circle cx="200" cy="200" r="125" fill="none" stroke="rgba(246,214,144,.45)" stroke-width="1.1" stroke-dasharray="1 12"/></g>
+      <circle cx="200" cy="200" r="158" fill="none" stroke="rgba(230,180,92,.2)" stroke-width="1"/>
+    </svg>
+    <div class="slide-inner" style="text-align:center">
+      <p class="eyebrow center">Thank you</p>
+      <h2 class="divider-title">Nate, and the Halo team</h2>
+      <p class="divider-sub">I built one of these to run my own companies. If you want a hand scoping your first one, I would be glad to help you map it.</p>
+      <div class="cover-meta" style="justify-content:center;margin-top:2.4rem">
+        <span><b>Andrew Zoll</b></span>
+        <span>andrew@andrewzoll.com</span>
+        <span>andrewzoll.com</span>
+      </div>
+      <p style="margin-top:1.8rem"><a class="inlink" href="prompts/">Open the starter prompt pack &rarr;</a></p>
+    </div>
+  </section>
+
+</div>
+
+<div class="brandfoot" id="brandfoot"><span class="bf-dot"></span><span>Personal OS</span><span class="bf-act" id="actlabel"></span></div>
+
+<div class="hud">
+  <button class="navbtn" id="prev" aria-label="Previous slide">&larr;</button>
+  <span class="counter"><b id="cur">1</b> / <span id="total">35</span></span>
+  <button class="navbtn" id="next" aria-label="Next slide">&rarr;</button>
+</div>
+
+<div class="hint" id="hint"><kbd>&larr;</kbd><kbd>&rarr;</kbd><span>to navigate</span></div>
+
+<script>
+(function(){
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var bar = document.getElementById('bar');
+  var cur = document.getElementById('cur');
+  var total = document.getElementById('total');
+  var actlabel = document.getElementById('actlabel');
+  var brandfoot = document.getElementById('brandfoot');
+  var hint = document.getElementById('hint');
+  var i = 0;
+  total.textContent = slides.length;
+
+  function show(n){
+    i = Math.max(0, Math.min(slides.length - 1, n));
+    for (var k = 0; k < slides.length; k++){
+      slides[k].classList.toggle('active', k === i);
+    }
+    bar.style.width = ((i + 1) / slides.length * 100) + '%';
+    cur.textContent = i + 1;
+    var act = slides[i].getAttribute('data-act') || '';
+    actlabel.textContent = act ? '· ' + act : '';
+    brandfoot.style.opacity = slides[i].hasAttribute('data-bare') ? '0' : '1';
+    hint.style.display = (i === 0) ? 'flex' : 'none';
+    if (history.replaceState) history.replaceState(null, '', '#' + (i + 1));
+  }
+  function next(){ show(i + 1); }
+  function prev(){ show(i - 1); }
+
+  document.addEventListener('keydown', function(e){
+    var k = e.key;
+    if (k === 'ArrowRight' || k === 'ArrowDown' || k === 'PageDown' || k === ' ' || k === 'Spacebar'){ e.preventDefault(); next(); }
+    else if (k === 'ArrowLeft' || k === 'ArrowUp' || k === 'PageUp'){ e.preventDefault(); prev(); }
+    else if (k === 'Home'){ e.preventDefault(); show(0); }
+    else if (k === 'End'){ e.preventDefault(); show(slides.length - 1); }
+    else if (k === 'f' || k === 'F'){
+      if (!document.fullscreenElement && document.documentElement.requestFullscreen) document.documentElement.requestFullscreen();
+      else if (document.exitFullscreen) document.exitFullscreen();
+    }
+  });
+
+  document.getElementById('next').addEventListener('click', next);
+  document.getElementById('prev').addEventListener('click', prev);
+
+  // touch swipe
+  var x0 = null;
+  document.addEventListener('touchstart', function(e){ x0 = e.touches[0].clientX; }, {passive:true});
+  document.addEventListener('touchend', function(e){
+    if (x0 === null) return;
+    var dx = e.changedTouches[0].clientX - x0;
+    if (Math.abs(dx) > 50){ dx < 0 ? next() : prev(); }
+    x0 = null;
+  }, {passive:true});
+
+  // copy-to-clipboard for prompt blocks
+  document.addEventListener('click', function(e){
+    var b = e.target.closest('[data-copy]');
+    if (!b) return;
+    var wrap = b.closest('.prompt, .seat');
+    var body = wrap && wrap.querySelector('.prompt-body, .pq');
+    if (!body) return;
+    var text = body.textContent.trim();
+    var done = function(){ b.textContent = 'Copied'; b.classList.add('done'); setTimeout(function(){ b.textContent = 'Copy'; b.classList.remove('done'); }, 1500); };
+    if (navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(text).then(done, done); }
+    else { var ta = document.createElement('textarea'); ta.value = text; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); } catch(_){} ta.remove(); done(); }
+  });
+
+  // click right / left third of screen to advance (ignore controls, prompts, selections)
+  document.addEventListener('click', function(e){
+    if (e.target.closest('.hud') || e.target.closest('a') || e.target.closest('button')) return;
+    if (e.target.closest('.prompt') || e.target.closest('.seat')) return;
+    if (window.getSelection && String(window.getSelection()).length) return;
+    var w = window.innerWidth;
+    if (e.clientX > w * 0.66) next();
+    else if (e.clientX < w * 0.34) prev();
+  });
+
+  var start = parseInt((location.hash || '').slice(1), 10);
+  show((start && start >= 1 && start <= slides.length) ? start - 1 : 0);
+})();
+</script>
+</body>
+</html>
