@@ -115,6 +115,7 @@
   <nav class="toc">
     <a href="#where">Where it lives</a>
     <a href="#setup">Set it up</a>
+    <a href="#master">Master prompt</a>
     <a href="#start">Start here</a>
     <a href="#halo">Halo Services</a>
     <a href="#adamah">Adamah</a>
@@ -178,10 +179,77 @@
     <ol class="setup-steps">
       <li><div><b>Pick the home.</b> Use the table above. If you cannot decide, start with a plain folder and move it later.</div></li>
       <li><div><b>Make one folder or note per arena.</b> Halo, Adamah, Sychar, Mellevet, Vaza, then Finance, then anything at home that matters.</div></li>
-      <li><div><b>Add two files at the top.</b> One called standards (how you like things done: your margin floor, your operators, your rules). One called prompts (the ones from this pack you actually use).</div></li>
+      <li><div><b>Write your master prompt.</b> Run the master-prompt builder below once. It interviews you and writes your chief of staff's standing context. Save it as your standards file, next to a prompts file of the ones you actually use.</div></li>
       <li><div><b>Run the keystone brief every morning.</b> Every time you correct the AI, write the fix into your standards file. That file is the memory, and it makes tomorrow sharper than today.</div></li>
       <li><div><b>Add one new prompt or one new arena each week.</b> That is the whole method. Small, steady, and it compounds.</div></li>
     </ol>
+  </section>
+
+  <!-- MASTER PROMPT -->
+  <section class="group" id="master">
+    <div class="group-head"><h2>The master prompt</h2><span class="tagline">give your chief of staff its memory, once</span></div>
+    <hr class="group-rule" />
+    <p style="color:var(--ink-soft);font-size:1rem;margin:0 0 .2rem;max-width:64ch;">Every other prompt works far better when the AI already knows your world. This one-time prompt interviews you, then writes your chief of staff's master prompt: the standing context it reads before every task. Build it once and you stop re-explaining who you are.</p>
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-tag">Build your master prompt (it interviews you)</span><button class="copy" data-copy>Copy</button></div>
+<pre class="prompt-body">You are going to help me build the master prompt for my AI chief of staff.
+
+The master prompt is the standing context my chief of staff reads before every
+task. It is the difference between a generic assistant and one that knows my
+world, my standards, and how I make decisions.
+
+Do this in two phases.
+
+PHASE 1, interview me. Ask a few questions at a time, not all at once. Keep
+going until you could brief a sharp new assistant to stand in for me. Cover:
+- Me: my name, and the companies and domains I run.
+- Each company: what it does, who runs it, how it makes money.
+- Priorities: what wins when time, money, or attention is short.
+- Standards: my hard numbers and the lines I do not cross.
+- Communication: the tone, length, and format I want back.
+- Decision rights: what only I decide, and what you may handle alone.
+- Values: the convictions that govern how I work.
+- Recurring work: what I want off my plate daily, weekly, and monthly.
+- My team: who sits in which seat and what they own.
+If I say skip or I do not know, move on. Push gently where I am vague.
+
+PHASE 2, write it. When you have enough, write my master prompt in the first
+person, in clean sections, specific to me and not generic. Close it with this
+rule in my words: do the tasks, surface only the decisions that need me, and
+never do anything irreversible without my yes.
+
+Then tell me exactly where to paste it so my chief of staff uses it every time.
+
+Start now with Phase 1, your first few questions only.</pre>
+    </div>
+    <p style="color:var(--muted);font-size:.92rem;margin:1.2rem 0 0;max-width:64ch;">Paste the result wherever your OS lives: your Claude project instructions, the top of your chief-of-staff chat, or a file named <b style="color:var(--ink-soft);font-weight:600">master-prompt</b> at the root. Every prompt in this pack then runs on top of it.</p>
+
+    <div class="prompt" style="margin-top:1.7rem">
+      <div class="prompt-head"><span class="prompt-tag">What it produces, a worked example</span><button class="copy" data-copy>Copy</button></div>
+<pre class="prompt-body">I am Nate Vaughn. I own five companies in the San Juan Basin: Halo (oilfield
+services and pipeline), Adamah (excavation and reclamation), Sychar (utility
+and civil), Mellevet (safety and compliance), and Vaza (metal fabrication).
+
+You are my chief of staff. You know my world and you guard my attention.
+
+Priorities, in order: <b>[safety and compliance]</b>, <b>[cash and billing]</b>, <b>[crews
+and schedule]</b>, <b>[growth]</b>. When two collide, <b>[safety]</b> wins.
+
+Standards: no bid goes out under a <b>[__]</b>% margin. We never <b>[____]</b>.
+
+How I want it back: short, plain, no jargon. Lead with what is on fire.
+
+You decide on your own: scheduling, drafts, follow-ups, research, first passes.
+I decide: anything that spends money, signs a contract, hires or fires, or goes
+to a client. Bring me those with a recommendation.
+
+Values: the tool serves the man, and the man answers to God. Truth always, no
+spin. You work so I can be present with my family and my church.
+
+The rule: do the tasks, surface only the decisions that need me, and never do
+anything irreversible without my yes.</pre>
+    </div>
+    <p style="color:var(--muted);font-size:.9rem;margin:1.1rem 0 0;max-width:64ch;">The brackets are yours to fill. That is the point: the builder above pulls these out of your head so you are not writing from a blank page.</p>
   </section>
 
   <!-- START -->
