@@ -124,6 +124,7 @@
     <a href="#vaza">Vaza</a>
     <a href="#group">Across the group</a>
     <a href="#seats">One per seat</a>
+    <a href="#skills">Skills</a>
   </nav>
 
   <!-- WHERE IT LIVES -->
@@ -490,6 +491,67 @@ Here is the aging: <b>[paste]</b></pre>
 <pre class="prompt-body">Be a second set of eyes on this bid. Find the scope I missed, tell me if
 margin is under our floor, and list the three questions to ask before I
 sign. Here is the bid: <b>[paste]</b></pre>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section class="group" id="skills">
+    <div class="group-head"><h2>Skills</h2><span class="tagline">graduate a prompt into something the AI runs on its own</span></div>
+    <hr class="group-rule" />
+    <p style="color:var(--ink-soft);font-size:1rem;margin:0 0 .2rem;max-width:64ch;">A prompt is a play you run by hand. A skill is that same play, packaged so the AI runs it on its own the moment it is relevant. You stop fetching the right prompt; the right one shows up when you need it. A skill is just a small folder with one file inside.</p>
+
+    <div class="prompt">
+      <div class="prompt-head"><span class="prompt-tag">Anatomy of a skill: skills/bid-check/SKILL.md</span><button class="copy" data-copy>Copy</button></div>
+<pre class="prompt-body">---
+name: bid-check
+description: Reviews a Halo bid before it goes out. Use when I say "check this bid", "review this estimate", "should we bid this", or paste a scope of work. Flags missed scope, thin margin, and risk.
+---
+
+## Instructions
+
+When I give you a bid invitation or a draft estimate:
+
+1. Scope. List anything missing: mobilization, testing, tie-ins, traffic control.
+2. Margin. Flag it if it falls under our 18% floor.
+3. Resources. Note any crew or equipment we did not account for.
+4. Risk. Call out what exposes us if the operator changes scope mid-job.
+
+## Output
+
+In this order: a go or no-go call, the three biggest risks, and the questions to ask the operator before I sign.</pre>
+    </div>
+
+    <ul class="pick">
+      <li><b>The folder.</b> One folder per skill, named for the skill, holding a single file that is always called SKILL.md.</li>
+      <li><b>name.</b> A short, lowercase, hyphenated handle. This is what the skill is called.</li>
+      <li><b>description.</b> The most important line. It says what the skill does and when to use it. The AI reads this to decide whether to fire, so write the trigger the way you would actually ask for it.</li>
+      <li><b>The body.</b> Plain instructions under ## Instructions, then exactly what you want back under ## Output. That is the whole play.</li>
+    </ul>
+    <p style="color:var(--muted);font-size:.92rem;margin:1.2rem 0 0;max-width:64ch;">Optional extras: a <b style="color:var(--ink-soft);font-weight:600">model</b> line to pick which brain runs it, and supporting files in the same folder (a checklist, a template) that the instructions point to.</p>
+
+    <p style="color:var(--ink-soft);font-size:1rem;margin:1.7rem 0 .2rem;max-width:64ch;"><b style="color:var(--ink);">Using it.</b> Put the folder where your AI looks for skills: a skills folder in a connected project or in Claude Code, or upload it in Claude. After that you never call it by name. You say "check this bid" and the AI matches your words to the description and runs the skill.</p>
+
+    <div class="prompt" style="margin-top:1.4rem">
+      <div class="prompt-head"><span class="prompt-tag">Turn one of your prompts into a skill</span><button class="copy" data-copy>Copy</button></div>
+<pre class="prompt-body">Turn the prompt below into a proper skill file.
+
+A skill is a saved play my AI runs on its own whenever it is relevant. It is a
+folder named skills/&lt;short-name&gt;/ with one file inside called SKILL.md.
+
+Write me that SKILL.md, using this exact shape:
+
+---
+name: a short, lowercase, hyphenated handle
+description: one or two sentences saying what it does and when to use it, written the way I would actually ask for it, because the AI reads this line to decide when to run the skill.
+---
+
+## Instructions
+Numbered steps, in my voice, that carry out the play.
+
+## Output
+Exactly what I want back, and in what order.
+
+Keep it plain and specific to my work. Here is the prompt to convert: [paste one of your prompts]</pre>
     </div>
   </section>
 
