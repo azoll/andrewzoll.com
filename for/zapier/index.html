@@ -1,0 +1,473 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Built for Zapier · Andrew Zoll</title>
+  <meta name="description" content="An independent application page Andrew Zoll built for the Zapier AI Platform team, applying for Applied AI Engineer. A builder who already ships LLM routing, eval, and observability tooling in production."/>
+  <meta name="robots" content="noindex, nofollow"/>
+  <link rel="icon" href="/assets/favicon-primary.png"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <style>
+    :root{
+      --orange:#FF4A00; --orange-soft:#FF7A3D; --ink:#1F1410; --body:#4A413B;
+      --line:#ECE3DA; --surface:#FBF7F2; --cream:#FFFDF9; --dark:#201510;
+    }
+    html,body{margin:0;padding:0;background:var(--cream);color:var(--body);font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;-webkit-font-smoothing:antialiased;}
+    *{box-sizing:border-box;}
+    h1,h2,h3{font-family:'Inter',sans-serif;}
+
+    .nav{display:flex;justify-content:space-between;align-items:center;padding:18px 26px;border-bottom:1px solid var(--line);background:var(--cream);position:sticky;top:0;z-index:10;}
+    .brand{display:flex;align-items:center;gap:11px;font-size:15px;font-weight:700;color:var(--ink);text-decoration:none;}
+    .brand .mark{width:20px;height:20px;border-radius:6px;background:var(--orange);display:inline-flex;align-items:center;justify-content:center;transition:transform .6s cubic-bezier(.2,.7,.3,1.4);cursor:pointer;}
+    .brand .mark::after{content:"";width:8px;height:8px;border-radius:50%;background:var(--cream);}
+    .brand:hover .mark{transform:rotate(90deg);}
+    .nav-cta{background:var(--orange);color:#fff !important;padding:9px 18px;border-radius:8px;font-weight:600;font-size:13px;text-decoration:none;transition:transform .15s ease,box-shadow .15s ease;display:inline-flex;align-items:center;gap:9px;}
+    .nav-cta .badge{width:18px;height:18px;border-radius:50%;background:rgba(255,255,255,0.24);display:inline-flex;align-items:center;justify-content:center;font-size:11px;}
+    .nav-cta:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(255,74,0,0.32);}
+
+    .wrap{max-width:920px;margin:0 auto;padding:46px 24px 100px;}
+    .wide{position:relative;left:50%;transform:translateX(-50%);width:min(1120px,calc(100vw - 40px));}
+    .eyebrow{font-size:12px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--orange);margin-bottom:20px;}
+
+    .hero{position:relative;border-radius:24px;padding:54px 48px 50px;overflow:hidden;background:linear-gradient(150deg,#2A1B12,#1A0F0A 62%,#2D1708);}
+    .hero::before{content:"";position:absolute;top:-130px;right:-90px;width:440px;height:440px;border-radius:50%;background:radial-gradient(circle,rgba(255,74,0,0.30),transparent 64%);pointer-events:none;}
+    .hero #spot{position:absolute;width:520px;height:520px;border-radius:50%;pointer-events:none;background:radial-gradient(circle,rgba(255,122,61,0.10),transparent 62%);transform:translate(-50%,-50%);opacity:0;transition:opacity .5s ease;mix-blend-mode:screen;z-index:1;}
+    .hero .inner{position:relative;z-index:2;text-align:center;}
+    h1{font-size:clamp(33px,5vw,52px);font-weight:800;line-height:1.08;letter-spacing:-0.025em;margin:0 0 24px;color:#fff;}
+    .hero .lead{font-size:20px;line-height:1.55;color:#E8DED4;margin:0 auto 16px;max-width:680px;}
+    .hero .lead b{color:#fff;font-weight:600;}
+    .subnote{font-size:13.5px;color:#A8978A;margin:0 auto;max-width:700px;line-height:1.6;}
+
+    /* animated signature: an LLM proxy routing requests through eval + observability */
+    .proxy{position:relative;width:230px;height:120px;margin:0 auto 22px;}
+    .proxy svg{width:230px;height:120px;overflow:visible;}
+    .proxy .track{stroke:rgba(255,255,255,0.16);stroke-width:2;fill:none;}
+    .proxy .hub{fill:var(--orange);}
+    .proxy .model{fill:none;stroke:rgba(255,255,255,0.55);stroke-width:2;}
+    .proxy .pkt{fill:var(--orange-soft);}
+    @media (prefers-reduced-motion: no-preference){
+      .proxy .pulse{animation:hubpulse 2.4s ease-out infinite;transform-box:fill-box;transform-origin:center;}
+    }
+    @keyframes hubpulse{0%{opacity:.6;transform:scale(1);}70%{opacity:0;transform:scale(2.4);}100%{opacity:0;transform:scale(2.4);}}
+
+    .stat{margin:38px 0 8px;padding:28px 30px;border:1px solid var(--line);border-radius:16px;background:var(--surface);display:flex;align-items:baseline;gap:20px;flex-wrap:wrap;position:relative;}
+    .stat .num{font-weight:800;font-size:clamp(40px,7.5vw,62px);line-height:1;letter-spacing:-0.035em;color:var(--ink);font-variant-numeric:tabular-nums;display:flex;align-items:baseline;gap:6px;}
+    .stat .num .arrow{color:var(--orange);font-size:0.6em;}
+    .stat .num .fp{font-size:0.32em;font-weight:600;color:var(--body);letter-spacing:0;}
+    .stat .lbl{font-size:15px;line-height:1.45;color:var(--body);max-width:340px;}
+    .stat .lbl b{color:var(--ink);font-weight:600;}
+
+    section h2{font-size:13px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--orange);margin:56px 0 18px;padding-bottom:10px;border-bottom:1px solid var(--line);position:relative;}
+    section h2::before{content:"";display:inline-block;width:7px;height:7px;border-radius:2px;background:var(--orange);margin-right:10px;vertical-align:middle;transform:translateY(-2px);box-shadow:0 0 0 0 rgba(255,74,0,0.5);animation:hpulse 2.6s ease-out infinite;}
+    @keyframes hpulse{0%{box-shadow:0 0 0 0 rgba(255,74,0,0.45);}70%{box-shadow:0 0 0 8px rgba(255,74,0,0);}100%{box-shadow:0 0 0 0 rgba(255,74,0,0);}}
+    section p{font-size:18px;line-height:1.6;color:var(--body);margin:0 0 16px;}
+    section p b{color:var(--ink);}
+
+    .map{counter-reset:jd;}
+    .map .row{display:flex;gap:14px;padding:16px 0;border-bottom:1px solid var(--line);counter-increment:jd;position:relative;overflow:hidden;}
+    .map .row:last-child{border-bottom:0;}
+    .map .row::after{content:counter(jd,decimal-leading-zero);position:absolute;right:2px;top:50%;transform:translateY(-50%) scale(.8);font-weight:800;font-size:56px;line-height:1;color:rgba(255,74,0,0.07);pointer-events:none;letter-spacing:-0.04em;opacity:0;transition:transform .6s cubic-bezier(.2,.7,.3,1.4),opacity .6s ease;z-index:0;}
+    .map .row.in::after{opacity:1;transform:translateY(-50%) scale(1);}
+    .map .check{flex-shrink:0;margin-top:2px;display:inline-block;transition:transform .45s cubic-bezier(.2,.7,.3,1.4);transform:scale(0);z-index:1;}
+    .map .row.in .check{transform:scale(1);}
+    .map .check svg{width:22px;height:22px;display:block;overflow:visible;}
+    .map .check circle{fill:rgba(255,74,0,0.1);}
+    .map .check path{stroke:var(--orange);stroke-width:2.6;fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:32;stroke-dashoffset:32;transition:stroke-dashoffset .55s ease .14s;}
+    .map .row.in .check path{stroke-dashoffset:0;}
+    .map .body{position:relative;z-index:1;}
+    .map .body .jd{font-size:14px;font-weight:500;color:var(--orange);margin-bottom:6px;font-style:italic;}
+    .map .body .me{font-size:17px;line-height:1.55;color:var(--ink);}
+
+    .receipt{border:1px solid var(--line);border-radius:16px;padding:22px 24px;margin:0 0 14px;background:var(--cream);transition:transform .2s ease,box-shadow .2s ease;position:relative;overflow:hidden;will-change:transform;}
+    .receipt::before{content:"";position:absolute;left:0;top:0;height:100%;width:3px;background:var(--orange);opacity:0;border-radius:16px 0 0 16px;transition:opacity .2s ease;}
+    .receipt:hover::before{opacity:.6;}
+    .receipt:hover{transform:translateY(-3px);box-shadow:0 16px 38px rgba(255,74,0,0.10);}
+    .receipt .rhead{display:flex;align-items:center;gap:12px;margin-bottom:11px;}
+    .receipt .tag{font-size:11.5px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--orange);}
+    .receipt .chip{margin-left:auto;font-weight:600;font-size:12px;padding:5px 11px;border-radius:999px;background:rgba(255,74,0,0.10);color:var(--orange);white-space:nowrap;font-variant-numeric:tabular-nums;}
+    .receipt h3{margin:0 0 9px;font-size:19px;color:var(--ink);font-weight:700;}
+    .receipt p{font-size:16px;line-height:1.55;color:var(--body);margin:0 0 12px;}
+    .receipt p .nm{font-variant-numeric:tabular-nums;font-weight:600;color:var(--ink);}
+    .receipt a{font-size:13.5px;font-weight:600;color:var(--orange);text-decoration:none;display:inline-flex;align-items:center;gap:7px;}
+    .receipt a .arr{display:inline-block;transition:transform .15s ease;}
+    .receipt a:hover .arr{transform:translateX(4px);}
+
+    .note{position:relative;background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--orange);border-radius:14px;padding:26px 30px 24px;overflow:hidden;}
+    .note p{margin:0;font-size:18px;line-height:1.6;color:var(--body);}
+    .note p b{color:var(--ink);}
+    .note .q{position:absolute;top:-26px;right:16px;font-weight:800;font-size:140px;line-height:1;color:rgba(255,74,0,0.10);pointer-events:none;user-select:none;}
+
+    .band{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:30px 32px;margin:50px 0 0;}
+    .band p{margin:0 0 16px;font-size:18px;color:var(--body);}
+    .band p strong{color:var(--ink);}
+    .band .links a{display:inline-block;margin:0 18px 10px 0;font-weight:600;color:var(--orange);font-size:14.5px;text-decoration:none;border-bottom:1px solid rgba(255,74,0,0.35);transition:opacity .15s ease;}
+    .band .links a:hover{opacity:.65;}
+    .band .cta{background:var(--orange);color:#fff !important;text-decoration:none;padding:13px 14px 13px 24px;font-weight:600;font-size:15px;border-radius:10px;display:inline-flex;align-items:center;gap:11px;margin-top:8px;transition:transform .15s ease,box-shadow .15s ease;will-change:transform;}
+    .band .cta .badge{width:24px;height:24px;border-radius:50%;background:rgba(255,255,255,0.24);display:inline-flex;align-items:center;justify-content:center;font-size:13px;}
+    .band .cta:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(255,74,0,0.34);}
+
+    .foot{font-size:13px;color:#A8978A;margin-top:42px;text-align:center;line-height:1.6;}
+    ::selection{background:rgba(255,74,0,0.18);color:var(--ink);}
+
+    .mark-hl{background:linear-gradient(transparent 62%, rgba(255,74,0,0.24) 0);background-size:0% 100%;background-repeat:no-repeat;background-position:0 0;transition:background-size .85s cubic-bezier(.4,.7,.3,1) .15s;padding:0 1px;font-weight:600;color:var(--ink);}
+    .mark-hl.in{background-size:100% 100%;}
+
+    .reveal{opacity:0;transform:translateY(18px);transition:opacity .65s cubic-bezier(.2,.6,.2,1),transform .65s cubic-bezier(.2,.6,.2,1);}
+    .reveal.in{opacity:1;transform:none;}
+
+    #progress{position:fixed;top:0;left:0;height:3px;width:0;background:var(--orange);z-index:30;transition:width .1s linear;}
+    .nav,.wrap{position:relative;z-index:2;}
+    .stat.pulse::after{content:"";position:absolute;inset:-1px;border-radius:16px;border:2px solid var(--orange);opacity:0;animation:ring .75s ease-out;}
+    @keyframes ring{0%{opacity:.45;transform:scale(1);}100%{opacity:0;transform:scale(1.04);}}
+    .brand.spin .mark{transform:rotate(720deg) scale(1.1);}
+
+    @media (max-width:640px){ .hero{padding:38px 26px 36px;} .wrap{padding:34px 18px 80px;} .map .row::after{display:none;} }
+
+    @media (prefers-reduced-motion: reduce){
+      .reveal{opacity:1 !important;transform:none !important;transition:none !important;}
+      .map .check{transform:scale(1) !important;transition:none !important;}
+      .map .check path{stroke-dashoffset:0 !important;}
+      .receipt{transition:none !important;}
+      #spot,#progress{display:none !important;}
+      section h2::before{animation:none !important;}
+      .map .row::after{opacity:1 !important;transform:translateY(-50%) scale(1) !important;}
+      .mark-hl{background-size:100% 100% !important;transition:none !important;}
+    }
+
+    /* router signature panel */
+    .router{border:1px solid var(--line);border-radius:14px;background:linear-gradient(180deg,var(--cream),var(--surface));padding:28px 28px 26px;}
+    .router-top{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin-bottom:18px;flex-wrap:wrap;}
+    .router .metric-lbl{font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;font-size:11px;letter-spacing:0.09em;text-transform:uppercase;color:var(--body);margin-bottom:7px;}
+    .router .metric-val{display:flex;align-items:baseline;gap:2px;font-weight:800;letter-spacing:-0.03em;color:var(--orange);}
+    .router .mnum{font-size:clamp(40px,7vw,56px);line-height:1;font-variant-numeric:tabular-nums;}
+    .router .mpct{font-size:22px;font-weight:700;}
+    .router .routed{font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;font-size:13px;color:var(--body);}
+    .router .routed-k{color:#A8978A;}
+    .router .routed-v{color:var(--ink);font-weight:600;}
+    .router .bartrack{height:10px;border-radius:999px;background:var(--line);overflow:hidden;margin:0 0 18px;}
+    .router .barfill{height:100%;width:0;border-radius:999px;background:linear-gradient(90deg,var(--orange),var(--orange-soft));transition:width .9s cubic-bezier(.3,.6,.3,1);}
+    .router .lanes{display:flex;gap:10px;flex-wrap:wrap;}
+    .router .lane{font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;font-size:12.5px;font-weight:600;padding:7px 14px;border-radius:999px;border:1px solid var(--line);color:var(--body);background:var(--cream);transition:border-color .3s ease,background .3s ease,color .3s ease;}
+    .router .lane.active{border-color:var(--orange);background:var(--orange);color:#fff;}
+    .anim-cap{font-size:14px;font-style:italic;color:#A8978A;line-height:1.55;margin:18px 0 0;max-width:700px;}
+    @media (prefers-reduced-motion: reduce){ .router .barfill{transition:none;} }
+  </style>
+</head>
+<body>
+  <div id="progress"></div>
+  <nav class="nav">
+    <a class="brand" href="https://andrewzoll.com"><span class="mark" id="swirl" title="psst"></span> Andrew Zoll</a>
+    <a class="nav-cta" href="mailto:andrew@andrewzoll.com">andrew@andrewzoll.com <span class="badge">&#8599;</span></a>
+  </nav>
+
+  <div class="wrap">
+    <div class="wide">
+    <p class="eyebrow reveal">Built for the Zapier AI Platform team</p>
+
+    <div class="hero reveal">
+      <div id="spot"></div>
+      <div class="inner">
+        <div class="proxy" aria-hidden="true">
+          <svg viewBox="0 0 230 120" fill="none">
+            <path class="track" d="M30 60 H100"/>
+            <path class="track" d="M130 60 H175 V28 H200"/>
+            <path class="track" d="M130 60 H175 V60 H200"/>
+            <path class="track" d="M130 60 H175 V92 H200"/>
+            <circle class="hub pulse" cx="115" cy="60" r="14"/>
+            <circle class="hub" cx="115" cy="60" r="14"/>
+            <circle class="model" cx="208" cy="28" r="8"/>
+            <circle class="model" cx="208" cy="60" r="8"/>
+            <circle class="model" cx="208" cy="92" r="8"/>
+            <rect class="pkt" x="24" y="56" width="9" height="9" rx="2"/>
+          </svg>
+        </div>
+        <h1>I already run an LLM proxy.<br>Mine ships to production.</h1>
+        <p class="lead reveal">I'm Andrew Zoll. Your AI Platform team builds the LLM proxy server, the observability layer, and the eval workflows that every other team builds on top of. I built that exact shape for my own products: a two-tier model router, eval-and-ship discipline, and agent guardrails that run every day. <b>This page is me showing the work, not describing it.</b></p>
+        <p class="subnote reveal">This is an independent application page Andrew Zoll built for the Applied AI Engineer role, in your design language on purpose. It is not affiliated with or endorsed by Zapier. It is just me, showing the work.</p>
+      </div>
+    </div>
+    </div>
+
+    <section>
+      <h2 class="reveal">Route to the cheap model when the cheap model is enough</h2>
+      <div class="wide">
+      <div class="router reveal" aria-label="Animation: a model router decides which provider tier to send each request to, holding cost down while quality stays high.">
+        <div class="router-top">
+          <div class="metric">
+            <div class="metric-lbl">requests on the cheap tier</div>
+            <div class="metric-val"><span class="mnum">0</span><span class="mpct">%</span></div>
+          </div>
+          <div class="routed"><span class="routed-k">routing:</span> <span class="routed-v">reading the request</span></div>
+        </div>
+        <div class="bartrack"><div class="barfill"></div></div>
+        <div class="lanes">
+          <div class="lane" data-l="0">classify</div>
+          <div class="lane" data-l="1">cost cap</div>
+          <div class="lane" data-l="2">fallback</div>
+          <div class="lane" data-l="3">observe</div>
+        </div>
+      </div>
+      </div>
+      <p class="anim-cap">An illustration of the routing logic, not a reported metric. A proxy that just forwards calls is easy. A proxy that decides which tier a request deserves, caps the spend, falls back cleanly, and logs every decision is the actual job. I built that router for FieldCommand because the bill demanded it.</p>
+    </section>
+
+    <section>
+      <h2 class="reveal">What your JD asks for, line by line</h2>
+      <div class="map">
+        <div class="row reveal">
+          <div class="check"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11"/><path d="M6 12.5 L10.5 17 L18 7.5"/></svg></div>
+          <div class="body">
+            <div class="jd">"Develop and maintain core services such as our LLM proxy server, platform APIs, and reusable tooling that standardize how teams access and operate models in production"</div>
+            <div class="me">I built a two-tier model router for FieldCommand that sends cheap work to a cheap model and harder work to a stronger one, with three providers wired in behind one interface and per-tenant feature flags gating each AI feature. That is a proxy with a paved road on top. <span class="mark-hl">I run it in production now.</span></div>
+          </div>
+        </div>
+        <div class="row reveal">
+          <div class="check"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11"/><path d="M6 12.5 L10.5 17 L18 7.5"/></svg></div>
+          <div class="body">
+            <div class="jd">"Build and improve parts of our LLM Ops and ML Ops stack, including observability, monitoring, evaluation workflows, and operational tooling"</div>
+            <div class="me">Veritas is an evaluation workflow I shipped. It reads an AI claim, retrieves the source, and returns a structured verdict with a confidence cap. I drove its false-positive rate down by reading failures one at a time, which is exactly what an eval loop is for.</div>
+          </div>
+        </div>
+        <div class="row reveal">
+          <div class="check"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11"/><path d="M6 12.5 L10.5 17 L18 7.5"/></svg></div>
+          <div class="body">
+            <div class="jd">"Design and implement systems that improve the performance, reliability, safety, and cost efficiency of AI-powered experiences"</div>
+            <div class="me">Cost efficiency is why the router exists, and reliability is why AndrewOS runs builder, reviewer, and validator agents where the validator grades the builder and blocks bad output before it ships. I treat cost, latency, and safety as the design, not an afterthought.</div>
+          </div>
+        </div>
+        <div class="row reveal">
+          <div class="check"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11"/><path d="M6 12.5 L10.5 17 L18 7.5"/></svg></div>
+          <div class="body">
+            <div class="jd">"You will work mostly in TypeScript & Python. Comfort with typed languages and modern backend practices is a must"</div>
+            <div class="me">FieldCommand is a multi-tenant SaaS I built solo in TypeScript on a PostgreSQL and Supabase backend, with REST integrations, ETL pipelines, role-based access control, and tenant isolation. Typed backend work is my daily ground.</div>
+          </div>
+        </div>
+        <div class="row reveal">
+          <div class="check"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11"/><path d="M6 12.5 L10.5 17 L18 7.5"/></svg></div>
+          <div class="body">
+            <div class="jd">"Build tools that help other engineers move faster, simplifying complex workflows and improving how teams build and ship software"</div>
+            <div class="me">AndrewOS is a developer platform for agents. I built reusable delegation patterns, structured task packets, and validation gates so that other agents can pick up work and ship it safely. The whole point is leverage for the people downstream of me.</div>
+          </div>
+        </div>
+        <div class="row reveal">
+          <div class="check"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11"/><path d="M6 12.5 L10.5 17 L18 7.5"/></svg></div>
+          <div class="body">
+            <div class="jd">"Evaluate emerging tools, models, and patterns in the AI ecosystem, and help determine which ones should be incorporated into the shared platform"</div>
+            <div class="me">I already build on Zapier and n8n, and I wire ChatGPT and Claude into real workflows, so I judge tools by whether they earn a place in production. I once integrated Redtail CRM with the ChatGPT API and cut more than twenty hours of manual work every month.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="stat reveal" data-countdown data-from="30" data-to="5">
+      <div class="num">30%<span class="arrow">&rarr;</span><span class="val">5</span>%<span class="fp">FP</span></div>
+      <div class="lbl">On Veritas, I drove the false-positive rate from about 30% to <b>under 5%</b> by reading failures one at a time. That eval-and-ship-or-hold discipline is how you keep a model trustworthy once it is in production.</div>
+    </div>
+
+    <section>
+      <h2 class="reveal">What I've shipped this way</h2>
+      <div class="receipt reveal">
+        <div class="rhead">
+          <span class="tag">LLM proxy, multi-provider, built solo</span>
+          <span class="chip">187,745 lines</span>
+        </div>
+        <h3>FieldCommand</h3>
+        <p>A multi-tenant B2B SaaS, <span class="nm" data-countup data-from="0" data-to="187745">187,745</span> lines of TypeScript, built solo on PostgreSQL and Supabase. Four AI features in production behind per-tenant feature flags, a two-tier model router that sends cheap work to a cheap model, and three providers wired in behind one interface.</p>
+        <a href="https://app.fieldcommand.io">app.fieldcommand.io <span class="arr">&rarr;</span></a>
+      </div>
+      <div class="receipt reveal">
+        <div class="rhead">
+          <span class="tag">An eval workflow, in production</span>
+          <span class="chip">~30% &rarr; &lt;5% FP</span>
+        </div>
+        <h3>Veritas</h3>
+        <p>Live at veritaslaw.app. It reads a claim, retrieves the source, and returns a structured verdict on whether the claim holds up. Built with Zod schemas, prompt caching, and cost caps. False-positive rate driven from about 30% to under 5% by empirical failure analysis.</p>
+        <a href="https://veritaslaw.app">veritaslaw.app <span class="arr">&rarr;</span></a>
+      </div>
+      <div class="receipt reveal">
+        <div class="rhead">
+          <span class="tag">Agent platform, daily use</span>
+          <span class="chip">build &middot; review &middot; validate</span>
+        </div>
+        <h3>AndrewOS</h3>
+        <p>An agent operating system I run across two businesses. It uses builder, reviewer, and validator triads where the validator grades the builder and blocks before anything ships, plus human gates on irreversible actions. It is the observability and guardrail layer that keeps autonomous agents honest.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2 class="reveal">The honest part</h2>
+      <div class="note reveal">
+        <span class="q" aria-hidden="true">&ldquo;</span>
+        <p>Your post asks for four or more years building and operating production AI and ML systems, plus at least one year in LLM Ops. My agent and LLM work runs from 2025 to now and I built it myself, so I am not bringing multi-year tenure on a large platform team. What I am bringing is the exact stack you describe, already running in production: an LLM router, eval workflows, observability, and cost caps that I designed because my own products needed them. You wrote that you welcome people who use AI tools to build, and that comfort with typed backends matters more than years on a title. <span class="mark-hl">Judge me on the systems, not the calendar.</span></p>
+      </div>
+    </section>
+
+    <div class="band reveal">
+      <p><strong>If this resonates, I'd love fifteen minutes.</strong> Reply wherever I sent you this link, or reach me directly.</p>
+      <div class="links">
+        <a href="https://portfolio.andrewzoll.com">Portfolio</a>
+        <a href="https://www.linkedin.com/in/andrewzoll">LinkedIn</a>
+        <a href="https://veritaslaw.app">Veritas (live)</a>
+        <a href="https://app.fieldcommand.io">FieldCommand (live)</a>
+      </div>
+      <a class="cta" href="mailto:andrew@andrewzoll.com">andrew@andrewzoll.com <span class="badge">&#8599;</span></a>
+    </div>
+
+    <p class="foot reveal">This is an independent application page Andrew Zoll built for the Applied AI Engineer role. It is not affiliated with or endorsed by Zapier. Private link, not indexed. Just for the hiring team.</p>
+  </div>
+
+  <script>
+    (function(){
+      var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      function ease(t){ return 1 - Math.pow(1 - t, 3); }
+      function animateCount(el){
+        var from = parseFloat(el.getAttribute('data-from'));
+        var to = parseFloat(el.getAttribute('data-to'));
+        var isDown = el.hasAttribute('data-countdown');
+        var target = isDown ? el.querySelector('.val') : el;
+        var dur = 1200, start = null;
+        function fmt(n){ return Math.round(n).toLocaleString('en-US'); }
+        if(reduce){ target.textContent = fmt(to); return; }
+        function step(ts){
+          if(!start) start = ts;
+          var p = Math.min(1, (ts - start) / dur);
+          var v = from + (to - from) * ease(p);
+          target.textContent = fmt(v);
+          if(p < 1) requestAnimationFrame(step);
+          else target.textContent = fmt(to);
+        }
+        requestAnimationFrame(step);
+      }
+      if(!('IntersectionObserver' in window) || reduce){
+        document.querySelectorAll('.reveal, .mark-hl').forEach(function(el){ el.classList.add('in'); });
+        document.querySelectorAll('[data-countup],[data-countdown]').forEach(animateCount);
+        return;
+      }
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){
+          if(e.isIntersecting){
+            e.target.classList.add('in');
+            if(e.target.hasAttribute('data-countup') || e.target.hasAttribute('data-countdown')) animateCount(e.target);
+            io.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.2 });
+      document.querySelectorAll('.reveal, .mark-hl, [data-countup], [data-countdown]').forEach(function(el){ io.observe(el); });
+    })();
+  </script>
+
+  <script>
+    (function(){
+      var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if(reduce) return;
+      var fine = window.matchMedia('(pointer:fine)').matches;
+
+      var bar = document.getElementById('progress');
+      if(bar){
+        var onScroll = function(){
+          var d = document.documentElement, max = d.scrollHeight - d.clientHeight;
+          bar.style.width = (max > 0 ? (d.scrollTop / max * 100) : 0) + '%';
+        };
+        window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
+      }
+
+      var spot = document.getElementById('spot'), hero = document.querySelector('.hero');
+      if(spot && hero && fine){
+        hero.addEventListener('mousemove', function(e){
+          var r = hero.getBoundingClientRect();
+          spot.style.left = (e.clientX - r.left) + 'px'; spot.style.top = (e.clientY - r.top) + 'px'; spot.style.opacity = '1';
+        }, { passive: true });
+        hero.addEventListener('mouseleave', function(){ spot.style.opacity = '0'; });
+      }
+
+      document.querySelectorAll('.nav-cta, .band .cta').forEach(function(b){
+        if(!fine) return;
+        b.addEventListener('mousemove', function(e){
+          var r = b.getBoundingClientRect();
+          b.style.transform = 'translate(' + ((e.clientX - r.left - r.width/2) * 0.3) + 'px,' + ((e.clientY - r.top - r.height/2) * 0.5) + 'px)';
+        });
+        b.addEventListener('mouseleave', function(){ b.style.transform = ''; });
+      });
+
+      if(fine){
+        document.querySelectorAll('.receipt').forEach(function(c){
+          c.addEventListener('mousemove', function(e){
+            var r = c.getBoundingClientRect();
+            var px = (e.clientX - r.left) / r.width - 0.5, py = (e.clientY - r.top) / r.height - 0.5;
+            c.style.transform = 'translateY(-3px) perspective(820px) rotateX(' + (-py * 4) + 'deg) rotateY(' + (px * 5) + 'deg)';
+          });
+          c.addEventListener('mouseleave', function(){ c.style.transform = ''; });
+        });
+      }
+
+      document.querySelectorAll('.stat').forEach(function(s){
+        var io = new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ setTimeout(function(){ s.classList.add('pulse'); }, 1150); io.unobserve(s); } }); }, { threshold: 0.4 });
+        io.observe(s);
+      });
+
+      var swirl = document.getElementById('swirl'), brand = document.querySelector('.brand');
+      if(swirl){
+        swirl.addEventListener('click', function(ev){
+          ev.preventDefault();
+          if(brand) brand.classList.add('spin');
+          setTimeout(function(){ if(brand) brand.classList.remove('spin'); }, 800);
+        });
+      }
+    })();
+  </script>
+
+  <script>
+    /* model-router cost climb */
+    (function(){
+      var c = document.querySelector('.router');
+      if(!c) return;
+      var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var mnum = c.querySelector('.mnum'), bar = c.querySelector('.barfill'), routedV = c.querySelector('.routed-v'), lanes = c.querySelectorAll('.lane');
+      var steps = [
+        { v:41, t:'classify by difficulty' },
+        { v:58, t:'cap the spend' },
+        { v:67, t:'fall back on failure' },
+        { v:74, t:'log every decision' }
+      ];
+      var countTimer = null;
+      function countTo(from, to){
+        if(countTimer) clearTimeout(countTimer);
+        var cur = from, stepv = Math.max(1, Math.round((to - from) / 14));
+        (function s(){ cur += stepv; if(cur >= to) cur = to; mnum.textContent = cur; if(cur < to) countTimer = setTimeout(s, 45); })();
+      }
+      function applyStep(i){
+        var st = steps[i];
+        lanes.forEach(function(ln, idx){ ln.classList.toggle('active', idx <= i); });
+        routedV.textContent = st.t;
+        bar.style.width = st.v + '%';
+        countTo(i === 0 ? 0 : steps[i-1].v, st.v);
+      }
+      function finalState(){
+        lanes.forEach(function(ln){ ln.classList.add('active'); });
+        routedV.textContent = steps[steps.length-1].t;
+        mnum.textContent = '74'; bar.style.width = '74%';
+      }
+      if(reduce){ finalState(); return; }
+      var i = 0, timers = [];
+      function clearT(){ timers.forEach(clearTimeout); timers = []; if(countTimer){ clearTimeout(countTimer); countTimer = null; } }
+      function reset(){
+        lanes.forEach(function(ln){ ln.classList.remove('active'); });
+        bar.style.width = '0%'; mnum.textContent = '0'; routedV.textContent = 'reading the request';
+      }
+      function tick(){
+        applyStep(i);
+        i++;
+        if(i < steps.length){ timers.push(setTimeout(tick, 1700)); }
+        else { timers.push(setTimeout(function(){ i = 0; reset(); timers.push(setTimeout(tick, 650)); }, 2600)); }
+      }
+      var io = new IntersectionObserver(function(es){
+        es.forEach(function(e){ if(e.isIntersecting){ clearT(); reset(); timers.push(setTimeout(tick, 450)); io.unobserve(c); } });
+      }, { threshold: 0.3 });
+      io.observe(c);
+    })();
+  </script>
+</body>
+</html>
