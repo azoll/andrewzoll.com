@@ -36,6 +36,7 @@
     .mono{font-family:'IBM Plex Mono',ui-monospace,Menlo,monospace;}
     a{color:var(--ss-blue);text-decoration:none;}
     a:hover{text-decoration:underline;}
+    button{font-family:inherit;}
 
     /* ===== App chrome shell ===== */
     .app{max-width:1180px;margin:22px auto 60px;background:var(--white);border:1px solid var(--line);border-radius:10px;overflow:hidden;box-shadow:0 1px 2px rgba(28,39,51,0.04),0 18px 48px rgba(28,39,51,0.09);}
@@ -55,9 +56,15 @@
 
     /* tab strip */
     .tabs{display:flex;gap:2px;padding:0 14px;border-bottom:1px solid var(--line);background:var(--rail);overflow-x:auto;}
-    .tab{padding:11px 16px 10px;font-size:13.5px;font-weight:500;color:var(--muted);border-bottom:2px solid transparent;white-space:nowrap;cursor:default;}
-    .tab.on{color:var(--ss-blue);border-bottom-color:var(--ss-blue);font-weight:600;background:var(--white);}
+    .tab{padding:11px 16px 10px;font-size:13.5px;font-weight:500;color:var(--muted);border:0;border-bottom:2px solid transparent;background:transparent;white-space:nowrap;cursor:pointer;}
+    .tab:hover{color:var(--ss-blue-deep);}
+    .tab[aria-selected="true"]{color:var(--ss-blue);border-bottom-color:var(--ss-blue);font-weight:600;background:var(--white);}
+    .tab:focus-visible{outline:2px solid var(--ss-blue);outline-offset:-2px;border-radius:4px 4px 0 0;}
     .tab i{font-style:normal;}
+
+    /* tab panels */
+    .tabpanel[hidden]{display:none;}
+    .tabpanel:focus{outline:none;}
 
     /* main split: rail + canvas */
     .split{display:flex;min-height:200px;}
@@ -76,7 +83,11 @@
     .pill.green{background:var(--green-wash);color:#1f6b40;}
     .pill.amber{background:var(--amber-wash);color:#9a5e00;}
     .ctoolbar .right{margin-left:auto;display:flex;gap:8px;align-items:center;}
-    .minibtn{font-size:12.5px;font-weight:500;color:var(--body);border:1px solid var(--line);background:var(--white);padding:5px 11px;border-radius:6px;display:inline-flex;align-items:center;gap:6px;}
+    .minibtn{font-size:12.5px;font-weight:500;color:var(--body);border:1px solid var(--line);background:var(--white);padding:5px 11px;border-radius:6px;display:inline-flex;align-items:center;gap:6px;cursor:pointer;transition:background .12s ease,border-color .12s ease,color .12s ease;}
+    .minibtn:hover{border-color:var(--ss-blue-line);color:var(--ss-blue-deep);}
+    .minibtn:focus-visible{outline:2px solid var(--ss-blue);outline-offset:1px;}
+    .minibtn[aria-pressed="true"]{background:var(--ss-blue-wash);border-color:var(--ss-blue-line);color:var(--ss-blue-deep);}
+    .minibtn .chk{font-size:11px;}
 
     /* ===== the sheet ===== */
     .sheetwrap{overflow-x:auto;}
@@ -85,10 +96,17 @@
     .sheet thead th.cnum{width:38px;text-align:center;color:#AEB9C4;}
     .sheet td{border-bottom:1px solid var(--line-soft);border-right:1px solid var(--line-soft);padding:0;vertical-align:top;}
     .sheet tbody tr:nth-child(even) td{background:var(--cellzebra);}
+    .sheet tbody tr.hiderow{display:none;}
     .rownum{width:38px;text-align:center;color:#AEB9C4;font-size:12px;padding:13px 0;}
 
     .cell{padding:12px 14px;}
-    .cell .twirl{display:inline-flex;width:15px;height:15px;align-items:center;justify-content:center;color:var(--muted);margin-right:5px;vertical-align:-2px;font-size:10px;}
+
+    /* twirl is now a real button */
+    .twirl{display:inline-flex;width:18px;height:18px;align-items:center;justify-content:center;color:var(--muted);margin-right:5px;vertical-align:-3px;font-size:10px;border:0;background:transparent;padding:0;cursor:pointer;border-radius:4px;}
+    .twirl:hover{background:rgba(14,95,217,0.10);color:var(--ss-blue-deep);}
+    .twirl:focus-visible{outline:2px solid var(--ss-blue);outline-offset:1px;}
+    .twirl .car{display:inline-block;transition:transform .18s cubic-bezier(.2,.7,.3,1.4);}
+    .twirl[aria-expanded="false"] .car{transform:rotate(-90deg);}
 
     /* parent rows = the JD pillars */
     tr.parent td{background:var(--ss-blue-wash) !important;border-bottom:1px solid var(--ss-blue-line);}
@@ -111,12 +129,15 @@
 
     /* status balls (RYG) */
     .status{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:500;white-space:nowrap;}
-    .ball{width:14px;height:14px;border-radius:50%;flex-shrink:0;box-shadow:inset 0 0 0 1px rgba(0,0,0,0.06);}
+    .ball{width:14px;height:14px;border-radius:50%;flex-shrink:0;box-shadow:inset 0 0 0 1px rgba(0,0,0,0.06);transition:transform .25s cubic-bezier(.2,.7,.3,1.5),box-shadow .25s ease;}
     .ball.g{background:var(--green);}
     .ball.a{background:var(--amber);}
     .ball.b{background:var(--red);}
     .status.g{color:#1f6b40;}
     .status.a{color:#9a5e00;}
+    /* whimsy: nudge the status ball when its row is hovered */
+    tr:hover .ball{transform:scale(1.28);box-shadow:inset 0 0 0 1px rgba(0,0,0,0.06),0 0 0 4px rgba(46,139,87,0.14);}
+    tr:hover .status.a .ball{box-shadow:inset 0 0 0 1px rgba(0,0,0,0.06),0 0 0 4px rgba(224,138,0,0.16);}
 
     .evi{font-size:13.5px;color:var(--body);line-height:1.5;}
     .evi b{color:var(--ink);font-weight:600;}
@@ -130,7 +151,7 @@
     tr.gap .reqname{color:#9a5e00;}
 
     /* ===== Gantt / timeline section ===== */
-    .panel{padding:26px 26px 30px;border-top:8px solid #EEF2F6;}
+    .panel{padding:26px 26px 30px;}
     .panel h2{font-size:13px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--ss-blue);margin:0 0 4px;display:flex;align-items:center;gap:9px;}
     .panel .sub{font-size:14px;color:var(--body);margin:0 0 22px;max-width:680px;line-height:1.55;}
     .gantt{border:1px solid var(--line);border-radius:8px;overflow:hidden;}
@@ -156,16 +177,29 @@
     .bar.now::after{content:"today";position:absolute;top:-1px;left:5px;font-size:10px;color:var(--red);font-weight:600;background:var(--white);padding:0 3px;}
 
     /* ===== comment / honest-gap thread ===== */
-    .thread{padding:26px;border-top:8px solid #EEF2F6;}
+    .thread{padding:26px;}
     .thread h2{font-size:13px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--ss-blue);margin:0 0 18px;display:flex;align-items:center;gap:9px;}
     .comment{display:flex;gap:13px;padding:16px 0;border-bottom:1px solid var(--line-soft);}
     .comment:last-child{border-bottom:0;}
-    .comment .av{width:34px;height:34px;border-radius:50%;color:#fff;font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+    .comment .comment-av{width:34px;height:34px;border-radius:50%;color:#fff;font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
     .comment .meta{font-size:12.5px;color:var(--muted);margin-bottom:4px;}
     .comment .meta b{color:var(--ink);font-weight:600;font-size:13.5px;}
     .comment .txt{font-size:14.5px;color:var(--body);line-height:1.6;}
     .comment .txt b{color:var(--ink);font-weight:600;}
     .comment .txt .num{font-family:'IBM Plex Mono',monospace;font-weight:600;color:var(--ss-blue-deep);}
+
+    /* ===== role detail panel ===== */
+    .detail{padding:26px;}
+    .detail h2{font-size:13px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--ss-blue);margin:0 0 6px;display:flex;align-items:center;gap:9px;}
+    .detail .sub{font-size:14px;color:var(--body);margin:0 0 22px;max-width:700px;line-height:1.55;}
+    .props{border:1px solid var(--line);border-radius:8px;overflow:hidden;}
+    .prop{display:grid;grid-template-columns:200px 1fr;border-bottom:1px solid var(--line-soft);}
+    .prop:last-child{border-bottom:0;}
+    .prop:nth-child(even){background:var(--cellzebra);}
+    .prop .k{padding:12px 14px;font-size:11px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;color:var(--muted);border-right:1px solid var(--line);}
+    .prop .v{padding:12px 14px;font-size:14px;color:var(--body);}
+    .prop .v b{color:var(--ink);font-weight:600;}
+    .prop .v .num{font-family:'IBM Plex Mono',monospace;font-weight:600;color:var(--ss-blue-deep);}
 
     /* ===== footer action bar ===== */
     .actionbar{display:flex;align-items:center;gap:14px;padding:20px 26px;border-top:1px solid var(--line);background:var(--rail);flex-wrap:wrap;}
@@ -186,6 +220,10 @@
     .notebar svg{width:15px;height:15px;flex-shrink:0;margin-top:1px;stroke:#9a5e00;}
     .notebar b{color:#5e4000;font-weight:600;}
 
+    /* tiny toast for filter/sort feedback */
+    .toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(14px);background:var(--ink);color:#fff;font-size:12.5px;font-weight:500;padding:8px 15px;border-radius:8px;box-shadow:0 8px 26px rgba(28,39,51,0.28);opacity:0;pointer-events:none;transition:opacity .2s ease,transform .2s ease;z-index:50;}
+    .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
     ::selection{background:var(--ss-blue-wash);color:var(--ink);}
 
     /* reveal */
@@ -193,7 +231,7 @@
     .rv.in{opacity:1;transform:none;}
     .bar{opacity:0;transition:opacity .5s ease;}
     .bar.in{opacity:1;}
-    .ball{transform:scale(0);transition:transform .4s cubic-bezier(.2,.7,.3,1.5);}
+    .ball{transform:scale(0);}
     .ball.in{transform:scale(1);}
 
     @media (max-width:760px){
@@ -201,13 +239,14 @@
       .rail{display:none;}
       .filepath{display:none;}
       .actionbar .acts{margin-left:0;width:100%;}
-      .panel,.thread{padding:22px 16px;}
+      .panel,.thread,.detail{padding:22px 16px;}
+      .prop,.detail .prop{grid-template-columns:130px 1fr;}
     }
     @media (prefers-reduced-motion:reduce){
-      .rv,.bar,.ball{opacity:1 !important;transform:none !important;transition:none !important;}
+      .rv,.bar,.ball,.twirl .car{opacity:1 !important;transform:none !important;transition:none !important;}
     }
   </style>
-<noscript><style>.rv,.reveal,.node,.bar,.ball{opacity:1!important;transform:none!important}</style></noscript>
+<noscript><style>.rv,.reveal,.node,.bar,.ball{opacity:1!important;transform:none!important}.tabpanel[hidden]{display:block!important;}</style></noscript>
 </head>
 <body>
 
@@ -225,227 +264,265 @@
     </div>
 
     <!-- tab strip -->
-    <div class="tabs">
-      <div class="tab on">Fit Sheet</div>
-      <div class="tab">Delivery Timeline</div>
-      <div class="tab">Comments</div>
-      <div class="tab">Role Detail</div>
+    <div class="tabs" role="tablist" aria-label="Fit sheet views">
+      <button class="tab" type="button" id="tab-sheet" role="tab" aria-selected="true" aria-controls="panel-sheet">Fit Sheet</button>
+      <button class="tab" type="button" id="tab-timeline" role="tab" aria-selected="false" aria-controls="panel-timeline" tabindex="-1">Delivery Timeline</button>
+      <button class="tab" type="button" id="tab-comments" role="tab" aria-selected="false" aria-controls="panel-comments" tabindex="-1">Comments</button>
+      <button class="tab" type="button" id="tab-detail" role="tab" aria-selected="false" aria-controls="panel-detail" tabindex="-1">Role Detail</button>
     </div>
 
     <!-- hero-area independent-page note -->
     <div class="notebar">
       <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16v.01"/></svg>
-      <span><b>Independent page Andrew Zoll built on his own.</b> Not affiliated with, authorized by, or endorsed by Smartsheet. He built it as a Smartsheet on purpose, to show how he already thinks in the product.</span>
+      <span><b>Independent page Andrew Zoll built on his own.</b> Not affiliated with, authorized by, or endorsed by Smartsheet. I built it as a Smartsheet on purpose, so you can see how I already think in the product.</span>
     </div>
 
-    <!-- split -->
-    <div class="split">
-      <div class="rail" aria-hidden="true">
-        <div class="ic on" title="Grid"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/></svg></div>
-        <div class="ic" title="Gantt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 6h9M4 12h13M4 18h6"/></svg></div>
-        <div class="ic" title="Cards"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="7" height="16" rx="1.5"/><rect x="14" y="4" width="7" height="10" rx="1.5"/></svg></div>
-        <div class="ic" title="Comments"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 11.5a8.4 8.4 0 0 1-8.5 8.5 8.7 8.7 0 0 1-3.8-.9L3 21l1.9-5.6A8.4 8.4 0 0 1 4 11.5 8.4 8.4 0 0 1 12.5 3 8.4 8.4 0 0 1 21 11.5Z"/></svg></div>
+    <!-- ===== TAB PANEL: Fit Sheet ===== -->
+    <section class="tabpanel" id="panel-sheet" role="tabpanel" aria-labelledby="tab-sheet" tabindex="0">
+      <div class="split">
+        <div class="rail" aria-hidden="true">
+          <div class="ic on" title="Grid"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/></svg></div>
+          <div class="ic" title="Gantt"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 6h9M4 12h13M4 18h6"/></svg></div>
+          <div class="ic" title="Cards"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="7" height="16" rx="1.5"/><rect x="14" y="4" width="7" height="10" rx="1.5"/></svg></div>
+          <div class="ic" title="Comments"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 11.5a8.4 8.4 0 0 1-8.5 8.5 8.7 8.7 0 0 1-3.8-.9L3 21l1.9-5.6A8.4 8.4 0 0 1 4 11.5 8.4 8.4 0 0 1 12.5 3 8.4 8.4 0 0 1 21 11.5Z"/></svg></div>
+        </div>
+
+        <div class="canvas">
+          <!-- canvas toolbar -->
+          <div class="ctoolbar">
+            <span class="grouping">Grouped by <b>JD requirement</b> · 5 requirements · 9 evidence rows</span>
+            <span class="pill green">7 On track</span>
+            <span class="pill amber">1 At risk</span>
+            <div class="right">
+              <button class="minibtn" type="button" id="filterBtn" aria-pressed="false">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 5h18l-7 8v5l-4 2v-7L3 5Z"/></svg>
+                <span id="filterLabel">Filter</span>
+              </button>
+              <button class="minibtn" type="button" id="sortBtn" aria-pressed="false">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 4v16M7 20l-3-3M7 4l3 3M14 7h7M14 12h5M14 17h3"/></svg>
+                <span id="sortLabel">Sort: Status</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- the sheet -->
+          <div class="sheetwrap">
+            <table class="sheet">
+              <thead>
+                <tr>
+                  <th class="cnum">#</th>
+                  <th style="min-width:280px">Requirement</th>
+                  <th style="width:170px">Owner</th>
+                  <th style="width:140px">Status</th>
+                  <th style="min-width:300px">Evidence in production</th>
+                </tr>
+              </thead>
+              <tbody>
+
+                <!-- PILLAR 1 -->
+                <tr class="parent rv" data-status="g" data-group="1">
+                  <td class="rownum">1</td>
+                  <td><div class="cell"><button class="twirl" type="button" aria-expanded="true" aria-controls="r1-c1 r1-c2" aria-label="Collapse evidence rows under: Lead complex, multi-system AI deployments"><span class="car">&#9660;</span></button><span class="reqname">Lead complex, multi-system AI deployments end to end</span><div class="reqsub">scope, architect, build, validate, own the relationship</div></div></td>
+                  <td><div class="cell owner"><span class="av az">AZ</span>Andrew</div></td>
+                  <td><div class="cell status g"><span class="ball g"></span>On track</div></td>
+                  <td><div class="cell evi">I've spent six years owning client outcomes end to end. Now I'm pointing that at systems I built myself.</div></td>
+                </tr>
+                <tr class="rv child" id="r1-c1" data-status="g" data-group="1">
+                  <td class="rownum">2</td>
+                  <td><div class="cell reqchild"><span class="reqname">Architect and ship a multi-system platform solo</span><span class="jdquote">"production systems organizations depend on"</span></div></td>
+                  <td><div class="cell owner"><span class="av fc">FC</span>FieldCommand</div></td>
+                  <td><div class="cell status g"><span class="ball g"></span>On track</div></td>
+                  <td><div class="cell evi">I built FieldCommand, a multi-tenant B2B SaaS. That's <span class="num">187,745</span> lines of TypeScript, written solo. Stripe billing, a CRM, AI services, and reporting, all wired into automated data pipelines.<a class="lnk" href="https://app.fieldcommand.io">app.fieldcommand.io <span class="arr">&rarr;</span></a></div></td>
+                </tr>
+                <tr class="rv child" id="r1-c2" data-status="g" data-group="1">
+                  <td class="rownum">3</td>
+                  <td><div class="cell reqchild"><span class="reqname">Carry an outcome under real oversight</span><span class="jdquote">"navigated security reviews, managed customer relationships"</span></div></td>
+                  <td><div class="cell owner"><span class="av fr">FA</span>Advisory</div></td>
+                  <td><div class="cell status g"><span class="ball g"></span>On track</div></td>
+                  <td><div class="cell evi">For six years I operated under continuous FINRA and SEC supervision, with strict confidentiality, recordkeeping, and audit requirements. So I'm comfortable being the single owner of an outcome that actually matters to someone.</div></td>
+                </tr>
+
+                <!-- PILLAR 2 -->
+                <tr class="parent rv" data-status="g" data-group="2">
+                  <td class="rownum">4</td>
+                  <td><div class="cell"><button class="twirl" type="button" aria-expanded="true" aria-controls="r2-c1 r2-c2" aria-label="Collapse evidence rows under: Architect multi-agent solutions"><span class="car">&#9660;</span></button><span class="reqname">Architect multi-agent solutions</span><div class="reqsub">select the coordination pattern per workflow and compliance need</div></div></td>
+                  <td><div class="cell owner"><span class="av os">OS</span>AndrewOS</div></td>
+                  <td><div class="cell status g"><span class="ball g"></span>On track</div></td>
+                  <td><div class="cell evi">I run multi-agent orchestration every day. It's not a demo, it's how my businesses run.</div></td>
+                </tr>
+                <tr class="rv child" id="r2-c1" data-status="g" data-group="2">
+                  <td class="rownum">5</td>
+                  <td><div class="cell reqchild"><span class="reqname">Run agents with validation loops and human gates</span><span class="jdquote">"multi-agent orchestration, agent deployment at scale"</span></div></td>
+                  <td><div class="cell owner"><span class="av os">OS</span>AndrewOS</div></td>
+                  <td><div class="cell status g"><span class="ball g"></span>On track</div></td>
+                  <td><div class="cell evi">AndrewOS is an agent operating system I built and run across two businesses. It leans on structured delegation: agents specialize, the next level up validates, and a human gate stands in front of anything irreversible before it ships.</div></td>
+                </tr>
+                <tr class="rv child" id="r2-c2" data-status="g" data-group="2">
+                  <td class="rownum">6</td>
+                  <td><div class="cell reqchild"><span class="reqname">Ship AI features into a real product behind controls</span><span class="jdquote">"MCP / tool-use, agent deployment"</span></div></td>
+                  <td><div class="cell owner"><span class="av fc">FC</span>FieldCommand</div></td>
+                  <td><div class="cell status g"><span class="ball g"></span>On track</div></td>
+                  <td><div class="cell evi">FieldCommand ships <b>four AI features in production</b>, each behind per-tenant feature flags, with role-based access control and tenant isolation across the whole platform.</div></td>
+                </tr>
+
+                <!-- PILLAR 3 -->
+                <tr class="parent rv" data-status="g" data-group="3">
+                  <td class="rownum">7</td>
+                  <td><div class="cell"><button class="twirl" type="button" aria-expanded="true" aria-controls="r3-c1" aria-label="Collapse evidence rows under: Define eval, quality, and hallucination gates"><span class="car">&#9660;</span></button><span class="reqname">Define eval, quality, and hallucination gates</span><div class="reqsub">use them to make ship and no-ship decisions</div></div></td>
+                  <td><div class="cell owner"><span class="av vr">VR</span>Veritas</div></td>
+                  <td><div class="cell status g"><span class="ball g"></span>On track</div></td>
+                  <td><div class="cell evi">I've already built the eval discipline this role is asking for.</div></td>
+                </tr>
+                <tr class="rv child" id="r3-c1" data-status="g" data-group="3">
+                  <td class="rownum">8</td>
+                  <td><div class="cell reqchild"><span class="reqname">Drive a false-positive rate down by reading failures</span><span class="jdquote">"evaluation frameworks, AI product quality, accuracy"</span></div></td>
+                  <td><div class="cell owner"><span class="av vr">VR</span>Veritas</div></td>
+                  <td><div class="cell status g"><span class="ball g"></span>On track</div></td>
+                  <td><div class="cell evi"><b>Veritas result:</b> I drove the false-positive rate from roughly <span class="num">30%</span> down to under <span class="num">5%</span>, and I did it by reading failures one at a time. That eval-and-decide loop is how an agent earns trust in production.</div></td>
+                </tr>
+
+                <!-- PILLAR 4: ownership / reusable assets -->
+                <tr class="parent rv" data-status="g" data-group="4">
+                  <td class="rownum">9</td>
+                  <td><div class="cell"><button class="twirl" type="button" aria-expanded="false" aria-controls="r4-c1" aria-label="Expand evidence rows under: Own Deployment Kit quality and reusable assets"><span class="car">&#9660;</span></button><span class="reqname">Own Deployment Kit quality and reusable assets</span><div class="reqsub">a kit a non-engineer can follow, built to be owned without you</div></div></td>
+                  <td><div class="cell owner"><span class="av az">AZ</span>Andrew</div></td>
+                  <td><div class="cell status g"><span class="ball g"></span>On track</div></td>
+                  <td><div class="cell evi">"You think in platforms, not projects" is just a description of how I already build.</div></td>
+                </tr>
+                <tr class="rv child hiderow" id="r4-c1" data-status="g" data-group="4">
+                  <td class="rownum">9.1</td>
+                  <td><div class="cell reqchild"><span class="reqname">Document a system a non-engineer can run</span><span class="jdquote">"demonstrated reusable assets matter more than a title"</span></div></td>
+                  <td><div class="cell owner"><span class="av az">AZ</span>Andrew</div></td>
+                  <td><div class="cell status g"><span class="ball g"></span>On track</div></td>
+                  <td><div class="cell evi">AndrewOS is a reusable delegation system, not a one-off. And I translate between technical builders and non-technical operators for a living, which is exactly the Deployment Kit bar: documented well enough that a solutions consultant with no engineering background can pick it up and run it.</div></td>
+                </tr>
+
+                <!-- HONEST GAP ROW -->
+                <tr class="gap rv" data-status="a" data-group="5">
+                  <td class="rownum">10</td>
+                  <td><div class="cell"><span class="reqname">6 to 10+ years production software engineering</span><span class="jdquote">title history reads advisor, not engineer</span></div></td>
+                  <td><div class="cell owner"><span class="av az">AZ</span>Andrew</div></td>
+                  <td><div class="cell status a"><span class="ball a"></span>At risk</div></td>
+                  <td><div class="cell evi">I'm flagging this one honestly. My title history reads financial advisor, so the years-of-engineering box doesn't check cleanly. Pop open the Comments tab and you'll see how the shipped receipts answer it.</div></td>
+                </tr>
+
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
+    </section>
 
-      <div class="canvas">
-        <!-- canvas toolbar -->
-        <div class="ctoolbar">
-          <span class="grouping">Grouped by <b>JD requirement</b> · 5 requirements · 9 evidence rows</span>
-          <span class="pill green">7 On track</span>
-          <span class="pill amber">1 At risk</span>
-          <div class="right">
-            <span class="minibtn">Filter</span>
-            <span class="minibtn">Sort: Status</span>
+    <!-- ===== TAB PANEL: Delivery Timeline (Gantt) ===== -->
+    <section class="tabpanel" id="panel-timeline" role="tabpanel" aria-labelledby="tab-timeline" tabindex="0" hidden>
+      <div class="panel">
+        <h2 class="rv"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h9M4 12h13M4 18h6"/></svg> Delivery timeline</h2>
+        <p class="sub rv">Same work, plotted on a date axis. These are shipped systems running today, not a roadmap of things I'm hoping to do.</p>
+
+        <div class="gantt rv">
+          <div class="axis">
+            <div class="corner">Shipped system</div>
+            <div class="months">
+              <span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May</span><span>Jun</span>
+            </div>
           </div>
-        </div>
 
-        <!-- the sheet -->
-        <div class="sheetwrap">
-          <table class="sheet">
-            <thead>
-              <tr>
-                <th class="cnum">#</th>
-                <th style="min-width:280px">Requirement</th>
-                <th style="width:170px">Owner</th>
-                <th style="width:140px">Status</th>
-                <th style="min-width:300px">Evidence in production</th>
-              </tr>
-            </thead>
-            <tbody>
-
-              <!-- PILLAR 1 -->
-              <tr class="parent rv">
-                <td class="rownum">1</td>
-                <td><div class="cell"><span class="twirl">&#9660;</span><span class="reqname">Lead complex, multi-system AI deployments end to end</span><div class="reqsub">scope, architect, build, validate, own the relationship</div></div></td>
-                <td><div class="cell owner"><span class="av az">AZ</span>Andrew</div></td>
-                <td><div class="cell status g"><span class="ball g"></span>On track</div></td>
-                <td><div class="cell evi">Six years owning client outcomes end to end, now applied to systems I built myself.</div></td>
-              </tr>
-              <tr class="rv">
-                <td class="rownum">2</td>
-                <td><div class="cell reqchild"><span class="reqname">Architect and ship a multi-system platform solo</span><span class="jdquote">"production systems organizations depend on"</span></div></td>
-                <td><div class="cell owner"><span class="av fc">FC</span>FieldCommand</div></td>
-                <td><div class="cell status g"><span class="ball g"></span>On track</div></td>
-                <td><div class="cell evi">I built FieldCommand, a multi-tenant B2B SaaS, <span class="num">187,745</span> lines of TypeScript, solo. Stripe billing, CRM, AI services, and reporting wired into automated data pipelines.<a class="lnk" href="https://app.fieldcommand.io">app.fieldcommand.io <span class="arr">&rarr;</span></a></div></td>
-              </tr>
-              <tr class="rv">
-                <td class="rownum">3</td>
-                <td><div class="cell reqchild"><span class="reqname">Carry an outcome under real oversight</span><span class="jdquote">"navigated security reviews, managed customer relationships"</span></div></td>
-                <td><div class="cell owner"><span class="av fr">FA</span>Advisory</div></td>
-                <td><div class="cell status g"><span class="ball g"></span>On track</div></td>
-                <td><div class="cell evi">I operated for six years under continuous FINRA and SEC supervision, with strict confidentiality, recordkeeping, and audit requirements. I am comfortable being the single owner of an outcome that matters to someone.</div></td>
-              </tr>
-
-              <!-- PILLAR 2 -->
-              <tr class="parent rv">
-                <td class="rownum">4</td>
-                <td><div class="cell"><span class="twirl">&#9660;</span><span class="reqname">Architect multi-agent solutions</span><div class="reqsub">select the coordination pattern per workflow and compliance need</div></div></td>
-                <td><div class="cell owner"><span class="av os">OS</span>AndrewOS</div></td>
-                <td><div class="cell status g"><span class="ball g"></span>On track</div></td>
-                <td><div class="cell evi">I run multi-agent orchestration daily, not as a demo.</div></td>
-              </tr>
-              <tr class="rv">
-                <td class="rownum">5</td>
-                <td><div class="cell reqchild"><span class="reqname">Run agents with validation loops and human gates</span><span class="jdquote">"multi-agent orchestration, agent deployment at scale"</span></div></td>
-                <td><div class="cell owner"><span class="av os">OS</span>AndrewOS</div></td>
-                <td><div class="cell status g"><span class="ball g"></span>On track</div></td>
-                <td><div class="cell evi">AndrewOS is an agent operating system I built and run across two businesses. It uses structured delegation: agent specialization, validation at the next level, and human gatekeeping before anything irreversible ships.</div></td>
-              </tr>
-              <tr class="rv">
-                <td class="rownum">6</td>
-                <td><div class="cell reqchild"><span class="reqname">Ship AI features into a real product behind controls</span><span class="jdquote">"MCP / tool-use, agent deployment"</span></div></td>
-                <td><div class="cell owner"><span class="av fc">FC</span>FieldCommand</div></td>
-                <td><div class="cell status g"><span class="ball g"></span>On track</div></td>
-                <td><div class="cell evi">FieldCommand ships <b>four AI features in production</b> behind per-tenant feature flags, with role-based access control and tenant isolation across the platform.</div></td>
-              </tr>
-
-              <!-- PILLAR 3 -->
-              <tr class="parent rv">
-                <td class="rownum">7</td>
-                <td><div class="cell"><span class="twirl">&#9660;</span><span class="reqname">Define eval, quality, and hallucination gates</span><div class="reqsub">use them to make ship and no-ship decisions</div></div></td>
-                <td><div class="cell owner"><span class="av vr">VR</span>Veritas</div></td>
-                <td><div class="cell status g"><span class="ball g"></span>On track</div></td>
-                <td><div class="cell evi">I have already built the eval discipline this role asks for.</div></td>
-              </tr>
-              <tr class="rv">
-                <td class="rownum">8</td>
-                <td><div class="cell reqchild"><span class="reqname">Drive a false-positive rate down by reading failures</span><span class="jdquote">"evaluation frameworks, AI product quality, accuracy"</span></div></td>
-                <td><div class="cell owner"><span class="av vr">VR</span>Veritas</div></td>
-                <td><div class="cell status g"><span class="ball g"></span>On track</div></td>
-                <td><div class="cell evi"><b>Veritas result:</b> I drove the false-positive rate from roughly <span class="num">30%</span> to under <span class="num">5%</span> by reading failures one at a time. That eval-and-decide loop is how an agent stays trustworthy in production.</div></td>
-              </tr>
-
-              <!-- PILLAR 4: ownership / reusable assets -->
-              <tr class="parent rv">
-                <td class="rownum">9</td>
-                <td><div class="cell"><span class="twirl">&#9660;</span><span class="reqname">Own Deployment Kit quality and reusable assets</span><div class="reqsub">a kit a non-engineer can follow, built to be owned without you</div></div></td>
-                <td><div class="cell owner"><span class="av az">AZ</span>Andrew</div></td>
-                <td><div class="cell status g"><span class="ball g"></span>On track</div></td>
-                <td><div class="cell evi">"You think in platforms, not projects" describes how I already build. AndrewOS is a reusable delegation system, not a one-off. I translate between technical builders and non-technical operators for a living, which is exactly the Deployment Kit bar: documented well enough for a solutions consultant with no engineering background to run it.</div></td>
-              </tr>
-
-              <!-- HONEST GAP ROW -->
-              <tr class="gap rv">
-                <td class="rownum">10</td>
-                <td><div class="cell"><span class="reqname">6 to 10+ years production software engineering</span><span class="jdquote">title history reads advisor, not engineer</span></div></td>
-                <td><div class="cell owner"><span class="av az">AZ</span>Andrew</div></td>
-                <td><div class="cell status a"><span class="ball a"></span>At risk</div></td>
-                <td><div class="cell evi">Flagged honestly. My title history reads financial advisor, so the years-of-engineering box does not check cleanly. See the comment thread below for how the shipped receipts answer it.</div></td>
-              </tr>
-
-            </tbody>
-          </table>
-        </div>
-
-        <!-- ===== Delivery timeline (Gantt) ===== -->
-        <div class="panel">
-          <h2 class="rv"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h9M4 12h13M4 18h6"/></svg> Delivery timeline</h2>
-          <p class="sub rv">The same work, plotted on a date axis. These are shipped systems running today, not a roadmap of intentions.</p>
-
-          <div class="gantt rv">
-            <div class="axis">
-              <div class="corner">Shipped system</div>
-              <div class="months">
-                <span>Jan</span><span>Feb</span><span>Mar</span><span>Apr</span><span>May</span><span>Jun</span>
-              </div>
+          <div class="grow">
+            <div class="gname"><b>FieldCommand</b><small>187,745 lines TS · solo · 4 AI features</small></div>
+            <div class="track">
+              <div class="gl"></div><div class="gl"></div><div class="gl"></div><div class="gl"></div><div class="gl"></div><div class="gl"></div>
+              <div class="bar blue" style="left:2%;width:80%">multi-tenant build · RBAC · tenant isolation &rarr;</div>
+              <div class="bar now" style="left:93%"></div>
             </div>
+          </div>
 
-            <div class="grow">
-              <div class="gname"><b>FieldCommand</b><small>187,745 lines TS · solo · 4 AI features</small></div>
-              <div class="track">
-                <div class="gl"></div><div class="gl"></div><div class="gl"></div><div class="gl"></div><div class="gl"></div><div class="gl"></div>
-                <div class="bar blue" style="left:2%;width:80%">multi-tenant build · RBAC · tenant isolation &rarr;</div>
-                <div class="bar now" style="left:93%"></div>
-              </div>
+          <div class="grow">
+            <div class="gname"><b>AndrewOS</b><small>multi-agent OS · validation loops</small></div>
+            <div class="track">
+              <div class="gl"></div><div class="gl"></div><div class="gl"></div><div class="gl"></div><div class="gl"></div><div class="gl"></div>
+              <div class="bar violet" style="left:14%;width:68%">builder / reviewer / validator triads &rarr;</div>
+              <div class="bar now" style="left:93%"></div>
             </div>
+          </div>
 
-            <div class="grow">
-              <div class="gname"><b>AndrewOS</b><small>multi-agent OS · validation loops</small></div>
-              <div class="track">
-                <div class="gl"></div><div class="gl"></div><div class="gl"></div><div class="gl"></div><div class="gl"></div><div class="gl"></div>
-                <div class="bar violet" style="left:14%;width:68%">builder / reviewer / validator triads &rarr;</div>
-                <div class="bar now" style="left:93%"></div>
-              </div>
-            </div>
-
-            <div class="grow">
-              <div class="gname"><b>Veritas</b><small>eval pipeline · FP 30% to under 5%</small></div>
-              <div class="track">
-                <div class="gl"></div><div class="gl"></div><div class="gl"></div><div class="gl"></div><div class="gl"></div><div class="gl"></div>
-                <div class="bar green" style="left:40%;width:42%">eval gates · ship / no-ship loop &rarr;</div>
-                <div class="bar now" style="left:93%"></div>
-              </div>
+          <div class="grow">
+            <div class="gname"><b>Veritas</b><small>eval pipeline · FP 30% to under 5%</small></div>
+            <div class="track">
+              <div class="gl"></div><div class="gl"></div><div class="gl"></div><div class="gl"></div><div class="gl"></div><div class="gl"></div>
+              <div class="bar green" style="left:40%;width:42%">eval gates · ship / no-ship loop &rarr;</div>
+              <div class="bar now" style="left:93%"></div>
             </div>
           </div>
         </div>
+      </div>
+    </section>
 
-        <!-- ===== Honest-gap comment thread ===== -->
-        <div class="thread">
-          <h2 class="rv"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.4 8.4 0 0 1-8.5 8.5 8.7 8.7 0 0 1-3.8-.9L3 21l1.9-5.6A8.4 8.4 0 0 1 4 11.5 8.4 8.4 0 0 1 12.5 3 8.4 8.4 0 0 1 21 11.5Z"/></svg> Comment thread on Row 10 · the honest part</h2>
+    <!-- ===== TAB PANEL: Comments / honest-gap thread ===== -->
+    <section class="tabpanel" id="panel-comments" role="tabpanel" aria-labelledby="tab-comments" tabindex="0" hidden>
+      <div class="thread">
+        <h2 class="rv"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.4 8.4 0 0 1-8.5 8.5 8.7 8.7 0 0 1-3.8-.9L3 21l1.9-5.6A8.4 8.4 0 0 1 4 11.5 8.4 8.4 0 0 1 12.5 3 8.4 8.4 0 0 1 21 11.5Z"/></svg> Comment thread on Row 10 · the honest part</h2>
 
-          <div class="comment rv">
-            <div class="comment-av av" style="background:var(--ss-blue);color:#fff;width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:12px;">AZ</div>
-            <div>
-              <div class="meta"><b>Andrew Zoll</b> · marked Row 10 At Risk</div>
-              <div class="txt">The job description asks for six to ten or more years of production software engineering. My resume reads financial advisor, so that box does not check on title alone. I am not going to pretend otherwise.</div>
-            </div>
-          </div>
-
-          <div class="comment rv">
-            <div class="comment-av av" style="background:var(--ss-blue);color:#fff;width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:12px;">AZ</div>
-            <div>
-              <div class="meta"><b>Andrew Zoll</b> · added evidence</div>
-              <div class="txt">Here is the counterweight. The job description also says the Deployment Kits are the portfolio, and that demonstrated reusable assets matter more than a title. My receipts are shipped and running: <span class="num">187,745</span> lines of TypeScript built solo, four AI features in production, an agent operating system with validation loops, and an eval pipeline taken from a <span class="num">30%</span> false-positive rate to under <span class="num">5%</span>. The work is the argument.</div>
-            </div>
-          </div>
-
-          <div class="comment rv">
-            <div class="comment-av av" style="background:var(--green);color:#fff;width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:12px;">AZ</div>
-            <div>
-              <div class="meta"><b>Andrew Zoll</b> · proposed status change</div>
-              <div class="txt">I built this page as a Smartsheet so the format would carry the point. A Forward Deployed Engineer reads a customer's world and ships inside it. I already think in your product. I would let you judge fit against the shipped systems, not against the job title on the row.</div>
-            </div>
+        <div class="comment rv">
+          <div class="comment-av" style="background:var(--ss-blue);">AZ</div>
+          <div>
+            <div class="meta"><b>Andrew Zoll</b> · marked Row 10 At Risk</div>
+            <div class="txt">The job asks for six to ten or more years of production software engineering. My resume reads financial advisor, so that box doesn't check on title alone. I'm not going to pretend otherwise.</div>
           </div>
         </div>
 
-        <!-- ===== action bar ===== -->
-        <div class="actionbar rv">
-          <div class="lead"><b>Worth fifteen minutes?</b> The systems above are live. Open them, or reach me directly.</div>
-          <div class="acts">
-            <a class="btn" href="https://portfolio.andrewzoll.com">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/></svg>
-              Portfolio
-            </a>
-            <a class="btn" href="https://www.linkedin.com/in/andrewzoll">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 10v7M8 7v.01M12 17v-4a2 2 0 0 1 4 0v4"/></svg>
-              LinkedIn
-            </a>
-            <a class="btn primary" href="mailto:andrew@andrewzoll.com">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
-              andrew@andrewzoll.com
-            </a>
+        <div class="comment rv">
+          <div class="comment-av" style="background:var(--ss-blue);">AZ</div>
+          <div>
+            <div class="meta"><b>Andrew Zoll</b> · added evidence</div>
+            <div class="txt">Here's the counterweight. The same job description says the Deployment Kits are the portfolio, and that demonstrated reusable assets matter more than a title. My receipts are shipped and running right now: <span class="num">187,745</span> lines of TypeScript built solo, four AI features in production, an agent operating system with validation loops, and an eval pipeline I took from a <span class="num">30%</span> false-positive rate to under <span class="num">5%</span>. The work is the argument.</div>
           </div>
         </div>
+
+        <div class="comment rv">
+          <div class="comment-av" style="background:var(--green);">AZ</div>
+          <div>
+            <div class="meta"><b>Andrew Zoll</b> · proposed status change</div>
+            <div class="txt">I built this page as a Smartsheet so the format would carry the point for me. A Forward Deployed Engineer reads a customer's world and ships inside it, and I'm already thinking in your product. So I'd ask you to judge my fit against the shipped systems, not against the job title sitting on that row.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== TAB PANEL: Role Detail ===== -->
+    <section class="tabpanel" id="panel-detail" role="tabpanel" aria-labelledby="tab-detail" tabindex="0" hidden>
+      <div class="detail">
+        <h2 class="rv"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg> Role detail · the row properties</h2>
+        <p class="sub rv">If you clicked a row open in a real sheet, this is the side panel you'd get. Here's the quick version of who I am and why I built this.</p>
+
+        <div class="props rv">
+          <div class="prop"><div class="k">Applicant</div><div class="v"><b>Andrew Zoll</b></div></div>
+          <div class="prop"><div class="k">Applying for</div><div class="v">Senior Forward Deployed AI Engineer</div></div>
+          <div class="prop"><div class="k">Headline</div><div class="v">AI-native operator and SaaS founder. I built the platform, and I run it.</div></div>
+          <div class="prop"><div class="k">Flagship</div><div class="v"><b>FieldCommand</b> · multi-tenant B2B SaaS · <span class="num">187,745</span> lines of TypeScript, solo · four AI features in production</div></div>
+          <div class="prop"><div class="k">Agents</div><div class="v"><b>AndrewOS</b> · an agent operating system I run across two businesses, with validation loops and human gates</div></div>
+          <div class="prop"><div class="k">Eval work</div><div class="v"><b>Veritas</b> · drove the false-positive rate from roughly <span class="num">30%</span> to under <span class="num">5%</span> by reading failures one at a time</div></div>
+          <div class="prop"><div class="k">Oversight</div><div class="v">Six years under FINRA and SEC supervision, so I'm used to owning an outcome someone is actually counting on</div></div>
+          <div class="prop"><div class="k">Why a Smartsheet</div><div class="v">A Forward Deployed Engineer ships inside the customer's world. So I built my pitch inside yours.</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== action bar ===== -->
+    <div class="actionbar rv">
+      <div class="lead"><b>Worth fifteen minutes?</b> The systems above are live. Open them, or just reach me directly.</div>
+      <div class="acts">
+        <a class="btn" href="https://portfolio.andrewzoll.com">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/></svg>
+          Portfolio
+        </a>
+        <a class="btn" href="https://www.linkedin.com/in/andrewzoll">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 10v7M8 7v.01M12 17v-4a2 2 0 0 1 4 0v4"/></svg>
+          LinkedIn
+        </a>
+        <a class="btn primary" href="mailto:andrew@andrewzoll.com">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+          andrew@andrewzoll.com
+        </a>
       </div>
     </div>
   </div>
@@ -454,29 +531,191 @@
     <b>This is an independent page Andrew Zoll built on his own.</b> It is not affiliated with, authorized by, or endorsed by Smartsheet, and it borrows the work-sheet metaphor on purpose to show fit. The Smartsheet name and product belong to Smartsheet Inc. Private link, not indexed.
   </p>
 
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
   <script>
     (function(){
       var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      /* ---------- reveal ---------- */
       var targets = document.querySelectorAll('.rv, .bar, .ball');
+      function revealAll(){ targets.forEach(function(el){ el.classList.add('in'); }); }
       if(!('IntersectionObserver' in window) || reduce){
-        targets.forEach(function(el){ el.classList.add('in'); });
-        return;
-      }
-      var io = new IntersectionObserver(function(entries){
-        entries.forEach(function(e){
-          if(e.isIntersecting){
-            var el = e.target;
-            if(el.classList.contains('ball') || el.classList.contains('bar')){
-              var sib = Array.prototype.indexOf.call(el.parentNode.children, el);
-              setTimeout(function(){ el.classList.add('in'); }, sib * 40);
-            } else {
-              el.classList.add('in');
+        revealAll();
+      } else {
+        var io = new IntersectionObserver(function(entries){
+          entries.forEach(function(e){
+            if(e.isIntersecting){
+              var el = e.target;
+              if(el.classList.contains('ball') || el.classList.contains('bar')){
+                var sib = Array.prototype.indexOf.call(el.parentNode.children, el);
+                setTimeout(function(){ el.classList.add('in'); }, sib * 40);
+              } else {
+                el.classList.add('in');
+              }
+              io.unobserve(el);
             }
-            io.unobserve(el);
+          });
+        }, { threshold: 0.15 });
+        targets.forEach(function(el){ io.observe(el); });
+      }
+
+      /* ---------- toast helper ---------- */
+      var toast = document.getElementById('toast');
+      var toastTimer;
+      function flash(msg){
+        if(!toast) return;
+        toast.textContent = msg;
+        toast.classList.add('show');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(function(){ toast.classList.remove('show'); }, 1700);
+      }
+
+      /* ---------- count-up on the mono numbers (whimsy) ---------- */
+      function countUp(el){
+        if(reduce){ return; }
+        var raw = el.getAttribute('data-final');
+        var hasPct = /%/.test(raw);
+        var target = parseFloat(raw.replace(/[^0-9.]/g,''));
+        if(isNaN(target)){ return; }
+        var commas = /,/.test(raw);
+        var dur = 900, start = null;
+        function fmt(n){
+          if(hasPct){ return Math.round(n) + '%'; }
+          var s = Math.round(n).toString();
+          if(commas){ s = s.replace(/\B(?=(\d{3})+(?!\d))/g, ','); }
+          return s;
+        }
+        function step(ts){
+          if(start === null) start = ts;
+          var p = Math.min((ts - start) / dur, 1);
+          var eased = 1 - Math.pow(1 - p, 3);
+          el.textContent = fmt(target * eased);
+          if(p < 1){ requestAnimationFrame(step); }
+          else { el.textContent = raw; }
+        }
+        requestAnimationFrame(step);
+      }
+      var numEls = document.querySelectorAll('.evi .num, .prop .num, .comment .num');
+      numEls.forEach(function(el){ el.setAttribute('data-final', el.textContent.trim()); });
+      if('IntersectionObserver' in window && !reduce){
+        var numIo = new IntersectionObserver(function(entries){
+          entries.forEach(function(e){
+            if(e.isIntersecting){ countUp(e.target); numIo.unobserve(e.target); }
+          });
+        }, { threshold: 0.6 });
+        numEls.forEach(function(el){ numIo.observe(el); });
+      }
+
+      /* ---------- tabs ---------- */
+      var tabs = Array.prototype.slice.call(document.querySelectorAll('.tab[role="tab"]'));
+      function selectTab(tab, focus){
+        tabs.forEach(function(t){
+          var sel = (t === tab);
+          t.setAttribute('aria-selected', sel ? 'true' : 'false');
+          t.tabIndex = sel ? 0 : -1;
+          var panel = document.getElementById(t.getAttribute('aria-controls'));
+          if(panel){ panel.hidden = !sel; }
+        });
+        if(focus){ tab.focus(); }
+        /* re-trigger reveal for anything inside the now-visible panel */
+        var shown = document.getElementById(tab.getAttribute('aria-controls'));
+        if(shown){
+          shown.querySelectorAll('.rv, .bar, .ball').forEach(function(el){ el.classList.add('in'); });
+          shown.querySelectorAll('.num[data-final]').forEach(function(el){
+            el.textContent = el.getAttribute('data-final'); /* ensure final value if not yet animated */
+          });
+        }
+      }
+      tabs.forEach(function(tab, i){
+        tab.addEventListener('click', function(){ selectTab(tab, false); });
+        tab.addEventListener('keydown', function(e){
+          var idx = i;
+          if(e.key === 'ArrowRight' || e.key === 'ArrowDown'){ e.preventDefault(); selectTab(tabs[(idx+1)%tabs.length], true); }
+          else if(e.key === 'ArrowLeft' || e.key === 'ArrowUp'){ e.preventDefault(); selectTab(tabs[(idx-1+tabs.length)%tabs.length], true); }
+          else if(e.key === 'Home'){ e.preventDefault(); selectTab(tabs[0], true); }
+          else if(e.key === 'End'){ e.preventDefault(); selectTab(tabs[tabs.length-1], true); }
+        });
+      });
+
+      /* ---------- row expand / collapse ---------- */
+      var twirls = document.querySelectorAll('.twirl');
+      function setGroup(btn, expand){
+        btn.setAttribute('aria-expanded', expand ? 'true' : 'false');
+        var ids = (btn.getAttribute('aria-controls') || '').split(/\s+/);
+        ids.forEach(function(id){
+          var row = document.getElementById(id);
+          if(row){ row.classList.toggle('hiderow', !expand); }
+        });
+        var label = btn.getAttribute('aria-label') || '';
+        btn.setAttribute('aria-label', (expand ? 'Collapse' : 'Expand') + label.replace(/^(Collapse|Expand)/, ''));
+      }
+      twirls.forEach(function(btn){
+        btn.addEventListener('click', function(){
+          var expanded = btn.getAttribute('aria-expanded') === 'true';
+          setGroup(btn, !expanded);
+        });
+      });
+
+      /* ---------- filter (status) ---------- */
+      var rows = Array.prototype.slice.call(document.querySelectorAll('.sheet tbody tr'));
+      var filterBtn = document.getElementById('filterBtn');
+      var filterLabel = document.getElementById('filterLabel');
+      var filterOn = false;
+      function applyFilter(){
+        rows.forEach(function(r){
+          if(!filterOn){
+            /* respect collapse state: only un-hide rows whose parent twirl is open */
+            if(r.classList.contains('child')){
+              var ctrl = document.querySelector('.twirl[aria-controls~="' + r.id + '"]');
+              var open = !ctrl || ctrl.getAttribute('aria-expanded') === 'true';
+              r.classList.toggle('hiderow', !open);
+            } else {
+              r.classList.remove('hiderow');
+            }
+          } else {
+            r.classList.toggle('hiderow', r.getAttribute('data-status') !== 'a');
           }
         });
-      }, { threshold: 0.15 });
-      targets.forEach(function(el){ io.observe(el); });
+      }
+      filterBtn.addEventListener('click', function(){
+        filterOn = !filterOn;
+        filterBtn.setAttribute('aria-pressed', filterOn ? 'true' : 'false');
+        filterLabel.innerHTML = filterOn ? 'Filter: At risk &#10005;' : 'Filter';
+        applyFilter();
+        flash(filterOn ? 'Filtered to At-risk rows only' : 'Filter cleared');
+      });
+
+      /* ---------- sort (status) ---------- */
+      var tbody = document.querySelector('.sheet tbody');
+      var originalOrder = rows.slice();
+      var sortBtn = document.getElementById('sortBtn');
+      var sortLabel = document.getElementById('sortLabel');
+      var sortMode = 0; /* 0 = grouped (default), 1 = At-risk first, 2 = On-track first */
+      var rank = { a: 0, b: 1, g: 2 }; /* at-risk worst first */
+      function applySort(){
+        if(filterOn){ /* leave filter on; sort still reorders underlying rows */ }
+        var ordered;
+        if(sortMode === 0){
+          ordered = originalOrder.slice();
+        } else {
+          ordered = rows.slice().sort(function(x, y){
+            var rx = rank[x.getAttribute('data-status')] || 0;
+            var ry = rank[y.getAttribute('data-status')] || 0;
+            if(sortMode === 2){ rx = 9 - rx; ry = 9 - ry; }
+            if(rx !== ry){ return rx - ry; }
+            return originalOrder.indexOf(x) - originalOrder.indexOf(y);
+          });
+        }
+        ordered.forEach(function(r){ tbody.appendChild(r); });
+      }
+      sortBtn.addEventListener('click', function(){
+        sortMode = (sortMode + 1) % 3;
+        if(sortMode === 0){ sortLabel.textContent = 'Sort: Status'; sortBtn.setAttribute('aria-pressed','false'); flash('Restored grouped order'); }
+        else if(sortMode === 1){ sortLabel.textContent = 'Sort: At-risk first'; sortBtn.setAttribute('aria-pressed','true'); flash('Sorted: At-risk first'); }
+        else { sortLabel.textContent = 'Sort: On-track first'; sortBtn.setAttribute('aria-pressed','true'); flash('Sorted: On-track first'); }
+        applySort();
+      });
     })();
   </script>
 </body>

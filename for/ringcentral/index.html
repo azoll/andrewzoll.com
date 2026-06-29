@@ -64,7 +64,18 @@
     .callbar .who .nm .live i{width:6px;height:6px;border-radius:50%;background:var(--ok);display:inline-block;animation:blink 1.4s steps(2,end) infinite;}
     @keyframes blink{50%{opacity:.25;}}
     .callbar .who .sub{font-size:12.5px;color:var(--muted);margin-top:2px;}
-    .callbar .timer{margin-left:auto;font-family:var(--mono);font-size:14px;font-weight:600;color:var(--rc-blue-ink);letter-spacing:0.02em;font-variant-numeric:tabular-nums;}
+    .callbar .wave{margin-left:auto;display:flex;align-items:center;gap:3px;height:22px;}
+    .callbar .wave span{width:3px;border-radius:3px;background:linear-gradient(180deg,var(--rc-blue),var(--rc-blue-deep));height:6px;transform-origin:center;animation:wavebar 1.1s ease-in-out infinite;}
+    .callbar .wave span:nth-child(1){animation-delay:0s;}
+    .callbar .wave span:nth-child(2){animation-delay:.13s;}
+    .callbar .wave span:nth-child(3){animation-delay:.26s;}
+    .callbar .wave span:nth-child(4){animation-delay:.39s;}
+    .callbar .wave span:nth-child(5){animation-delay:.52s;}
+    .callbar .wave span:nth-child(6){animation-delay:.65s;}
+    .callbar .wave span:nth-child(7){animation-delay:.78s;}
+    @keyframes wavebar{0%,100%{height:5px;}50%{height:18px;}}
+    .callbar .wave.spike span{animation-duration:.4s;background:linear-gradient(180deg,var(--rc-orange),var(--rc-orange-deep));}
+    .callbar .timer{font-family:var(--mono);font-size:14px;font-weight:600;color:var(--rc-blue-ink);letter-spacing:0.02em;font-variant-numeric:tabular-nums;}
     .callbar .ctrls{display:flex;gap:8px;}
     .callbar .ctrls span{width:34px;height:34px;border-radius:9px;border:1px solid var(--line);background:#fff;display:flex;align-items:center;justify-content:center;color:var(--body);}
     .callbar .ctrls span svg{width:16px;height:16px;}
@@ -168,6 +179,42 @@
     .rv{opacity:0;transform:translateY(16px);transition:opacity .6s cubic-bezier(.2,.6,.2,1),transform .6s cubic-bezier(.2,.6,.2,1);}
     .rv.in{opacity:1;transform:none;}
 
+    /* ---------- interactive controls (panel + rail) ---------- */
+    /* rail icons are now real buttons */
+    .rail .rico{border:0;background:transparent;cursor:pointer;font:inherit;padding:0;outline:none;}
+    .rail .rico:focus-visible{box-shadow:0 0 0 2px var(--rc-orange);border-radius:12px;}
+
+    /* panel heading hint */
+    .panel h2 .hint{display:block;font-family:var(--sans);font-size:10.5px;font-weight:500;letter-spacing:0;text-transform:none;color:var(--muted);margin-top:3px;}
+
+    /* topics: each row is a button, keeps the same look */
+    .topics li{padding:0;}
+    .topics .topic{display:flex;align-items:flex-start;gap:9px;width:100%;text-align:left;border:1px solid transparent;background:transparent;font:inherit;font-size:13px;line-height:1.45;color:var(--body);cursor:pointer;border-radius:8px;padding:4px 6px;margin:-4px -6px;transition:background .15s ease,border-color .15s ease;}
+    .topics .topic:hover{background:var(--surface);border-color:var(--line);}
+    .topics .topic:focus-visible{outline:none;border-color:var(--rc-blue);box-shadow:0 0 0 2px rgba(6,132,188,0.25);}
+    .topics .topic b{color:var(--ink);font-weight:600;}
+    .topics .topic .ck{width:17px;height:17px;flex-shrink:0;margin-top:1px;}
+    .topics .topic .ck svg{width:17px;height:17px;display:block;}
+    .topics .topic.active{background:rgba(6,132,188,0.07);border-color:rgba(6,132,188,0.28);}
+
+    /* stack chips are now buttons */
+    .stk .stkchip{font-family:var(--mono);font-size:11px;color:var(--rc-blue-deep);background:rgba(6,132,188,0.08);border:1px solid rgba(6,132,188,0.18);border-radius:6px;padding:3px 8px;cursor:pointer;transition:background .15s ease,border-color .15s ease,transform .12s ease;}
+    .stk .stkchip:hover{background:rgba(6,132,188,0.16);border-color:var(--rc-blue);}
+    .stk .stkchip:active{transform:translateY(1px);}
+    .stk .stkchip:focus-visible{outline:none;border-color:var(--rc-blue);box-shadow:0 0 0 2px rgba(6,132,188,0.25);}
+
+    /* the highlight pulse when a card is jumped to */
+    .assist{position:relative;transition:box-shadow .35s ease,border-left-color .35s ease;}
+    .turn.hot .assist{border-left-color:var(--rc-blue);box-shadow:0 0 0 2px rgba(6,132,188,0.5),0 16px 38px -22px rgba(6,63,94,0.7);animation:cardpulse 1.5s ease-out;}
+    .flag.turn.hot .assist{border-left-color:var(--rc-orange);box-shadow:0 0 0 2px rgba(255,122,0,0.5),0 16px 38px -22px rgba(6,63,94,0.7);}
+    @keyframes cardpulse{0%{box-shadow:0 0 0 6px rgba(6,132,188,0.35),0 16px 38px -22px rgba(6,63,94,0.7);}100%{box-shadow:0 0 0 2px rgba(6,132,188,0.5),0 16px 38px -22px rgba(6,63,94,0.7);}}
+
+    /* a hot chip that points at the same card lights up too */
+    .src .chip.hot{border-color:var(--rc-orange);color:var(--rc-orange-deep);background:#fff4ec;}
+
+    /* filtering: turns the rail buttons hide get dimmed out of the way */
+    .turn.dim,.sys.dim{display:none;}
+
     /* ---------- responsive: collapse to single column, panel becomes a card ---------- */
     @media (max-width:1080px){
       .console{grid-template-columns:64px minmax(0,1fr);}
@@ -187,8 +234,10 @@
     }
     @media (prefers-reduced-motion: reduce){
       .rv{opacity:1 !important;transform:none !important;transition:none !important;}
-      .dot,.callbar .who .nm .live i{animation:none !important;}
+      .dot,.callbar .who .nm .live i,.callbar .wave span{animation:none !important;}
+      .callbar .wave span{height:11px !important;}
       .meter i{transition:none !important;}
+      .turn.hot .assist{animation:none !important;}
       .thread{scroll-behavior:auto;}
     }
   </style>
@@ -205,10 +254,10 @@
       <!-- left rail: softphone / dialpad nav -->
       <aside class="rail">
         <div class="logo" id="logo" title="psst">AZ</div>
-        <div class="rico on" title="Active call"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92Z"/></svg></div>
-        <div class="rico" title="Messages"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
-        <div class="rico" title="Dialpad"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="5" cy="5" r="1"/><circle cx="12" cy="5" r="1"/><circle cx="19" cy="5" r="1"/><circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="19" r="1"/><circle cx="12" cy="19" r="1"/><circle cx="19" cy="19" r="1"/></svg></div>
-        <div class="rico" title="AI agents"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="8" width="16" height="12" rx="2"/><path d="M12 8V4M8 2h8M9 14h.01M15 14h.01"/></svg></div>
+        <button type="button" class="rico on" data-filter="all" title="Whole call (show everything)" aria-pressed="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92Z"/></svg></button>
+        <button type="button" class="rico" data-filter="ai" title="AI build receipts only" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="8" width="16" height="12" rx="2"/><path d="M12 8V4M8 2h8M9 14h.01M15 14h.01"/></svg></button>
+        <button type="button" class="rico" data-filter="people" title="Customer-facing + domain only" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></button>
+        <button type="button" class="rico" data-filter="honest" title="The honest read (supervisor note)" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V5l-8-3z"/><path d="M12 8v4M12 16h.01"/></svg></button>
         <div class="spacer"></div>
         <div class="dot" title="Available"></div>
       </aside>
@@ -221,6 +270,7 @@
             <div class="nm">RingCentral · AI GTM <span class="live"><i></i>Live screening</span></div>
             <div class="sub">AI Forward Deployed Engineer · req R078225 · Remote, US</div>
           </div>
+          <div class="wave" id="wave" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
           <div class="timer" id="timer">00:00</div>
           <div class="ctrls">
             <span title="Mute"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v4"/></svg></span>
@@ -235,12 +285,12 @@
           <!-- intro / who is on the call -->
           <div class="intro rv">
             <div class="eye">Inbound from the candidate</div>
-            <h1>I deploy agentic AI into the customer's environment and own the number.</h1>
-            <p>I'm Andrew Zoll. A Forward Deployed Engineer scopes, builds, and ships production AI inside a strategic account, then proves the ROI. I ship LLM agents to production myself, and I spent six years embedded with senior stakeholders in a regulated industry. <b>So I built your screening call as the thing you'd actually be selling: a contact-center console with agent-assist running live.</b> Your job description is talking. My receipts answer.</p>
+            <h1>Hey, I'm Andrew. I deploy agentic AI into the customer's environment and I own the number.</h1>
+            <p>So here's the quick version. A Forward Deployed Engineer scopes, builds, and ships production AI inside a strategic account, then proves the ROI. That's the work I already do. I ship LLM agents to production myself, and I've spent six years embedded with senior stakeholders in a regulated industry. <b>I figured the most honest way to introduce myself was to build your screening call as the thing you'd actually be selling, so this is a contact-center console with agent-assist running live.</b> Full disclosure: I've been a RingCentral customer since 2024, so I'm pitching this from inside your own product. Your job description does the talking on the left. My receipts answer on the right. Go ahead and poke at the panel, every control's wired up.</p>
           </div>
 
           <!-- turn 1: agentic experiences -->
-          <div class="turn rv">
+          <div class="turn rv" id="t-agentic" data-cat="ai">
             <div class="jd">
               <div class="pic">JD</div>
               <div class="bub">"Translate operational requirements into production-grade agentic AI experiences, with direct accountability for business outcomes."</div>
@@ -252,16 +302,16 @@
                 <span class="lbl">Agent-assist · suggested answer</span>
                 <span class="conf">match 0.94</span>
               </div>
-              <div class="txt">This is the work I already do. <span class="hl">AndrewOS</span> runs builder, reviewer, and validator agent triads where a validator grades the builder and blocks bad output before it ships, with human gates on anything irreversible. <span class="hl">FieldCommand</span> carries four AI features live in production behind per-tenant feature flags. I do not theorize about agentic systems. I run them daily and I own what they output.</div>
+              <div class="txt">This one's easy, because it's what I already do. <span class="hl">AndrewOS</span> runs builder, reviewer, and validator agent triads, where a validator grades the builder and blocks bad output before it ships, and there's a human gate on anything irreversible. <span class="hl">FieldCommand</span> carries four AI features live in production behind per-tenant feature flags. I don't theorize about agentic systems. I run them daily and I own what they put out.</div>
               <div class="src">
-                <a class="chip live" href="https://app.fieldcommand.io">FieldCommand · live</a>
+                <a class="chip live" href="https://app.fieldcommand.io" data-tech="Stripe">FieldCommand · live</a>
                 <span class="chip">AndrewOS · multi-agent orchestration</span>
               </div>
             </div>
           </div>
 
           <!-- turn 2: LLM / RAG / vector / orchestration -->
-          <div class="turn rv">
+          <div class="turn rv" id="t-llm" data-cat="ai">
             <div class="jd">
               <div class="pic">JD</div>
               <div class="bub">"Demonstrated proficiency with large language models, retrieval-augmented generation, vector databases, and agent orchestration frameworks."</div>
@@ -273,17 +323,17 @@
                 <span class="lbl">Agent-assist · suggested answer</span>
                 <span class="conf">match 0.91</span>
               </div>
-              <div class="txt">I built <span class="hl">Veritas</span>, a retrieval-and-verification pipeline that reads an AI claim, retrieves its source, and returns a structured verdict with a confidence cap. Multi-provider LLM routing, prompt caching, and cost guardrails are wired into FieldCommand. Agent orchestration is the spine of AndrewOS. These are not new words on a call. They are the systems I ship.</div>
+              <div class="txt">I built <span class="hl">Veritas</span>, a retrieval-and-verification pipeline that reads an AI claim, retrieves its source, and returns a structured verdict with a confidence cap. Multi-provider LLM routing, prompt caching, and cost guardrails are all wired into FieldCommand. Agent orchestration is the spine of AndrewOS. These aren't new words I'm hearing for the first time on a call. They're the systems I ship.</div>
               <div class="src">
                 <a class="chip live" href="https://veritaslaw.app">Veritas · live</a>
-                <span class="chip">retrieval + structured verdict</span>
-                <span class="chip">multi-provider routing</span>
+                <span class="chip" data-tech="RAG">retrieval + structured verdict</span>
+                <span class="chip" data-tech="multi-provider LLM">multi-provider routing</span>
               </div>
             </div>
           </div>
 
           <!-- turn 3: accuracy-sensitive conversational AI - the architecture pattern -->
-          <div class="turn rv">
+          <div class="turn rv" id="t-accuracy" data-cat="ai">
             <div class="jd">
               <div class="pic">JD</div>
               <div class="bub">"Build accuracy-sensitive conversational AI for a contact center, where a wrong answer to a customer is a real cost."</div>
@@ -295,7 +345,7 @@
                 <span class="lbl">Agent-assist · suggested answer</span>
                 <span class="conf">match 0.93</span>
               </div>
-              <div class="txt">My core pattern is <span class="hl">extract with AI, decide with code</span>. The model reads and judges. Deterministic code computes and verifies the final answer, so the path a customer hears is auditable instead of vibes. That is the right architecture for accuracy-sensitive contact-center AI, and it is how I drove Veritas's false-positive rate down. The number below is a Veritas result, not a RingCentral metric.</div>
+              <div class="txt">Here's my core pattern: <span class="hl">extract with AI, decide with code</span>. The model reads and judges. Deterministic code computes and verifies the final answer, so the path a customer hears is auditable instead of vibes. That's the right architecture for accuracy-sensitive contact-center AI, and it's how I drove Veritas's false-positive rate down. The number below is a Veritas result, not a RingCentral metric.</div>
               <div class="src">
                 <span class="chip">~30% → under 5% false positives (Veritas)</span>
                 <span class="chip">deterministic verification layer</span>
@@ -304,7 +354,7 @@
           </div>
 
           <!-- turn 4: secure integrations + compliance -->
-          <div class="turn rv">
+          <div class="turn rv" id="t-compliance" data-cat="ai">
             <div class="jd">
               <div class="pic">JD</div>
               <div class="bub">"Build integrations with customer systems using secure authentication (OAuth 2.0, SAML, SCIM) and implement compliance and PII-handling controls."</div>
@@ -316,16 +366,16 @@
                 <span class="lbl">Agent-assist · suggested answer</span>
                 <span class="conf">match 0.89</span>
               </div>
-              <div class="txt">FieldCommand is multi-tenant by design: role-based access control, tenant isolation, OAuth integration, and audit-ready data handling across the platform. I also operated six years under FINRA and SEC oversight, where PII handling and recordkeeping were not optional. Guardrails and compliance controls are not a checklist I would learn. They are how I already build.</div>
+              <div class="txt">FieldCommand is multi-tenant by design: role-based access control, tenant isolation, OAuth integration, and audit-ready data handling across the platform. On top of that, I spent six years operating under FINRA and SEC oversight, where PII handling and recordkeeping weren't optional. Guardrails and compliance controls aren't a checklist I'd need to go learn. They're how I already build.</div>
               <div class="src">
-                <span class="chip">OAuth · RBAC · tenant isolation</span>
+                <span class="chip" data-tech="OAuth RBAC PostgreSQL Supabase TypeScript">OAuth · RBAC · tenant isolation</span>
                 <span class="chip">FINRA / SEC recordkeeping</span>
               </div>
             </div>
           </div>
 
           <!-- turn 5: customer-facing delivery + exec communication -->
-          <div class="turn rv">
+          <div class="turn rv" id="t-delivery" data-cat="people">
             <div class="jd">
               <div class="pic">JD</div>
               <div class="bub">"Serve as the senior technical resource in the account: pre-sales scoping, live demos, proof-of-concept builds, and expansion business cases across technical and executive audiences."</div>
@@ -337,7 +387,7 @@
                 <span class="lbl">Agent-assist · suggested answer</span>
                 <span class="conf">match 0.90</span>
               </div>
-              <div class="txt">For six years I was the technical resource a household trusted with its money. I scoped the engagement, demonstrated the plan, answered the hard questions in the room, and owned the relationship from first meeting through ongoing iteration. The artifact was a financial plan instead of a deployed agent. The motion, scope to ship to expand, is identical, and translating technical work for non-technical decision makers is the skill I have practiced the longest.</div>
+              <div class="txt">For six years I was the technical resource a household trusted with its money. I scoped the engagement, walked them through the plan, answered the hard questions right there in the room, and owned the relationship from the first meeting through every iteration after. Sure, the artifact was a financial plan instead of a deployed agent. The motion is the same one though, scope to ship to expand, and translating technical work for non-technical decision makers is honestly the skill I've practiced the longest.</div>
               <div class="src">
                 <span class="chip">scope · demo · ship · expand</span>
                 <span class="chip">single owner of the outcome</span>
@@ -346,7 +396,7 @@
           </div>
 
           <!-- turn 6: domain + travel -->
-          <div class="turn rv">
+          <div class="turn rv" id="t-domain" data-cat="people">
             <div class="jd">
               <div class="pic">JD</div>
               <div class="bub">"Financial services or insurance domain knowledge preferred. 20 to 30 percent travel to customer sites."</div>
@@ -358,7 +408,7 @@
                 <span class="lbl">Agent-assist · suggested answer</span>
                 <span class="conf">match 0.92</span>
               </div>
-              <div class="txt">Financial services is my home turf. Six years as an advisor, with life and health insurance advisory as a large part of that practice, gives me real domain credibility in two of your named verticals. Travel to a customer site is not a hurdle. Being in the room, owning the deployment in person, is where I do my best work.</div>
+              <div class="txt">Financial services is my home turf. Six years as an advisor, with life and health insurance advisory as a big part of that practice, gives me real domain credibility in two of your named verticals. Travel to a customer site isn't a hurdle for me. Being in the room, owning the deployment in person, is where I do my best work anyway.</div>
               <div class="src">
                 <span class="chip">FINRA / SEC · 6 yrs advising</span>
                 <span class="chip">life + health insurance</span>
@@ -368,8 +418,8 @@
           </div>
 
           <!-- the honest part, as a flagged hold -->
-          <div class="sys rv"><span class="kv">supervisor note · flagged for the honest read</span></div>
-          <div class="turn flag rv">
+          <div class="sys rv" data-cat="honest" id="t-honest-note"><span class="kv">supervisor note · flagged for the honest read</span></div>
+          <div class="turn flag rv" id="t-honest" data-cat="honest">
             <div class="jd">
               <div class="pic">!</div>
               <div class="bub">"This role asks for 8 or more years in a customer-facing technical role. Your title history reads financial advisor, not solutions architect."</div>
@@ -381,7 +431,7 @@
                 <span class="lbl">Agent-assist · honest answer</span>
                 <span class="conf">no spin</span>
               </div>
-              <div class="txt">Here is the honest read. I have six years embedded with senior stakeholders in a regulated industry, owning the relationship and the outcome, plus the production AI agents I build and ship now. I am not a career FDE with a decade of the title. I am a builder who has spent years in the field owning outcomes for people who were paying close attention, and who ships agentic AI to production today. <span class="hl">The shipped receipts are the counterweight to the title, and the work above is the proof.</span></div>
+              <div class="txt">Here's the honest read. I've got six years embedded with senior stakeholders in a regulated industry, owning the relationship and the outcome, plus the production AI agents I build and ship now. I'm not a career FDE with a decade of the title, and I'm not going to pretend otherwise. I'm a builder who's spent years in the field owning outcomes for people who were paying very close attention, and who ships agentic AI to production today. <span class="hl">The shipped receipts are the counterweight to the title, and the work above is the proof.</span></div>
               <div class="src">
                 <a class="chip live" href="https://veritaslaw.app">Veritas · live</a>
                 <a class="chip live" href="https://app.fieldcommand.io">FieldCommand · live</a>
@@ -406,21 +456,21 @@
         </div>
 
         <div class="pblock rv">
-          <h2>Topics covered</h2>
+          <h2>Topics covered <span class="hint">tap a topic to jump to it</span></h2>
           <ul class="topics">
-            <li><span class="ck"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11"/><path d="M6 12.5 10.5 17 18 7.5"/></svg></span><span><b>Production agentic AI</b>, owned end to end</span></li>
-            <li><span class="ck"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11"/><path d="M6 12.5 10.5 17 18 7.5"/></svg></span><span>LLM, retrieval, structured verdicts</span></li>
-            <li><span class="ck"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11"/><path d="M6 12.5 10.5 17 18 7.5"/></svg></span><span>Accuracy-sensitive architecture</span></li>
-            <li><span class="ck"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11"/><path d="M6 12.5 10.5 17 18 7.5"/></svg></span><span>OAuth, RBAC, compliance, PII</span></li>
-            <li><span class="ck"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11"/><path d="M6 12.5 10.5 17 18 7.5"/></svg></span><span>Customer-facing delivery</span></li>
-            <li><span class="ck"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11"/><path d="M6 12.5 10.5 17 18 7.5"/></svg></span><span>FinServ + insurance domain</span></li>
+            <li><button type="button" class="topic" data-target="t-agentic"><span class="ck"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11"/><path d="M6 12.5 10.5 17 18 7.5"/></svg></span><span><b>Production agentic AI</b>, owned end to end</span></button></li>
+            <li><button type="button" class="topic" data-target="t-llm"><span class="ck"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11"/><path d="M6 12.5 10.5 17 18 7.5"/></svg></span><span>LLM, retrieval, structured verdicts</span></button></li>
+            <li><button type="button" class="topic" data-target="t-accuracy"><span class="ck"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11"/><path d="M6 12.5 10.5 17 18 7.5"/></svg></span><span>Accuracy-sensitive architecture</span></button></li>
+            <li><button type="button" class="topic" data-target="t-compliance"><span class="ck"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11"/><path d="M6 12.5 10.5 17 18 7.5"/></svg></span><span>OAuth, RBAC, compliance, PII</span></button></li>
+            <li><button type="button" class="topic" data-target="t-delivery"><span class="ck"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11"/><path d="M6 12.5 10.5 17 18 7.5"/></svg></span><span>Customer-facing delivery</span></button></li>
+            <li><button type="button" class="topic" data-target="t-domain"><span class="ck"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11"/><path d="M6 12.5 10.5 17 18 7.5"/></svg></span><span>FinServ + insurance domain</span></button></li>
           </ul>
         </div>
 
         <div class="pblock rv">
-          <h2>Stack on the call</h2>
+          <h2>Stack on the call <span class="hint">tap to see where it shows up</span></h2>
           <div class="stk">
-            <span>TypeScript</span><span>PostgreSQL</span><span>Supabase</span><span>OAuth</span><span>Stripe</span><span>multi-provider LLM</span><span>RAG</span><span>RBAC</span>
+            <button type="button" class="stkchip" data-target="t-compliance">TypeScript</button><button type="button" class="stkchip" data-target="t-compliance">PostgreSQL</button><button type="button" class="stkchip" data-target="t-compliance">Supabase</button><button type="button" class="stkchip" data-target="t-compliance">OAuth</button><button type="button" class="stkchip" data-target="t-agentic">Stripe</button><button type="button" class="stkchip" data-target="t-llm">multi-provider LLM</button><button type="button" class="stkchip" data-target="t-llm">RAG</button><button type="button" class="stkchip" data-target="t-compliance">RBAC</button>
           </div>
           <div class="cap">FieldCommand: 187,745 lines of TypeScript, built solo.</div>
         </div>
@@ -429,7 +479,7 @@
           <h2>Disposition</h2>
           <div class="dispo">
             <div class="dh">Recommend: next round</div>
-            <p class="dp">If this resonates, I would value fifteen minutes. Reply wherever I sent the link, or reach me directly.</p>
+            <p class="dp">Already a RingCentral customer since 2024, so I'm coming at this from inside your product. If it resonates, I'd love fifteen minutes. Reply wherever I sent you the link, or just reach me directly.</p>
             <a class="cta" href="mailto:andrew@andrewzoll.com">Book the next call <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
             <div class="links">
               <a href="https://portfolio.andrewzoll.com"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9h18M3 9V7a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v2M3 9v8a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V9"/></svg></span>Portfolio</a>
@@ -498,8 +548,94 @@
           logo.style.transition = 'transform .8s cubic-bezier(.2,.7,.3,1.4)';
           logo.style.transform = 'rotate(360deg)';
           setTimeout(function(){ logo.style.transform = ''; }, 820);
+          pingWave();
         });
       }
+
+      // ---------- whimsy: the live waveform spikes whenever a control fires ----------
+      var wave = document.getElementById('wave');
+      var spikeT;
+      function pingWave(){
+        if(!wave || reduce) return;
+        wave.classList.add('spike');
+        clearTimeout(spikeT);
+        spikeT = setTimeout(function(){ wave.classList.remove('spike'); }, 650);
+      }
+
+      // ---------- shared: jump to a turn and pulse-highlight its agent-assist card ----------
+      var thread = document.getElementById('thread');
+      var hotT;
+      function gotoTurn(id, techName){
+        var turn = document.getElementById(id);
+        if(!turn) return;
+        // make sure it's not filtered out; if it is, reset to "all" first
+        if(turn.classList.contains('dim')) setFilter('all');
+        // scroll the card into view inside the transcript region
+        var asst = turn.querySelector('.assist') || turn;
+        if(asst.scrollIntoView){
+          asst.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
+        }
+        // clear any previous highlight, then light this card up
+        document.querySelectorAll('.turn.hot').forEach(function(t){ t.classList.remove('hot'); });
+        document.querySelectorAll('.src .chip.hot').forEach(function(c){ c.classList.remove('hot'); });
+        turn.classList.add('hot');
+        // if a specific tech was named, flash the matching source chip too
+        if(techName){
+          turn.querySelectorAll('.src .chip[data-tech]').forEach(function(chip){
+            var techs = (chip.getAttribute('data-tech') || '').split(/\s+/);
+            if(techs.indexOf(techName) !== -1) chip.classList.add('hot');
+          });
+        }
+        pingWave();
+        clearTimeout(hotT);
+        hotT = setTimeout(function(){
+          turn.classList.remove('hot');
+          document.querySelectorAll('.src .chip.hot').forEach(function(c){ c.classList.remove('hot'); });
+        }, 2600);
+      }
+
+      // ---------- topics: click a topic to jump to its matching card ----------
+      var topicBtns = Array.prototype.slice.call(document.querySelectorAll('.topic'));
+      topicBtns.forEach(function(btn){
+        btn.addEventListener('click', function(){
+          topicBtns.forEach(function(b){ b.classList.remove('active'); });
+          btn.classList.add('active');
+          gotoTurn(btn.getAttribute('data-target'));
+        });
+      });
+
+      // ---------- stack chips: click to jump to where that tech shows up ----------
+      document.querySelectorAll('.stkchip').forEach(function(chip){
+        chip.addEventListener('click', function(){
+          gotoTurn(chip.getAttribute('data-target'), chip.textContent.trim());
+        });
+      });
+
+      // ---------- left rail: filter the transcript by call segment ----------
+      var railBtns = Array.prototype.slice.call(document.querySelectorAll('.rail .rico'));
+      var allTurns = Array.prototype.slice.call(document.querySelectorAll('#thread .turn, #thread .sys'));
+      function setFilter(mode){
+        railBtns.forEach(function(b){
+          var on = b.getAttribute('data-filter') === mode;
+          b.classList.toggle('on', on);
+          b.setAttribute('aria-pressed', on ? 'true' : 'false');
+        });
+        allTurns.forEach(function(t){
+          var cat = t.getAttribute('data-cat');
+          var show = (mode === 'all') || (cat === mode);
+          t.classList.toggle('dim', !show);
+        });
+      }
+      railBtns.forEach(function(btn){
+        if(!btn.getAttribute('data-filter')) return;
+        btn.addEventListener('click', function(){
+          setFilter(btn.getAttribute('data-filter'));
+          // bring the first visible turn into view
+          var first = allTurns.filter(function(t){ return !t.classList.contains('dim'); })[0];
+          if(first && first.scrollIntoView) first.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+          pingWave();
+        });
+      });
     })();
   </script>
 </body>
