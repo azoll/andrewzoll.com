@@ -77,6 +77,15 @@
     .term-head .tdots i:nth-child(2){background:#FEBC2E;}
     .term-head .tdots i:nth-child(3){background:#28C840;}
     .term-head .tlabel{font-size:11.5px;color:var(--dim);margin-left:4px;}
+    /* working copy button */
+    .copy-btn{margin-left:auto;font-family:var(--mono);font-size:10.5px;font-weight:600;letter-spacing:0.03em;
+      color:var(--dim);background:transparent;border:1px solid var(--line-2);border-radius:6px;
+      padding:4px 9px;display:inline-flex;align-items:center;gap:6px;cursor:pointer;
+      transition:color .15s ease,border-color .15s ease,background .15s ease;}
+    .copy-btn:hover{color:var(--teal);border-color:rgba(49,231,221,0.4);}
+    .copy-btn:focus-visible{outline:2px solid var(--teal);outline-offset:2px;}
+    .copy-btn svg{width:12px;height:12px;}
+    .copy-btn.done{color:var(--green);border-color:rgba(61,220,132,0.4);}
     .term-body{padding:16px 16px 18px;font-size:12.7px;line-height:1.72;}
     .term-body .ln{white-space:pre-wrap;word-break:break-word;}
     .c-prompt{color:var(--teal);}
@@ -94,8 +103,13 @@
     .wave-cap{display:flex;align-items:center;justify-content:space-between;font-size:11px;color:var(--dim);margin-bottom:9px;}
     .wave-cap .live{color:var(--teal);display:inline-flex;align-items:center;gap:6px;}
     .wave-cap .live .blip{width:6px;height:6px;border-radius:50%;background:var(--teal);animation:blip 2.4s ease-out infinite;}
-    .wave{display:flex;align-items:center;gap:3px;height:46px;}
-    .wave span{flex:1;min-width:2px;background:linear-gradient(180deg,var(--teal),var(--teal-dim));border-radius:2px;height:14%;transform-origin:center;will-change:height,opacity;opacity:0.85;}
+    .wave-cap .hint{color:#3D4A52;font-size:10.5px;}
+    /* the waveform itself is a real button: click it to make the agent "speak" */
+    .wave{display:flex;align-items:center;gap:3px;height:46px;width:100%;border:0;background:transparent;
+      padding:0;margin:0;cursor:pointer;border-radius:6px;transition:background .2s ease;}
+    .wave:hover{background:rgba(49,231,221,0.03);}
+    .wave:focus-visible{outline:2px solid var(--teal);outline-offset:3px;}
+    .wave span{flex:1;min-width:2px;background:linear-gradient(180deg,var(--teal),var(--teal-dim));border-radius:2px;height:14%;transform-origin:center;will-change:height,opacity;opacity:0.85;pointer-events:none;}
 
     /* section heading */
     .sec{padding:54px 0 0;}
@@ -105,12 +119,27 @@
     .sec-head p{font-size:14.5px;color:var(--body);margin:13px 0 0;max-width:62ch;}
     .sec-head p code{color:var(--teal);background:rgba(49,231,221,0.07);padding:1px 6px;border-radius:5px;font-size:12.5px;}
 
+    /* method filter pills */
+    .filters{display:flex;align-items:center;gap:9px;margin:18px 0 4px;flex-wrap:wrap;}
+    .filters .flabel{font-size:11px;color:var(--dim);letter-spacing:0.04em;margin-right:3px;}
+    .pill{font-family:var(--grotesk);font-size:11px;font-weight:700;letter-spacing:0.04em;
+      padding:5px 12px;border-radius:7px;cursor:pointer;background:var(--panel);color:var(--body);
+      border:1px solid var(--line-2);transition:color .15s ease,border-color .15s ease,background .15s ease;}
+    .pill:hover{border-color:var(--line-2);color:var(--ink);}
+    .pill:focus-visible{outline:2px solid var(--teal);outline-offset:2px;}
+    .pill[aria-pressed="true"]{background:rgba(49,231,221,0.12);color:var(--teal);border-color:rgba(49,231,221,0.4);}
+    .pill .ct{color:var(--dim);font-weight:600;margin-left:5px;font-variant-numeric:tabular-nums;}
+    .pill[aria-pressed="true"] .ct{color:var(--teal-dim);}
+
     /* ---------- API console: request -> response ---------- */
     .console{display:flex;flex-direction:column;gap:16px;}
     .call{border:1px solid var(--line);border-radius:12px;background:var(--panel);overflow:hidden;transition:border-color .25s ease,box-shadow .25s ease;}
     .call.open{border-color:var(--line-2);box-shadow:0 18px 44px rgba(0,0,0,0.36);}
     .call:hover{border-color:var(--line-2);}
-    .req{display:flex;align-items:center;gap:12px;padding:15px 17px;cursor:pointer;user-select:none;}
+    .call[hidden]{display:none;}
+    .req{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:15px 17px;cursor:pointer;
+      user-select:none;background:transparent;border:0;color:inherit;font:inherit;}
+    .req:focus-visible{outline:2px solid var(--teal);outline-offset:-3px;border-radius:10px;}
     .verb{font-family:var(--grotesk);font-size:11px;font-weight:700;letter-spacing:0.04em;padding:4px 9px;border-radius:6px;flex-shrink:0;}
     .verb.get{background:rgba(61,220,132,0.13);color:var(--green);border:1px solid rgba(61,220,132,0.3);}
     .verb.post{background:rgba(49,231,221,0.13);color:var(--teal);border:1px solid rgba(49,231,221,0.32);}
@@ -123,8 +152,8 @@
     .call.open .chev{transform:rotate(90deg);color:var(--teal);}
     .req .ask{font-size:12.4px;color:var(--body);font-style:italic;flex:1;min-width:0;}
 
-    .resp{max-height:0;overflow:hidden;transition:max-height .42s cubic-bezier(.4,.7,.3,1);}
-    .call.open .resp{max-height:760px;}
+    /* robust collapse: animate an explicit measured pixel height, no fragile fixed cap */
+    .resp{height:0;overflow:hidden;transition:height .40s cubic-bezier(.4,.7,.3,1);}
     .resp-inner{border-top:1px solid var(--line);padding:17px 19px 19px;background:var(--bg-2);}
     .resp-meta{display:flex;align-items:center;gap:10px;font-size:11px;color:var(--dim);margin-bottom:13px;flex-wrap:wrap;}
     .resp-meta .code{color:var(--green);font-weight:600;}
@@ -136,8 +165,9 @@
     .json .n{color:var(--violet);}
     .json .p{color:var(--dim);}
     .json .hl{color:var(--teal);font-weight:600;}
-    .json .lk{color:var(--teal);text-decoration:none;border-bottom:1px solid rgba(49,231,221,0.35);}
+    .json .lk{color:var(--teal);text-decoration:none;border-bottom:1px solid rgba(49,231,221,0.35);cursor:pointer;}
     .json .lk:hover{border-bottom-color:var(--teal);}
+    .json .lk:focus-visible{outline:2px solid var(--teal);outline-offset:2px;border-radius:3px;}
 
     /* ---------- eval panel (Veritas) ---------- */
     .eval{border:1px solid var(--line-2);border-radius:14px;background:linear-gradient(180deg,var(--panel-2),var(--bg-2));padding:26px 26px 24px;}
@@ -195,6 +225,7 @@
     .btn.primary:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(49,231,221,0.28);}
     .btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line-2);}
     .btn.ghost:hover{border-color:var(--teal);color:var(--teal);transform:translateY(-2px);}
+    .btn:focus-visible{outline:2px solid var(--teal);outline-offset:3px;}
     .btn .arr{transition:transform .15s ease;}
     .btn:hover .arr{transform:translateX(3px);}
     .endlinks{margin-top:20px;display:flex;flex-wrap:wrap;gap:18px;font-size:12.5px;}
@@ -223,15 +254,17 @@
       .turn{flex-direction:column;gap:5px;}
       .turn .who{width:auto;}
       .eval-verdict{text-align:left;}
+      .wave-cap .hint{display:none;}
     }
 
     @media (prefers-reduced-motion: reduce){
       .rv{opacity:1 !important;transform:none !important;transition:none !important;}
       .cursor,.wave span,.status-pill .blip,.wave-cap .live .blip,.scripthead .blip{animation:none !important;}
       .eval-fill{transition:none !important;}
+      .resp{transition:none !important;}
     }
   </style>
-<noscript><style>.rv,.reveal,.node,.bar,.ball{opacity:1!important;transform:none!important}</style></noscript>
+<noscript><style>.rv,.reveal,.node,.bar,.ball{opacity:1!important;transform:none!important}.resp{height:auto!important;}</style></noscript>
 </head>
 <body>
   <div class="disclaim">Not affiliated with Vapi. <b>Built by Andrew Zoll as a candidate for Member of Technical Staff, Forward Deployed.</b> A private link, rendered in their world on purpose.</div>
@@ -251,9 +284,9 @@
       <div class="hero-grid">
         <div>
           <p class="kicker rv">Member of Technical Staff · Forward Deployed</p>
-          <h1 class="rv">An FDE deploys voice agents <span class="accent">in the customer's world.</span><br/>Here is mine, already running.</h1>
-          <p class="hero-lead rv">I am Andrew Zoll. I ship products solo, real users and paying customers depend on them, and then I sit in the field and own the outcome. The job posting asks for a builder who can do that. <b>This page is the proof, returned as the thing you read all day.</b></p>
-          <p class="hero-lead rv">Vapi resolves calls instead of transferring them. I want to be the reason a customer deploys faster and expands.</p>
+          <h1 class="rv">An FDE deploys voice agents <span class="accent">in the customer's world.</span><br/>Here's mine, already running.</h1>
+          <p class="hero-lead rv">Hey, I'm Andrew Zoll. I ship products solo, real users and paying customers lean on them, and then I sit in the field and own the outcome. Your posting asks for a builder who can do exactly that. <b>So instead of telling you, I built the proof and handed it back as the thing you read all day.</b></p>
+          <p class="hero-lead rv">Vapi resolves calls instead of bouncing them to a human. I want to be the reason a customer gets live faster and then expands.</p>
           <div class="hero-meta rv">
             <span class="meta-chip"><b>187,745</b> lines of TypeScript, solo</span>
             <span class="meta-chip"><b>Stripe</b> paying customers</span>
@@ -261,25 +294,33 @@
           </div>
         </div>
 
-        <div class="term rv" aria-hidden="false">
+        <div class="term rv">
           <div class="term-head">
             <span class="tdots"><i></i><i></i><i></i></span>
             <span class="tlabel">~/andrew · deploy.sh</span>
+            <button type="button" class="copy-btn" id="copyBtn" aria-label="Copy the snippet to your clipboard">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              <span class="copy-label">copy</span>
+            </button>
           </div>
           <div class="term-body">
-<div class="ln"><span class="c-prompt">$</span> <span class="c-cmd">curl</span> <span class="c-flag">-X</span> POST https://api.andrewzoll.com<span class="c-dim">/v1/candidate</span> \</div>
+            <pre id="snippet" style="margin:0;font:inherit;white-space:pre-wrap;word-break:break-word;"><div class="ln"><span class="c-prompt">$</span> <span class="c-cmd">curl</span> <span class="c-flag">-X</span> POST https://api.andrewzoll.com<span class="c-dim">/v1/candidate</span> \</div>
 <div class="ln">  <span class="c-flag">-H</span> <span class="c-str">"X-Role: forward-deployed"</span> \</div>
 <div class="ln">  <span class="c-flag">-d</span> <span class="c-str">'{ "ships_solo": true, "owns_outcome": true }'</span></div>
-<div class="ln c-com"># building a voice assistant in one call:</div>
+<div class="ln c-com"># spin up a voice assistant in one call:</div>
 <div class="ln"><span class="c-prompt">›</span> <span class="c-cmd">assistant</span>.<span class="c-key">create</span>({ <span class="c-key">transcriber</span>, <span class="c-key">model</span>, <span class="c-key">voice</span> })</div>
-<div class="ln"><span class="c-prompt">›</span> <span class="c-cmd">assistant</span>.<span class="c-key">deploy</span>() <span class="c-dim">// then stay and tune it</span><span class="cursor"></span></div>
+<div class="ln"><span class="c-prompt">›</span> <span class="c-cmd">assistant</span>.<span class="c-key">deploy</span>() <span class="c-dim">// then I stay and tune it</span><span class="cursor"></span></div></pre>
 
             <div class="wave-wrap">
               <div class="wave-cap">
                 <span>inbound call · resolving</span>
                 <span class="live"><span class="blip"></span>listening</span>
               </div>
-              <div class="wave" id="wave" aria-hidden="true"></div>
+              <button type="button" class="wave" id="wave" aria-label="Tap to make the agent answer"></button>
+              <div class="wave-cap" style="margin-top:9px;margin-bottom:0;">
+                <span class="hint">tip: tap the waveform and it'll answer</span>
+                <span class="hint" id="waveStatus" aria-live="polite"></span>
+              </div>
             </div>
           </div>
         </div>
@@ -290,22 +331,29 @@
     <section class="sec">
       <div class="sec-head rv">
         <p class="lbl">// the job description, as an API</p>
-        <h2>Every requirement is a request. Each response is a real receipt.</h2>
-        <p>Send any line from the posting. The endpoint returns what I have actually shipped, not a claim. Tap a call to expand the response. Each one returned <code>200 OK</code>.</p>
+        <h2>Every requirement's a request. Each response is a real receipt.</h2>
+        <p>Send any line from the posting and the endpoint hands back what I've actually shipped, not a claim. Tap a call to expand the response, or filter by method. Every one of them came back <code>200 OK</code>.</p>
       </div>
 
-      <div class="console">
+      <div class="filters rv" role="group" aria-label="Filter requests by HTTP method">
+        <span class="flabel">filter:</span>
+        <button type="button" class="pill" data-filter="ALL" aria-pressed="true">ALL<span class="ct" data-ct="ALL"></span></button>
+        <button type="button" class="pill" data-filter="GET" aria-pressed="false">GET<span class="ct" data-ct="GET"></span></button>
+        <button type="button" class="pill" data-filter="POST" aria-pressed="false">POST<span class="ct" data-ct="POST"></span></button>
+      </div>
+
+      <div class="console" id="console">
 
         <!-- 1 -->
-        <div class="call rv">
-          <div class="req" role="button" tabindex="0" aria-expanded="false">
+        <div class="call rv" data-method="GET">
+          <button type="button" class="req" aria-expanded="false" aria-controls="resp-1">
             <span class="verb get">GET</span>
             <span class="path">/requirements/<span class="seg">shipped-product-real-users</span></span>
             <span class="ask">"a product real people or a real company depend on"</span>
             <span class="toggle"><span class="ststamp"><i></i>200</span>
-              <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></span>
-          </div>
-          <div class="resp"><div class="resp-inner">
+              <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg></span>
+          </button>
+          <div class="resp" id="resp-1" role="region"><div class="resp-inner">
             <div class="resp-meta"><span class="code">200 OK</span><span class="lat">application/json · <b>built solo</b></span></div>
 <div class="json"><span class="p">{</span>
   <span class="k">"product"</span>: <span class="s">"FieldCommand"</span>,
@@ -313,93 +361,94 @@
   <span class="k">"scale"</span>: <span class="hl">"187,745 lines of TypeScript, shipped solo"</span>,
   <span class="k">"paying_customers"</span>: <span class="s">"real, billed through Stripe"</span>,
   <span class="k">"depended_on_for"</span>: <span class="s">"running part of a contractor's operations"</span>,
-  <span class="k">"verify"</span>: <span class="lk" data-href="https://app.fieldcommand.io">"app.fieldcommand.io"</span>
+  <span class="k">"verify"</span>: <a class="lk" href="https://app.fieldcommand.io" target="_blank" rel="noopener">"app.fieldcommand.io"</a>
 <span class="p">}</span></div>
           </div></div>
         </div>
 
         <!-- 2 -->
-        <div class="call rv">
-          <div class="req" role="button" tabindex="0" aria-expanded="false">
+        <div class="call rv" data-method="GET">
+          <button type="button" class="req" aria-expanded="false" aria-controls="resp-2">
             <span class="verb get">GET</span>
             <span class="path">/requirements/<span class="seg">strong-generalist</span></span>
             <span class="ask">"move between UI, API design, data modeling, architecture"</span>
             <span class="toggle"><span class="ststamp"><i></i>200</span>
-              <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></span>
-          </div>
-          <div class="resp"><div class="resp-inner">
+              <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg></span>
+          </button>
+          <div class="resp" id="resp-2" role="region"><div class="resp-inner">
             <div class="resp-meta"><span class="code">200 OK</span><span class="lat">application/json · <b>full stack, one person</b></span></div>
 <div class="json"><span class="p">{</span>
   <span class="k">"frontend"</span>: <span class="s">"the FieldCommand app UI, built and shipped"</span>,
   <span class="k">"api_and_data"</span>: <span class="s">"REST surface, PostgreSQL on Supabase, RBAC, tenant isolation"</span>,
   <span class="k">"architecture"</span>: <span class="s">"multi-tenant from the first table; per-tenant feature flags"</span>,
-  <span class="k">"pipelines"</span>: <span class="s">"Stripe billing, AI services, CRM, reporting, wired together"</span>,
-  <span class="k">"note"</span>: <span class="hl">"the whole stack was mine, because there was no one else"</span>
+  <span class="k">"pipelines"</span>: <span class="s">"Stripe billing, AI services, CRM, reporting, all wired together"</span>,
+  <span class="k">"note"</span>: <span class="hl">"the whole stack was mine, because there was nobody else"</span>
 <span class="p">}</span></div>
           </div></div>
         </div>
 
         <!-- 3 -->
-        <div class="call rv">
-          <div class="req" role="button" tabindex="0" aria-expanded="false">
+        <div class="call rv" data-method="GET">
+          <button type="button" class="req" aria-expanded="false" aria-controls="resp-3">
             <span class="verb get">GET</span>
             <span class="path">/requirements/<span class="seg">typescript-or-python</span></span>
             <span class="ask">"TypeScript or Python · Cursor, Claude Code, Codex"</span>
             <span class="toggle"><span class="ststamp"><i></i>200</span>
-              <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></span>
-          </div>
-          <div class="resp"><div class="resp-inner">
+              <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg></span>
+          </button>
+          <div class="resp" id="resp-3" role="region"><div class="resp-inner">
             <div class="resp-meta"><span class="code">200 OK</span><span class="lat">application/json · <b>this is how I build now</b></span></div>
 <div class="json"><span class="p">{</span>
   <span class="k">"language"</span>: <span class="s">"TypeScript across all 187,745 lines"</span>,
-  <span class="k">"ai_assisted_dev"</span>: <span class="s">"Cursor and Claude Code, every day, spec to ship"</span>,
-  <span class="k">"workflow"</span>: <span class="s">"spec, build, validate, ship, then read the failures"</span>,
-  <span class="k">"why_it_matters"</span>: <span class="hl">"the FDE who builds with AI tooling deploys the next customer faster"</span>
+  <span class="k">"ai_assisted_dev"</span>: <span class="s">"Cursor and Claude Code, every single day, spec to ship"</span>,
+  <span class="k">"workflow"</span>: <span class="s">"spec, build, validate, ship, then I read the failures"</span>,
+  <span class="k">"why_it_matters"</span>: <span class="hl">"the FDE who builds with AI tooling gets the next customer live faster"</span>
 <span class="p">}</span></div>
           </div></div>
         </div>
 
         <!-- 4 -->
-        <div class="call rv">
-          <div class="req" role="button" tabindex="0" aria-expanded="false">
+        <div class="call rv" data-method="POST">
+          <button type="button" class="req" aria-expanded="false" aria-controls="resp-4">
             <span class="verb post">POST</span>
             <span class="path">/requirements/<span class="seg">production-ai-features</span></span>
             <span class="ask">"AI/ML, LLM APIs, building agents that hold up live"</span>
             <span class="toggle"><span class="ststamp"><i></i>201</span>
-              <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></span>
-          </div>
-          <div class="resp"><div class="resp-inner">
+              <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg></span>
+          </button>
+          <div class="resp" id="resp-4" role="region"><div class="resp-inner">
             <div class="resp-meta"><span class="code">201 Created</span><span class="lat">application/json · <b>live, behind flags</b></span></div>
 <div class="json"><span class="p">{</span>
   <span class="k">"fieldcommand_ai"</span>: <span class="s">"four AI features in production behind per-tenant flags"</span>,
   <span class="k">"andrewos"</span>: <span class="s">"a multi-agent operating system I run in daily production"</span>,
   <span class="k">"pattern"</span>: <span class="s">"builder, reviewer, validator agents; the validator blocks bad output before it ships"</span>,
-  <span class="k">"forward_deployed"</span>: <span class="hl">"I do not theorize about agents, I run them and own what they do"</span>
+  <span class="k">"forward_deployed"</span>: <span class="hl">"I don't theorize about agents, I run them and own what they do"</span>
 <span class="p">}</span></div>
           </div></div>
         </div>
 
         <!-- 5 -->
-        <div class="call rv">
-          <div class="req" role="button" tabindex="0" aria-expanded="false">
+        <div class="call rv" data-method="GET">
+          <button type="button" class="req" aria-expanded="false" aria-controls="resp-5">
             <span class="verb get">GET</span>
             <span class="path">/requirements/<span class="seg">agency-and-customer-comms</span></span>
             <span class="ask">"agency, structured thinking, explain hard things to execs"</span>
             <span class="toggle"><span class="ststamp"><i></i>200</span>
-              <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></span>
-          </div>
-          <div class="resp"><div class="resp-inner">
+              <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg></span>
+          </button>
+          <div class="resp" id="resp-5" role="region"><div class="resp-inner">
             <div class="resp-meta"><span class="code">200 OK</span><span class="lat">application/json · <b>six years in the field</b></span></div>
 <div class="json"><span class="p">{</span>
   <span class="k">"customer_comms"</span>: <span class="s">"six years as a financial advisor, the single point of contact for households trusting me with their money"</span>,
-  <span class="k">"explaining_hard_things"</span>: <span class="s">"translated technical and analytical concepts for non-technical people, one on one and in workshops"</span>,
-  <span class="k">"agency"</span>: <span class="s">"I built FieldCommand because the system I needed did not exist, not because anyone asked"</span>,
-  <span class="k">"regulated"</span>: <span class="hl">"operated under FINRA and SEC oversight, comfortable owning an outcome that matters to someone"</span>
+  <span class="k">"explaining_hard_things"</span>: <span class="s">"I translated technical and analytical concepts for non-technical people, one on one and in workshops"</span>,
+  <span class="k">"agency"</span>: <span class="s">"I built FieldCommand because the system I needed didn't exist, not because anyone asked"</span>,
+  <span class="k">"regulated"</span>: <span class="hl">"operated under FINRA and SEC oversight, so I'm comfortable owning an outcome that matters to someone"</span>
 <span class="p">}</span></div>
           </div></div>
         </div>
 
       </div>
+      <p class="sec-head" style="margin-top:16px;"><span style="font-size:12px;color:var(--dim);" id="filterNote" aria-live="polite"></span></p>
     </section>
 
     <!-- ================= EVAL PANEL ================= -->
@@ -407,7 +456,7 @@
       <div class="sec-head rv">
         <p class="lbl">// ship / no-ship discipline</p>
         <h2>I tune a number until it holds, one failure at a time.</h2>
-        <p>An FDE owns quality after launch, not at the demo. Here is one I owned: the false-positive rate on Veritas, an AI verifier I built and run.</p>
+        <p>An FDE owns quality after launch, not at the demo. Here's one I owned: the false-positive rate on Veritas, an AI verifier I built and run.</p>
       </div>
 
       <div class="eval rv" data-eval aria-label="A bar showing Veritas false-positive rate driven from about 30 percent down to under 5 percent.">
@@ -416,18 +465,18 @@
             <div class="lbl">false-positive rate · Veritas</div>
             <div class="val"><span class="num" id="evalNum">30</span><span class="pct">%</span></div>
           </div>
-          <div class="eval-verdict">driven from ~30% to <b>under 5%</b> by reading failures one at a time, not by tweaking a prompt and hoping.</div>
+          <div class="eval-verdict">I drove it from ~30% to <b>under 5%</b> by reading failures one at a time, not by tweaking a prompt and hoping.</div>
         </div>
         <div class="eval-track"><div class="eval-fill" id="evalFill"></div></div>
         <div class="eval-scale"><span>noisy (30%)</span><span>shippable (&lt;5%)</span></div>
-        <p class="eval-note"><b>Veritas</b> is a citation verifier for legal filings, live at veritaslaw.app. It reads a claim, retrieves the source, and returns a structured verdict with a confidence cap. That same eval-and-decide loop is how you keep a voice agent trustworthy after it is deployed.</p>
+        <p class="eval-note"><b>Veritas</b> is a citation verifier for legal filings, live at veritaslaw.app. It reads a claim, retrieves the source, and returns a structured verdict with a confidence cap. That same eval-and-decide loop is how you keep a voice agent trustworthy once it's deployed.</p>
       </div>
     </section>
 
     <!-- ================= SHIP LOG ================= -->
     <section class="sec">
       <div class="sec-head rv">
-        <p class="lbl">// what is live right now</p>
+        <p class="lbl">// what's live right now</p>
         <h2>The ship log.</h2>
         <p>Three systems, all in production, all built and run by me.</p>
       </div>
@@ -439,8 +488,8 @@
             <h3>FieldCommand</h3>
             <span class="badge green">187,745 lines</span>
           </div>
-          <p>A multi-tenant SaaS for commercial trade contractors, <span class="nm">187,745</span> lines of TypeScript, built solo on PostgreSQL and Supabase. Stripe billing with real paying customers, RBAC, tenant isolation, and four AI features live behind per-tenant flags.</p>
-          <a class="lk" data-href="https://app.fieldcommand.io">app.fieldcommand.io <span class="arr">&rsaquo;</span></a>
+          <p>It's a multi-tenant SaaS for commercial trade contractors, <span class="nm">187,745</span> lines of TypeScript, built solo on PostgreSQL and Supabase. Stripe billing with real paying customers, RBAC, tenant isolation, and four AI features live behind per-tenant flags.</p>
+          <a class="lk" href="https://app.fieldcommand.io" target="_blank" rel="noopener">app.fieldcommand.io <span class="arr">&rsaquo;</span></a>
         </div>
 
         <div class="entry rv">
@@ -449,7 +498,7 @@
             <h3>AndrewOS</h3>
             <span class="badge violet">in daily production</span>
           </div>
-          <p>A multi-agent operating system I run across two businesses. Builder, reviewer, and validator agents work in sequence, and the validator grades the builder and blocks before anything ships. Forward-deployed agents, in daily use, with the guardrails that keep them honest.</p>
+          <p>It's a multi-agent operating system I run across two businesses. Builder, reviewer, and validator agents work in sequence, and the validator grades the builder and blocks before anything ships. That's forward-deployed agents in daily use, with the guardrails that keep them honest.</p>
         </div>
 
         <div class="entry rv">
@@ -459,7 +508,7 @@
             <span class="badge">~30% &rarr; &lt;5% FP</span>
           </div>
           <p>An AI citation verifier for legal filings, live at veritaslaw.app. It reads a claim, retrieves the source, and returns a structured verdict with a confidence cap. I drove its false-positive rate from about 30% to under 5% by empirical failure analysis.</p>
-          <a class="lk" data-href="https://veritaslaw.app">veritaslaw.app <span class="arr">&rsaquo;</span></a>
+          <a class="lk" href="https://veritaslaw.app" target="_blank" rel="noopener">veritaslaw.app <span class="arr">&rsaquo;</span></a>
         </div>
       </div>
     </section>
@@ -469,7 +518,7 @@
       <div class="sec-head rv">
         <p class="lbl">// the honest part</p>
         <h2>Where the calls return a 4xx.</h2>
-        <p>An FDE has to name the walls plainly. Here is the part of the posting I do not clear cleanly, and what I would put on the table instead.</p>
+        <p>An FDE has to name the walls plainly, so here's the part of the posting I don't clear cleanly, and what I'd put on the table instead.</p>
       </div>
 
       <div class="scriptwrap rv">
@@ -481,7 +530,7 @@
           </div>
           <div class="turn me">
             <span class="who">Andrew</span>
-            <span class="said">I will not pretend otherwise. I do not have five-plus years carrying a formal software-engineer title, and I have not been the early engineer at a funded startup. That line is real, and I am not going to talk around it.</span>
+            <span class="said">I'm not going to pretend otherwise. I don't have five-plus years carrying a formal software-engineer title, and I haven't been the early engineer at a funded startup. That line's real, and I won't talk around it.</span>
           </div>
           <div class="turn them">
             <span class="who">Vapi</span>
@@ -489,7 +538,7 @@
           </div>
           <div class="turn me">
             <span class="who">Andrew</span>
-            <span class="said">Because the same posting optimizes for the thing I can prove. It asks for someone who has shipped a product with real users, paying customers, and a real company depending on it. <b>I built that solo: 187,745 lines, billed through Stripe, in production.</b> I build without a playbook, I cannot leave a broken system alone, and I own the outcome after the demo. That is the Forward Deployed shape, and it is verifiable.</span>
+            <span class="said">Because the same posting optimizes for the thing I can prove. It asks for someone who's shipped a product with real users, paying customers, and a real company depending on it. <b>I built that solo: 187,745 lines, billed through Stripe, in production.</b> I build without a playbook, I can't leave a broken system alone, and I own the outcome after the demo. That's the Forward Deployed shape, and it's verifiable.</span>
           </div>
         </div>
       </div>
@@ -498,15 +547,15 @@
     <!-- ================= END CALL / CTA ================= -->
     <section class="endcall rv">
       <h2>Let me deploy the first one.</h2>
-      <p>If this reads like the builder you forward-deploy, I would value fifteen minutes. Reply wherever I sent you this link, or open one of these. <b>Both are live.</b></p>
+      <p>If this reads like the builder you forward-deploy, I'd love fifteen minutes. Reply wherever I sent you this link, or open one of these. <b>Both are live.</b></p>
       <div class="btnrow">
-        <a class="btn primary" href="https://portfolio.andrewzoll.com">Open the portfolio <span class="arr">&rsaquo;</span></a>
-        <a class="btn ghost" href="https://linkedin.com/in/andrewzoll">Connect on LinkedIn <span class="arr">&rsaquo;</span></a>
+        <a class="btn primary" href="https://portfolio.andrewzoll.com" target="_blank" rel="noopener">Open the portfolio <span class="arr">&rsaquo;</span></a>
+        <a class="btn ghost" href="https://linkedin.com/in/andrewzoll" target="_blank" rel="noopener">Connect on LinkedIn <span class="arr">&rsaquo;</span></a>
       </div>
       <div class="endlinks">
-        <a href="https://veritaslaw.app">Veritas (live)</a>
-        <a href="https://app.fieldcommand.io">FieldCommand (live)</a>
-        <a href="https://portfolio.andrewzoll.com">portfolio.andrewzoll.com</a>
+        <a href="https://veritaslaw.app" target="_blank" rel="noopener">Veritas (live)</a>
+        <a href="https://app.fieldcommand.io" target="_blank" rel="noopener">FieldCommand (live)</a>
+        <a href="https://portfolio.andrewzoll.com" target="_blank" rel="noopener">portfolio.andrewzoll.com</a>
       </div>
     </section>
 
@@ -530,8 +579,10 @@
         document.querySelectorAll('.rv').forEach(function(el){ io.observe(el); });
       }
 
-      /* ---- waveform: a voice session that listens and resolves ---- */
+      /* ---- waveform: a live voice session, and a real button you can poke ---- */
       var wave = document.getElementById('wave');
+      var waveStatus = document.getElementById('waveStatus');
+      var surge = 0; // decays back to 0; a tap injects a burst the agent "speaks"
       if(wave){
         var BARS = 40, bars = [];
         for(var i=0;i<BARS;i++){ var s=document.createElement('span'); wave.appendChild(s); bars.push(s); }
@@ -544,10 +595,13 @@
             for(var i=0;i<BARS;i++){
               var env = 0.5 + 0.5*Math.sin(t*0.6 + i*0.18);
               var jitter = 0.45 + 0.55*Math.abs(Math.sin(t*2.1 + i*0.7) * Math.cos(t*0.9 + i*0.3));
-              var h = 8 + env*jitter*84;
+              var spike = surge * (0.6 + 0.4*Math.abs(Math.sin(t*5 + i*0.9)));
+              var h = 8 + env*jitter*(70 + spike*120);
+              if(h > 100) h = 100;
               bars[i].style.height = h.toFixed(1) + '%';
-              bars[i].style.opacity = (0.5 + env*0.5).toFixed(2);
+              bars[i].style.opacity = (0.5 + Math.min(1, env + spike)*0.5).toFixed(2);
             }
+            if(surge > 0.001){ surge *= 0.94; } else { surge = 0; }
             raf = requestAnimationFrame(frame);
           }
           var vio = new IntersectionObserver(function(es){
@@ -558,27 +612,110 @@
           }, { threshold: 0 });
           vio.observe(wave);
         }
+        /* whimsy: tap the waveform and the agent "answers" */
+        var lines = [
+          'resolved · no transfer needed',
+          'answered in one turn',
+          'caller handled, logged, done',
+          'deployed, then tuned'
+        ], lx = 0;
+        function answer(){
+          surge = 1;
+          if(waveStatus){
+            waveStatus.textContent = lines[lx % lines.length];
+            lx++;
+            clearTimeout(answer._tm);
+            answer._tm = setTimeout(function(){ waveStatus.textContent = ''; }, 2600);
+          }
+          if(reduce && waveStatus){ /* no surge animation, the text is the feedback */ }
+        }
+        wave.addEventListener('click', answer);
       }
 
-      /* ---- API console expand/collapse ---- */
-      document.querySelectorAll('.call .req').forEach(function(req){
-        var call = req.closest('.call');
-        function toggle(){
-          var open = call.classList.toggle('open');
-          req.setAttribute('aria-expanded', open ? 'true' : 'false');
+      /* ---- terminal: a real copy button (no fake run button) ---- */
+      var copyBtn = document.getElementById('copyBtn');
+      var snippet = document.getElementById('snippet');
+      if(copyBtn && snippet){
+        var label = copyBtn.querySelector('.copy-label');
+        var snippetText = snippet.innerText.replace(/ /g,' ').replace(/\n{2,}/g,'\n').trim();
+        copyBtn.addEventListener('click', function(){
+          function done(){
+            copyBtn.classList.add('done');
+            if(label) label.textContent = 'copied';
+            setTimeout(function(){ copyBtn.classList.remove('done'); if(label) label.textContent = 'copy'; }, 1600);
+          }
+          if(navigator.clipboard && navigator.clipboard.writeText){
+            navigator.clipboard.writeText(snippetText).then(done, fallback);
+          } else { fallback(); }
+          function fallback(){
+            var ta = document.createElement('textarea');
+            ta.value = snippetText; ta.style.position='fixed'; ta.style.opacity='0';
+            document.body.appendChild(ta); ta.select();
+            try{ document.execCommand('copy'); done(); }catch(e){ if(label) label.textContent='select+copy'; }
+            document.body.removeChild(ta);
+          }
+        });
+      }
+
+      /* ---- API console expand/collapse: measured height, never clips ---- */
+      function setOpen(call, open){
+        var req = call.querySelector('.req');
+        var resp = call.querySelector('.resp');
+        var inner = resp.firstElementChild;
+        call.classList.toggle('open', open);
+        req.setAttribute('aria-expanded', open ? 'true' : 'false');
+        if(open){
+          resp.style.height = inner.offsetHeight + 'px';
+          // after the transition, release to auto so reflow/resize never clips
+          clearTimeout(resp._tm);
+          resp._tm = setTimeout(function(){ if(call.classList.contains('open')) resp.style.height = 'auto'; }, 430);
+        } else {
+          // from auto -> fixed px -> 0 so the transition has something to animate
+          resp.style.height = inner.offsetHeight + 'px';
+          resp.offsetHeight; // force reflow
+          resp.style.height = '0px';
         }
-        req.addEventListener('click', toggle);
-        req.addEventListener('keydown', function(e){
-          if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); toggle(); }
+      }
+      document.querySelectorAll('.call').forEach(function(call){
+        var req = call.querySelector('.req');
+        req.addEventListener('click', function(){
+          setOpen(call, !call.classList.contains('open'));
         });
       });
-      var first = document.querySelector('.call');
-      if(first){ first.classList.add('open'); first.querySelector('.req').setAttribute('aria-expanded','true'); }
+      // keep open rows correct on resize
+      window.addEventListener('resize', function(){
+        document.querySelectorAll('.call.open .resp').forEach(function(resp){ resp.style.height = 'auto'; });
+      });
+      // open the first one by default
+      var firstCall = document.querySelector('.call');
+      if(firstCall){ setOpen(firstCall, true); }
 
-      /* ---- in-response links open in a new tab ---- */
-      document.querySelectorAll('[data-href]').forEach(function(el){
-        el.style.cursor = 'pointer';
-        el.addEventListener('click', function(){ window.open(el.getAttribute('data-href'), '_blank', 'noopener'); });
+      /* ---- method filter pills ---- */
+      var calls = [].slice.call(document.querySelectorAll('.call'));
+      var counts = { ALL: calls.length, GET: 0, POST: 0 };
+      calls.forEach(function(c){ counts[c.getAttribute('data-method')]++; });
+      document.querySelectorAll('[data-ct]').forEach(function(el){
+        el.textContent = counts[el.getAttribute('data-ct')];
+      });
+      var filterNote = document.getElementById('filterNote');
+      function applyFilter(method){
+        var shown = 0;
+        calls.forEach(function(c){
+          var match = (method === 'ALL') || (c.getAttribute('data-method') === method);
+          c.hidden = !match;
+          if(match) shown++;
+        });
+        document.querySelectorAll('.pill').forEach(function(p){
+          p.setAttribute('aria-pressed', p.getAttribute('data-filter') === method ? 'true' : 'false');
+        });
+        if(filterNote){
+          filterNote.textContent = method === 'ALL'
+            ? ''
+            : 'showing ' + shown + ' ' + method + ' ' + (shown === 1 ? 'request' : 'requests');
+        }
+      }
+      document.querySelectorAll('.pill').forEach(function(p){
+        p.addEventListener('click', function(){ applyFilter(p.getAttribute('data-filter')); });
       });
 
       /* ---- eval panel: count down 30 -> 5, fill the bar ---- */

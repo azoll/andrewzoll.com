@@ -31,9 +31,13 @@
     .bar .brand .mark::after{content:"";width:8px;height:8px;border-radius:50%;background:var(--card);}
     .bar .zapname{font-size:13.5px;color:var(--muted);display:flex;align-items:center;gap:8px;min-width:0;}
     .bar .zapname b{color:var(--ink);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-    .bar .live{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--ok);background:var(--ok-tint);padding:4px 9px;border-radius:999px;flex-shrink:0;}
-    .bar .live .dot{width:7px;height:7px;border-radius:50%;background:var(--ok);}
-    @media (prefers-reduced-motion: no-preference){ .bar .live .dot{animation:beat 2s ease-in-out infinite;} }
+    .bar .live{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--ok);background:var(--ok-tint);padding:4px 9px;border-radius:999px;flex-shrink:0;border:1px solid rgba(31,157,85,0.22);cursor:pointer;font-family:inherit;transition:color .2s ease,background .2s ease,border-color .2s ease;}
+    .bar .live .dot{width:7px;height:7px;border-radius:50%;background:var(--ok);transition:background .2s ease;}
+    .bar .live:hover{border-color:rgba(31,157,85,0.45);}
+    .bar .live:focus-visible{outline:2px solid var(--orange);outline-offset:2px;}
+    .bar .live[aria-pressed="false"]{color:var(--muted);background:var(--paper);border-color:var(--line-strong);}
+    .bar .live[aria-pressed="false"] .dot{background:var(--muted);}
+    @media (prefers-reduced-motion: no-preference){ .bar .live[aria-pressed="true"] .dot{animation:beat 2s ease-in-out infinite;} }
     @keyframes beat{0%,100%{opacity:1;}50%{opacity:.35;}}
     .bar .spacer{margin-left:auto;}
     .bar .editlink{font-size:13px;font-weight:600;color:var(--orange);text-decoration:none;display:inline-flex;align-items:center;gap:7px;padding:7px 13px;border:1px solid var(--line-strong);border-radius:8px;transition:background .15s ease,border-color .15s ease;}
@@ -64,18 +68,33 @@
     .node .knob svg{stroke:var(--orange);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
 
     /* small "+" splice between nodes, like the Zap editor add-step button */
-    .splice{position:relative;height:14px;margin:-8px 0 -2px;}
-    .splice::before{content:"+";position:absolute;left:14px;top:50%;transform:translateY(-50%);width:16px;height:16px;margin-left:-7px;border-radius:50%;background:var(--card);border:1px solid var(--line-strong);color:var(--muted);font-size:12px;line-height:14px;text-align:center;z-index:3;}
+    .splice{position:relative;display:block;width:100%;height:14px;margin:-8px 0 -2px;padding:0;background:none;border:none;cursor:pointer;}
+    .splice .add{position:absolute;left:14px;top:50%;transform:translateY(-50%);width:18px;height:18px;margin-left:-8px;padding:0;border-radius:50%;background:var(--card);border:1px solid var(--line-strong);color:var(--muted);font-size:13px;line-height:1;text-align:center;z-index:3;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;transition:background .15s ease,border-color .15s ease,color .15s ease,transform .15s ease;}
+    .splice .add:hover{background:var(--orange-tint);border-color:var(--orange-soft);color:var(--orange);transform:scale(1.12);}
+    .splice .add:focus-visible{outline:2px solid var(--orange);outline-offset:2px;}
 
     .step{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;transition:border-color .2s ease,box-shadow .2s ease,transform .2s ease;}
     .step:hover{border-color:var(--line-strong);box-shadow:0 14px 34px rgba(45,40,32,0.07);transform:translateY(-1px);}
 
-    .step .head{display:flex;align-items:center;gap:11px;padding:15px 18px;border-bottom:1px solid var(--line);}
+    .step .head{display:flex;align-items:center;gap:11px;padding:15px 18px;border-bottom:1px solid var(--line);width:100%;text-align:left;background:none;border-top:none;border-left:none;border-right:none;font-family:inherit;cursor:pointer;color:inherit;transition:background .15s ease;}
+    .step .head:hover{background:var(--orange-tint);}
+    .step .head:focus-visible{outline:2px solid var(--orange);outline-offset:-2px;}
+    .step .head[aria-expanded="false"]{border-bottom-color:transparent;}
+    .step .caret{margin-left:8px;flex-shrink:0;width:14px;height:14px;color:var(--muted);transition:transform .25s ease;}
+    .step .head[aria-expanded="false"] .caret{transform:rotate(-90deg);}
+    .step .caret svg{width:14px;height:14px;display:block;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;}
+    /* collapse/expand the detail body */
+    .step .body{overflow:hidden;}
+    .step .body[hidden]{display:none;}
+    @media (prefers-reduced-motion: no-preference){
+      .step .body.animating{animation:bodyOpen .28s ease;}
+    }
+    @keyframes bodyOpen{from{opacity:0;transform:translateY(-6px);}to{opacity:1;transform:none;}}
     .step .num{font-size:12px;font-weight:700;color:var(--muted);font-variant-numeric:tabular-nums;flex-shrink:0;}
     .step .kind{font-size:11px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;color:var(--orange);flex-shrink:0;}
     .step.trigger .kind{color:var(--orange);}
     .step .app{font-size:15px;font-weight:700;color:var(--ink);}
-    .step .status{margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:600;color:var(--muted);background:var(--paper);border:1px solid var(--line);padding:4px 10px;border-radius:999px;white-space:nowrap;flex-shrink:0;transition:color .35s ease,background .35s ease,border-color .35s ease;}
+    .step .status{margin-left:auto;margin-right:0;display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:600;color:var(--muted);background:var(--paper);border:1px solid var(--line);padding:4px 10px;border-radius:999px;white-space:nowrap;flex-shrink:0;transition:color .35s ease,background .35s ease,border-color .35s ease;}
     .step .status .tick{width:13px;height:13px;border-radius:50%;border:1.6px solid var(--line-strong);display:inline-block;position:relative;transition:border-color .35s ease,background .35s ease;}
     .node.in .step .status{color:var(--ok);background:var(--ok-tint);border-color:rgba(31,157,85,0.25);}
     .node.in .step .status .tick{border-color:var(--ok);background:var(--ok);}
@@ -139,16 +158,16 @@
       .flow::before{left:17px;}
       .node .knob{left:-38px;width:36px;height:36px;border-radius:9px;}
       .node .knob svg{width:18px;height:18px;}
-      .splice::before{left:11px;}
+      .splice .add{left:11px;}
     }
   </style>
-<noscript><style>.rv,.reveal,.node,.bar,.ball{opacity:1!important;transform:none!important}</style></noscript>
+<noscript><style>.rv,.reveal,.node,.bar,.ball{opacity:1!important;transform:none!important}.step .body[hidden]{display:block!important}.step .caret,.splice{display:none!important}.step .head{cursor:default!important}</style></noscript>
 </head>
 <body>
   <header class="bar">
     <a class="brand" href="https://andrewzoll.com"><span class="mark"></span> Andrew Zoll</a>
     <span class="zapname"><b>Zap: hire the Applied AI Engineer</b></span>
-    <span class="live"><span class="dot"></span> On</span>
+    <button class="live" id="zapToggle" type="button" aria-pressed="true" aria-label="Toggle this Zap on or off"><span class="dot"></span> <span class="livetxt">On</span></button>
     <span class="spacer"></span>
     <a class="editlink" href="mailto:andrew@andrewzoll.com">andrew@andrewzoll.com <span aria-hidden="true">&#8599;</span></a>
   </header>
@@ -158,7 +177,7 @@
 
     <div class="intro reveal">
       <h1>Most of this job is a Zap I already run. <span class="hl">So I built the page as one.</span></h1>
-      <p>I am Andrew Zoll. The AI Platform team owns the LLM proxy, the observability layer, and the eval workflows every other team builds on top of. I built that exact shape for my own products and I run it in production today. Below, each requirement in your post is a step, <b>wired to a working receipt.</b></p>
+      <p>Hey, I'm Andrew Zoll. Your AI Platform team owns the LLM proxy, the observability layer, and the eval workflows every other team builds on top of. I've built that exact shape for my own products, and it's running in production today. So instead of a cover letter, I turned each requirement in your post into a step. <b>Click any of them open and you'll find a working receipt.</b></p>
     </div>
 
     <div class="flow">
@@ -169,15 +188,16 @@
           <svg viewBox="0 0 24 24"><path d="M13 2 L4 14 H11 L10 22 L20 9 H13 Z"/></svg>
         </span>
         <div class="step trigger">
-          <div class="head">
+          <button class="head" type="button" aria-expanded="true" aria-controls="body-1">
             <span class="num">1</span>
             <span class="kind">Trigger</span>
             <span class="app">New role posted</span>
             <span class="status"><span class="tick"></span> caught</span>
-          </div>
-          <div class="body">
+            <span class="caret" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 9 L12 15 L18 9"/></svg></span>
+          </button>
+          <div class="body" id="body-1">
             <div class="jd"><span class="lbl">Your post</span>"Build the platform that makes AI and ML development faster, safer, and more reliable across an entire company."</div>
-            <p class="me">That is the work I do every day, just at one-builder scale. I run an agent operating system that delegates across builder, reviewer, and validator roles, and I built a two-tier model router so other parts of my own products can call models safely without each one reinventing access, cost caps, and fallback. <span class="hl">A platform for the people downstream of me is the whole point.</span></p>
+            <p class="me">That's the work I do every day, just at one-builder scale. I run an agent operating system that delegates across builder, reviewer, and validator roles, and I built a two-tier model router so other parts of my products can call models safely without each one reinventing access, cost caps, and fallback. <span class="hl">Building a platform for the people downstream of me is the whole point.</span></p>
             <div class="out">
               <span class="chip">role: <b>Applied AI Engineer</b></span>
               <span class="chip">team: <b>AI Platform</b></span>
@@ -187,7 +207,7 @@
         </div>
       </div>
 
-      <div class="splice" aria-hidden="true"></div>
+      <button class="splice add-splice" type="button" data-next="body-2" aria-label="Jump to step 2"><span class="add" aria-hidden="true">+</span></button>
 
       <!-- ACTION 1: LLM proxy -->
       <div class="node reveal">
@@ -195,15 +215,16 @@
           <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.2"/><path d="M12 3 V8 M12 16 V21 M4.2 7 L8 9.2 M16 14.8 L19.8 17 M19.8 7 L16 9.2 M8 14.8 L4.2 17"/></svg>
         </span>
         <div class="step">
-          <div class="head">
+          <button class="head" type="button" aria-expanded="false" aria-controls="body-2">
             <span class="num">2</span>
             <span class="kind">Action</span>
             <span class="app">FieldCommand · LLM proxy</span>
             <span class="status"><span class="tick"></span> tested</span>
-          </div>
-          <div class="body">
+            <span class="caret" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 9 L12 15 L18 9"/></svg></span>
+          </button>
+          <div class="body" id="body-2" hidden>
             <div class="jd"><span class="lbl">Things you'll do</span>"Develop and maintain core services such as our LLM proxy server, platform APIs, and reusable tooling that standardize how teams access and operate models in production."</div>
-            <p class="me">I built a two-tier model router for FieldCommand that sends cheap work to a cheap model and harder work to a stronger one, with three providers wired in behind one interface and per-tenant feature flags gating each AI feature. That is a proxy with a paved road on top, and it runs in production now because the bill demanded it.</p>
+            <p class="me">I built a two-tier model router for FieldCommand that sends cheap work to a cheap model and harder work to a stronger one. There are three providers wired in behind one interface, and per-tenant feature flags gate each AI feature. That's a proxy with a paved road on top, and it's running in production right now because the bill demanded it.</p>
             <div class="out">
               <span class="chip">FieldCommand: <b>187,745 lines TS</b></span>
               <span class="chip">providers behind one interface: <b>3</b></span>
@@ -213,7 +234,7 @@
         </div>
       </div>
 
-      <div class="splice" aria-hidden="true"></div>
+      <button class="splice add-splice" type="button" data-next="body-3" aria-label="Jump to step 3"><span class="add" aria-hidden="true">+</span></button>
 
       <!-- ACTION 2: eval / observability -->
       <div class="node reveal">
@@ -221,15 +242,16 @@
           <svg viewBox="0 0 24 24"><path d="M4 19 L9 12 L13 15 L20 5"/><circle cx="20" cy="5" r="1.6"/><circle cx="9" cy="12" r="1.6"/></svg>
         </span>
         <div class="step">
-          <div class="head">
+          <button class="head" type="button" aria-expanded="false" aria-controls="body-3">
             <span class="num">3</span>
             <span class="kind">Action</span>
             <span class="app">Veritas · eval workflow</span>
             <span class="status"><span class="tick"></span> tested</span>
-          </div>
-          <div class="body">
+            <span class="caret" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 9 L12 15 L18 9"/></svg></span>
+          </button>
+          <div class="body" id="body-3" hidden>
             <div class="jd"><span class="lbl">Things you'll do</span>"Build and improve parts of our LLM Ops and ML Ops stack, including observability, monitoring, evaluation workflows, and operational tooling."</div>
-            <p class="me">Veritas is an evaluation workflow I shipped and host live. It reads an AI claim, retrieves the source, and returns a structured verdict with a confidence cap, built with typed schemas, prompt caching, and cost ceilings. <span class="hl">I drove its false-positive rate down by reading failures one at a time,</span> which is exactly what an eval loop is for.</p>
+            <p class="me">Veritas is an evaluation workflow I shipped, and I host it live. It reads an AI claim, retrieves the source, and returns a structured verdict with a confidence cap. I built it with typed schemas, prompt caching, and cost ceilings. <span class="hl">I drove its false-positive rate down by reading failures one at a time,</span> which is exactly what an eval loop is for.</p>
             <div class="out">
               <span class="chip">false positives: <b>~30% &rarr; under 5%</b><span style="color:var(--muted);font-weight:500;"> (a Veritas result)</span></span>
               <a class="chip" href="https://veritaslaw.app">veritaslaw.app <span aria-hidden="true">&rarr;</span></a>
@@ -238,7 +260,7 @@
         </div>
       </div>
 
-      <div class="splice" aria-hidden="true"></div>
+      <button class="splice add-splice" type="button" data-next="body-4" aria-label="Jump to step 4"><span class="add" aria-hidden="true">+</span></button>
 
       <!-- ACTION 3: reliability / safety / cost -->
       <div class="node reveal">
@@ -246,15 +268,16 @@
           <svg viewBox="0 0 24 24"><path d="M12 3 L19 6 V11 C19 16 16 19.5 12 21 C8 19.5 5 16 5 11 V6 Z"/><path d="M9 12 L11 14 L15 9.5"/></svg>
         </span>
         <div class="step">
-          <div class="head">
+          <button class="head" type="button" aria-expanded="false" aria-controls="body-4">
             <span class="num">4</span>
             <span class="kind">Action</span>
             <span class="app">AndrewOS · guardrails</span>
             <span class="status"><span class="tick"></span> tested</span>
-          </div>
-          <div class="body">
+            <span class="caret" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 9 L12 15 L18 9"/></svg></span>
+          </button>
+          <div class="body" id="body-4" hidden>
             <div class="jd"><span class="lbl">Things you'll do</span>"Design and implement systems that improve the performance, reliability, safety, and cost efficiency of AI-powered experiences."</div>
-            <p class="me">Cost efficiency is why the router exists, and reliability is why AndrewOS runs builder, reviewer, and validator agents where the validator grades the builder and blocks weak output before it ships. Irreversible actions sit behind human gates. I treat cost, latency, and safety as the design, not an afterthought I bolt on later.</p>
+            <p class="me">Cost efficiency is why the router exists, and reliability is why AndrewOS runs builder, reviewer, and validator agents. The validator grades the builder and blocks weak output before it ships. Irreversible actions sit behind human gates. I treat cost, latency, and safety as the design itself, not an afterthought I bolt on later.</p>
             <div class="out">
               <span class="chip">pipeline: <b>build &middot; review &middot; validate</b></span>
               <span class="chip">irreversible actions: <b>human-gated</b></span>
@@ -263,7 +286,7 @@
         </div>
       </div>
 
-      <div class="splice" aria-hidden="true"></div>
+      <button class="splice add-splice" type="button" data-next="body-5" aria-label="Jump to step 5"><span class="add" aria-hidden="true">+</span></button>
 
       <!-- ACTION 4: TypeScript & Python -->
       <div class="node reveal">
@@ -271,15 +294,16 @@
           <svg viewBox="0 0 24 24"><path d="M8 8 L4 12 L8 16 M16 8 L20 12 L16 16 M13.5 5 L10.5 19"/></svg>
         </span>
         <div class="step">
-          <div class="head">
+          <button class="head" type="button" aria-expanded="false" aria-controls="body-5">
             <span class="num">5</span>
             <span class="kind">Action</span>
             <span class="app">Typed backend</span>
             <span class="status"><span class="tick"></span> tested</span>
-          </div>
-          <div class="body">
+            <span class="caret" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 9 L12 15 L18 9"/></svg></span>
+          </button>
+          <div class="body" id="body-5" hidden>
             <div class="jd"><span class="lbl">Things you'll do</span>"You will work mostly in TypeScript &amp; Python. Comfort with typed languages and modern backend practices is a must."</div>
-            <p class="me">FieldCommand is a multi-tenant SaaS I built solo in TypeScript on a PostgreSQL and Supabase backend, with REST integrations, ETL pipelines, role-based access control, and tenant isolation. Typed backend work is my daily ground, and I pair it with Python for the AI and data side.</p>
+            <p class="me">FieldCommand is a multi-tenant SaaS I built solo in TypeScript on a PostgreSQL and Supabase backend, with REST integrations, ETL pipelines, role-based access control, and tenant isolation. Typed backend work is my daily ground, and I pair it with Python for the AI and data side. It's where I'm most comfortable.</p>
             <div class="out">
               <span class="chip">TypeScript, Python, SQL</span>
               <span class="chip">RBAC + tenant isolation: <b>shipped</b></span>
@@ -288,7 +312,7 @@
         </div>
       </div>
 
-      <div class="splice" aria-hidden="true"></div>
+      <button class="splice add-splice" type="button" data-next="body-6" aria-label="Jump to step 6"><span class="add" aria-hidden="true">+</span></button>
 
       <!-- ACTION 5: tools that help engineers move faster + evaluate emerging tools -->
       <div class="node reveal">
@@ -296,15 +320,16 @@
           <svg viewBox="0 0 24 24"><path d="M14.5 4.5 A4 4 0 0 0 9 9 L4 14 V20 H10 L15 15 A4 4 0 0 0 19.5 9.5 L16 13 L12 11 L11 7 Z"/></svg>
         </span>
         <div class="step">
-          <div class="head">
+          <button class="head" type="button" aria-expanded="false" aria-controls="body-6">
             <span class="num">6</span>
             <span class="kind">Action</span>
             <span class="app">Zapier + n8n in production</span>
             <span class="status"><span class="tick"></span> tested</span>
-          </div>
-          <div class="body">
+            <span class="caret" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 9 L12 15 L18 9"/></svg></span>
+          </button>
+          <div class="body" id="body-6" hidden>
             <div class="jd"><span class="lbl">Things you'll do</span>"Build tools that help other engineers move faster" and "evaluate emerging tools, models, and patterns, and help determine which ones should be incorporated into the shared platform."</div>
-            <p class="me">I already build on Zapier and n8n, and I wire ChatGPT and Claude into real workflows, so I judge a tool by whether it earns a place in production rather than a demo. I once integrated Redtail CRM with the ChatGPT API and <span class="hl">cut more than twenty hours of manual work every month.</span> AndrewOS turns that instinct into reusable delegation patterns and validation gates so the next agent can pick up work and ship it safely.</p>
+            <p class="me">I'm already building on Zapier and n8n, and I wire ChatGPT and Claude into real workflows, so I judge a tool by whether it earns a place in production instead of just a demo. I once integrated Redtail CRM with the ChatGPT API and <span class="hl">cut more than twenty hours of manual work every month.</span> AndrewOS turns that instinct into reusable delegation patterns and validation gates, so the next agent can pick up work and ship it safely.</p>
             <div class="out">
               <span class="chip">Redtail + ChatGPT: <b>20+ hrs/mo saved</b></span>
               <span class="chip">power user: <b>Zapier &amp; n8n</b></span>
@@ -313,7 +338,7 @@
         </div>
       </div>
 
-      <div class="splice" aria-hidden="true"></div>
+      <button class="splice add-splice" type="button" data-next="body-7" aria-label="Jump to step 7"><span class="add" aria-hidden="true">+</span></button>
 
       <!-- FILTER: the honest gap -->
       <div class="node filter reveal">
@@ -321,15 +346,16 @@
           <svg viewBox="0 0 24 24"><path d="M4 5 H20 L14 12 V19 L10 21 V12 Z"/></svg>
         </span>
         <div class="step">
-          <div class="head">
+          <button class="head" type="button" aria-expanded="true" aria-controls="body-7">
             <span class="num">7</span>
             <span class="kind">Filter</span>
             <span class="app">Only continue if you read this honestly</span>
             <span class="status"><span class="tick"></span> reviewed</span>
-          </div>
-          <div class="body">
+            <span class="caret" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 9 L12 15 L18 9"/></svg></span>
+          </button>
+          <div class="body" id="body-7">
             <div class="jd"><span class="lbl">About you</span>"4+ years building and operating production AI/ML systems, plus at least 1 year in LLM Ops, ML Ops, or adjacent platform work."</div>
-            <p class="me">Here is the honest read. My agent and LLM work runs from 2025 to now and I built it myself, so I am not bringing multi-year tenure on a large platform team. What I am bringing is the exact stack you describe, already running in production: an LLM router, eval workflows, observability, and cost caps that I designed because my own products needed them. You wrote that the role gets tailored to the person who joins, and that comfort with typed backends matters more than a checklist. <span class="hl">Judge me on the systems, not the calendar.</span></p>
+            <p class="me">Here's the honest read. My agent and LLM work runs from 2025 to now and I built it myself, so I'm not bringing multi-year tenure on a large platform team. What I am bringing is the exact stack you describe, already running in production: an LLM router, eval workflows, observability, and cost caps that I designed because my own products needed them. You wrote that the role gets tailored to whoever joins, and that comfort with typed backends matters more than a checklist. <span class="hl">So judge me on the systems, not the calendar.</span></p>
           </div>
         </div>
       </div>
@@ -341,7 +367,7 @@
       <div class="inner">
         <p class="kind">Final action &middot; Send</p>
         <h2>If the steps tested green, run the last one.</h2>
-        <p>The whole point of a Zap is that the work already happened by the time you read the result. <b>I would love fifteen minutes.</b> Reply wherever I sent you this link, or reach me directly.</p>
+        <p>The whole point of a Zap is that the work's already done by the time you read the result. <b>I'd love fifteen minutes.</b> Reply wherever I sent you this link, or reach me directly.</p>
         <div class="actions">
           <a class="cta" href="mailto:andrew@andrewzoll.com">andrew@andrewzoll.com <span aria-hidden="true">&#8599;</span></a>
           <a class="ghost" href="https://portfolio.andrewzoll.com">Portfolio</a>
@@ -356,17 +382,84 @@
   <script>
     (function(){
       var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      var nodes = document.querySelectorAll('.reveal, .node');
+
+      /* ---- scroll reveal (motion-safe) ---- */
       if(!('IntersectionObserver' in window) || reduce){
         document.querySelectorAll('.reveal, .node').forEach(function(el){ el.classList.add('in'); });
-        return;
+      } else {
+        var io = new IntersectionObserver(function(entries){
+          entries.forEach(function(e){
+            if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+          });
+        }, { threshold: 0.25 });
+        document.querySelectorAll('.reveal, .node').forEach(function(el){ io.observe(el); });
       }
-      var io = new IntersectionObserver(function(entries){
-        entries.forEach(function(e){
-          if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+
+      /* ---- collapsible step nodes (real Zapier-style expand/collapse) ---- */
+      document.querySelectorAll('.step .head').forEach(function(head){
+        var body = document.getElementById(head.getAttribute('aria-controls'));
+        if(!body) return;
+        head.addEventListener('click', function(){
+          var open = head.getAttribute('aria-expanded') === 'true';
+          head.setAttribute('aria-expanded', String(!open));
+          if(open){
+            body.hidden = true;
+          } else {
+            body.hidden = false;
+            if(!reduce){
+              body.classList.remove('animating');
+              void body.offsetWidth; /* reflow so the animation re-fires */
+              body.classList.add('animating');
+            }
+          }
         });
-      }, { threshold: 0.25 });
-      document.querySelectorAll('.reveal, .node').forEach(function(el){ io.observe(el); });
+      });
+
+      /* ---- "+" splice buttons: open the next step and bring it into view ---- */
+      document.querySelectorAll('.add-splice').forEach(function(btn){
+        btn.addEventListener('click', function(){
+          var body = document.getElementById(btn.getAttribute('data-next'));
+          if(!body) return;
+          var step = body.closest('.step');
+          var head = step && step.querySelector('.head');
+          if(head && head.getAttribute('aria-expanded') !== 'true'){ head.click(); }
+          if(head){ head.scrollIntoView({behavior: reduce ? 'auto' : 'smooth', block: 'center'}); }
+        });
+      });
+
+      /* ---- the On/Off toggle: flip the Zap, and re-run the status pills ---- */
+      var toggle = document.getElementById('zapToggle');
+      var pills = Array.prototype.slice.call(document.querySelectorAll('.flow .node'));
+      var rerunTimers = [];
+      function clearReruns(){ rerunTimers.forEach(clearTimeout); rerunTimers = []; }
+
+      function setOn(on){
+        var txt = toggle.querySelector('.livetxt');
+        toggle.setAttribute('aria-pressed', String(on));
+        if(txt) txt.textContent = on ? 'On' : 'Off';
+        clearReruns();
+        if(!on){
+          /* paused: every step drains back to its untested gray state */
+          pills.forEach(function(n){ n.classList.remove('in'); });
+          return;
+        }
+        /* On: re-run the flow, ticking each step to done one at a time */
+        if(reduce){
+          pills.forEach(function(n){ n.classList.add('in'); });
+          return;
+        }
+        pills.forEach(function(n, i){
+          rerunTimers.push(setTimeout(function(){ n.classList.add('in'); }, 130 * i));
+        });
+      }
+      if(toggle){
+        /* IntersectionObserver ticks each step to green as it scrolls in (the existing
+           connector/status whimsy). The toggle then owns re-running that state. */
+        toggle.setAttribute('aria-pressed','true');
+        toggle.addEventListener('click', function(){
+          setOn(toggle.getAttribute('aria-pressed') !== 'true');
+        });
+      }
     })();
   </script>
 </body>
