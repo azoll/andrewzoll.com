@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>Built for Vouch · Andrew Zoll</title>
-  <meta name="description" content="A page Andrew Zoll built for the Vouch team, applying for Senior Software Engineer. A builder who exposes messy domains as deterministic, well-typed, auditable tools that AI agents can trust."/>
+  <title>Certificate of Fit · Andrew Zoll for Vouch</title>
+  <meta name="description" content="Vouch verifies startups before it binds them. Andrew Zoll ran himself through the same check: a candidate page for the Senior Software Engineer role on the AI Pod, built as a certificate where the model reads, code decides, and the verdict is computed."/>
   <meta name="robots" content="noindex, nofollow"/>
   <link rel="icon" href="/assets/favicon-primary.png"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -12,359 +12,371 @@
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
   <style>
     :root{
-      --ink:#0F1C2C; --slate:#263240; --mint:#3BE0AD; --mint-deep:#0E9C73; --purple:#7B2FBE;
-      --body:#3A4654; --muted:#8A99A6; --line:#E2E8E9; --surface:#F4F7F6; --amber:#F2A33C;
+      --paper:#FAF7F0; --card:#FFFDF8; --ink:#14222F; --ink-2:#3D4A56; --body:#46535F;
+      --muted:#8C949C; --line:#E6DFD1; --line-2:#D8CFBC;
+      --coral:#E0533A; --coral-deep:#BC3D26; --bind:#159A72; --bind-deep:#0C7355; --amber:#BD8118;
     }
-    html,body{margin:0;padding:0;background:#fff;color:var(--body);font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;-webkit-font-smoothing:antialiased;}
+    html,body{margin:0;padding:0;background:var(--paper);color:var(--body);font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;-webkit-font-smoothing:antialiased;}
     *{box-sizing:border-box;}
     h1,h2,h3,.serif{font-family:'Fraunces','Iowan Old Style',Georgia,serif;}
+    .mono{font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;}
 
-    .nav{display:flex;justify-content:space-between;align-items:center;padding:18px 26px;border-bottom:1px solid var(--line);background:#fff;position:sticky;top:0;z-index:10;}
+    /* paper grain + faint security guilloche behind everything */
+    body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+      background:
+        repeating-linear-gradient(135deg,rgba(20,34,47,0.018) 0 2px,transparent 2px 9px),
+        radial-gradient(circle at 18% 12%,rgba(224,83,58,0.04),transparent 38%),
+        radial-gradient(circle at 84% 80%,rgba(21,154,114,0.045),transparent 42%);}
+
+    .nav{display:flex;justify-content:space-between;align-items:center;padding:18px 26px;border-bottom:1px solid var(--line);background:rgba(250,247,240,0.86);backdrop-filter:saturate(1.2) blur(6px);position:sticky;top:0;z-index:20;}
     .brand{display:flex;align-items:center;gap:11px;font-family:'Fraunces',serif;font-size:17px;font-weight:600;color:var(--ink);text-decoration:none;letter-spacing:-0.01em;}
-    .brand .mark{width:20px;height:20px;border-radius:6px;background:conic-gradient(from 210deg,var(--mint),var(--purple),var(--ink),var(--mint));display:inline-block;transition:transform .7s cubic-bezier(.2,.7,.3,1.4);position:relative;cursor:pointer;}
-    .brand .mark::after{content:"";position:absolute;inset:5px;border-radius:3px;background:#fff;}
-    .brand:hover .mark{transform:rotate(40deg);}
+    .brand .seal{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--bind);position:relative;display:inline-block;transition:transform .7s cubic-bezier(.2,.7,.3,1.4);cursor:pointer;}
+    .brand .seal::before{content:"";position:absolute;inset:3px;border-radius:50%;border:1px dashed rgba(21,154,114,0.6);}
+    .brand .seal::after{content:"\2713";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:var(--bind);font-size:11px;font-weight:700;}
+    .brand:hover .seal{transform:rotate(120deg);}
     .nav-cta{background:var(--ink);color:#fff !important;padding:9px 18px;border-radius:999px;font-family:'Inter',sans-serif;font-weight:600;font-size:13px;text-decoration:none;transition:transform .15s ease,box-shadow .15s ease;display:inline-flex;align-items:center;gap:9px;}
-    .nav-cta .badge{width:18px;height:18px;border-radius:50%;background:rgba(59,224,173,0.28);display:inline-flex;align-items:center;justify-content:center;font-size:11px;}
-    .nav-cta:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(15,28,44,0.28);}
+    .nav-cta .badge{width:18px;height:18px;border-radius:50%;background:rgba(21,154,114,0.30);display:inline-flex;align-items:center;justify-content:center;font-size:11px;}
+    .nav-cta:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(20,34,47,0.26);}
 
-    .wrap{max-width:920px;margin:0 auto;padding:46px 24px 100px;}
-    .wide{position:relative;left:50%;transform:translateX(-50%);width:min(1120px,calc(100vw - 40px));}
-    .eyebrow{font-size:12px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--mint-deep);margin-bottom:20px;}
+    .wrap{max-width:880px;margin:0 auto;padding:40px 22px 100px;position:relative;z-index:2;}
+    .wide{position:relative;left:50%;transform:translateX(-50%);width:min(1080px,calc(100vw - 36px));}
+    .eyebrow{font-size:12px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--coral-deep);margin-bottom:18px;display:flex;align-items:center;gap:10px;}
+    .eyebrow::after{content:"";flex:1;height:1px;background:var(--line-2);}
 
-    /* signature dark hero panel */
-    .hero{position:relative;border-radius:28px;padding:56px 48px 50px;overflow:hidden;background:linear-gradient(140deg,#16314A,#0A1623 58%,#0F2438);}
-    .hero::before{content:"";position:absolute;top:-130px;right:-90px;width:440px;height:440px;border-radius:50%;background:radial-gradient(circle,rgba(59,224,173,0.30),transparent 64%);pointer-events:none;}
-    .hero::after{content:"";position:absolute;bottom:-150px;left:-100px;width:380px;height:380px;border-radius:50%;background:radial-gradient(circle,rgba(123,47,190,0.22),transparent 66%);pointer-events:none;}
-    .hero #spot{position:absolute;width:520px;height:520px;border-radius:50%;pointer-events:none;background:radial-gradient(circle,rgba(59,224,173,0.10),transparent 62%);transform:translate(-50%,-50%);opacity:0;transition:opacity .5s ease;mix-blend-mode:screen;z-index:1;}
-    .hero .inner{position:relative;z-index:2;text-align:center;}
-    h1{font-size:clamp(34px,5.4vw,58px);font-weight:600;line-height:1.04;letter-spacing:-0.018em;margin:0 0 24px;color:#fff;}
+    /* ============ the certificate ============ */
+    .cert{position:relative;background:var(--card);border:1px solid var(--line-2);border-radius:6px;padding:8px;box-shadow:0 30px 60px -38px rgba(20,34,47,0.45);}
+    .cert::before{content:"";position:absolute;inset:8px;border:1.5px solid var(--line-2);border-radius:3px;pointer-events:none;}
+    .cert .corner{position:absolute;width:16px;height:16px;border:2px solid var(--coral);opacity:.55;}
+    .cert .corner.tl{top:14px;left:14px;border-right:0;border-bottom:0;}
+    .cert .corner.tr{top:14px;right:14px;border-left:0;border-bottom:0;}
+    .cert .corner.bl{bottom:14px;left:14px;border-right:0;border-top:0;}
+    .cert .corner.br{bottom:14px;right:14px;border-left:0;border-top:0;}
+    .cert .pad{position:relative;padding:42px 44px 40px;}
+    .cert .watermark{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;overflow:hidden;}
+    .cert .watermark span{font-family:'Fraunces',serif;font-weight:700;font-size:clamp(70px,16vw,150px);color:rgba(20,34,47,0.035);transform:rotate(-9deg);letter-spacing:-.03em;white-space:nowrap;}
 
-    /* animated word-emblem: one scene per verb */
-    .emblem{position:relative;width:188px;height:150px;margin:0 auto 16px;}
-    .emblem .home{position:absolute;top:50%;left:50%;width:50px;height:50px;margin:-25px 0 0 -25px;border-radius:13px;border:2px solid rgba(59,224,173,0.92);box-shadow:0 0 22px rgba(59,224,173,0.18);z-index:1;transition:opacity .34s ease,transform .46s cubic-bezier(.2,.8,.3,1.25);}
-    .emblem.busy .home{opacity:0;transform:scale(1.5);}
-    .emblem .scene{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0;transform:scale(0);transform-origin:center;z-index:2;transition:opacity .42s ease,transform .5s cubic-bezier(.2,.8,.3,1.25);}
-    .emblem .scene.in{opacity:1;transform:scale(1);}
-    .emblem .scene svg{width:148px;height:148px;overflow:visible;}
-    .emblem .bar,.emblem .node,.emblem .ring,.emblem .chk{transform-box:fill-box;transform-origin:center;}
-    /* build: mint cube bob */
-    .scene[data-verb="build"].in svg{animation:bob 3.4s ease-in-out infinite;}
-    @keyframes bob{0%,100%{transform:translateY(0) rotate(0deg);}50%{transform:translateY(-6px) rotate(4deg);}}
-    /* type: bracket pulse */
-    .scene[data-verb="type"].in .node{animation:nodepulse 1.7s ease-in-out infinite;}
-    .scene[data-verb="type"].in .node:nth-child(3){animation-delay:.25s;}
-    @keyframes nodepulse{0%,100%{opacity:.5;transform:scale(.82);}50%{opacity:1;transform:scale(1.1);}}
-    /* audit: checkmark draw + rings */
-    .scene[data-verb="audit"].in .ring{animation:radiate 1.9s ease-out infinite;}
-    .scene[data-verb="audit"].in .ring:nth-child(2){animation-delay:.95s;}
-    @keyframes radiate{0%{opacity:.7;transform:scale(.45);}100%{opacity:0;transform:scale(1.3);}}
-    /* ship: equalizer */
-    .scene[data-verb="ship"].in .bar{animation:eq 1.05s ease-in-out infinite;}
-    .scene[data-verb="ship"].in .bar:nth-child(2){animation-delay:.08s;}
-    .scene[data-verb="ship"].in .bar:nth-child(3){animation-delay:.16s;}
-    .scene[data-verb="ship"].in .bar:nth-child(4){animation-delay:.30s;}
-    .scene[data-verb="ship"].in .bar:nth-child(5){animation-delay:.18s;}
-    @keyframes eq{0%,100%{transform:scaleY(.28);}50%{transform:scaleY(1);}}
+    .cert-head{display:flex;justify-content:space-between;align-items:flex-start;gap:18px;flex-wrap:wrap;position:relative;z-index:1;border-bottom:1px dashed var(--line-2);padding-bottom:18px;margin-bottom:24px;}
+    .cert-head .t{font-family:'Fraunces',serif;font-size:14px;font-weight:600;color:var(--ink);letter-spacing:.02em;}
+    .cert-head .meta{font-size:11.5px;color:var(--muted);margin-top:3px;}
+    .cert-head .form{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-align:right;}
+    .cert-head .form b{color:var(--ink-2);}
 
-    .rot{display:inline-block;position:relative;}
-    .rot .word{display:inline-block;white-space:nowrap;text-transform:capitalize;opacity:1;background:linear-gradient(95deg,#7BF0CE,#27C698);-webkit-background-clip:text;background-clip:text;color:transparent;transition:opacity .24s ease,transform .24s ease;font-style:italic;}
-    .rot .word.out{opacity:0;transform:translateY(-0.42em);}
-    .rot .word.pre{opacity:0;transform:translateY(0.42em);transition:none;}
-    .lead{font-size:20px;line-height:1.55;color:#CFDBE4;margin:0 auto 16px;max-width:680px;font-family:'Inter',sans-serif;}
-    .lead b{color:#fff;font-weight:600;}
-    .subnote{font-size:13.5px;color:#7E93A3;margin:0 auto;max-width:680px;}
+    .fields{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr;gap:14px 30px;margin-bottom:26px;}
+    .field{border-bottom:1px solid var(--line);padding-bottom:9px;}
+    .field .k{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:5px;}
+    .field .v{font-size:15.5px;color:var(--ink);font-weight:600;}
+    .field .v.mono{font-size:14px;}
 
-    section h2{font-family:'Inter',sans-serif;font-size:13px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--mint-deep);margin:58px 0 18px;padding-bottom:10px;border-bottom:1px solid var(--line);position:relative;}
-    section h2::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--mint);margin-right:10px;vertical-align:middle;transform:translateY(-2px);box-shadow:0 0 0 0 rgba(59,224,173,0.5);animation:hpulse 2.6s ease-out infinite;}
-    @keyframes hpulse{0%{box-shadow:0 0 0 0 rgba(59,224,173,0.5);}70%{box-shadow:0 0 0 8px rgba(59,224,173,0);}100%{box-shadow:0 0 0 0 rgba(59,224,173,0);}}
-    section p{font-size:18px;line-height:1.6;color:var(--body);margin:0 0 16px;}
-    section p b{color:var(--ink);}
+    h1{font-size:clamp(30px,4.6vw,46px);font-weight:600;line-height:1.08;letter-spacing:-0.018em;margin:6px 0 18px;color:var(--ink);position:relative;z-index:1;}
+    h1 em{font-style:italic;color:var(--coral-deep);}
+    .lead{font-size:18.5px;line-height:1.6;color:var(--body);margin:0 0 14px;max-width:680px;position:relative;z-index:1;}
+    .lead b{color:var(--ink);font-weight:600;}
+    .subnote{font-size:13px;color:var(--muted);margin:18px 0 0;position:relative;z-index:1;max-width:660px;}
 
-    /* JD map */
-    .map{counter-reset:jd;}
-    .map .row{display:flex;gap:14px;padding:18px 0;border-bottom:1px solid var(--line);counter-increment:jd;position:relative;overflow:hidden;}
-    .map .row:last-child{border-bottom:0;}
-    .map .check{flex-shrink:0;margin-top:2px;display:inline-block;transition:transform .45s cubic-bezier(.2,.7,.3,1.4);transform:scale(0);}
-    .map .row.in .check{transform:scale(1);}
-    .map .check svg{width:22px;height:22px;display:block;overflow:visible;}
-    .map .check circle{fill:rgba(59,224,173,0.14);}
-    .map .check path{stroke:var(--mint-deep);stroke-width:2.6;fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:32;stroke-dashoffset:32;transition:stroke-dashoffset .55s ease .14s;}
-    .map .row.in .check path{stroke-dashoffset:0;}
-    .map .body{position:relative;z-index:1;}
-    .map .body .jd{font-size:14px;font-weight:500;color:var(--mint-deep);margin-bottom:6px;font-style:italic;}
-    .map .body .me{font-size:17px;line-height:1.55;color:var(--ink);}
-    .map .row::after{content:counter(jd,decimal-leading-zero);position:absolute;right:2px;top:50%;transform:translateY(-50%) scale(.8);font-family:'Fraunces',serif;font-weight:600;font-size:54px;line-height:1;color:rgba(15,28,44,0.05);pointer-events:none;letter-spacing:-0.04em;opacity:0;transition:transform .6s cubic-bezier(.2,.7,.3,1.4),opacity .6s ease;z-index:0;}
-    .map .row.in::after{opacity:1;transform:translateY(-50%) scale(1);}
+    /* the BIND stamp */
+    .stamp{position:absolute;top:30px;right:34px;z-index:3;width:150px;height:150px;display:flex;align-items:center;justify-content:center;
+      transform:rotate(-13deg) scale(1.7);opacity:0;transition:transform .5s cubic-bezier(.2,.9,.3,1.5),opacity .3s ease;}
+    .stamp.in{transform:rotate(-13deg) scale(1);opacity:.92;}
+    .stamp .ring{position:absolute;inset:0;border:3px solid var(--bind);border-radius:50%;opacity:.9;}
+    .stamp .ring.inner{inset:9px;border-width:1.5px;border-style:dashed;}
+    .stamp .txt{text-align:center;color:var(--bind-deep);font-family:'Fraunces',serif;}
+    .stamp .txt .ok{font-size:13px;font-weight:700;letter-spacing:.18em;}
+    .stamp .txt .big{font-size:30px;font-weight:700;line-height:.95;letter-spacing:.02em;margin:2px 0;}
+    .stamp .txt .dt{font-size:8.5px;letter-spacing:.1em;color:var(--bind);font-family:ui-monospace,monospace;}
+    .stamp::after{content:"";position:absolute;inset:0;background:radial-gradient(circle,transparent 60%,rgba(250,247,240,0.4) 72%);mix-blend-mode:screen;border-radius:50%;}
+    @media (max-width:720px){ .stamp{position:static;margin:6px auto 4px;transform:rotate(-8deg) scale(1);opacity:.92;} .stamp.in{transform:rotate(-8deg) scale(1);} .cert .pad{padding:30px 24px 30px;} }
 
-    /* stat card */
-    .stat{margin:38px 0 8px;padding:28px 30px;border:1px solid var(--line);border-radius:16px;background:var(--surface);display:flex;align-items:baseline;gap:20px;flex-wrap:wrap;position:relative;}
-    .stat .num{font-family:'Fraunces',serif;font-weight:600;font-size:clamp(40px,7.5vw,62px);line-height:1;letter-spacing:-0.03em;color:var(--ink);font-variant-numeric:tabular-nums;display:flex;align-items:baseline;gap:6px;}
-    .stat .num .arrow{color:var(--mint-deep);font-size:0.55em;}
+    /* section headers */
+    section{position:relative;z-index:2;}
+    section h2{font-family:'Inter',sans-serif;font-size:12.5px;font-weight:700;letter-spacing:0.13em;text-transform:uppercase;color:var(--coral-deep);margin:62px 0 4px;display:flex;align-items:center;gap:11px;}
+    section h2 .n{font-family:ui-monospace,monospace;font-size:11px;color:var(--muted);font-weight:600;}
+    section h2::after{content:"";flex:1;height:1px;background:var(--line-2);}
+    .sec-sub{font-size:14px;color:var(--muted);margin:0 0 22px;max-width:640px;}
+
+    /* the engine pipeline */
+    .pipe{border:1px solid var(--line-2);border-radius:12px;background:linear-gradient(180deg,var(--card),var(--paper));padding:24px 26px 22px;}
+    .pipe-top{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:16px;flex-wrap:wrap;}
+    .pipe .callsig{font-family:ui-monospace,monospace;font-size:13.5px;color:var(--ink);background:var(--card);border:1px solid var(--line-2);border-radius:8px;padding:8px 13px;font-weight:600;}
+    .pipe .callsig .fn{color:var(--coral-deep);}
+    .pipe .callsig .arg{color:var(--bind-deep);}
+    .pipe .verdict-badge{font-family:'Inter',sans-serif;font-weight:700;font-size:12.5px;letter-spacing:0.06em;text-transform:uppercase;padding:8px 15px;border-radius:999px;background:rgba(21,154,114,0.13);color:var(--bind-deep);border:1px solid rgba(21,154,114,0.4);opacity:0;transform:scale(.9);transition:opacity .4s ease,transform .4s cubic-bezier(.2,.8,.3,1.3);white-space:nowrap;}
+    .pipe .verdict-badge.show{opacity:1;transform:scale(1);}
+    .pipe .stages{display:flex;flex-direction:column;}
+    .pipe .stage{display:flex;align-items:flex-start;gap:13px;padding:10px 0;position:relative;}
+    .pipe .stage .dot{flex-shrink:0;width:22px;height:22px;border-radius:50%;border:2px solid var(--line-2);background:var(--card);margin-top:1px;position:relative;transition:border-color .35s ease;}
+    .pipe .stage .dot::after{content:"";position:absolute;inset:4px;border-radius:50%;background:var(--bind);opacity:0;transform:scale(0);transition:opacity .35s ease,transform .35s cubic-bezier(.2,.8,.3,1.4);}
+    .pipe .stage:not(:last-child) .dot::before{content:"";position:absolute;left:50%;top:22px;transform:translateX(-50%);width:2px;height:calc(100% + 20px);background:var(--line-2);transition:background .35s ease;}
+    .pipe .stage.done .dot{border-color:var(--bind-deep);}
+    .pipe .stage.done .dot::after{opacity:1;transform:scale(1);}
+    .pipe .stage.done:not(:last-child) .dot::before{background:var(--bind);}
+    .pipe .stage.active .dot{border-color:var(--bind-deep);box-shadow:0 0 0 4px rgba(21,154,114,0.15);}
+    .pipe .stage .txt{flex:1;min-width:0;}
+    .pipe .stage .lbl{font-size:15px;color:var(--ink);font-weight:600;line-height:1.35;opacity:.5;transition:opacity .35s ease;}
+    .pipe .stage.active .lbl,.pipe .stage.done .lbl{opacity:1;}
+    .pipe .stage .sub{font-family:ui-monospace,monospace;font-size:12px;color:var(--muted);margin-top:3px;}
+    .pipe .stage .who{margin-left:auto;font-size:10.5px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;padding:3px 9px;border-radius:999px;align-self:center;white-space:nowrap;}
+    .pipe .stage .who.ai{background:rgba(224,83,58,0.12);color:var(--coral-deep);}
+    .pipe .stage .who.code{background:rgba(21,154,114,0.15);color:var(--bind-deep);}
+    .anim-cap{font-size:14px;font-style:italic;color:var(--muted);line-height:1.55;margin:16px 0 0;max-width:700px;}
+
+    /* coverage schedule */
+    .sched{border:1px solid var(--line-2);border-radius:12px;overflow:hidden;background:var(--card);}
+    .sched .crow{display:grid;grid-template-columns:64px 1fr 96px;gap:16px;padding:18px 22px;border-bottom:1px solid var(--line);position:relative;align-items:start;}
+    .sched .crow:last-child{border-bottom:0;}
+    .sched .cov{font-family:ui-monospace,monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding-top:3px;}
+    .sched .cov b{display:block;font-size:20px;color:var(--ink);font-family:'Fraunces',serif;letter-spacing:0;margin-top:2px;}
+    .sched .desc .jd{font-size:13px;font-weight:500;color:var(--coral-deep);font-style:italic;margin-bottom:6px;line-height:1.45;}
+    .sched .desc .me{font-size:15.5px;line-height:1.55;color:var(--ink-2);}
+    .sched .desc .me b{color:var(--ink);}
+    .sched .status{justify-self:end;text-align:right;}
+    .sched .pill{display:inline-flex;align-items:center;gap:6px;font-family:'Inter',sans-serif;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--bind-deep);background:rgba(21,154,114,0.12);border:1px solid rgba(21,154,114,0.32);padding:5px 10px;border-radius:999px;opacity:0;transform:translateY(4px);transition:opacity .4s ease,transform .4s ease;}
+    .sched .crow.in .pill{opacity:1;transform:none;}
+    .sched .pill .ck{width:13px;height:13px;}
+    .sched .pill .ck path{stroke:var(--bind-deep);stroke-width:2.6;fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:20;stroke-dashoffset:20;transition:stroke-dashoffset .5s ease .15s;}
+    .sched .crow.in .pill .ck path{stroke-dashoffset:0;}
+    @media (max-width:640px){ .sched .crow{grid-template-columns:1fr;gap:8px;} .sched .status{justify-self:start;} .sched .cov b{display:inline;margin-left:8px;} }
+
+    /* exclusion endorsement */
+    .excl{position:relative;background:var(--card);border:1px solid var(--line-2);border-left:3px solid var(--amber);border-radius:12px;padding:24px 28px;overflow:hidden;}
+    .excl .tag{font-family:'Inter',sans-serif;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--amber);margin-bottom:9px;}
+    .excl p{margin:0;font-size:17px;line-height:1.6;color:var(--body);}
+    .excl p b{color:var(--ink);}
+    .excl .stamp-x{position:absolute;top:-18px;right:14px;font-family:'Fraunces',serif;font-weight:700;font-size:120px;line-height:1;color:rgba(189,129,24,0.10);pointer-events:none;}
+
+    /* loss-ratio stat */
+    .stat{margin:34px 0 8px;padding:26px 30px;border:1px solid var(--line-2);border-radius:14px;background:var(--card);display:flex;align-items:baseline;gap:22px;flex-wrap:wrap;position:relative;overflow:hidden;}
+    .stat .num{font-family:'Fraunces',serif;font-weight:600;font-size:clamp(38px,7vw,58px);line-height:1;letter-spacing:-0.03em;color:var(--ink);font-variant-numeric:tabular-nums;display:flex;align-items:baseline;gap:6px;}
+    .stat .num .arrow{color:var(--bind-deep);font-size:0.5em;}
     .stat .num .fp{font-size:0.3em;font-weight:600;color:var(--body);letter-spacing:0;font-family:'Inter',sans-serif;}
-    .stat .lbl{font-size:15px;line-height:1.45;color:var(--body);max-width:360px;}
+    .stat .lbl{font-size:15px;line-height:1.5;color:var(--body);max-width:380px;}
     .stat .lbl b{color:var(--ink);font-weight:600;}
-    .stat.pulse::after{content:"";position:absolute;inset:-1px;border-radius:16px;border:2px solid var(--mint);opacity:0;animation:ring .75s ease-out;}
-    @keyframes ring{0%{opacity:.5;transform:scale(1);}100%{opacity:0;transform:scale(1.04);}}
 
-    /* receipts */
-    .receipt{border:1px solid var(--line);border-radius:16px;padding:22px 24px;margin:0 0 14px;background:#fff;transition:transform .2s ease,box-shadow .2s ease;position:relative;overflow:hidden;transform-style:preserve-3d;will-change:transform;}
-    .receipt:hover{transform:translateY(-3px);box-shadow:0 16px 38px rgba(15,28,44,0.10);}
-    .receipt::before{content:"";position:absolute;left:0;top:0;height:100%;width:3px;background:var(--mint);opacity:0;border-radius:16px 0 0 16px;transition:opacity .2s ease;}
-    .receipt:hover::before{opacity:.7;}
-    .receipt[data-accent="purple"]::before{background:var(--purple);}
-    .receipt[data-accent="ink"]::before{background:var(--slate);}
-    .receipt .rhead{display:flex;align-items:center;gap:12px;margin-bottom:11px;}
-    .receipt .tag{font-size:11.5px;font-weight:600;letter-spacing:0.07em;text-transform:uppercase;color:var(--mint-deep);}
-    .receipt[data-accent="purple"] .tag{color:#7c43c8;}
-    .receipt[data-accent="ink"] .tag{color:var(--slate);}
+    /* evidence / supporting documents */
+    .receipt{border:1px solid var(--line-2);border-radius:13px;padding:22px 24px;margin:0 0 14px;background:var(--card);transition:transform .2s ease,box-shadow .2s ease;position:relative;overflow:hidden;will-change:transform;}
+    .receipt:hover{transform:translateY(-3px);box-shadow:0 16px 38px -16px rgba(20,34,47,0.22);}
+    .receipt::before{content:"";position:absolute;left:0;top:0;height:100%;width:3px;background:var(--bind);opacity:0;transition:opacity .2s ease;}
+    .receipt:hover::before{opacity:.8;}
+    .receipt[data-accent="coral"]::before{background:var(--coral);}
+    .receipt[data-accent="ink"]::before{background:var(--ink);}
+    .receipt .rhead{display:flex;align-items:center;gap:12px;margin-bottom:10px;flex-wrap:wrap;}
+    .receipt .tag{font-size:11px;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;color:var(--bind-deep);}
+    .receipt[data-accent="coral"] .tag{color:var(--coral-deep);}
+    .receipt[data-accent="ink"] .tag{color:var(--ink-2);}
     .receipt h3{margin:0 0 9px;font-size:22px;color:var(--ink);font-weight:600;letter-spacing:-0.01em;}
     .receipt p{font-size:16px;line-height:1.55;color:var(--body);margin:0 0 12px;}
     .receipt p .nm{font-variant-numeric:tabular-nums;font-weight:600;color:var(--ink);}
-    .receipt a{font-family:'Inter',sans-serif;font-size:13.5px;font-weight:600;color:var(--mint-deep);text-decoration:none;display:inline-flex;align-items:center;gap:7px;}
+    .receipt a{font-family:'Inter',sans-serif;font-size:13.5px;font-weight:600;color:var(--bind-deep);text-decoration:none;display:inline-flex;align-items:center;gap:7px;}
     .receipt a .arr{display:inline-block;transition:transform .15s ease;}
     .receipt a:hover .arr{transform:translateX(4px);}
-    .receipt .chip{margin-left:auto;font-family:'Inter',sans-serif;font-weight:600;font-size:12px;letter-spacing:.01em;padding:5px 11px;border-radius:999px;background:rgba(59,224,173,0.14);color:var(--mint-deep);white-space:nowrap;font-variant-numeric:tabular-nums;}
-    .receipt[data-accent="purple"] .chip{background:rgba(123,47,190,0.13);color:#7c43c8;}
-    .receipt[data-accent="ink"] .chip{background:rgba(38,50,64,0.10);color:var(--slate);}
-
-    /* honest-part callout */
-    .note{position:relative;background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--amber);border-radius:14px;padding:26px 30px 24px;overflow:hidden;}
-    .note p{margin:0;font-size:18px;line-height:1.6;color:var(--body);}
-    .note p b{color:var(--ink);}
-    .note .q{position:absolute;top:-30px;right:16px;font-family:'Fraunces',serif;font-weight:700;font-size:150px;line-height:1;color:rgba(242,163,60,0.14);pointer-events:none;user-select:none;}
-
-    .mark-hl{background:linear-gradient(transparent 62%, rgba(59,224,173,0.42) 0);background-size:0% 100%;background-repeat:no-repeat;background-position:0 0;transition:background-size .85s cubic-bezier(.4,.7,.3,1) .15s;padding:0 1px;font-weight:600;color:var(--ink);}
+    .receipt .chip{margin-left:auto;font-family:'Inter',sans-serif;font-weight:600;font-size:12px;padding:5px 11px;border-radius:999px;background:rgba(21,154,114,0.13);color:var(--bind-deep);white-space:nowrap;font-variant-numeric:tabular-nums;}
+    .receipt[data-accent="coral"] .chip{background:rgba(224,83,58,0.12);color:var(--coral-deep);}
+    .receipt[data-accent="ink"] .chip{background:rgba(20,34,47,0.08);color:var(--ink-2);}
+    .mark-hl{background:linear-gradient(transparent 62%, rgba(21,154,114,0.34) 0);background-size:0% 100%;background-repeat:no-repeat;transition:background-size .85s cubic-bezier(.4,.7,.3,1) .15s;padding:0 1px;font-weight:600;color:var(--ink);}
     .mark-hl.in{background-size:100% 100%;}
 
-    .band{background:var(--ink);border-radius:18px;padding:32px 34px;margin:52px 0 0;position:relative;overflow:hidden;}
-    .band::before{content:"";position:absolute;top:-90px;right:-60px;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(59,224,173,0.22),transparent 64%);pointer-events:none;}
-    .band p{margin:0 0 16px;font-size:19px;color:#CFDBE4;position:relative;z-index:1;}
+    /* bind band */
+    .band{background:var(--ink);border-radius:16px;padding:32px 34px;margin:54px 0 0;position:relative;overflow:hidden;}
+    .band::before{content:"";position:absolute;top:-90px;right:-60px;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(21,154,114,0.26),transparent 64%);pointer-events:none;}
+    .band .seal-line{display:flex;align-items:center;gap:10px;font-family:ui-monospace,monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:rgba(21,154,114,0.9);margin-bottom:14px;position:relative;z-index:1;}
+    .band .seal-line::before{content:"\2713";display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;border:1px solid rgba(21,154,114,0.7);font-size:10px;}
+    .band p{margin:0 0 16px;font-size:19px;color:#D7DEE4;position:relative;z-index:1;}
     .band p strong{color:#fff;}
     .band .links{position:relative;z-index:1;}
-    .band .links a{font-family:'Inter',sans-serif;display:inline-block;margin:0 18px 10px 0;font-weight:600;color:var(--mint);font-size:14.5px;text-decoration:none;border-bottom:1px solid rgba(59,224,173,0.4);transition:opacity .15s ease;}
+    .band .links a{font-family:'Inter',sans-serif;display:inline-block;margin:0 18px 10px 0;font-weight:600;color:#5FD3AC;font-size:14.5px;text-decoration:none;border-bottom:1px solid rgba(21,154,114,0.4);transition:opacity .15s ease;}
     .band .links a:hover{opacity:.7;}
-    .band .cta{font-family:'Inter',sans-serif;background:var(--mint);color:var(--ink) !important;text-decoration:none;padding:13px 14px 13px 24px;font-weight:600;font-size:15px;border-radius:999px;display:inline-flex;align-items:center;gap:11px;margin-top:8px;transition:transform .15s ease,box-shadow .15s ease;position:relative;z-index:1;will-change:transform;}
-    .band .cta .badge{width:24px;height:24px;border-radius:50%;background:rgba(15,28,44,0.16);display:inline-flex;align-items:center;justify-content:center;font-size:13px;}
-    .band .cta:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(59,224,173,0.4);}
+    .band .cta{font-family:'Inter',sans-serif;background:var(--bind);color:#06241a !important;text-decoration:none;padding:13px 14px 13px 24px;font-weight:600;font-size:15px;border-radius:999px;display:inline-flex;align-items:center;gap:11px;margin-top:8px;transition:transform .15s ease,box-shadow .15s ease;position:relative;z-index:1;will-change:transform;}
+    .band .cta .badge{width:24px;height:24px;border-radius:50%;background:rgba(6,36,26,0.18);display:inline-flex;align-items:center;justify-content:center;font-size:13px;}
+    .band .cta:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(21,154,114,0.4);}
 
-    .foot{font-size:13px;color:var(--muted);margin-top:42px;text-align:center;}
-    ::selection{background:rgba(59,224,173,0.32);color:var(--ink);}
+    .foot{font-size:12.5px;color:var(--muted);margin-top:40px;text-align:center;line-height:1.6;}
+    ::selection{background:rgba(21,154,114,0.28);color:var(--ink);}
 
     .reveal{opacity:0;transform:translateY(18px);transition:opacity .65s cubic-bezier(.2,.6,.2,1),transform .65s cubic-bezier(.2,.6,.2,1);}
     .reveal.in{opacity:1;transform:none;}
-    .reveal-words .w{display:inline-block;opacity:0;transform:translateY(20px);transition:opacity .5s cubic-bezier(.2,.7,.3,1),transform .5s cubic-bezier(.2,.7,.3,1);}
-    .reveal-words.in .w{opacity:1;transform:none;}
-
-    /* whimsy */
-    #progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--mint),var(--mint-deep));z-index:30;transition:width .1s linear;}
-    #float{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
-    .fl{position:absolute;width:30px;height:30px;border-radius:8px;background:conic-gradient(from 0deg,var(--mint),transparent 75%);opacity:0.05;animation:drift linear infinite;}
-    @keyframes drift{0%{transform:translateY(22px) rotate(0deg);}50%{transform:translateY(-22px) rotate(40deg);}100%{transform:translateY(22px) rotate(0deg);}}
-    .nav,.wrap{position:relative;z-index:2;}
-    .brand.spin .mark{transform:rotate(720deg) scale(1.1);}
-
-    /* ============ signature: the tool call ============ */
-    .anim-cap{font-size:14px;font-style:italic;color:var(--muted);line-height:1.55;margin:18px 0 0;max-width:700px;}
-    .pipe{border:1px solid var(--line);border-radius:16px;background:linear-gradient(180deg,#fff,var(--surface));padding:26px 26px 24px;}
-    .pipe-top{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:18px;flex-wrap:wrap;}
-    .pipe .callsig{font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;font-size:13.5px;color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:9px;padding:8px 13px;font-weight:600;}
-    .pipe .callsig .fn{color:var(--purple);}
-    .pipe .callsig .arg{color:var(--mint-deep);}
-    .pipe .verdict-badge{font-family:'Inter',sans-serif;font-weight:700;font-size:13px;letter-spacing:0.04em;text-transform:uppercase;padding:8px 15px;border-radius:999px;background:rgba(242,163,60,0.14);color:#C77B16;border:1px solid rgba(242,163,60,0.4);opacity:0;transform:scale(.9);transition:opacity .4s ease,transform .4s cubic-bezier(.2,.8,.3,1.3);white-space:nowrap;}
-    .pipe .verdict-badge.show{opacity:1;transform:scale(1);}
-    .pipe .stages{display:flex;flex-direction:column;gap:0;}
-    .pipe .stage{display:flex;align-items:flex-start;gap:13px;padding:11px 0;position:relative;}
-    .pipe .stage .dot{flex-shrink:0;width:22px;height:22px;border-radius:50%;border:2px solid var(--line);background:#fff;margin-top:1px;position:relative;transition:border-color .35s ease,background .35s ease;}
-    .pipe .stage .dot::after{content:"";position:absolute;inset:4px;border-radius:50%;background:var(--mint);opacity:0;transform:scale(0);transition:opacity .35s ease,transform .35s cubic-bezier(.2,.8,.3,1.4);}
-    .pipe .stage:not(:last-child) .dot::before{content:"";position:absolute;left:50%;top:22px;transform:translateX(-50%);width:2px;height:calc(100% + 22px);background:var(--line);transition:background .35s ease;}
-    .pipe .stage.done .dot{border-color:var(--mint-deep);}
-    .pipe .stage.done .dot::after{opacity:1;transform:scale(1);}
-    .pipe .stage.done:not(:last-child) .dot::before{background:var(--mint);}
-    .pipe .stage.active .dot{border-color:var(--mint-deep);box-shadow:0 0 0 4px rgba(59,224,173,0.16);}
-    .pipe .stage.verdict.done .dot{border-color:#C77B16;}
-    .pipe .stage.verdict.done .dot::after{background:var(--amber);}
-    .pipe .stage .txt{flex:1;min-width:0;}
-    .pipe .stage .lbl{font-size:15.5px;color:var(--ink);font-weight:600;line-height:1.35;opacity:.5;transition:opacity .35s ease;}
-    .pipe .stage.active .lbl,.pipe .stage.done .lbl{opacity:1;}
-    .pipe .stage .sub{font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;font-size:12px;color:var(--muted);margin-top:3px;}
-    .pipe .stage .who{margin-left:auto;font-size:10.5px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;padding:3px 9px;border-radius:999px;align-self:center;white-space:nowrap;}
-    .pipe .stage .who.ai{background:rgba(123,47,190,0.12);color:#7c43c8;}
-    .pipe .stage .who.code{background:rgba(59,224,173,0.16);color:var(--mint-deep);}
-
-    @media (max-width:640px){ .hero{padding:38px 26px 36px;} .wrap{padding:34px 18px 80px;} .pipe .stage .who{display:none;} .map .row::after{display:none;} }
+    #progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--coral),var(--bind));z-index:30;transition:width .1s linear;}
 
     @media (prefers-reduced-motion: reduce){
-      .reveal,.reveal-words .w{opacity:1 !important;transform:none !important;transition:none !important;}
-      .map .check{transform:scale(1) !important;transition:none !important;}
-      .map .check path{stroke-dashoffset:0 !important;}
+      .reveal{opacity:1 !important;transform:none !important;transition:none !important;}
       .receipt{transition:none !important;}
-      #spot,#float,#progress{display:none !important;}
-      .rot .word{transition:none !important;}
-      .emblem .scene,.emblem .home{transition:none !important;}
-      .emblem .scene svg,.emblem .bar,.emblem .node,.emblem .ring{animation:none !important;}
-      .hero::before,.hero::after,section h2::before{animation:none !important;}
-      .map .row::after{opacity:1 !important;transform:translateY(-50%) scale(1) !important;}
+      #progress{display:none !important;}
+      .stamp{opacity:.92 !important;transform:rotate(-13deg) scale(1) !important;transition:none !important;}
+      .sched .crow .pill{opacity:1 !important;transform:none !important;}
+      .sched .crow .pill .ck path{stroke-dashoffset:0 !important;}
       .mark-hl{background-size:100% 100% !important;transition:none !important;}
       .pipe .stage .dot,.pipe .stage .dot::after,.pipe .verdict-badge{transition:none !important;}
+      body::before{display:none;}
     }
   </style>
 </head>
 <body>
   <div id="progress"></div>
-  <div id="float"></div>
   <nav class="nav">
-    <a class="brand" href="https://andrewzoll.com"><span class="mark" id="swirl" title="psst"></span> Andrew Zoll</a>
+    <a class="brand" href="https://andrewzoll.com"><span class="seal" id="seal" title="psst"></span> Andrew Zoll</a>
     <a class="nav-cta" href="mailto:andrew@andrewzoll.com">andrew@andrewzoll.com <span class="badge">&#8599;</span></a>
   </nav>
 
   <div class="wrap">
-    <div class="wide">
-    <p class="eyebrow reveal">Built for the Vouch team</p>
+    <p class="eyebrow reveal">Certificate of Fit &middot; built for Vouch</p>
 
-    <div class="hero reveal">
-      <div id="spot"></div>
-      <div class="inner">
-        <div class="emblem" id="emblem" aria-hidden="true">
-          <div class="home"></div>
-          <div class="scene" data-verb="build"><svg viewBox="0 0 110 110" fill="none" stroke="#3BE0AD" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"><path d="M55 20 86 38 86 72 55 90 24 72 24 38Z"/><path d="M55 20V54M55 54 24 38M55 54 86 38"/></svg></div>
-          <div class="scene" data-verb="type"><svg viewBox="0 0 110 110" fill="none"><path d="M40 30 L24 55 L40 80" stroke="#3BE0AD" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M70 30 L86 55 L70 80" stroke="#3BE0AD" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle class="node" cx="55" cy="44" r="5" fill="#3BE0AD"/><circle class="node" cx="55" cy="66" r="5" fill="#3BE0AD"/></svg></div>
-          <div class="scene" data-verb="audit"><svg viewBox="0 0 110 110" fill="none"><circle class="ring" cx="55" cy="55" r="22" stroke="#3BE0AD" stroke-width="2.4"/><circle class="ring" cx="55" cy="55" r="22" stroke="#3BE0AD" stroke-width="2.4"/><path class="chk" d="M42 56 L51 65 L70 44" stroke="#3BE0AD" stroke-width="3.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-          <div class="scene" data-verb="ship"><svg viewBox="0 0 110 110" fill="none"><circle cx="14" cy="55" r="10" stroke="#3BE0AD" stroke-width="2.4"/><g fill="#3BE0AD"><rect class="bar" x="34" y="44" width="3.8" height="22" rx="1.9"/><rect class="bar" x="43" y="44" width="3.8" height="22" rx="1.9"/><rect class="bar" x="52" y="44" width="3.8" height="22" rx="1.9"/><rect class="bar" x="61" y="44" width="3.8" height="22" rx="1.9"/><rect class="bar" x="70" y="44" width="3.8" height="22" rx="1.9"/></g><circle cx="96" cy="55" r="10" stroke="#3BE0AD" stroke-width="2.4"/></svg></div>
+    <div class="wide">
+    <div class="cert reveal">
+      <span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
+      <div class="pad">
+        <div class="watermark"><span>VERIFIED</span></div>
+
+        <div class="stamp" id="stamp" aria-label="Stamp: OK to bind">
+          <span class="ring"></span><span class="ring inner"></span>
+          <span class="txt"><span class="ok">&#10003; CLEARED TO</span><span class="big">BIND</span><span class="dt">FORM&nbsp;AZ&middot;SWE&middot;AI-POD</span></span>
         </div>
-        <h1>Tools an agent can <span class="rot" data-rot aria-label="build, type, audit, and ship tools an agent can trust"><span class="word">trust</span></span>.<br>That's the platform role.</h1>
-        <p class="lead reveal-words" style="transition-delay:.1s">I'm Andrew Zoll. Your AI Pod needs someone to expose Vouch's domain operations as deterministic, well-typed, auditable tools, for both autonomous agents and the humans building skills on top. I've spent the last year building exactly that pattern: the model reads, code decides, and every verdict is reproducible. <b>This page is that pattern, pointed at your stack.</b></p>
-        <p class="subnote reveal" style="transition-delay:.18s">A candidate's pitch for your Senior Software Engineer role, built in your design language on purpose. Not affiliated with Vouch. Just me, showing the work.</p>
+
+        <div class="cert-head">
+          <div>
+            <div class="t">Candidate Coverage Certificate</div>
+            <div class="meta">Issued by the candidate. Not affiliated with Vouch. Just the work, shown.</div>
+          </div>
+          <div class="form">Form <b>AZ-01</b><br>Policy <b>SWE&middot;AI-POD</b></div>
+        </div>
+
+        <div class="fields">
+          <div class="field"><div class="k">Policyholder</div><div class="v">Andrew Zoll</div></div>
+          <div class="field"><div class="k">Coverage applied for</div><div class="v">Senior Software Engineer, AI Pod</div></div>
+          <div class="field"><div class="k">Underwriter</div><div class="v">The Vouch hiring team</div></div>
+          <div class="field"><div class="k">Method</div><div class="v mono">model reads &middot; code decides</div></div>
+        </div>
+
+        <h1>Vouch verifies startups before it binds them.<br>So I ran myself through <em>the same check.</em></h1>
+        <p class="lead">Your AI Pod needs someone who can take a messy operational domain, insurance certificates, broker workflows, binding rules, and expose it as deterministic, well-typed, auditable tools that agents and humans can both trust. I spent the last year building exactly that pattern, and I built a working COI checker, your literal problem, to prove it. <b>This page is that engine, turned around and pointed at my own fit.</b></p>
+        <p class="subnote">Every line below is a real coverage check: a claim from your job description, matched to something I have actually shipped, marked bound only where the evidence holds. The one place it does not, I wrote in as an exclusion.</p>
       </div>
     </div>
     </div>
 
     <section>
-      <h2 class="reveal">A tool call, the way it should work</h2>
+      <h2 class="reveal"><span class="n">01</span> How the verdict gets computed</h2>
+      <p class="sec-sub reveal">The same split I built for Certificates of Insurance, applied to a candidate. Watch a tool call resolve.</p>
       <div class="wide">
-      <div class="pipe reveal" aria-label="Animation: an agent calls a check_coi tool. A typed contract validates the input, the AI model extracts the fields, and a pure deterministic rules engine renders the verdict. The model reads, code decides, and the result carries an audit trail.">
+      <div class="pipe reveal" aria-label="Animation: an agent calls bind_check on a candidate. A typed contract validates the input, the model extracts the record, a pure deterministic rules engine renders the verdict, and the result returns with an audit trail. The model reads, code decides.">
         <div class="pipe-top">
-          <div class="callsig"><span class="fn">check_coi</span>(<span class="arg">pdf</span>, <span class="arg">requirements</span>)</div>
-          <div class="verdict-badge" id="vbadge">Do not bind</div>
+          <div class="callsig"><span class="fn">bind_check</span>(<span class="arg">candidate</span>, <span class="arg">role</span>)</div>
+          <div class="verdict-badge" id="vbadge">&#10003; OK to bind</div>
         </div>
         <div class="stages" id="stages">
-          <div class="stage" data-i="0"><div class="dot"></div><div class="txt"><div class="lbl">Agent calls the tool</div><div class="sub">one inbound tool call</div></div><span class="who code">interface</span></div>
-          <div class="stage" data-i="1"><div class="dot"></div><div class="txt"><div class="lbl">Zod contract validates the input</div><div class="sub">well-bounded, typed, normalized</div></div><span class="who code">code</span></div>
-          <div class="stage" data-i="2"><div class="dot"></div><div class="txt"><div class="lbl">Model extracts the fields at temperature 0</div><div class="sub">every field nullable, no guessing</div></div><span class="who ai">ai</span></div>
-          <div class="stage" data-i="3"><div class="dot"></div><div class="txt"><div class="lbl">Pure rules engine renders the verdict</div><div class="sub">no AI, no I/O, reproducible</div></div><span class="who code">code</span></div>
-          <div class="stage verdict" data-i="4"><div class="dot"></div><div class="txt"><div class="lbl">Returns a verdict with an audit trail</div><div class="sub">workers' comp expired · computed, not generated</div></div><span class="who code">code</span></div>
+          <div class="stage" data-i="0"><div class="dot"></div><div class="txt"><div class="lbl">An agent calls the tool</div><div class="sub">one inbound, typed tool call</div></div><span class="who code">interface</span></div>
+          <div class="stage" data-i="1"><div class="dot"></div><div class="txt"><div class="lbl">A Zod contract validates the input</div><div class="sub">well-bounded, normalized, no surprises</div></div><span class="who code">code</span></div>
+          <div class="stage" data-i="2"><div class="dot"></div><div class="txt"><div class="lbl">The model extracts the record at temperature 0</div><div class="sub">every field nullable, no guessing</div></div><span class="who ai">ai</span></div>
+          <div class="stage" data-i="3"><div class="dot"></div><div class="txt"><div class="lbl">A pure rules engine renders the verdict</div><div class="sub">no AI, no I/O, reproducible</div></div><span class="who code">code</span></div>
+          <div class="stage verdict" data-i="4"><div class="dot"></div><div class="txt"><div class="lbl">Returns a verdict with an audit trail</div><div class="sub">cleared to bind &middot; computed, not generated</div></div><span class="who code">code</span></div>
         </div>
       </div>
       </div>
-      <p class="anim-cap">The model never decides whether a certificate binds. It reads. A deterministic engine renders the verdict, so an agent can never hallucinate an "okay to bind," and every answer can prove why. That split, fuzzy extraction wrapped in a hard contract, is how you make a domain safe for agents to touch.</p>
+      <p class="anim-cap">The model never decides whether something binds. It reads. A deterministic engine renders the verdict, so an agent can never hallucinate an "okay to bind," and every answer can prove why. That split, fuzzy extraction wrapped in a hard contract, is how you make a domain like insurance safe for agents to touch.</p>
     </section>
 
     <section>
-      <h2 class="reveal">What your JD asks for, line by line</h2>
-      <div class="map">
-        <div class="row reveal">
-          <div class="check"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11"/><path d="M6 12.5 L10.5 17 L18 7.5"/></svg></div>
-          <div class="body">
+      <h2 class="reveal"><span class="n">02</span> Schedule of coverage</h2>
+      <p class="sec-sub reveal">Your job description, line by line, as binding coverage. Each line is marked bound only where I have shipped the real thing.</p>
+      <div class="sched">
+        <div class="crow reveal">
+          <div class="cov">Coverage<b>A</b></div>
+          <div class="desc">
             <div class="jd">"Expose domain operations as deterministic, well-typed, auditable tools for both autonomous AI agents and human-built skills"</div>
-            <div class="me">This is the thing I build. COI Check reads an insurance certificate with a model, then a pure rules engine renders the pass or fail. I wrapped it as an MCP server so an agent calls <b>check_coi</b>, gets a Zod-typed result, and the verdict is computed, never generated. <span class="mark-hl">The model reads, code decides.</span></div>
+            <div class="me">This is the thing I build. My COI checker reads an insurance certificate with a model, then a pure rules engine renders the pass or fail. I wrapped it as an MCP server, so an agent calls <b>check_coi</b>, gets a Zod-typed result, and the verdict is computed, never generated. <span class="mark-hl">The model reads, code decides.</span></div>
           </div>
+          <div class="status"><span class="pill"><svg class="ck" viewBox="0 0 24 24"><path d="M5 12.5 L10 17.5 L19 6.5"/></svg>Bound</span></div>
         </div>
-        <div class="row reveal">
-          <div class="check"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11"/><path d="M6 12.5 L10.5 17 L18 7.5"/></svg></div>
-          <div class="body">
-            <div class="jd">"Implement reliable tool and data-access primitives: well-bounded interfaces, normalized data contracts, auth/permissions, observability, and eval harness"</div>
-            <div class="me">Every one of those, shipped. Zod-bounded contracts on the tools, a committed eval harness that scores extraction field by field before anything ships, per-tenant auth and feature flags in FieldCommand, and structured traces through my agent pipelines. <span class="mark-hl">I build the eval harness first, not last.</span></div>
+        <div class="crow reveal">
+          <div class="cov">Coverage<b>B</b></div>
+          <div class="desc">
+            <div class="jd">"Reliable tool and data-access primitives: well-bounded interfaces, normalized data contracts, auth and permissions, observability, and an eval harness"</div>
+            <div class="me">Every one of those, shipped. Zod-bounded tool contracts, a committed eval harness that scores extraction field by field before anything ships, per-tenant auth and feature flags in FieldCommand, and structured traces through my agent pipelines. <span class="mark-hl">I build the eval harness first, not last.</span></div>
           </div>
+          <div class="status"><span class="pill"><svg class="ck" viewBox="0 0 24 24"><path d="M5 12.5 L10 17.5 L19 6.5"/></svg>Bound</span></div>
         </div>
-        <div class="row reveal">
-          <div class="check"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11"/><path d="M6 12.5 L10.5 17 L18 7.5"/></svg></div>
-          <div class="body">
-            <div class="jd">"Design APIs, event flows, and service contracts that let agents and human workflows interact with operational systems without becoming brittle"</div>
-            <div class="me">FieldCommand is a multi-tenant B2B SaaS I built solo, <span class="nm" data-countup data-from="0" data-to="187745">187,745</span> lines of TypeScript, with a two-tier model router and three providers wired behind one interface so swapping a model never touches a call site. Contracts that absorb change are the whole point.</div>
+        <div class="crow reveal">
+          <div class="cov">Coverage<b>C</b></div>
+          <div class="desc">
+            <div class="jd">"Design APIs, event flows, and service contracts that let agents and human workflows touch operational systems without becoming brittle"</div>
+            <div class="me">FieldCommand is a multi-tenant B2B SaaS I built solo, <span class="nm" data-countup data-from="0" data-to="187745">187,745</span> lines of TypeScript, with a two-tier model router and three providers wired behind one interface, so swapping a model never touches a call site. Contracts that absorb change are the whole point.</div>
           </div>
+          <div class="status"><span class="pill"><svg class="ck" viewBox="0 0 24 24"><path d="M5 12.5 L10 17.5 L19 6.5"/></svg>Bound</span></div>
         </div>
-        <div class="row reveal">
-          <div class="check"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11"/><path d="M6 12.5 L10.5 17 L18 7.5"/></svg></div>
-          <div class="body">
+        <div class="crow reveal">
+          <div class="cov">Coverage<b>D</b></div>
+          <div class="desc">
             <div class="jd">"Evolve the experience surfaces brokers and clients use every day: component library, AI-assisted prototyping, design to engineering collaboration"</div>
-            <div class="me">I ship the frontend too. The page you're reading is AI-assisted prototyping in your own design language. The COI scanner is a working React surface where a broker marks a field wrong and that correction teaches the next extraction without a redeploy.</div>
+            <div class="me">I ship the frontend too. The certificate you are reading is AI-assisted prototyping. My COI scanner is a working React surface where a broker marks a field wrong and that correction teaches the next extraction, no redeploy.</div>
           </div>
+          <div class="status"><span class="pill"><svg class="ck" viewBox="0 0 24 24"><path d="M5 12.5 L10 17.5 L19 6.5"/></svg>Bound</span></div>
         </div>
-        <div class="row reveal">
-          <div class="check"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11"/><path d="M6 12.5 L10.5 17 L18 7.5"/></svg></div>
-          <div class="body">
-            <div class="jd">"Contribute to AI-enabled workflows and agent infrastructure, ensuring systems remain predictable, auditable, and production-ready"</div>
+        <div class="crow reveal">
+          <div class="cov">Coverage<b>E</b></div>
+          <div class="desc">
+            <div class="jd">"Contribute to AI-enabled workflows and agent infrastructure, keeping systems predictable, auditable, and production-ready"</div>
             <div class="me">I run an agent operating system across two businesses: builder, reviewer, and validator triads where a validator grades the builder and blocks bad output before it ships, plus a determinism layer where code computes and verifies while the agent only extracts and judges.</div>
           </div>
+          <div class="status"><span class="pill"><svg class="ck" viewBox="0 0 24 24"><path d="M5 12.5 L10 17.5 L19 6.5"/></svg>Bound</span></div>
         </div>
-        <div class="row reveal">
-          <div class="check"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="11"/><path d="M6 12.5 L10.5 17 L18 7.5"/></svg></div>
-          <div class="body">
-            <div class="jd">"Experience with LLM agent frameworks or tool-calling patterns: MCP, Anthropic SDK, or equivalents"</div>
+        <div class="crow reveal">
+          <div class="cov">Coverage<b>F</b></div>
+          <div class="desc">
+            <div class="jd">"Experience with LLM agent frameworks or tool-calling patterns: MCP, the Anthropic SDK, or equivalents"</div>
             <div class="me">I ship MCP. Veritas distributes as an MCP server you run inside Claude, and I wrapped the COI checker as an MCP tool for this application. <span class="mark-hl">The Anthropic SDK is in my daily work.</span></div>
           </div>
+          <div class="status"><span class="pill"><svg class="ck" viewBox="0 0 24 24"><path d="M5 12.5 L10 17.5 L19 6.5"/></svg>Bound</span></div>
         </div>
       </div>
     </section>
 
-    <div class="stat reveal" data-countdown data-from="30" data-to="5">
-      <div class="num">30%<span class="arrow">&rarr;</span><span class="val">5</span>%<span class="fp">FP</span></div>
-      <div class="lbl">I drove the false-positive rate on Veritas, my AI claim verifier, from about 30% to <b>under 5%</b> by reading failures one at a time against an eval harness. Auditable beats clever. That discipline is how you keep a tool trustworthy once an agent is calling it unattended.</div>
-    </div>
+    <section>
+      <h2 class="reveal"><span class="n">03</span> Stated exclusions</h2>
+      <p class="sec-sub reveal">The part a good certificate always names out loud.</p>
+      <div class="excl reveal">
+        <span class="stamp-x" aria-hidden="true">!</span>
+        <div class="tag">Endorsement &middot; excluded coverage</div>
+        <p>Your nice-to-haves list Salesforce development, Apex and LWC and platform events, and I have not shipped on that platform. What I have done many times is wire heterogeneous systems behind one clean contract, which is what this role actually asks for. Salesforce becomes one more source behind the same typed interface. <span class="mark-hl">The hard part, making a messy domain safe for an agent to call, is the part I already do every day.</span></p>
+      </div>
+    </section>
 
     <section>
-      <h2 class="reveal">What I've shipped this way</h2>
+      <h2 class="reveal"><span class="n">04</span> Supporting evidence</h2>
+      <p class="sec-sub reveal">The documents the bind is underwritten on. All live, all mine.</p>
 
-      <div class="receipt reveal">
-        <div class="rhead">
-          <span class="tag">An auditable tool, now agent-callable</span>
-          <span class="chip">AI reads &middot; code decides</span>
-        </div>
+      <div class="stat reveal" data-countdown data-from="30" data-to="5">
+        <div class="num">30%<span class="arrow">&rarr;</span><span class="val">5</span>%<span class="fp">FP</span></div>
+        <div class="lbl">I drove the false-positive rate on Veritas, my AI claim verifier, from about 30% to <b>under 5%</b> by reading failures one at a time against an eval harness. Auditable beats clever. That is how you keep a tool trustworthy once an agent is calling it unattended.</div>
+      </div>
+
+      <div class="receipt reveal" data-accent="coral">
+        <div class="rhead"><span class="tag">A working sketch of your exact problem</span><span class="chip">AI reads &middot; code decides</span></div>
         <h3>COI Check</h3>
-        <p>Reads a Certificate of Insurance, extracts it into a Zod-typed structure, and a pure deterministic rules engine renders the pass or fail. The model cannot invent coverage that is not on the page. There is a live extraction-accuracy dashboard, a corrections feedback loop, and an MCP server that exposes it as a tool an agent can call. Built as a working sketch of your exact problem.</p>
+        <p>Reads a Certificate of Insurance, extracts it into a Zod-typed structure, and a pure deterministic rules engine renders the pass or fail. The model cannot invent coverage that is not on the page. Live extraction-accuracy dashboard, a corrections feedback loop, and an MCP server that exposes it as a tool an agent can call. I built this specifically because it is the shape of your work.</p>
         <a href="https://vouch.andrewzoll.com">vouch.andrewzoll.com <span class="arr">&rarr;</span></a>
       </div>
 
-      <div class="receipt reveal" data-accent="purple">
-        <div class="rhead">
-          <span class="tag">Production AI verifier</span>
-          <span class="chip">~30% &rarr; &lt;5% FP</span>
-        </div>
+      <div class="receipt reveal">
+        <div class="rhead"><span class="tag">Production AI verifier</span><span class="chip">~30% &rarr; &lt;5% FP</span></div>
         <h3>Veritas</h3>
         <p>Live at veritaslaw.app. Reads a claim, retrieves the source, returns a structured verdict on whether it holds up, with a confidence cap. Zod schemas, prompt caching, cost caps, and an MCP distribution. False-positive rate driven from roughly 30% to under 5% by empirical failure analysis.</p>
         <a href="https://veritaslaw.app">veritaslaw.app <span class="arr">&rarr;</span></a>
       </div>
 
       <div class="receipt reveal" data-accent="ink">
-        <div class="rhead">
-          <span class="tag">Multi-tenant B2B SaaS, built solo</span>
-          <span class="chip">187,745 lines</span>
-        </div>
+        <div class="rhead"><span class="tag">Multi-tenant B2B SaaS, built solo</span><span class="chip">187,745 lines</span></div>
         <h3>FieldCommand</h3>
-        <p>A production CRM, <span class="nm" data-countup data-from="0" data-to="187745">187,745</span> lines of TypeScript on Postgres, built solo. Four AI features live behind per-tenant feature flags, a two-tier model router that sends cheap work to a cheap model, three providers wired behind one interface. Real customers, real data contracts.</p>
+        <p>A production CRM, <span class="nm" data-countup data-from="0" data-to="187745">187,745</span> lines of TypeScript on Postgres, built solo. Four AI features live behind per-tenant feature flags, a two-tier model router that sends cheap work to a cheap model, three providers behind one interface. Real customers, real data contracts.</p>
         <a href="https://app.fieldcommand.io">app.fieldcommand.io <span class="arr">&rarr;</span></a>
       </div>
 
       <div class="receipt reveal">
-        <div class="rhead">
-          <span class="tag">Agent infrastructure, in daily use</span>
-          <span class="chip">build &middot; review &middot; validate</span>
-        </div>
+        <div class="rhead"><span class="tag">Agent infrastructure, in daily use</span><span class="chip">build &middot; review &middot; validate</span></div>
         <h3>AndrewOS</h3>
         <p>An agent operating system I run across two businesses. Builder, reviewer, and validator triads where the validator grades the builder and blocks before anything ships, a determinism layer that gates irreversible actions behind code rather than prompts, and human gates on top. Predictable, auditable agents, the boring way.</p>
       </div>
     </section>
 
-    <section>
-      <h2 class="reveal">The honest part</h2>
-      <div class="note reveal">
-        <span class="q" aria-hidden="true">&ldquo;</span>
-        <p>Your nice-to-haves list Salesforce development, Apex and LWC and platform events, and I have not shipped on that platform. What I have done many times is wire heterogeneous systems behind one clean contract, which is what this role actually asks for. Salesforce becomes one more source behind the same typed interface. <span class="mark-hl">The hard part, making a messy domain safe for an agent to call, is the part I already do every day.</span></p>
-      </div>
-    </section>
-
     <div class="band reveal">
-      <p><strong>If this resonates, I'd love to talk.</strong> Reply wherever I sent you this link, or reach me directly. I can walk the COI tool and its MCP server end to end whenever works.</p>
+      <div class="seal-line">Cleared to bind &middot; pending one conversation</div>
+      <p><strong>If this resonates, I would love to talk.</strong> Reply wherever I sent you this link, or reach me directly. I can walk the COI tool and its MCP server end to end whenever works.</p>
       <div class="links">
         <a href="https://vouch.andrewzoll.com">COI Check (live)</a>
         <a href="https://veritaslaw.app">Veritas (live)</a>
@@ -374,7 +386,7 @@
       <a class="cta" href="mailto:andrew@andrewzoll.com">andrew@andrewzoll.com <span class="badge">&#8599;</span></a>
     </div>
 
-    <p class="foot reveal">Built for Vouch by Andrew Zoll. Private link, not indexed. Just for you.</p>
+    <p class="foot reveal">Certificate of Fit, issued by Andrew Zoll for Vouch. Private link, not indexed. Just for you.</p>
   </div>
 
   <script>
@@ -392,16 +404,15 @@
         function step(ts){
           if(!start) start = ts;
           var p = Math.min(1, (ts - start) / dur);
-          var v = from + (to - from) * ease(p);
-          target.textContent = fmt(v);
-          if(p < 1) requestAnimationFrame(step);
-          else target.textContent = fmt(to);
+          target.textContent = fmt(from + (to - from) * ease(p));
+          if(p < 1) requestAnimationFrame(step); else target.textContent = fmt(to);
         }
         requestAnimationFrame(step);
       }
       if(!('IntersectionObserver' in window) || reduce){
-        document.querySelectorAll('.reveal, .reveal-words, .mark-hl').forEach(function(el){ el.classList.add('in'); });
+        document.querySelectorAll('.reveal, .mark-hl, .sched .crow').forEach(function(el){ el.classList.add('in'); });
         document.querySelectorAll('[data-countup],[data-countdown]').forEach(animateCount);
+        var st = document.getElementById('stamp'); if(st) st.classList.add('in');
         return;
       }
       var io = new IntersectionObserver(function(entries){
@@ -413,182 +424,54 @@
           }
         });
       }, { threshold: 0.2 });
-      document.querySelectorAll('.reveal, .reveal-words, .mark-hl, [data-countup], [data-countdown]').forEach(function(el){ io.observe(el); });
-    })();
-  </script>
+      document.querySelectorAll('.reveal, .mark-hl, .sched .crow, [data-countup], [data-countdown]').forEach(function(el){ io.observe(el); });
 
-  <script>
-    /* ============ whimsy + rotating hero ============ */
-    (function(){
-      var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-      document.querySelectorAll('.reveal-words').forEach(function(h){
-        var nodes = Array.prototype.slice.call(h.childNodes);
-        h.textContent = '';
-        nodes.forEach(function(node){
-          if(node.nodeType === 3){
-            node.textContent.trim().split(/\s+/).forEach(function(w){
-              if(!w) return;
-              var s = document.createElement('span'); s.className = 'w'; s.textContent = w;
-              h.appendChild(s); h.appendChild(document.createTextNode(' '));
-            });
-          } else {
-            node.classList && node.classList.add('w');
-            h.appendChild(node); h.appendChild(document.createTextNode(' '));
-          }
-        });
-        var i = 0;
-        h.querySelectorAll('.w').forEach(function(s){ s.style.transitionDelay = (i++ * 0.03) + 's'; });
-      });
-
-      var rot = document.querySelector('[data-rot]');
-      var emblem = document.getElementById('emblem');
-      var colors = {
-        trust: 'linear-gradient(95deg,#7BF0CE,#27C698)',
-        build: 'linear-gradient(95deg,#7BF0CE,#27C698)',
-        type: 'linear-gradient(95deg,#CFBCFF,#9D78FF)',
-        audit: 'linear-gradient(95deg,#8BF0DA,#34CBA8)',
-        ship: 'linear-gradient(95deg,#A9E8FF,#46C6E0)'
-      };
-      var sceneFor = function(v){ return emblem ? emblem.querySelector('.scene[data-verb="' + v + '"]') : null; };
-      var colorWord = function(el, v){ el.style.backgroundImage = colors[v] || colors.trust; };
-      if(rot && !window.__rotStarted){
-        window.__rotStarted = true;
-        var verbs = ['build','type','audit','ship'];
-        var word = rot.querySelector('.word');
-        var idx = 0;
-        word.textContent = verbs[0]; colorWord(word, verbs[0]);
-        var first = sceneFor(verbs[0]);
-        if(first){
-          if(reduce){ first.classList.add('in'); if(emblem) emblem.classList.add('busy'); }
-          else { setTimeout(function(){ first.classList.add('in'); if(emblem) emblem.classList.add('busy'); }, 80); }
-        }
-        if(!reduce){
-          var swapWord = function(v){
-            word.classList.remove('pre'); word.classList.add('out');
-            setTimeout(function(){
-              word.textContent = v; colorWord(word, v);
-              word.classList.remove('out'); word.classList.add('pre');
-              void word.offsetWidth;
-              setTimeout(function(){ word.classList.remove('pre'); }, 20);
-            }, 220);
-          };
-          setInterval(function(){
-            var cur = sceneFor(verbs[idx]);
-            var nextIdx = (idx + 1) % verbs.length;
-            if(cur) cur.classList.remove('in');
-            if(emblem) emblem.classList.remove('busy');
-            swapWord(verbs[nextIdx]);
-            setTimeout(function(){
-              idx = nextIdx;
-              var nx = sceneFor(verbs[idx]);
-              if(nx) nx.classList.add('in');
-              if(emblem) emblem.classList.add('busy');
-            }, 780);
-          }, 5000);
-        }
+      /* the bind stamp slams down once the certificate is in view */
+      var stamp = document.getElementById('stamp');
+      if(stamp){
+        var sio = new IntersectionObserver(function(es){
+          es.forEach(function(e){ if(e.isIntersecting){ setTimeout(function(){ stamp.classList.add('in'); }, 650); sio.unobserve(stamp); } });
+        }, { threshold: 0.4 });
+        sio.observe(stamp);
       }
 
-      if(reduce) return;
-      var fine = window.matchMedia('(pointer:fine)').matches;
-
+      /* progress bar */
       var bar = document.getElementById('progress');
       if(bar){
-        var onScroll = function(){
-          var d = document.documentElement, max = d.scrollHeight - d.clientHeight;
-          bar.style.width = (max > 0 ? (d.scrollTop / max * 100) : 0) + '%';
-        };
+        var onScroll = function(){ var d = document.documentElement, max = d.scrollHeight - d.clientHeight; bar.style.width = (max > 0 ? (d.scrollTop / max * 100) : 0) + '%'; };
         window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
       }
 
-      var spot = document.getElementById('spot'), hero = document.querySelector('.hero');
-      if(spot && hero && fine){
-        hero.addEventListener('mousemove', function(e){
-          var r = hero.getBoundingClientRect();
-          spot.style.left = (e.clientX - r.left) + 'px'; spot.style.top = (e.clientY - r.top) + 'px'; spot.style.opacity = '1';
-        }, { passive: true });
-        hero.addEventListener('mouseleave', function(){ spot.style.opacity = '0'; });
-      }
-
-      var fc = document.getElementById('float');
-      if(fc){
-        var L = [8,22,40,62,80,90], T = [14,60,30,75,20,55], D = [17,23,20,26,18,22];
-        for(var i = 0; i < 6; i++){
-          var el = document.createElement('div'); el.className = 'fl';
-          el.style.left = L[i] + '%'; el.style.top = T[i] + '%';
-          el.style.animationDuration = D[i] + 's'; el.style.animationDelay = (-i * 2) + 's';
-          fc.appendChild(el);
-        }
-      }
-
-      document.querySelectorAll('.nav-cta, .band .cta').forEach(function(b){
-        if(!fine) return;
-        b.addEventListener('mousemove', function(e){
-          var r = b.getBoundingClientRect();
-          b.style.transform = 'translate(' + ((e.clientX - r.left - r.width/2) * 0.3) + 'px,' + ((e.clientY - r.top - r.height/2) * 0.5) + 'px)';
-        });
-        b.addEventListener('mouseleave', function(){ b.style.transform = ''; });
-      });
-
-      if(fine){
-        document.querySelectorAll('.receipt').forEach(function(c){
-          c.addEventListener('mousemove', function(e){
-            var r = c.getBoundingClientRect();
-            var px = (e.clientX - r.left) / r.width - 0.5, py = (e.clientY - r.top) / r.height - 0.5;
-            c.style.transform = 'translateY(-3px) perspective(820px) rotateX(' + (-py * 4) + 'deg) rotateY(' + (px * 5) + 'deg)';
-          });
-          c.addEventListener('mouseleave', function(){ c.style.transform = ''; });
-        });
-      }
-
-      document.querySelectorAll('.stat').forEach(function(s){
-        var io = new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ setTimeout(function(){ s.classList.add('pulse'); }, 1150); io.unobserve(s); } }); }, { threshold: 0.4 });
-        io.observe(s);
-      });
-
-      var swirl = document.getElementById('swirl'), brand = document.querySelector('.brand');
-      if(swirl){
-        swirl.addEventListener('click', function(ev){
-          ev.preventDefault();
-          if(brand) brand.classList.add('spin');
-          setTimeout(function(){ if(brand) brand.classList.remove('spin'); }, 800);
-        });
-      }
+      var seal = document.getElementById('seal');
+      if(seal){ seal.addEventListener('click', function(ev){ ev.preventDefault(); seal.style.transform = 'rotate(720deg)'; setTimeout(function(){ seal.style.transform = ''; }, 800); }); }
     })();
   </script>
 
   <script>
-    /* ============ the tool call pipeline ============ */
+    /* the bind_check pipeline */
     (function(){
-      var pipe = document.querySelector('.pipe');
-      if(!pipe) return;
+      var pipe = document.querySelector('.pipe'); if(!pipe) return;
       var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       var stages = Array.prototype.slice.call(pipe.querySelectorAll('.stage'));
       var badge = document.getElementById('vbadge');
-      function clearAll(){ stages.forEach(function(s){ s.classList.remove('active','done'); }); badge.classList.remove('show'); }
       function finalState(){ stages.forEach(function(s){ s.classList.add('done'); }); badge.classList.add('show'); }
       if(reduce){ finalState(); return; }
       var timers = [];
-      function clearT(){ timers.forEach(clearTimeout); timers = []; }
       function run(){
-        clearT(); clearAll();
+        timers.forEach(clearTimeout); timers = [];
+        stages.forEach(function(s){ s.classList.remove('active','done'); }); badge.classList.remove('show');
         var i = 0;
         function step(){
-          if(i > 0) stages[i-1].classList.remove('active'), stages[i-1].classList.add('done');
+          if(i > 0){ stages[i-1].classList.remove('active'); stages[i-1].classList.add('done'); }
           if(i < stages.length){
             stages[i].classList.add('active');
             if(stages[i].classList.contains('verdict')) timers.push(setTimeout(function(){ badge.classList.add('show'); }, 260));
-            i++;
-            timers.push(setTimeout(step, 920));
-          } else {
-            timers.push(setTimeout(function(){ run(); }, 3200));
-          }
+            i++; timers.push(setTimeout(step, 920));
+          } else { timers.push(setTimeout(run, 3400)); }
         }
         timers.push(setTimeout(step, 400));
       }
-      var io = new IntersectionObserver(function(es){
-        es.forEach(function(e){ if(e.isIntersecting){ run(); io.unobserve(pipe); } });
-      }, { threshold: 0.3 });
+      var io = new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting){ run(); io.unobserve(pipe); } }); }, { threshold: 0.3 });
       io.observe(pipe);
     })();
   </script>
