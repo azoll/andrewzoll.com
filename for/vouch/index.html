@@ -79,10 +79,11 @@
     .stamp.in{transform:rotate(-13deg) scale(1);opacity:.92;}
     .stamp .ring{position:absolute;inset:0;border:3px solid var(--bind);border-radius:50%;opacity:.9;}
     .stamp .ring.inner{inset:9px;border-width:1.5px;border-style:dashed;}
-    .stamp .txt{text-align:center;color:var(--bind-deep);font-family:'Fraunces',serif;}
-    .stamp .txt .ok{font-size:13px;font-weight:700;letter-spacing:.18em;}
-    .stamp .txt .big{font-size:30px;font-weight:700;line-height:.95;letter-spacing:.02em;margin:2px 0;}
-    .stamp .txt .dt{font-size:8.5px;letter-spacing:.1em;color:var(--bind);font-family:ui-monospace,monospace;}
+    .stamp .txt{text-align:center;color:var(--bind-deep);font-family:'Fraunces',serif;line-height:1;width:100%;}
+    .stamp .txt span{display:block;}
+    .stamp .txt .ok{font-size:12.5px;font-weight:700;letter-spacing:.16em;text-indent:.16em;}
+    .stamp .txt .big{font-size:30px;font-weight:700;line-height:.95;letter-spacing:.04em;text-indent:.04em;margin:3px 0;}
+    .stamp .txt .dt{font-size:8px;letter-spacing:.1em;text-indent:.1em;color:var(--bind);font-family:ui-monospace,monospace;}
     .stamp::after{content:"";position:absolute;inset:0;background:radial-gradient(circle,transparent 60%,rgba(250,247,240,0.4) 72%);mix-blend-mode:screen;border-radius:50%;}
     @media (max-width:720px){ .stamp{position:static;margin:6px auto 4px;transform:rotate(-8deg) scale(1);opacity:.92;} .stamp.in{transform:rotate(-8deg) scale(1);} .cert .pad{padding:30px 24px 30px;} }
 
@@ -234,7 +235,6 @@
             <div class="t">Candidate Coverage Certificate</div>
             <div class="meta">Issued by the candidate. Not affiliated with Vouch. Just the work, shown.</div>
           </div>
-          <div class="form">Form <b>AZ-01</b><br>Policy <b>SWE&middot;AI-POD</b></div>
         </div>
 
         <div class="fields">
