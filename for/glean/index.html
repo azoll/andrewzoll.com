@@ -1,0 +1,478 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Built for Glean · Andrew Zoll</title>
+  <meta name="description" content="An independent application page Andrew Zoll built for Glean's Founding Forward Deployed Engineer role, laid out as a working knowledge graph that connects each requirement to a shipped system."/>
+  <meta name="robots" content="noindex,nofollow"/>
+  <link rel="icon" href="/assets/favicon-primary.png"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <style>
+    :root{
+      --blue:#343ced; --blue-light:#646bff; --blue-100:#e2e3fb; --blue-300:#9297f4;
+      --midnight:#0a0227; --dark-blue:#05083b; --indigo-900:#050735;
+      --lime:#d8fd49; --neon-blue:#a9e0ff;
+      --bg:#ffffff; --cream:#fbf6f4;
+      --text:#1c1b2e; --body:#3d3d52; --muted:#727287; --line:#e7e6f3; --line-2:#d8d6ec;
+      --mono:'DM Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+      --sans:'Hanken Grotesk','Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+    }
+    *{box-sizing:border-box;}
+    html,body{margin:0;padding:0;background:var(--bg);color:var(--body);font-family:var(--sans);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased;}
+    a{color:inherit;}
+    h1,h2,h3{font-family:var(--sans);font-weight:500;letter-spacing:-0.02em;color:var(--midnight);}
+    ::selection{background:rgba(52,60,237,0.16);color:var(--midnight);}
+
+    /* ---------- top bar ---------- */
+    .bar{position:sticky;top:0;z-index:40;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 26px;background:rgba(255,255,255,0.86);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);}
+    .brand{display:flex;align-items:center;gap:11px;font-weight:600;font-size:15px;color:var(--midnight);text-decoration:none;}
+    .brand .mark{width:22px;height:22px;display:block;flex-shrink:0;}
+    .barcta{font-family:var(--sans);font-weight:500;font-size:14px;color:#fff;background:var(--blue);text-decoration:none;padding:9px 20px;border-radius:4rem;display:inline-flex;align-items:center;gap:8px;transition:transform .16s ease,box-shadow .16s ease,background .16s ease;}
+    .barcta:hover{transform:translateY(-1px);background:var(--blue-light);box-shadow:0 8px 24px rgba(52,60,237,0.28);}
+
+    .wrap{max-width:1080px;margin:0 auto;padding:0 26px;}
+
+    /* ---------- hero: deep-blue band with the live graph ---------- */
+    .hero{background:radial-gradient(1100px 600px at 78% -10%,rgba(100,107,255,0.40),transparent 62%),radial-gradient(800px 520px at 8% 30%,rgba(52,60,237,0.28),transparent 60%),linear-gradient(168deg,var(--midnight),var(--dark-blue) 70%,var(--indigo-900));color:#cfd0ee;position:relative;overflow:hidden;}
+    .hero .wrap{padding-top:54px;padding-bottom:18px;}
+    .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:0.12em;text-transform:uppercase;color:var(--neon-blue);margin:0 0 18px;display:inline-flex;align-items:center;gap:9px;}
+    .eyebrow .pip{width:7px;height:7px;border-radius:50%;background:var(--lime);box-shadow:0 0 0 0 rgba(216,253,73,0.6);animation:pip 2.6s ease-out infinite;}
+    @keyframes pip{0%{box-shadow:0 0 0 0 rgba(216,253,73,0.5);}70%{box-shadow:0 0 0 8px rgba(216,253,73,0);}100%{box-shadow:0 0 0 0 rgba(216,253,73,0);}}
+    .hero h1{font-size:clamp(32px,5vw,52px);line-height:1.07;color:#fff;margin:0 0 18px;max-width:18ch;}
+    .hero h1 .lime{color:var(--lime);}
+    .hero .lead{font-size:clamp(17px,2vw,19px);line-height:1.6;color:#c2c4e6;max-width:60ch;margin:0 0 6px;}
+    .hero .lead b{color:#fff;font-weight:600;}
+
+    /* graph stage */
+    .stage-wrap{margin:30px 0 0;padding-bottom:40px;}
+    .stage-hint{font-family:var(--mono);font-size:12px;color:#8f92c4;margin:0 0 12px;display:flex;align-items:center;gap:8px;}
+    .stage-hint kbd{font-family:var(--mono);font-size:11px;color:var(--neon-blue);border:1px solid rgba(169,224,255,0.3);border-radius:5px;padding:1px 7px;background:rgba(169,224,255,0.06);}
+    .stage{position:relative;width:100%;border:1px solid rgba(146,151,244,0.22);border-radius:24px;background:linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.01));overflow:hidden;}
+    .stage svg{display:block;width:100%;height:auto;}
+    .stage .edge{stroke:rgba(146,151,244,0.30);stroke-width:1.4;fill:none;transition:stroke .3s ease,stroke-width .3s ease;}
+    .stage .edge.lit{stroke:var(--lime);stroke-width:2.2;filter:drop-shadow(0 0 6px rgba(216,253,73,0.5));}
+    .stage .edge.flow{stroke-dasharray:5 7;animation:dash 1.1s linear infinite;}
+    @keyframes dash{to{stroke-dashoffset:-24;}}
+    .gnode{cursor:pointer;}
+    .gnode .halo{fill:transparent;}
+    .gnode .disc{transition:transform .25s cubic-bezier(.2,.8,.3,1.2),fill .25s ease,stroke .25s ease;transform-box:fill-box;transform-origin:center;}
+    .gnode .lbl{font-family:var(--sans);font-weight:500;fill:#dfe0f6;pointer-events:none;}
+    .gnode .sub{font-family:var(--mono);fill:#9396c8;pointer-events:none;}
+    /* requirement (JD) nodes — indigo */
+    .gnode.req .disc{fill:rgba(100,107,255,0.16);stroke:var(--blue-light);stroke-width:1.6;}
+    .gnode.req.active .disc{fill:var(--blue);stroke:#fff;transform:scale(1.12);}
+    .gnode.req.dim .disc{opacity:0.34;}
+    .gnode.req.dim .lbl,.gnode.req.dim .sub{opacity:0.4;}
+    /* receipt nodes — lime when lit */
+    .gnode.rcpt .disc{fill:rgba(255,255,255,0.05);stroke:rgba(146,151,244,0.4);stroke-width:1.4;}
+    .gnode.rcpt.lit .disc{fill:rgba(216,253,73,0.14);stroke:var(--lime);stroke-width:2;transform:scale(1.06);}
+    .gnode.rcpt.lit .lbl{fill:#fff;}
+    .gnode.rcpt.dim .disc{opacity:0.3;}
+    .gnode.rcpt.dim .lbl{opacity:0.4;}
+    .ringpulse{fill:none;stroke:var(--lime);opacity:0;}
+
+    /* detail panel below the graph */
+    .detail{margin:22px 0 0;border:1px solid rgba(146,151,244,0.22);border-radius:18px;background:rgba(255,255,255,0.04);padding:22px 24px;min-height:118px;transition:border-color .3s ease;}
+    .detail .dtag{font-family:var(--mono);font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--neon-blue);margin:0 0 8px;}
+    .detail .jd{font-size:14.5px;line-height:1.5;color:#b7b9e0;font-style:italic;margin:0 0 12px;border-left:2px solid var(--blue-light);padding-left:13px;}
+    .detail .me{font-size:16.5px;line-height:1.62;color:#eef0ff;margin:0;}
+    .detail .me b{color:#fff;font-weight:600;}
+    .detail .me .hl{color:var(--lime);font-weight:600;}
+    .detail .links{margin:14px 0 0;display:flex;flex-wrap:wrap;gap:9px;}
+    .detail .links a{font-family:var(--mono);font-size:12.5px;color:var(--midnight);background:var(--lime);text-decoration:none;padding:6px 13px;border-radius:4rem;display:inline-flex;align-items:center;gap:6px;font-weight:500;transition:transform .15s ease;}
+    .detail .links a:hover{transform:translateX(2px);}
+
+    /* tab rail under the graph: same data, clickable */
+    .rail{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 0;}
+    .rail button{font-family:var(--mono);font-size:12.5px;color:#b7b9e0;background:rgba(255,255,255,0.04);border:1px solid rgba(146,151,244,0.28);border-radius:4rem;padding:7px 15px;cursor:pointer;transition:all .18s ease;}
+    .rail button:hover{border-color:var(--blue-light);color:#fff;}
+    .rail button[aria-pressed="true"]{background:var(--blue);border-color:#fff;color:#fff;}
+    .rail button:focus-visible{outline:2px solid var(--lime);outline-offset:2px;}
+
+    /* ---------- light body sections ---------- */
+    section{padding:58px 0;}
+    section.cream{background:var(--cream);}
+    .sec-eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:0.11em;text-transform:uppercase;color:var(--blue);margin:0 0 14px;}
+    section h2{font-size:clamp(24px,3.6vw,34px);line-height:1.12;margin:0 0 16px;max-width:20ch;}
+    section .intro{font-size:18px;line-height:1.62;color:var(--body);max-width:64ch;margin:0 0 14px;}
+    section .intro b{color:var(--text);font-weight:600;}
+
+    /* shipped-systems cards */
+    .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin:30px 0 0;}
+    .card{border:1px solid var(--line);border-radius:18px;background:#fff;padding:24px 22px;transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease;position:relative;overflow:hidden;}
+    .card:hover{transform:translateY(-4px);box-shadow:0 20px 44px rgba(10,2,39,0.10);border-color:var(--line-2);}
+    .card .icon{width:40px;height:40px;margin:0 0 14px;}
+    .card h3{font-size:19px;margin:0 0 9px;}
+    .card p{font-size:14.5px;line-height:1.56;color:var(--body);margin:0 0 13px;}
+    .card .stack{font-family:var(--mono);font-size:11.5px;color:var(--muted);display:flex;flex-wrap:wrap;gap:6px;margin:0 0 13px;}
+    .card .stack span{border:1px solid var(--line);border-radius:5px;padding:2px 7px;}
+    .card a{font-family:var(--mono);font-size:12.5px;font-weight:500;color:var(--blue);text-decoration:none;display:inline-flex;align-items:center;gap:6px;}
+    .card a .arr{transition:transform .15s ease;}
+    .card a:hover .arr{transform:translateX(3px);}
+    @media (max-width:820px){ .cards{grid-template-columns:1fr;} }
+
+    /* honest-gap block */
+    .honest{border:1px solid var(--line-2);border-left:3px solid var(--blue);border-radius:14px;background:#fff;padding:26px 28px;position:relative;}
+    .honest .htag{font-family:var(--mono);font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--blue);margin:0 0 10px;}
+    .honest p{font-size:17px;line-height:1.64;color:var(--body);margin:0;}
+    .honest p b{color:var(--text);font-weight:600;}
+    .honest p .hl{background:linear-gradient(transparent 62%,rgba(216,253,73,0.55) 0);padding:0 2px;font-weight:600;color:var(--text);}
+
+    /* trust strip */
+    .trust{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;margin:28px 0 0;font-family:var(--mono);font-size:12px;color:var(--muted);}
+    .trust .badge{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);border-radius:4rem;padding:6px 13px;background:#fff;}
+    .trust .badge .tdot{width:7px;height:7px;border-radius:50%;background:var(--blue);}
+
+    /* closing band */
+    .close{background:radial-gradient(900px 460px at 84% -20%,rgba(100,107,255,0.4),transparent 60%),linear-gradient(160deg,var(--midnight),var(--dark-blue));color:#cfd0ee;border-radius:0;}
+    .close h2{color:#fff;}
+    .close .intro{color:#c2c4e6;}
+    .close .actions{display:flex;flex-wrap:wrap;gap:12px;margin:26px 0 0;}
+    .close a.cta{font-family:var(--sans);font-weight:500;font-size:16px;color:var(--midnight);background:var(--lime);text-decoration:none;padding:13px 26px;border-radius:4rem;display:inline-flex;align-items:center;gap:9px;transition:transform .16s ease,box-shadow .16s ease;}
+    .close a.cta:hover{transform:translateY(-2px);box-shadow:0 14px 32px rgba(216,253,73,0.3);}
+    .close a.ghost{font-family:var(--sans);font-weight:500;font-size:15px;color:#fff;text-decoration:none;padding:13px 22px;border-radius:4rem;border:1px solid rgba(255,255,255,0.22);display:inline-flex;align-items:center;gap:9px;transition:background .16s ease;}
+    .close a.ghost:hover{background:rgba(255,255,255,0.08);}
+
+    .disclaimer{font-size:12.5px;line-height:1.6;color:var(--muted);background:#fff;border:1px dashed var(--line-2);border-radius:10px;padding:13px 16px;margin:0 0 0;}
+    .disclaimer b{color:var(--body);font-weight:600;}
+    .foot{font-size:12.5px;line-height:1.6;color:#8f92c4;text-align:center;padding:30px 26px 40px;max-width:64ch;margin:0 auto;}
+
+    .reveal{opacity:0;transform:translateY(18px);transition:opacity .6s cubic-bezier(.2,.6,.2,1),transform .6s cubic-bezier(.2,.6,.2,1);}
+    .reveal.in{opacity:1;transform:none;}
+
+    @media (prefers-reduced-motion: reduce){
+      .reveal{opacity:1 !important;transform:none !important;transition:none !important;}
+      .eyebrow .pip{animation:none !important;}
+      .stage .edge.flow{animation:none !important;}
+      .gnode .disc,.card{transition:none !important;}
+    }
+    @media (max-width:640px){
+      section{padding:44px 0;}
+      .hero .wrap{padding-top:40px;}
+      .stage-hint kbd{display:none;}
+    }
+  </style>
+</head>
+<body>
+  <header class="bar">
+    <a class="brand" href="https://andrewzoll.com">
+      <svg class="mark" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <circle cx="12" cy="6" r="2.4" fill="#343ced"/>
+        <circle cx="5" cy="17" r="2.4" fill="#646bff"/>
+        <circle cx="19" cy="17" r="2.4" fill="#d8fd49"/>
+        <path d="M12 8.4 L6 15 M12 8.4 L18 15 M7 17 H17" stroke="#9297f4" stroke-width="1.4" stroke-linecap="round"/>
+      </svg>
+      Andrew Zoll
+    </a>
+    <a class="barcta" href="mailto:andrew@andrewzoll.com">andrew@andrewzoll.com <span aria-hidden="true">&#8599;</span></a>
+  </header>
+
+  <!-- ===================== HERO + LIVE GRAPH ===================== -->
+  <div class="hero">
+    <div class="wrap">
+      <p class="eyebrow"><span class="pip"></span> Built for Glean &middot; Founding Forward Deployed Engineer</p>
+      <h1>You connect a company's knowledge.<br><span class="lime">Here's how my work connects to yours.</span></h1>
+      <p class="lead">I'm Andrew Zoll. A founding FDE goes 0-to-1 inside a customer's world and owns the outcome. So instead of a cover letter, I built your requirements as a graph. <b>Click a requirement node and watch it light the system I already shipped to match it.</b></p>
+
+      <div class="stage-wrap reveal">
+        <p class="stage-hint">Live graph &middot; click any blue requirement node <kbd>or use the chips below</kbd></p>
+        <div class="stage">
+          <svg viewBox="0 0 1000 520" role="img" aria-label="Interactive knowledge graph mapping Glean's Founding Forward Deployed Engineer requirements to systems Andrew Zoll has shipped. Requirement nodes on the left connect to receipt nodes on the right.">
+            <!-- edges drawn first so nodes sit on top; data-from = requirement id, data-to = receipt id -->
+            <g id="edges"></g>
+            <!-- receipt nodes (right) -->
+            <g id="receipts"></g>
+            <!-- requirement nodes (left) -->
+            <g id="reqs"></g>
+          </svg>
+        </div>
+
+        <!-- accessible / no-graph fallback control rail: same requirement set, real buttons -->
+        <div class="rail" id="rail" role="tablist" aria-label="Glean requirements"></div>
+
+        <div class="detail" id="detail" aria-live="polite">
+          <p class="dtag">Tap a node to begin</p>
+          <p class="me">Each of Glean's requirements for this founding role is a node on the left. Select one and the graph traces an edge to the thing I've actually built that proves it. Everything here is shipped and linkable, not a slide.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== SHIPPED SYSTEMS ===================== -->
+  <section>
+    <div class="wrap">
+      <p class="sec-eyebrow reveal">The receipts, in full</p>
+      <h2 class="reveal">Three systems I built and run. This is the 0-to-1 track record.</h2>
+      <p class="intro reveal">The graph above traces requirements to these. They're real, they're mine, and the live ones are one click away. Glean wants a founding FDE who has shipped production software from scratch in ambiguous environments. <b>I've done it three times.</b></p>
+      <div class="cards">
+        <div class="card reveal">
+          <svg class="icon" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+            <circle cx="20" cy="9" r="3.4" fill="#343ced"/>
+            <circle cx="9" cy="26" r="3.4" fill="#646bff"/>
+            <circle cx="31" cy="26" r="3.4" fill="#646bff"/>
+            <circle cx="20" cy="33" r="3" fill="#9297f4"/>
+            <path d="M20 12 L10 23 M20 12 L30 23 M11 27 L19 31 M29 27 L21 31" stroke="#9297f4" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+          <h3>AndrewOS</h3>
+          <p>An agent operating system I designed and run across two businesses. Arena-based delegation, a manager to builder to reviewer to validator pipeline where an independent validator audits the builder before anything ships, and a determinism layer: the LLM extracts and judges, deterministic code computes and verifies.</p>
+          <div class="stack"><span>multi-agent</span><span>eval gates</span><span>human gatekeeping</span></div>
+          <span style="font-family:var(--mono);font-size:12.5px;color:var(--muted);">Private system, in daily use</span>
+        </div>
+        <div class="card reveal">
+          <svg class="icon" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+            <rect x="7" y="9" width="26" height="22" rx="3" stroke="#343ced" stroke-width="1.8"/>
+            <path d="M7 15 H33 M13 22 H21 M13 26 H27" stroke="#646bff" stroke-width="1.6" stroke-linecap="round"/>
+            <circle cx="11" cy="12" r="1.2" fill="#d8fd49"/>
+          </svg>
+          <h3>FieldCommand</h3>
+          <p>A multi-tenant B2B SaaS for commercial trade contractors, built solo and full-stack. AI features in production behind per-tenant feature flags, a cost-aware model router with three LLM providers, Stripe billing, role-based access control, and tenant isolation.</p>
+          <div class="stack"><span>TypeScript</span><span>Next.js</span><span>Node</span><span>PostgreSQL</span></div>
+          <a href="https://app.fieldcommand.io">app.fieldcommand.io <span class="arr" aria-hidden="true">&rarr;</span></a>
+        </div>
+        <div class="card reveal">
+          <svg class="icon" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+            <path d="M20 6 L31 11 V20 C31 27 26 31.5 20 34 C14 31.5 9 27 9 20 V11 Z" stroke="#343ced" stroke-width="1.8"/>
+            <path d="M15 20 L18.5 23.5 L25 16" stroke="#d8fd49" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <h3>Veritas</h3>
+          <p>A citation-verification pipeline for legal filings, built on the extract-with-AI then decide-with-code pattern. The model pulls a claim, deterministic code checks it against the source and returns a structured, hedged verdict. Zod verdict schemas, fixture-gated releases.</p>
+          <div class="stack"><span>Python</span><span>Next.js</span><span>Zod</span><span>Vercel</span></div>
+          <a href="https://veritaslaw.app">veritaslaw.app <span class="arr" aria-hidden="true">&rarr;</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== HONEST GAP ===================== -->
+  <section class="cream">
+    <div class="wrap">
+      <p class="sec-eyebrow reveal">The honest part</p>
+      <div class="honest reveal">
+        <p class="htag">What I'm not pretending</p>
+        <p>I don't have a prior W-2 at a big AI lab, and I won't pretend otherwise. My proof is shipped systems, not pedigree. Your post asks for a 0-to-1 build track record, production AI experience, full-stack depth, and the judgment to know what's actually buildable. I bring all four, plus six years owning senior client relationships under FINRA and SEC supervision, which is the closest thing I have to being a technical partner to the C-suite under real accountability. <span class="hl">Judge me on the systems, not the resume shape.</span></p>
+      </div>
+      <div class="trust">
+        <span class="badge"><span class="tdot"></span> US citizen, no sponsorship</span>
+        <span class="badge"><span class="tdot"></span> Remote-US, Pueblo CO</span>
+        <span class="badge"><span class="tdot"></span> 25 to 50% travel works for me</span>
+        <span class="badge"><span class="tdot"></span> Outside business disclosable on hire</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CLOSE ===================== -->
+  <section class="close">
+    <div class="wrap">
+      <p class="sec-eyebrow reveal" style="color:var(--neon-blue);">Last node</p>
+      <h2 class="reveal">If the graph connected, let's talk.</h2>
+      <p class="intro reveal">The whole point of a knowledge graph is that the connection is already there before you go looking for it. <b style="color:#fff;">I'd love a short conversation.</b> Reply wherever I sent you this link, or reach me directly.</p>
+      <div class="actions reveal">
+        <a class="cta" href="mailto:andrew@andrewzoll.com">andrew@andrewzoll.com <span aria-hidden="true">&#8599;</span></a>
+        <a class="ghost" href="https://portfolio.andrewzoll.com">Portfolio</a>
+        <a class="ghost" href="https://www.linkedin.com/in/andrewzoll">LinkedIn</a>
+      </div>
+      <div style="margin:30px 0 0;">
+        <div class="disclaimer"><b>Independent application page.</b> Andrew Zoll built this for the Founding Forward Deployed Engineer role, in Glean's own design language on purpose. It is not affiliated with, authorized by, or endorsed by Glean. It's just me, showing the work.</div>
+      </div>
+    </div>
+  </section>
+
+  <p class="foot">Built for Glean by Andrew Zoll. Private link, not indexed, just for the hiring team. The knowledge graph above is hand-built, not a Glean asset.</p>
+
+  <script>
+    (function(){
+      var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      /* ---------------- graph data: requirements -> receipts ---------------- */
+      // receipts (right column nodes)
+      var receipts = [
+        { id:'andrewos',    label:'AndrewOS',     y:120 },
+        { id:'fieldcommand',label:'FieldCommand', y:260 },
+        { id:'veritas',     label:'Veritas',      y:340 },
+        { id:'advisory',    label:'Advisory work',y:440 }
+      ];
+      // requirements (left column nodes) with the JD quote + the receipt(s) each connects to
+      var reqs = [
+        {
+          id:'r-0to1', label:'0-to-1 build', sub:'from scratch', to:['fieldcommand','andrewos','veritas'],
+          jd:'“Your primary job is 0-to-1 product creation. You’ve built production software from scratch in ambiguous environments.”',
+          me:'I’ve gone 0-to-1 three times. FieldCommand is a multi-tenant SaaS I built solo and full-stack. AndrewOS is an agent operating system I designed from nothing. Veritas is a verification pipeline I shipped to production. <span class="hl">Ambiguous-environment, build-from-scratch is the only mode I’ve worked in.</span>',
+          links:[{t:'FieldCommand',u:'https://app.fieldcommand.io'},{t:'Veritas',u:'https://veritaslaw.app'}]
+        },
+        {
+          id:'r-ai', label:'Production AI', sub:'shipped, real-world', to:['andrewos','veritas'],
+          jd:'“You’ve shipped AI-powered solutions in the real world: prompt engineering, agent development, evaluation frameworks, deployment at scale.”',
+          me:'AndrewOS runs agent triads with an independent validator that grades the builder and blocks bad output. Veritas is an evaluation framework I shipped: it extracts a claim with the model, then <b>decides with deterministic code</b> and returns a hedged verdict. Prompt engineering, agent development, and evals aren’t concepts to me. They’re what I run.',
+          links:[{t:'Veritas',u:'https://veritaslaw.app'}]
+        },
+        {
+          id:'r-fullstack', label:'Full-stack depth', sub:'across the stack', to:['fieldcommand'],
+          jd:'“Strong programming skills across the stack with a deep understanding of enterprise systems.”',
+          me:'FieldCommand is TypeScript, Next.js, and Node on a PostgreSQL and Supabase backend, with REST integrations, role-based access control, tenant isolation, and Stripe billing. <span class="hl">Multi-tenant, permission-aware, enterprise-shaped</span>, and I own every layer of it.',
+          links:[{t:'FieldCommand',u:'https://app.fieldcommand.io'}]
+        },
+        {
+          id:'r-business', label:'Business acumen', sub:'diagnose to hypothesis', to:['advisory','fieldcommand'],
+          jd:'“You can walk into a customer, identify where the real problems are, and connect that diagnosis to a product hypothesis.”',
+          me:'For six years as a financial advisor I walked into a household, found the real problem under the stated one, and turned it into a plan. FieldCommand exists because I diagnosed a workflow gap for trade contractors and built the product hypothesis into software. <b>Diagnosis-to-product is the loop I live in.</b>',
+          links:[]
+        },
+        {
+          id:'r-csuite', label:'Technical partner to C-suite', sub:'earn trust high', to:['advisory'],
+          jd:'“You’ll earn trust at the highest levels of your customer organizations and become a technical partner to the C-suite.”',
+          me:'I spent six years as the single accountable person a household trusted with its money, under continuous SEC supervision. I’m comfortable being the throat to choke for an outcome someone cares about, and translating technical depth into language a decision-maker acts on.',
+          links:[]
+        },
+        {
+          id:'r-judgment', label:'Builder’s judgment', sub:'know what’s buildable', to:['fieldcommand','andrewos'],
+          jd:'“You know what’s actually buildable, how long it will take, and when to simplify scope.”',
+          me:'Building solo forces this. FieldCommand shipped because I cut scope honestly and sequenced what mattered. AndrewOS enforces it structurally with build discipline: spec before code, explicit success criteria, surgical changes, no drive-by gold-plating. <span class="hl">Scope judgment is a habit, not a hope.</span>',
+          links:[]
+        },
+        {
+          id:'r-scale', label:'Scale what works', sub:'make it repeatable', to:['andrewos'],
+          jd:'“Once something works, you’ll make it repeatable, working closely with the core R&amp;D team.”',
+          me:'AndrewOS is exactly this instinct turned into a system: when a one-off motion works, I codify it into a reusable delegation pattern with validation gates so the next agent can run it safely. <b>Turning a working one-off into a repeatable surface is the architecture I already built.</b>',
+          links:[]
+        }
+      ];
+
+      var byId = {};
+      reqs.forEach(function(r){ byId[r.id] = r; });
+
+      /* ---------------- build the SVG nodes ---------------- */
+      var SVGNS = 'http://www.w3.org/2000/svg';
+      var stage = document.querySelector('.stage svg');
+      var gEdges = document.getElementById('edges');
+      var gReceipts = document.getElementById('receipts');
+      var gReqs = document.getElementById('reqs');
+      var reqX = 215, rcptX = 785;
+      // distribute requirement nodes vertically
+      var topPad = 48, botPad = 48, span = 520 - topPad - botPad;
+      reqs.forEach(function(r, i){ r.y = topPad + span * (i / (reqs.length - 1)); });
+
+      function el(name, attrs){
+        var e = document.createElementNS(SVGNS, name);
+        for(var k in attrs){ e.setAttribute(k, attrs[k]); }
+        return e;
+      }
+
+      // edges (one per req->receipt link)
+      var edgeEls = [];
+      reqs.forEach(function(r){
+        r.to.forEach(function(rid){
+          var rc = receipts.find(function(x){ return x.id === rid; });
+          if(!rc) return;
+          var mx = (reqX + rcptX) / 2;
+          var d = 'M '+reqX+' '+r.y+' C '+mx+' '+r.y+', '+mx+' '+rc.y+', '+rcptX+' '+rc.y;
+          var p = el('path', { d:d, class:'edge', 'data-from':r.id, 'data-to':rid });
+          gEdges.appendChild(p);
+          edgeEls.push(p);
+        });
+      });
+
+      // receipt nodes
+      receipts.forEach(function(rc){
+        var g = el('g', { class:'gnode rcpt', 'data-id':rc.id, tabindex:'-1' });
+        g.appendChild(el('circle', { class:'disc', cx:rcptX, cy:rc.y, r:'13' }));
+        var t = el('text', { class:'lbl', x:rcptX+22, y:rc.y+5, 'font-size':'15' });
+        t.textContent = rc.label;
+        g.appendChild(t);
+        gReceipts.appendChild(g);
+        rc.node = g;
+      });
+
+      // requirement nodes (clickable)
+      reqs.forEach(function(r){
+        var g = el('g', { class:'gnode req', 'data-id':r.id, role:'button', tabindex:'0',
+                          'aria-label':'Requirement: '+r.label });
+        g.appendChild(el('circle', { class:'halo', cx:reqX, cy:r.y, r:'30' }));
+        g.appendChild(el('circle', { class:'disc', cx:reqX, cy:r.y, r:'14' }));
+        var t1 = el('text', { class:'lbl', x:reqX-26, y:r.y+1, 'text-anchor':'end', 'font-size':'15.5' });
+        t1.textContent = r.label;
+        g.appendChild(t1);
+        var t2 = el('text', { class:'sub', x:reqX-26, y:r.y+16, 'text-anchor':'end', 'font-size':'11' });
+        t2.textContent = r.sub;
+        g.appendChild(t2);
+        gReqs.appendChild(g);
+        r.node = g;
+        g.addEventListener('click', function(){ select(r.id); });
+        g.addEventListener('keydown', function(e){
+          if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); select(r.id); }
+        });
+      });
+
+      /* ---------------- build the chip rail (real, keyboard-accessible) ---------------- */
+      var rail = document.getElementById('rail');
+      reqs.forEach(function(r){
+        var b = document.createElement('button');
+        b.type = 'button';
+        b.textContent = r.label;
+        b.setAttribute('aria-pressed', 'false');
+        b.setAttribute('data-id', r.id);
+        b.addEventListener('click', function(){ select(r.id); });
+        rail.appendChild(b);
+        r.chip = b;
+      });
+
+      /* ---------------- selection logic ---------------- */
+      var detail = document.getElementById('detail');
+      var current = null;
+
+      function select(id){
+        var r = byId[id];
+        if(!r) return;
+        current = id;
+        var connected = {};
+        r.to.forEach(function(x){ connected[x] = true; });
+
+        // requirement nodes: active vs dim
+        reqs.forEach(function(rr){
+          rr.node.classList.toggle('active', rr.id === id);
+          rr.node.classList.toggle('dim', rr.id !== id);
+          rr.chip.setAttribute('aria-pressed', String(rr.id === id));
+        });
+        // receipt nodes: lit if connected, dim otherwise
+        receipts.forEach(function(rc){
+          rc.node.classList.toggle('lit', !!connected[rc.id]);
+          rc.node.classList.toggle('dim', !connected[rc.id]);
+        });
+        // edges: light + animate the ones from this requirement
+        edgeEls.forEach(function(e){
+          var on = e.getAttribute('data-from') === id;
+          e.classList.toggle('lit', on);
+          e.classList.toggle('flow', on && !reduce);
+        });
+
+        // render detail
+        var linksHtml = '';
+        if(r.links && r.links.length){
+          linksHtml = '<div class="links">' + r.links.map(function(l){
+            return '<a href="'+l.u+'">'+l.t+' &rarr;</a>';
+          }).join('') + '</div>';
+        }
+        detail.innerHTML = '<p class="dtag">'+r.label+'</p>' +
+          '<p class="jd">'+r.jd+'</p>' +
+          '<p class="me">'+r.me+'</p>' + linksHtml;
+      }
+
+      // open with the first requirement after a brief beat so the connection is obvious
+      if(reduce){ select('r-0to1'); }
+      else { setTimeout(function(){ select('r-0to1'); }, 650); }
+
+      /* ---------------- scroll reveal ---------------- */
+      if(!('IntersectionObserver' in window) || reduce){
+        document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('in'); });
+      } else {
+        var io = new IntersectionObserver(function(entries){
+          entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+        }, { threshold: 0.18 });
+        document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+      }
+    })();
+  </script>
+</body>
+</html>
