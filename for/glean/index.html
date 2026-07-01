@@ -303,10 +303,10 @@
           links:[{t:'FieldCommand',u:'https://app.fieldcommand.io'},{t:'Veritas',u:'https://veritaslaw.app'}]
         },
         {
-          id:'r-ai', label:'Production AI', sub:'shipped, real-world', to:['andrewos','veritas'],
+          id:'r-ai', label:'Production AI', sub:'shipped, real-world', to:['andrewos','fieldcommand','veritas'],
           jd:'“You’ve shipped AI-powered solutions in the real world: prompt engineering, agent development, evaluation frameworks, deployment at scale.”',
-          me:'AndrewOS runs agent triads with an independent validator that grades the builder and blocks bad output. Veritas is an evaluation framework I shipped: it extracts a claim with the model, then <b>decides with deterministic code</b> and returns a hedged verdict. Prompt engineering, agent development, and evals aren’t concepts to me. They’re what I run.',
-          links:[{t:'Veritas',u:'https://veritaslaw.app'}]
+          me:'AndrewOS runs agent triads with an independent validator that grades the builder and blocks bad output. FieldCommand has four AI features live in production behind per-tenant flags, with a two-tier model router that sends cheap work to a cheap model and hard reasoning to a premium one across three providers. Veritas is an evaluation framework I shipped: it extracts a claim with the model, then <b>decides with deterministic code</b> and returns a hedged verdict. Prompt engineering, agent development, and evals aren’t concepts to me. They’re what I run.',
+          links:[{t:'FieldCommand',u:'https://app.fieldcommand.io'},{t:'Veritas',u:'https://veritaslaw.app'}]
         },
         {
           id:'r-fullstack', label:'Full-stack depth', sub:'across the stack', to:['fieldcommand'],
