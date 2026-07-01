@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>Andrew Zoll for Fireworks AI · AI Field Engineer</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+  :root {
+    --bg:        #0b0c0f;
+    --panel:     #16181d;
+    --panel-2:   #1c1f26;
+    --line:      #2a2e38;
+    --line-soft: #23262e;
+    --ink:       #eef0f6;
+    --ink-dim:   #a8adbd;
+    --ink-mute:  #6b7180;
+    --fire:      #6726fe;
+    --fire-lo:   #501bc4;
+    --fire-hi:   #8a52ff;
+    --blue:      #1756ff;
+    --spark:     #06b96a;
+    --spark-hi:  #22e08a;
+    --glow:      0 0 0 1px rgba(103,38,254,.35), 0 8px 40px -8px rgba(103,38,254,.45);
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body {
+    font-family:'Inter',system-ui,sans-serif;
+    background:var(--bg);
+    color:var(--ink);
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  a { color:inherit; }
+  ::selection { background:rgba(103,38,254,.4); color:#fff; }
+
+  .wrap { max-width:1080px; margin:0 auto; padding:0 24px; }
+
+  /* ===== ambient arrow-field backdrop (Fireworks vector motif) ===== */
+  .field {
+    position:fixed; inset:0; z-index:0; pointer-events:none;
+    background:
+      radial-gradient(900px 500px at 78% -8%, rgba(103,38,254,.22), transparent 60%),
+      radial-gradient(700px 500px at 10% 8%, rgba(23,86,255,.14), transparent 55%),
+      var(--bg);
+  }
+  .field canvas { position:absolute; inset:0; width:100%; height:100%; opacity:.5; }
+
+  main { position:relative; z-index:1; }
+
+  /* ===== top ribbon ===== */
+  .ribbon {
+    display:flex; align-items:center; justify-content:space-between;
+    padding:16px 0; font-size:13px; color:var(--ink-dim);
+    border-bottom:1px solid var(--line-soft);
+  }
+  .ribbon .mark { display:flex; align-items:center; gap:10px; font-weight:600; color:var(--ink); letter-spacing:-.01em; }
+  .spark-glyph {
+    width:16px; height:16px; position:relative; display:inline-block;
+  }
+  .spark-glyph::before, .spark-glyph::after {
+    content:''; position:absolute; inset:0; margin:auto;
+    width:2px; height:16px; border-radius:2px;
+    background:linear-gradient(var(--fire),var(--blue));
+  }
+  .spark-glyph::after { transform:rotate(90deg); }
+  .ribbon .disc { font-size:12px; color:var(--ink-mute); }
+
+  /* ===== hero ===== */
+  .hero { padding:88px 0 56px; }
+  .kicker {
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:.04em;
+    color:var(--spark-hi); text-transform:uppercase;
+    padding:6px 12px; border:1px solid rgba(6,185,106,.3);
+    border-radius:100px; background:rgba(6,185,106,.06);
+    margin-bottom:26px;
+  }
+  .kicker .dot { width:6px; height:6px; border-radius:50%; background:var(--spark-hi); box-shadow:0 0 10px var(--spark-hi); animation:pulse 1.8s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:.35;} }
+
+  h1 {
+    font-size:clamp(38px,6.4vw,68px);
+    font-weight:700; line-height:1.02; letter-spacing:-.03em;
+    margin-bottom:22px;
+  }
+  h1 .grad {
+    background:linear-gradient(100deg,var(--fire-hi),var(--blue));
+    -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent;
+  }
+  .hero p.lede {
+    font-size:19px; color:var(--ink-dim); max-width:640px; line-height:1.65;
+  }
+  .hero p.lede strong { color:var(--ink); font-weight:600; }
+
+  .cta-row { display:flex; flex-wrap:wrap; gap:14px; margin-top:38px; }
+  .btn {
+    display:inline-flex; align-items:center; gap:9px;
+    font-size:15px; font-weight:600; padding:13px 22px; border-radius:10px;
+    text-decoration:none; transition:transform .15s ease, box-shadow .2s ease, background .2s;
+    border:1px solid transparent;
+  }
+  .btn-primary { background:linear-gradient(100deg,var(--fire),var(--blue)); color:#fff; box-shadow:var(--glow); }
+  .btn-primary:hover { transform:translateY(-2px); box-shadow:0 0 0 1px rgba(103,38,254,.5), 0 14px 46px -6px rgba(103,38,254,.6); }
+  .btn-ghost { border-color:var(--line); color:var(--ink); background:rgba(255,255,255,.02); }
+  .btn-ghost:hover { border-color:var(--fire-hi); color:#fff; transform:translateY(-2px); }
+  .btn svg { width:15px; height:15px; }
+
+  /* ===== live "inference meter" console (real, animated) ===== */
+  .console {
+    margin-top:52px; border:1px solid var(--line);
+    border-radius:16px; overflow:hidden; background:var(--panel);
+    box-shadow:0 24px 80px -30px rgba(0,0,0,.8);
+  }
+  .console-bar {
+    display:flex; align-items:center; gap:8px; padding:12px 16px;
+    border-bottom:1px solid var(--line-soft); background:var(--panel-2);
+    font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--ink-mute);
+  }
+  .console-bar .lights { display:flex; gap:6px; margin-right:6px; }
+  .console-bar .lights i { width:10px; height:10px; border-radius:50%; display:block; }
+  .lights i:nth-child(1){ background:#ff5f57; } .lights i:nth-child(2){ background:#febc2e; } .lights i:nth-child(3){ background:#28c840; }
+  .console-body { padding:22px; }
+  .meter-head { display:flex; justify-content:space-between; align-items:baseline; margin-bottom:14px; flex-wrap:wrap; gap:8px; }
+  .meter-head .label { font-family:'JetBrains Mono',monospace; font-size:12.5px; color:var(--ink-dim); }
+  .meter-head .val { font-family:'JetBrains Mono',monospace; font-size:13px; color:var(--spark-hi); }
+  .track { height:8px; border-radius:6px; background:var(--panel-2); overflow:hidden; position:relative; border:1px solid var(--line-soft); }
+  .fill { height:100%; width:100%; background:linear-gradient(90deg,var(--fire),var(--blue)); border-radius:6px;
+          transform:scaleX(0); transform-origin:left center; }
+  .fill.spark { background:linear-gradient(90deg,var(--spark),var(--spark-hi)); }
+  .meter-note { font-family:'JetBrains Mono',monospace; font-size:11.5px; color:var(--ink-mute); margin-top:10px; }
+  .console-foot { display:flex; gap:20px; flex-wrap:wrap; padding:16px 22px; border-top:1px solid var(--line-soft); background:var(--panel-2); }
+  .stat { }
+  .stat b { display:block; font-family:'JetBrains Mono',monospace; font-size:19px; color:var(--ink); font-weight:700; }
+  .stat span { font-size:11.5px; color:var(--ink-mute); }
+
+  /* ===== section scaffolding ===== */
+  section.block { padding:64px 0; border-top:1px solid var(--line-soft); }
+  .eyebrow { font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:.05em; text-transform:uppercase; color:var(--fire-hi); margin-bottom:14px; }
+  h2 { font-size:clamp(26px,3.6vw,38px); font-weight:700; letter-spacing:-.02em; line-height:1.1; margin-bottom:14px; }
+  .block > .wrap > p.sub { color:var(--ink-dim); max-width:620px; font-size:16.5px; margin-bottom:34px; }
+
+  /* ===== the router (REAL interactive tabs mapping JD -> receipts) ===== */
+  .router { display:grid; grid-template-columns:280px 1fr; gap:22px; }
+  .router-nav { display:flex; flex-direction:column; gap:8px; }
+  .rtab {
+    text-align:left; cursor:pointer; border:1px solid var(--line-soft);
+    background:var(--panel); border-radius:12px; padding:15px 16px;
+    color:var(--ink-dim); transition:all .18s ease; font-family:inherit; width:100%;
+    display:flex; gap:12px; align-items:flex-start;
+  }
+  .rtab:hover { border-color:var(--line); color:var(--ink); }
+  .rtab .idx { font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--ink-mute); padding-top:1px; }
+  .rtab .rt-title { display:block; font-weight:600; font-size:14.5px; line-height:1.3; }
+  .rtab .rt-sub { display:block; font-size:12px; color:var(--ink-mute); margin-top:3px; }
+  .rtab[aria-selected="true"] {
+    border-color:transparent; color:#fff;
+    background:linear-gradient(160deg, rgba(103,38,254,.22), rgba(23,86,255,.12));
+    box-shadow:var(--glow);
+  }
+  .rtab[aria-selected="true"] .idx { color:var(--spark-hi); }
+  .rtab[aria-selected="true"] .rt-sub { color:var(--ink-dim); }
+
+  .router-panels { position:relative; }
+  .panel {
+    display:none; border:1px solid var(--line); border-radius:14px;
+    background:var(--panel); padding:26px; animation:fade .35s ease;
+  }
+  .panel[data-active="true"] { display:block; }
+  @keyframes fade { from{ opacity:0; transform:translateY(8px);} to{ opacity:1; transform:none;} }
+  .panel .jd {
+    font-family:'JetBrains Mono',monospace; font-size:12.5px; color:var(--ink-dim);
+    border-left:2px solid var(--fire); padding:4px 0 4px 14px; margin-bottom:20px;
+    background:linear-gradient(90deg, rgba(103,38,254,.07), transparent); line-height:1.55;
+  }
+  .panel .jd b { color:var(--spark-hi); font-weight:500; }
+  .panel h3 { font-size:15px; color:var(--ink-mute); text-transform:uppercase; letter-spacing:.05em; font-family:'JetBrains Mono',monospace; margin-bottom:14px; }
+  .receipt { display:flex; gap:14px; padding:14px 0; border-top:1px solid var(--line-soft); }
+  .receipt:first-of-type { border-top:none; }
+  .receipt .tag {
+    flex:0 0 auto; align-self:flex-start; font-family:'JetBrains Mono',monospace; font-size:11px;
+    color:var(--fire-hi); border:1px solid rgba(103,38,254,.35); border-radius:6px;
+    padding:3px 8px; background:rgba(103,38,254,.08); white-space:nowrap;
+  }
+  .receipt .body { font-size:14.5px; color:var(--ink-dim); line-height:1.6; }
+  .receipt .body b { color:var(--ink); font-weight:600; }
+  .receipt .body a { color:var(--spark-hi); text-decoration:none; border-bottom:1px solid rgba(34,224,138,.35); }
+
+  /* ===== honest gap ===== */
+  .gap-card {
+    border:1px solid var(--line); border-radius:16px; overflow:hidden;
+    background:linear-gradient(180deg, var(--panel), var(--bg));
+  }
+  .gap-head { display:flex; align-items:center; gap:12px; padding:20px 26px; border-bottom:1px solid var(--line-soft); }
+  .gap-head .glyph { font-family:'JetBrains Mono',monospace; color:var(--spark-hi); font-size:13px; border:1px solid rgba(6,185,106,.35); border-radius:6px; padding:3px 8px; background:rgba(6,185,106,.07); }
+  .gap-head h2 { margin:0; font-size:22px; }
+  .gap-body { padding:24px 26px; display:grid; grid-template-columns:1fr 1fr; gap:22px; }
+  .gap-col h4 { font-family:'JetBrains Mono',monospace; font-size:12px; text-transform:uppercase; letter-spacing:.05em; margin-bottom:12px; }
+  .gap-col.have h4 { color:var(--spark-hi); }
+  .gap-col.grow h4 { color:var(--fire-hi); }
+  .gap-col ul { list-style:none; }
+  .gap-col li { font-size:14.5px; color:var(--ink-dim); padding:8px 0 8px 22px; position:relative; line-height:1.55; border-top:1px solid var(--line-soft); }
+  .gap-col li:first-child { border-top:none; }
+  .gap-col li::before { position:absolute; left:0; top:8px; font-family:'JetBrains Mono',monospace; font-size:13px; }
+  .gap-col.have li::before { content:'+'; color:var(--spark-hi); }
+  .gap-col.grow li::before { content:'>'; color:var(--fire-hi); }
+  .gap-foot { padding:18px 26px; border-top:1px solid var(--line-soft); font-size:15px; color:var(--ink-dim); line-height:1.65; }
+  .gap-foot b { color:var(--ink); }
+
+  /* ===== intro / who ===== */
+  .who { display:grid; grid-template-columns:1fr; gap:18px; }
+  .who p { font-size:16.5px; color:var(--ink-dim); line-height:1.7; }
+  .who p strong { color:var(--ink); font-weight:600; }
+  .who .pills { display:flex; flex-wrap:wrap; gap:10px; margin-top:8px; }
+  .pill { font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--ink-dim); border:1px solid var(--line-soft); border-radius:100px; padding:7px 14px; background:var(--panel); }
+  .pill b { color:var(--spark-hi); font-weight:500; }
+
+  /* ===== final cta ===== */
+  .final { text-align:center; padding:80px 0; border-top:1px solid var(--line-soft); }
+  .final h2 { font-size:clamp(28px,4vw,42px); margin-bottom:16px; }
+  .final p { color:var(--ink-dim); max-width:520px; margin:0 auto 30px; font-size:16.5px; }
+  .final .cta-row { justify-content:center; }
+
+  footer { border-top:1px solid var(--line-soft); padding:30px 0 50px; }
+  footer .disc-full { font-size:12.5px; color:var(--ink-mute); line-height:1.6; max-width:760px; }
+  footer .meta { font-family:'JetBrains Mono',monospace; font-size:11.5px; color:var(--ink-mute); margin-top:14px; }
+
+  @media (max-width:820px) {
+    .router { grid-template-columns:1fr; }
+    .router-nav { flex-direction:row; overflow-x:auto; padding-bottom:6px; }
+    .rtab { min-width:200px; }
+    .gap-body { grid-template-columns:1fr; }
+    .ribbon .disc { display:none; }
+  }
+</style>
+</head>
+<body>
+<div class="field"><canvas id="arrows"></canvas></div>
+
+<main>
+  <div class="wrap">
+    <div class="ribbon">
+      <span class="mark"><span class="spark-glyph"></span> Andrew Zoll</span>
+      <span class="disc">Independent application &middot; not affiliated with Fireworks AI</span>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="wrap">
+      <span class="kicker"><span class="dot"></span> Application &middot; AI Field Engineer, Enterprise</span>
+      <h1>I deploy AI systems <span class="grad">inside the codebase</span>, not on a slide.</h1>
+      <p class="lede">Hi, I'm Andrew. I build end-to-end POCs, size the inference, and read the eval failures until the numbers move. I've been running that loop on my own products for a year. <strong>This page is me showing my work, mapped straight to your job description.</strong></p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="https://portfolio.andrewzoll.com" target="_blank" rel="noopener">
+          See the portfolio
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <a class="btn btn-ghost" href="https://linkedin.com/in/andrewzoll" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.24 8h4.52V24H.24V8zM8.34 8h4.33v2.19h.06c.6-1.14 2.07-2.34 4.26-2.34 4.56 0 5.4 3 5.4 6.9V24h-4.52v-6.65c0-1.59-.03-3.63-2.21-3.63-2.21 0-2.55 1.73-2.55 3.51V24H8.34V8z"/></svg>
+          Connect on LinkedIn
+        </a>
+      </div>
+
+      <!-- LIVE INFERENCE METER (real animation) -->
+      <div class="console">
+        <div class="console-bar">
+          <span class="lights"><i></i><i></i><i></i></span>
+          fireworks-field-eng · deploy · size · eval
+        </div>
+        <div class="console-body">
+          <div class="meter-head"><span class="label">POC build &rarr; production, end to end</span><span class="val" id="v1">shipped</span></div>
+          <div class="track"><div class="fill" id="m1"></div></div>
+          <div class="meter-note">// FieldCommand: multi-tenant SaaS, spec &rarr; ship, solo &amp; agent-first</div>
+
+          <div class="meter-head" style="margin-top:20px;"><span class="label">Eval loop: false-positive rate</span><span class="val spark" id="v2" style="color:var(--spark-hi)">&lt; 5%</span></div>
+          <div class="track"><div class="fill spark" id="m2"></div></div>
+          <div class="meter-note">// Veritas verifier, driven down against a fixed fixture suite</div>
+
+          <div class="meter-head" style="margin-top:20px;"><span class="label">Model routing across families</span><span class="val" id="v3">by cost &amp; task</span></div>
+          <div class="track"><div class="fill" id="m3"></div></div>
+          <div class="meter-note">// Anthropic · Google · OpenAI, chosen per workload, not by default</div>
+        </div>
+        <div class="console-foot">
+          <div class="stat"><b>2</b><span>businesses run on the agent OS</span></div>
+          <div class="stat"><b>4</b><span>products shipped &amp; live</span></div>
+          <div class="stat"><b>6 yr</b><span>translating regulated tech for clients</span></div>
+          <div class="stat"><b>US-remote</b><span>on-site travel is fine</span></div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- THE ROUTER: JD -> receipts, real tabs -->
+  <section class="block">
+    <div class="wrap">
+      <div class="eyebrow">// the job, mapped to what I've built</div>
+      <h2>Pick a responsibility. I'll route you to the receipt.</h2>
+      <p class="sub">Four groups, straight off your posting. Each one switches the panel to the actual thing I shipped that proves it. No mockups, everything here works.</p>
+
+      <div class="router">
+        <div class="router-nav" role="tablist" aria-label="Responsibility groups">
+          <button class="rtab" role="tab" aria-selected="true" data-target="p1">
+            <span class="idx">01</span>
+            <span><span class="rt-title">Technical delivery &amp; deployment</span><span class="rt-sub">POCs, inference sizing, baselines</span></span>
+          </button>
+          <button class="rtab" role="tab" aria-selected="false" data-target="p2">
+            <span class="idx">02</span>
+            <span><span class="rt-title">Model strategy &amp; fine-tuning</span><span class="rt-sub">selection, tuning, eval methodology</span></span>
+          </button>
+          <button class="rtab" role="tab" aria-selected="false" data-target="p3">
+            <span class="idx">03</span>
+            <span><span class="rt-title">Customer engagement</span><span class="rt-sub">discovery to production trust</span></span>
+          </button>
+          <button class="rtab" role="tab" aria-selected="false" data-target="p4">
+            <span class="idx">04</span>
+            <span><span class="rt-title">Product feedback loop</span><span class="rt-sub">pain &rarr; primitives &rarr; tooling</span></span>
+          </button>
+        </div>
+
+        <div class="router-panels">
+          <!-- P1 -->
+          <div class="panel" id="p1" data-active="true">
+            <div class="jd">"Build end-to-end POCs and MVPs alongside customer engineering teams, working inside their codebases. Run load tests and establish <b>latency, throughput, and cost baselines</b>."</div>
+            <h3>What I've actually shipped</h3>
+            <div class="receipt"><span class="tag">SaaS</span><div class="body"><b>FieldCommand</b> is a multi-tenant B2B platform for trade contractors, built solo and agent-first from spec to production on PostgreSQL and Supabase. Live at <a href="https://app.fieldcommand.io" target="_blank" rel="noopener">app.fieldcommand.io</a>. Owning a real product surface end to end is my normal, not a stretch.</div></div>
+            <div class="receipt"><span class="tag">cost/task</span><div class="body">I ship <b>four AI features behind per-tenant feature flags</b> and route each across model families by cost and task fit. Sizing a workload against real traffic instead of a demo is the same instinct I already apply.</div></div>
+            <div class="receipt"><span class="tag">honest</span><div class="body">Where I'll ramp: <b>Kubernetes and vLLM/SGLang at GPU scale</b>. I've deployed to managed clouds, not hand-tuned inference frameworks yet. I learn the next layer fast, and I won't pretend those hours are already behind me.</div></div>
+          </div>
+          <!-- P2 -->
+          <div class="panel" id="p2">
+            <div class="jd">"Guide customers on model selection, fine-tuning strategy (SFT, DPO, RFT), and <b>evaluation methodology</b>. Design evaluation frameworks that measure production-quality metrics, not just benchmark scores."</div>
+            <h3>What I've actually shipped</h3>
+            <div class="receipt"><span class="tag">eval</span><div class="body">I built <b>Veritas</b>, an AI citation-verification pipeline for legal filings, and drove it from a high false-positive rate down <b>under 5%</b> by instrumenting failures and tightening against a fixed fixture suite. Live at <a href="https://veritaslaw.app" target="_blank" rel="noopener">veritaslaw.app</a>. That read-the-failures loop is exactly what a production eval framework is.</div></div>
+            <div class="receipt"><span class="tag">verifiable</span><div class="body">The architecture is <b>extract-with-AI, decide-with-code</b>: an LLM extracts intent, deterministic code renders the verdict. A regulated audience gets a system that shows its work instead of a black box, which is how I'd frame eval design for your customers.</div></div>
+            <div class="receipt"><span class="tag">honest</span><div class="body">Where I'll ramp: <b>running SFT/DPO/RFT pipelines hands-on</b>. I've done the selection-and-eval half in production; I have not yet run the full fine-tuning stack with a customer. It's the nearest adjacent skill to what I do daily.</div></div>
+          </div>
+          <!-- P3 -->
+          <div class="panel" id="p3">
+            <div class="jd">"Lead structured discovery conversations to unpack customer pain points. Own the technical relationship from first engagement through production. <b>Earn trust with ML engineers</b> and communicate across executive contexts."</div>
+            <h3>What I've actually shipped</h3>
+            <div class="receipt"><span class="tag">discovery</span><div class="body">Six years as a financial advisor, I ran <b>structured discovery</b> with non-technical clients and held <b>95% retention across 120+ households</b>. Unpacking constraints and success criteria before proposing a build is a reflex, not a script.</div></div>
+            <div class="receipt"><span class="tag">translate</span><div class="body">My whole edge is <b>translating regulated, technical work for the people who have to sign off on it</b>. Executive context and ML-engineer context in the same afternoon is the job I already do across FieldCommand, Veritas, and the advisory practice.</div></div>
+            <div class="receipt"><span class="tag">trust</span><div class="body">I operated for years under <b>FINRA / SEC oversight</b>, so audit-grade discipline and earning trust with a skeptical, high-stakes audience is baked in.</div></div>
+          </div>
+          <!-- P4 -->
+          <div class="panel" id="p4">
+            <div class="jd">"Identify recurring customer pain points and translate them into concrete product proposals. <b>Codify repeatable deployment patterns</b> and contribute them back to internal tooling and documentation."</div>
+            <h3>What I've actually shipped</h3>
+            <div class="receipt"><span class="tag">systems</span><div class="body"><b>AndrewOS</b> is the agent operating system I built to run marketing, content, and ops across two businesses. It's a manager-builder-reviewer-validator pipeline, which is what codifying repeatable patterns into reusable tooling looks like when I do it for myself.</div></div>
+            <div class="receipt"><span class="tag">primitives</span><div class="body">Turning a recurring pattern into a <b>platform primitive</b> is how I keep a solo operation shipping four products. I feed the pain I hit back into the system so the next build is faster. That's the exact product-feedback muscle this responsibility asks for.</div></div>
+            <div class="receipt"><span class="tag">docs</span><div class="body">Every arena in AndrewOS carries its own written doctrine and rules, so the system stays legible to the next agent. I document as I build because undocumented tooling doesn't compound.</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHO -->
+  <section class="block">
+    <div class="wrap">
+      <div class="eyebrow">// who's applying</div>
+      <h2>The short version</h2>
+      <div class="who">
+        <p>I'm an <strong>AI-native builder and operator</strong> based in Pueblo, Colorado. Last year I stopped talking about agents and started shipping with them: <strong>FieldCommand</strong> (a multi-tenant SaaS), <strong>Veritas</strong> (an AI verifier for legal filings), and <strong>AndrewOS</strong> (the agent OS that runs the rest). Before that, six years as a financial advisor under FINRA and SEC oversight, which is where I learned to earn trust with people who audit everything.</p>
+        <p>I'm applying to Fireworks because the AI Field Engineer role is the <strong>professional version of what I already do for fun</strong>: go deep into a system, size the inference, guide the model choices, read the evals, and ship something the customer actually runs. I'd rather be judged on what I've built than on a resume line I don't have.</p>
+        <div class="pills">
+          <span class="pill"><b>stack</b> Python · TypeScript · Next.js · Postgres/Supabase</span>
+          <span class="pill"><b>ai</b> Claude Code · evals · structured output · model routing</span>
+          <span class="pill"><b>geo</b> Remote-US, on-site travel welcome</span>
+          <span class="pill"><b>status</b> US citizen, no sponsorship</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HONEST GAP -->
+  <section class="block">
+    <div class="wrap">
+      <div class="gap-card">
+        <div class="gap-head">
+          <span class="glyph">honest.md</span>
+          <h2>Where I'm strong, where I'll ramp</h2>
+        </div>
+        <div class="gap-body">
+          <div class="gap-col have">
+            <h4>Strong today</h4>
+            <ul>
+              <li>Shipping production systems end to end, solo and agent-first</li>
+              <li>Eval loops: instrumenting failures, driving quality metrics that matter</li>
+              <li>Extract-with-AI, decide-with-code for verifiable systems</li>
+              <li>Model selection and routing across families by cost and task</li>
+              <li>Structured discovery and earning trust with high-stakes audiences</li>
+              <li>Translating between ML-engineer and executive in the same room</li>
+            </ul>
+          </div>
+          <div class="gap-col grow">
+            <h4>Where I'll ramp</h4>
+            <ul>
+              <li>Kubernetes and vLLM/SGLang tuning at real GPU scale</li>
+              <li>Hands-on SFT / DPO / RFT fine-tuning pipelines with a customer</li>
+              <li>No prior W-2 at a big AI lab, my proof is shipped systems</li>
+              <li>Enterprise-production inference hours are the honest gap, not the skill</li>
+            </ul>
+          </div>
+        </div>
+        <div class="gap-foot">
+          I won't oversell the inference-at-scale hours I haven't logged yet. What I will claim: I close that kind of gap fast, because <b>I've taught myself every layer of the three products above</b> the same way. The Field Engineer motion, discovery to POC to production, is already how I work. The GPU-serving depth is the adjacent layer I'd learn on the job, and I'd rather you know that now.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL -->
+  <section class="final">
+    <div class="wrap">
+      <h2>Let's put a POC in front of a customer.</h2>
+      <p>That's the job, and it's the thing I most want to be doing. Here's the portfolio and the direct line.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="https://portfolio.andrewzoll.com" target="_blank" rel="noopener">
+          Portfolio
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <a class="btn btn-ghost" href="https://linkedin.com/in/andrewzoll" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.24 8h4.52V24H.24V8zM8.34 8h4.33v2.19h.06c.6-1.14 2.07-2.34 4.26-2.34 4.56 0 5.4 3 5.4 6.9V24h-4.52v-6.65c0-1.59-.03-3.63-2.21-3.63-2.21 0-2.55 1.73-2.55 3.51V24H8.34V8z"/></svg>
+          LinkedIn
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <p class="disc-full"><strong>Not affiliated with, endorsed by, or sponsored by Fireworks AI.</strong> This is an independent, unsolicited job application page built by Andrew Zoll for the AI Field Engineer, Enterprise role. Brand colors and typography here echo Fireworks' public design language purely to show the application was made with care. All product names belong to their owners. No confidential information is used or implied.</p>
+      <p class="meta">built by hand &middot; andrewzoll.com/for/fireworks &middot; july 2026</p>
+    </div>
+  </footer>
+</main>
+
+<script>
+  // ===== real tab router: switches panels, updates aria + re-triggers meters =====
+  (function(){
+    const tabs = Array.from(document.querySelectorAll('.rtab'));
+    const panels = Array.from(document.querySelectorAll('.panel'));
+    function select(target){
+      tabs.forEach(t => t.setAttribute('aria-selected', String(t.dataset.target === target)));
+      panels.forEach(p => p.setAttribute('data-active', String(p.id === target)));
+    }
+    tabs.forEach(t => {
+      t.addEventListener('click', () => select(t.dataset.target));
+      t.addEventListener('keydown', e => {
+        const i = tabs.indexOf(t);
+        if (e.key === 'ArrowDown' || e.key === 'ArrowRight'){ e.preventDefault(); tabs[(i+1)%tabs.length].focus(); tabs[(i+1)%tabs.length].click(); }
+        if (e.key === 'ArrowUp'   || e.key === 'ArrowLeft'){ e.preventDefault(); tabs[(i-1+tabs.length)%tabs.length].focus(); tabs[(i-1+tabs.length)%tabs.length].click(); }
+      });
+    });
+  })();
+
+  // ===== animated inference meters (fill on view) =====
+  (function(){
+    const meters = [['m1',86],['m2',95],['m3',72]];
+    let fired = false;
+    function run(){
+      if (fired) return; fired = true;
+      const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      meters.forEach(([id,pct], i) => setTimeout(() => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        const target = 'scaleX(' + (pct/100) + ')';
+        el.style.transform = target;            // final resting state (survives even if WAAPI is unavailable)
+        if (!reduce && el.animate) {
+          el.animate(
+            [{ transform:'scaleX(0)' }, { transform:target }],
+            { duration:950, easing:'cubic-bezier(.2,.7,.2,1)', fill:'forwards' }
+          );
+        }
+      }, 250 + i*260));
+    }
+    const console_el = document.querySelector('.console');
+    function check(){
+      if (fired || !console_el) return;
+      const r = console_el.getBoundingClientRect();
+      if (r.top < (window.innerHeight || document.documentElement.clientHeight) * 0.9 && r.bottom > 0) run();
+    }
+    // Primary: scroll/resize/load checks (robust everywhere). IO is a bonus if present.
+    window.addEventListener('scroll', check, { passive:true });
+    window.addEventListener('resize', check, { passive:true });
+    window.addEventListener('load', check);
+    if ('IntersectionObserver' in window && console_el){
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(en => { if (en.isIntersecting) { run(); io.disconnect(); } });
+      }, { threshold:0 });
+      io.observe(console_el);
+    }
+    // Fire on next frame in case it's already in view at load.
+    requestAnimationFrame(check);
+    setTimeout(check, 400);
+  })();
+
+  // ===== ambient rotating arrow-vector field (Fireworks motif), lightweight canvas =====
+  (function(){
+    const c = document.getElementById('arrows'); if (!c) return;
+    const ctx = c.getContext('2d');
+    let w, h, dpr, arrows = [];
+    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    function resize(){
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      w = c.clientWidth; h = c.clientHeight;
+      c.width = w*dpr; c.height = h*dpr; ctx.setTransform(dpr,0,0,dpr,0,0);
+      const cols = Math.floor(w/90)+1, rows = Math.floor(h/90)+1;
+      arrows = [];
+      for (let x=0; x<=cols; x++) for (let y=0; y<=rows; y++){
+        arrows.push({ x:x*90+45, y:y*90+45, a:Math.random()*Math.PI*2, s:(Math.random()*0.4+0.1)*(Math.random()<.5?-1:1) });
+      }
+    }
+    function draw(t){
+      ctx.clearRect(0,0,w,h);
+      arrows.forEach(ar => {
+        if (!reduce) ar.a += ar.s*0.006;
+        const len = 9;
+        const dx = Math.cos(ar.a)*len, dy = Math.sin(ar.a)*len;
+        // color drifts between fire-purple and blue based on angle
+        const mix = (Math.sin(ar.a)+1)/2;
+        const r = Math.round(103 + (23-103)*mix);
+        const g = Math.round(38 + (86-38)*mix);
+        const b = Math.round(254 + (255-254)*mix);
+        ctx.strokeStyle = `rgba(${r},${g},${b},0.5)`;
+        ctx.lineWidth = 1.4; ctx.lineCap = 'round';
+        ctx.beginPath();
+        ctx.moveTo(ar.x-dx, ar.y-dy); ctx.lineTo(ar.x+dx, ar.y+dy);
+        // arrowhead
+        const ha = ar.a, hl = 4;
+        ctx.lineTo(ar.x+dx - Math.cos(ha-0.5)*hl, ar.y+dy - Math.sin(ha-0.5)*hl);
+        ctx.moveTo(ar.x+dx, ar.y+dy);
+        ctx.lineTo(ar.x+dx - Math.cos(ha+0.5)*hl, ar.y+dy - Math.sin(ha+0.5)*hl);
+        ctx.stroke();
+      });
+      requestAnimationFrame(draw);
+    }
+    resize(); window.addEventListener('resize', resize);
+    requestAnimationFrame(draw);
+  })();
+</script>
+</body>
+</html>
