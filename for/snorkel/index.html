@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>Andrew Zoll for Snorkel AI &middot; Applied AI Engineer, Enterprise Solutions</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap');
+
+  :root {
+    --cream:      #f5f3ef;
+    --cream-2:    #f1efe9;
+    --paper:      #fbfaf7;
+    --ink:        #111c2d;
+    --ink-2:      #37404f;
+    --ink-soft:   #5c6472;
+    --ink-mute:   #8b93a2;
+    --line:       #e2ded4;
+    --line-2:     #d8d3c6;
+    --iris:       #5e5ad1;
+    --iris-lo:    #4b47bd;
+    --iris-hi:    #7d79e6;
+    --iris-wash:  #a0afee;
+    --sky:        #3ea2f9;
+    --sky-soft:   #8dbfe0;
+    --magenta:    #e3057d;
+    --deep:       #14194d;
+    --ok:         #1f9c6b;
+    --shadow:     0 1px 2px rgba(17,28,45,.05), 0 12px 40px -18px rgba(17,28,45,.22);
+    --shadow-lg:  0 30px 80px -40px rgba(20,25,77,.45);
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body {
+    font-family:'Geist', system-ui, sans-serif;
+    background:var(--cream);
+    color:var(--ink);
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  a { color:inherit; }
+  ::selection { background:rgba(94,90,209,.22); }
+  .mono { font-family:'Geist Mono', ui-monospace, monospace; }
+
+  .wrap { max-width:1120px; margin:0 auto; padding:0 28px; }
+
+  /* ambient frontier-dot backdrop */
+  .backdrop {
+    position:fixed; inset:0; z-index:0; pointer-events:none;
+    background:
+      radial-gradient(1100px 620px at 84% -10%, rgba(94,90,209,.10), transparent 62%),
+      radial-gradient(760px 520px at 4% 2%, rgba(62,162,249,.07), transparent 58%);
+  }
+  .backdrop canvas { position:absolute; inset:0; width:100%; height:100%; opacity:.9; }
+  main { position:relative; z-index:1; }
+
+  /* ribbon */
+  .ribbon {
+    display:flex; align-items:center; justify-content:space-between; gap:16px;
+    padding:20px 0; font-size:13px; color:var(--ink-soft);
+  }
+  .ribbon .mark { display:flex; align-items:center; gap:11px; font-weight:600; color:var(--ink); letter-spacing:-.01em; }
+  .goggles { width:26px; height:18px; flex:0 0 auto; }
+  .ribbon .disc { font-size:12px; color:var(--ink-mute); }
+
+  /* hero */
+  .hero { padding:64px 0 40px; display:grid; grid-template-columns:1.15fr .85fr; gap:52px; align-items:start; }
+  .tag {
+    display:inline-flex; align-items:center; gap:9px;
+    font-family:'Geist Mono', monospace; font-size:12px; letter-spacing:.02em;
+    color:var(--iris-lo); background:#fff;
+    padding:7px 13px; border:1px solid var(--line-2); border-radius:100px;
+    margin-bottom:26px; box-shadow:var(--shadow);
+  }
+  .tag .dot { width:7px; height:7px; border-radius:50%; background:var(--ok); box-shadow:0 0 0 4px rgba(31,156,107,.14); }
+  h1 {
+    font-size:clamp(36px,5.3vw,60px); font-weight:600; line-height:1.02;
+    letter-spacing:-.035em; margin-bottom:22px; color:var(--ink);
+  }
+  h1 .accent { color:var(--iris); }
+  h1 .under {
+    position:relative; white-space:nowrap;
+  }
+  h1 .under::after {
+    content:''; position:absolute; left:0; right:0; bottom:.04em; height:.14em;
+    background:linear-gradient(90deg, var(--iris-wash), var(--sky-soft)); border-radius:3px; opacity:.6; z-index:-1;
+  }
+  .lede { font-size:18.5px; color:var(--ink-2); max-width:560px; line-height:1.66; }
+  .lede strong { color:var(--ink); font-weight:600; }
+  .cta-row { display:flex; flex-wrap:wrap; gap:13px; margin-top:32px; }
+  .btn {
+    display:inline-flex; align-items:center; gap:9px; font-size:15px; font-weight:500;
+    padding:12px 20px; border-radius:11px; text-decoration:none;
+    transition:transform .15s ease, box-shadow .2s ease, background .2s, border-color .2s;
+    border:1px solid transparent;
+  }
+  .btn svg { width:15px; height:15px; }
+  .btn-primary { background:var(--ink); color:var(--cream); box-shadow:var(--shadow); }
+  .btn-primary:hover { transform:translateY(-2px); background:var(--deep); box-shadow:var(--shadow-lg); }
+  .btn-ghost { border-color:var(--line-2); color:var(--ink); background:#fff; }
+  .btn-ghost:hover { border-color:var(--iris); color:var(--iris-lo); transform:translateY(-2px); }
+
+  /* hero card: coverage dial */
+  .dial-card {
+    background:var(--paper); border:1px solid var(--line); border-radius:20px;
+    box-shadow:var(--shadow-lg); overflow:hidden;
+  }
+  .dial-head {
+    display:flex; align-items:center; gap:9px; padding:15px 20px;
+    border-bottom:1px solid var(--line); background:#fff;
+    font-family:'Geist Mono', monospace; font-size:12px; color:var(--ink-mute); letter-spacing:-.01em;
+  }
+  .dial-head .pip { width:8px; height:8px; border-radius:2px; background:var(--iris); }
+  .dial-body { padding:26px 24px 22px; text-align:center; }
+  .dial { position:relative; width:172px; height:172px; margin:0 auto 6px; }
+  .dial svg { transform:rotate(-90deg); }
+  .dial .val {
+    position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center;
+  }
+  .dial .val b { font-size:40px; font-weight:600; letter-spacing:-.03em; color:var(--ink); line-height:1; }
+  .dial .val span { font-family:'Geist Mono', monospace; font-size:11px; color:var(--ink-mute); margin-top:5px; letter-spacing:.02em; }
+  .dial-note { font-size:13px; color:var(--ink-soft); line-height:1.55; margin-top:8px; padding:0 6px; }
+  .dial-foot {
+    display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--line);
+    border-top:1px solid var(--line);
+  }
+  .dial-foot .cell { background:var(--paper); padding:13px 16px; }
+  .dial-foot .cell b { display:block; font-size:17px; font-weight:600; color:var(--ink); letter-spacing:-.01em; }
+  .dial-foot .cell span { font-size:11.5px; color:var(--ink-mute); }
+
+  /* section scaffold */
+  section.block { padding:58px 0; }
+  .eyebrow {
+    font-family:'Geist Mono', monospace; font-size:12px; letter-spacing:.04em;
+    text-transform:uppercase; color:var(--iris-lo); margin-bottom:13px;
+  }
+  h2 { font-size:clamp(25px,3.4vw,36px); font-weight:600; letter-spacing:-.025em; line-height:1.1; margin-bottom:12px; color:var(--ink); }
+  .sub { color:var(--ink-2); max-width:660px; font-size:16.5px; margin-bottom:30px; }
+  .divider { height:1px; background:linear-gradient(90deg, var(--line-2), transparent); }
+
+  /* THE BENCH: interactive labeling ledger */
+  .bench { background:var(--paper); border:1px solid var(--line); border-radius:20px; box-shadow:var(--shadow); overflow:hidden; }
+  .bench-top {
+    display:flex; align-items:center; justify-content:space-between; gap:14px; flex-wrap:wrap;
+    padding:16px 22px; border-bottom:1px solid var(--line); background:#fff;
+  }
+  .bench-top .title { display:flex; align-items:center; gap:10px; font-weight:600; font-size:15px; letter-spacing:-.01em; }
+  .bench-top .title .sq { width:22px; height:22px; border-radius:6px; background:linear-gradient(150deg,var(--iris),var(--sky)); display:grid; place-items:center; }
+  .bench-top .title .sq svg { width:13px; height:13px; }
+  .filters { display:flex; gap:7px; flex-wrap:wrap; }
+  .filt {
+    font-family:'Geist Mono', monospace; font-size:12px; cursor:pointer;
+    padding:6px 12px; border-radius:100px; border:1px solid var(--line-2);
+    background:var(--cream); color:var(--ink-soft); transition:all .16s ease;
+  }
+  .filt:hover { border-color:var(--iris-wash); color:var(--iris-lo); }
+  .filt[aria-pressed="true"] { background:var(--ink); color:var(--cream); border-color:var(--ink); }
+
+  .bench-cols {
+    display:grid; grid-template-columns:1fr 128px 118px; gap:12px;
+    padding:11px 22px; border-bottom:1px solid var(--line);
+    font-family:'Geist Mono', monospace; font-size:11px; text-transform:uppercase; letter-spacing:.05em; color:var(--ink-mute);
+  }
+  .bench-cols span:nth-child(2), .bench-cols span:nth-child(3) { text-align:right; }
+
+  .row { border-bottom:1px solid var(--line); transition:background .16s ease; }
+  .row:last-child { border-bottom:none; }
+  .row.hidden { display:none; }
+  .row-head {
+    display:grid; grid-template-columns:1fr 128px 118px; gap:12px; align-items:center;
+    padding:15px 22px; cursor:pointer; width:100%; text-align:left; background:transparent;
+    border:none; font-family:inherit; color:inherit;
+  }
+  .row-head:hover { background:var(--cream); }
+  .row-head:focus-visible { outline:2px solid var(--iris); outline-offset:-2px; }
+  .rq { display:flex; align-items:flex-start; gap:12px; }
+  .rq .chev {
+    flex:0 0 auto; width:18px; height:18px; margin-top:2px; color:var(--ink-mute);
+    transition:transform .22s ease;
+  }
+  .row[data-open="true"] .chev { transform:rotate(90deg); color:var(--iris); }
+  .rq .txt b { display:block; font-weight:600; font-size:14.5px; color:var(--ink); letter-spacing:-.01em; line-height:1.35; }
+  .rq .txt .jd { display:block; font-size:12.5px; color:var(--ink-mute); margin-top:3px; line-height:1.45; }
+  .rcat {
+    justify-self:end; font-family:'Geist Mono', monospace; font-size:11px;
+    padding:4px 9px; border-radius:6px; border:1px solid var(--line-2); color:var(--ink-soft); white-space:nowrap;
+  }
+  .rcat[data-c="rag"]    { color:var(--iris-lo); border-color:var(--iris-wash); background:rgba(94,90,209,.06); }
+  .rcat[data-c="eval"]   { color:#0d7a52; border-color:#a7dcc7; background:rgba(31,156,107,.08); }
+  .rcat[data-c="deliver"]{ color:#1f6fb0; border-color:var(--sky-soft); background:rgba(62,162,249,.08); }
+  .rcat[data-c="trust"]  { color:var(--magenta); border-color:#f2a6ce; background:rgba(227,5,125,.06); }
+
+  .rmeter { justify-self:end; display:flex; align-items:center; gap:8px; }
+  .rmeter .bar { width:56px; height:6px; border-radius:4px; background:var(--cream-2); overflow:hidden; border:1px solid var(--line-2); }
+  .rmeter .bar i { display:block; height:100%; width:0; border-radius:4px; background:linear-gradient(90deg,var(--iris),var(--sky)); transition:width .5s cubic-bezier(.2,.7,.2,1); }
+  .rmeter .pct { font-family:'Geist Mono', monospace; font-size:11.5px; color:var(--ink-soft); width:34px; text-align:right; }
+
+  .row-body { overflow:hidden; max-height:0; transition:max-height .3s ease; }
+  .row[data-open="true"] .row-body { max-height:1200px; }
+  .rb-inner { padding:2px 22px 20px 52px; }
+  .rb-inner .lead { font-size:14.5px; color:var(--ink-2); line-height:1.62; margin-bottom:13px; }
+  .rb-inner .lead b { color:var(--ink); font-weight:600; }
+  .rb-inner .lead a { color:var(--iris-lo); text-decoration:none; border-bottom:1px solid var(--iris-wash); }
+  .proof { display:flex; gap:11px; padding:11px 0; border-top:1px dashed var(--line-2); }
+  .proof:first-of-type { border-top:none; }
+  .proof .k {
+    flex:0 0 auto; font-family:'Geist Mono', monospace; font-size:10.5px; align-self:flex-start;
+    color:var(--iris-lo); background:rgba(94,90,209,.07); border:1px solid var(--iris-wash);
+    border-radius:6px; padding:3px 8px; white-space:nowrap;
+  }
+  .proof .v { font-size:13.5px; color:var(--ink-soft); line-height:1.55; }
+  .proof .v b { color:var(--ink); font-weight:600; }
+  .proof .v a { color:var(--iris-lo); text-decoration:none; border-bottom:1px solid var(--iris-wash); }
+  .bench-help { padding:13px 22px; border-top:1px solid var(--line); background:#fff; font-size:12.5px; color:var(--ink-mute); display:flex; gap:8px; align-items:center; }
+  .bench-help .mono { color:var(--ink-soft); }
+
+  /* who */
+  .who-grid { display:grid; grid-template-columns:1.3fr .7fr; gap:34px; align-items:start; }
+  .who p { font-size:16.5px; color:var(--ink-2); line-height:1.72; margin-bottom:16px; }
+  .who p strong { color:var(--ink); font-weight:600; }
+  .who p a { color:var(--iris-lo); text-decoration:none; border-bottom:1px solid var(--iris-wash); }
+  .side-card { background:var(--paper); border:1px solid var(--line); border-radius:18px; padding:22px; box-shadow:var(--shadow); }
+  .side-card h4 { font-family:'Geist Mono', monospace; font-size:11.5px; text-transform:uppercase; letter-spacing:.05em; color:var(--ink-mute); margin-bottom:14px; }
+  .side-card dl { display:grid; gap:11px; }
+  .side-card .kv { display:flex; flex-direction:column; gap:2px; padding-bottom:11px; border-bottom:1px solid var(--line); }
+  .side-card .kv:last-child { border-bottom:none; padding-bottom:0; }
+  .side-card .kv dt { font-family:'Geist Mono', monospace; font-size:11px; color:var(--iris-lo); letter-spacing:.02em; }
+  .side-card .kv dd { font-size:14px; color:var(--ink-2); line-height:1.45; }
+  .side-card .kv dd b { color:var(--ink); font-weight:600; }
+
+  /* honest gap */
+  .gap-card { background:linear-gradient(180deg, var(--paper), var(--cream)); border:1px solid var(--line); border-radius:20px; overflow:hidden; box-shadow:var(--shadow); }
+  .gap-head { display:flex; align-items:center; gap:12px; padding:20px 26px; border-bottom:1px solid var(--line); }
+  .gap-head .glyph { font-family:'Geist Mono', monospace; color:var(--iris-lo); font-size:12.5px; border:1px solid var(--iris-wash); border-radius:7px; padding:4px 9px; background:rgba(94,90,209,.06); }
+  .gap-head h2 { margin:0; font-size:21px; }
+  .gap-body { padding:22px 26px; display:grid; grid-template-columns:1fr 1fr; gap:26px; }
+  .gap-col h4 { font-family:'Geist Mono', monospace; font-size:11.5px; text-transform:uppercase; letter-spacing:.05em; margin-bottom:12px; }
+  .gap-col.have h4 { color:var(--ok); }
+  .gap-col.grow h4 { color:var(--iris-lo); }
+  .gap-col ul { list-style:none; }
+  .gap-col li { font-size:14px; color:var(--ink-2); padding:9px 0 9px 24px; position:relative; line-height:1.55; border-top:1px solid var(--line); }
+  .gap-col li:first-child { border-top:none; }
+  .gap-col li::before { position:absolute; left:0; top:9px; font-family:'Geist Mono', monospace; font-size:13px; font-weight:600; }
+  .gap-col.have li::before { content:'+'; color:var(--ok); }
+  .gap-col.grow li::before { content:'\2192'; color:var(--iris-lo); }
+  .gap-foot { padding:20px 26px; border-top:1px solid var(--line); font-size:15px; color:var(--ink-2); line-height:1.66; }
+  .gap-foot b { color:var(--ink); }
+
+  /* final */
+  .final { text-align:center; padding:74px 0 40px; }
+  .final h2 { font-size:clamp(27px,3.8vw,40px); margin-bottom:15px; }
+  .final p { color:var(--ink-2); max-width:520px; margin:0 auto 28px; font-size:16.5px; }
+  .final .cta-row { justify-content:center; }
+
+  footer { border-top:1px solid var(--line-2); padding:28px 0 52px; margin-top:20px; }
+  footer .disc-full { font-size:12.5px; color:var(--ink-mute); line-height:1.65; max-width:800px; }
+  footer .disc-full strong { color:var(--ink-soft); }
+  footer .meta { font-family:'Geist Mono', monospace; font-size:11.5px; color:var(--ink-mute); margin-top:14px; }
+
+  @media (max-width:900px) {
+    .hero { grid-template-columns:1fr; gap:34px; }
+    .who-grid { grid-template-columns:1fr; }
+    .gap-body { grid-template-columns:1fr; gap:16px; }
+    .bench-cols { grid-template-columns:1fr 96px; }
+    .bench-cols span:nth-child(3), .row-head .rmeter { display:none; }
+    .row-head { grid-template-columns:1fr 96px; }
+    .rb-inner { padding-left:22px; }
+    .ribbon .disc { display:none; }
+  }
+</style>
+</head>
+<body>
+<div class="backdrop"><canvas id="dots"></canvas></div>
+
+<main>
+  <div class="wrap">
+    <div class="ribbon">
+      <span class="mark">
+        <svg class="goggles" viewBox="0 0 34 22" fill="none" aria-hidden="true">
+          <rect x="1.2" y="4" width="14" height="13" rx="4" stroke="#111c2d" stroke-width="1.8"/>
+          <rect x="18.8" y="4" width="14" height="13" rx="4" stroke="#111c2d" stroke-width="1.8"/>
+          <path d="M15.2 10.5h3.6" stroke="#111c2d" stroke-width="1.8"/>
+          <path d="M1.2 8C-0.4 6 0.6 2.5 3.2 2.5" stroke="#5e5ad1" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+        Andrew Zoll
+      </span>
+      <span class="disc">Independent application &middot; not affiliated with Snorkel AI</span>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div>
+      <span class="tag mono"><span class="dot"></span> application &middot; applied ai engineer, enterprise solutions</span>
+      <h1>I ship the <span class="accent">solution</span>, then I <span class="under">read the evals</span> until it's actually reliable.</h1>
+      <p class="lede">Hi, I'm Andrew. For a year my only customer has been my own products: I built the <strong>RAG and agentic systems</strong>, then dragged their reliability up by reading eval failures until the numbers moved. That's the Enterprise Solutions loop. This page maps your job description straight onto the things I shipped.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="https://portfolio.andrewzoll.com" target="_blank" rel="noopener">
+          See the portfolio
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <a class="btn btn-ghost" href="https://linkedin.com/in/andrewzoll" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.24 8h4.52V24H.24V8zM8.34 8h4.33v2.19h.06c.6-1.14 2.07-2.34 4.26-2.34 4.56 0 5.4 3 5.4 6.9V24h-4.52v-6.65c0-1.59-.03-3.63-2.21-3.63-2.21 0-2.55 1.73-2.55 3.51V24H8.34V8z"/></svg>
+          Connect on LinkedIn
+        </a>
+      </div>
+    </div>
+
+    <!-- coverage dial (recomputes with the bench below) -->
+    <aside class="dial-card" aria-label="Requirement coverage">
+      <div class="dial-head mono"><span class="pip"></span> coverage.snorkel &middot; jd_to_receipt</div>
+      <div class="dial-body">
+        <div class="dial">
+          <svg width="172" height="172" viewBox="0 0 172 172" aria-hidden="true">
+            <circle cx="86" cy="86" r="72" fill="none" stroke="#e2ded4" stroke-width="13"/>
+            <circle id="dialArc" cx="86" cy="86" r="72" fill="none" stroke="url(#g)" stroke-width="13"
+                    stroke-linecap="round" stroke-dasharray="452.4" stroke-dashoffset="452.4"/>
+            <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#5e5ad1"/><stop offset="1" stop-color="#3ea2f9"/>
+            </linearGradient></defs>
+          </svg>
+          <div class="val"><b id="dialNum">0</b><span class="mono">of 4 groups opened</span></div>
+        </div>
+        <p class="dial-note">Open a requirement in the bench below and this fills in. Nothing here is a mockup, every row expands to the real thing I built.</p>
+      </div>
+      <div class="dial-foot">
+        <div class="cell"><b>2</b><span>businesses on the agent OS</span></div>
+        <div class="cell"><b>4</b><span>products shipped &amp; live</span></div>
+        <div class="cell"><b>&lt; 5%</b><span>false-positive rate, driven down</span></div>
+        <div class="cell"><b>US-remote</b><span>25% travel is fine</span></div>
+      </div>
+    </aside>
+  </header>
+
+  <div class="wrap"><div class="divider"></div></div>
+
+  <!-- THE BENCH -->
+  <section class="block">
+    <div class="wrap">
+      <div class="eyebrow">// the development bench</div>
+      <h2>Your requirements, run one at a time.</h2>
+      <p class="sub">Four responsibilities lifted straight from the posting. Filter by the kind of work, then open a row to see the system I actually shipped that covers it. Each row also carries an honest confidence read, because a bench that only ever shows green isn't a bench.</p>
+
+      <div class="bench">
+        <div class="bench-top">
+          <div class="title">
+            <span class="sq"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4"><path d="M4 7h16M4 12h16M4 17h10"/></svg></span>
+            Requirement ledger
+          </div>
+          <div class="filters" role="group" aria-label="Filter requirements by type">
+            <button class="filt" data-filter="all" aria-pressed="true">all</button>
+            <button class="filt" data-filter="rag" aria-pressed="false">rag &amp; agentic</button>
+            <button class="filt" data-filter="eval" aria-pressed="false">evaluation</button>
+            <button class="filt" data-filter="deliver" aria-pressed="false">delivery</button>
+            <button class="filt" data-filter="trust" aria-pressed="false">customer trust</button>
+          </div>
+        </div>
+
+        <div class="bench-cols">
+          <span>requirement</span><span>type</span><span>confidence</span>
+        </div>
+
+        <!-- ROW 1 -->
+        <div class="row" data-cat="rag" data-open="false">
+          <button class="row-head" aria-expanded="false">
+            <span class="rq">
+              <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 6l6 6-6 6"/></svg>
+              <span class="txt">
+                <b>Build and deploy RAG systems and agentic workflows</b>
+                <span class="jd">JD: "retrieval-augmented generation (RAG), fine-tuning pipelines, prompt engineering recipes and agentic workflows"</span>
+              </span>
+            </span>
+            <span class="rcat mono" data-c="rag">rag &amp; agentic</span>
+            <span class="rmeter"><span class="bar"><i data-pct="88"></i></span><span class="pct mono">88%</span></span>
+          </button>
+          <div class="row-body"><div><div class="rb-inner">
+            <p class="lead">Agentic systems are my default motion, not a demo. I built <b>Veritas</b> to pair retrieval and extraction with a deterministic decision layer, and <b>AndrewOS</b> is a multi-agent orchestration system with real hand-offs between agents.</p>
+            <div class="proof"><span class="k mono">veritas</span><span class="v">A citation-verification pipeline for legal filings at <a href="https://veritaslaw.app" target="_blank" rel="noopener">veritaslaw.app</a>. The model extracts each claim, then <b>deterministic code decides the verdict</b>, so a regulated reader gets a system that shows its work instead of a confident guess.</span></div>
+            <div class="proof"><span class="k mono">andrewos</span><span class="v"><b>AndrewOS</b> runs marketing, content, and ops across two businesses with arena-based delegation: specialized agents, validation at the next level up, and a human kept as final authority at every gate. That is agentic-workflow design under real constraints.</span></div>
+            <div class="proof"><span class="k mono">honest</span><span class="v">My RAG and agent work is applied and production-shaped. I have not stood up a customer's <b>fine-tuning pipeline (SFT/DPO)</b> hands-on yet, which is the nearest adjacent layer I would ramp into.</span></div>
+          </div></div></div>
+        </div>
+
+        <!-- ROW 2 -->
+        <div class="row" data-cat="eval" data-open="false">
+          <button class="row-head" aria-expanded="false">
+            <span class="rq">
+              <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 6l6 6-6 6"/></svg>
+              <span class="txt">
+                <b>Build evaluation workflows for model reliability</b>
+                <span class="jd">JD: "comprehensive evaluation workflows" for model reliability</span>
+              </span>
+            </span>
+            <span class="rcat mono" data-c="eval">evaluation</span>
+            <span class="rmeter"><span class="bar"><i data-pct="94"></i></span><span class="pct mono">94%</span></span>
+          </button>
+          <div class="row-body"><div><div class="rb-inner">
+            <p class="lead">This is the part of the job I'd reach for first. On Veritas I <b>built the evaluation fixtures myself</b> and then drove a high false-positive rate down under 5% by reading eval failures until the numbers moved.</p>
+            <div class="proof"><span class="k mono">the loop</span><span class="v">I did not tune against a benchmark score. I <b>read failures one at a time</b>, found where extraction was over-firing, and tightened the pipeline against a fixed fixture suite until reliability held. That read-the-failures loop is what production evaluation actually is.</span></div>
+            <div class="proof"><span class="k mono">reliability</span><span class="v">The extract-with-model, decide-with-code split means the reliability metric is <b>legible</b>: I can point at exactly why a verdict flipped. For a customer worried about hallucinated output, that legibility is the thing they buy.</span></div>
+            <div class="proof"><span class="k mono">honest</span><span class="v">My eval work has been on my own systems and one problem domain. Snorkel's customers span many, so I'd expect to learn the breadth of eval design your team has already standardized.</span></div>
+          </div></div></div>
+        </div>
+
+        <!-- ROW 3 -->
+        <div class="row" data-cat="deliver" data-open="false">
+          <button class="row-head" aria-expanded="false">
+            <span class="rq">
+              <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 6l6 6-6 6"/></svg>
+              <span class="txt">
+                <b>Standardize solutions into reusable recipes and tooling</b>
+                <span class="jd">JD: "standardize solutions and contribute to internal tooling and best practices"</span>
+              </span>
+            </span>
+            <span class="rcat mono" data-c="deliver">delivery</span>
+            <span class="rmeter"><span class="bar"><i data-pct="85"></i></span><span class="pct mono">85%</span></span>
+          </button>
+          <div class="row-body"><div><div class="rb-inner">
+            <p class="lead">Turning a one-off into a repeatable pattern is the only way a solo operator ships four live products. That instinct is exactly what "standardize into internal recipes" asks for.</p>
+            <div class="proof"><span class="k mono">fieldcommand</span><span class="v"><b>FieldCommand</b> is a multi-tenant SaaS for trade contractors, shipped solo and full-stack: 187,745 lines of TypeScript, PostgreSQL and Supabase, Stripe billing, RBAC and tenant isolation, and four AI features behind per-tenant flags. Live at <a href="https://fieldcommand.io" target="_blank" rel="noopener">fieldcommand.io</a>.</span></div>
+            <div class="proof"><span class="k mono">recipes</span><span class="v">AndrewOS is built as a <b>manager, builder, reviewer, validator</b> pipeline. Every recurring pattern gets codified into a reusable arena with its own written doctrine, which is what contributing repeatable deployment patterns back to a team looks like.</span></div>
+            <div class="proof"><span class="k mono">workshops</span><span class="v">Six years translating regulated, technical work for non-technical people means the <b>enablement-workshop half</b> of this role is already how I operate.</span></div>
+          </div></div></div>
+        </div>
+
+        <!-- ROW 4 -->
+        <div class="row" data-cat="trust" data-open="false">
+          <button class="row-head" aria-expanded="false">
+            <span class="rq">
+              <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M9 6l6 6-6 6"/></svg>
+              <span class="txt">
+                <b>Own the customer relationship, technical to executive</b>
+                <span class="jd">JD: "manage customer relationships" &middot; "presentation skills to technical and executive audiences"</span>
+              </span>
+            </span>
+            <span class="rcat mono" data-c="trust">customer trust</span>
+            <span class="rmeter"><span class="bar"><i data-pct="90"></i></span><span class="pct mono">90%</span></span>
+          </button>
+          <div class="row-body"><div><div class="rb-inner">
+            <p class="lead">The customer-facing half is the part of my background that's oldest and deepest. I've earned trust with people who audit everything, and I've done it under real accountability.</p>
+            <div class="proof"><span class="k mono">retention</span><span class="v">At Edward Jones I held <b>95% client retention across 120+ households</b> through structured discovery and systematic follow-through, not charisma.</span></div>
+            <div class="proof"><span class="k mono">accountability</span><span class="v">Both my advisory years and my RWM integration work ran under <b>FINRA and SEC oversight</b>, so audit-grade discipline and earning a skeptical audience's trust are baked in, not aspirational.</span></div>
+            <div class="proof"><span class="k mono">translate</span><span class="v">My whole edge is holding the <b>ML-engineer conversation and the executive conversation in the same afternoon</b>, which is the exact bridging this role names.</span></div>
+          </div></div></div>
+        </div>
+
+        <div class="bench-help">
+          <span class="mono">tip</span> open any row to run it &middot; use the filters to slice by work type &middot; the dial up top counts groups you've opened
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap"><div class="divider"></div></div>
+
+  <!-- WHO -->
+  <section class="block">
+    <div class="wrap">
+      <div class="eyebrow">// who's applying</div>
+      <h2>The short version</h2>
+      <div class="who-grid">
+        <div class="who">
+          <p>I'm an <strong>AI-native builder and operator</strong> in Pueblo, Colorado, on Mountain Time. Last year I stopped talking about agents and started shipping with them: <strong>Veritas</strong> (an AI verifier for legal filings), <strong>FieldCommand</strong> (a multi-tenant SaaS), and <strong>AndrewOS</strong> (the agent OS that runs the rest). Before that, six years as a financial advisor under FINRA and SEC oversight, where I learned to earn trust with people who check the work.</p>
+          <p>I'm applying to Snorkel because "Applied AI Engineer, Enterprise Solutions" is the <strong>professional version of what I already do for real</strong>: partner on a hard problem, build the RAG or agentic system, read the evals until it's reliable, and hand the customer something they actually run. I'd rather be judged on what I've shipped than on a resume line I don't have, so I built this page and my <a href="https://portfolio.andrewzoll.com" target="_blank" rel="noopener">portfolio</a> to show it.</p>
+        </div>
+        <aside class="side-card">
+          <h4>fit at a glance</h4>
+          <dl>
+            <div class="kv"><dt>stack</dt><dd>Python, TypeScript, Next.js, <b>PostgreSQL / Supabase</b></dd></div>
+            <div class="kv"><dt>ai</dt><dd>RAG, agentic workflows, <b>evaluation loops</b>, structured output</dd></div>
+            <div class="kv"><dt>proof</dt><dd>Veritas evals under 5% FP, <b>187,745 LOC</b> shipped solo</dd></div>
+            <div class="kv"><dt>geo</dt><dd>Remote-US (MT), <b>25% travel welcome</b></dd></div>
+            <div class="kv"><dt>status</dt><dd>US citizen, <b>no sponsorship</b></dd></div>
+          </dl>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- HONEST GAP -->
+  <section class="block">
+    <div class="wrap">
+      <div class="gap-card">
+        <div class="gap-head">
+          <span class="glyph mono">honest.md</span>
+          <h2>Where I'm strong, where I'll ramp</h2>
+        </div>
+        <div class="gap-body">
+          <div class="gap-col have">
+            <h4>Strong today</h4>
+            <ul>
+              <li>Building RAG and agentic systems end to end, solo and agent-first</li>
+              <li>Evaluation loops: writing fixtures, reading failures, driving reliability</li>
+              <li>Extract-with-model, decide-with-code for verifiable output</li>
+              <li>Full-stack delivery: multi-tenant SaaS, billing, RBAC, tenant isolation</li>
+              <li>Structured discovery and earning trust with high-stakes audiences</li>
+              <li>Translating between ML-engineer and executive in the same room</li>
+            </ul>
+          </div>
+          <div class="gap-col grow">
+            <h4>Where I'll ramp</h4>
+            <ul>
+              <li>Deep ML-research depth: hands-on PyTorch / scikit-learn fine-tuning</li>
+              <li>Running SFT / DPO fine-tuning pipelines with a customer</li>
+              <li>No prior W-2 at a data-centric AI lab, my proof is shipped systems</li>
+              <li>The breadth of eval design across many customer domains at once</li>
+            </ul>
+          </div>
+        </div>
+        <div class="gap-foot">
+          The honest caveat: my Python is <b>applied agent and pipeline work, not deep ML-research</b>. I've done the retrieval, extraction, evaluation, and deployment half in production, and I have not spent my days fine-tuning models in PyTorch. I won't overclaim that depth. What I will claim: I've taught myself every layer of the three products above the same way, and the applied-solutions motion this role names, discovery to build to reliable delivery, is already how I work.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL -->
+  <section class="final">
+    <div class="wrap">
+      <h2>Let's put a reliable solution in front of a customer.</h2>
+      <p>That's the job, and it's the thing I most want to be doing. Here's the portfolio and the direct line.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="https://portfolio.andrewzoll.com" target="_blank" rel="noopener">
+          Portfolio
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <a class="btn btn-ghost" href="https://linkedin.com/in/andrewzoll" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.24 8h4.52V24H.24V8zM8.34 8h4.33v2.19h.06c.6-1.14 2.07-2.34 4.26-2.34 4.56 0 5.4 3 5.4 6.9V24h-4.52v-6.65c0-1.59-.03-3.63-2.21-3.63-2.21 0-2.55 1.73-2.55 3.51V24H8.34V8z"/></svg>
+          LinkedIn
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <p class="disc-full"><strong>Not affiliated with, endorsed by, or sponsored by Snorkel AI.</strong> This is an independent, unsolicited job-application page built by Andrew Zoll for the Applied AI Engineer, Enterprise Solutions role. The colors and typography here echo Snorkel's public design language purely to show the application was made with care. All product names and marks belong to their owners. No confidential information is used or implied.</p>
+      <p class="meta">built by hand &middot; andrewzoll.com/for/snorkel &middot; july 2026</p>
+    </div>
+  </footer>
+</main>
+
+<script>
+  // ===== bench: expandable rows + filters + coverage dial =====
+  (function(){
+    var rows   = Array.prototype.slice.call(document.querySelectorAll('.row'));
+    var filts  = Array.prototype.slice.call(document.querySelectorAll('.filt'));
+    var opened = Object.create(null);
+    var dialArc = document.getElementById('dialArc');
+    var dialNum = document.getElementById('dialNum');
+    var CIRC = 452.4;
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function refreshDial(){
+      var n = Object.keys(opened).length;
+      var frac = n / rows.length;
+      dialArc.style.strokeDashoffset = String(CIRC * (1 - frac));
+      dialNum.textContent = String(n);
+    }
+
+    rows.forEach(function(row){
+      var head = row.querySelector('.row-head');
+      var bodyEl = row.querySelector('.row-body');
+      var bar  = row.querySelector('.rmeter i');
+      head.addEventListener('click', function(){
+        var next = row.getAttribute('data-open') !== 'true';
+        row.setAttribute('data-open', String(next));
+        head.setAttribute('aria-expanded', String(next));
+        // Drive expansion explicitly off measured content height (robust everywhere).
+        if (bodyEl){
+          bodyEl.style.maxHeight = next ? (bodyEl.scrollHeight + 40) + 'px' : '0px';
+        }
+        if (next){
+          opened[row.getAttribute('data-cat')] = true;
+          if (bar){ var p = bar.getAttribute('data-pct'); if (reduce){ bar.style.width = p + '%'; } else { requestAnimationFrame(function(){ bar.style.width = p + '%'; }); } }
+          refreshDial();
+        }
+      });
+    });
+
+    function applyFilter(f){
+      filts.forEach(function(b){ b.setAttribute('aria-pressed', String(b.dataset.filter === f)); });
+      rows.forEach(function(row){
+        var show = (f === 'all') || (row.getAttribute('data-cat') === f);
+        row.classList.toggle('hidden', !show);
+      });
+    }
+    filts.forEach(function(b){ b.addEventListener('click', function(){ applyFilter(b.dataset.filter); }); });
+
+    refreshDial();
+  })();
+
+  // ===== ambient frontier dot-drift (Snorkel data motif), lightweight canvas =====
+  (function(){
+    var c = document.getElementById('dots'); if (!c) return;
+    var ctx = c.getContext('2d');
+    var w, h, dpr, pts = [];
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    function resize(){
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      w = c.clientWidth; h = c.clientHeight;
+      c.width = w*dpr; c.height = h*dpr; ctx.setTransform(dpr,0,0,dpr,0,0);
+      var gap = 46, cols = Math.floor(w/gap)+2, rowsN = Math.floor(h/gap)+2;
+      pts = [];
+      for (var x=0; x<cols; x++) for (var y=0; y<rowsN; y++){
+        pts.push({ bx:x*gap, by:y*gap, ph:Math.random()*Math.PI*2, sp:0.4+Math.random()*0.7 });
+      }
+    }
+    function draw(t){
+      ctx.clearRect(0,0,w,h);
+      var time = t*0.0004;
+      for (var i=0;i<pts.length;i++){
+        var p = pts[i];
+        var dx = reduce ? 0 : Math.cos(time*p.sp + p.ph)*3;
+        var dy = reduce ? 0 : Math.sin(time*p.sp + p.ph)*3;
+        var wave = (Math.sin(time + p.bx*0.01 + p.by*0.012)+1)/2; // 0..1 across field
+        var r = 1.1 + wave*1.5;
+        // color drifts cream-line -> iris on the wave crest
+        var a = 0.10 + wave*0.34;
+        var cr = Math.round(210 + (94-210)*wave);
+        var cg = Math.round(206 + (90-206)*wave);
+        var cb = Math.round(196 + (209-196)*wave);
+        ctx.beginPath();
+        ctx.arc(p.bx+dx, p.by+dy, r, 0, Math.PI*2);
+        ctx.fillStyle = 'rgba('+cr+','+cg+','+cb+','+a+')';
+        ctx.fill();
+      }
+      requestAnimationFrame(draw);
+    }
+    resize(); window.addEventListener('resize', resize);
+    requestAnimationFrame(draw);
+  })();
+</script>
+</body>
+</html>
