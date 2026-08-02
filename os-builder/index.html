@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>OS Builder · $5,000 Multi-Agent Operating System for Your Business · Andrew Zoll</title>
-  <meta name="description" content="The OS Builder is a $5,000 productized build of a multi-agent operating system for your business. A folder-based hierarchy of AI agents scoped to sales, marketing, ops, finance, and hiring, with persistent business context shared across every agent. Built on Anthropic Claude and OpenAI GPT-4o."/>
-  <meta name="keywords" content="multi-agent AI system, AI operating system, AI agent framework for small business, Claude agents, GPT-4o agents, business automation agents, AI agent hierarchy, autonomous AI workflow, PersonalOS, AI virtual assistant team"/>
+  <title>OS Builder · An AI setup that actually knows your business · Andrew Zoll</title>
+  <meta name="description" content="Most AI forgets your business the moment you close the window. The OS Builder is a custom setup that remembers your customers, pricing, voice, and tools permanently, with a team of AI assistants that handle the repeatable work while you approve every decision that matters."/>
+  <meta name="keywords" content="AI for small business, AI operating system, business AI assistant, custom AI setup, AI that remembers my business, AI workflow for business owners, personal AI OS"/>
   <link rel="canonical" href="https://andrewzoll.com/os-builder/"/>
   <meta property="og:type" content="website"/>
-  <meta property="og:title" content="OS Builder · $5,000 Multi-Agent Operating System for Your Business"/>
-  <meta property="og:description" content="A productized build of a multi-agent operating system. Folder-based agent hierarchy, persistent business context, Claude and GPT-4o under the hood. $5,000 flat."/>
+  <meta property="og:title" content="OS Builder · An AI setup that actually knows your business"/>
+  <meta property="og:description" content="A custom AI setup that remembers your business permanently, with assistants that handle the repeatable work. You approve every decision that matters."/>
   <meta property="og:url" content="https://andrewzoll.com/os-builder/"/>
   <meta property="og:image" content="https://andrewzoll.com/assets/logo-primary.png"/>
   <meta name="twitter:card" content="summary_large_image"/>
@@ -18,19 +18,18 @@
   <style>
     html,body{margin:0;padding:0;background:#fff;color:#0B1A36;font-family:Inter,sans-serif;-webkit-font-smoothing:antialiased;}
     *{box-sizing:border-box;}
-    .nav{display:flex;justify-content:space-between;align-items:center;padding:20px 24px;border-bottom:1px solid #E8E9EB;background:#fff;}
-    .nav a{font-size:14px;font-weight:500;color:#0B1A36;text-decoration:none;}
-    .nav .logo img{height:24px;display:block;}
-    .nav-links{display:flex;gap:24px;align-items:center;}
-    .nav-cta{background:#0F2144;color:#fff !important;padding:9px 16px;border-radius:6px;font-weight:600;font-size:13px;}
     .wrap{max-width:760px;margin:0 auto;padding:64px 24px 100px;}
     .eyebrow{font-size:12px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:#2F5D3E;margin-bottom:20px;}
     h1{font-size:clamp(36px,5.5vw,56px);font-weight:700;line-height:1.05;letter-spacing:-0.03em;margin:0 0 24px;color:#0B1A36;}
     .lead{font-size:19px;line-height:1.6;color:#5E6169;margin:0 0 40px;}
-    .price-band{background:#FAFAFA;border:1px solid #E8E9EB;border-radius:12px;padding:24px 28px;margin:0 0 56px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;}
-    .price-band .price{font-size:28px;font-weight:700;color:#2F5D3E;font-family:ui-monospace,SF Mono,Menlo,monospace;}
-    .price-band .price-label{font-size:13px;color:#888C94;text-transform:uppercase;letter-spacing:0.14em;margin-bottom:4px;}
-    .price-band a{background:#0F2144;color:#fff;text-decoration:none;padding:14px 22px;font-weight:600;font-size:14px;border-radius:6px;}
+    .paths{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:0 0 56px;}
+    .path{background:#FAFAFA;border:1px solid #E8E9EB;border-radius:12px;padding:24px 26px;display:flex;flex-direction:column;}
+    .path .tag{font-size:12px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:#888C94;margin-bottom:12px;}
+    .path .price{font-size:26px;font-weight:700;color:#2F5D3E;letter-spacing:-0.01em;margin-bottom:6px;}
+    .path .sub{font-size:15px;line-height:1.5;color:#5E6169;margin:0 0 20px;flex:1;}
+    .path a{display:inline-block;text-align:center;background:#0F2144;color:#fff;text-decoration:none;padding:13px 20px;font-weight:600;font-size:14px;border-radius:6px;}
+    .path.soft a{background:#fff;color:#0F2144;border:1px solid #0F2144;}
+    @media (max-width:640px){.paths{grid-template-columns:1fr;}}
     section h2{font-size:28px;font-weight:700;line-height:1.2;letter-spacing:-0.02em;margin:56px 0 20px;color:#0B1A36;}
     section h3{font-size:19px;font-weight:600;margin:24px 0 10px;}
     section p{font-size:17px;line-height:1.65;color:#0B1A36;margin:0 0 20px;}
@@ -39,6 +38,9 @@
     .agent-card{background:#FAFAFA;border:1px solid #E8E9EB;border-radius:10px;padding:20px 24px;margin-bottom:14px;}
     .agent-card .name{font-weight:600;font-size:17px;margin-bottom:6px;}
     .agent-card .desc{font-size:15px;color:#5E6169;line-height:1.55;margin:0;}
+    .quote{margin:40px 0 0;padding:32px 32px;background:#FAFAFA;border-left:3px solid #2F5D3E;border-radius:0 10px 10px 0;}
+    .quote p{font-size:19px;line-height:1.55;color:#0B1A36;margin:0 0 16px;font-weight:500;}
+    .quote .attr{font-size:14px;color:#5E6169;font-weight:600;}
     .cta-band{margin:72px 0 0;padding:40px 32px;background:#0B1A36;color:#fff;border-radius:12px;}
     .cta-band h3{font-size:24px;font-weight:700;margin:0 0 12px;letter-spacing:-0.02em;}
     .cta-band p{color:rgba(255,255,255,0.75);font-size:16px;line-height:1.55;margin:0 0 24px;}
@@ -65,11 +67,11 @@
     "@context": "https://schema.org",
     "@type": "Service",
     "name": "OS Builder",
+    "serviceType": "Custom AI operating system for businesses",
     "url": "https://andrewzoll.com/os-builder/",
     "provider": {"@type":"Person","name":"Andrew Zoll","url":"https://andrewzoll.com/"},
     "areaServed": "United States",
-    "description": "A $5,000 productized build of a multi-agent operating system for your business. Folder-based agent hierarchy, persistent business context, scoped routing. Built on Anthropic Claude and OpenAI GPT-4o with Zapier, Make.com, and n8n integrations.",
-    "offers": {"@type":"Offer","price":"5000","priceCurrency":"USD"}
+    "description": "A custom AI setup that permanently remembers a business (customers, pricing, voice, tools) with a team of AI assistants that handle repeatable work, built so the owner approves every decision that matters and owns the whole system as plain files."
   }
   </script>
 </head>
@@ -85,7 +87,7 @@
       <a href="/#about">About</a>
     </div>
     <div class="az-nav-right">
-      <a href="/#book" class="az-nav-cta az-nav-desktop-cta">Book the assessment →</a>
+      <a href="/#book" class="az-nav-cta az-nav-desktop-cta">Book a call →</a>
       <button class="az-nav-menu-btn" aria-label="Menu" aria-expanded="false" onclick="var m=document.getElementById('az-nav-mobile');var open=m.classList.toggle('open');this.setAttribute('aria-expanded',open);">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="3" y1="7" x2="21" y2="7"/><line x1="3" y1="17" x2="21" y2="17"/></svg>
     </button>
@@ -98,93 +100,110 @@
     <a href="/blog/">Blog</a>
     <a href="/#faq">FAQ</a>
     <a href="/#about">About</a>
-    <a href="/#book" class="az-nav-cta">Book the assessment →</a>
+    <a href="/#book" class="az-nav-cta">Book a call →</a>
   </div>
   <div class="wrap">
-    <div class="eyebrow">OS Builder · The Enterprise Tier</div>
-    <h1>An operating system for your business, staffed by AI agents.</h1>
-    <p class="lead">Stop juggling prompts. The OS Builder is a folder-based AI agent hierarchy that mirrors how your business actually runs. Every agent reads the same persistent context, so the system always knows who you are, what you sell, and how you operate.</p>
+    <div class="eyebrow">OS Builder</div>
+    <h1>Stop re-explaining your business to AI.</h1>
+    <p class="lead">Every time you open ChatGPT, it has forgotten who you are, what you sell, and how you talk. So you paste the same context again, get a generic answer, and stay the only person who holds the whole business together. The OS Builder fixes that. It is a custom AI setup that knows your business permanently, with a team of assistants that handle the repeatable work while you approve every call that matters.</p>
 
-    <div class="price-band">
-      <div>
-        <div class="price-label">Flat fee</div>
-        <div class="price">$5,000</div>
+    <div class="paths">
+      <div class="path soft">
+        <div class="tag">Build it yourself</div>
+        <div class="price">$1,500</div>
+        <p class="sub">The full system as a kit you install and run on your own machine. Same structure, self-serve. Launching soon, get on the list.</p>
+        <a href="mailto:andrew@andrewzoll.com?subject=OS%20Builder%20self-serve%20waitlist">Get on the list →</a>
       </div>
-      <a href="/#book">Start with the assessment →</a>
+      <div class="path">
+        <div class="tag">Built with you</div>
+        <div class="price">Done for you</div>
+        <p class="sub">I build it into your business and tune it to how you actually work. Scoped to you in one conversation.</p>
+        <a href="/#book">Book a call →</a>
+      </div>
     </div>
 
     <section>
-      <h2>What it actually is</h2>
-      <p>A real business runs as a small org chart. The owner gives a goal to a director. The director hands the work down to specialists. The specialists report back. The owner stays out of the details.</p>
-      <p>The OS Builder replicates that structure in software. It is a hierarchy of AI agents, each scoped to one arena of your business, all running on top of Anthropic Claude and OpenAI GPT-4o. You give the top of the chain a goal. It routes the work to the right agent. It brings the result back to you when a human decision is required.</p>
-      <p>This is not a chatbot and it is not a single AI assistant. It is a structured agent network with persistent business context. The system knows your customer ICP, your pricing, your brand voice, your tools, your suppliers, and your common workflows. You never re-explain.</p>
+      <h2>The problem it actually solves</h2>
+      <p>Most owners use AI as a smarter search box. You give it context, it gives you an answer, and the moment you close the window it forgets everything. It never gets better at your business, because it never remembers your business. And every useful thing it does still starts with you, at the keyboard, explaining yourself from scratch.</p>
+      <p>That is the ceiling almost everyone hits. Not "AI can't help," but "AI never keeps what it learns, so I am still the bottleneck."</p>
     </section>
 
     <section>
-      <h2>The agent hierarchy</h2>
-      <p>Built around the arenas every business has. Yours might use different labels, but the shape is the same.</p>
+      <h2>What you actually get</h2>
+      <p>Two things, built to fit how you already run.</p>
+      <p><strong>A memory of your business that never resets.</strong> Your customers, your pricing, your brand voice, your tools, your suppliers, the way you like things done. Set once. Every assistant reads from it. You never re-explain.</p>
+      <p><strong>A team of assistants, each responsible for one part of the work.</strong> One handles sales follow-up. One handles content in your voice. One handles scheduling and onboarding. You hand off a goal in plain English; the right assistant does the assembly and brings it back for your decision.</p>
+      <p>You own all of it. It is plain files on your machine, not a subscription you rent and lose. Nothing sends, spends, or signs without you.</p>
+    </section>
+
+    <section>
+      <h2>The assistants</h2>
+      <p>Built around the parts every business has. Yours may use different labels, but the shape is the same, and you only turn on the ones you need.</p>
 
       <div class="agent-card">
-        <div class="name">Executive Agent</div>
-        <p class="desc">Reads your goal in plain English. Decides which arena owns it. Routes the work and brings the output back to you.</p>
+        <div class="name">The one that runs point</div>
+        <p class="desc">You give it a goal in plain English. It figures out which part of the business owns it, does the work or hands it to the right assistant, and brings the result back when you need to decide something.</p>
       </div>
       <div class="agent-card">
-        <div class="name">Sales and GTM Agent</div>
-        <p class="desc">Owns prospecting, follow-up, proposal drafts, and pipeline tracking. Knows your offer, your ICP, and your voice.</p>
+        <div class="name">Sales and follow-up</div>
+        <p class="desc">Chases leads, drafts follow-ups and proposals, and keeps the pipeline honest. It knows your offer, your ideal customer, and your voice, so nothing sounds generic.</p>
       </div>
       <div class="agent-card">
-        <div class="name">Marketing Agent</div>
-        <p class="desc">Owns content, copy, brand voice, and distribution. Locked to your voice canon so output sounds like you, not like generic AI.</p>
+        <div class="name">Marketing and content</div>
+        <p class="desc">Drafts posts, emails, and copy that sound like you and not like a robot, because it is locked to how you actually write.</p>
       </div>
       <div class="agent-card">
-        <div class="name">Operations Agent</div>
-        <p class="desc">Owns scheduling, onboarding, invoicing, and documentation. Connects to your CRM and project tools through Zapier and Make.com.</p>
+        <div class="name">Operations</div>
+        <p class="desc">Handles scheduling, onboarding, invoicing prep, and documentation, and connects to the tools you already use.</p>
       </div>
       <div class="agent-card">
-        <div class="name">Finance Agent</div>
-        <p class="desc">Owns invoice tracking, expense categorization, and recurring-revenue reporting. Reads your accounting data through scoped integrations.</p>
+        <div class="name">Finance</div>
+        <p class="desc">Tracks invoices, categorizes expenses, and reports on recurring revenue, from the numbers you already have.</p>
       </div>
       <div class="agent-card">
-        <div class="name">Hiring and HR Agent</div>
-        <p class="desc">Owns job-description drafts, candidate review summaries, and onboarding checklists. Surfaces only when you are actively hiring.</p>
+        <div class="name">Hiring</div>
+        <p class="desc">Drafts job descriptions, summarizes candidates, and builds onboarding checklists. Quiet until you are actually hiring.</p>
       </div>
     </section>
 
     <section>
-      <h2>How it is built</h2>
+      <h2>Why it is different from a ChatGPT window</h2>
       <ul>
-        <li>Folder-based agent canon stored in plain markdown so you own the artifact and can audit every instruction</li>
-        <li>Persistent business context loaded by every agent: ICP, pricing, brand voice, common workflows, tools, suppliers</li>
-        <li>Anthropic Claude (Opus, Sonnet, Haiku) and OpenAI GPT-4o as the underlying models, picked per task</li>
-        <li>Zapier, Make.com, and n8n for external system integration</li>
-        <li>Scoped routing so each agent only sees what it needs, not your full business</li>
-        <li>Human gates at every irreversible action so the system never sends, spends, or signs without your approval</li>
+        <li>It remembers your business permanently. You set the context once, not every session.</li>
+        <li>It sounds like you, because it is calibrated to how you actually write, not to a generic default.</li>
+        <li>You approve every decision that matters. It drafts and prepares; it never sends, spends, or signs on its own.</li>
+        <li>You own the whole thing as plain files you can read and audit. There is no black box and no lock-in.</li>
+        <li>It is one system, not a drawer full of scattered chats you can never find again.</li>
       </ul>
     </section>
 
+    <!--
+      TESTIMONIAL — Todd's OWN words, from his 7/24/2026 iMessage. Near-verbatim: only the two
+      obvious typos are fixed ("mean ton" -> "me a ton"; "ass" -> "as") and one jargon clause
+      ("; i.e. DAF Account allocation restrictions") is trimmed with an ellipsis. No words added
+      or reworded. Attribution: first-name + role, per Andrew. Andrew is giving Todd a heads-up;
+      published on Andrew's authority (2026-08-01).
+    -->
     <section>
-      <h2>What you get</h2>
-      <ul>
-        <li>The full agent canon delivered as a working repository you own</li>
-        <li>A 60-day implementation runway with weekly check-ins</li>
-        <li>Voice and context calibration so every agent sounds like your business</li>
-        <li>Integration setup for the top three external systems you depend on</li>
-        <li>Documentation that lets your team extend the system on their own</li>
-      </ul>
+      <h2>What it is like on the other side of the build</h2>
+      <div class="quote">
+        <p>"This AI OS is helping me a ton. Saving so much time on identifying actual constraints per individually restricted accounts... It is also helping me identify specific documents to load into my system, so I have them on record as informing my models and process. Thank you!"</p>
+        <div class="attr">Todd M., independent financial advisor</div>
+      </div>
     </section>
 
     <section>
       <h2>Who this is for</h2>
-      <p>Owners of small businesses with 10 to 50 employees who already have AI somewhere in the workflow and have hit the ceiling of single-prompt assistants. The OS Builder is the right next step when one ChatGPT window is not enough and you find yourself re-explaining your business every time you sit down to use AI.</p>
-      <p>It is not the right starting point. Most owners should run the $997 Assessment first, build one or two workflows from the plan, and only then commit to the OS Builder if the math justifies it.</p>
+      <p>Owners and operators who already use AI somewhere and have hit the ceiling of the single chat window. If you find yourself re-explaining your business every time you sit down to use AI, or you are the only person who can get a useful answer out of it, this is the next step.</p>
+      <p>It is not the right first step for everyone. If you are just getting started with AI, the assessment below will tell you honestly whether the OS Builder is worth it yet, or whether one or two simple workflows get you most of the way for now.</p>
     </section>
 
     <div class="cta-band">
-      <h3>Start with the assessment. Decide on the OS Builder after.</h3>
-      <p>The assessment costs $997 and tells you whether the OS Builder is the right next step for your business. If it is not, the plan will say so. If it is, the assessment credit applies toward the build.</p>
-      <a href="/#book">Book your AI Efficiency Assessment →</a>
+      <h3>Start with a conversation.</h3>
+      <p>Every build is scoped to your actual business, so it starts with a short call, not a shopping cart. We figure out whether this is the right move for you, and what it would cover. If it is not the right fit, I will tell you.</p>
+      <a href="/#book">Book a call →</a>
     </div>
   </div>
-  <div class="footer">© 2026 Andrew Zoll · AI Efficiency Assessments · Pueblo, CO</div>
+  <div class="footer">© 2026 Andrew Zoll · Pueblo, CO</div>
 </body>
 </html>
