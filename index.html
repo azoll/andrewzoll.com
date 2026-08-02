@@ -240,6 +240,14 @@
       .az-problem-grid{grid-template-columns:1fr !important;}
     }
 
+    /* Services grid collapses */
+    @media (max-width: 900px){
+      .az-services-grid{grid-template-columns:1fr !important;}
+    }
+    /* Arrow nudge on service card links */
+    .az-card-hover .az-arrow{display:inline-block; transition: transform 150ms ease-out;}
+    .az-card-hover:hover .az-arrow{transform: translateX(5px);}
+
     /* Two-column sections collapse */
     @media (max-width: 820px){
       .az-audit-grid,
@@ -491,6 +499,7 @@
 <script type="text/babel" src="components/TheAudit.jsx"></script>
 <script type="text/babel" src="components/HowItWorksNew.jsx"></script>
 <script type="text/babel" src="components/SamplePlan.jsx"></script>
+<script type="text/babel" src="components/ServicesGrid.jsx"></script>
 <script type="text/babel" src="components/WhoFor.jsx"></script>
 <script type="text/babel" src="components/AboutInline.jsx"></script>
 <script type="text/babel" src="components/FAQNew.jsx"></script>
@@ -512,6 +521,7 @@
           <TheAudit onBook={openBook}/>
           <HowItWorksNew/>
           <SamplePlan/>
+          <ServicesGrid/>
           <WhoFor/>
           <AboutInline/>
           <FAQNew/>
