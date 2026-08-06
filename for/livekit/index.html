@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>Andrew Zoll for LiveKit &middot; Senior Software Engineer, Agents</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --bg:        #08090b;
+    --bg-2:      #0c0e11;
+    --panel:     #101317;
+    --panel-2:   #0a0c0f;
+    --line:      rgba(255,255,255,.085);
+    --line-2:    rgba(255,255,255,.14);
+    --fg:        #eef1f5;
+    --fg-2:      #b9c0cb;
+    --fg-3:      #7f8794;
+    --fg-4:      #5c636e;
+    --cyan:      #38e1ff;
+    --cyan-dim:  #1aa9c9;
+    --blue:      #2b7fff;
+    --amber:     #ffb86b;
+    --green:     #7ed4a8;
+    --lav:       #a8a0ff;
+    --mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior:auto; } }
+
+  body {
+    font-family:'Inter', system-ui, -apple-system, sans-serif;
+    background:var(--bg);
+    color:var(--fg);
+    font-size:16px;
+    line-height:1.62;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  a { color:inherit; }
+  ::selection { background:rgba(56,225,255,.24); color:#fff; }
+  .mono { font-family:var(--mono); }
+
+  /* ambient backdrop */
+  .backdrop {
+    position:fixed; inset:0; z-index:0; pointer-events:none;
+    background:
+      radial-gradient(900px 540px at 88% -12%, rgba(43,127,255,.16), transparent 62%),
+      radial-gradient(720px 460px at 6% 4%, rgba(56,225,255,.075), transparent 60%);
+  }
+  .backdrop::after {
+    content:''; position:absolute; inset:0;
+    background-image:
+      linear-gradient(rgba(255,255,255,.028) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.028) 1px, transparent 1px);
+    background-size:64px 64px;
+    -webkit-mask-image:radial-gradient(1000px 700px at 62% 0%, #000, transparent 72%);
+    mask-image:radial-gradient(1000px 700px at 62% 0%, #000, transparent 72%);
+  }
+
+  .shell { position:relative; z-index:1; max-width:1180px; margin:0 auto; padding:0 26px; }
+
+  /* top bar */
+  .topbar {
+    display:flex; align-items:center; justify-content:space-between; gap:18px; flex-wrap:wrap;
+    padding:20px 0 18px; border-bottom:1px solid var(--line);
+    font-family:var(--mono); font-size:12px; color:var(--fg-3); letter-spacing:.01em;
+  }
+  .topbar .who { color:var(--fg); font-weight:500; display:flex; align-items:center; gap:10px; }
+  .pulse { width:7px; height:7px; border-radius:50%; background:var(--cyan); box-shadow:0 0 0 4px rgba(56,225,255,.13); flex:0 0 auto; }
+  .topbar .disc { color:var(--fg-4); }
+
+  /* two column frame */
+  .frame { display:grid; grid-template-columns:172px 1fr; gap:56px; align-items:start; }
+  .rail { position:sticky; top:32px; padding-top:78px; }
+  .rail ol { list-style:none; display:flex; flex-direction:column; gap:2px; }
+  .rail button {
+    all:unset; cursor:pointer; display:flex; gap:11px; align-items:baseline;
+    font-family:var(--mono); font-size:12px; color:var(--fg-4);
+    padding:7px 10px; border-radius:7px; width:100%;
+    border-left:2px solid transparent; transition:color .18s, background .18s, border-color .18s;
+  }
+  .rail button:hover { color:var(--fg-2); background:rgba(255,255,255,.035); }
+  .rail button.on { color:var(--cyan); border-left-color:var(--cyan); background:rgba(56,225,255,.06); }
+  .rail button:focus-visible { outline:1px solid var(--cyan); outline-offset:2px; }
+  .rail .num { color:var(--fg-4); }
+  .rail button.on .num { color:var(--cyan-dim); }
+
+  .col { min-width:0; }
+
+  /* hero */
+  .hero { padding:74px 0 0; }
+  .kicker {
+    font-family:var(--mono); font-size:12px; color:var(--cyan); letter-spacing:.03em;
+    text-transform:lowercase; margin-bottom:24px;
+  }
+  h1 {
+    font-size:clamp(31px,4.5vw,55px); line-height:1.05; font-weight:600; letter-spacing:-.032em;
+    max-width:15ch; margin-bottom:26px;
+  }
+  h1 .fade { color:var(--fg-3); }
+  .lede { font-size:18px; color:var(--fg-2); max-width:62ch; }
+  .lede + .lede { margin-top:16px; }
+  .lede strong { color:var(--fg); font-weight:600; }
+
+  .manifest {
+    font-family:var(--mono); font-size:12.5px; color:var(--fg-3);
+    margin-top:34px; display:flex; flex-wrap:wrap; gap:8px 26px;
+  }
+  .manifest span b { color:var(--fg-2); font-weight:500; }
+  .manifest span.neg b { color:var(--amber); }
+
+  /* waveform */
+  .waveband { margin:44px 0 0; }
+  .waveband canvas { display:block; width:100%; height:132px; }
+  .wavecap { font-family:var(--mono); font-size:11.5px; color:var(--fg-4); margin-top:10px; }
+
+  /* sections */
+  section { padding:82px 0 0; scroll-margin-top:24px; }
+  .shead { display:flex; align-items:baseline; gap:16px; padding-bottom:14px; border-bottom:1px solid var(--line); margin-bottom:30px; }
+  .shead .n { font-family:var(--mono); font-size:12px; color:var(--cyan-dim); flex:0 0 auto; }
+  .shead h2 { font-size:23px; font-weight:600; letter-spacing:-.02em; }
+  .body-copy { max-width:70ch; color:var(--fg-2); }
+  .body-copy p + p { margin-top:15px; }
+  .body-copy strong { color:var(--fg); font-weight:600; }
+  .body-copy em { color:var(--fg); font-style:normal; border-bottom:1px solid rgba(56,225,255,.4); }
+
+  /* tabs + code */
+  .exhibit { margin-top:30px; border:1px solid var(--line); border-radius:14px; overflow:hidden; background:var(--panel-2); }
+  .tabs {
+    display:flex; gap:0; overflow-x:auto; border-bottom:1px solid var(--line);
+    background:var(--panel); scrollbar-width:thin;
+  }
+  .tabs::-webkit-scrollbar { height:0; }
+  .tabs button {
+    all:unset; cursor:pointer; white-space:nowrap;
+    font-family:var(--mono); font-size:12px; color:var(--fg-3);
+    padding:14px 17px; border-bottom:2px solid transparent;
+    transition:color .16s, border-color .16s, background .16s;
+  }
+  .tabs button:hover { color:var(--fg-2); background:rgba(255,255,255,.03); }
+  .tabs button[aria-selected="true"] { color:var(--cyan); border-bottom-color:var(--cyan); background:rgba(56,225,255,.05); }
+  .tabs button:focus-visible { outline:1px solid var(--cyan); outline-offset:-3px; }
+
+  .codebar {
+    display:flex; align-items:center; justify-content:space-between; gap:14px;
+    padding:11px 16px; border-bottom:1px solid var(--line); background:rgba(255,255,255,.018);
+    font-family:var(--mono); font-size:11.5px; color:var(--fg-4);
+  }
+  .copybtn {
+    all:unset; cursor:pointer; font-family:var(--mono); font-size:11.5px; color:var(--fg-3);
+    border:1px solid var(--line-2); border-radius:6px; padding:4px 10px;
+    transition:color .16s, border-color .16s, background .16s;
+    /* fixed box so swapping the label never reflows the bar */
+    display:inline-block; min-width:64px; text-align:center;
+  }
+  .copybtn.fail { color:var(--amber); border-color:rgba(255,184,107,.5); }
+  .copybtn:hover { color:var(--cyan); border-color:rgba(56,225,255,.45); background:rgba(56,225,255,.06); }
+  .copybtn:focus-visible { outline:1px solid var(--cyan); outline-offset:2px; }
+  .copybtn.done { color:var(--green); border-color:rgba(126,212,168,.5); }
+
+  pre {
+    margin:0; padding:20px 18px; overflow-x:auto;
+    font-family:var(--mono); font-size:13px; line-height:1.72; color:#c8cdd6;
+    -webkit-overflow-scrolling:touch;
+  }
+  pre::-webkit-scrollbar { height:8px; }
+  pre::-webkit-scrollbar-thumb { background:rgba(255,255,255,.12); border-radius:4px; }
+  .t-com { color:#636a75; }
+  .t-str { color:var(--green); }
+  .t-key { color:var(--lav); }
+  .t-dec { color:var(--amber); }
+  .t-typ { color:var(--cyan); }
+  .t-num { color:var(--amber); }
+
+  .why { padding:18px 18px 20px; border-top:1px solid var(--line); background:rgba(255,255,255,.014); }
+  .why .lbl { font-family:var(--mono); font-size:11px; color:var(--cyan-dim); margin-bottom:8px; }
+  .why p { color:var(--fg-2); font-size:15px; max-width:74ch; }
+  .why p + p { margin-top:11px; }
+  [hidden] { display:none !important; }
+
+  /* receipts */
+  .ledger { margin-top:8px; border-top:1px solid var(--line); }
+  .entry {
+    display:grid; grid-template-columns:180px 1fr; gap:26px;
+    padding:22px 0; border-bottom:1px solid var(--line);
+  }
+  .entry .key { font-family:var(--mono); font-size:12.5px; color:var(--cyan); }
+  .entry .key .sub { display:block; color:var(--fg-4); margin-top:4px; }
+  .entry .val { color:var(--fg-2); font-size:15.5px; max-width:70ch; }
+  .entry .val strong { color:var(--fg); font-weight:600; }
+
+  /* shortfalls */
+  .gaps { display:flex; flex-direction:column; gap:20px; margin-top:26px; }
+  .gap {
+    border:1px solid var(--line); border-left:2px solid var(--amber);
+    border-radius:0 12px 12px 0; padding:20px 22px; background:rgba(255,184,107,.028);
+  }
+  .gap h3 { font-size:16px; font-weight:600; margin-bottom:9px; letter-spacing:-.01em; }
+  .gap .tagline { font-family:var(--mono); font-size:11px; color:var(--amber); margin-bottom:10px; letter-spacing:.02em; }
+  .gap p { color:var(--fg-2); font-size:15.5px; max-width:72ch; }
+  .gap p + p { margin-top:11px; }
+  .gap blockquote {
+    font-family:var(--mono); font-size:12.5px; color:var(--fg-3);
+    border-left:1px solid var(--line-2); padding-left:13px; margin:12px 0;
+  }
+
+  /* proposal */
+  .offer {
+    margin-top:26px; border:1px solid rgba(56,225,255,.24); border-radius:14px;
+    background:linear-gradient(180deg, rgba(56,225,255,.055), rgba(43,127,255,.02));
+    padding:28px 26px;
+  }
+  .offer h3 { font-size:17px; font-weight:600; margin-bottom:11px; letter-spacing:-.01em; }
+  .offer p { color:var(--fg-2); font-size:15.5px; max-width:72ch; }
+  .offer p + p { margin-top:13px; }
+  .offer .divider { height:1px; background:var(--line); margin:24px 0; }
+
+  .cta-row { display:flex; flex-wrap:wrap; gap:12px; margin-top:30px; }
+  .btn {
+    display:inline-flex; align-items:center; gap:9px; text-decoration:none;
+    font-size:14.5px; font-weight:500; padding:12px 19px; border-radius:10px;
+    border:1px solid transparent; transition:transform .15s ease, background .18s, border-color .18s, color .18s;
+  }
+  .btn svg { width:14px; height:14px; flex:0 0 auto; }
+  .btn-p { background:var(--cyan); color:#04222a; font-weight:600; }
+  .btn-p:hover { transform:translateY(-2px); background:#5ce9ff; }
+  .btn-g { border-color:var(--line-2); color:var(--fg); }
+  .btn-g:hover { transform:translateY(-2px); border-color:rgba(56,225,255,.5); color:var(--cyan); }
+  .btn:focus-visible { outline:1px solid var(--cyan); outline-offset:3px; }
+
+  /* footer */
+  footer {
+    margin-top:96px; padding:30px 0 56px; border-top:1px solid var(--line);
+    font-family:var(--mono); font-size:11.5px; color:var(--fg-4);
+    display:flex; flex-wrap:wrap; gap:10px 28px; justify-content:space-between;
+  }
+  footer a { color:var(--fg-3); text-decoration:none; }
+  footer a:hover { color:var(--cyan); }
+
+  @media (max-width:980px) {
+    .frame { grid-template-columns:1fr; gap:0; }
+    .rail { display:none; }
+    .hero { padding-top:48px; }
+    h1 { max-width:18ch; }
+  }
+  @media (max-width:620px) {
+    .shell { padding:0 18px; }
+    .entry { grid-template-columns:1fr; gap:9px; }
+    .entry .key .sub { display:inline; margin:0 0 0 8px; }
+    section { padding-top:62px; }
+    .lede { font-size:16.5px; }
+    pre { font-size:12px; }
+    .waveband canvas { height:104px; }
+    /* Wrap rather than scroll. A hidden scrollbar hides two of the five tabs. */
+    .tabs { flex-wrap:wrap; overflow-x:visible; }
+    .tabs button { padding:12px 13px; flex:1 1 auto; text-align:center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="backdrop" aria-hidden="true"></div>
+
+<div class="shell">
+
+  <div class="topbar">
+    <div class="who"><span class="pulse" aria-hidden="true"></span> andrew zoll</div>
+    <div>senior software engineer, agents &middot; remote, u.s.</div>
+    <div class="disc">not affiliated with, endorsed by, or sponsored by LiveKit</div>
+  </div>
+
+  <div class="frame">
+
+    <nav class="rail" aria-label="Sections">
+      <ol>
+        <li><button type="button" data-to="s0"><span class="num">00</span> opening</button></li>
+        <li><button type="button" data-to="s1"><span class="num">01</span> design calls</button></li>
+        <li><button type="button" data-to="s2"><span class="num">02</span> receipts</button></li>
+        <li><button type="button" data-to="s3"><span class="num">03</span> shortfalls</button></li>
+        <li><button type="button" data-to="s4"><span class="num">04</span> proposal</button></li>
+      </ol>
+    </nav>
+
+    <main class="col">
+
+      <div class="hero">
+        <div class="kicker">application &rsaquo; agents framework &rsaquo; python core</div>
+        <h1>I designed an agent framework's API from scratch. <span class="fade">Nobody can see it.</span></h1>
+        <p class="lede">That second sentence is the honest problem with my application, so I put it in the headline instead of the footnotes. I've made the calls this role is built around, deciding how agents get invoked, how they compose, which invariants the framework enforces, and what the system says when it fails at 3am. I made all of them in private.</p>
+        <p class="lede">Below are five of those calls, written as Python so they read against your framework rather than mine. Then the work behind them, then the three places I don't measure up, then something concrete I'd rather do than argue about years of experience.</p>
+
+        <div class="manifest">
+          <span>python: <b>daily, since july 2026</b></span>
+          <span>typescript: <b>187,745 lines shipped solo</b></span>
+          <span class="neg">public oss: <b>none</b></span>
+        </div>
+
+        <div class="waveband">
+          <canvas id="wave" aria-hidden="true"></canvas>
+          <p class="wavecap" id="wavecap">move your cursor across the strip. it is decoration, but it is at least honest decoration.</p>
+        </div>
+      </div>
+
+      <section id="s0">
+        <div class="shead"><span class="n">00</span><h2>Opening</h2></div>
+        <div class="body-copy">
+          <p>I'm going to skip the paragraph where I explain that LiveKit is building the infrastructure layer for the agentic era. You wrote that line and you already believe it. Here is the part that might actually be useful to you.</p>
+          <p>I built and I run <strong>AndrewOS</strong>, an agent operating system I use every single day. It orchestrates a delegation hierarchy of agents, it runs autonomous loops on a schedule without me watching, it blocks its own output at deterministic gates, it writes a structured trace of every decision a stage makes, and it stops at defined points to ask me a question instead of guessing. Nothing about it is a demo.</p>
+          <p>Building that meant answering the questions this job exists to answer. How does a developer invoke an agent, and what does the call site have to say out loud? What composes cleanly and what quietly does not? Which rules belong in the framework as invariants and which belong to the caller? What does the system hand you at 3am when something has gone wrong in a loop that ran twice while you were asleep?</p>
+          <p>I have real opinions from doing that work, and I'd rather show you the opinions than the resume.</p>
+        </div>
+      </section>
+
+      <section id="s1">
+        <div class="shead"><span class="n">01</span><h2>Five design calls I actually made</h2></div>
+        <div class="body-copy">
+          <p>These are decisions from AndrewOS, translated into Python sketches so they sit next to your framework instead of behind my private repo. <em>The syntax is illustrative. The tradeoffs are the real thing.</em> I'm not claiming this is shipped Python, and I'd rather be caught being precise about that than get a nod for something I didn't do.</p>
+        </div>
+
+        <div class="exhibit">
+          <div class="tabs" role="tablist" aria-label="Design calls">
+            <button role="tab" id="tb-0" aria-controls="tp-0" aria-selected="true">01 &nbsp;composition</button>
+            <button role="tab" id="tb-1" aria-controls="tp-1" aria-selected="false" tabindex="-1">02 &nbsp;invariants</button>
+            <button role="tab" id="tb-2" aria-controls="tp-2" aria-selected="false" tabindex="-1">03 &nbsp;determinism</button>
+            <button role="tab" id="tb-3" aria-controls="tp-3" aria-selected="false" tabindex="-1">04 &nbsp;observability</button>
+            <button role="tab" id="tb-4" aria-controls="tp-4" aria-selected="false" tabindex="-1">05 &nbsp;human gates</button>
+          </div>
+
+          <div class="codebar">
+            <span id="codename">orchestrate.py</span>
+            <button type="button" class="copybtn" id="copybtn">copy</button>
+          </div>
+
+          <div role="tabpanel" id="tp-0" aria-labelledby="tb-0" data-file="orchestrate.py">
+<pre><code># Two ways to run work, and the choice itself is the API.
+# The caller has to say which one it wants, at the call site.
+
+@orchestrator.route("inbound")
+async def dispatch(task: Task, ctx: Context) -&gt; Result:
+    plan = ctx.decompose(task)
+
+    if plan.is_sequential:
+        # Same context. The next step reads the prior result,
+        # so fidelity beats wall clock and we stay in-process.
+        return await ctx.call(plan.steps)
+
+    # Independent work. Fan out, keep the parent free,
+    # accept that each child starts cold.
+    return await ctx.gather(
+        ctx.spawn(step, isolation="fresh") for step in plan.steps
+    )
+</code></pre>
+            <div class="why">
+              <div class="lbl">why it looks like that</div>
+              <p>The interesting decision here is not the scheduler. It is that I refused to let the framework infer sequential against parallel on the caller's behalf. Inference is right on the cheap cases and wrong on the expensive ones, and the expensive ones are exactly where a developer needs to know what happened.</p>
+              <p>So the call site declares intent and the framework honors it. That costs the developer one extra thought and it buys back every debugging session where somebody has to reconstruct why their steps ran out of order.</p>
+            </div>
+          </div>
+
+          <div role="tabpanel" id="tp-1" aria-labelledby="tb-1" data-file="review.py" hidden>
+<pre><code>class Reviewer(Agent):
+    """A reviewer never shares a context with what it reviews."""
+
+    isolation = Isolation.FRESH   # deliberately not configurable
+
+    async def run(self, artifact: Artifact) -&gt; Findings:
+        if artifact.produced_by is self.identity:
+            raise SelfReviewError(artifact.produced_by)
+        return await self.inspect(artifact)
+</code></pre>
+            <div class="why">
+              <div class="lbl">why it looks like that</div>
+              <p>This one started as a config flag and I took the flag away, because the flag kept getting flipped. An agent that reviews its own output agrees with itself close to every time, and it agrees in a confident voice, which is worse than disagreeing.</p>
+              <p>My rule for framework design came out of this. If an invariant is load bearing and a tired person can turn it off at 11pm, it does not belong in configuration. Put it in the type and let the exception be loud.</p>
+            </div>
+          </div>
+
+          <div role="tabpanel" id="tp-2" aria-labelledby="tb-2" data-file="gates.py" hidden>
+<pre><code># Code computes and verifies. The model extracts and judges.
+# Anything checkable deterministically is not a prompt.
+
+GATES = (
+    lint_gate,      # non-zero exit blocks the send outright
+    dedupe_gate,    # queries the live source, never a local log
+    freeze_gate,    # one flag file halts every outbound loop
+)
+
+async def emit(draft: Draft) -&gt; Sent | Blocked:
+    for gate in GATES:
+        verdict = gate(draft)
+        if not verdict.ok:
+            return Blocked(gate=gate.name, reason=verdict.reason)
+    return await transport.send(draft)
+</code></pre>
+            <div class="why">
+              <div class="lbl">why it looks like that</div>
+              <p>Every gate returns a reason rather than a boolean. A framework that tells a developer no without telling them why is a framework people learn to route around, and the routing around is invisible until it is a support ticket.</p>
+              <p>The dedupe gate line matters more than it reads. I originally checked a local run log, which was fast and which lied whenever a run half finished. It now queries the live source of truth and it fails closed. Fast and wrong is the worst quadrant to design a default into.</p>
+            </div>
+          </div>
+
+          <div role="tabpanel" id="tp-3" aria-labelledby="tb-3" data-file="trace.py" hidden>
+<pre><code>@dataclass(frozen=True)
+class TraceEvent:
+    stage: str
+    received: Ref           # what came in
+    decided: str            # what this stage chose
+    because: str            # why, in one line
+    handed_to: str | None   # where it went next, if anywhere
+
+# Append-only, one file per run. A finished run reads top to
+# bottom as a replay of every decision, including the refusals.
+</code></pre>
+            <div class="why">
+              <div class="lbl">why it looks like that</div>
+              <p>This is the piece I would push hardest on if I joined. Agent systems fail quietly, and they fail in the space between two stages, which is precisely the space no single stage logs. If the trace is bolted on afterward, the first real production incident becomes archaeology instead of a read.</p>
+              <p>The <code class="mono">because</code> field is the one people cut and the one I would defend. A trace that records what happened without recording why is a transcript, and a transcript does not tell you which prompt or which threshold to change.</p>
+            </div>
+          </div>
+
+          <div role="tabpanel" id="tp-4" aria-labelledby="tb-4" data-file="policy.py" hidden>
+<pre><code>class Gate(Enum):
+    AUTO    = auto()   # reversible and cheap, runs unattended
+    NOTIFY  = auto()   # runs, then tells the human afterward
+    CONFIRM = auto()   # stops and waits for a human answer
+
+def gate_for(action: Action) -&gt; Gate:
+    if action.is_irreversible or action.spends_money:
+        return Gate.CONFIRM
+    if action.is_externally_visible:
+        return Gate.NOTIFY
+    return Gate.AUTO
+</code></pre>
+            <div class="why">
+              <div class="lbl">why it looks like that</div>
+              <p>The gate is a property of the action, not a setting on the agent. That keeps the safe default in exactly one function instead of scattered across every caller who was in a hurry.</p>
+              <p>It also means adding a new action type forces you through this function, so the question of whether a human should see it gets asked at authoring time rather than after the first thing gets sent that should not have been sent.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="s2">
+        <div class="shead"><span class="n">02</span><h2>What sits behind those opinions</h2></div>
+        <div class="body-copy">
+          <p>Every claim on this page traces back to one of these. I've marked what is current, what is private, and what is old, because the mix matters as much as the list.</p>
+        </div>
+
+        <div class="ledger">
+          <div class="entry">
+            <div class="key">coder<span class="sub">current, w-2</span></div>
+            <div class="val"><strong>Senior Software Engineer, AI Solutions</strong>. I write Python every day in a large production codebase on a two-person team, and I ship directly to production. I own test coverage, the release process, and the operating docs. I started in July 2026, so read this as current rather than as tenure.</div>
+          </div>
+          <div class="entry">
+            <div class="key">andrewos<span class="sub">private</span></div>
+            <div class="val">The agent operating system described above. Multi-agent orchestration with a delegation hierarchy, autonomous scheduled loops, a deterministic gate and lint layer that can block a send, structured agent traces for observability, and explicit human gatekeeping points. It is the most relevant thing I have built and it is the thing you cannot look at, which I deal with in the next section.</div>
+          </div>
+          <div class="entry">
+            <div class="key">fieldcommand<span class="sub">shipped, solo</span></div>
+            <div class="val"><strong>187,745 lines of TypeScript</strong>, built alone and AI-assisted end to end. PostgreSQL on Supabase, Stripe billing, role-based access control, tenant isolation, and four AI features behind per-tenant feature flags. Your nice-to-have list mentions familiarity with the TypeScript and JavaScript ecosystems, and this is where mine comes from.</div>
+          </div>
+          <div class="entry">
+            <div class="key">veritas<span class="sub">live</span></div>
+            <div class="val">A citation-verification platform for legal filings. It has a verification pipeline, deliberately hedged verdict semantics because an overconfident wrong answer costs somebody a sanctions hearing, and a fixture suite that gates every release. Choosing the exact wording a verdict is allowed to use is an API design problem wearing a legal costume.</div>
+          </div>
+          <div class="entry">
+            <div class="key">career-ops<span class="sub">internal tooling</span></div>
+            <div class="val">An AI-driven job-search pipeline I built for myself. It scans postings through the Greenhouse, Ashby, and Lever APIs, scores offers, generates tailored CVs, and analyzes patterns across runs. It is how I found this posting, and it is the most direct SDK-consumption and developer-tooling work I can point at.</div>
+          </div>
+          <div class="entry">
+            <div class="key">ryleigh wm<span class="sub">prior</span></div>
+            <div class="val">I integrated Redtail CRM with the ChatGPT API and removed more than 20 hours of manual work per month. It is small and it is old. I include it because that is where the habit of automating my own job started.</div>
+          </div>
+          <div class="entry">
+            <div class="key">school<span class="sub">2013</span></div>
+            <div class="val">B.A. from Ozark Christian College. That is not a computer science degree and I am not going to dress it up as one. Your posting does not ask for a degree, so I will leave it there.</div>
+          </div>
+        </div>
+      </section>
+
+      <section id="s3">
+        <div class="shead"><span class="n">03</span><h2>Where I fall short</h2></div>
+        <div class="body-copy">
+          <p>This role has the sharpest gaps of anything I'm applying to. You'd find all three of them anyway, so you should get them from me, in the order I think they should matter to you.</p>
+        </div>
+
+        <div class="gaps">
+          <div class="gap">
+            <div class="tagline">gap 01 &nbsp;/&nbsp; the one that should worry you most</div>
+            <h3>My production language is TypeScript, not Python</h3>
+            <blockquote>"Strong experience building production systems in Python"</blockquote>
+            <p>I write Python daily right now, in a large production codebase, on a two-person team, shipping to prod. That started in July 2026. It is weeks of professional Python, not years of it, and no amount of framing turns weeks into years.</p>
+            <p>What I'd argue is narrower than the requirement. Language fluency and framework design judgment are different skills that happen to travel together on most resumes. Mine came apart, because I built the judgment in TypeScript and I'm rebuilding the fluency in Python now. If the bar is genuinely five years of production Python, I am under it, and you should filter me out here rather than in round three.</p>
+          </div>
+
+          <div class="gap">
+            <div class="tagline">gap 02 &nbsp;/&nbsp; the one I can't fix quickly</div>
+            <h3>I have no public open-source track record</h3>
+            <blockquote>"The best way to impress us is with thoughtful Issues or PRs on our GitHub repos"</blockquote>
+            <p>I don't have those, and I'm not going to file a hurried drive-by PR the week I apply and pretend it demonstrates something. You would see straight through it and you would be right to.</p>
+            <p>The uncomfortable version is this. My strongest work is AndrewOS, it is private because it runs my actual business and my household, and so the best evidence I have is the least visible evidence I have. That is a real cost of how I've built things and I'm the one who pays it. If public repos are a hard filter for this role, this application ends here and I understand why.</p>
+          </div>
+
+          <div class="gap">
+            <div class="tagline">gap 03 &nbsp;/&nbsp; the one I think matters least</div>
+            <h3>My formally-titled engineering tenure is short</h3>
+            <p>I spent years as a financial advisor while building software the whole time, and the job title only caught up to the work recently. So the resume reads younger than the output does.</p>
+            <p>I mention it because a recruiter screen will surface it and I'd rather it not look like something I hid. If your bar is a decade of framework work at named infrastructure companies, I don't clear it.</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="s4">
+        <div class="shead"><span class="n">04</span><h2>What I'd rather do than argue about it</h2></div>
+
+        <div class="offer">
+          <h3>Option one: hand me a problem and read what comes back</h3>
+          <p>Pick an abstraction in the Agents framework that you're not happy with. It can be one that shipped and now feels wrong, or one your team keeps relitigating and hasn't settled. Send it to me.</p>
+          <p>Within a week I'll send back a written proposal. The API sketched in code, the tradeoff named plainly, the migration cost for people already on the old shape, and the strongest case I can build against my own version. You don't have to run me through a loop to read it. If it's shallow you'll know in ten minutes and we're done cheaply. If it's good, you'll have learned more about how I think than four interviews would tell you.</p>
+
+          <div class="divider"></div>
+
+          <h3>Option two: watch the private thing, live</h3>
+          <p>I'll share my screen and walk you through AndrewOS, and you pick which part gets opened. The orchestration layer, the gate layer, the trace format, the place where a loop stops to ask me a question. I can't hand over the repository, so I'll hand over the reasoning and you can push on it in real time.</p>
+          <p>Either option costs you less than a phone screen and tells you considerably more. I'd take either one.</p>
+        </div>
+
+        <div class="cta-row">
+          <a class="btn btn-p" href="https://portfolio.andrewzoll.com" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
+            See the portfolio
+          </a>
+          <a class="btn btn-g" href="https://linkedin.com/in/andrewzoll" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M7 10v7M7 6.5v.01M12 17v-4a3 3 0 0 1 6 0v4M3 3h18v18H3z"/></svg>
+            Connect on LinkedIn
+          </a>
+        </div>
+      </section>
+
+      <footer>
+        <span>built by andrew zoll for one application. not a template.</span>
+        <span>not affiliated with, endorsed by, or sponsored by LiveKit.</span>
+        <span><a href="https://portfolio.andrewzoll.com" target="_blank" rel="noopener">portfolio.andrewzoll.com</a></span>
+      </footer>
+
+    </main>
+  </div>
+</div>
+
+<script>
+(function () {
+  'use strict';
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- python highlighter ---------- */
+  var PY = /('''[\s\S]*?'''|"""[\s\S]*?""")|(#[^\n]*)|('(?:[^'\\\n]|\\.)*'|"(?:[^"\\\n]|\\.)*")|\b(async|await|def|class|return|if|elif|else|for|while|in|is|not|and|or|raise|from|import|with|try|except|finally|yield|lambda|pass|None|True|False|self)\b|(@[A-Za-z_][\w.]*)|\b([A-Z][A-Za-z0-9_]*)\b|\b(\d+(?:\.\d+)?)\b/g;
+
+  function esc(s) {
+    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  function highlight(src) {
+    var out = '', last = 0, m;
+    PY.lastIndex = 0;
+    while ((m = PY.exec(src)) !== null) {
+      out += esc(src.slice(last, m.index));
+      var cls = m[1] ? 't-str' : m[2] ? 't-com' : m[3] ? 't-str'
+              : m[4] ? 't-key' : m[5] ? 't-dec' : m[6] ? 't-typ' : 't-num';
+      out += '<span class="' + cls + '">' + esc(m[0]) + '</span>';
+      last = m.index + m[0].length;
+    }
+    out += esc(src.slice(last));
+    return out;
+  }
+
+  var blocks = document.querySelectorAll('pre > code');
+  for (var i = 0; i < blocks.length; i++) {
+    var raw = blocks[i].textContent;
+    blocks[i].setAttribute('data-raw', raw);
+    blocks[i].innerHTML = highlight(raw);
+  }
+
+  /* ---------- tabs ---------- */
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('[role="tab"]'));
+  var panels = tabs.map(function (t) { return document.getElementById(t.getAttribute('aria-controls')); });
+  var codename = document.getElementById('codename');
+
+  function select(idx, focusIt) {
+    tabs.forEach(function (t, j) {
+      var on = j === idx;
+      t.setAttribute('aria-selected', on ? 'true' : 'false');
+      if (on) { t.removeAttribute('tabindex'); } else { t.setAttribute('tabindex', '-1'); }
+      if (panels[j]) { panels[j].hidden = !on; }
+    });
+    if (panels[idx] && codename) {
+      codename.textContent = panels[idx].getAttribute('data-file') || '';
+    }
+    resetCopy();
+    if (focusIt) { tabs[idx].focus(); }
+  }
+
+  tabs.forEach(function (t, idx) {
+    t.addEventListener('click', function () { select(idx, false); });
+    t.addEventListener('keydown', function (e) {
+      var next = null;
+      if (e.key === 'ArrowRight') { next = (idx + 1) % tabs.length; }
+      else if (e.key === 'ArrowLeft') { next = (idx - 1 + tabs.length) % tabs.length; }
+      else if (e.key === 'Home') { next = 0; }
+      else if (e.key === 'End') { next = tabs.length - 1; }
+      if (next !== null) { e.preventDefault(); select(next, true); }
+    });
+  });
+
+  /* ---------- copy button ---------- */
+  var copyBtn = document.getElementById('copybtn');
+  var copyTimer = null;
+
+  function resetCopy() {
+    if (!copyBtn) { return; }
+    if (copyTimer) { clearTimeout(copyTimer); copyTimer = null; }
+    copyBtn.textContent = 'copy';
+    copyBtn.classList.remove('done', 'fail');
+    copyBtn.removeAttribute('title');
+  }
+
+  function activePanel() {
+    for (var j = 0; j < panels.length; j++) {
+      if (panels[j] && !panels[j].hidden) { return panels[j]; }
+    }
+    return panels[0];
+  }
+
+  function fallbackCopy(text) {
+    // Selecting an offscreen node can yank the page scroll, so pin it at the
+    // top-left, make it invisible, and put the scroll position back after.
+    var y = window.pageYOffset, x = window.pageXOffset;
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.setAttribute('readonly', '');
+    ta.style.cssText = 'position:fixed;top:0;left:0;width:1px;height:1px;' +
+                       'padding:0;border:0;opacity:0;pointer-events:none;';
+    document.body.appendChild(ta);
+    try { ta.focus({ preventScroll: true }); } catch (e0) { ta.focus(); }
+    if (ta.setSelectionRange) { ta.setSelectionRange(0, text.length); } else { ta.select(); }
+    var ok = false;
+    try { ok = document.execCommand('copy'); } catch (err) { ok = false; }
+    document.body.removeChild(ta);
+    restoreScroll(x, y);
+    return ok;
+  }
+
+  // 'instant', not 'auto'. 'auto' defers to the CSS scroll-behavior rule,
+  // which is smooth here, and an animated restore is not a restore.
+  function restoreScroll(x, y) {
+    if (window.pageYOffset === y && window.pageXOffset === x) { return; }
+    try { window.scrollTo({ left: x, top: y, behavior: 'instant' }); }
+    catch (err) { window.scrollTo(x, y); }
+  }
+
+  function flagCopied(ok) {
+    if (!copyBtn) { return; }
+    copyBtn.textContent = ok ? 'copied' : 'blocked';
+    copyBtn.classList.add(ok ? 'done' : 'fail');
+    if (!ok) {
+      copyBtn.setAttribute('title', 'the browser blocked clipboard access, so select the code and copy it by hand');
+    }
+    copyTimer = setTimeout(resetCopy, 1800);
+  }
+
+  if (copyBtn) {
+    copyBtn.addEventListener('click', function () {
+      var p = activePanel();
+      var code = p ? p.querySelector('code') : null;
+      if (!code) { return; }
+      var text = code.getAttribute('data-raw') || code.textContent;
+      var settled = false;
+      function finish(ok) {
+        if (settled) { return; }
+        settled = true;
+        flagCopied(ok);
+      }
+      // The fallback touches selection and focus, so it must run at most once.
+      function tryFallback() {
+        if (settled) { return; }
+        finish(fallbackCopy(text));
+      }
+      // Watchdog. If the clipboard permission never resolves, the button
+      // still has to say something rather than sit there looking broken.
+      var watchdog = setTimeout(tryFallback, 900);
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(
+          function () { clearTimeout(watchdog); finish(true); },
+          function () { clearTimeout(watchdog); tryFallback(); }
+        );
+      } else {
+        clearTimeout(watchdog);
+        tryFallback();
+      }
+    });
+  }
+
+  /* ---------- rail scroll spy ---------- */
+  var railBtns = Array.prototype.slice.call(document.querySelectorAll('.rail button'));
+  var sections = railBtns.map(function (b) { return document.getElementById(b.getAttribute('data-to')); });
+
+  railBtns.forEach(function (b, idx) {
+    b.addEventListener('click', function () {
+      var target = sections[idx];
+      if (target) { target.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' }); }
+    });
+  });
+
+  function markRail(idx) {
+    railBtns.forEach(function (b, j) { b.classList.toggle('on', j === idx); });
+  }
+
+  markRail(0); // top of the page belongs to section 00 until the spy says otherwise
+
+  if ('IntersectionObserver' in window) {
+    var seen = {};
+    var spy = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { seen[en.target.id] = en.isIntersecting ? en.intersectionRatio : 0; });
+      var best = -1, bestVal = 0;
+      sections.forEach(function (s, j) {
+        if (!s) { return; }
+        var v = seen[s.id] || 0;
+        if (v > bestVal) { bestVal = v; best = j; }
+      });
+      if (best >= 0) { markRail(best); return; }
+      // Nothing is in the reading band, which happens at the very top of the
+      // page and in the seams between sections. Fall back to the last section
+      // that starts above the fold rather than leaving a stale highlight.
+      var mid = window.innerHeight * 0.35, fb = 0;
+      sections.forEach(function (s, j) {
+        if (s && s.getBoundingClientRect().top <= mid) { fb = j; }
+      });
+      markRail(fb);
+    }, { rootMargin: '-12% 0px -55% 0px', threshold: [0, 0.15, 0.4, 0.75, 1] });
+    sections.forEach(function (s) { if (s) { spy.observe(s); } });
+  }
+
+  /* ---------- waveform ---------- */
+  (function wave() {
+    var c = document.getElementById('wave');
+    if (!c || !c.getContext) { return; }
+    var ctx = c.getContext('2d');
+    var w = 0, h = 0, bars = 40, running = false, raf = null, t = 0;
+    var focus = 0.5, targetFocus = 0.5, gain = 0.42, targetGain = 0.42;
+    var seeds = [];
+
+    function reseed(n) {
+      seeds = [];
+      for (var i = 0; i < n; i++) { seeds.push(i * 0.41 + Math.sin(i * 1.73) * 1.1); }
+    }
+
+    function resize() {
+      var dpr = Math.min(window.devicePixelRatio || 1, 2);
+      var r = c.getBoundingClientRect();
+      w = r.width; h = r.height;
+      if (w <= 0 || h <= 0) { return; }
+      c.width = Math.round(w * dpr);
+      c.height = Math.round(h * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      bars = Math.max(24, Math.min(120, Math.floor(w / 11)));
+      reseed(bars);
+      if (!running) { draw(); }
+    }
+
+    function draw() {
+      if (w <= 0 || h <= 0) { return; }
+      ctx.clearRect(0, 0, w, h);
+      focus += (targetFocus - focus) * 0.09;
+      gain += (targetGain - gain) * 0.07;
+
+      var slot = w / bars;
+      var bw = Math.max(2, slot - 3);
+      var mid = h * 0.52;
+      var grad = ctx.createLinearGradient(0, 0, w, 0);
+      grad.addColorStop(0, '#2b7fff');
+      grad.addColorStop(0.55, '#38e1ff');
+      grad.addColorStop(1, '#1aa9c9');
+      ctx.fillStyle = grad;
+
+      for (var i = 0; i < bars; i++) {
+        var p = i / (bars - 1);
+        var s = seeds[i];
+        var base = 0.30
+          + 0.34 * Math.sin(t * 0.9 + s)
+          + 0.22 * Math.sin(t * 1.7 + s * 2.1)
+          + 0.14 * Math.sin(t * 2.9 + s * 0.6);
+        var d = p - focus;
+        var lens = Math.exp(-(d * d) / 0.014);
+        var v = Math.abs(base) * (0.34 + gain) * (0.55 + 1.05 * lens);
+        v = Math.max(0.012, Math.min(1, v));
+
+        var bh = v * (h * 0.44);
+        ctx.globalAlpha = 0.30 + 0.62 * Math.min(1, v * 1.25);
+        var x = i * slot + (slot - bw) / 2;
+        ctx.fillRect(x, mid - bh, bw, bh);
+        ctx.globalAlpha *= 0.34;
+        ctx.fillRect(x, mid + 2, bw, bh * 0.5);
+      }
+      ctx.globalAlpha = 1;
+
+      ctx.strokeStyle = 'rgba(255,255,255,.07)';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(0, Math.round(mid) + 0.5);
+      ctx.lineTo(w, Math.round(mid) + 0.5);
+      ctx.stroke();
+    }
+
+    function loop() {
+      t += 0.032;
+      draw();
+      raf = window.requestAnimationFrame(loop);
+    }
+
+    function start() {
+      if (running || reduce) { return; }
+      running = true;
+      raf = window.requestAnimationFrame(loop);
+    }
+
+    function stop() {
+      running = false;
+      if (raf) { window.cancelAnimationFrame(raf); raf = null; }
+    }
+
+    c.addEventListener('pointermove', function (e) {
+      var r = c.getBoundingClientRect();
+      targetFocus = Math.max(0, Math.min(1, (e.clientX - r.left) / r.width));
+      targetGain = 0.78;
+      if (reduce) { draw(); }
+    });
+    c.addEventListener('pointerleave', function () { targetGain = 0.42; if (reduce) { draw(); } });
+
+    window.addEventListener('resize', resize);
+    resize();
+
+    if (reduce) {
+      var cap = document.getElementById('wavecap');
+      if (cap) { cap.textContent = 'motion is reduced per your system setting. the strip still tracks your cursor.'; }
+      draw();
+    } else if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) { if (en.isIntersecting) { start(); } else { stop(); } });
+      }, { threshold: 0.01 }).observe(c);
+    } else {
+      start();
+    }
+  })();
+})();
+</script>
+</body>
+</html>

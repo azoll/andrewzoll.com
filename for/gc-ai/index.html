@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>Andrew Zoll for GC AI &middot; Member of Technical Staff, Forward Deployed Engineer</title>
+<meta name="description" content="A long-form application from Andrew Zoll for the Forward Deployed Engineer role at GC AI.">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500;600;700;800&family=Fragment+Mono&display=swap');
+
+  :root {
+    --ink:        #05151b;
+    --ink-2:      #0a2129;
+    --ink-3:      #103038;
+    --deep:       #003047;
+    --paper:      #fffaf5;
+    --cream:      #f0e9e2;
+    --taupe:      #cab8b0;
+    --teal:       #349294;
+    --teal-hi:    #45b0b1;
+    --teal-lo:    #26706f;
+    --sky:        #50abda;
+
+    --on-dark:      #fffaf5;
+    --on-dark-2:    rgba(255,250,245,.76);
+    --on-dark-3:    rgba(255,250,245,.52);
+    --on-dark-line: rgba(255,250,245,.13);
+
+    --on-light:      #05151b;
+    --on-light-2:    #3c4c51;
+    --on-light-3:    #6d7c80;
+    --on-light-line: #ddd3c9;
+
+    --gut: 30px;
+    --max: 1180px;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; scroll-padding-top:86px; }
+
+  body {
+    font-family:'Hanken Grotesk', system-ui, -apple-system, sans-serif;
+    background:var(--paper);
+    color:var(--on-light);
+    font-size:16.5px;
+    line-height:1.62;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  a { color:inherit; }
+  ::selection { background:rgba(52,146,148,.28); }
+
+  .mono {
+    font-family:'Fragment Mono', ui-monospace, SFMono-Regular, monospace;
+    font-size:11.5px; letter-spacing:.09em; text-transform:uppercase;
+  }
+  .wrap { max-width:var(--max); margin:0 auto; padding:0 var(--gut); }
+
+  /* ============ sticky masthead ============ */
+  .masthead {
+    position:sticky; top:0; z-index:60;
+    background:rgba(5,21,27,.92);
+    backdrop-filter:saturate(150%) blur(14px);
+    -webkit-backdrop-filter:saturate(150%) blur(14px);
+    border-bottom:1px solid rgba(255,250,245,.11);
+  }
+  .mast-inner {
+    display:flex; align-items:center; justify-content:space-between; gap:22px;
+    height:62px;
+  }
+  .mark { display:flex; align-items:center; gap:11px; flex:0 0 auto; text-decoration:none; }
+  .mark .glyph {
+    width:24px; height:24px; flex:0 0 auto;
+    border:1.5px solid var(--teal); border-radius:5px;
+    display:grid; place-items:center;
+    font-family:'Fragment Mono', monospace; font-size:10.5px; color:var(--teal);
+    letter-spacing:0;
+  }
+  .mark .who { color:var(--on-dark); font-weight:600; font-size:14.5px; letter-spacing:-.012em; }
+  .mark .who span { color:var(--on-dark-3); font-weight:400; }
+
+  .secnav { display:flex; align-items:center; gap:3px; flex:1 1 auto; justify-content:center; }
+  .secnav a {
+    font-family:'Fragment Mono', monospace; font-size:11px; letter-spacing:.07em;
+    text-transform:uppercase; text-decoration:none;
+    color:var(--on-dark-3); padding:7px 11px; border-radius:5px;
+    white-space:nowrap; transition:color .18s ease, background .18s ease;
+  }
+  .secnav a:hover { color:var(--on-dark); background:rgba(255,250,245,.07); }
+  .secnav a { flex:0 0 auto; }
+  .secnav a.on { color:var(--teal-hi); background:rgba(52,146,148,.13); }
+  .secnav a .n { opacity:.55; margin-right:6px; }
+
+  .mast-cta {
+    flex:0 0 auto; text-decoration:none;
+    font-size:13.5px; font-weight:600; color:var(--ink);
+    background:var(--paper); padding:8px 15px; border-radius:6px;
+    display:inline-flex; align-items:center; gap:7px;
+    transition:background .18s ease, color .18s ease;
+  }
+  .mast-cta:hover { background:var(--teal); color:var(--paper); }
+  .mast-cta svg { width:12px; height:12px; }
+
+  .progress {
+    position:absolute; left:0; bottom:-1px; height:2px; width:0%;
+    background:linear-gradient(90deg, var(--teal-lo), var(--teal-hi));
+  }
+
+  /* ============ generic sections ============ */
+  .dark  { background:var(--ink);  color:var(--on-dark); }
+  .light { background:var(--paper); color:var(--on-light); }
+  .warm  { background:var(--cream); color:var(--on-light); }
+
+  section { position:relative; }
+
+  .sec-label {
+    display:flex; align-items:center; gap:14px; margin-bottom:34px;
+  }
+  .sec-label .num {
+    font-family:'Fragment Mono', monospace; font-size:11.5px; letter-spacing:.1em;
+    color:var(--teal); border:1px solid currentColor; border-radius:4px; padding:3px 8px;
+  }
+  .sec-label .rule { flex:1 1 auto; height:1px; background:var(--on-light-line); }
+  .dark .sec-label .rule { background:var(--on-dark-line); }
+  .sec-label .kicker {
+    font-family:'Fragment Mono', monospace; font-size:11.5px; letter-spacing:.1em;
+    text-transform:uppercase; color:var(--on-light-3);
+  }
+  .dark .sec-label .kicker { color:var(--on-dark-3); }
+
+  h1 {
+    font-size:clamp(33px,4.9vw,57px); font-weight:700; line-height:1.04;
+    letter-spacing:-.035em;
+  }
+  h2 {
+    font-size:clamp(25px,3.1vw,35px); font-weight:700; line-height:1.14;
+    letter-spacing:-.028em; margin-bottom:16px;
+  }
+  h3 {
+    font-size:19px; font-weight:650; letter-spacing:-.018em; line-height:1.3;
+  }
+  p { max-width:64ch; }
+  .dark p { color:var(--on-dark-2); }
+  .light p, .warm p { color:var(--on-light-2); }
+  p + p { margin-top:15px; }
+  strong { font-weight:650; color:var(--on-light); }
+  .dark strong { color:var(--on-dark); }
+  em.tealish { font-style:normal; color:var(--teal); font-weight:600; }
+  .dark em.tealish { color:var(--teal-hi); }
+
+  /* ============ hero ============ */
+  .hero { padding:76px 0 78px; overflow:hidden; }
+  .hero::before {
+    content:''; position:absolute; inset:0; pointer-events:none;
+    background:
+      radial-gradient(900px 460px at 78% -18%, rgba(52,146,148,.20), transparent 64%),
+      radial-gradient(700px 420px at -8% 108%, rgba(0,48,71,.55), transparent 62%);
+  }
+  .hero::after {
+    content:''; position:absolute; inset:0; pointer-events:none; opacity:.5;
+    background-image:
+      repeating-linear-gradient(90deg, rgba(255,250,245,.045) 0 1px, transparent 1px 96px);
+    mask-image:linear-gradient(180deg, rgba(0,0,0,.85), transparent 78%);
+    -webkit-mask-image:linear-gradient(180deg, rgba(0,0,0,.85), transparent 78%);
+  }
+  .hero .wrap { position:relative; z-index:2; }
+  .hero-grid { display:grid; grid-template-columns:1.32fr .68fr; gap:56px; align-items:start; }
+
+  .eyebrow {
+    display:inline-flex; align-items:center; gap:10px;
+    font-family:'Fragment Mono', monospace; font-size:11px; letter-spacing:.11em;
+    text-transform:uppercase; color:var(--teal-hi);
+    border:1px solid rgba(52,146,148,.42); border-radius:100px;
+    padding:6px 13px; margin-bottom:28px;
+  }
+  .eyebrow .pulse {
+    width:6px; height:6px; border-radius:50%; background:var(--teal-hi);
+    box-shadow:0 0 0 4px rgba(52,146,148,.18);
+  }
+  .hero h1 { margin-bottom:24px; color:var(--on-dark); }
+  .hero h1 .hl { color:var(--teal-hi); }
+  .lede { font-size:18px; line-height:1.66; max-width:60ch; }
+  .lede + .lede { margin-top:15px; }
+
+  .cta-row { display:flex; flex-wrap:wrap; gap:12px; margin-top:34px; }
+  .btn {
+    display:inline-flex; align-items:center; gap:9px;
+    font-size:15px; font-weight:600; letter-spacing:-.008em;
+    padding:12px 20px; border-radius:7px; text-decoration:none;
+    border:1px solid transparent;
+    transition:transform .16s ease, background .18s ease, border-color .18s ease, color .18s ease;
+  }
+  .btn svg { width:14px; height:14px; }
+  .btn-solid { background:var(--teal); color:#02181a; }
+  .btn-solid:hover { background:var(--teal-hi); transform:translateY(-2px); }
+  .btn-line { border-color:rgba(255,250,245,.26); color:var(--on-dark); }
+  .btn-line:hover { border-color:var(--teal-hi); color:var(--teal-hi); transform:translateY(-2px); }
+  .btn-dark { background:var(--ink); color:var(--paper); }
+  .btn-dark:hover { background:var(--teal-lo); transform:translateY(-2px); }
+  .btn-lightline { border-color:var(--on-light-line); color:var(--on-light); background:#fff; }
+  .btn-lightline:hover { border-color:var(--teal); color:var(--teal-lo); transform:translateY(-2px); }
+
+  /* position record */
+  .record {
+    border:1px solid var(--on-dark-line); border-radius:9px;
+    background:rgba(255,250,245,.035);
+    overflow:hidden;
+  }
+  .record-head {
+    padding:13px 17px; border-bottom:1px solid var(--on-dark-line);
+    background:rgba(255,250,245,.04);
+    color:var(--on-dark-3);
+  }
+  .rrow {
+    display:grid; grid-template-columns:74px 1fr; gap:12px;
+    padding:13px 17px; border-bottom:1px solid var(--on-dark-line);
+    align-items:baseline;
+  }
+  .rrow .k { color:var(--on-dark-3); }
+  .rrow .v { font-size:14.5px; color:var(--on-dark); line-height:1.45; }
+  .rrow .v .sub { display:block; color:var(--on-dark-3); font-size:13px; margin-top:3px; }
+  .record-foot { padding:14px 17px; }
+  .record-foot a {
+    display:inline-flex; align-items:center; gap:8px;
+    font-size:13.5px; font-weight:600; color:var(--teal-hi); text-decoration:none;
+    border-bottom:1px solid rgba(69,176,177,.4); padding-bottom:2px;
+    transition:color .18s, border-color .18s;
+  }
+  .record-foot a:hover { color:var(--on-dark); border-color:var(--on-dark); }
+  .record-foot svg { width:12px; height:12px; }
+
+  /* ============ 01 docket reader ============ */
+  .reader-sec { padding:78px 0 84px; }
+  .reader-intro { max-width:66ch; margin-bottom:38px; }
+  .reader {
+    display:grid; grid-template-columns:.86fr 1.14fr; gap:0;
+    border:1px solid var(--on-dark-line); border-radius:10px; overflow:hidden;
+    background:rgba(255,250,245,.028);
+  }
+  .docket { border-right:1px solid var(--on-dark-line); }
+  .docket-head, .panel-head {
+    padding:12px 18px; border-bottom:1px solid var(--on-dark-line);
+    color:var(--on-dark-3); background:rgba(255,250,245,.04);
+    display:flex; align-items:center; justify-content:space-between; gap:10px;
+  }
+  .dk {
+    display:block; width:100%; text-align:left; cursor:pointer;
+    background:transparent; border:0; border-bottom:1px solid var(--on-dark-line);
+    border-left:2px solid transparent;
+    padding:16px 18px; color:inherit; font:inherit;
+    display:grid; grid-template-columns:30px 1fr; gap:12px; align-items:start;
+    transition:background .17s ease, border-color .17s ease;
+  }
+  .dk:last-child { border-bottom:0; }
+  .dk:hover { background:rgba(255,250,245,.05); }
+  .dk:focus-visible { outline:2px solid var(--teal-hi); outline-offset:-2px; }
+  .dk .idx {
+    font-family:'Fragment Mono', monospace; font-size:11px; letter-spacing:.06em;
+    color:var(--on-dark-3); padding-top:3px;
+  }
+  .dk .txt { font-size:14.7px; line-height:1.45; color:var(--on-dark-2); letter-spacing:-.008em; }
+  .dk[aria-selected="true"] { background:rgba(52,146,148,.13); border-left-color:var(--teal-hi); }
+  .dk[aria-selected="true"] .idx { color:var(--teal-hi); }
+  .dk[aria-selected="true"] .txt { color:var(--on-dark); font-weight:600; }
+
+  .panel-wrap { min-width:0; }
+  .panel { padding:26px 28px 28px; }
+  .panel[hidden] { display:none; }
+  .panel h3 { color:var(--on-dark); margin-bottom:13px; letter-spacing:-.02em; }
+  .panel p { font-size:15.6px; }
+  .evi { margin-top:22px; border-top:1px solid var(--on-dark-line); }
+  .evi .e {
+    display:grid; grid-template-columns:118px 1fr; gap:14px;
+    padding:11px 0; border-bottom:1px solid var(--on-dark-line);
+    align-items:baseline;
+  }
+  .evi .e:last-child { border-bottom:0; }
+  .evi .e .lbl { color:var(--teal-hi); }
+  .evi .e .val { font-size:14.3px; color:var(--on-dark-2); line-height:1.5; }
+  .fade-in { animation:fade .32s ease both; }
+  @keyframes fade { from { opacity:0; transform:translateY(5px); } to { opacity:1; transform:none; } }
+
+  /* ============ 02 builds ledger ============ */
+  .builds-sec { padding:82px 0 84px; }
+  .ledger { border-top:1px solid var(--on-light-line); margin-top:34px; }
+  .build {
+    display:grid; grid-template-columns:34px 1.5fr .95fr; gap:28px;
+    padding:28px 0; border-bottom:1px solid var(--on-light-line);
+    align-items:start;
+  }
+  .build .bnum {
+    font-family:'Fragment Mono', monospace; font-size:11.5px; letter-spacing:.06em;
+    color:var(--teal); padding-top:5px;
+  }
+  .build h3 { margin-bottom:5px; }
+  .build .role {
+    font-family:'Fragment Mono', monospace; font-size:11px; letter-spacing:.09em;
+    text-transform:uppercase; color:var(--on-light-3); margin-bottom:11px; display:block;
+  }
+  .build p { font-size:15.6px; }
+  .facts { border-top:1px solid var(--on-light-line); }
+  .facts div {
+    display:flex; justify-content:space-between; gap:14px;
+    padding:8px 0; border-bottom:1px solid var(--on-light-line);
+    font-size:13.6px; line-height:1.45;
+  }
+  .facts div:last-child { border-bottom:0; }
+  .facts .fk {
+    font-family:'Fragment Mono', monospace; font-size:10.5px; letter-spacing:.08em;
+    text-transform:uppercase; color:var(--on-light-3); flex:0 0 auto; padding-top:3px;
+  }
+  .facts .fv { text-align:right; color:var(--on-light); font-weight:500; }
+
+  /* ============ 03 disclosure ============ */
+  .disc-sec { padding:74px 0 78px; }
+  .disc-grid { display:grid; grid-template-columns:1.42fr .58fr; gap:44px; align-items:start; }
+  .notice {
+    border-left:3px solid var(--teal); background:var(--paper);
+    border-top:1px solid var(--on-light-line);
+    border-right:1px solid var(--on-light-line);
+    border-bottom:1px solid var(--on-light-line);
+    border-radius:0 9px 9px 0; padding:28px 30px;
+  }
+  .notice .tag { color:var(--teal-lo); margin-bottom:14px; display:block; }
+  .notice h2 { font-size:clamp(22px,2.5vw,28px); }
+  .disc-side { border-top:2px solid var(--on-light); padding-top:2px; }
+  .disc-side .srow { padding:14px 0; border-bottom:1px solid var(--on-light-line); }
+  .disc-side .srow:last-child { border-bottom:0; }
+  .disc-side .sk {
+    font-family:'Fragment Mono', monospace; font-size:10.5px; letter-spacing:.09em;
+    text-transform:uppercase; color:var(--on-light-3); display:block; margin-bottom:4px;
+  }
+  .disc-side .sv { font-size:15px; line-height:1.45; color:var(--on-light); font-weight:500; }
+
+  /* ============ 04 shortfall ============ */
+  .short-sec { padding:80px 0 84px; }
+  .short-grid { display:grid; grid-template-columns:1fr 1fr; gap:52px; margin-top:34px; }
+  .col-head {
+    display:flex; align-items:center; gap:11px; margin-bottom:18px;
+    padding-bottom:12px; border-bottom:1px solid var(--on-light-line);
+  }
+  .col-head .dotm { width:8px; height:8px; border-radius:2px; flex:0 0 auto; }
+  .col-head .cap {
+    font-family:'Fragment Mono', monospace; font-size:11px; letter-spacing:.1em;
+    text-transform:uppercase;
+  }
+  .miss .dotm { background:var(--taupe); }
+  .miss .cap  { color:var(--on-light-3); }
+  .have .dotm { background:var(--teal); }
+  .have .cap  { color:var(--teal-lo); }
+  .plainlist { list-style:none; }
+  .plainlist li {
+    padding:13px 0; border-bottom:1px solid var(--on-light-line);
+    font-size:15.4px; line-height:1.56; color:var(--on-light-2);
+  }
+  .plainlist li:last-child { border-bottom:0; }
+  .closing-line { margin-top:34px; max-width:74ch; font-size:16.6px; }
+
+  /* ============ 05 start ============ */
+  .start-sec { padding:80px 0 84px; }
+  .phases { display:grid; grid-template-columns:repeat(3,1fr); gap:26px; margin-top:34px; }
+  .phase {
+    border:1px solid var(--on-dark-line); border-radius:9px; padding:24px 22px 26px;
+    background:rgba(255,250,245,.03);
+  }
+  .phase .pnum {
+    font-family:'Fragment Mono', monospace; font-size:11px; letter-spacing:.09em;
+    color:var(--teal-hi); display:block; margin-bottom:12px;
+  }
+  .phase h3 { color:var(--on-dark); margin-bottom:9px; }
+  .phase p { font-size:15px; }
+
+  /* ============ close ============ */
+  .close-sec { padding:82px 0 74px; }
+  .close-grid { display:grid; grid-template-columns:1.25fr .75fr; gap:52px; align-items:end; }
+  .close h2 { font-size:clamp(27px,3.6vw,42px); }
+  .contact { border-top:1px solid var(--on-light-line); }
+  .contact a {
+    display:flex; align-items:center; justify-content:space-between; gap:16px;
+    padding:15px 0; border-bottom:1px solid var(--on-light-line);
+    text-decoration:none; font-weight:600; font-size:15.5px;
+    transition:color .18s ease, padding .18s ease;
+  }
+  .contact a:hover { color:var(--teal-lo); padding-left:6px; }
+  .contact a .arw { color:var(--on-light-3); font-family:'Fragment Mono', monospace; font-size:13px; }
+  .contact a:hover .arw { color:var(--teal); }
+
+  footer { background:var(--ink); color:var(--on-dark-3); padding:34px 0 40px; }
+  .foot-grid { display:flex; flex-wrap:wrap; gap:18px; justify-content:space-between; align-items:center; }
+  .disclaimer { font-size:13px; line-height:1.6; max-width:66ch; color:var(--on-dark-3); }
+  .disclaimer strong { color:var(--on-dark-2); font-weight:600; }
+
+  /* reveal */
+  .rv { opacity:0; transform:translateY(14px); transition:opacity .6s ease, transform .6s ease; }
+  .rv.in { opacity:1; transform:none; }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior:auto; }
+    .rv { opacity:1; transform:none; transition:none; }
+    .fade-in { animation:none; }
+    .btn:hover, .contact a:hover { transform:none; padding-left:0; }
+  }
+
+  /* ============ responsive ============ */
+  @media (max-width:1190px) {
+    .secnav { display:none; }
+  }
+  @media (max-width:1080px) {
+    .hero-grid { grid-template-columns:1fr; gap:40px; }
+    .record { max-width:520px; }
+    .close-grid { grid-template-columns:1fr; gap:36px; align-items:start; }
+  }
+  @media (max-width:900px) {
+    .reader { grid-template-columns:1fr; }
+    .docket { border-right:0; border-bottom:1px solid var(--on-dark-line); }
+    .phases { grid-template-columns:1fr; gap:18px; }
+    .short-grid { grid-template-columns:1fr; gap:38px; }
+    .disc-grid { grid-template-columns:1fr; gap:30px; }
+    .build { grid-template-columns:26px 1fr; gap:18px; }
+    .build .facts { grid-column:2; margin-top:16px; }
+  }
+  @media (max-width:640px) {
+    :root { --gut:20px; }
+    body { font-size:16px; }
+    .mast-inner { height:56px; }
+    .mark .who span { display:none; }
+    .hero { padding:52px 0 56px; }
+    .reader-sec, .builds-sec, .disc-sec, .short-sec, .start-sec, .close-sec { padding:56px 0 60px; }
+    .panel { padding:22px 20px 24px; }
+    .evi .e { grid-template-columns:1fr; gap:3px; }
+    .notice { padding:22px 20px; border-radius:0 6px 6px 0; }
+    .rrow { grid-template-columns:66px 1fr; }
+    .facts div { flex-direction:column; gap:2px; }
+    .facts .fv { text-align:left; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===================== MASTHEAD ===================== -->
+<header class="masthead">
+  <div class="wrap mast-inner">
+    <a class="mark" href="#top">
+      <span class="glyph">AZ</span>
+      <span class="who">Andrew Zoll <span>for GC AI</span></span>
+    </a>
+    <nav class="secnav" aria-label="Sections">
+      <a href="#work"><span class="n">01</span>The work</a>
+      <a href="#builds"><span class="n">02</span>What I built</a>
+      <a href="#disclosure"><span class="n">03</span>Disclosure</a>
+      <a href="#shortfall"><span class="n">04</span>Where I fall short</a>
+      <a href="#start"><span class="n">05</span>How I start</a>
+    </nav>
+    <a class="mast-cta" href="https://jobs.ashbyhq.com/gc-ai/d036dab4-1dd9-41d3-b551-8d53e2e54284" target="_blank" rel="noopener">
+      The posting
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg>
+    </a>
+    <div class="progress" id="progress"></div>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- ===================== HERO ===================== -->
+<section class="dark hero">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <span class="eyebrow"><span class="pulse"></span>Application &middot; Forward Deployed Engineer</span>
+        <h1>I already write software from <span class="hl">inside</span> the business function that uses it.</h1>
+        <p class="lede">At Coder I'm a Senior Software Engineer embedded in the revenue organization. I build an internal AI agent platform that turns CRM records, support history, and call transcripts into answers and workflows for the revenue team, and my requirements arrive in conversation with the person who has the problem rather than in a ticket.</p>
+        <p class="lede">On my own time I built and still run a citation verification platform for legal filings, so I know exactly what it costs when an AI system gets a case citation wrong in front of a lawyer. Those two things together are why I'm applying to be one of your first Forward Deployed Engineers.</p>
+        <div class="cta-row">
+          <a class="btn btn-solid" href="https://portfolio.andrewzoll.com" target="_blank" rel="noopener">
+            See the work
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+          <a class="btn btn-line" href="https://linkedin.com/in/andrewzoll" target="_blank" rel="noopener">
+            LinkedIn
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <aside class="record" aria-label="Position record">
+        <div class="record-head mono">Position record</div>
+        <div class="rrow"><span class="k mono">Role</span><span class="v">Member of Technical Staff, Forward Deployed Engineer</span></div>
+        <div class="rrow"><span class="k mono">Location</span><span class="v">Remote, United States<span class="sub">Customer travel up to 25 percent</span></span></div>
+        <div class="rrow"><span class="k mono">Band</span><span class="v">$165,000 to $350,000 plus equity</span></div>
+        <div class="rrow"><span class="k mono">Applicant</span><span class="v">Andrew Zoll, Colorado<span class="sub">Senior Software Engineer (AI Solutions), Coder</span></span></div>
+        <div class="record-foot">
+          <a href="https://jobs.ashbyhq.com/gc-ai/d036dab4-1dd9-41d3-b551-8d53e2e54284" target="_blank" rel="noopener">
+            Read the posting on Ashby
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg>
+          </a>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 01 THE WORK ===================== -->
+<section class="dark reader-sec" id="work">
+  <div class="wrap">
+    <div class="sec-label rv">
+      <span class="num">01</span>
+      <span class="kicker">The work, line by line</span>
+      <span class="rule"></span>
+    </div>
+    <div class="reader-intro rv">
+      <h2>Here is what the posting asks for, and where I have already done it.</h2>
+      <p>Pick any line from the posting on the left. The panel on the right is my honest answer to that line, including the places where my version of the work was smaller or internal rather than enterprise.</p>
+    </div>
+
+    <div class="reader rv">
+      <div class="docket">
+        <div class="docket-head"><span class="mono">From the job description</span><span class="mono">6 items</span></div>
+        <div role="tablist" aria-label="Job requirements" id="docket">
+          <button class="dk" role="tab" id="t1" aria-controls="p1" aria-selected="true" tabindex="0">
+            <span class="idx">R.01</span>
+            <span class="txt">Embed with customers and integrate GC AI into the workflows where legal work actually happens.</span>
+          </button>
+          <button class="dk" role="tab" id="t2" aria-controls="p2" aria-selected="false" tabindex="-1">
+            <span class="idx">R.02</span>
+            <span class="txt">Design and build integrations using the GC AI API, from prototype through production deployment.</span>
+          </button>
+          <button class="dk" role="tab" id="t3" aria-controls="p3" aria-selected="false" tabindex="-1">
+            <span class="idx">R.03</span>
+            <span class="txt">Troubleshoot and debug customer integrations in real time.</span>
+          </button>
+          <button class="dk" role="tab" id="t4" aria-controls="p4" aria-selected="false" tabindex="-1">
+            <span class="idx">R.04</span>
+            <span class="txt">Identify repeatable deployment patterns and contribute them back as reusable platform capabilities.</span>
+          </button>
+          <button class="dk" role="tab" id="t5" aria-controls="p5" aria-selected="false" tabindex="-1">
+            <span class="idx">R.05</span>
+            <span class="txt">Create reference implementations, documentation, and best practices.</span>
+          </button>
+          <button class="dk" role="tab" id="t6" aria-controls="p6" aria-selected="false" tabindex="-1">
+            <span class="idx">R.06</span>
+            <span class="txt">High agency. Operate autonomously and figure things out without a roadmap.</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="panel-wrap">
+        <div class="panel-head"><span class="mono">My answer</span><span class="mono" id="panel-marker">R.01</span></div>
+
+        <div class="panel" role="tabpanel" id="p1" aria-labelledby="t1">
+          <h3>I am the engineer who sits inside the function I build for.</h3>
+          <p>Coder hired me into the revenue organization rather than into a platform team, and that placement is the entire point of the job. I build an internal AI agent platform that turns CRM data, support history, and call transcripts into answers and workflows for the people running revenue, and I learn what to build by talking to them instead of reading a spec somebody else wrote.</p>
+          <p>Before I wrote software full time I spent four years at Edward Jones holding 95 percent client retention across more than 120 households. That is where I learned the harder half of forward deployment, which is staying in the room with a non technical person until I actually understand what they are asking for.</p>
+          <div class="evi">
+            <div class="e"><span class="lbl mono">Now</span><span class="val">Senior Software Engineer (AI Solutions) at Coder, embedded in revenue, started July 2026.</span></div>
+            <div class="e"><span class="lbl mono">Shape</span><span class="val">Two person team, large production Python codebase, changes go straight to production.</span></div>
+            <div class="e"><span class="lbl mono">Caveat</span><span class="val">My customer is internal today, not a Fortune 500 legal department.</span></div>
+          </div>
+        </div>
+
+        <div class="panel" role="tabpanel" id="p2" aria-labelledby="t2" hidden>
+          <h3>I have taken integrations from an empty file to paying users, by myself.</h3>
+          <p>FieldCommand is a multi tenant SaaS product for commercial trade contractors that I designed, built, and shipped solo. It is 187,745 lines of TypeScript on PostgreSQL and Supabase, with Stripe billing, role based access control, tenant isolation, and four AI features gated behind per tenant feature flags. Nobody handed me an architecture, and nobody caught my mistakes for me.</p>
+          <p>The closest match to your API work is smaller and older. At Ryleigh Wealth Management I built an integration between the Redtail CRM and the ChatGPT API that removed more than 20 hours of manual work every month. It was somebody else's system, somebody else's data model, and non technical users on the other end, which is the situation an integration engineer is usually in.</p>
+          <div class="evi">
+            <div class="e"><span class="lbl mono">Stack</span><span class="val">TypeScript, PostgreSQL, Supabase, Stripe, per tenant feature flags.</span></div>
+            <div class="e"><span class="lbl mono">Third party</span><span class="val">Redtail CRM plus the ChatGPT API, built for advisors who do not write code.</span></div>
+            <div class="e"><span class="lbl mono">Scope</span><span class="val">Prototype through production deployment, including billing and access control.</span></div>
+          </div>
+        </div>
+
+        <div class="panel" role="tabpanel" id="p3" aria-labelledby="t3" hidden>
+          <h3>On a two person team, the person debugging it in real time is me.</h3>
+          <p>At Coder I own test coverage and the release process for the agent platform, which means when something breaks in production there is no second line behind me. I have gotten fast at reading unfamiliar code under time pressure because the alternative is a revenue team that cannot work.</p>
+          <p>Veritas taught me the discipline side of the same problem. Releases there are gated by a fixture suite, so a change that would let a bad verdict through never reaches a user. I would rather block my own release than debug a wrong answer that a lawyer already relied on.</p>
+          <div class="evi">
+            <div class="e"><span class="lbl mono">Ownership</span><span class="val">Test coverage, release process, and operating docs at Coder.</span></div>
+            <div class="e"><span class="lbl mono">Gate</span><span class="val">Veritas releases must pass a fixture suite before they ship.</span></div>
+            <div class="e"><span class="lbl mono">Habit</span><span class="val">I reproduce the failure before I theorize about it.</span></div>
+          </div>
+        </div>
+
+        <div class="panel" role="tabpanel" id="p4" aria-labelledby="t4" hidden>
+          <h3>Turning a one off fix into a platform capability is a reflex I already have.</h3>
+          <p>I built AndrewOS because I kept solving the same coordination problem by hand. It is an agent operating system I run every day, with multi agent orchestration, autonomous scheduled loops, a deterministic gate layer that handles the checks code should own, and structured observability so I can replay what an agent actually did. It is not public, but it is the clearest evidence that I generalize my own work instead of repeating it.</p>
+          <p>FieldCommand's per tenant feature flags came from the same instinct. Different tenants wanted different behavior, and I wanted one deployment path rather than four forks, so the difference moved into configuration where it belonged.</p>
+          <div class="evi">
+            <div class="e"><span class="lbl mono">Pattern</span><span class="val">Deterministic gates for anything a human should not be trusted to remember.</span></div>
+            <div class="e"><span class="lbl mono">Pattern</span><span class="val">Per tenant configuration instead of per customer forks.</span></div>
+            <div class="e"><span class="lbl mono">Signal</span><span class="val">I build the tool for the second occurrence, not the tenth.</span></div>
+          </div>
+        </div>
+
+        <div class="panel" role="tabpanel" id="p5" aria-labelledby="t5" hidden>
+          <h3>I treat documentation as part of the correctness work, not paperwork after it.</h3>
+          <p>At Coder the operating docs are mine along with the code, because a two person team that does not write things down loses the context the moment either person is out.</p>
+          <p>Veritas forced the sharper version of this lesson. I had to write down precisely what the system is allowed to claim, which is why its verdicts are hedged rather than absolute. A verification tool that tells a lawyer something false with confidence is worse than no tool at all, and the only way to hold that line across releases is to specify it in writing and then test against the specification.</p>
+          <div class="evi">
+            <div class="e"><span class="lbl mono">Owned</span><span class="val">Operating docs and release process at Coder.</span></div>
+            <div class="e"><span class="lbl mono">Written</span><span class="val">Verdict semantics for Veritas, defining what the product may and may not assert.</span></div>
+            <div class="e"><span class="lbl mono">Belief</span><span class="val">If the rule is not written down, it is not a rule yet.</span></div>
+          </div>
+        </div>
+
+        <div class="panel" role="tabpanel" id="p6" aria-labelledby="t6" hidden>
+          <h3>Nobody assigned me any of this.</h3>
+          <p>Veritas, FieldCommand, and AndrewOS all exist because I decided they should, and I built them on nights and weekends with no team, no roadmap, and nobody checking my progress. Two of them are live products with real infrastructure behind them rather than demos I abandoned once the interesting part was over.</p>
+          <p>I also left a stable financial advisory career to write software, which is the most expensive vote I have ever cast for my own judgment. Your posting says you want someone who can operate without a roadmap. I have mostly worked without one.</p>
+          <div class="evi">
+            <div class="e"><span class="lbl mono">Self directed</span><span class="val">Three products designed, built, and shipped outside of any job.</span></div>
+            <div class="e"><span class="lbl mono">Sustained</span><span class="val">Veritas and its infrastructure are still running, not parked after launch.</span></div>
+            <div class="e"><span class="lbl mono">Constraint</span><span class="val">I did it while working full time and raising four kids in Colorado.</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 02 BUILDS ===================== -->
+<section class="light builds-sec" id="builds">
+  <div class="wrap">
+    <div class="sec-label rv">
+      <span class="num">02</span>
+      <span class="kicker">Things I built and still run</span>
+      <span class="rule"></span>
+    </div>
+    <div class="rv" style="max-width:66ch">
+      <h2>Four systems, and what each one proves.</h2>
+      <p>I would rather show you working software than a list of technologies. Everything below is real, and the two live products have real users and real infrastructure bills.</p>
+    </div>
+
+    <div class="ledger rv">
+      <article class="build">
+        <span class="bnum">B.01</span>
+        <div>
+          <h3>Coder, internal AI agent platform</h3>
+          <span class="role">Senior Software Engineer (AI Solutions) &middot; current</span>
+          <p>I build an agent platform that turns CRM records, support history, and call transcripts into answers and workflows for the revenue organization. It is a large production Python codebase worked by two people, and I own test coverage, the release process, and the operating docs alongside the feature work. I am only weeks in, so treat this as direction rather than tenure.</p>
+        </div>
+        <div class="facts">
+          <div><span class="fk">Language</span><span class="fv">Python</span></div>
+          <div><span class="fk">Team</span><span class="fv">Two engineers</span></div>
+          <div><span class="fk">Deploy</span><span class="fv">Straight to production</span></div>
+          <div><span class="fk">Owns</span><span class="fv">Tests, releases, docs</span></div>
+        </div>
+      </article>
+
+      <article class="build">
+        <span class="bnum">B.02</span>
+        <div>
+          <h3>Veritas, citation verification for legal filings</h3>
+          <span class="role">Founder and sole engineer &middot; veritaslaw.app &middot; live</span>
+          <p>Veritas checks the cases and quotations cited in a legal filing against source records and returns a verdict on each one. The verdict language is deliberately hedged, because a verification tool that overstates its own certainty is a liability rather than a safeguard. A fixture suite gates every release. This is the reason I understand your customers' anxiety about AI output in a legal document, and it is disclosed in full in section 03.</p>
+        </div>
+        <div class="facts">
+          <div><span class="fk">Domain</span><span class="fv">Legal technology</span></div>
+          <div><span class="fk">Core</span><span class="fv">Verification pipeline</span></div>
+          <div><span class="fk">Safety</span><span class="fv">Hedged verdict semantics</span></div>
+          <div><span class="fk">Release gate</span><span class="fv">Fixture suite</span></div>
+        </div>
+      </article>
+
+      <article class="build">
+        <span class="bnum">B.03</span>
+        <div>
+          <h3>FieldCommand, multi tenant SaaS for trade contractors</h3>
+          <span class="role">Founder and sole engineer &middot; fieldcommand.io &middot; launch ready</span>
+          <p>I built the whole product alone with AI assistance throughout, from the data model to the billing flow. It covers tenant isolation, role based access control, Stripe subscriptions, and four AI features behind per tenant feature flags. It is the clearest proof that I can carry something from a prototype conversation to a production deployment without a team around me.</p>
+        </div>
+        <div class="facts">
+          <div><span class="fk">Size</span><span class="fv">187,745 lines of TypeScript</span></div>
+          <div><span class="fk">Data</span><span class="fv">PostgreSQL, Supabase</span></div>
+          <div><span class="fk">Billing</span><span class="fv">Stripe</span></div>
+          <div><span class="fk">Access</span><span class="fv">RBAC, tenant isolation</span></div>
+        </div>
+      </article>
+
+      <article class="build">
+        <span class="bnum">B.04</span>
+        <div>
+          <h3>AndrewOS, an agent operating system</h3>
+          <span class="role">Personal infrastructure &middot; not public</span>
+          <p>AndrewOS runs my own work. It handles multi agent orchestration, autonomous scheduled loops, a deterministic gate layer that puts safety checks in code rather than in prompts, and structured observability so every run can be replayed and audited. I built it because I got tired of doing the same coordination by hand, which is the same reflex that turns a one off customer deployment into a platform capability.</p>
+        </div>
+        <div class="facts">
+          <div><span class="fk">Pattern</span><span class="fv">Multi agent orchestration</span></div>
+          <div><span class="fk">Safety</span><span class="fv">Deterministic gates</span></div>
+          <div><span class="fk">Audit</span><span class="fv">Structured traces</span></div>
+          <div><span class="fk">Status</span><span class="fv">Runs daily</span></div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 03 DISCLOSURE ===================== -->
+<section class="warm disc-sec" id="disclosure">
+  <div class="wrap">
+    <div class="sec-label rv">
+      <span class="num">03</span>
+      <span class="kicker">Conflict disclosure</span>
+      <span class="rule"></span>
+    </div>
+    <div class="disc-grid">
+      <div class="notice rv">
+        <span class="tag mono">Disclosed up front</span>
+        <h2>Veritas is mine, and you should hear that from me first.</h2>
+        <p>I founded Veritas, I built its verification pipeline, and I still run it. It is a disclosable outside business activity, and it operates in legal technology, which is your market. I am raising it in the first paragraph of my application rather than letting you discover it in a search later.</p>
+        <p>Two things follow from that. The first is credibility, because I have spent real time on how legal work product gets checked and where AI output goes wrong in front of a court. The second is transparency, because if my owning Veritas is a conflict for GC AI, I want that conversation early rather than after an offer. I am comfortable either way, and I would rather you have the whole picture.</p>
+      </div>
+      <div class="disc-side rv">
+        <div class="srow"><span class="sk">What it is</span><span class="sv">A citation verification platform for legal filings.</span></div>
+        <div class="srow"><span class="sk">My role</span><span class="sv">Founder and sole engineer. I still operate it.</span></div>
+        <div class="srow"><span class="sk">Status</span><span class="sv">Live at veritaslaw.app, run in the evenings.</span></div>
+        <div class="srow"><span class="sk">Who it serves</span><span class="sv">Lawyers checking their own filings, not in-house legal teams.</span></div>
+        <div class="srow"><span class="sk">If it is a problem</span><span class="sv">Tell me in the first conversation and we will sort it out then.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 04 SHORTFALL ===================== -->
+<section class="light short-sec" id="shortfall">
+  <div class="wrap">
+    <div class="sec-label rv">
+      <span class="num">04</span>
+      <span class="kicker">Where I fall short</span>
+      <span class="rule"></span>
+    </div>
+    <div class="rv" style="max-width:66ch">
+      <h2>I have not done this exact job, and I am not going to pretend otherwise.</h2>
+      <p>Here is the honest accounting. If the missing column is disqualifying for you, that is a fair call and I would rather you make it now.</p>
+    </div>
+
+    <div class="short-grid rv">
+      <div class="miss">
+        <div class="col-head"><span class="dotm"></span><span class="cap">What I have not done</span></div>
+        <ul class="plainlist">
+          <li>I have never held the Forward Deployed Engineer title, at GC AI or anywhere else.</li>
+          <li>I have never deployed enterprise software into a Fortune 500 legal department, and I have not sat across from a general counsel or a procurement committee.</li>
+          <li>My customer facing record is advisory rather than enterprise post sales. I worked with individual clients and households, not multi stakeholder rollouts.</li>
+          <li>My formally titled engineering tenure is short. I started at Coder in July, and most of my shipping happened under my own name rather than under a job title.</li>
+        </ul>
+      </div>
+      <div class="have">
+        <div class="col-head"><span class="dotm"></span><span class="cap">What I actually have</span></div>
+        <ul class="plainlist">
+          <li>I am an engineer embedded in a business function right now, doing the same kind of work this role describes under a different name.</li>
+          <li>I have built and shipped integrations against other people's systems, including a CRM API integration used by people who do not write code.</li>
+          <li>I know the legal AI problem space because I built a product in it, not because I read about it.</li>
+          <li>I spent four years under FINRA and SEC oversight, so confidentiality, regulated data, and careful claims are habits rather than training slides.</li>
+        </ul>
+      </div>
+    </div>
+
+    <p class="closing-line rv">If you need somebody who has already run twenty enterprise deployments, I am not that person and you should hire them. If you are defining this function for the first time and you want an engineer who will sit with the customer, build the thing, and write down what worked so the next deployment is faster, that part I am confident about.</p>
+  </div>
+</section>
+
+<!-- ===================== 05 HOW I START ===================== -->
+<section class="dark start-sec" id="start">
+  <div class="wrap">
+    <div class="sec-label rv">
+      <span class="num">05</span>
+      <span class="kicker">How I would start</span>
+      <span class="rule"></span>
+    </div>
+    <div class="rv" style="max-width:66ch">
+      <h2>My first quarter would look like this.</h2>
+      <p>I am guessing at your specifics, so treat this as how I work rather than as a plan I expect to survive contact with your customers.</p>
+    </div>
+
+    <div class="phases rv">
+      <div class="phase">
+        <span class="pnum">Phase 01 &middot; Week one</span>
+        <h3>Learn the product by breaking it</h3>
+        <p>I would build something real against the GC AI API before I talk to a customer about it, because I cannot promise an integration I have not attempted myself. I would also read whatever exists of the current deployment history and write down the questions it leaves open.</p>
+      </div>
+      <div class="phase">
+        <span class="pnum">Phase 02 &middot; Month one</span>
+        <h3>Sit with one customer properly</h3>
+        <p>I would take a single account and follow one workflow end to end, whether that is contract review inside procurement or a compliance check during vendor onboarding. I want to see where the legal team actually loses hours before I propose where the API should sit.</p>
+      </div>
+      <div class="phase">
+        <span class="pnum">Phase 03 &middot; Quarter one</span>
+        <h3>Turn that deployment into a template</h3>
+        <p>Once one integration is in production I would extract the reusable part, write the reference implementation and the documentation around it, and hand Product and Engineering a specific request rather than a vague complaint about what was hard.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CLOSE ===================== -->
+<section class="warm close-sec close">
+  <div class="wrap">
+    <div class="close-grid">
+      <div class="rv">
+        <h2>I would like the first conversation.</h2>
+        <p>Your principles say ship today and own it completely. That is how I have had to work, because on three of these products there was nobody else to hand it to. If the missing enterprise deployment history is the sticking point, ask me about it directly and I will give you the same answer I gave in section 04.</p>
+        <div class="cta-row">
+          <a class="btn btn-dark" href="https://portfolio.andrewzoll.com" target="_blank" rel="noopener">
+            Portfolio
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+          <a class="btn btn-lightline" href="https://linkedin.com/in/andrewzoll" target="_blank" rel="noopener">
+            LinkedIn
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M9 7h8v8"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="contact rv">
+        <a href="https://portfolio.andrewzoll.com" target="_blank" rel="noopener"><span>portfolio.andrewzoll.com</span><span class="arw">&gt;</span></a>
+        <a href="https://linkedin.com/in/andrewzoll" target="_blank" rel="noopener"><span>linkedin.com/in/andrewzoll</span><span class="arw">&gt;</span></a>
+        <a href="https://jobs.ashbyhq.com/gc-ai/d036dab4-1dd9-41d3-b551-8d53e2e54284" target="_blank" rel="noopener"><span>The GC AI posting</span><span class="arw">&gt;</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap foot-grid">
+    <p class="disclaimer">
+      <strong>This page is not affiliated with, endorsed by, or sponsored by GC AI.</strong>
+      It is a personal application page written and hosted by Andrew Zoll. Company names, role details, and quoted requirements come from the public job posting and are used only to explain why I am applying. Andrew is the founder of Veritas, disclosed in section 03. Education: B.A., Ozark Christian College, 2013.
+    </p>
+    <span class="mono" style="color:rgba(255,250,245,.4)">Andrew Zoll &middot; Colorado</span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ---------- 1. Requirement docket reader (real tablist) ---------- */
+  var tabs   = Array.prototype.slice.call(document.querySelectorAll('#docket .dk'));
+  var marker = document.getElementById('panel-marker');
+
+  function select(i, focus) {
+    tabs.forEach(function (tab, j) {
+      var on    = (i === j);
+      var panel = document.getElementById(tab.getAttribute('aria-controls'));
+      tab.setAttribute('aria-selected', on ? 'true' : 'false');
+      tab.tabIndex = on ? 0 : -1;
+      if (panel) {
+        panel.hidden = !on;
+        panel.classList.remove('fade-in');
+        if (on) { void panel.offsetWidth; panel.classList.add('fade-in'); }
+      }
+    });
+    if (marker) { marker.textContent = 'R.0' + (i + 1); }
+    if (focus) { tabs[i].focus(); }
+  }
+
+  tabs.forEach(function (tab, i) {
+    tab.addEventListener('click', function () {
+      select(i, false);
+      if (window.matchMedia('(max-width: 900px)').matches) {
+        var p = document.getElementById(tab.getAttribute('aria-controls'));
+        if (p) { p.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }
+      }
+    });
+    tab.addEventListener('keydown', function (e) {
+      var next = null;
+      if (e.key === 'ArrowDown' || e.key === 'ArrowRight') { next = (i + 1) % tabs.length; }
+      else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') { next = (i - 1 + tabs.length) % tabs.length; }
+      else if (e.key === 'Home') { next = 0; }
+      else if (e.key === 'End') { next = tabs.length - 1; }
+      if (next !== null) { e.preventDefault(); select(next, true); }
+    });
+  });
+
+  /* ---------- 2. Section nav scroll spy ---------- */
+  var links = Array.prototype.slice.call(document.querySelectorAll('.secnav a'));
+  var ids   = links.map(function (a) { return a.getAttribute('href').slice(1); });
+  var secs  = ids.map(function (id) { return document.getElementById(id); }).filter(Boolean);
+
+  function spy() {
+    var best = -1, bestTop = -Infinity, probe = 140;
+    secs.forEach(function (s, i) {
+      var top = s.getBoundingClientRect().top;
+      if (top <= probe && top > bestTop) { bestTop = top; best = i; }
+    });
+    links.forEach(function (a, i) { a.classList.toggle('on', i === best); });
+  }
+
+  /* ---------- 3. Scroll progress line ---------- */
+  var bar = document.getElementById('progress');
+  function progress() {
+    var h = document.documentElement;
+    var max = h.scrollHeight - h.clientHeight;
+    var pct = max > 0 ? (h.scrollTop / max) * 100 : 0;
+    if (bar) { bar.style.width = pct.toFixed(2) + '%'; }
+  }
+
+  var ticking = false;
+  function onScroll() {
+    if (ticking) { return; }
+    ticking = true;
+    window.requestAnimationFrame(function () { spy(); progress(); ticking = false; });
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
+  spy(); progress();
+
+  /* ---------- 4. Restrained reveal on scroll ---------- */
+  var reveals = Array.prototype.slice.call(document.querySelectorAll('.rv'));
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.05 });
+    reveals.forEach(function (el) { io.observe(el); });
+  } else {
+    reveals.forEach(function (el) { el.classList.add('in'); });
+  }
+})();
+</script>
+</body>
+</html>
