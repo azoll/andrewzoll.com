@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta name="robots" content="noindex, nofollow"/>
+<title>Andrew Zoll · AI Engineer 6, AI Foundation &amp; Tooling · built for Netflix Ads Platform</title>
+<meta name="description" content="Andrew Zoll's case for the AI Engineer 6, AI Foundation and Tooling role on Netflix Ads Platform Engineering."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --red:#E50914;
+  --red-dk:#B20710;
+  --black:#000;
+  --ground:#141414;
+  --card:#181818;
+  --card-2:#232323;
+  --line:#2b2b2b;
+  --text:#fff;
+  --dim:#b3b3b3;
+  --faint:#777;
+  --sans:'Inter',Netflix Sans,Helvetica Neue,Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--ground);color:var(--text);font-family:var(--sans);
+  line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+a{color:inherit}
+.wrap{max-width:1240px;margin:0 auto;padding:0 4vw}
+
+/* ---------- top bar ---------- */
+.bar{
+  position:sticky;top:0;z-index:60;
+  background:linear-gradient(180deg,rgba(0,0,0,.94) 8%,rgba(0,0,0,.55) 60%,transparent);
+  transition:background .3s;
+}
+.bar.solid{background:var(--black);border-bottom:1px solid var(--line)}
+.bar .wrap{display:flex;align-items:center;gap:26px;height:66px}
+.word{
+  font-weight:900;letter-spacing:.055em;font-size:19px;color:var(--red);
+  text-transform:uppercase;white-space:nowrap;
+}
+.barnav{display:flex;gap:20px;font-size:13.5px;color:var(--dim);font-weight:400}
+.barnav a{text-decoration:none;transition:color .2s}
+.barnav a:hover{color:#fff}
+@media(max-width:760px){.barnav{display:none}}
+.barright{margin-left:auto;font-size:12px;color:var(--faint);letter-spacing:.04em}
+@media(max-width:560px){.barright{display:none}}
+
+/* ---------- billboard ---------- */
+.bb{
+  position:relative;margin-top:-66px;padding:150px 0 62px;
+  background:
+    radial-gradient(950px 620px at 78% 22%, rgba(229,9,20,.30), transparent 62%),
+    linear-gradient(180deg,#0b0b0b 0%,var(--ground) 88%);
+  overflow:hidden;
+}
+.bb::after{
+  content:'';position:absolute;left:0;right:0;bottom:0;height:130px;
+  background:linear-gradient(180deg,transparent,var(--ground));
+}
+.bb .wrap{position:relative;z-index:2;max-width:920px;margin-left:auto;margin-right:auto}
+@media(min-width:1100px){.bb .wrap{margin-left:max(4vw,calc((100vw - 1240px)/2))}}
+.kicker{
+  display:inline-flex;align-items:center;gap:9px;font-size:12.5px;font-weight:600;
+  letter-spacing:.13em;text-transform:uppercase;color:var(--dim);margin-bottom:16px;
+}
+.kicker b{color:var(--red);font-weight:800}
+h1{
+  font-size:clamp(40px,7.6vw,86px);font-weight:800;line-height:.98;letter-spacing:-.038em;
+  max-width:14ch;
+}
+h1 span{display:block;color:var(--red)}
+.meta{display:flex;align-items:center;gap:13px;flex-wrap:wrap;margin:24px 0 20px;font-size:14px;color:var(--dim)}
+.meta .match{color:#46d369;font-weight:700}
+.meta .rated{border:1px solid #555;padding:1px 8px;font-size:12px;letter-spacing:.04em}
+.meta .dot{color:var(--faint)}
+.syn{max-width:62ch;font-size:17.5px;color:#e6e6e6;line-height:1.62}
+.syn b{color:#fff;font-weight:600}
+.acts{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
+.btn{
+  display:inline-flex;align-items:center;gap:10px;border:0;cursor:pointer;font-family:inherit;
+  font-size:15.5px;font-weight:600;padding:12px 26px;border-radius:4px;text-decoration:none;
+  transition:opacity .18s,background .18s;
+}
+.btn-play{background:#fff;color:#000}
+.btn-play:hover{opacity:.78}
+.btn-info{background:rgba(109,109,110,.62);color:#fff}
+.btn-info:hover{background:rgba(109,109,110,.45)}
+.btn-red{background:var(--red);color:#fff}
+.btn-red:hover{background:var(--red-dk)}
+.btn-ghost{background:transparent;color:#fff;border:1px solid #555}
+.btn-ghost:hover{border-color:#fff}
+
+/* the "More Info" drawer, genuinely toggled */
+.drawer{
+  display:none;margin-top:26px;max-width:78ch;
+  border-left:3px solid var(--red);background:var(--card);padding:20px 22px;border-radius:0 4px 4px 0;
+}
+.drawer.open{display:block}
+.drawer p{font-size:14.6px;color:var(--dim);margin-bottom:11px}
+.drawer p:last-child{margin-bottom:0}
+.drawer b{color:#fff;font-weight:600}
+
+/* ---------- sections ---------- */
+section{padding:8px 0 56px}
+.head{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:6px}
+h2{font-size:clamp(21px,2.7vw,27px);font-weight:700;letter-spacing:-.017em}
+.head .note{font-size:13.5px;color:var(--faint)}
+.sub{color:var(--dim);font-size:15.5px;max-width:70ch;margin:10px 0 24px}
+
+/* ---------- season tabs ---------- */
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}
+.tab{
+  background:transparent;border:1px solid var(--line);color:var(--dim);cursor:pointer;
+  font-family:inherit;font-size:13.5px;font-weight:500;padding:9px 18px;border-radius:4px;
+  transition:all .18s;
+}
+.tab:hover{border-color:#666;color:#fff}
+.tab[aria-selected="true"]{background:#fff;border-color:#fff;color:#000;font-weight:600}
+
+/* ---------- episodes ---------- */
+.eps{border-top:1px solid var(--line)}
+.ep{border-bottom:1px solid var(--line)}
+.epBtn{
+  width:100%;display:grid;grid-template-columns:52px 1fr auto;gap:20px;align-items:center;
+  background:transparent;border:0;color:inherit;text-align:left;cursor:pointer;
+  padding:20px 8px;font-family:inherit;transition:background .18s;
+}
+.epBtn:hover{background:rgba(255,255,255,.045)}
+.epNo{font-size:23px;font-weight:300;color:var(--faint);text-align:center}
+.epTitle{font-size:16px;font-weight:600;line-height:1.4}
+.epTitle em{display:block;font-style:normal;font-weight:400;font-size:13px;color:var(--faint);margin-top:5px;letter-spacing:.02em}
+.epMark{
+  font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  padding:4px 11px;border-radius:3px;white-space:nowrap;
+}
+.epMark.built{background:rgba(70,211,105,.14);color:#46d369}
+.epMark.part{background:rgba(229,158,9,.14);color:#e5a409}
+.epMark.none{background:rgba(229,9,20,.15);color:#ff5c66}
+.epBody{display:none;padding:0 8px 26px 72px}
+.ep.open .epBody{display:block}
+.epBody p{font-size:15.2px;color:var(--dim);margin-bottom:13px;max-width:76ch}
+.epBody p:last-of-type{margin-bottom:0}
+.epBody b{color:#fff;font-weight:600}
+.epBody .quote{
+  border-left:2px solid var(--red);padding-left:14px;color:#fff;font-size:14.4px;
+  margin-bottom:15px;font-weight:400;
+}
+@media(max-width:620px){
+  .epBtn{grid-template-columns:34px 1fr;gap:13px;padding:17px 4px}
+  .epMark{grid-column:2;justify-self:start;margin-top:8px}
+  .epBody{padding-left:47px}
+}
+
+/* ---------- systems row ---------- */
+.row{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+@media(max-width:940px){.row{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:520px){.row{grid-template-columns:1fr}}
+.tile{
+  background:var(--card);border-radius:5px;overflow:hidden;border:1px solid transparent;
+  transition:transform .22s,border-color .22s;position:relative;
+}
+.tile:hover{transform:translateY(-4px);border-color:#3a3a3a}
+.tileTop{
+  height:96px;display:flex;align-items:flex-end;padding:14px;
+  background:linear-gradient(135deg,rgba(229,9,20,.5),rgba(20,20,20,.9));
+}
+.tileTop .big{font-size:52px;font-weight:800;line-height:.8;color:rgba(255,255,255,.16);letter-spacing:-.05em}
+.tileBody{padding:15px 16px 18px}
+.tileBody h3{font-size:15.5px;font-weight:700;margin-bottom:7px}
+.tileBody p{font-size:13.4px;color:var(--dim);line-height:1.55}
+.tileBody .tag{display:block;margin-top:11px;font-size:11.5px;color:var(--faint);letter-spacing:.05em}
+
+/* ---------- honest gaps ---------- */
+.rating{background:var(--card);border-radius:5px;padding:28px 28px 26px;border:1px solid var(--line)}
+.rating h2{margin-bottom:6px}
+.ratingList{list-style:none;margin-top:22px;display:flex;flex-direction:column;gap:20px}
+.ratingList li{display:grid;grid-template-columns:118px 1fr;gap:20px;align-items:start}
+@media(max-width:620px){.ratingList li{grid-template-columns:1fr;gap:6px}}
+.ratingList .lab{
+  font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#ff5c66;
+  border:1px solid rgba(229,9,20,.4);padding:5px 9px;border-radius:3px;text-align:center;
+}
+.ratingList p{font-size:14.8px;color:var(--dim)}
+.ratingList b{color:#fff;font-weight:600}
+
+/* ---------- close ---------- */
+.close{border-top:1px solid var(--line);padding:52px 0 76px}
+.close h2{max-width:19ch;margin-bottom:16px}
+.close p{max-width:64ch;color:var(--dim);font-size:16.5px;margin-bottom:26px}
+.sig{margin-top:36px;font-size:12.5px;color:var(--faint);letter-spacing:.04em}
+.disclaim{
+  max-width:80ch;font-size:13px;color:var(--faint);line-height:1.7;
+  border-top:1px solid var(--line);padding-top:20px;margin-top:34px;
+}
+</style>
+</head>
+<body>
+
+<header class="bar" id="bar">
+  <div class="wrap">
+    <span class="word">Andrew Zoll</span>
+    <nav class="barnav">
+      <a href="#episodes">Episodes</a>
+      <a href="#systems">Systems</a>
+      <a href="#gaps">What it isn't</a>
+      <a href="#close">Contact</a>
+    </nav>
+    <span class="barright">Built for Ads Platform Engineering</span>
+  </div>
+</header>
+
+<div class="bb">
+  <div class="wrap">
+    <div class="kicker"><b>&#9679;</b> Applying for AI Engineer 6 &middot; AI Foundation &amp; Tooling</div>
+    <h1>The first AI engineer<span>has already done this once.</span></h1>
+
+    <div class="meta">
+      <span class="match">Strong match</span>
+      <span class="dot">&middot;</span><span>2026</span>
+      <span class="dot">&middot;</span><span class="rated">Remote, US</span>
+      <span class="dot">&middot;</span><span>Applied AI</span>
+      <span class="dot">&middot;</span><span>3 seasons, 12 episodes</span>
+    </div>
+
+    <p class="syn">
+      You're hiring your first dedicated AI engineer to build the agentic layer your team
+      develops on, and the line in the posting I keep coming back to is
+      <b>"shipping faster without accumulating slop, regressions, or accountability gaps."</b>
+      That's the whole problem. I've spent two years solving my own version of it, because I
+      run two businesses on agents I built and nobody else was going to catch it when they
+      were wrong.
+    </p>
+
+    <div class="acts">
+      <button class="btn btn-play" id="playBtn" type="button">&#9654;&nbsp; Start with episode 1</button>
+      <button class="btn btn-info" id="infoBtn" type="button" aria-expanded="false" aria-controls="drawer">&#9432;&nbsp; More info</button>
+    </div>
+
+    <div class="drawer" id="drawer">
+      <p><b>Who:</b> Andrew Zoll, Pueblo, Colorado, Mountain time. Currently Senior Software
+      Engineer for AI Solutions at Coder, writing Python on a large production codebase and
+      building an internal AI agent platform for the revenue organization.</p>
+      <p><b>What I bring:</b> AndrewOS, a multi-agent operating system I built and run across
+      two of my businesses; Veritas, a citation-verification pipeline for legal filings;
+      FieldCommand, a multi-tenant SaaS I shipped solo. All three built AI-assisted end to end.</p>
+      <p><b>Where I'd stretch:</b> the posting asks for three or more years of concentrated
+      applied AI work and deep retrieval-augmented generation experience. My concentrated
+      applied AI work runs about two years, and my retrieval layer is version-controlled files
+      rather than an embedding store. Both are covered honestly in the last section.</p>
+    </div>
+  </div>
+</div>
+
+<main>
+
+  <!-- ================= EPISODES ================= -->
+  <section id="episodes" class="wrap">
+    <div class="head">
+      <h2>Episodes</h2>
+      <span class="note">Every title is a line lifted from your job description.</span>
+    </div>
+    <p class="sub">
+      Three seasons. The first is what the role asks me to build. The second is the part
+      that keeps it trustworthy, which is where I've spent most of my time. The third is
+      what I can't claim.
+    </p>
+
+    <div class="tabs" role="tablist" aria-label="Seasons">
+      <button class="tab" role="tab" aria-selected="true" data-season="1">Season 1: What you're asking me to build</button>
+      <button class="tab" role="tab" aria-selected="false" data-season="2">Season 2: Keeping it honest</button>
+      <button class="tab" role="tab" aria-selected="false" data-season="3">Season 3: The gaps</button>
+    </div>
+
+    <div class="eps" id="eps"></div>
+  </section>
+
+  <!-- ================= SYSTEMS ================= -->
+  <section id="systems" class="wrap">
+    <div class="head"><h2>The systems behind all of that</h2></div>
+    <p class="sub">Four things that exist and run. Every claim on this page traces to one of them.</p>
+    <div class="row">
+      <article class="tile">
+        <div class="tileTop"><span class="big">01</span></div>
+        <div class="tileBody">
+          <h3>AndrewOS</h3>
+          <p>A multi-agent operating system running marketing, content, and operations across two
+          businesses. Delegation hierarchy, scoped task packets, independent validators, and a
+          knowledge layer the agents are grounded on.</p>
+          <span class="tag">Running continuously since 2025</span>
+        </div>
+      </article>
+      <article class="tile">
+        <div class="tileTop"><span class="big">02</span></div>
+        <div class="tileBody">
+          <h3>Veritas</h3>
+          <p>Citation verification for legal filings. An LLM extracts the claim, deterministic
+          code decides the verdict, and releases are gated on a fixed fixture suite. Built
+          specifically because models are confidently wrong.</p>
+          <span class="tag">veritaslaw.app</span>
+        </div>
+      </article>
+      <article class="tile">
+        <div class="tileTop"><span class="big">03</span></div>
+        <div class="tileBody">
+          <h3>FieldCommand</h3>
+          <p>A multi-tenant SaaS for commercial trade contractors, shipped solo on PostgreSQL and
+          Supabase. Roughly 187,745 lines of TypeScript, with tenant isolation, role-based access
+          control, and Stripe billing pipelines.</p>
+          <span class="tag">Production, paying customers</span>
+        </div>
+      </article>
+      <article class="tile">
+        <div class="tileTop"><span class="big">04</span></div>
+        <div class="tileBody">
+          <h3>Coder</h3>
+          <p>The day job. Senior Software Engineer for AI Solutions, building an internal AI agent
+          platform in Python on a two-person team, shipping straight to production and owning the
+          quality and delivery practice.</p>
+          <span class="tag">Current W-2 role</span>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ================= GAPS ================= -->
+  <section id="gaps" class="wrap">
+    <div class="rating">
+      <h2>What this title does not include</h2>
+      <p class="sub" style="margin-bottom:0">
+        You wrote that you want production systems and not just prototypes, so here is the
+        honest inventory before anyone spends an hour on a call.
+      </p>
+      <ul class="ratingList">
+        <li>
+          <span class="lab">Tenure</span>
+          <p><b>The posting asks for three or more years of significant focus on applied AI systems.</b>
+          Mine runs closer to two, starting when I built AndrewOS and deepening through Veritas and
+          the Coder platform. It's concentrated rather than long, and I'd rather you weigh the
+          systems than the calendar, but I'm not going to round it up.</p>
+        </li>
+        <li>
+          <span class="lab">RAG depth</span>
+          <p><b>You ask for deep retrieval-augmented generation: document indexing, embedding
+          strategies, retrieval pipelines.</b> I built my grounding layer out of version-controlled
+          files instead, on purpose, because I needed every fact an agent acted on to be diffable
+          and attributable. That was the right call for my systems and it is not the same as
+          having run an embedding and retrieval stack at your scale. This is the largest gap here.</p>
+        </li>
+        <li>
+          <span class="lab">Level</span>
+          <p><b>This is a level 6 seat.</b> I've led as a founder and I'm under a year into a formal
+          senior engineering title. Judge the level on what I've built rather than the title
+          history, and if the answer is that it reads a level lower, that's a fair reading and
+          I'd still want the conversation.</p>
+        </li>
+        <li>
+          <span class="lab">Ads domain</span>
+          <p><b>I have not worked in ad serving.</b> I know nothing about ad insertion, encoding
+          recipes, or brand safety at delivery, and I would be learning that alongside the team.
+          The role is scoped to the engineering platform rather than the ads product, which is
+          the reason I think it's still a fit.</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ================= CLOSE ================= -->
+  <section id="close" class="wrap close">
+    <h2>Why I want this one</h2>
+    <p>
+      Most companies hiring for agentic tooling want a demo. You wrote the accountability
+      problem into the job description yourself, which tells me the team has already hit the
+      part where AI-assisted speed starts costing you something. That's the interesting half
+      of the work, and it's the half I've actually done.
+    </p>
+    <div class="acts">
+      <a class="btn btn-red" href="https://portfolio.andrewzoll.com" target="_blank" rel="noopener">See the portfolio</a>
+      <a class="btn btn-ghost" href="https://www.linkedin.com/in/andrewzoll" target="_blank" rel="noopener">Connect on LinkedIn</a>
+    </div>
+    <p class="sig">Andrew Zoll &middot; Pueblo, Colorado &middot; Mountain time</p>
+    <p class="disclaim">
+      I'm not affiliated with Netflix and this is not an official page of any kind. I built it in
+      your design language because a page is a faster way to show you how I work than a resume is,
+      and because the role is about demonstrating value rather than describing it. Every claim
+      here points at a system that exists, and everything I can't claim is in the section above,
+      in the same size type.
+    </p>
+  </section>
+
+</main>
+
+<script>
+(function(){
+  "use strict";
+
+  var EPISODES = {
+    "1":[
+      {
+        t:'"Architect and build a centralized context layer that gives AI agents grounded, team-specific knowledge"',
+        s:"AndrewOS, the knowledge and memory layer",
+        mark:"built", cls:"built",
+        q:"Architect and build a centralized context layer that gives AI agents grounded, team-specific knowledge",
+        p:["This is the core of AndrewOS and it is the piece I'd bring on day one. Every agent in the system reads a shared context layer before it acts: operating doctrine, per-domain canon, and a memory store of facts that were learned once and should never be re-derived.",
+           "The design decision worth talking about is that the store is version-controlled files rather than an embedding index. I wanted every fact an agent relied on to be diffable, reviewable, and attributable to a commit, because when an agent was wrong I needed to find out which fact made it wrong. That tradeoff cost me semantic recall and bought me auditability, and I'd want to argue it out with your team rather than assume it transfers."]
+      },
+      {
+        t:'"Develop multi-agent orchestration where parallel agents handle implementation, testing, and documentation as coordinated workflows"',
+        s:"AndrewOS, the delegation hierarchy",
+        mark:"built", cls:"built",
+        q:"Develop multi-agent orchestration where parallel agents handle implementation, testing, and documentation as coordinated workflows",
+        p:["AndrewOS runs a four-layer hierarchy. A chief of staff agent takes the inbound work, domain managers scope it into task packets, builder agents execute, and validators check the result. Independent work fans out in parallel; dependent work runs in sequence. That distinction is enforced in the system rather than left to a model's judgment.",
+           "The thing I learned the hard way is that parallelism is the easy half. The hard half is deciding what genuinely does not depend on anything else, because getting that wrong produces work that looks finished and is quietly built on a stale premise."]
+      },
+      {
+        t:'"Design and implement agentic workflows for the full development lifecycle: AI-assisted code generation, automated test creation, PR pre-review, and deployment validation"',
+        s:"Build discipline and the validator layer",
+        mark:"built", cls:"built",
+        q:"Design and implement agentic workflows for the full development lifecycle: AI-assisted code generation, automated test creation, PR pre-review, and deployment validation",
+        p:["Everything I've shipped in two years went through an agentic build loop: specification first, then build, then an independent review pass, then ship. FieldCommand and Veritas both exist because that loop works.",
+           "The pre-review half is where I'd have the most to contribute. I run reviewers as separate agents with distinct lenses, security, correctness, and tests, rather than one generalist reviewer, because a single reviewer converges on the same blind spots the builder had."]
+      },
+      {
+        t:'"Set up standardized AI development environments so every engineer can work in an AI-first workflow from day one"',
+        s:"Portable setup, documented and repeatable",
+        mark:"built", cls:"built",
+        q:"Set up standardized AI development environments so every engineer can work in an AI-first workflow from day one",
+        p:["AndrewOS is designed to stand up on a fresh machine from a clone plus a documented bootstrap: the environment, the tool layer, the scheduled jobs, and the safety rules that keep the automated parts from double-firing on a second machine.",
+           "I built that because I got bitten by it. The bootstrap document exists because a parallel machine once ran the same automated loop twice, and the fix was a documented, standardized setup rather than a note to myself."]
+      },
+      {
+        t:'"Build AI-powered operational workflows: automated incident triage, log and metric correlation, root cause analysis, and guided resolution"',
+        s:"Automated sweeps and alerting, at my scale",
+        mark:"part", cls:"part",
+        q:"Build AI-powered operational workflows: automated incident triage, log and metric correlation, root cause analysis, and guided resolution",
+        p:["I run scheduled sweeps that check system state, surface anything unresolved, and escalate on defined thresholds, including a circuit breaker that halts outbound sending automatically when a quality metric crosses its limit. There is a live operational dashboard that reads job health, recent failures, and pending decisions.",
+           "The honest scope check: that is operational automation over my own systems, not incident response inside a large production organization. The pattern transfers. The scale does not, and I'd be learning your operational surface."]
+      }
+    ],
+    "2":[
+      {
+        t:'"Striking the right balance between AI-driven speed and quality: shipping faster without accumulating slop, regressions, or accountability gaps"',
+        s:"The rule the whole system is built around",
+        mark:"built", cls:"built",
+        q:"A core part of this role is striking the right balance between AI-driven speed and quality, shipping faster without accumulating slop, regressions, or accountability gaps",
+        p:["This is the sentence that made me apply. My answer to it is one structural rule: no agent audits its own work. A reviewer or validator has to run in a fresh, independent context, because an agent asked to check itself in the same context will agree with itself nearly every time. It's the single most useful thing I've done for output quality.",
+           "The second piece is the trace. Every stage of a run appends what it received, what it decided, why, and what it handed off, append only. A finished run reads top to bottom as a replayable record, and that record is what I review instead of raw agent output. That is the accountability gap the posting names, and it is closable."]
+      },
+      {
+        t:'"Proven experience building and deploying agentic AI systems in production: agent architectures, tool integration, orchestration, and evaluation frameworks"',
+        s:"Veritas, and what evaluation actually cost",
+        mark:"built", cls:"built",
+        q:"Proven experience building and deploying agentic AI systems in production: agent architectures, tool integration, orchestration, and evaluation frameworks",
+        p:["Veritas checks the cases and quotations cited in a legal filing against source records. Hallucinated citations are the entire reason it exists, so the evaluation loop is the product rather than a nicety.",
+           "The architecture is deliberate. The model extracts the claim, then deterministic code decides the verdict, because a model is good at reading a messy citation out of prose and should not be trusted to rule on whether it is real. I hold the pipeline against a fixed fixture suite and nothing ships that fails it.",
+           "I also chose the verdict language carefully. It reports that a citation was not located in the reporter rather than calling it false, because a lawyer acts on that sentence in a filing. Getting the hedge right mattered more than sounding confident."]
+      },
+      {
+        t:'"Drive team-wide AI adoption through hands-on enablement: pairing sessions, architecture reviews, workflow demonstrations, and continuous feedback loops"',
+        s:"The part I should be straight about",
+        mark:"part", cls:"part",
+        q:"Demonstrated ability to drive technical adoption across a team: you can demonstrate value, build trust through pairing and architecture reviews, and bring engineers along on new workflows",
+        p:["Where I'm strong: I've spent six years translating technical work to non-technical decision makers under real accountability, and I own the quality and delivery practice on my current team, which is adoption work whether or not it has that name. Demonstrating value by building the thing and showing it is how I work by default, and this page is an example of it.",
+           "Where I'm honest: my team is two people. I have not driven adoption across a large engineering organization, and I'm a naturally quiet operator rather than an evangelist. I win people over by shipping something useful and letting them use it, which works, and it is slower than a natural extrovert doing the same job."]
+      },
+      {
+        t:'"Strong software engineering fundamentals: you build production-grade systems, not just prototypes"',
+        s:"Python at Coder, TypeScript at scale in FieldCommand",
+        mark:"built", cls:"built",
+        q:"Strong software engineering fundamentals: you build production-grade systems, not just prototypes. Proficiency in Python and/or JVM languages",
+        p:["Python is my current daily language. At Coder I write it on a large production codebase as one of two engineers, shipping directly to production, and I own the test coverage, release process, and operating documentation for the platform.",
+           "FieldCommand is the scale receipt on the other side: a multi-tenant SaaS with roughly 187,745 lines of TypeScript, tenant isolation, role-based access control, four AI features behind per-tenant feature flags, and billing pipelines. It has real customers and real money moving through it, which is a different discipline from a prototype.",
+           "On the JVM half of that requirement: I do not write Java or Scala. Python satisfies the stated bar, so I'm noting it rather than treating it as a gap."]
+      }
+    ],
+    "3":[
+      {
+        t:'"3+ years of significant focus on applied AI systems"',
+        s:"Roughly two, concentrated",
+        mark:"none", cls:"none",
+        q:"3+ years of significant focus on applied AI systems",
+        p:["My concentrated applied AI work runs about two years rather than three. It started when I built AndrewOS and deepened through Veritas and the Coder agent platform.",
+           "I'm not going to argue the number away. What I'd put against it is that the two years were spent building and operating agentic systems that other people depend on, rather than evaluating them, and that the posting asks for proven production experience with agent architectures and evaluation frameworks, which is exactly what those two years produced."]
+      },
+      {
+        t:'"Deep experience with retrieval-augmented generation: document indexing, embedding strategies, retrieval pipelines, and grounding techniques"',
+        s:"Grounding yes, embeddings no",
+        mark:"none", cls:"none",
+        q:"Deep experience with retrieval-augmented generation: document indexing, embedding strategies, retrieval pipelines, and grounding techniques",
+        p:["This is the largest gap on the page and I'd rather it be the first thing you know. Grounding I've done extensively, and my agents are grounded on a curated corpus rather than on whatever the model remembers. Indexing and embedding strategies I have not built at depth, because I deliberately chose version-controlled files over an embedding store for auditability.",
+           "That was the right call for systems where I needed to trace a wrong answer back to the fact that caused it. It is not a substitute for having run a retrieval pipeline at your scale, and I would be ramping on that rather than arriving with it."]
+      },
+      {
+        t:'"Prior experience as the first or early AI engineer on a team"',
+        s:"Listed as a nice to have, and the one I clear cleanly",
+        mark:"built", cls:"built",
+        q:"Prior experience as the first or early AI engineer on a team: standing up AI capabilities where none previously existed, with the ownership and initiative of an early-stage environment",
+        p:["This one I clear without qualification, which is why it's in this season rather than the first. Every AI capability I've described was stood up where none existed, by me, with nobody to hand the ambiguous parts to.",
+           "AndrewOS had no precedent to copy. Veritas had no existing verification pipeline. At Coder I'm on a two-person team building an agent platform that did not previously exist. Being the first AI engineer is the only mode I've worked in."]
+      }
+    ]
+  };
+
+  var epsEl = document.getElementById('eps');
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('.tab'));
+
+  function render(season){
+    var list = EPISODES[season] || [];
+    epsEl.innerHTML = list.map(function(e,i){
+      return '<article class="ep">'
+        + '<button class="epBtn" aria-expanded="false">'
+        +   '<span class="epNo">' + (i+1) + '</span>'
+        +   '<span class="epTitle">' + e.t + '<em>' + e.s + '</em></span>'
+        +   '<span class="epMark ' + e.cls + '">' + (e.mark === 'built' ? 'Shipped' : e.mark === 'part' ? 'Partial' : 'Gap') + '</span>'
+        + '</button>'
+        + '<div class="epBody">'
+        +   '<p class="quote">' + e.q + '</p>'
+        +   e.p.map(function(x){ return '<p>' + x + '</p>'; }).join('')
+        + '</div>'
+      + '</article>';
+    }).join('');
+
+    Array.prototype.forEach.call(epsEl.querySelectorAll('.ep'), function(ep){
+      var btn = ep.querySelector('.epBtn');
+      btn.addEventListener('click', function(){
+        var open = ep.classList.toggle('open');
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+    });
+  }
+
+  tabs.forEach(function(tab){
+    tab.addEventListener('click', function(){
+      tabs.forEach(function(t){ t.setAttribute('aria-selected', t === tab ? 'true' : 'false'); });
+      render(tab.getAttribute('data-season'));
+    });
+  });
+  render('1');
+
+  /* hero buttons genuinely do what they say */
+  document.getElementById('playBtn').addEventListener('click', function(){
+    tabs.forEach(function(t){ t.setAttribute('aria-selected', t.getAttribute('data-season') === '1' ? 'true' : 'false'); });
+    render('1');
+    var first = epsEl.querySelector('.ep');
+    if(first){
+      first.classList.add('open');
+      first.querySelector('.epBtn').setAttribute('aria-expanded','true');
+    }
+    document.getElementById('episodes').scrollIntoView({behavior:'smooth'});
+  });
+
+  var infoBtn = document.getElementById('infoBtn'), drawer = document.getElementById('drawer');
+  infoBtn.addEventListener('click', function(){
+    var open = drawer.classList.toggle('open');
+    infoBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+
+  /* bar solidifies on scroll, like the real thing */
+  var bar = document.getElementById('bar');
+  window.addEventListener('scroll', function(){
+    bar.classList.toggle('solid', window.scrollY > 40);
+  }, {passive:true});
+})();
+</script>
+</body>
+</html>
