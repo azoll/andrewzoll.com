@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta name="robots" content="noindex, nofollow"/>
+<title>Andrew Zoll for Netflix Platform Systems, Developer Productivity</title>
+<style>
+  :root{
+    --ink:#f5f5f7; --dim:#8c8c92; --faint:#5a5a61;
+    --bg:#000; --panel:#0d0d0f; --panel2:#141416; --line:#242428;
+    --red:#e50914; --green:#46d369; --amber:#e8b339;
+    --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+    --sans:"Helvetica Neue",Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+  a{color:inherit}
+
+  /* ---------- top rail ---------- */
+  .rail{position:sticky;top:0;z-index:60;background:rgba(0,0,0,.86);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .rail .wrap{display:flex;align-items:center;gap:16px;height:52px}
+  .mark{font-family:var(--mono);font-size:11px;letter-spacing:.22em;color:var(--red);font-weight:700}
+  .rail nav{margin-left:auto;display:flex;gap:20px}
+  .rail nav a{font-size:12px;color:var(--dim);text-decoration:none;letter-spacing:.04em}
+  .rail nav a:hover{color:var(--ink)}
+  @media(max-width:720px){.rail nav{display:none}}
+
+  /* ---------- hero ---------- */
+  .hero{padding:88px 0 64px;position:relative}
+  .hero:before{content:"";position:absolute;inset:0 0 auto;height:420px;
+    background:radial-gradient(680px 300px at 12% 0%,rgba(229,9,20,.20),transparent 70%);pointer-events:none}
+  .kicker{font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--faint);text-transform:uppercase;margin-bottom:22px}
+  h1{font-size:clamp(34px,5.6vw,60px);line-height:1.04;letter-spacing:-.03em;font-weight:800;max-width:16ch}
+  h1 em{font-style:normal;color:var(--red)}
+  .lede{margin-top:22px;font-size:clamp(16px,2vw,19px);color:#c8c8cd;max-width:60ch}
+  .lede b{color:var(--ink);font-weight:600}
+  .disc{margin-top:20px;font-size:12.5px;color:var(--faint);max-width:62ch}
+
+  /* ---------- the running pipeline ---------- */
+  .loop{margin-top:44px;border:1px solid var(--line);border-radius:10px;background:var(--panel);overflow:hidden}
+  .loop-bar{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid var(--line);background:var(--panel2)}
+  .loop-bar .t{font-family:var(--mono);font-size:11.5px;color:var(--dim);letter-spacing:.06em}
+  .loop-bar .status{margin-left:auto;font-family:var(--mono);font-size:11px;letter-spacing:.1em;padding:3px 9px;border-radius:3px;border:1px solid var(--line);color:var(--dim)}
+  .loop-bar .status.go{color:var(--green);border-color:rgba(70,211,105,.4);background:rgba(70,211,105,.08)}
+  .replay{font-family:var(--mono);font-size:11px;letter-spacing:.08em;background:none;border:1px solid var(--line);color:var(--dim);
+    padding:4px 11px;border-radius:3px;cursor:pointer}
+  .replay:hover{color:var(--ink);border-color:#3a3a40}
+  .stages{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--line)}
+  @media(max-width:760px){.stages{grid-template-columns:repeat(2,1fr)}}
+  .stage{background:var(--panel);padding:18px 16px 20px;min-height:112px;position:relative}
+  .stage .n{font-family:var(--mono);font-size:10px;color:var(--faint);letter-spacing:.16em}
+  .stage .lab{margin-top:8px;font-size:13.5px;font-weight:600;letter-spacing:-.01em;color:var(--faint);transition:color .3s}
+  .stage .sub{margin-top:5px;font-size:11.5px;color:transparent;transition:color .4s;line-height:1.45}
+  .stage .fill{position:absolute;left:0;bottom:0;height:2px;width:0;background:var(--red);transition:width .5s linear}
+  .stage.on .lab{color:var(--ink)}
+  .stage.on .sub{color:var(--dim)}
+  .stage.done .fill{width:100%;background:var(--green)}
+  .stage.on .fill{width:100%}
+
+  /* ---------- sections ---------- */
+  section{padding:76px 0;border-top:1px solid var(--line)}
+  .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--red);text-transform:uppercase}
+  h2{margin-top:14px;font-size:clamp(24px,3.4vw,34px);letter-spacing:-.025em;font-weight:700;max-width:22ch}
+  .sub{margin-top:14px;color:var(--dim);max-width:64ch;font-size:15.5px}
+
+  /* ---------- friction log ---------- */
+  .log{margin-top:36px;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+  .row{border-bottom:1px solid var(--line);background:var(--panel)}
+  .row:last-child{border-bottom:0}
+  .row-head{width:100%;display:flex;align-items:center;gap:16px;padding:17px 18px;background:none;border:0;color:inherit;
+    font:inherit;text-align:left;cursor:pointer}
+  .row-head:hover{background:var(--panel2)}
+  .row-head .id{font-family:var(--mono);font-size:10.5px;color:var(--faint);letter-spacing:.12em;flex:none;width:52px}
+  .row-head .ttl{font-size:15px;font-weight:600;letter-spacing:-.01em}
+  .row-head .chev{margin-left:auto;color:var(--faint);flex:none;transition:transform .25s;font-size:13px}
+  .row.open .chev{transform:rotate(90deg);color:var(--red)}
+  .row-body{max-height:0;overflow:hidden;transition:max-height .35s ease}
+  .row-body .inner{padding:0 18px 20px 86px;color:#bdbdc4;font-size:14.5px;max-width:76ch}
+  @media(max-width:620px){.row-body .inner{padding-left:18px}}
+  .row-body .inner p+p{margin-top:11px}
+  .row-body .inner b{color:var(--ink);font-weight:600}
+
+  /* ---------- ledger with real filter ---------- */
+  .filters{margin-top:30px;display:flex;flex-wrap:wrap;gap:8px}
+  .filters button{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+    background:none;border:1px solid var(--line);color:var(--dim);padding:7px 14px;border-radius:3px;cursor:pointer;transition:.2s}
+  .filters button:hover{color:var(--ink);border-color:#3a3a40}
+  .filters button[aria-pressed="true"]{background:var(--ink);color:#000;border-color:var(--ink);font-weight:700}
+  .count{margin-top:14px;font-family:var(--mono);font-size:11px;color:var(--faint);letter-spacing:.08em}
+  .ledger{margin-top:14px;display:grid;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+  .item{background:var(--panel);padding:20px 18px;display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media(max-width:760px){.item{grid-template-columns:1fr;gap:10px}}
+  .item.hide{display:none}
+  .ask{font-size:14px;color:var(--ink);font-weight:600;letter-spacing:-.01em}
+  .ask .tag{display:inline-block;font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;
+    padding:2px 7px;border-radius:2px;margin-bottom:9px}
+  .t-strong .tag{background:rgba(70,211,105,.12);color:var(--green);border:1px solid rgba(70,211,105,.3)}
+  .t-ramp .tag{background:rgba(232,179,57,.12);color:var(--amber);border:1px solid rgba(232,179,57,.3)}
+  .t-gap .tag{background:rgba(229,9,20,.12);color:#ff5560;border:1px solid rgba(229,9,20,.32)}
+  .real{font-size:14px;color:#bdbdc4;line-height:1.62}
+  .real b{color:var(--ink);font-weight:600}
+
+  /* ---------- trace viewer ---------- */
+  .trace{margin-top:34px;display:grid;grid-template-columns:230px 1fr;gap:1px;background:var(--line);
+    border:1px solid var(--line);border-radius:10px;overflow:hidden;min-height:330px}
+  @media(max-width:760px){.trace{grid-template-columns:1fr}}
+  .tnav{background:var(--panel2);padding:10px 0}
+  .tnav button{width:100%;text-align:left;background:none;border:0;color:var(--dim);font:inherit;font-size:13.5px;
+    padding:11px 18px;cursor:pointer;border-left:2px solid transparent;transition:.18s}
+  .tnav button:hover{color:var(--ink);background:rgba(255,255,255,.03)}
+  .tnav button[aria-selected="true"]{color:var(--ink);border-left-color:var(--red);background:rgba(229,9,20,.07);font-weight:600}
+  .tnav .idx{font-family:var(--mono);font-size:10px;color:var(--faint);letter-spacing:.14em;margin-right:9px}
+  .tpane{background:var(--panel);padding:26px 24px}
+  .tpane .fld{margin-bottom:19px}
+  .tpane .fld:last-child{margin-bottom:0}
+  .tpane .k{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--red);margin-bottom:6px}
+  .tpane .v{font-size:14.5px;color:#c8c8cd;line-height:1.62;max-width:70ch}
+  .tpane .v b{color:var(--ink);font-weight:600}
+
+  /* ---------- honest block ---------- */
+  .honest{margin-top:34px;border:1px solid rgba(229,9,20,.3);border-radius:10px;background:linear-gradient(180deg,rgba(229,9,20,.06),transparent);padding:28px 26px}
+  .honest h3{font-size:17px;letter-spacing:-.02em;margin-bottom:6px}
+  .honest p{color:var(--dim);font-size:14px;margin-bottom:16px;max-width:66ch}
+  .honest ul{list-style:none;display:grid;gap:11px}
+  .honest li{display:flex;gap:12px;font-size:14.5px;color:#bdbdc4;line-height:1.6;max-width:74ch}
+  .honest li:before{content:"";flex:none;width:5px;height:5px;border-radius:50%;background:var(--red);margin-top:9px}
+  .honest li b{color:var(--ink);font-weight:600}
+
+  /* ---------- close ---------- */
+  .close{padding:84px 0 96px;border-top:1px solid var(--line);text-align:center}
+  .close h2{margin:0 auto;max-width:20ch}
+  .close p{margin:16px auto 0;color:var(--dim);max-width:56ch;font-size:15.5px}
+  .cta{margin-top:30px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+  .btn{display:inline-block;padding:13px 26px;border-radius:4px;text-decoration:none;font-size:14.5px;font-weight:700;letter-spacing:.01em}
+  .btn.p{background:var(--red);color:#fff}
+  .btn.p:hover{background:#ff2630}
+  .btn.s{border:1px solid #3a3a40;color:var(--ink)}
+  .btn.s:hover{border-color:var(--ink)}
+  footer{border-top:1px solid var(--line);padding:26px 0 40px;color:var(--faint);font-size:12.5px;text-align:center}
+
+  .rv{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease}
+  .rv.in{opacity:1;transform:none}
+  @media(prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}
+    .stage .fill{transition:none}.row-body{transition:none}}
+</style>
+</head>
+<body>
+
+<div class="rail">
+  <div class="wrap">
+    <span class="mark">ANDREW ZOLL</span>
+    <nav>
+      <a href="#friction">Friction log</a>
+      <a href="#ledger">The ask vs the receipt</a>
+      <a href="#trace">How I keep AI honest</a>
+      <a href="#gaps">Where I'm short</a>
+    </nav>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="kicker">Staff Software Engineer (L6) &middot; Developer Productivity &middot; Platform Systems, AIMS</div>
+    <h1>I work on the inner loop. I also work <em>inside</em> one.</h1>
+    <p class="lede">Hi, I'm Andrew. I'm a Senior Software Engineer on AI Solutions at <b>Coder</b>, where the entire product is remote development environments. So the developer platform is both the thing I build and the thing I build in. When your posting says the inner loop becomes the bottleneck on everything else if it doesn't scale, that's not an abstraction to me. It's Tuesday.</p>
+    <p class="disc">This is a candidate's pitch for your Platform Systems developer productivity role, built in your design language on purpose. I'm not affiliated with Netflix. It's just me, showing the work.</p>
+
+    <div class="loop">
+      <div class="loop-bar">
+        <span class="t">andrewos &middot; inner-loop</span>
+        <button class="replay" id="replay">REPLAY</button>
+        <span class="status" id="status">IDLE</span>
+      </div>
+      <div class="stages" id="stages">
+        <div class="stage" data-sub="Reads written doctrine and current system state before it acts."><div class="n">01</div><div class="lab">Context</div><div class="sub"></div><div class="fill"></div></div>
+        <div class="stage" data-sub="A builder produces. It never gets to grade itself."><div class="n">02</div><div class="lab">Build</div><div class="sub"></div><div class="fill"></div></div>
+        <div class="stage" data-sub="An independent reviewer runs in a separate context."><div class="n">03</div><div class="lab">Review</div><div class="sub"></div><div class="fill"></div></div>
+        <div class="stage" data-sub="Deterministic code checks the output against written rules."><div class="n">04</div><div class="lab">Gate</div><div class="sub"></div><div class="fill"></div></div>
+        <div class="stage" data-sub="Every stage appended what it received, decided, and handed off."><div class="n">05</div><div class="lab">Trace</div><div class="sub"></div><div class="fill"></div></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section id="friction">
+  <div class="wrap">
+    <div class="eyebrow rv">Diagnosed from watching, not from tickets</div>
+    <h2 class="rv">Your posting asks for someone who finds friction firsthand. Here's my actual log.</h2>
+    <p class="sub rv">These are real problems in a system I run every day, and what I did about each one. Open a row to see the fix rather than the claim.</p>
+
+    <div class="log rv" id="log">
+      <div class="row">
+        <button class="row-head"><span class="id">F-01</span><span class="ttl">A new machine couldn't reproduce the working setup</span><span class="chev">&rsaquo;</span></button>
+        <div class="row-body"><div class="inner">
+          <p>Cloning the repo gave me code, docs, and memory. It didn't give me symlinks, helper binaries, installed CLIs, tool server configs, or scheduled jobs. So a second machine looked fine and quietly behaved differently.</p>
+          <p>I wrote the environment down as a real bootstrap procedure instead of tribal knowledge, and I made it explicit which pieces are machine-local rather than version controlled. <b>The failure I care about most is the silent one</b>, so the bootstrap also names the things you must not load on a second machine, because two machines running the same schedule means everything fires twice.</p>
+        </div></div>
+      </div>
+      <div class="row">
+        <button class="row-head"><span class="id">F-02</span><span class="ttl">Scheduled work double fired, and retries weren't idempotent</span><span class="chev">&rsaquo;</span></button>
+        <div class="row-body"><div class="inner">
+          <p>This is the classic one. Autonomous loops on a schedule are fine right up until a job overlaps itself or a retry replays an action that should only ever happen once. In my case the blast radius was outbound messages, which is the worst kind of thing to send twice.</p>
+          <p>I put a duplicate guard in front of the send path that fails closed, keyed on the recipient rather than on the message, and checked against the live source of truth rather than a log file the system wrote itself. <b>A log the system wrote is not evidence about the system.</b></p>
+        </div></div>
+      </div>
+      <div class="row">
+        <button class="row-head"><span class="id">F-03</span><span class="ttl">Unresolved work was invisible until somebody went looking</span><span class="chev">&rsaquo;</span></button>
+        <div class="row-body"><div class="inner">
+          <p>Nothing was broken. Things were just quietly stale, and I only found out when I happened to open the right file. That's the same problem as a build that gets slower by two percent a week.</p>
+          <p>I built automated daily, weekly, and monthly sweeps that run without anyone invoking them, plus a live dashboard covering job health, queues, source freshness, and unresolved signals. The sweeps write a short read-once summary so an agent starting cold is grounded in current state instead of guessing. <b>You can't prioritize friction you aren't measuring</b>, which is the part of your posting I nodded at hardest.</p>
+        </div></div>
+      </div>
+      <div class="row">
+        <button class="row-head"><span class="id">F-04</span><span class="ttl">Generated output looked right and was wrong</span><span class="chev">&rsaquo;</span></button>
+        <div class="row-body"><div class="inner">
+          <p>Model output that reads well is the most expensive kind of defect, because review fatigue is real and a confident paragraph slides through.</p>
+          <p>So I stopped asking a model to judge it. I wrote a deterministic linter that machine checks generated text against written rules and exits nonzero when it finds a violation, and I wired it into the gates ahead of anything leaving the system. <b>That moved correctness from model judgment into code</b>, which is the same reason I'd want guardrails under any GenAI developer tooling before a team is asked to depend on it.</p>
+        </div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="ledger">
+  <div class="wrap">
+    <div class="eyebrow rv">Line by line</div>
+    <h2 class="rv">What you asked for, and what I've actually got.</h2>
+    <p class="sub rv">Filter it. I'd rather you read the short honest list than the long flattering one.</p>
+
+    <div class="filters rv" id="filters">
+      <button data-f="all" aria-pressed="true">All</button>
+      <button data-f="strong" aria-pressed="false">Strong</button>
+      <button data-f="ramp" aria-pressed="false">Ramp</button>
+      <button data-f="gap" aria-pressed="false">Gap</button>
+    </div>
+    <div class="count" id="count"></div>
+
+    <div class="ledger rv" id="ledger">
+      <div class="item t-strong" data-t="strong">
+        <div class="ask"><span class="tag">Strong</span>Own the end to end developer experience: dev environments, build and test infrastructure, CI/CD, and the tools people use to get from idea to production.</div>
+        <div class="real">I work at <b>Coder</b>, where remote development environments are the whole product, and I own the quality and delivery practice for the platform I work on: test coverage, release process, and the operating documentation other people work from. On my own system I standardized the environment so a fresh machine reproduces the entire setup.</div>
+      </div>
+      <div class="item t-strong" data-t="strong">
+        <div class="ask"><span class="tag">Strong</span>Working understanding of GenAI powered developer tooling, with judgment about where they help, where they don't, and how to validate their output.</div>
+        <div class="real">I've built with AI coding assistants and agentic workflows as my primary method for two years. The whole architecture of my system is an argument about where they can't be trusted: <b>no agent reviews its own work</b>, an independent reviewer runs in a separate context, and a deterministic gate machine checks the result before it ships.</div>
+      </div>
+      <div class="item t-strong" data-t="strong">
+        <div class="ask"><span class="tag">Strong</span>Instrument developer workflows to measure productivity, and use that data to prioritize where to invest next.</div>
+        <div class="real">I built the sweeps and the live dashboard that my system reports through: job health, queue depth, source freshness, unresolved signals, and recent failures. It exists because I got tired of finding problems by accident.</div>
+      </div>
+      <div class="item t-strong" data-t="strong">
+        <div class="ask"><span class="tag">Strong</span>Drive adoption through documentation, migration support, and hands on partnership. Treat launch as the start of the work.</div>
+        <div class="real">I've spent ten years getting people to actually change how they work, first in a regulated advisory practice and now as the translator between what an agent platform can do and what non-technical revenue operators need from it. <b>Adoption is the part of this job I'd enjoy most.</b></div>
+      </div>
+      <div class="item t-strong" data-t="strong">
+        <div class="ask"><span class="tag">Strong</span>Deep proficiency in Python.</div>
+        <div class="real">Python is what I write daily at Coder, on a large production codebase, with a two person team that ships straight to production.</div>
+      </div>
+      <div class="item t-ramp" data-t="ramp">
+        <div class="ask"><span class="tag">Ramp</span>Build and operate large scale build and CI/CD systems that keep iteration times fast as codebase, model count, and headcount grow.</div>
+        <div class="real">I've built and operated this for a small number of users, not for hundreds of researchers. The instincts transfer. <b>The scale genuinely doesn't</b>, and you should test for that rather than take my word.</div>
+      </div>
+      <div class="item t-ramp" data-t="ramp">
+        <div class="ask"><span class="tag">Ramp</span>Set technical standards for developer tooling and raise the bar through design reviews and architectural guidance.</div>
+        <div class="real">I've done this as the person writing the standard, and everything in my system that started as a one off fix ended up written down as doctrine both agents and humans work from. I've done less of it <b>across an org of peers who can push back</b>, which is a different and harder skill.</div>
+      </div>
+      <div class="item t-gap" data-t="gap">
+        <div class="ask"><span class="tag">Gap</span>Working proficiency in at least one JVM language (Scala, Java, or similar).</div>
+        <div class="real">I don't have this. Python is my daily language and TypeScript is my second. <b>I'd be learning Scala on the job</b>, and I'd rather you know that now than find out in week three.</div>
+      </div>
+      <div class="item t-gap" data-t="gap">
+        <div class="ask"><span class="tag">Gap</span>Hands on experience with distributed build systems such as Bazel, Buck, or Pants.</div>
+        <div class="real">I haven't used any of them. I understand the problem they solve, which is not the same as having operated one.</div>
+      </div>
+      <div class="item t-gap" data-t="gap">
+        <div class="ask"><span class="tag">Gap</span>Large scale distributed data and compute frameworks such as Spark or Beam.</div>
+        <div class="real">Also a real gap. My pipeline work has been ETL and integration architecture on PostgreSQL, not distributed compute.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="trace">
+  <div class="wrap">
+    <div class="eyebrow rv">The thing I'd bring on day one</div>
+    <h2 class="rv">A run that replays as an audit record.</h2>
+    <p class="sub rv">Your posting asks for guardrails that make GenAI tooling safe to rely on. This is mine. Click a stage to see what it actually does.</p>
+
+    <div class="trace rv">
+      <div class="tnav" id="tnav" role="tablist">
+        <button role="tab" aria-selected="true" data-i="0"><span class="idx">01</span>Context</button>
+        <button role="tab" aria-selected="false" data-i="1"><span class="idx">02</span>Build</button>
+        <button role="tab" aria-selected="false" data-i="2"><span class="idx">03</span>Review</button>
+        <button role="tab" aria-selected="false" data-i="3"><span class="idx">04</span>Gate</button>
+        <button role="tab" aria-selected="false" data-i="4"><span class="idx">05</span>Trace</button>
+      </div>
+      <div class="tpane" id="tpane"></div>
+    </div>
+  </div>
+</section>
+
+<section id="gaps">
+  <div class="wrap">
+    <div class="eyebrow rv">Before you spend time on me</div>
+    <h2 class="rv">The honest version.</h2>
+
+    <div class="honest rv">
+      <h3>Four things I'd want you to weigh</h3>
+      <p>I'd rather lose the interview on the facts than win it on a good page.</p>
+      <ul>
+        <li><b>No JVM language.</b> You ask for working proficiency in Scala or Java. I write Python and TypeScript. That's a ramp, not a claim.</li>
+        <li><b>No Bazel, Buck, Pants, Spark, or Beam.</b> Four named technologies in your requirements that I have not used in production.</li>
+        <li><b>Scale.</b> My developer productivity work is real and it's mine end to end, but it serves a handful of users rather than hundreds of ML researchers. Operating at AIMS scale would be new.</li>
+        <li><b>Tenure.</b> I've been in a formal senior software engineer title for under a year, which makes an L6 seat a stretch. My proof is what I've built rather than how long I've been titled, so I'd want you to test the work rather than trust the resume.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="close">
+  <div class="wrap">
+    <h2>If the shape still fits, I'd like to talk.</h2>
+    <p>Everything above is checkable. The portfolio has the systems themselves, not screenshots of them.</p>
+    <div class="cta">
+      <a class="btn p" href="https://portfolio.andrewzoll.com">See the work</a>
+      <a class="btn s" href="https://linkedin.com/in/andrewzoll">Connect on LinkedIn</a>
+    </div>
+  </div>
+</div>
+
+<footer>Andrew Zoll &middot; Pueblo, Colorado &middot; Built for Netflix Platform Systems, and not affiliated with Netflix.</footer>
+
+<script>
+(function(){
+  "use strict";
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ---- reveal ---- */
+  var rv = document.querySelectorAll(".rv");
+  if(!("IntersectionObserver" in window) || reduce){
+    rv.forEach(function(e){e.classList.add("in");});
+  } else {
+    var io = new IntersectionObserver(function(es){
+      es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add("in"); io.unobserve(e.target);} });
+    },{threshold:.12});
+    rv.forEach(function(e){io.observe(e);});
+  }
+
+  /* ---- pipeline ---- */
+  var stages = Array.prototype.slice.call(document.querySelectorAll("#stages .stage"));
+  var status = document.getElementById("status");
+  var timers = [];
+  stages.forEach(function(s){ s.querySelector(".sub").textContent = s.getAttribute("data-sub"); });
+
+  function runLoop(){
+    timers.forEach(clearTimeout); timers = [];
+    stages.forEach(function(s){ s.classList.remove("on","done"); });
+    status.textContent = "RUNNING"; status.classList.remove("go");
+    if(reduce){
+      stages.forEach(function(s){ s.classList.add("on","done"); });
+      status.textContent = "PASSED"; status.classList.add("go");
+      return;
+    }
+    stages.forEach(function(s, i){
+      timers.push(setTimeout(function(){
+        s.classList.add("on");
+        timers.push(setTimeout(function(){ s.classList.add("done"); }, 520));
+      }, 380 + i*640));
+    });
+    timers.push(setTimeout(function(){
+      status.textContent = "PASSED"; status.classList.add("go");
+    }, 380 + stages.length*640 + 300));
+  }
+  document.getElementById("replay").addEventListener("click", runLoop);
+  if("IntersectionObserver" in window){
+    var lo = new IntersectionObserver(function(es){
+      es.forEach(function(e){ if(e.isIntersecting){ runLoop(); lo.disconnect(); } });
+    },{threshold:.35});
+    lo.observe(document.getElementById("stages"));
+  } else { runLoop(); }
+
+  /* ---- friction rows ---- */
+  document.querySelectorAll("#log .row").forEach(function(row){
+    var head = row.querySelector(".row-head");
+    var body = row.querySelector(".row-body");
+    head.setAttribute("aria-expanded","false");
+    head.addEventListener("click", function(){
+      var open = row.classList.toggle("open");
+      head.setAttribute("aria-expanded", open ? "true" : "false");
+      body.style.maxHeight = open ? (body.scrollHeight + "px") : "0px";
+    });
+  });
+  window.addEventListener("resize", function(){
+    document.querySelectorAll("#log .row.open").forEach(function(r){
+      var b = r.querySelector(".row-body"); b.style.maxHeight = b.scrollHeight + "px";
+    });
+  });
+
+  /* ---- ledger filter ---- */
+  var items = Array.prototype.slice.call(document.querySelectorAll("#ledger .item"));
+  var countEl = document.getElementById("count");
+  function applyFilter(f){
+    var shown = 0;
+    items.forEach(function(it){
+      var match = (f === "all") || (it.getAttribute("data-t") === f);
+      it.classList.toggle("hide", !match);
+      if(match) shown++;
+    });
+    countEl.textContent = "SHOWING " + shown + " OF " + items.length;
+  }
+  document.querySelectorAll("#filters button").forEach(function(b){
+    b.addEventListener("click", function(){
+      document.querySelectorAll("#filters button").forEach(function(o){ o.setAttribute("aria-pressed","false"); });
+      b.setAttribute("aria-pressed","true");
+      applyFilter(b.getAttribute("data-f"));
+    });
+  });
+  applyFilter("all");
+
+  /* ---- trace viewer ---- */
+  var TRACE = [
+    { got:"A task, plus written operating doctrine and the current state of the system.",
+      did:"Grounded itself before acting. It reads what the system already knows rather than inferring it from whatever happened to be in the prompt.",
+      why:"Most agent failures I've seen are not reasoning failures. They're context failures wearing a reasoning costume.",
+      out:"A scoped task with the constraints attached to it." },
+    { got:"A scoped task with its constraints.",
+      did:"Produced the work. Wrote the code, the document, or the change.",
+      why:"The builder is the only stage allowed to be optimistic, and it's deliberately the only one that can't sign off on itself.",
+      out:"A candidate change, marked unreviewed." },
+    { got:"A candidate change, and nothing about who wrote it.",
+      did:"Reviewed it adversarially in a separate context, with the job of finding what's wrong rather than confirming it's fine.",
+      why:"A reviewer running in the same context as the builder will quietly agree with itself. Independence has to be structural, not requested.",
+      out:"Findings, or an explicit nothing found." },
+    { got:"The reviewed change.",
+      did:"Ran deterministic checks. Code compares the output against written rules and exits nonzero on a violation.",
+      why:"This is the stage I'd argue for hardest. It's the difference between hoping a model was careful and computing whether it was.",
+      out:"Pass, or a blocked ship with the exact rule that failed." },
+    { got:"Everything above, appended as it happened.",
+      did:"Wrote an append only record of what each stage received, decided, why, and handed off.",
+      why:"So a finished run reads top to bottom as an audit record. It's also the only reason I can debug a bad run a week later instead of guessing.",
+      out:"A replayable trace, which is the surface I review instead of raw agent output." }
+  ];
+  var tpane = document.getElementById("tpane");
+  function renderTrace(i){
+    var t = TRACE[i];
+    tpane.innerHTML =
+      '<div class="fld"><div class="k">Received</div><div class="v">'+t.got+'</div></div>'+
+      '<div class="fld"><div class="k">Did</div><div class="v">'+t.did+'</div></div>'+
+      '<div class="fld"><div class="k">Why it works this way</div><div class="v">'+t.why+'</div></div>'+
+      '<div class="fld"><div class="k">Handed off</div><div class="v">'+t.out+'</div></div>';
+  }
+  document.querySelectorAll("#tnav button").forEach(function(b){
+    b.addEventListener("click", function(){
+      document.querySelectorAll("#tnav button").forEach(function(o){ o.setAttribute("aria-selected","false"); });
+      b.setAttribute("aria-selected","true");
+      renderTrace(parseInt(b.getAttribute("data-i"),10));
+    });
+  });
+  renderTrace(0);
+})();
+</script>
+</body>
+</html>
