@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta name="robots" content="noindex, nofollow"/>
+<title>Built for Temporal · Andrew Zoll</title>
+<meta name="description" content="Andrew Zoll's case for the Staff Software Engineer, AI Foundations (Agent Optimization) role at Temporal."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Noto+Sans+Mono:wght@400;500;700&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --ink:#0A0A0A; --panel:#141414; --panel-2:#1A1A1A; --line:#262626; --line-hot:#333;
+  --text:#F4F4F5; --dim:#A1A1AA; --faint:#71717A;
+  --purple:#B664FF; --magenta:#FF6BFF; --lime:#C3FF62; --mint:#1FF1A5;
+  --indigo:#444CE7; --red:#FF5555; --emerald:#34D399;
+  --mono:'Noto Sans Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+  --sans:'Space Grotesk',ui-sans-serif,system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--ink); color:var(--text); font-family:var(--sans);
+  -webkit-font-smoothing:antialiased; line-height:1.6; overflow-x:hidden;
+}
+body::before{
+  content:''; position:fixed; inset:0; pointer-events:none; z-index:0; opacity:.4;
+  background:
+    linear-gradient(var(--line) 1px,transparent 1px) 0 0/100% 88px,
+    linear-gradient(90deg,var(--line) 1px,transparent 1px) 0 0/88px 100%;
+  mask-image:radial-gradient(ellipse 90% 60% at 50% 0%,#000 0%,transparent 75%);
+}
+.wrap{max-width:1120px;margin:0 auto;padding:0 28px;position:relative;z-index:1}
+.mono{font-family:var(--mono)}
+.eyebrow{
+  font-family:var(--mono); font-size:11px; letter-spacing:.16em; text-transform:uppercase;
+  color:var(--faint);
+}
+a{color:inherit}
+
+/* ---------- top bar ---------- */
+.topbar{
+  border-bottom:1px solid var(--line); position:sticky; top:0; z-index:50;
+  background:rgba(10,10,10,.82); backdrop-filter:blur(14px);
+}
+.topbar .wrap{display:flex;align-items:center;justify-content:space-between;height:60px;gap:20px}
+.mark{display:flex;align-items:center;gap:11px;font-family:var(--mono);font-size:13px;letter-spacing:.02em}
+.pulse{width:9px;height:9px;border-radius:50%;background:var(--lime);box-shadow:0 0 0 0 rgba(195,255,98,.6);animation:pulse 2.4s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(195,255,98,.55)}70%{box-shadow:0 0 0 11px rgba(195,255,98,0)}100%{box-shadow:0 0 0 0 rgba(195,255,98,0)}}
+.topnav{display:flex;gap:24px;font-family:var(--mono);font-size:12px;color:var(--dim)}
+.topnav a{text-decoration:none;transition:color .18s}
+.topnav a:hover{color:var(--lime)}
+@media(max-width:820px){.topnav{display:none}}
+
+/* ---------- hero ---------- */
+.hero{padding:92px 0 64px;position:relative}
+.hero h1{
+  font-size:clamp(38px,6.4vw,74px); line-height:1.02; font-weight:700; letter-spacing:-.035em;
+  margin:22px 0 0; max-width:15ch;
+}
+.hero h1 .hl{
+  background:linear-gradient(96deg,var(--purple),var(--magenta) 52%,var(--mint));
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+}
+.hero .lede{margin-top:26px;max-width:60ch;font-size:19px;color:var(--dim)}
+.hero .lede strong{color:var(--text);font-weight:500}
+.disclaim{
+  margin-top:22px; font-family:var(--mono); font-size:12px; color:var(--faint);
+  border-left:2px solid var(--line-hot); padding-left:14px; max-width:62ch; line-height:1.75;
+}
+
+/* ---------- event history player ---------- */
+.player{
+  margin-top:52px; border:1px solid var(--line); border-radius:14px; background:var(--panel);
+  overflow:hidden; box-shadow:0 32px 90px -40px rgba(182,100,255,.35);
+}
+.player-head{
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+  padding:14px 18px; border-bottom:1px solid var(--line); background:var(--panel-2);
+  font-family:var(--mono); font-size:12px; flex-wrap:wrap;
+}
+.wf-id{color:var(--dim)}
+.wf-id b{color:var(--purple);font-weight:500}
+.status-chip{
+  display:inline-flex;align-items:center;gap:7px;padding:4px 11px;border-radius:999px;
+  border:1px solid rgba(195,255,98,.32); background:rgba(195,255,98,.08); color:var(--lime);
+  font-size:11px; letter-spacing:.06em;
+}
+.replay{
+  font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;
+  background:transparent;border:1px solid var(--line-hot);color:var(--dim);
+  padding:6px 15px;border-radius:7px;cursor:pointer;transition:all .18s;
+}
+.replay:hover{border-color:var(--purple);color:var(--purple);background:rgba(182,100,255,.07)}
+.events{padding:8px 0;max-height:388px;overflow-y:auto}
+.ev{
+  display:grid;grid-template-columns:52px 168px 1fr;gap:16px;align-items:baseline;
+  padding:9px 20px;font-family:var(--mono);font-size:12.5px;
+  opacity:0;transform:translateX(-8px);
+}
+.ev.on{opacity:1;transform:none;transition:opacity .4s ease,transform .4s ease}
+.ev .n{color:var(--faint);font-size:11px}
+.ev .t{color:var(--purple)}
+.ev .d{color:var(--dim)}
+.ev.fail .t{color:var(--red)}
+.ev.retry .t{color:var(--magenta)}
+.ev.win .t{color:var(--lime)}
+.ev .d b{color:var(--text);font-weight:400}
+@media(max-width:680px){
+  .ev{grid-template-columns:36px 1fr;gap:6px 12px}
+  .ev .d{grid-column:2/-1;font-size:11.5px}
+}
+
+/* ---------- generic section ---------- */
+section{padding:88px 0;position:relative}
+.sec-head{max-width:66ch;margin-bottom:44px}
+.sec-head h2{
+  font-size:clamp(27px,3.7vw,40px);font-weight:700;letter-spacing:-.028em;line-height:1.14;margin-top:14px;
+}
+.sec-head p{margin-top:16px;color:var(--dim);font-size:17px}
+.rule{height:1px;background:linear-gradient(90deg,var(--line-hot),transparent)}
+
+/* ---------- task queue tabs ---------- */
+.tq{border:1px solid var(--line);border-radius:14px;background:var(--panel);overflow:hidden}
+.tq-tabs{display:flex;border-bottom:1px solid var(--line);background:var(--panel-2);overflow-x:auto}
+.tq-tab{
+  font-family:var(--mono);font-size:12px;letter-spacing:.04em;white-space:nowrap;
+  background:transparent;border:0;border-bottom:2px solid transparent;color:var(--faint);
+  padding:15px 22px;cursor:pointer;transition:all .18s;
+}
+.tq-tab:hover{color:var(--dim)}
+.tq-tab[aria-selected="true"]{color:var(--lime);border-bottom-color:var(--lime);background:rgba(195,255,98,.05)}
+.tq-panel{padding:30px 26px;display:none}
+.tq-panel.on{display:block;animation:fadeUp .34s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:none}}
+.tq-panel h3{font-size:20px;font-weight:600;letter-spacing:-.015em;margin-bottom:8px}
+.tq-panel .meta{font-family:var(--mono);font-size:11.5px;color:var(--faint);margin-bottom:18px}
+.tq-panel p{color:var(--dim);max-width:72ch;margin-bottom:14px}
+.tq-panel p strong{color:var(--text);font-weight:500}
+.stackline{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.chip{
+  font-family:var(--mono);font-size:11px;padding:5px 11px;border-radius:6px;
+  border:1px solid var(--line-hot);color:var(--dim);background:var(--panel-2);
+}
+.chip.hot{border-color:rgba(182,100,255,.4);color:var(--purple);background:rgba(182,100,255,.07)}
+
+/* ---------- history rows (JD to receipt) ---------- */
+.hist{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--panel)}
+.row{border-bottom:1px solid var(--line)}
+.row:last-child{border-bottom:0}
+.row-btn{
+  width:100%;text-align:left;background:transparent;border:0;cursor:pointer;color:inherit;
+  display:grid;grid-template-columns:26px 1fr auto;gap:16px;align-items:center;
+  padding:19px 22px;font-family:inherit;transition:background .18s;
+}
+.row-btn:hover{background:var(--panel-2)}
+.row-btn .idx{font-family:var(--mono);font-size:11px;color:var(--faint)}
+.row-btn .req{font-size:15.5px;font-weight:500;line-height:1.45}
+.row-btn .st{
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;
+  padding:4px 10px;border-radius:999px;white-space:nowrap;
+}
+.st.completed{color:var(--lime);border:1px solid rgba(195,255,98,.3);background:rgba(195,255,98,.07)}
+.st.partial{color:var(--magenta);border:1px solid rgba(255,107,255,.3);background:rgba(255,107,255,.07)}
+.st.open{color:var(--red);border:1px solid rgba(255,85,85,.32);background:rgba(255,85,85,.07)}
+.row-body{max-height:0;overflow:hidden;transition:max-height .4s cubic-bezier(.4,0,.2,1)}
+.row-body-inner{padding:0 22px 24px 64px;color:var(--dim);font-size:15px;max-width:82ch}
+.row-body-inner p+p{margin-top:12px}
+.row-body-inner strong{color:var(--text);font-weight:500}
+.row-body-inner .src{
+  display:block;margin-top:14px;font-family:var(--mono);font-size:11.5px;color:var(--faint);
+  border-left:2px solid var(--line-hot);padding-left:12px;
+}
+.row[aria-expanded="true"] .row-btn{background:var(--panel-2)}
+@media(max-width:680px){
+  .row-btn{grid-template-columns:22px 1fr;gap:12px}
+  .row-btn .st{grid-column:2;justify-self:start;margin-top:8px}
+  .row-body-inner{padding-left:22px}
+}
+
+/* ---------- retry policy ---------- */
+.retry-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+@media(max-width:820px){.retry-grid{grid-template-columns:1fr}}
+.rp{border:1px solid var(--line);border-radius:14px;background:var(--panel);padding:26px 24px}
+.rp.nonretry{border-color:rgba(255,85,85,.26)}
+.rp h3{font-family:var(--mono);font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px}
+.rp.retry h3{color:var(--mint)}
+.rp.nonretry h3{color:var(--red)}
+.rp .sub{font-family:var(--mono);font-size:11.5px;color:var(--faint);margin-bottom:20px}
+.rp ul{list-style:none}
+.rp li{padding:13px 0;border-top:1px solid var(--line);font-size:15px;color:var(--dim)}
+.rp li:first-child{border-top:0;padding-top:0}
+.rp li b{display:block;color:var(--text);font-weight:500;font-size:15px;margin-bottom:4px}
+
+/* ---------- workers ---------- */
+.workers{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+@media(max-width:900px){.workers{grid-template-columns:1fr}}
+.worker{
+  border:1px solid var(--line);border-radius:14px;background:var(--panel);padding:26px 24px;
+  position:relative;overflow:hidden;transition:border-color .25s,transform .25s;
+}
+.worker:hover{border-color:var(--line-hot);transform:translateY(-3px)}
+.worker::after{
+  content:'';position:absolute;left:0;top:0;height:2px;width:100%;
+  background:linear-gradient(90deg,var(--accent,var(--purple)),transparent);
+}
+.worker .q{font-family:var(--mono);font-size:11px;color:var(--faint);letter-spacing:.06em}
+.worker h3{font-size:19px;font-weight:600;margin:10px 0 10px;letter-spacing:-.015em}
+.worker p{font-size:14.5px;color:var(--dim)}
+.worker .live{
+  display:inline-flex;align-items:center;gap:7px;margin-top:18px;
+  font-family:var(--mono);font-size:11px;color:var(--dim);text-decoration:none;transition:color .18s;
+}
+.worker .live:hover{color:var(--lime)}
+
+/* ---------- close ---------- */
+.close-band{
+  border:1px solid var(--line);border-radius:16px;background:
+    radial-gradient(ellipse 70% 130% at 12% 0%,rgba(182,100,255,.14),transparent 62%),var(--panel);
+  padding:52px 42px;
+}
+.close-band h2{font-size:clamp(26px,3.4vw,38px);font-weight:700;letter-spacing:-.028em;line-height:1.15;max-width:20ch}
+.close-band p{margin-top:18px;color:var(--dim);max-width:62ch;font-size:17px}
+.ctas{display:flex;flex-wrap:wrap;gap:14px;margin-top:32px}
+.btn{
+  font-family:var(--mono);font-size:12.5px;letter-spacing:.05em;text-decoration:none;
+  padding:13px 24px;border-radius:8px;transition:all .2s;display:inline-flex;align-items:center;gap:9px;
+}
+.btn-p{background:var(--lime);color:#0A0A0A;font-weight:700}
+.btn-p:hover{background:var(--mint);transform:translateY(-2px)}
+.btn-s{border:1px solid var(--line-hot);color:var(--text)}
+.btn-s:hover{border-color:var(--purple);color:var(--purple)}
+footer{border-top:1px solid var(--line);padding:34px 0;margin-top:80px}
+footer .wrap{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;font-family:var(--mono);font-size:11.5px;color:var(--faint)}
+.reveal{opacity:0;transform:translateY(22px)}
+.reveal.in{opacity:1;transform:none;transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.3,1)}
+@media(prefers-reduced-motion:reduce){
+  .reveal,.reveal.in,.ev,.ev.on{opacity:1!important;transform:none!important;transition:none!important}
+  .pulse{animation:none}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar"><div class="wrap">
+  <div class="mark"><span class="pulse"></span> andrew zoll <span style="color:var(--faint)">/</span> <span style="color:var(--purple)">for temporal</span></div>
+  <nav class="topnav">
+    <a href="#history">Event History</a>
+    <a href="#queues">Task Queues</a>
+    <a href="#retry">Retry Policy</a>
+    <a href="#workers">Workers</a>
+  </nav>
+</div></div>
+
+<header class="hero"><div class="wrap">
+  <div class="eyebrow">Staff Software Engineer · AI Foundations · Agent Optimization</div>
+  <h1>My career is a long-running workflow. Here's the <span class="hl">event history</span>.</h1>
+  <p class="lede">I'm Andrew Zoll. I build agent systems that have to be right, not just impressive, and I've spent the last two years making agentic coding produce output I'd actually ship. <strong>That's the job you posted.</strong> So instead of telling you about it, I replayed the execution.</p>
+  <p class="disclaim">This is a candidate's pitch for your Staff Software Engineer, AI Foundations role, built in your design language on purpose. I'm not affiliated with Temporal. It's just me, showing the work, using your vocabulary because it happens to be the right vocabulary.</p>
+
+  <div class="player">
+    <div class="player-head">
+      <span class="wf-id">workflowId: <b>andrew-zoll-career-v11</b> · runId: 2015-2026</span>
+      <span style="display:flex;align-items:center;gap:12px">
+        <span class="status-chip" id="wfStatus"><span class="pulse" style="width:6px;height:6px"></span> RUNNING</span>
+        <button class="replay" id="replayBtn" type="button">Replay</button>
+      </span>
+    </div>
+    <div class="events" id="events"></div>
+  </div>
+</div></header>
+
+<section id="history"><div class="wrap">
+  <div class="sec-head reveal">
+    <div class="eyebrow">Block 01 · Requirement to receipt</div>
+    <h2>Every line of your JD, matched to something I actually built.</h2>
+    <p>Open any row. The receipt underneath is a real system with a real URL, not a bullet point. Where I don't have the receipt, the row says so and stays open.</p>
+  </div>
+  <div class="hist reveal" id="hist"></div>
+</div></section>
+
+<div class="wrap"><div class="rule"></div></div>
+
+<section id="queues"><div class="wrap">
+  <div class="sec-head reveal">
+    <div class="eyebrow">Block 02 · Task queues</div>
+    <h2>Three queues I poll every day, and what actually runs on each.</h2>
+    <p>Your role asks for fluency across Python, TypeScript, and agentic systems. Here's where each one lives in my week, including the honest state of each.</p>
+  </div>
+  <div class="tq reveal">
+    <div class="tq-tabs" role="tablist">
+      <button class="tq-tab" role="tab" aria-selected="true" data-tq="py">python.production</button>
+      <button class="tq-tab" role="tab" aria-selected="false" data-tq="ts">typescript.product</button>
+      <button class="tq-tab" role="tab" aria-selected="false" data-tq="ag">agents.orchestration</button>
+      <button class="tq-tab" role="tab" aria-selected="false" data-tq="go">go.and.java</button>
+    </div>
+
+    <div class="tq-panel on" id="tq-py">
+      <h3>Python, on a large production codebase, shipping to prod</h3>
+      <div class="meta">worker: coder · team size: 2 · status: current day job</div>
+      <p>I'm a Senior Software Engineer for AI Solutions at <strong>Coder</strong>, embedded in the revenue organization, building an internal AI agent platform that turns CRM, support, and call-transcript data into answers and workflows for revenue teams. It's Python, it's a large existing codebase, and it's a two-person team, which means I ship directly to production and own what happens next.</p>
+      <p>I also own the quality and delivery practice for that platform: test coverage, release process, and the operating documentation other people read. That last part matters for your role, because you listed writing public technical documentation as part of the job and I'd rather point at the habit than claim the skill.</p>
+      <div class="stackline">
+        <span class="chip hot">Python</span><span class="chip">Production codebase</span><span class="chip">Agent platform</span><span class="chip">Test coverage</span><span class="chip">Release process</span>
+      </div>
+    </div>
+
+    <div class="tq-panel" id="tq-ts">
+      <h3>TypeScript, 187,745 lines of it, shipped solo</h3>
+      <div class="meta">worker: fieldcommand · team size: 1 · status: live, multi-tenant</div>
+      <p>I designed and shipped <strong>FieldCommand</strong>, a multi-tenant SaaS platform for commercial trade contractors, on my own. PostgreSQL and Supabase underneath, role-based access control and tenant isolation across the whole surface, Stripe billing wired into automated data pipelines, and four AI features running in production behind per-tenant feature flags.</p>
+      <p>The number I care about there isn't the line count. It's that I built the entire thing AI-assisted end to end, spec through validation through ship, which is the exact loop your team is trying to make trustworthy for everyone else.</p>
+      <div class="stackline">
+        <span class="chip hot">TypeScript</span><span class="chip">Next.js</span><span class="chip">PostgreSQL</span><span class="chip">Supabase</span><span class="chip">Stripe</span><span class="chip">RBAC</span><span class="chip">Feature flags</span>
+      </div>
+    </div>
+
+    <div class="tq-panel" id="tq-ag">
+      <h3>Agent orchestration, with a validator that's allowed to say no</h3>
+      <div class="meta">worker: andrewos · status: running my actual businesses</div>
+      <p>I built <strong>AndrewOS</strong>, an agent operating system with arena-based delegation across product, go-to-market, marketing, and operations. It runs autonomous content production and scheduled retrospective loops across two businesses. This page exists because one of those loops surfaced your posting and then built the thing you're reading.</p>
+      <p>The design decision I'd defend in an interview is the independence rule: no agent audits its own work, and every layer audits the layer below it. A builder produces, a reviewer runs in a fresh context, and a validator can block the output before it ships. That's how I got agentic coding from "impressive demo" to "I let it touch production," and it's a systems answer rather than a prompting answer.</p>
+      <div class="stackline">
+        <span class="chip hot">Multi-agent orchestration</span><span class="chip hot">Claude Code</span><span class="chip">Human gatekeeping</span><span class="chip">Agent specialization</span><span class="chip">Scheduled loops</span><span class="chip">Determinism checks</span>
+      </div>
+    </div>
+
+    <div class="tq-panel" id="tq-go">
+      <h3>Go and Java, the queue I haven't polled yet</h3>
+      <div class="meta">worker: none · status: honest gap, stated on purpose</div>
+      <p>Your JD lists Python, TypeScript, Java, and Go. I've got the first two at production depth and I have not written Go or Java in anger. I'm not going to dress that up as "familiar with."</p>
+      <p>What I'd actually claim is the thing your JD asks for right after it: an affinity for learning new ones. I picked up production Python on a large unfamiliar codebase this year on a two-person team, which is roughly the same problem. If Go fluency is a day-one requirement rather than a first-quarter one, that's a real reason to pass on me, and I'd rather you know now than in week three.</p>
+      <div class="stackline">
+        <span class="chip">Go: not yet</span><span class="chip">Java: not yet</span><span class="chip hot">Python: shipping now</span><span class="chip hot">TypeScript: 187,745 lines</span>
+      </div>
+    </div>
+  </div>
+</div></section>
+
+<div class="wrap"><div class="rule"></div></div>
+
+<section id="retry"><div class="wrap">
+  <div class="sec-head reveal">
+    <div class="eyebrow">Block 03 · Retry policy</div>
+    <h2>The gaps, sorted by whether trying harder actually fixes them.</h2>
+    <p>Your JD has requirements I don't clear. Rather than bury them, I've split them the way you'd split them: things that back off and succeed, and things that belong in nonRetryableErrorTypes so nobody wastes an attempt.</p>
+  </div>
+  <div class="retry-grid reveal">
+    <div class="rp retry">
+      <h3>Retryable</h3>
+      <div class="sub">backoffCoefficient: 2.0 · these close with reps</div>
+      <ul>
+        <li><b>Temporal's programming model</b>You list writing an app on Temporal as a nice-to-have. I haven't. I've built durable, resumable, retry-aware agent loops by hand in AndrewOS, which mostly taught me why I should have been using something like Temporal.</li>
+        <li><b>Go fluency</b>Not there. Your own JD phrases this one as "if you haven't written Go yet, you've been meaning to," and that's an accurate description of where I am.</li>
+        <li><b>Public library APIs and docs</b>I've designed and documented internal APIs and written the operating docs my team runs on. I haven't done it for a public package with outside consumers.</li>
+      </ul>
+    </div>
+    <div class="rp nonretry">
+      <h3>Non-retryable</h3>
+      <div class="sub">maximumAttempts: 1 · you should weigh these honestly</div>
+      <ul>
+        <li><b>Deep concurrency primitives</b>You ask for deep experience with mutexes, atomics, and safe concurrent programming. I don't have that depth. I've built concurrent agent systems, but at the orchestration layer, not at the primitive layer, and those are not the same claim.</li>
+        <li><b>Optimizing AI systems with machine learning techniques</b>I've cut agent cost and latency through architecture: routing work to the right worker, managing context, caching, and cutting rework. I have not done it through ML technique, and your JD explicitly wants both.</li>
+        <li><b>An open source track record</b>My work has been proprietary or solo commercial. There's no meaningful public PR history to point you at, on a team where the work is open source by default.</li>
+      </ul>
+    </div>
+  </div>
+</div></section>
+
+<div class="wrap"><div class="rule"></div></div>
+
+<section id="workers"><div class="wrap">
+  <div class="sec-head reveal">
+    <div class="eyebrow">Block 04 · Registered workers</div>
+    <h2>Three systems currently running, all of them mine.</h2>
+    <p>Every claim above resolves to one of these. They're live, so you can check.</p>
+  </div>
+  <div class="workers reveal">
+    <div class="worker" style="--accent:var(--purple)">
+      <div class="q">taskQueue: agent-os</div>
+      <h3>AndrewOS</h3>
+      <p>An agent operating system with arena-based delegation, a builder to reviewer to validator pipeline, and scheduled autonomous loops. It runs marketing, content, and operations across two businesses without me in the loop for each step.</p>
+      <a class="live" href="https://portfolio.andrewzoll.com" target="_blank" rel="noopener">→ portfolio.andrewzoll.com</a>
+    </div>
+    <div class="worker" style="--accent:var(--lime)">
+      <div class="q">taskQueue: multi-tenant-saas</div>
+      <h3>FieldCommand</h3>
+      <p>A multi-tenant SaaS for commercial trade contractors, built solo in TypeScript on PostgreSQL and Supabase, with tenant isolation, RBAC, Stripe billing, and four AI features behind per-tenant flags.</p>
+      <a class="live" href="https://app.fieldcommand.io" target="_blank" rel="noopener">→ app.fieldcommand.io</a>
+    </div>
+    <div class="worker" style="--accent:var(--mint)">
+      <div class="q">taskQueue: verification-pipeline</div>
+      <h3>Veritas</h3>
+      <p>A citation-verification platform for legal filings. It checks cited cases and quotations against source records and returns an auditable verification record. I designed the pipeline and the hedged-verdict semantics, because a confident wrong answer is worse than a careful one.</p>
+      <a class="live" href="https://veritaslaw.app" target="_blank" rel="noopener">→ veritaslaw.app</a>
+    </div>
+  </div>
+</div></section>
+
+<section style="padding-top:20px"><div class="wrap">
+  <div class="close-band reveal">
+    <div class="eyebrow">Continue as new</div>
+    <h2>You want someone who's already living in this problem.</h2>
+    <p>I spend my working hours making agentic coding produce output that survives review, and my own systems are the proof that I care about the "trustworthy" half more than the "fast" half. The gaps above are real and I'd rather you price them in now. If the shape fits, I'd like to talk.</p>
+    <div class="ctas">
+      <a class="btn btn-p" href="https://portfolio.andrewzoll.com" target="_blank" rel="noopener">See the portfolio</a>
+      <a class="btn btn-s" href="https://www.linkedin.com/in/andrewzoll" target="_blank" rel="noopener">Connect on LinkedIn</a>
+      <a class="btn btn-s" href="https://github.com/azoll" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </div>
+</div></section>
+
+<footer><div class="wrap">
+  <span>Andrew Zoll · Pueblo, Colorado · built for Temporal, unaffiliated</span>
+  <span>andrewzoll.com</span>
+</div></footer>
+
+<script>
+/* ---------------- event history player ---------------- */
+const EVENTS = [
+  {n:1,  t:'WorkflowExecutionStarted', c:'', d:'Ozark Christian College, <b>B.A. 2013</b>. Not a CS degree. Noted up front.'},
+  {n:2,  t:'ActivityTaskScheduled',    c:'', d:'Senior Pastor and Operations Lead, <b>Colony Christian Church</b>. Ran operations, budget, and growth for a mission-driven org.'},
+  {n:3,  t:'ActivityTaskCompleted',    c:'', d:'Communications Director and <b>IT Lead</b>, 1,200-member organization. SQL Server administration, Power BI, Azure, full website rebuild still in production.'},
+  {n:4,  t:'ActivityTaskScheduled',    c:'', d:'Financial Advisor at <b>Edward Jones</b>. 120+ households, 95% retention, translating complex systems for non-technical people all day.'},
+  {n:5,  t:'ActivityTaskFailed',       c:'fail', d:'The seat stopped fitting. I wanted to build the systems, not operate inside someone else\'s.'},
+  {n:6,  t:'RetryPolicyApplied',       c:'retry', d:'Backed off. Started building instead of advising. Integration architecture, CRM pipelines, ChatGPT API, <b>20+ hours of manual work eliminated monthly</b>.'},
+  {n:7,  t:'ChildWorkflowStarted',     c:'', d:'<b>FieldCommand</b>. Multi-tenant SaaS shipped solo. 187,745 lines of TypeScript, four AI features in production behind per-tenant flags.'},
+  {n:8,  t:'ChildWorkflowStarted',     c:'', d:'<b>AndrewOS</b>. Agent operating system, arena-based delegation, builder to reviewer to validator, no agent audits its own work.'},
+  {n:9,  t:'ChildWorkflowStarted',     c:'', d:'<b>Veritas</b>. Citation verification for legal filings, with hedged-verdict semantics because a confident wrong answer is the failure mode that matters.'},
+  {n:10, t:'ActivityTaskCompleted',    c:'win', d:'<b>Coder</b>, Senior Software Engineer for AI Solutions. Python, large production codebase, two-person team, internal AI agent platform.'},
+  {n:11, t:'SignalReceived',           c:'', d:'Your posting: Staff Software Engineer, AI Foundations. <b>Agent optimization.</b> Token spend, latency, and result quality.'},
+  {n:12, t:'WorkflowTaskScheduled',    c:'win', d:'Which is the problem I already work on. So I built this page and stopped the timer.'}
+];
+const evBox=document.getElementById('events');
+const statusChip=document.getElementById('wfStatus');
+let timers=[];
+function play(){
+  timers.forEach(clearTimeout); timers=[];
+  evBox.innerHTML='';
+  statusChip.innerHTML='<span class="pulse" style="width:6px;height:6px"></span> RUNNING';
+  statusChip.style.borderColor='rgba(195,255,98,.32)';
+  EVENTS.forEach((e,i)=>{
+    const row=document.createElement('div');
+    row.className='ev '+(e.c||'');
+    row.innerHTML='<span class="n">'+String(e.n).padStart(2,'0')+'</span><span class="t">'+e.t+'</span><span class="d">'+e.d+'</span>';
+    evBox.appendChild(row);
+    timers.push(setTimeout(()=>{
+      row.classList.add('on');
+      evBox.scrollTop=evBox.scrollHeight;
+      if(i===EVENTS.length-1){
+        statusChip.innerHTML='◆ AWAITING SIGNAL';
+        statusChip.style.borderColor='rgba(182,100,255,.4)';
+        statusChip.style.color='var(--purple)';
+        statusChip.style.background='rgba(182,100,255,.08)';
+      }
+    }, 220*i+300));
+  });
+}
+document.getElementById('replayBtn').addEventListener('click',()=>{
+  statusChip.style.color=''; statusChip.style.background='';
+  play();
+});
+play();
+
+/* ---------------- JD requirement to receipt rows ---------------- */
+const HIST=[
+  {req:'Maintain and expand a deep understanding of agentic coding',st:'completed',
+   body:'<p>Agentic coding is not a side interest for me, it is the method. I built <strong>AndrewOS</strong>, an agent operating system with arena-based delegation across product, go-to-market, marketing, and operations, and it runs autonomous loops across two real businesses.</p><p>The reason it works is structural rather than clever prompting: builders produce, reviewers run in a fresh independent context, and validators can block output before it ships. I use Claude Code as a daily driver on production work, so my opinions here come from operating the thing, not reading about it.</p><span class="src">receipt: AndrewOS, running today. This page was surfaced and built by one of its scheduled loops.</span>'},
+  {req:'Design and build agentic coding systems we can trust to deliver high-quality outputs',st:'completed',
+   body:'<p>This is the sentence in your JD that made me apply. Trust is the hard half, and the answer I landed on is that <strong>no agent audits its own work</strong>. Every layer audits the layer below it, and the reviewer has to be a separate context or it just agrees with itself.</p><p>At Coder I own the quality and delivery practice for the AI agent platform I work on: test coverage, release process, and operating documentation. Same instinct, applied to a team codebase rather than my own.</p><span class="src">receipt: AndrewOS builder, reviewer, validator pipeline. Coder platform quality practice.</span>'},
+  {req:'Develop a deep understanding of AI application development patterns and emerging architectures',st:'completed',
+   body:'<p>I shipped four AI features into production at <strong>FieldCommand</strong> behind per-tenant feature flags, which is a very different exercise from a demo because you have to decide what happens when the model is wrong for a specific customer.</p><p>At <strong>Veritas</strong> I designed a verification pipeline and its hedged-verdict semantics, deliberately refusing to let the product say "false" when the honest answer is "not located in the reporter." Getting the failure vocabulary right was most of the product work.</p><span class="src">receipt: app.fieldcommand.io, veritaslaw.app</span>'},
+  {req:'Take end-to-end ownership of new features, working with other teams to deliver reliability and developer experience',st:'completed',
+   body:'<p>FieldCommand is 187,745 lines of TypeScript that I specified, built, validated, and shipped by myself, including tenant isolation, role-based access control, Stripe billing, and automated data pipelines. There was nobody else to hand the hard part to.</p><p>At Coder I do the team version of that on a two-person team against a large existing codebase, which is where the "working with other teams" half actually gets tested.</p><span class="src">receipt: FieldCommand, built solo. Coder, shipping to production now.</span>'},
+  {req:'Serve as a domain expert on AI design patterns, collaborating with field staff on best practices',st:'completed',
+   body:'<p>My current seat at <strong>Coder</strong> is literally this: a software engineer embedded in the revenue organization, building the AI agent platform that revenue teams use, which means translating between what the system can do and what a non-technical operator needs it to do.</p><p>I did the same translation for four years as a financial advisor with 120+ households and a 95% retention rate. Explaining a complex system to somebody who has no reason to care about its internals is a skill I got paid for before I got paid to build.</p><span class="src">receipt: Coder revenue org. Edward Jones, 2020 to 2024.</span>'},
+  {req:'Write public technical documentation describing concepts and APIs',st:'partial',
+   body:'<p>I own the operating documentation for my platform at Coder, and documentation discipline is baked into how AndrewOS works, since agents can only be delegated to when the doctrine is written down and current.</p><p>The honest gap: that has all been internal or commercial. I have not written docs for a public library with outside consumers, which is a different audience and a harder one.</p><span class="src">partial: internal and operating docs, yes. Public package docs, not yet.</span>'},
+  {req:'8+ years of professional work experience',st:'completed',
+   body:'<p>Eleven years, 2015 to now: operations and budget leadership, IT lead for a 1,200-member organization on SQL Server and Azure, four years as a financial advisor under FINRA and SEC oversight, then founder and engineer.</p><p>I want to be precise, because I think you should be able to check my claims: that is eleven years of <strong>professional work experience</strong>, which is what your JD asks for. It is not eleven years of full-time software engineering, and I would not want you to read it that way.</p><span class="src">receipt: 2015 to 2026, continuous. Software as the primary craft since 2024.</span>'},
+  {req:'BS or MS in Computer Science, or equivalent work experience writing production-grade software',st:'partial',
+   body:'<p>I have a B.A. from Ozark Christian College, not a CS degree. I am leaning entirely on the second clause of your requirement.</p><p>The equivalence I would offer: a multi-tenant SaaS platform shipped solo at 187,745 lines with real tenants and real billing, a citation-verification pipeline in production, and daily Python on a large production codebase at Coder. If your bar for "equivalent" is that the software exists, is used, and did not fall over, I can point at all three.</p><span class="src">partial: no CS degree. Production software, yes, and it is public.</span>'},
+  {req:'Proven experience optimizing AI systems using both machine learning and systems techniques',st:'open',
+   body:'<p>This is a genuine gap and I am not going to talk around it. I have optimized agent systems for cost, latency, and reliability through <strong>architecture</strong>: routing work to the right worker, managing context deliberately, cutting rework by making validation cheap, and refusing to re-run what has not changed.</p><p>What I have not done is the machine learning half. No model-routing work grounded in evaluation methodology, no training or fine-tuning, no rigorous quality-versus-cost frontier analysis. Your JD asks for both, and I currently have one.</p><span class="src">open: systems side yes, ML technique side no.</span>'},
+  {req:'Deep experience with concurrent programming, including mutexes, atomics, and concurrency primitives',st:'open',
+   body:'<p>Also a real gap. I build concurrent systems at the orchestration layer, where the units are agents and jobs rather than threads and locks, and where the failure modes I have earned scar tissue on are duplicate sends, double-firing schedulers, and non-idempotent retries.</p><p>That is adjacent reasoning, not the same expertise. If this requirement is load-bearing for the role rather than a nice-to-have, I would rather you screen me out on it than discover it in month two.</p><span class="src">open: orchestration-layer concurrency yes, primitive-level concurrency no.</span>'},
+  {req:'A track record of open source contributions',st:'open',
+   body:'<p>Listed as a nice-to-have, and I do not have it. My work has been commercial or solo, so there is no meaningful public PR history to send you.</p><p>I note that your team works in the open by default, which means this gap has a real cost for you and not just for me. Worth naming rather than skipping.</p><span class="src">open: no significant public contribution history.</span>'}
+];
+const histBox=document.getElementById('hist');
+HIST.forEach((h,i)=>{
+  const row=document.createElement('div');
+  row.className='row'; row.setAttribute('aria-expanded','false');
+  const open = h.st==='open';
+  row.innerHTML=
+    '<button class="row-btn" type="button" aria-expanded="'+open+'">'+
+      '<span class="idx">'+String(i+1).padStart(2,'0')+'</span>'+
+      '<span class="req">'+h.req+'</span>'+
+      '<span class="st '+h.st+'">'+h.st+'</span>'+
+    '</button>'+
+    '<div class="row-body"><div class="row-body-inner">'+h.body+'</div></div>';
+  histBox.appendChild(row);
+  const btn=row.querySelector('.row-btn'), body=row.querySelector('.row-body');
+  btn.addEventListener('click',()=>{
+    const isOpen=row.getAttribute('aria-expanded')==='true';
+    row.setAttribute('aria-expanded',String(!isOpen));
+    btn.setAttribute('aria-expanded',String(!isOpen));
+    body.style.maxHeight=isOpen?'0px':body.scrollHeight+'px';
+  });
+  /* the gaps start expanded, on purpose */
+  if(open){
+    row.setAttribute('aria-expanded','true');
+    requestAnimationFrame(()=>{body.style.maxHeight=body.scrollHeight+'px';});
+  }
+});
+window.addEventListener('resize',()=>{
+  document.querySelectorAll('.row[aria-expanded="true"]').forEach(r=>{
+    const b=r.querySelector('.row-body'); b.style.maxHeight=b.scrollHeight+'px';
+  });
+});
+
+/* ---------------- task queue tabs ---------------- */
+document.querySelectorAll('.tq-tab').forEach(tab=>{
+  tab.addEventListener('click',()=>{
+    document.querySelectorAll('.tq-tab').forEach(t=>t.setAttribute('aria-selected','false'));
+    document.querySelectorAll('.tq-panel').forEach(p=>p.classList.remove('on'));
+    tab.setAttribute('aria-selected','true');
+    document.getElementById('tq-'+tab.dataset.tq).classList.add('on');
+  });
+});
+
+/* ---------------- scroll reveal ---------------- */
+const io=new IntersectionObserver(es=>es.forEach(e=>{
+  if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}
+}),{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
