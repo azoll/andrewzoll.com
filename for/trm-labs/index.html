@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta name="robots" content="noindex, nofollow"/>
+<title>Case file: Andrew Zoll · Staff Software Engineer, Agent Engineering · TRM Labs</title>
+<meta name="description" content="Andrew Zoll's case for the Staff Software Engineer, Agent Engineering role at TRM Labs."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300&family=Funnel+Sans:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  /* Sourced from trmlabs.com's own CSS custom properties */
+  --tech-dark:#05131d;
+  --primary-black:#071c2c;
+  --blue-051521:#051521;
+  --dark-blue:#0a304d;
+  --web-blue-1:#1f64f6;
+  --light-blue:#4082ff;
+  --web-blue-3:#20a4ff;
+  --medium-blue:#084a9b;
+  --mint:#d4fdaf;
+  --stone:#bdcddf;
+  --neutral-60:#596f82;
+  --neutral-40:#c1c9d6;
+  --paper:#f4f6fb;
+  --rule:rgba(189,205,223,.16);
+  --rule-hot:rgba(189,205,223,.34);
+
+  --serif:'Newsreader',Lyon Display,Georgia,'Times New Roman',serif;
+  --sans:'Funnel Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;
+  --mono:'Space Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--tech-dark);
+  color:var(--neutral-40);
+  font-family:var(--sans);
+  font-weight:300;
+  line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+a{color:inherit}
+.shell{max-width:1180px;margin:0 auto;padding:0 26px}
+
+/* ============ dossier cover ============ */
+.cover{
+  border-bottom:1px solid var(--rule);
+  background:
+    radial-gradient(1100px 420px at 84% -12%, rgba(31,100,246,.20), transparent 66%),
+    linear-gradient(180deg, var(--primary-black) 0%, var(--tech-dark) 100%);
+  position:relative;
+  overflow:hidden;
+}
+.cover::after{
+  content:'';position:absolute;left:0;right:0;top:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--web-blue-3),var(--mint),transparent);
+  opacity:.65;
+  animation:sweep 9s ease-in-out infinite;
+}
+@keyframes sweep{0%{transform:translateX(-46%)}50%{transform:translateX(46%)}100%{transform:translateX(-46%)}}
+.cover .shell{padding:34px 26px 58px;position:relative;z-index:2}
+
+.filetag{
+  display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+  font-family:var(--mono);font-size:11px;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--neutral-60);
+}
+.filetag .live{
+  display:inline-flex;align-items:center;gap:7px;color:var(--mint);
+  border:1px solid rgba(212,253,175,.3);border-radius:500px;padding:3px 12px;letter-spacing:.1em;
+}
+.filetag .live i{width:6px;height:6px;border-radius:50%;background:var(--mint);display:block;animation:blip 2.2s infinite}
+@keyframes blip{0%,100%{opacity:1}50%{opacity:.25}}
+
+.coverGrid{display:grid;grid-template-columns:minmax(0,1fr) 322px;gap:52px;align-items:end;margin-top:40px}
+@media(max-width:900px){.coverGrid{grid-template-columns:1fr;gap:34px;align-items:start}}
+
+h1{
+  font-family:var(--serif);font-weight:300;color:#fff;
+  font-size:clamp(40px,5.6vw,70px);line-height:1.03;letter-spacing:-.017em;
+  max-width:15ch;
+}
+h1 em{font-style:italic;color:var(--mint)}
+.deck{
+  margin-top:22px;max-width:56ch;font-size:17.5px;color:var(--stone);line-height:1.66;
+}
+.deck b{color:#fff;font-weight:500}
+
+/* metadata card, the "file stamp" */
+.stamp{
+  border:1px solid var(--rule-hot);border-radius:4px;background:rgba(5,21,33,.72);
+  backdrop-filter:blur(6px);
+}
+.stamp dl{display:grid;grid-template-columns:auto 1fr;gap:0}
+.stamp dt,.stamp dd{
+  font-family:var(--mono);font-size:11px;letter-spacing:.05em;
+  padding:11px 15px;border-bottom:1px solid var(--rule);
+}
+.stamp dt{color:var(--neutral-60);text-transform:uppercase;white-space:nowrap;border-right:1px solid var(--rule)}
+.stamp dd{color:var(--stone);text-align:right}
+.stamp dd b{color:var(--mint);font-weight:400}
+.stamp dl>:nth-last-child(-n+2){border-bottom:none}
+
+.disclaim{
+  margin-top:30px;max-width:78ch;font-size:13.5px;line-height:1.72;color:var(--neutral-60);
+  border-left:2px solid var(--medium-blue);padding-left:16px;
+}
+
+/* ============ layout: rail + case ============ */
+.body{display:grid;grid-template-columns:246px minmax(0,1fr);gap:56px;padding:64px 0 20px}
+@media(max-width:940px){.body{grid-template-columns:1fr;gap:8px;padding-top:44px}}
+
+.rail{position:sticky;top:26px;align-self:start}
+@media(max-width:940px){.rail{position:static;margin-bottom:34px}}
+.rail h2{
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.19em;text-transform:uppercase;
+  color:var(--neutral-60);font-weight:400;margin-bottom:16px;
+}
+.railList{list-style:none;border-left:1px solid var(--rule)}
+.railList a{
+  display:grid;grid-template-columns:34px 1fr;gap:6px;align-items:baseline;
+  text-decoration:none;padding:9px 0 9px 15px;margin-left:-1px;
+  border-left:2px solid transparent;
+  font-size:13.5px;color:var(--neutral-60);transition:color .2s,border-color .2s;
+}
+.railList a span{font-family:var(--mono);font-size:10.5px;color:var(--medium-blue)}
+.railList a:hover{color:var(--stone)}
+.railList a.on{color:#fff;border-left-color:var(--mint)}
+.railList a.on span{color:var(--mint)}
+
+/* ============ sections ============ */
+section{scroll-margin-top:26px;padding-bottom:64px}
+.sechead{display:flex;align-items:baseline;gap:14px;margin-bottom:8px;flex-wrap:wrap}
+.sechead .num{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--medium-blue)}
+h3{font-family:var(--serif);font-weight:400;color:#fff;font-size:clamp(25px,3vw,33px);line-height:1.15;letter-spacing:-.012em}
+.lede{margin:14px 0 28px;max-width:66ch;font-size:16px;color:var(--stone)}
+
+/* ============ trace graph ============ */
+.trace{
+  border:1px solid var(--rule);border-radius:4px;overflow:hidden;
+  background:linear-gradient(180deg,rgba(7,28,44,.9),rgba(5,19,29,.9));
+}
+.traceHead{
+  display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;
+  padding:13px 17px;border-bottom:1px solid var(--rule);background:rgba(10,48,77,.32);
+  font-family:var(--mono);font-size:11px;letter-spacing:.08em;color:var(--neutral-60);
+}
+.traceHead b{color:var(--stone);font-weight:400}
+.traceBody{display:grid;grid-template-columns:minmax(0,1.12fr) minmax(0,1fr)}
+@media(max-width:820px){.traceBody{grid-template-columns:1fr}}
+.traceSvg{width:100%;height:auto;display:block;background:
+  radial-gradient(520px 260px at 30% 40%, rgba(31,100,246,.11), transparent 70%);
+  border-right:1px solid var(--rule)}
+@media(max-width:820px){.traceSvg{border-right:none;border-bottom:1px solid var(--rule)}}
+.node{cursor:pointer}
+.node circle{transition:r .22s,fill .22s,stroke .22s}
+.node text{font-family:'Space Mono',monospace;font-size:9.4px;fill:var(--neutral-40);letter-spacing:.03em;pointer-events:none}
+.node:hover circle{stroke:var(--mint)}
+.node.sel circle{fill:var(--mint);stroke:var(--mint)}
+.node.sel text{fill:#fff}
+.edge{stroke:var(--medium-blue);stroke-width:1;opacity:.5;transition:stroke .25s,opacity .25s,stroke-width .25s}
+.edge.hot{stroke:var(--mint);opacity:1;stroke-width:1.7}
+.traceInfo{padding:24px 24px 26px;min-height:260px}
+.traceInfo .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--medium-blue)}
+.traceInfo h4{font-family:var(--serif);font-weight:400;color:#fff;font-size:23px;margin:9px 0 12px;line-height:1.2}
+.traceInfo p{font-size:14.6px;color:var(--stone);margin-bottom:13px}
+.traceInfo .meta{font-family:var(--mono);font-size:11px;color:var(--neutral-60);letter-spacing:.05em;border-top:1px solid var(--rule);padding-top:12px;margin-top:16px}
+
+/* ============ exhibits ============ */
+.filters{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:22px}
+.chip{
+  font-family:var(--mono);font-size:11px;letter-spacing:.09em;text-transform:uppercase;
+  background:transparent;border:1px solid var(--rule-hot);color:var(--neutral-60);
+  padding:6px 15px;border-radius:500px;cursor:pointer;transition:all .18s;
+}
+.chip:hover{color:var(--stone);border-color:var(--stone)}
+.chip.on{background:var(--web-blue-1);border-color:var(--web-blue-1);color:#fff}
+.chip .ct{opacity:.62;margin-left:6px}
+
+.exhibits{display:flex;flex-direction:column;gap:12px}
+.ex{
+  border:1px solid var(--rule);border-radius:4px;background:rgba(7,28,44,.55);
+  transition:border-color .2s,background .2s;
+}
+.ex:hover{border-color:var(--rule-hot)}
+.ex[hidden]{display:none}
+.exBtn{
+  width:100%;display:grid;grid-template-columns:auto minmax(0,1fr) auto auto;gap:16px;align-items:center;
+  background:transparent;border:0;color:inherit;text-align:left;cursor:pointer;
+  padding:17px 19px;font-family:inherit;
+}
+.exNo{font-family:var(--mono);font-size:10.5px;color:var(--medium-blue);letter-spacing:.1em}
+.exReq{font-size:15.4px;color:#fff;font-weight:400;line-height:1.45}
+.tag{
+  font-family:var(--mono);font-size:9.6px;letter-spacing:.12em;text-transform:uppercase;
+  padding:3px 10px;border-radius:500px;white-space:nowrap;
+}
+.tag.shipped{color:var(--mint);border:1px solid rgba(212,253,175,.34);background:rgba(212,253,175,.07)}
+.tag.partial{color:var(--web-blue-3);border:1px solid rgba(32,164,255,.34);background:rgba(32,164,255,.07)}
+.tag.gap{color:var(--stone);border:1px solid var(--rule-hot);background:transparent}
+.caret{font-family:var(--mono);font-size:13px;color:var(--neutral-60);transition:transform .24s}
+.ex.open .caret{transform:rotate(90deg)}
+.exBody{display:none;padding:0 19px 21px 62px;border-top:1px solid var(--rule);margin-top:2px;padding-top:17px}
+.ex.open .exBody{display:block}
+@media(max-width:620px){
+  .exBtn{grid-template-columns:auto minmax(0,1fr) auto;gap:11px}
+  .exBtn .caret{display:none}
+  .exBody{padding-left:19px}
+}
+.exBody p{font-size:14.8px;color:var(--stone);margin-bottom:12px;max-width:70ch}
+.exBody p:last-child{margin-bottom:0}
+.exBody code{font-family:var(--mono);font-size:12.6px;color:var(--mint);background:rgba(212,253,175,.07);padding:1px 6px;border-radius:3px}
+.exBody .src{font-family:var(--mono);font-size:10.8px;letter-spacing:.05em;color:var(--neutral-60);margin-top:14px;display:block}
+
+/* ============ gap block ============ */
+.gap{border:1px solid var(--rule-hot);border-radius:4px;background:rgba(10,48,77,.2);padding:30px 30px 26px}
+.gap h3{font-size:26px;margin-bottom:6px}
+.gap .lede{margin-bottom:24px}
+.gapList{list-style:none;display:flex;flex-direction:column;gap:19px}
+.gapList li{padding-left:20px;border-left:2px solid var(--medium-blue)}
+.gapList b{display:block;color:#fff;font-weight:500;font-size:15.2px;margin-bottom:5px;font-family:var(--sans)}
+.gapList span{font-size:14.4px;color:var(--stone)}
+
+/* ============ close ============ */
+.close{border-top:1px solid var(--rule);padding:56px 0 78px;text-align:left}
+.close h3{max-width:20ch}
+.close p{max-width:62ch;margin:16px 0 30px;font-size:16.5px;color:var(--stone)}
+.btns{display:flex;gap:12px;flex-wrap:wrap}
+.btn{
+  display:inline-block;text-decoration:none;font-family:var(--mono);font-size:12px;
+  letter-spacing:.1em;text-transform:uppercase;padding:13px 26px;border-radius:500px;transition:all .18s;
+}
+.btn-p{background:var(--web-blue-1);color:#fff;border:1px solid var(--web-blue-1)}
+.btn-p:hover{background:#0045d8;border-color:#0045d8}
+.btn-s{background:transparent;color:var(--stone);border:1px solid var(--rule-hot)}
+.btn-s:hover{border-color:var(--mint);color:var(--mint)}
+.sig{margin-top:40px;font-family:var(--mono);font-size:11px;letter-spacing:.09em;color:var(--neutral-60)}
+</style>
+</head>
+<body>
+
+<header class="cover">
+  <div class="shell">
+    <div class="filetag">
+      <span class="live"><i></i>Case open</span>
+      <span>Andrew Zoll · Pueblo, Colorado</span>
+    </div>
+
+    <div class="coverGrid">
+      <div>
+        <h1>I trace agent behavior the way you trace <em>everything else</em>.</h1>
+        <p class="deck">
+          You're hiring a Staff Software Engineer for Agent Engineering, and the requirement
+          that jumped out at me wasn't the framework work. It was <b>"design safe, observable,
+          and auditable agent behaviors."</b> That's the problem I've spent the last two years
+          on, because I run my own businesses on agents and I couldn't afford to guess whether
+          they were right.
+        </p>
+      </div>
+
+      <div class="stamp">
+        <dl>
+          <dt>Role</dt><dd>Agent Engineering, Staff</dd>
+          <dt>Posture</dt><dd>US Remote, <b>Mountain</b></dd>
+          <dt>Current</dt><dd>SWE, AI Solutions @ Coder</dd>
+          <dt>Stack</dt><dd>Python, TypeScript, Postgres</dd>
+          <dt>Exhibits</dt><dd><b>7 filed</b>, 3 gaps</dd>
+        </dl>
+      </div>
+    </div>
+
+    <p class="disclaim">
+      I'm not affiliated with TRM Labs, and nothing here is an official anything. I built this
+      page in your design language because you evaluate applied AI fluency during the interview,
+      and I'd rather show you than tell you. Everything below points at a system that exists.
+      The things I haven't done are in their own section, in the same size type.
+    </p>
+  </div>
+</header>
+
+<main class="shell body">
+
+  <nav class="rail" aria-label="Case contents">
+    <h2>Contents</h2>
+    <ul class="railList">
+      <li><a href="#trace" data-rail><span>01</span>The trace</a></li>
+      <li><a href="#exhibits" data-rail><span>02</span>Exhibits against the req</a></li>
+      <li><a href="#gaps" data-rail><span>03</span>What this doesn't show</a></li>
+      <li><a href="#close" data-rail><span>04</span>The ask</a></li>
+    </ul>
+  </nav>
+
+  <div>
+
+    <!-- ============ 01 TRACE ============ -->
+    <section id="trace">
+      <div class="sechead"><span class="num">01</span><h3>The trace</h3></div>
+      <p class="lede">
+        Four systems, and the edges between them are the point. Click any node and the panel
+        shows what it actually is. The highlighted edges are the real dependencies, not decoration.
+      </p>
+
+      <div class="trace">
+        <div class="traceHead">
+          <span>network: <b>andrew-zoll/built-systems</b></span>
+          <span id="traceHint">4 nodes · 4 edges · click to inspect</span>
+        </div>
+        <div class="traceBody">
+          <svg class="traceSvg" viewBox="0 0 400 300" role="img" aria-label="Interactive network of Andrew Zoll's built systems">
+            <g id="edges" fill="none">
+              <line class="edge" data-a="andrewos" data-b="veritas" x1="120" y1="88" x2="290" y2="128"/>
+              <line class="edge" data-a="andrewos" data-b="fieldcommand" x1="120" y1="88" x2="112" y2="222"/>
+              <line class="edge" data-a="andrewos" data-b="coder" x1="120" y1="88" x2="286" y2="238"/>
+              <line class="edge" data-a="veritas" data-b="coder" x1="290" y1="128" x2="286" y2="238"/>
+            </g>
+            <g id="nodes">
+              <g class="node" data-id="andrewos" tabindex="0" role="button" aria-label="AndrewOS">
+                <circle cx="120" cy="88" r="15" fill="#1f64f6" stroke="#4082ff" stroke-width="1.4"/>
+                <text x="120" y="118" text-anchor="middle">AndrewOS</text>
+              </g>
+              <g class="node" data-id="veritas" tabindex="0" role="button" aria-label="Veritas">
+                <circle cx="290" cy="128" r="11" fill="#084a9b" stroke="#4082ff" stroke-width="1.4"/>
+                <text x="290" y="154" text-anchor="middle">Veritas</text>
+              </g>
+              <g class="node" data-id="fieldcommand" tabindex="0" role="button" aria-label="FieldCommand">
+                <circle cx="112" cy="222" r="12" fill="#084a9b" stroke="#4082ff" stroke-width="1.4"/>
+                <text x="112" y="249" text-anchor="middle">FieldCommand</text>
+              </g>
+              <g class="node" data-id="coder" tabindex="0" role="button" aria-label="Coder">
+                <circle cx="286" cy="238" r="11" fill="#084a9b" stroke="#4082ff" stroke-width="1.4"/>
+                <text x="286" y="264" text-anchor="middle">Coder (day job)</text>
+              </g>
+            </g>
+          </svg>
+          <div class="traceInfo" id="traceInfo" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 02 EXHIBITS ============ -->
+    <section id="exhibits">
+      <div class="sechead"><span class="num">02</span><h3>Exhibits against the req</h3></div>
+      <p class="lede">
+        Every line here is lifted from your job description. Filter by how honestly I clear it.
+        Open a row to see the system behind the claim.
+      </p>
+
+      <div class="filters" role="group" aria-label="Filter exhibits by status">
+        <button class="chip on" data-filter="all">All <span class="ct">10</span></button>
+        <button class="chip" data-filter="shipped">Shipped <span class="ct">7</span></button>
+        <button class="chip" data-filter="partial">Partial <span class="ct">2</span></button>
+        <button class="chip" data-filter="gap">Gap <span class="ct">1</span></button>
+      </div>
+
+      <div class="exhibits" id="exhibits">
+
+        <article class="ex" data-status="shipped">
+          <button class="exBtn" aria-expanded="false">
+            <span class="exNo">EX-01</span>
+            <span class="exReq">"Architect and implement a robust agentic framework that supports tool use, context retrieval, memory, and planning"</span>
+            <span class="tag shipped">Shipped</span>
+            <span class="caret">&#9656;</span>
+          </button>
+          <div class="exBody">
+            <p>
+              I built AndrewOS, an agent operating system that runs marketing, content, and
+              operations across two of my businesses. It has a delegation hierarchy rather than
+              one prompt: a chief of staff agent routes work to arena managers, and managers
+              hand scoped task packets down to builder agents.
+            </p>
+            <p>
+              Memory is files in a version-controlled repository, not a vector blob, so every
+              fact the agents rely on is diffable, reviewable, and attributable to a commit.
+              That decision came from getting burned by memory I couldn't audit.
+            </p>
+            <span class="src">System: AndrewOS · running continuously since 2025</span>
+          </div>
+        </article>
+
+        <article class="ex" data-status="shipped">
+          <button class="exBtn" aria-expanded="false">
+            <span class="exNo">EX-02</span>
+            <span class="exReq">"Design safe, observable, and auditable agent behaviors, ensuring reliability in high-sensitivity environments"</span>
+            <span class="tag shipped">Shipped</span>
+            <span class="caret">&#9656;</span>
+          </button>
+          <div class="exBody">
+            <p>
+              This is the requirement I'd want to talk about first. AndrewOS has a rule I enforce
+              structurally: <code>no agent audits its own work</code>. A reviewer or validator has
+              to run in a fresh, independent context, because an agent asked to check itself in
+              the same context will agree with itself almost every time.
+            </p>
+            <p>
+              On top of that, every stage of a manager to builder to reviewer run appends a
+              structured trace: what it received, what it decided, why, and what it handed off.
+              Append only. A finished run reads top to bottom as a replayable record, which is
+              the surface I review instead of raw agent output.
+            </p>
+            <p>
+              Irreversible actions sit behind a human gate. Agents draft outreach; they do not
+              send it. That is a design constraint I chose before it was a preference, and it is
+              the same shape as the governance layer your team owns.
+            </p>
+            <span class="src">System: AndrewOS observability layer · agent-trace spec</span>
+          </div>
+        </article>
+
+        <article class="ex" data-status="shipped">
+          <button class="exBtn" aria-expanded="false">
+            <span class="exNo">EX-03</span>
+            <span class="exReq">"Evaluate performance across metrics like reasoning, latency, success rate, and hallucination, and iterate based on user feedback and system telemetry"</span>
+            <span class="tag shipped">Shipped</span>
+            <span class="caret">&#9656;</span>
+          </button>
+          <div class="exBody">
+            <p>
+              Veritas is a citation-verification platform for legal filings. It checks the cases
+              and quotations in a brief against source records and returns an auditable
+              verification record. Hallucinated citations are the entire problem it exists to catch.
+            </p>
+            <p>
+              The architecture is deliberate: extract the claim with the model, then decide with
+              deterministic code. The model is good at reading a messy citation out of prose and
+              bad at being trusted about whether it is real, so the judgment never sits with it.
+              I hold the pipeline against a fixed fixture suite and no release ships that fails it.
+            </p>
+            <p>
+              I also chose the verdict language carefully. The product says a citation was
+              <code>not located in reporter</code> rather than calling it false, because a lawyer
+              acts on that sentence in a filing and the honest hedge matters more than the
+              confident one.
+            </p>
+            <span class="src">System: Veritas · veritaslaw.app</span>
+          </div>
+        </article>
+
+        <article class="ex" data-status="shipped">
+          <button class="exBtn" aria-expanded="false">
+            <span class="exNo">EX-04</span>
+            <span class="exReq">"Strong engineering background with deep experience in backend or systems work (Python preferred)"</span>
+            <span class="tag shipped">Shipped</span>
+            <span class="caret">&#9656;</span>
+          </button>
+          <div class="exBody">
+            <p>
+              I'm a Senior Software Engineer for AI Solutions at Coder right now, writing Python
+              on a large production codebase as one of two engineers, shipping directly to
+              production. I own the quality and delivery practice for that platform: test
+              coverage, release process, and the operating documentation.
+            </p>
+            <p>
+              Before that, I designed and shipped FieldCommand solo. It's a multi-tenant SaaS on
+              PostgreSQL and Supabase serving commercial contractors, roughly 187,745 lines of
+              TypeScript, with role-based access control, tenant isolation, and audit-ready data
+              handling. I built the billing and reporting pipelines through Stripe myself.
+            </p>
+            <span class="src">Roles: Coder (current) · FieldCommand (founder, shipped solo)</span>
+          </div>
+        </article>
+
+        <article class="ex" data-status="shipped">
+          <button class="exBtn" aria-expanded="false">
+            <span class="exNo">EX-05</span>
+            <span class="exReq">"AI fluency is a baseline expectation. We expect every team member to use AI to accelerate and reimagine their craft, not just automate surface tasks."</span>
+            <span class="tag shipped">Shipped</span>
+            <span class="caret">&#9656;</span>
+          </button>
+          <div class="exBody">
+            <p>
+              This is the line that made me apply. Everything I've shipped in the last two years
+              was built AI-assisted end to end, and I mean the whole loop: specification, build,
+              independent validation, ship. FieldCommand and Veritas both exist because one person
+              with a good agent architecture can now do what used to need a team.
+            </p>
+            <p>
+              The interesting part isn't that I use the tools. It's that I hit the failure modes
+              early and had to build around them, which is where the independence rule and the
+              trace layer came from. I've spent more time on making agentic output trustworthy
+              than on making it fast.
+            </p>
+            <span class="src">Evidence: this page, AndrewOS, Veritas, FieldCommand</span>
+          </div>
+        </article>
+
+        <article class="ex" data-status="shipped">
+          <button class="exBtn" aria-expanded="false">
+            <span class="exNo">EX-06</span>
+            <span class="exReq">"High product empathy, you care about how agents impact real users (analysts) and optimize accordingly"</span>
+            <span class="tag shipped">Shipped</span>
+            <span class="caret">&#9656;</span>
+          </button>
+          <div class="exBody">
+            <p>
+              I spent six years as a financial advisor under FINRA and SEC supervision, owning
+              senior client relationships where a wrong answer had consequences and a regulator
+              could ask me to justify it later. That is the closest thing I have to your analysts:
+              a professional user who has to defend the output of the tool they used.
+            </p>
+            <p>
+              It's why Veritas hedges its verdicts and why AndrewOS keeps a human on anything
+              irreversible. I've been the person on the hook, so I build for the person on the hook.
+            </p>
+            <span class="src">Background: Ryleigh Wealth Management · regulated advisory practice</span>
+          </div>
+        </article>
+
+        <article class="ex" data-status="shipped">
+          <button class="exBtn" aria-expanded="false">
+            <span class="exNo">EX-07</span>
+            <span class="exReq">"Bias toward experimentation and iteration. If something takes months elsewhere, it will ship here in days."</span>
+            <span class="tag shipped">Shipped</span>
+            <span class="caret">&#9656;</span>
+          </button>
+          <div class="exBody">
+            <p>
+              I run a nightly autonomous loop that scans the market, verifies findings against
+              primary sources, and writes up what it found, including what it failed to cover.
+              This page came out of that loop. It found your requisition, verified the posting
+              against your own board, and I built the page the same evening.
+            </p>
+            <p>
+              I'm also honest about the pace question in your posting. I have a family and I keep
+              Sunday. Inside that, I move fast, and the systems I build are the reason I can.
+            </p>
+            <span class="src">Cadence: evenings and weekends, alongside a full-time engineering role</span>
+          </div>
+        </article>
+
+        <article class="ex" data-status="partial">
+          <button class="exBtn" aria-expanded="false">
+            <span class="exNo">EX-08</span>
+            <span class="exReq">"Hands-on experience building with LLMs, agents, and tooling frameworks (LangChain, semantic caches, vector DBs, etc.)"</span>
+            <span class="tag partial">Partial</span>
+            <span class="caret">&#9656;</span>
+          </button>
+          <div class="exBody">
+            <p>
+              LLMs and agents, yes, at depth, against both the OpenAI and Anthropic APIs and
+              through agentic coding tooling daily. The named framework layer is where I'd be
+              honest with you: I've built orchestration directly rather than on LangChain, and my
+              memory layer is version-controlled files rather than a vector database, which was a
+              deliberate choice for auditability on my own systems.
+            </p>
+            <p>
+              I'd be learning your stack's specific ergonomics, not the ideas underneath it. I'd
+              rather you know that going in than find it out in week two.
+            </p>
+            <span class="src">Honest read: strong on the concepts, light on the named tools</span>
+          </div>
+        </article>
+
+        <article class="ex" data-status="partial">
+          <button class="exBtn" aria-expanded="false">
+            <span class="exNo">EX-09</span>
+            <span class="exReq">"Previous experience with knowledge graphs, task orchestration, or AI safety a plus"</span>
+            <span class="tag partial">Partial</span>
+            <span class="caret">&#9656;</span>
+          </button>
+          <div class="exBody">
+            <p>
+              Task orchestration is the strongest of the three for me, since it's what AndrewOS
+              is. Safety in the practical sense, meaning gates, independent review, and refusing
+              to let an agent take an irreversible action unsupervised, is also real work I've done.
+            </p>
+            <p>
+              Knowledge graphs I've touched, not lived in. If the investigative side of your
+              product leans hard on graph structure, treat that as something I'd ramp on rather
+              than something I'd arrive with.
+            </p>
+            <span class="src">Honest read: orchestration strong, safety practical, graphs light</span>
+          </div>
+        </article>
+
+        <article class="ex" data-status="gap">
+          <button class="exBtn" aria-expanded="false">
+            <span class="exNo">EX-10</span>
+            <span class="exReq">"We manage petabyte-scale pipelines, serve models with millisecond-level latency"</span>
+            <span class="tag gap">Gap</span>
+            <span class="caret">&#9656;</span>
+          </button>
+          <div class="exBody">
+            <p>
+              I have not operated at petabyte scale, and I have not run a model-serving tier at
+              millisecond latency. My systems are production systems with real users and real
+              money, and they are not that size. Claiming otherwise would fall apart in the first
+              technical conversation.
+            </p>
+            <p>
+              What I'd bring instead is the architecture and reliability half of the charter,
+              which is where the requisition puts most of its weight. If the seat is mostly the
+              infrastructure half, I'm the wrong candidate and I'd rather say so here.
+            </p>
+            <span class="src">Honest read: real gap, stated plainly</span>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ============ 03 GAPS ============ -->
+    <section id="gaps">
+      <div class="gap">
+        <div class="sechead"><span class="num">03</span><h3>What this trace doesn't show</h3></div>
+        <p class="lede">
+          You wrote that you hire for slope and judgment and encourage people who don't check
+          every box. I'm taking you at your word, so here are the boxes I don't check.
+        </p>
+        <ul class="gapList">
+          <li>
+            <b>Staff is a level stretch on paper.</b>
+            Your own ladder puts a Staff Engineer as a role model and mentor to the entire
+            engineering organization, driving projects across multiple teams. I've led as a
+            founder and I'm not yet a year into a formal senior engineering title. Judge the
+            level on the systems, and if it reads Senior rather than Staff, that's a fair call.
+          </li>
+          <li>
+            <b>Infrastructure scale, as above.</b>
+            Petabyte pipelines and millisecond serving are outside what I've run.
+          </li>
+          <li>
+            <b>The named LLM tooling stack.</b>
+            I've built the orchestration myself rather than on LangChain, and I use files rather
+            than vector stores for agent memory. Concepts transfer. Specific ergonomics don't.
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ 04 CLOSE ============ -->
+    <section id="close" class="close">
+      <div class="sechead"><span class="num">04</span><h3>Why I'd want this one specifically</h3></div>
+      <p>
+        Most agent work right now is a demo that nobody has to defend. Yours goes to investigators
+        building cases, where an unexplainable answer is worse than no answer. That constraint is
+        the reason I build the way I do, and I'd rather work somewhere it's the requirement than
+        somewhere it's a preference.
+      </p>
+      <div class="btns">
+        <a class="btn btn-p" href="https://portfolio.andrewzoll.com" target="_blank" rel="noopener">See the portfolio</a>
+        <a class="btn btn-s" href="https://www.linkedin.com/in/andrewzoll" target="_blank" rel="noopener">Connect on LinkedIn</a>
+      </div>
+      <p class="sig">Andrew Zoll · Pueblo, Colorado · Mountain time · built for TRM Labs, unaffiliated</p>
+    </section>
+
+  </div>
+</main>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---------- trace graph ---------- */
+  var DATA = {
+    andrewos:{
+      k:"NODE 01 · ORCHESTRATION",
+      t:"AndrewOS",
+      p:["An agent operating system I built and run across two businesses. Arena-based delegation, a chief of staff agent that routes work, managers that scope task packets, builders that execute, and independent reviewers that never review their own output.",
+         "Memory is version-controlled files, so every fact an agent acts on is diffable and attributable. It is the hub here because the other three systems either run on it or were built with it."],
+      m:"Continuous since 2025 · orchestration, delegation, observability"
+    },
+    veritas:{
+      k:"NODE 02 · VERIFICATION",
+      t:"Veritas",
+      p:["A citation-verification platform for legal filings. It checks cited cases and quotations against source records and returns an auditable verification record.",
+         "The pipeline extracts the claim with a model, then decides with deterministic code. Verdicts are hedged on purpose, because a lawyer acts on that sentence. Releases are held against a fixed fixture suite."],
+      m:"veritaslaw.app · hallucination detection, evaluation loops"
+    },
+    fieldcommand:{
+      k:"NODE 03 · PRODUCTION SAAS",
+      t:"FieldCommand",
+      p:["A multi-tenant SaaS for commercial trade contractors, shipped solo on PostgreSQL and Supabase. Roughly 187,745 lines of TypeScript, with role-based access control, tenant isolation, and audit-ready data handling.",
+         "Four AI features shipped to production behind per-tenant feature flags, plus the Stripe billing and reporting pipelines. This is the backend and systems receipt."],
+      m:"Built AI-assisted end to end · spec, build, validate, ship"
+    },
+    coder:{
+      k:"NODE 04 · CURRENT ROLE",
+      t:"Coder",
+      p:["Senior Software Engineer for AI Solutions, embedded in the revenue organization, building an internal AI agent platform that turns CRM, support, and call-transcript data into answers and workflows.",
+         "Python, on a large production codebase, on a two-person team, shipping straight to production. I own the quality and delivery practice: coverage, release process, operating docs."],
+      m:"Current W-2 role · the day job that proves the night work travels"
+    }
+  };
+
+  var nodes = Array.prototype.slice.call(document.querySelectorAll('.node'));
+  var edges = Array.prototype.slice.call(document.querySelectorAll('.edge'));
+  var info  = document.getElementById('traceInfo');
+  var hint  = document.getElementById('traceHint');
+
+  function select(id){
+    var d = DATA[id];
+    if(!d) return;
+    nodes.forEach(function(n){ n.classList.toggle('sel', n.getAttribute('data-id') === id); });
+    edges.forEach(function(e){
+      var hot = e.getAttribute('data-a') === id || e.getAttribute('data-b') === id;
+      e.classList.toggle('hot', hot);
+    });
+    var html = '<div class="k">' + d.k + '</div><h4>' + d.t + '</h4>';
+    d.p.forEach(function(x){ html += '<p>' + x + '</p>'; });
+    html += '<div class="meta">' + d.m + '</div>';
+    info.innerHTML = html;
+    var linked = edges.filter(function(e){
+      return e.getAttribute('data-a') === id || e.getAttribute('data-b') === id;
+    }).length;
+    hint.textContent = d.t.toLowerCase() + ' selected · ' + linked + ' connected';
+  }
+
+  nodes.forEach(function(n){
+    var id = n.getAttribute('data-id');
+    n.addEventListener('click', function(){ select(id); });
+    n.addEventListener('keydown', function(ev){
+      if(ev.key === 'Enter' || ev.key === ' '){ ev.preventDefault(); select(id); }
+    });
+  });
+  select('andrewos');
+
+  /* ---------- exhibit accordion ---------- */
+  Array.prototype.forEach.call(document.querySelectorAll('.ex'), function(ex){
+    var btn = ex.querySelector('.exBtn');
+    btn.addEventListener('click', function(){
+      var open = ex.classList.toggle('open');
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+  });
+
+  /* ---------- exhibit filter ---------- */
+  var chips = Array.prototype.slice.call(document.querySelectorAll('.chip'));
+  chips.forEach(function(chip){
+    chip.addEventListener('click', function(){
+      var want = chip.getAttribute('data-filter');
+      chips.forEach(function(c){ c.classList.toggle('on', c === chip); });
+      Array.prototype.forEach.call(document.querySelectorAll('.ex'), function(ex){
+        var show = (want === 'all') || (ex.getAttribute('data-status') === want);
+        ex.hidden = !show;
+        if(!show){ ex.classList.remove('open'); ex.querySelector('.exBtn').setAttribute('aria-expanded','false'); }
+      });
+    });
+  });
+
+  /* ---------- rail scrollspy ---------- */
+  var links = Array.prototype.slice.call(document.querySelectorAll('[data-rail]'));
+  var secs  = links.map(function(a){ return document.querySelector(a.getAttribute('href')); });
+  function spy(){
+    var best = 0, bestTop = -Infinity;
+    secs.forEach(function(s, i){
+      if(!s) return;
+      var top = s.getBoundingClientRect().top - 90;
+      if(top <= 0 && top > bestTop){ bestTop = top; best = i; }
+    });
+    links.forEach(function(a, i){ a.classList.toggle('on', i === best); });
+  }
+  window.addEventListener('scroll', spy, {passive:true});
+  spy();
+})();
+</script>
+</body>
+</html>
