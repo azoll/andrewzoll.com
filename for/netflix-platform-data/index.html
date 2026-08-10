@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>Andrew Zoll for Platform Data Products (SWE 5) at Netflix</title>
+<style>
+  :root{
+    --red:#E50914; --black:#000; --panel:#141414; --panel2:#1c1c1c; --line:#2b2b2b;
+    --text:#F5F5F5; --dim:#9a9a9a; --dim2:#6f6f6f; --good:#46D369;
+    --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+    --sans:'Helvetica Neue',Helvetica,Arial,sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--black);color:var(--text);font-family:var(--sans);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+
+  /* ---- console chrome ---- */
+  .topbar{border-bottom:1px solid var(--line);background:var(--panel);position:sticky;top:0;z-index:50}
+  .topbar .wrap{display:flex;align-items:center;gap:14px;height:52px}
+  .brandmark{font-weight:800;letter-spacing:.14em;color:var(--red);font-size:13px}
+  .crumb{font-family:var(--mono);font-size:11.5px;color:var(--dim2);letter-spacing:.04em}
+  .crumb b{color:var(--dim);font-weight:500}
+  .live{margin-left:auto;display:flex;align-items:center;gap:7px;font-family:var(--mono);font-size:11px;color:var(--dim)}
+  .dot{width:7px;height:7px;border-radius:50%;background:var(--good);box-shadow:0 0 0 0 rgba(70,211,105,.6);animation:pulse 2.6s infinite}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(70,211,105,.5)}70%{box-shadow:0 0 0 9px rgba(70,211,105,0)}100%{box-shadow:0 0 0 0 rgba(70,211,105,0)}}
+
+  .disc{background:#0d0d0d;border-bottom:1px solid var(--line);font-family:var(--mono);font-size:11px;color:var(--dim2);padding:8px 0}
+
+  /* ---- query hero ---- */
+  .hero{padding:54px 0 30px}
+  .qlabel{font-family:var(--mono);font-size:11px;color:var(--dim2);letter-spacing:.1em;text-transform:uppercase;margin-bottom:14px}
+  .qbox{border:1px solid var(--line);border-left:3px solid var(--red);background:var(--panel);border-radius:3px;padding:20px 22px;font-family:var(--mono);font-size:14.5px;line-height:1.75;color:#dcdcdc}
+  .qbox .kw{color:var(--red)}
+  .qbox .str{color:#7fd6a0}
+  .hero h1{font-size:clamp(30px,5vw,50px);line-height:1.06;letter-spacing:-.025em;font-weight:800;margin:30px 0 16px;max-width:22ch}
+  .hero p{color:var(--dim);max-width:60ch;font-size:17px}
+  .hero p strong{color:var(--text);font-weight:600}
+
+  /* ---- explorer ---- */
+  .explorer{display:grid;grid-template-columns:216px 1fr;gap:0;border:1px solid var(--line);border-radius:4px;overflow:hidden;margin:44px 0 10px;background:var(--panel)}
+  .rail{background:#101010;border-right:1px solid var(--line);padding:16px 0}
+  .rail h3{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim2);padding:0 16px 10px}
+  .dimbtn{display:block;width:100%;text-align:left;background:none;border:0;border-left:2px solid transparent;color:var(--dim);font-family:var(--sans);font-size:13.5px;padding:9px 16px;cursor:pointer;transition:background .15s,color .15s,border-color .15s}
+  .dimbtn:hover{background:#181818;color:var(--text)}
+  .dimbtn[aria-pressed="true"]{background:#1e1e1e;color:#fff;border-left-color:var(--red);font-weight:600}
+  .dimbtn .n{font-family:var(--mono);font-size:11px;color:var(--dim2);float:right;margin-top:2px}
+  .dimbtn[aria-pressed="true"] .n{color:var(--red)}
+
+  .panel{padding:18px 20px 24px;min-height:520px}
+  .ptop{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:4px}
+  .ptop h2{font-size:16px;font-weight:700;letter-spacing:-.01em}
+  .ptop .meta{font-family:var(--mono);font-size:11px;color:var(--dim2);margin-left:auto}
+
+  .req{border-bottom:1px solid #232323}
+  .req:last-child{border-bottom:0}
+  .reqhead{width:100%;display:flex;gap:14px;align-items:flex-start;background:none;border:0;color:inherit;text-align:left;padding:15px 2px;cursor:pointer;font-family:var(--sans)}
+  .reqhead:hover .rq{color:#fff}
+  .chev{flex:0 0 12px;margin-top:6px;color:var(--dim2);font-family:var(--mono);font-size:11px;transition:transform .2s}
+  .req.open .chev{transform:rotate(90deg);color:var(--red)}
+  .rq{flex:1;font-size:15px;color:#d8d8d8;line-height:1.5}
+  .tag{flex:0 0 auto;font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--dim2);border:1px solid var(--line);border-radius:2px;padding:2px 7px;margin-top:3px}
+  .reqbody{display:none;padding:2px 2px 20px 26px}
+  .req.open .reqbody{display:block;animation:fade .22s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(-3px)}to{opacity:1;transform:none}}
+  .reqbody p{color:var(--dim);font-size:15px;margin-bottom:9px}
+  .reqbody p strong{color:var(--text);font-weight:600}
+  .reqbody .src{font-family:var(--mono);font-size:11px;color:var(--dim2);border-left:2px solid var(--line);padding-left:9px}
+
+  /* ---- tokenomics ---- */
+  .sec{padding:64px 0 10px}
+  .sec h2.big{font-size:clamp(23px,3.4vw,33px);letter-spacing:-.02em;font-weight:800;max-width:26ch;line-height:1.14;margin-bottom:14px}
+  .sec .sub{color:var(--dim);max-width:64ch;margin-bottom:26px}
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(258px,1fr));gap:14px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:4px;padding:18px}
+  .card h4{font-size:14px;font-weight:700;margin-bottom:8px}
+  .card p{color:var(--dim);font-size:14.5px}
+  .card .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--red);display:block;margin-bottom:9px}
+
+  /* ---- honest gaps ---- */
+  .gaps{background:var(--panel);border:1px solid var(--line);border-top:2px solid #7a5c00;border-radius:4px;padding:24px 24px 10px;margin-top:14px}
+  .gaps .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#d6a800;margin-bottom:12px}
+  .gaps h3{font-size:19px;font-weight:700;margin-bottom:12px}
+  .gaps ul{list-style:none}
+  .gaps li{color:var(--dim);font-size:15px;padding:9px 0 9px 20px;position:relative;border-top:1px solid #232323}
+  .gaps li:first-child{border-top:0}
+  .gaps li:before{content:"!";position:absolute;left:0;top:9px;font-family:var(--mono);font-size:12px;color:#d6a800}
+
+  /* ---- cta ---- */
+  .cta{padding:60px 0 76px;text-align:center}
+  .cta h2{font-size:clamp(24px,3.6vw,34px);font-weight:800;letter-spacing:-.02em;margin-bottom:10px}
+  .cta p{color:var(--dim);margin-bottom:24px}
+  .btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+  .btn{display:inline-block;padding:13px 26px;border-radius:3px;font-weight:700;font-size:15px;text-decoration:none;transition:transform .14s,background .14s}
+  .btn:hover{transform:translateY(-1px)}
+  .btn.p{background:var(--red);color:#fff}
+  .btn.p:hover{background:#f6121d}
+  .btn.s{background:#2a2a2a;color:var(--text)}
+  .btn.s:hover{background:#383838}
+  footer{border-top:1px solid var(--line);padding:20px 0 40px;font-family:var(--mono);font-size:11px;color:var(--dim2);text-align:center}
+
+  @media(max-width:820px){
+    .explorer{grid-template-columns:1fr}
+    .rail{border-right:0;border-bottom:1px solid var(--line);display:flex;flex-wrap:wrap;padding:10px 8px}
+    .rail h3{width:100%;padding:4px 8px 8px}
+    .dimbtn{width:auto;border-left:0;border-bottom:2px solid transparent;padding:7px 11px}
+    .dimbtn[aria-pressed="true"]{border-left:0;border-bottom-color:var(--red)}
+    .dimbtn .n{float:none;margin-left:6px}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap">
+    <span class="brandmark">N</span>
+    <span class="crumb">platform dse <b>/</b> candidate explorer <b>/</b> <b>andrew-zoll</b></span>
+    <span class="live"><span class="dot"></span> JR41877</span>
+  </div>
+</div>
+
+<div class="disc"><div class="wrap">Not affiliated with Netflix. This is a personal page I built as part of my own application for Software Engineer 5, Platform Data Products.</div></div>
+
+<div class="wrap">
+
+  <section class="hero">
+    <div class="qlabel">the query I read your posting as</div>
+    <div class="qbox">
+<span class="kw">SELECT</span> engineer<br>
+<span class="kw">WHERE</span> shipped_full_stack_alone = <span class="str">true</span><br>
+&nbsp;&nbsp;<span class="kw">AND</span> comfortable_in(<span class="str">'messy, changing data'</span>)<br>
+&nbsp;&nbsp;<span class="kw">AND</span> has_measured(<span class="str">'coding agent tokenomics'</span>)<br>
+&nbsp;&nbsp;<span class="kw">AND</span> needs_no_engineering_org_behind_them = <span class="str">true</span>;
+    </div>
+    <h1>You'd be our first software engineer.</h1>
+    <p>That line is why I'm here. I've never built any other way. <strong>FieldCommand</strong> is 187,745 lines of TypeScript I designed and shipped by myself, data model through API through interface. Nobody gave me a backlog for it. I decided what mattered, built it, and owned what happened after.</p>
+  </section>
+
+  <section>
+    <div class="explorer">
+      <div class="rail">
+        <h3>Filter receipts</h3>
+        <button class="dimbtn" data-dim="all" aria-pressed="true">Everything <span class="n">9</span></button>
+        <button class="dimbtn" data-dim="fullstack" aria-pressed="false">Full stack <span class="n">3</span></button>
+        <button class="dimbtn" data-dim="data" aria-pressed="false">Data fluency <span class="n">2</span></button>
+        <button class="dimbtn" data-dim="agents" aria-pressed="false">Agents and AI cost <span class="n">2</span></button>
+        <button class="dimbtn" data-dim="ownership" aria-pressed="false">Solo ownership <span class="n">2</span></button>
+      </div>
+
+      <div class="panel">
+        <div class="ptop">
+          <h2 id="ptitle">Every requirement, with what I've actually got</h2>
+          <span class="meta" id="pcount">9 of 9 shown</span>
+        </div>
+        <div id="reqs">
+
+          <div class="req" data-dim="fullstack">
+            <button class="reqhead"><span class="chev">&#9656;</span><span class="rq">"You've designed, built, and shipped full stack applications"</span><span class="tag">Must have</span></button>
+            <div class="reqbody">
+              <p><strong>FieldCommand</strong>, a multi-tenant SaaS platform for commercial trade contractors, built solo on PostgreSQL and Supabase. 187,745 lines of TypeScript, from the relational schema up through the API layer to the interface contractors use every day. Role-based access control and tenant isolation are mine too.</p>
+              <p><strong>Veritas</strong>, a citation-verification platform for legal filings, is the second one. It runs in production today.</p>
+              <p class="src">Both shipped end to end. Neither had a second engineer.</p>
+            </div>
+          </div>
+
+          <div class="req" data-dim="fullstack">
+            <button class="reqhead"><span class="chev">&#9656;</span><span class="rq">"Strong TypeScript and React, plus enough backend (Node.js, GraphQL, or similar) to own a data feature end to end"</span><span class="tag">Must have</span></button>
+            <div class="reqbody">
+              <p>TypeScript and React are my default reach, with Node behind them. That's what FieldCommand is written in, and it's what I've built data-heavy interfaces on top of more than once. Next.js for the app layer.</p>
+              <p>To be exact about the parenthetical: my API work has been REST rather than GraphQL. I read "or similar" as the honest scope of what I bring, and picking up a GraphQL service layer is a week, not a quarter.</p>
+              <p class="src">Owning a data feature end to end is the part I've done repeatedly. GraphQL specifically is new.</p>
+            </div>
+          </div>
+
+          <div class="req" data-dim="fullstack">
+            <button class="reqhead"><span class="chev">&#9656;</span><span class="rq">"Build and ship full stack features for our infrastructure cost and usage tooling, from the React and TypeScript frontend through the GraphQL services behind it"</span><span class="tag">What you'll do</span></button>
+            <div class="reqbody">
+              <p>This is the closest description of my week that I've read in a job posting. At <strong>Coder</strong> I'm a Senior Software Engineer on AI Solutions, on a two-person team embedded in the revenue organization, building an internal platform that turns CRM, support and call-transcript data into answers and workflows for people who don't write code.</p>
+              <p>Internal-facing, data-heavy, shipped straight to production, and built by sitting with the stakeholders who own the domain instead of the system. I also own the quality practice for it: test coverage, release process, and the operating docs other people work from.</p>
+              <p class="src">Coder's product is remote development environments, so infrastructure cost is a thing I think about on the clock.</p>
+            </div>
+          </div>
+
+          <div class="req" data-dim="data">
+            <button class="reqhead"><span class="chev">&#9656;</span><span class="rq">"Enough data fluency (SQL, and comfort reasoning about a data model) that a data-heavy product isn't a cold start"</span><span class="tag">Must have</span></button>
+            <div class="reqbody">
+              <p>I've built on PostgreSQL and Supabase for FieldCommand and worked in Microsoft SQL Server before that. I've designed the ETL and pipeline layer connecting Stripe billing, AI services, CRM data and operational reporting, which meant reasoning about other people's schemas as much as my own.</p>
+              <p>The "messy, changing data" phrasing is the part I'd underline. Ten years in financial services meant most of the data I touched was somebody else's, partially documented, and moving.</p>
+              <p class="src">Not a data engineer. Comfortable in the data model, which is what you asked for.</p>
+            </div>
+          </div>
+
+          <div class="req" data-dim="data">
+            <button class="reqhead"><span class="chev">&#9656;</span><span class="rq">"You should have a background in relational data modeling, API design, and data-rich application development"</span><span class="tag">The role</span></button>
+            <div class="reqbody">
+              <p>All three are the substance of FieldCommand rather than adjacent to it. The relational model came first, the API design followed it, and the application is almost entirely reporting and operational data rendered for people who need to act on it.</p>
+              <p>I've also taken products from scoping through design to implementation without a product manager in between, which is the "strong sense of product ownership" line right under it.</p>
+              <p class="src">187,745 lines of it, and I made every schema call.</p>
+            </div>
+          </div>
+
+          <div class="req" data-dim="agents">
+            <button class="reqhead"><span class="chev">&#9656;</span><span class="rq">"agents and agent-facing tooling" and "coding agent 'tokenomics'"</span><span class="tag">Domain</span></button>
+            <div class="reqbody">
+              <p><strong>AndrewOS</strong> is an agent operating system I built and run every day. It delegates work across specialized agents with human approval gates, and part of it is the instrumentation that reports what those agents actually cost, broken out by model and by workload, surfaced on a live dashboard next to job health, queue depth and failure signals.</p>
+              <p>I built the measurement layer for the same reason your team exists. You can't make an efficiency argument to engineers without usage data, and you can't get usage data by asking people.</p>
+              <p class="src">I wanted the number, so I built the thing that produces the number.</p>
+            </div>
+          </div>
+
+          <div class="req" data-dim="agents">
+            <button class="reqhead"><span class="chev">&#9656;</span><span class="rq">"enterprise-scale AI platform concerns"</span><span class="tag">Domain</span></button>
+            <div class="reqbody">
+              <p>The concern I've spent the most time on is trusting generated output. In AndrewOS no agent reviews its own work: a builder produces, and an independent reviewer runs in a separate context where it can't quietly agree with itself. Under that sits a deterministic gate layer that machine-checks generated output against written rules before anything ships, which moves correctness out of model judgment and into code.</p>
+              <p><strong>Veritas</strong> is the strictest version. A model extracts each claim, deterministic code renders the verdict, and a fixed fixture suite gates every release.</p>
+              <p class="src">Ten years under FINRA and SEC oversight taught me why auditable beats impressive.</p>
+            </div>
+          </div>
+
+          <div class="req" data-dim="ownership">
+            <button class="reqhead"><span class="chev">&#9656;</span><span class="rq">"A track record of owning work on your own. You'd be our first software engineer, so you'll set direction and see it through without a big engineering org behind you."</span><span class="tag">Must have</span></button>
+            <div class="reqbody">
+              <p>Three products, all mine end to end: FieldCommand, Veritas, and AndrewOS. No engineering org behind any of them, no backlog handed down, and no cover if a call turned out wrong.</p>
+              <p>The "freedom and responsibility" language in your posting reads to me like a description of the only working conditions I've had. I set the direction and I wore the outcome.</p>
+              <p class="src">Being the only engineer in the room is my normal, not my stretch.</p>
+            </div>
+          </div>
+
+          <div class="req" data-dim="ownership">
+            <button class="reqhead"><span class="chev">&#9656;</span><span class="rq">"Experience contributing to internal systems and tools you don't own, including autonomously onboarding to new application stacks"</span><span class="tag">Must have</span></button>
+            <div class="reqbody">
+              <p>My current job started as exactly this. I joined a large production Python codebase on a two-person team and had to get useful in it fast, then extend into CRM, support and call-transcript systems that other teams own.</p>
+              <p>Onboarding myself to unfamiliar stacks without a guide is the skill I've leaned on hardest this year.</p>
+              <p class="src">Coder, 2026 to present. Python daily, shipping direct to production.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <p style="font-family:var(--mono);font-size:11px;color:var(--dim2);margin-top:9px">Every quoted requirement is verbatim from the JR41877 posting. Click any row to open the receipt.</p>
+  </section>
+
+  <section class="sec">
+    <h2 class="big">Why the tokenomics line is the one that got me.</h2>
+    <p class="sub">Most postings describe a product. This one describes a measurement problem I already have, at a scale I don't.</p>
+    <div class="cards">
+      <div class="card">
+        <span class="k">the problem</span>
+        <h4>Agent spend is invisible by default</h4>
+        <p>An agent workflow will happily cost ten times what you assumed and report nothing. The only way I found out what mine cost was to instrument it and put the result somewhere I'd see it daily.</p>
+      </div>
+      <div class="card">
+        <span class="k">what I built</span>
+        <h4>Usage reporting, then a dashboard</h4>
+        <p>Cost and usage broken out by model and workload, next to job health, queue depth, source freshness and failure signals. It polls and refreshes itself, because a report nobody opens is not instrumentation.</p>
+      </div>
+      <div class="card">
+        <span class="k">what transfers</span>
+        <h4>The argument, not the code</h4>
+        <p>Mine is one person's footprint. Yours is one of the largest cloud and GenAI footprints anywhere. The code doesn't transfer. The instinct to make the number exist before making the case does.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="gaps">
+      <div class="k">Known data quality issues</div>
+      <h3>Where I'm short, stated plainly.</h3>
+      <ul>
+        <li><strong>Druid and Iceberg:</strong> no hands-on time with either. I've built on relational stores and reasoned about analytics models, but your nice-to-have here is genuinely a gap.</li>
+        <li><strong>GraphQL:</strong> my API design work has been REST. I'd be learning your service layer's idioms in the first weeks.</li>
+        <li><strong>Survey design and product analytics instrumentation:</strong> none, and you name it as where AIPI may go next.</li>
+        <li><strong>Being the engineering voice among data practitioners:</strong> I've been the only engineer plenty of times, but not on a team of analytics engineers and data scientists. That room would be new.</li>
+        <li><strong>Scale:</strong> I've never operated at Netflix's infrastructure footprint. My cost work is one person's, not an organization's.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="cta">
+    <h2>If the shape fits, I'd like to talk.</h2>
+    <p>The systems are easier to look at than to read about.</p>
+    <div class="btns">
+      <a class="btn p" href="https://portfolio.andrewzoll.com">See the portfolio</a>
+      <a class="btn s" href="https://linkedin.com/in/andrewzoll">Connect on LinkedIn</a>
+    </div>
+  </section>
+
+</div>
+
+<footer><div class="wrap">Andrew Zoll &middot; Pueblo, CO &middot; built for JR41877, Software Engineer 5, Platform Data Products</div></footer>
+
+<script>
+(function(){
+  var reqs = Array.prototype.slice.call(document.querySelectorAll('.req'));
+  var btns = Array.prototype.slice.call(document.querySelectorAll('.dimbtn'));
+  var titleEl = document.getElementById('ptitle');
+  var countEl = document.getElementById('pcount');
+  var titles = {
+    all: "Every requirement, with what I've actually got",
+    fullstack: "Full stack: TypeScript, React, and owning a feature end to end",
+    data: "Data fluency: schemas, SQL, and other people's messy tables",
+    agents: "Agents, agent-facing tooling, and what they cost",
+    ownership: "Solo ownership: being the only engineer in the room"
+  };
+
+  // expand / collapse a receipt row
+  reqs.forEach(function(r){
+    r.querySelector('.reqhead').addEventListener('click', function(){
+      r.classList.toggle('open');
+    });
+  });
+
+  // dimension filter
+  function apply(dim){
+    var shown = 0;
+    reqs.forEach(function(r){
+      var hit = (dim === 'all' || r.getAttribute('data-dim') === dim);
+      r.style.display = hit ? '' : 'none';
+      if (hit) shown++;
+      if (!hit) r.classList.remove('open');
+    });
+    btns.forEach(function(b){
+      b.setAttribute('aria-pressed', b.getAttribute('data-dim') === dim ? 'true' : 'false');
+    });
+    titleEl.textContent = titles[dim];
+    countEl.textContent = shown + ' of ' + reqs.length + ' shown';
+    // opening a single dimension opens its rows, since there are few enough to read at once
+    if (dim !== 'all') {
+      reqs.forEach(function(r){
+        if (r.style.display !== 'none') r.classList.add('open');
+      });
+    }
+  }
+
+  btns.forEach(function(b){
+    b.addEventListener('click', function(){ apply(b.getAttribute('data-dim')); });
+  });
+
+  apply('all');
+})();
+</script>
+</body>
+</html>
