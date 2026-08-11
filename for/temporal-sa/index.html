@@ -208,7 +208,7 @@
           <p><strong>Reliability:</strong> an early automation of mine could send the same message to the same person twice. That is a bug that costs you a relationship rather than a request. The fix wasn't a better prompt, it was an idempotency guard keyed on the recipient that reads the live sent record and <strong>fails closed when it cannot read it.</strong> If you have ever explained to a customer why at-least-once delivery means their emails went out twice, you have had my exact conversation.</p>
           <p><strong>Cost:</strong> I instrumented spend by model and by workload because an agent workflow will happily cost ten times what you assumed and report nothing. There is no way to make an efficiency argument without the number.</p>
           <p><strong>Security:</strong> role-based access control, tenant isolation and audit-ready data handling across FieldCommand, built by hand. Before engineering I spent six years under FINRA and SEC oversight, which teaches you early which mistakes are recoverable and which are not.</p>
-          <div class="kv"><span>idempotency, learned the hard way</span><span>cost-per-model instrumentation</span><span>RBAC + tenant isolation</span><span>FINRA / SEC background</span></div>
+          <div class="kv"><span>idempotency, learned the hard way</span><span>cost-per-model instrumentation</span><span>RBAC + tenant isolation</span><span>ships to production on AWS</span><span>FINRA / SEC background</span></div>
         </div>
       </div>
 
@@ -266,7 +266,7 @@
     <div class="gaps">
       <ul>
         <li><b>I have never carried a number.</b> This is a 70/30 base and variable role, and I have never worked a quota or a pre-sales motion with an AE. I've been the engineer next to that motion, not inside it. That's a real difference and I'd expect a ramp on the commercial half.</li>
-        <li><b>My cloud depth is thin.</b> You ask for experience with a major cloud provider. I've shipped on Supabase and Cloudflare, with foundational Azure exposure, and I have not run production workloads on AWS or GCP at the depth a prospect's architect would probe.</li>
+        <li><b>My cloud experience is real but narrow.</b> You ask for experience with at least one major cloud provider. I ship to production on <b>AWS</b> at Coder, and I've shipped on Supabase and Cloudflare with foundational Azure exposure. What I haven't done is design across a wide service surface the way a prospect's architect might probe, and I've never touched GCP.</li>
         <li><b>I have not used Temporal in production.</b> I've read the docs and I understand what problem it solves because I built the bad version, but I would be learning your product in public for the first stretch, and I would rather say that than perform familiarity.</li>
         <li><b>My formal engineering title is about a year old.</b> I've been shipping software far longer, and shipping it alone, but if you count years on a badge, mine is short. I'd rather you weigh what I built.</li>
       </ul>
