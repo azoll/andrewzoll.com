@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>Andrew Zoll for Staff Solutions Architect at Temporal</title>
+<style>
+  :root{
+    --bg:#0a0b10;
+    --panel:#12141d;
+    --panel2:#171a25;
+    --line:#242838;
+    --line2:#1c1f2b;
+    --ink:#e8eaf2;
+    --mut:#8f96ab;
+    --mut2:#5f677d;
+    --blue:#5b8cff;
+    --violet:#a077ff;
+    --ok:#3ecf8e;
+    --warn:#f0b429;
+    --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+    --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.62;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1060px;margin:0 auto;padding:0 24px}
+  a{color:var(--blue);text-decoration:none}
+  a:hover{text-decoration:underline}
+
+  .bar{border-bottom:1px solid var(--line);background:rgba(10,11,16,.86);backdrop-filter:blur(10px);position:sticky;top:0;z-index:30}
+  .bar .wrap{display:flex;align-items:center;gap:12px;height:54px;font-family:var(--mono);font-size:12.5px;color:var(--mut2)}
+  .bar b{color:var(--ink);font-weight:600;font-family:var(--sans);font-size:14px}
+  .stat{margin-left:auto;display:flex;align-items:center;gap:7px;color:var(--ok);font-size:11.5px;
+        border:1px solid #1e4d3a;background:#0e2419;border-radius:999px;padding:4px 12px}
+  .pulse{width:6px;height:6px;border-radius:50%;background:var(--ok);animation:p 2.2s ease-in-out infinite}
+  @keyframes p{0%,100%{opacity:1}50%{opacity:.3}}
+  .disc{border-bottom:1px solid var(--line2);font-size:12.5px;color:var(--mut2);padding:10px 0}
+
+  /* hero */
+  .hero{padding:72px 0 50px}
+  .eye{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;
+       background:linear-gradient(90deg,var(--blue),var(--violet));-webkit-background-clip:text;background-clip:text;
+       -webkit-text-fill-color:transparent;margin-bottom:20px}
+  .hero h1{font-size:clamp(31px,4.9vw,50px);line-height:1.08;letter-spacing:-.032em;font-weight:640;max-width:20ch;margin-bottom:24px}
+  .hero h1 em{font-style:normal;background:linear-gradient(90deg,var(--blue),var(--violet));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .hero p{font-size:18.5px;color:var(--mut);max-width:60ch;margin-bottom:15px}
+  .hero p strong{color:var(--ink);font-weight:560}
+
+  .tz{margin-top:34px;display:flex;flex-wrap:wrap;gap:10px}
+  .tzc{border:1px solid var(--line);background:var(--panel);border-radius:10px;padding:12px 16px;font-family:var(--mono);font-size:12px}
+  .tzc span{display:block;color:var(--mut2);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:5px}
+  .tzc b{color:var(--ink);font-weight:500}
+  .tzc.hit b{color:var(--ok)}
+
+  /* section */
+  .sec{padding:58px 0;border-top:1px solid var(--line2)}
+  .kick{font-family:var(--mono);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--mut2);margin-bottom:14px}
+  .sec h2{font-size:clamp(23px,3.1vw,31px);line-height:1.2;letter-spacing:-.025em;font-weight:620;max-width:26ch;margin-bottom:13px}
+  .sec .sub{color:var(--mut);max-width:64ch}
+
+  /* replay control */
+  .ctrl{display:flex;align-items:center;gap:10px;margin:28px 0 18px;flex-wrap:wrap}
+  .ctrl button{
+    font:inherit;font-family:var(--mono);font-size:12.5px;background:var(--panel);color:var(--mut);
+    border:1px solid var(--line);border-radius:8px;padding:8px 15px;cursor:pointer;transition:all .15s ease;
+  }
+  .ctrl button:hover:not(:disabled){border-color:var(--blue);color:var(--ink)}
+  .ctrl button:disabled{opacity:.35;cursor:not-allowed}
+  .ctrl .go{background:linear-gradient(90deg,var(--blue),var(--violet));border-color:transparent;color:#fff}
+  .ctrl .pos{margin-left:auto;font-family:var(--mono);font-size:12px;color:var(--mut2)}
+  .track{height:3px;background:var(--line2);border-radius:2px;overflow:hidden;margin-bottom:26px}
+  .track i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--blue),var(--violet));transition:width .4s cubic-bezier(.4,0,.2,1)}
+
+  /* event history */
+  .hist{position:relative;padding-left:30px}
+  .hist:before{content:"";position:absolute;left:8px;top:6px;bottom:6px;width:1px;background:var(--line)}
+  .ev{position:relative;margin-bottom:12px;opacity:.32;transition:opacity .35s ease}
+  .ev.on{opacity:1}
+  .ev:before{
+    content:"";position:absolute;left:-26px;top:19px;width:11px;height:11px;border-radius:50%;
+    background:var(--bg);border:2px solid var(--line);transition:all .35s ease;
+  }
+  .ev.on:before{border-color:var(--blue);box-shadow:0 0 0 4px rgba(91,140,255,.12)}
+  .ev.on.done:before{border-color:var(--ok);box-shadow:0 0 0 4px rgba(62,207,142,.12)}
+  .ev.on.retry:before{border-color:var(--warn);box-shadow:0 0 0 4px rgba(240,180,41,.12)}
+
+  .ev > button{
+    width:100%;text-align:left;display:flex;align-items:center;gap:13px;font:inherit;color:inherit;cursor:pointer;
+    background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:14px 17px;transition:border-color .16s ease;
+  }
+  .ev > button:hover{border-color:var(--mut2)}
+  .ev[data-o="1"] > button{border-color:var(--blue);border-bottom-left-radius:0;border-bottom-right-radius:0}
+  .ev .id{font-family:var(--mono);font-size:11px;color:var(--mut2);flex-shrink:0;width:22px}
+  .ev .nm{font-family:var(--mono);font-size:13px;flex:1;letter-spacing:-.01em}
+  .ev .st{font-family:var(--mono);font-size:10px;letter-spacing:.05em;text-transform:uppercase;border-radius:5px;padding:3px 9px;flex-shrink:0}
+  .s-done{background:#0e2419;color:var(--ok);border:1px solid #1e4d3a}
+  .s-retry{background:#2a2110;color:var(--warn);border:1px solid #4d3d16}
+  .s-open{background:#101a2e;color:var(--blue);border:1px solid #1f3560}
+  .ev .cv{color:var(--mut2);font-size:12px;transition:transform .22s ease;flex-shrink:0}
+  .ev[data-o="1"] .cv{transform:rotate(90deg)}
+
+  .det{display:none;background:var(--panel2);border:1px solid var(--blue);border-top:0;border-radius:0 0 11px 11px;padding:18px 20px 20px}
+  .ev[data-o="1"] .det{display:block}
+  .det .q{font-family:var(--mono);font-size:12.5px;color:var(--mut);background:var(--bg);border-left:2px solid var(--blue);
+          border-radius:0 7px 7px 0;padding:11px 14px;margin-bottom:15px}
+  .det p{color:#c3c9d8;margin-bottom:12px;max-width:70ch;font-size:15.5px}
+  .det p:last-child{margin-bottom:0}
+  .det strong{color:var(--ink);font-weight:600}
+  .kv{display:flex;flex-wrap:wrap;gap:8px;margin-top:15px}
+  .kv span{font-family:var(--mono);font-size:11px;color:var(--mut);background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:4px 10px}
+
+  /* gaps */
+  .gaps{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:28px 26px;margin-top:24px}
+  .gaps ul{list-style:none;display:grid;gap:16px}
+  .gaps li{padding-left:22px;position:relative;color:#c3c9d8;max-width:74ch;font-size:15.5px}
+  .gaps li:before{content:"";position:absolute;left:0;top:10px;width:9px;height:2px;background:var(--warn);border-radius:2px}
+  .gaps b{color:var(--ink);font-weight:620}
+
+  .cta{padding:70px 0 78px;text-align:center;border-top:1px solid var(--line2)}
+  .cta h2{font-size:clamp(24px,3.5vw,35px);letter-spacing:-.03em;font-weight:640;max-width:22ch;margin:0 auto 14px;line-height:1.12}
+  .cta p{color:var(--mut);max-width:54ch;margin:0 auto 28px}
+  .btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+  .btn{font-size:15px;font-weight:550;border-radius:9px;padding:12px 24px;display:inline-block;transition:transform .15s ease,box-shadow .15s ease}
+  .btn:hover{text-decoration:none;transform:translateY(-1px)}
+  .btn.p{background:linear-gradient(90deg,var(--blue),var(--violet));color:#fff}
+  .btn.p:hover{box-shadow:0 8px 24px rgba(91,140,255,.28)}
+  .btn.s{background:var(--panel);color:var(--ink);border:1px solid var(--line)}
+  .btn.s:hover{border-color:var(--mut2)}
+  footer{border-top:1px solid var(--line2);padding:24px 0 44px;font-family:var(--mono);font-size:11.5px;color:var(--mut2)}
+
+  @media(max-width:620px){
+    .hero{padding:48px 0 36px}
+    .sec{padding:44px 0}
+    .ev > button{flex-wrap:wrap;gap:9px}
+    .ev .nm{flex-basis:100%;order:3}
+    .ctrl .pos{margin-left:0;flex-basis:100%}
+  }
+</style>
+</head>
+<body>
+
+<div class="bar"><div class="wrap">
+  <b>Andrew Zoll</b>
+  <span>workflow: staff-solutions-architect / new-logo-west</span>
+  <span class="stat"><span class="pulse"></span>RUNNING</span>
+</div></div>
+<div class="wrap"><div class="disc">Not affiliated with Temporal. This is a personal page I built as part of my own application for the Staff Solutions Architect, New Logo - West role.</div></div>
+
+<div class="wrap">
+
+  <section class="hero">
+    <div class="eye">Staff Solutions Architect &middot; New Logo, West</div>
+    <h1>I spent a year building a worse version of Temporal <em>by hand,</em> which is the best possible reason to want this job.</h1>
+    <p>I'm Andrew. I built an agent operating system that runs my businesses, and to make it survive contact with reality I ended up reinventing, badly, most of what you sell: idempotency keys so a job can't fire twice, an append-only history I can replay instead of rerunning, a circuit breaker that halts everything when a failure rate crosses a threshold, and scheduled work that has to keep its promises while I sleep.</p>
+    <p><strong>Nobody should have to build that themselves. That's your entire pitch, and I arrived at it the expensive way.</strong> Which means when a prospect's architect tells me their retry logic is fine, I know exactly what they're about to find out.</p>
+
+    <div class="tz">
+      <div class="tzc hit"><span>your requirement</span><b>Mountain or Pacific</b></div>
+      <div class="tzc hit"><span>where I live</span><b>Pueblo, Colorado &middot; Mountain</b></div>
+      <div class="tzc"><span>posted band</span><b>$250,000 to $300,000 &middot; 70/30</b></div>
+      <div class="tzc"><span>your languages I write daily</span><b>TypeScript, Python</b></div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="kick">event history</div>
+    <h2>The case, replayed as a workflow.</h2>
+    <p class="sub">Every event below is a line from your posting and what I can actually put behind it. Step through it, or jump straight to whichever event you'd push on hardest. Two are marked retry, because I got those wrong before I got them right.</p>
+
+    <div class="ctrl">
+      <button class="go" id="play">Replay from start</button>
+      <button id="prev" disabled>Step back</button>
+      <button id="next">Step forward</button>
+      <button id="all">Show all</button>
+      <span class="pos" id="pos">event 1 of 7</span>
+    </div>
+    <div class="track"><i id="fill"></i></div>
+
+    <div class="hist" id="hist">
+
+      <div class="ev done" data-o="0">
+        <button aria-expanded="false"><span class="id">01</span><span class="nm">reside_in_mountain_or_pacific</span><span class="st s-done">completed</span><span class="cv">&#9656;</span></button>
+        <div class="det">
+          <div class="q">"Reside within the Mountain or Pacific time zones."</div>
+          <p>Pueblo, Colorado. Mountain time, permanently, with a family and a mortgage rather than a lease I might leave.</p>
+          <p>I'm leading with the most boring requirement on your list because it is the one most candidates fudge. <strong>I'm not relocating to satisfy this and I'm not going to drift out of the zone.</strong> The Western region is the region I already live and work in.</p>
+          <div class="kv"><span>Pueblo, CO</span><span>UTC-6 / UTC-7</span><span>no relocation needed</span></div>
+        </div>
+      </div>
+
+      <div class="ev done" data-o="0">
+        <button aria-expanded="false"><span class="id">02</span><span class="nm">advise_sales_account_executives</span><span class="st s-done">completed</span><span class="cv">&#9656;</span></button>
+        <div class="det">
+          <div class="q">"Serve as a strategic technical advisor to Sales Account Executives, assisting with scoping and sizing opportunities and offering guidance on technical fit and challenges."</div>
+          <p>This is my current job, structurally. At <strong>Coder</strong> I'm a Senior Software Engineer on AI Solutions, embedded inside the revenue organization rather than beside it. I build the internal agent platform for the people carrying quota, which means most of my week is figuring out what a seller actually needs before writing anything, and telling them plainly when the thing they asked for won't do what they think.</p>
+          <p>Coder sells developer infrastructure to engineering organizations, so the deals I sit next to are the same shape as yours: a technical buyer, a real architecture question underneath the commercial one, and a champion who needs ammunition for a meeting I'm not in.</p>
+          <div class="kv"><span>embedded in revenue org</span><span>developer infrastructure</span><span>technical buyer motion</span></div>
+        </div>
+      </div>
+
+      <div class="ev retry" data-o="0">
+        <button aria-expanded="false"><span class="id">03</span><span class="nm">production_operations_judgment</span><span class="st s-retry">completed after retry</span><span class="cv">&#9656;</span></button>
+        <div class="det">
+          <div class="q">"Firm grasp of operational considerations in production environments, such as security, reliability, performance, cost management, and operations."</div>
+          <p>Marked retry because I learned this by failing first, and that's the version worth telling a prospect.</p>
+          <p><strong>Reliability:</strong> an early automation of mine could send the same message to the same person twice. That is a bug that costs you a relationship rather than a request. The fix wasn't a better prompt, it was an idempotency guard keyed on the recipient that reads the live sent record and <strong>fails closed when it cannot read it.</strong> If you have ever explained to a customer why at-least-once delivery means their emails went out twice, you have had my exact conversation.</p>
+          <p><strong>Cost:</strong> I instrumented spend by model and by workload because an agent workflow will happily cost ten times what you assumed and report nothing. There is no way to make an efficiency argument without the number.</p>
+          <p><strong>Security:</strong> role-based access control, tenant isolation and audit-ready data handling across FieldCommand, built by hand. Before engineering I spent six years under FINRA and SEC oversight, which teaches you early which mistakes are recoverable and which are not.</p>
+          <div class="kv"><span>idempotency, learned the hard way</span><span>cost-per-model instrumentation</span><span>RBAC + tenant isolation</span><span>FINRA / SEC background</span></div>
+        </div>
+      </div>
+
+      <div class="ev done" data-o="0">
+        <button aria-expanded="false"><span class="id">04</span><span class="nm">build_prototypes_in_supported_language</span><span class="st s-done">completed</span><span class="cv">&#9656;</span></button>
+        <div class="det">
+          <div class="q">"Proficiency in building application prototypes and providing design, development, build, and deployment guidance using one or more of Temporal's supported languages: Java, Golang, TypeScript, Python, C# or PHP."</div>
+          <p>Two of your six, both daily. <strong>TypeScript:</strong> FieldCommand is 187,745 lines of it, a multi-tenant SaaS on PostgreSQL and Supabase that I designed and shipped alone, schema through API through the interface contractors use. <strong>Python:</strong> my day job, on a large production codebase, on a two-person team, shipping straight to production.</p>
+          <p>Prototyping specifically is the mode I'm most comfortable in. Three products now where the first working version existed before anyone agreed it should, because arguing about an idea is slower than building the small version of it.</p>
+          <div class="kv"><span>TypeScript, 187,745 lines shipped</span><span>Python, daily, production</span><span>React, Node, PostgreSQL</span></div>
+        </div>
+      </div>
+
+      <div class="ev done" data-o="0">
+        <button aria-expanded="false"><span class="id">05</span><span class="nm">technical_communication</span><span class="st s-done">completed</span><span class="cv">&#9656;</span></button>
+        <div class="det">
+          <div class="q">"Exceptional technical communication skills, including presenting, whiteboarding, and writing."</div>
+          <p>This is the strongest thing I bring and the least visible on a resume. For four years I advised more than 120 households and kept 95% of them, which happens through explanation rather than performance. Running a room of people who did not want to be there, making something genuinely complicated feel handleable, and being trusted afterward is a repeatable skill and I have several thousand reps of it.</p>
+          <p>The writing half is current: at Coder I own the operating documentation the rest of the team works from, and I wrote the entire operating manual my agent system runs on, which had to be unambiguous enough for a machine to follow.</p>
+          <p><strong>Why it matters for New Logo specifically:</strong> durable execution is a genuinely hard first conversation. You're asking an engineering team to accept that the retry logic they are proud of is a liability. That lands or dies on whether the person saying it can make them feel smart rather than sold to.</p>
+          <div class="kv"><span>120+ households advised</span><span>95% retention</span><span>workshop presenting</span><span>owns operating docs</span></div>
+        </div>
+      </div>
+
+      <div class="ev retry" data-o="0">
+        <button aria-expanded="false"><span class="id">06</span><span class="nm">architectural_pattern_advice</span><span class="st s-retry">completed after retry</span><span class="cv">&#9656;</span></button>
+        <div class="det">
+          <div class="q">"Ability to provide insightful advice on architectural topics, including application patterns and platform architectures."</div>
+          <p>Also a retry, because the architecture I'd advise on is the one I got wrong first.</p>
+          <p>AndrewOS started as a pile of scripts that called each other. It failed the way every hand-rolled orchestrator fails: no way to know what had already run, no way to resume from the middle, and a failure in step four meant rerunning steps one through three and hoping they were idempotent. <strong>What fixed it was an append-only trace where every stage records what it received, what it decided, why, and what it handed off, so a finished run replays top to bottom as an audit record instead of a story.</strong></p>
+          <p>I wrote that and then read your docs and felt slightly ill. It is a shabby hand-built version of your event history. But it means I can draw the failure mode on a whiteboard from memory, because it was mine.</p>
+          <p>The rest of the pattern set is the same shape: a builder-then-independent-reviewer sequence where no stage reviews its own work, deterministic gates around the steps where a wrong answer is unrecoverable, and a freeze flag that halts all sending when a bounce rate crosses a threshold.</p>
+          <div class="kv"><span>append-only replayable trace</span><span>circuit breaker on threshold</span><span>independent-reviewer pattern</span><span>built it wrong first</span></div>
+        </div>
+      </div>
+
+      <div class="ev" data-o="0">
+        <button aria-expanded="false"><span class="id">07</span><span class="nm">distributed_systems_depth</span><span class="st s-open">open, see gaps</span><span class="cv">&#9656;</span></button>
+        <div class="det">
+          <div class="q">"Deep understanding of distributed system technologies, design principles, and best practices."</div>
+          <p>I'm marking this one open rather than claiming it, because you'd find out in the first technical conversation and I'd rather you find out here.</p>
+          <p><strong>What's real:</strong> I understand the problem class from the inside. Idempotency, at-least-once versus exactly-once, partial failure, compensating actions, replay and state reconstruction are not vocabulary I learned for an interview. I hit each of them and paid for it.</p>
+          <p><strong>What isn't:</strong> I have not operated a distributed system at scale. My systems serve one operator and a small customer base. Consensus, sharding, multi-region behavior and the failure modes that only appear at real traffic are things I have read about and not lived. A prospect running Temporal across regions at high volume will ask questions I would need help with for a while.</p>
+          <p>My honest argument is that the New Logo conversation is mostly about the first category, and that I would be genuinely fast at the second because I want it.</p>
+          <div class="kv"><span>problem class: lived</span><span>scale: not lived</span><span>stated, not hidden</span></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="kick">what I don't have</div>
+    <h2>Four things I'd want to know if I were reading this.</h2>
+    <div class="gaps">
+      <ul>
+        <li><b>I have never carried a number.</b> This is a 70/30 base and variable role, and I have never worked a quota or a pre-sales motion with an AE. I've been the engineer next to that motion, not inside it. That's a real difference and I'd expect a ramp on the commercial half.</li>
+        <li><b>My cloud depth is thin.</b> You ask for experience with a major cloud provider. I've shipped on Supabase and Cloudflare, with foundational Azure exposure, and I have not run production workloads on AWS or GCP at the depth a prospect's architect would probe.</li>
+        <li><b>I have not used Temporal in production.</b> I've read the docs and I understand what problem it solves because I built the bad version, but I would be learning your product in public for the first stretch, and I would rather say that than perform familiarity.</li>
+        <li><b>My formal engineering title is about a year old.</b> I've been shipping software far longer, and shipping it alone, but if you count years on a badge, mine is short. I'd rather you weigh what I built.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="cta">
+    <h2>If the shape fits, I'd like to talk.</h2>
+    <p>The systems are easier to look at than to read about. I'd rather walk you through the trace and let you tell me everywhere it should have been your event history.</p>
+    <div class="btns">
+      <a class="btn p" href="https://portfolio.andrewzoll.com">See the portfolio</a>
+      <a class="btn s" href="https://linkedin.com/in/andrewzoll">Connect on LinkedIn</a>
+    </div>
+  </section>
+
+</div>
+
+<footer><div class="wrap">Andrew Zoll &middot; Pueblo, CO &middot; built for the Staff Solutions Architect, New Logo - West role at Temporal</div></footer>
+
+<script>
+(function(){
+  var evs  = [].slice.call(document.querySelectorAll('.ev'));
+  var pos  = document.getElementById('pos');
+  var fill = document.getElementById('fill');
+  var bPrev= document.getElementById('prev');
+  var bNext= document.getElementById('next');
+  var bPlay= document.getElementById('play');
+  var bAll = document.getElementById('all');
+  var at = 1, timer = null;
+
+  function render(){
+    evs.forEach(function(e,i){ e.classList.toggle('on', i < at); });
+    pos.textContent = 'event ' + Math.min(at, evs.length) + ' of ' + evs.length;
+    fill.style.width = (at / evs.length * 100) + '%';
+    bPrev.disabled = at <= 1;
+    bNext.disabled = at >= evs.length;
+  }
+  function stop(){ if (timer) { clearInterval(timer); timer = null; bPlay.textContent = 'Replay from start'; } }
+
+  bNext.addEventListener('click', function(){ stop(); if (at < evs.length) { at++; render(); } });
+  bPrev.addEventListener('click', function(){ stop(); if (at > 1) { at--; render(); } });
+  bAll.addEventListener('click', function(){ stop(); at = evs.length; render(); });
+  bPlay.addEventListener('click', function(){
+    if (timer) { stop(); return; }
+    at = 1; render(); bPlay.textContent = 'Pause';
+    timer = setInterval(function(){
+      if (at >= evs.length) { stop(); return; }
+      at++; render();
+    }, 850);
+  });
+
+  evs.forEach(function(e, i){
+    var b = e.querySelector('button');
+    b.addEventListener('click', function(){
+      stop();
+      var open = e.getAttribute('data-o') === '1';
+      e.setAttribute('data-o', open ? '0' : '1');
+      b.setAttribute('aria-expanded', open ? 'false' : 'true');
+      if (!open && i + 1 > at) { at = i + 1; }   // opening an event reveals the history up to it
+      render();
+    });
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>
