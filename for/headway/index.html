@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>Andrew Zoll for Staff Software Engineer, Experimentation at Headway</title>
+<style>
+  :root{
+    --cream:#fbf9f4;
+    --paper:#ffffff;
+    --ink:#12211c;
+    --ink2:#3b4c46;
+    --mut:#6b7a74;
+    --mut2:#9aa8a2;
+    --line:#e5e2d8;
+    --line2:#f0eee6;
+    --green:#1f6f52;
+    --green-d:#155540;
+    --green-w:#e9f4ee;
+    --sage:#cfe3d6;
+    --clay:#c96f4a;
+    --clay-w:#fbeee7;
+    --sun:#d9a441;
+    --sun-w:#fbf3e2;
+    --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+    --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--cream);color:var(--ink);font-family:var(--sans);font-size:16.5px;line-height:1.65;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1020px;margin:0 auto;padding:0 26px}
+  a{color:var(--green)}
+
+  .nav{padding:22px 0}
+  .nav .wrap{display:flex;align-items:center;gap:11px}
+  .nav .n{font-size:17px;font-weight:640;letter-spacing:-.028em}
+  .nav .r{font-size:14.5px;color:var(--mut)}
+  .nav .b{margin-left:auto;font-size:13px;font-weight:560;background:var(--sage);color:var(--green-d);border-radius:999px;padding:6px 15px}
+  .disc{font-size:12.5px;color:var(--mut);padding-bottom:16px}
+
+  /* hero */
+  .hero{background:var(--paper);border:1px solid var(--line);border-radius:24px;padding:58px 48px 52px;margin-bottom:16px}
+  .eye{font-family:var(--mono);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--green);margin-bottom:20px}
+  .hero h1{font-size:clamp(30px,4.7vw,48px);line-height:1.08;letter-spacing:-.035em;font-weight:660;max-width:20ch;margin-bottom:24px}
+  .hero h1 u{text-decoration:none;background:linear-gradient(180deg,transparent 64%,var(--sage) 64%);padding:0 2px}
+  .hero p{font-size:18px;color:var(--ink2);max-width:60ch;margin-bottom:15px}
+  .hero p.s{font-size:16.5px;color:var(--mut)}
+  .hero strong{font-weight:620;color:var(--ink)}
+
+  /* section frame */
+  .card{background:var(--paper);border:1px solid var(--line);border-radius:24px;padding:48px;margin-bottom:16px}
+  .kick{font-family:var(--mono);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--mut2);margin-bottom:13px}
+  .card h2{font-size:clamp(23px,3.1vw,32px);line-height:1.16;letter-spacing:-.03em;font-weight:650;max-width:25ch;margin-bottom:13px}
+  .card .sub{color:var(--mut);max-width:62ch}
+
+  /* experiment log */
+  .modes{display:inline-flex;background:var(--cream);border:1px solid var(--line);border-radius:999px;padding:4px;gap:2px;margin:28px 0 8px}
+  .modes button{
+    font:inherit;font-size:14px;font-weight:560;border:0;background:transparent;color:var(--mut);
+    border-radius:999px;padding:8px 20px;cursor:pointer;transition:all .18s ease;
+  }
+  .modes button[aria-pressed="true"]{background:var(--green);color:#fff}
+  .modes button:hover[aria-pressed="false"]{color:var(--ink)}
+  .modehint{font-size:13.5px;color:var(--mut2);margin-bottom:22px}
+
+  .xp{border:1px solid var(--line);border-radius:18px;margin-bottom:12px;overflow:hidden;background:var(--paper);transition:border-color .18s ease}
+  .xp:hover{border-color:var(--mut2)}
+  .xp[data-o="1"]{border-color:var(--green)}
+  .xp > button{
+    width:100%;display:flex;align-items:flex-start;gap:15px;text-align:left;font:inherit;color:inherit;
+    background:transparent;border:0;padding:19px 22px;cursor:pointer;
+  }
+  .tagn{
+    font-family:var(--mono);font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;
+    border-radius:6px;padding:4px 9px;flex-shrink:0;margin-top:3px;min-width:74px;text-align:center;
+  }
+  .t-ran{background:var(--green-w);color:var(--green-d);border:1px solid #c9e2d4}
+  .t-part{background:var(--sun-w);color:#8a6317;border:1px solid #eeddb4}
+  .t-no{background:var(--clay-w);color:#96442a;border:1px solid #f0d3c6}
+  .xp .h{flex:1}
+  .xp .h b{display:block;font-size:17px;font-weight:620;letter-spacing:-.02em;line-height:1.3;margin-bottom:4px}
+  .xp .h i{display:block;font-style:normal;font-size:13.5px;color:var(--mut)}
+  .xp .pl{width:26px;height:26px;border-radius:50%;background:var(--cream);display:grid;place-items:center;
+          color:var(--ink2);font-size:15px;line-height:1;flex-shrink:0;margin-top:3px;transition:transform .24s cubic-bezier(.34,1.4,.5,1),background .18s ease}
+  .xp[data-o="1"] .pl{transform:rotate(45deg);background:var(--green);color:#fff}
+
+  .body{display:none;padding:0 22px 24px 111px}
+  .xp[data-o="1"] .body{display:block;animation:in .24s ease}
+  @keyframes in{from{opacity:0;transform:translateY(-5px)}to{opacity:1;transform:none}}
+  .body .quote{background:var(--cream);border-radius:12px;padding:13px 16px;font-size:14.5px;color:var(--ink2);margin-bottom:15px}
+  .body .quote em{font-style:italic;color:var(--mut)}
+  .body p{margin-bottom:12px;color:var(--ink2);max-width:66ch;font-size:15.5px}
+  .body p:last-child{margin-bottom:0}
+  .body strong{font-weight:640;color:var(--ink)}
+  .thr{border-top:1px dashed var(--line);margin-top:16px;padding-top:14px}
+  .thr .lab{font-family:var(--mono);font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--clay);margin-bottom:8px}
+  .thr p{font-size:14.5px;color:var(--mut)}
+  .pills{display:flex;flex-wrap:wrap;gap:7px;margin-top:15px}
+  .pills span{font-family:var(--mono);font-size:11px;color:var(--mut);background:var(--cream);border:1px solid var(--line);border-radius:7px;padding:4px 10px}
+
+  /* threats mode */
+  .plan.threats .xp > button{cursor:default}
+  .plan.threats .body{display:block;padding-left:22px}
+  .plan.threats .body .quote,.plan.threats .body > p,.plan.threats .pills{display:none}
+  .plan.threats .thr{border-top:0;margin-top:0;padding-top:0}
+  .plan.threats .xp .pl{display:none}
+
+  /* fine */
+  .fine{background:var(--ink);color:#e3eae7;border-radius:24px;padding:48px;margin-bottom:16px}
+  .fine h2{font-size:clamp(23px,3.1vw,31px);letter-spacing:-.03em;font-weight:650;margin-bottom:11px;max-width:24ch;line-height:1.14}
+  .fine .sub{color:#9fb2ab;max-width:60ch;margin-bottom:26px}
+  .fine ul{list-style:none;display:grid;gap:16px}
+  .fine li{padding-left:24px;position:relative;color:#c6d3ce;max-width:74ch;font-size:15.5px}
+  .fine li:before{content:"";position:absolute;left:0;top:10px;width:10px;height:2px;background:var(--sage);border-radius:2px}
+  .fine b{color:#fff;font-weight:630}
+
+  .cta{background:var(--paper);border:1px solid var(--line);border-radius:24px;padding:58px 48px 62px;text-align:center;margin-bottom:24px}
+  .cta h2{font-size:clamp(24px,3.5vw,36px);letter-spacing:-.035em;font-weight:660;max-width:21ch;margin:0 auto 13px;line-height:1.1}
+  .cta p{color:var(--mut);max-width:52ch;margin:0 auto 28px}
+  .btns{display:flex;gap:11px;justify-content:center;flex-wrap:wrap}
+  .btn{font-size:15px;font-weight:580;border-radius:999px;padding:13px 26px;display:inline-block;text-decoration:none;
+       border:1.5px solid transparent;transition:transform .15s cubic-bezier(.34,1.4,.5,1),box-shadow .15s ease}
+  .btn:hover{transform:translateY(-2px)}
+  .btn.p{background:var(--green);color:#fff}
+  .btn.p:hover{box-shadow:0 8px 20px rgba(31,111,82,.26)}
+  .btn.s{background:transparent;color:var(--ink);border-color:var(--line)}
+  .btn.s:hover{border-color:var(--ink)}
+  footer{padding:4px 0 44px;font-size:12.5px;color:var(--mut2)}
+
+  @media(max-width:720px){
+    .hero,.card,.fine,.cta{padding-left:26px;padding-right:26px;border-radius:20px}
+    .hero{padding-top:42px;padding-bottom:38px}
+    .body{padding-left:22px}
+    .xp > button{gap:12px;padding:16px 18px}
+  }
+</style>
+</head>
+<body>
+
+<div class="nav"><div class="wrap">
+  <span class="n">Andrew Zoll</span>
+  <span class="r">for Staff Software Engineer, Experimentation</span>
+  <span class="b">remote, US</span>
+</div></div>
+<div class="wrap"><div class="disc">Not affiliated with Headway. This is a personal page I built as part of my own application for the Staff Software Engineer, Experimentation role.</div></div>
+
+<div class="wrap">
+
+  <section class="hero">
+    <div class="eye">Patient org &middot; experimentation platform</div>
+    <h1>You want someone <u>uncomfortable with numbers they can't explain.</u> That discomfort is why I built most of what I've built.</h1>
+    <p>I'm Andrew. I'll be straight with you about the shape of my case, because your posting rewards that: <strong>I have not owned an experimentation platform at a company like yours.</strong> What I have done is design and run controlled experiments with pre-registered decision rules, ship behind per-tenant flags, and build the deterministic gates that decide whether a result is trustworthy enough to act on.</p>
+    <p class="s">So I've written this as an experiment log rather than a resume. Four claims, each with a method, a result, and the threats to validity, because a claim without its threats is the kind of number neither of us should accept.</p>
+  </section>
+
+  <section class="card">
+    <div class="kick">experiment log</div>
+    <h2>Four claims, and what would undermine each one.</h2>
+    <p class="sub">Switch to "threats to validity" to read only the caveats. I built that mode because it is the version of this page I would read first, and because a candidate who hides the caveats behind the claims is doing the thing your posting is trying to filter out.</p>
+
+    <div class="modes" role="group" aria-label="Reading mode">
+      <button data-m="full" aria-pressed="true">Full log</button>
+      <button data-m="threats" aria-pressed="false">Threats to validity only</button>
+    </div>
+    <div class="modehint" id="hint">Four claims, each expandable. Threats are shown inside each one.</div>
+
+    <div class="plan" id="plan">
+
+      <div class="xp" data-o="0">
+        <button aria-expanded="false">
+          <span class="tagn t-ran">ran it</span>
+          <span class="h"><b>I have designed a controlled experiment with a pre-registered decision rule, not just "tried things."</b><i>Claim 1 of 4</i></span>
+          <span class="pl">+</span>
+        </button>
+        <div class="body">
+          <div class="quote"><em>"You are fluent enough in the statistics to be a real partner to data scientists. You can tell the difference between a result that is weak and a result that is invalid."</em></div>
+          <p>My outbound system runs a documented split test, and the protocol was written before any data came in. Verbatim from my own operating canon: <strong>every batch of 20 or more splits 50/50 between two message frameworks, same audience segment, same send window, same prospect quality</strong>, with each message tagged to its arm. Tracked metrics are open, reply, positive reply and booking. The decision rule was fixed in advance: <strong>whichever framework wins by 30% or more on positive-reply lift becomes the default</strong>, reviewed at a fixed four-week date.</p>
+          <p>I want to be precise about what that is and is not. It is a real design: matched assignment, a held window, one primary metric chosen up front, and a pre-committed threshold so I could not talk myself into a favorable read afterward. <strong>It is not a platform, and the sample sizes are outbound-marketing sized, not million-patient sized.</strong></p>
+          <p>The instinct underneath it is the one you're describing. I wrote the threshold down first specifically because I did not trust myself to look at the numbers and be honest afterward.</p>
+          <div class="thr">
+            <div class="lab">Threats to validity</div>
+            <p>No power analysis was run, so a 30% lift threshold on batches of 20 or more is a business rule rather than a statistically derived one. There is no correction for the four metrics tracked. And I designed and judged this myself, with no data scientist to argue with me, which is exactly the check your role would put on me.</p>
+          </div>
+          <div class="pills"><span>50/50 assignment</span><span>pre-registered threshold</span><span>fixed review window</span><span>tagged arms</span></div>
+        </div>
+      </div>
+
+      <div class="xp" data-o="0">
+        <button aria-expanded="false">
+          <span class="tagn t-ran">ran it</span>
+          <span class="h"><b>I shipped behind flags with per-tenant targeting, and I own the gate that decides what is trustworthy.</b><i>Claim 2 of 4</i></span>
+          <span class="pl">+</span>
+        </button>
+        <div class="body">
+          <div class="quote"><em>"You have owned an experimentation or feature flagging stack end to end rather than only used one... Whether you built it from first principles or built the missing pieces on top of a vendor matters far less to us than having been accountable for whether the results were correct."</em></div>
+          <p>In <strong>FieldCommand</strong>, the multi-tenant SaaS I designed and shipped alone across 187,745 lines of TypeScript, I shipped four AI features into production <strong>behind per-tenant feature flags</strong>. Targeting was tenant-scoped, so a feature could be on for one customer and off for the next, which is the same primitive an assignment layer needs even though the purpose was rollout rather than measurement.</p>
+          <p>The accountability half is where I'd make my case hardest. In <strong>Veritas</strong>, my citation-verification product, <strong>a fixed fixture suite is the release gate</strong>: correctness lives in deterministic code, not model judgment, and a release does not ship if the suite fails. I also made an explicit, written decision about which error type to accept, and tuned deliberately toward over-rejection, because a false positive there means a fabricated citation reached a court filing and a false negative just annoys a lawyer.</p>
+          <p><strong>That choice, which error to eat, is the part of your job I have actually done.</strong> Not at your scale and not in an assignment context, but I have been the person accountable for whether a result was correct, with a real consequence if it was not.</p>
+          <div class="thr">
+            <div class="lab">Threats to validity</div>
+            <p>Per-tenant flags for rollout are not experiment assignment. I never built persistence guarantees for assignment, exposure logging, or identity resolution across anonymous and signed-in sessions, and those are named explicitly in your posting as the parts that do not come out of the box. I would be building those for the first time.</p>
+          </div>
+          <div class="pills"><span>per-tenant flags, production</span><span>fixture suite as release gate</span><span>chose the error type deliberately</span></div>
+        </div>
+      </div>
+
+      <div class="xp" data-o="0">
+        <button aria-expanded="false">
+          <span class="tagn t-part">partly</span>
+          <span class="h"><b>I have raised how well an organization operates through defaults and review, at the scale of one.</b><i>Claim 3 of 4</i></span>
+          <span class="pl">+</span>
+        </button>
+        <div class="body">
+          <div class="quote"><em>"You have built a program and not only a platform. You have measurably raised how well an organization experiments through defaults, templates, review, and teaching, not only through code."</em></div>
+          <p>Marked partly, because the program is real and the organization is small.</p>
+          <p>The system I run on has exactly what you describe, in structure: written defaults that agents follow without me in the room, a required pre-send review layer, templates for each class of work, and a rule that <strong>no stage reviews its own output</strong>. A builder produces, and an independent reviewer runs in a separate context where it cannot quietly agree with itself. That rule exists because the first version did agree with itself, constantly, and was useless.</p>
+          <p>There is also a documented pre-test gate that any high-stakes copy must clear before shipping, which is a pre-registration habit applied to a different domain. The point of all of it is the point of your second half: to make a good decision reachable <strong>without the person who designed the process being present.</strong></p>
+          <p>At Coder I do a smaller version of this with humans: I own the test coverage, release process and operating documentation the rest of the team works from.</p>
+          <div class="thr">
+            <div class="lab">Threats to validity</div>
+            <p>The organization I raised is me plus a set of agents, not eleven teams running hundreds of experiments. "Measurably raised" is doing real work in your sentence and I cannot produce an organizational before-and-after metric. Teaching human engineers to experiment well, and saying no to teams who all want something different, are things I have done at a scale of two, not of a company.</p>
+          </div>
+          <div class="pills"><span>written defaults</span><span>mandatory independent review</span><span>pre-send gate</span><span>owns docs at Coder</span></div>
+        </div>
+      </div>
+
+      <div class="xp" data-o="0">
+        <button aria-expanded="false">
+          <span class="tagn t-no">have not</span>
+          <span class="h"><b>The measurement-bug class. I have debugged its cousins, not the thing itself.</b><i>Claim 4 of 4</i></span>
+          <span class="pl">+</span>
+        </button>
+        <div class="body">
+          <div class="quote"><em>"You have debugged the hard class of measurement bugs: traffic that split unevenly, users who ended up in both arms, effects that vanished once you looked at who was actually exposed, identity that broke between anonymous and logged-in sessions."</em></div>
+          <p>I am not going to dress this one up. <strong>I have not debugged an uneven traffic split or a both-arms bug, because I have not run a system where those were possible.</strong> If that is the load-bearing requirement, I am the wrong candidate and you should stop here.</p>
+          <p>What I would offer instead is that I have debugged the structurally identical bug in a different costume. My automation once sent the same person the same message twice, which is a double-exposure bug: <strong>the same subject counted twice because identity was resolved per code path instead of centrally.</strong> The fix was not a patch in one path. It was a single deterministic guard keyed on the recipient that reads the live sent record and <strong>fails closed when it cannot read it</strong>, with every outbound path routed through it.</p>
+          <p>That is the same lesson your bullet is pointing at: <strong>the trustworthiness of a number is decided by the weakest link in the chain that produces it</strong>, and the only durable fix is one central place that owns identity. I learned it on a smaller stage and I would rather tell you where I learned it than imply I learned it at yours.</p>
+          <div class="thr">
+            <div class="lab">Threats to validity</div>
+            <p>An analogy is not experience. Recipient-keyed deduplication in an outbound system is much easier than cross-device identity resolution between anonymous and authenticated sessions at scale, and I know it. This is the single biggest gap between me and your ideal candidate.</p>
+          </div>
+          <div class="pills"><span>honest no</span><span>adjacent bug, solved</span><span>central identity, learned late</span></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="fine">
+    <h2>What I'd want to know if I were reading this.</h2>
+    <p class="sub">Your posting states no years requirement and no degree requirement, which is unusual and I noticed. So the honest gaps are about substance rather than credentials.</p>
+    <ul>
+      <li><b>Your stack has real holes for me.</b> I write Python and TypeScript daily and have shipped React and Postgres in production, which covers a good part of your list. I have never used <b>Snowflake, dbt, LaunchDarkly, Statsig, Spark or Kafka</b>, and four of those six are the actual subject of this role. That is a genuine ramp, not a formality.</li>
+      <li><b>Scale.</b> Headway is 75,000 providers and over a million patients, with eleven teams running hundreds of experiments. My systems serve one operator and a small customer base. Everything I know about correctness I learned at a scale where a mistake is embarrassing rather than material.</li>
+      <li><b>Mentoring senior engineers is an aspiration, not a record.</b> You ask for someone who regularly does it. I have mentored, but not senior engineers inside a real engineering organization, and I would rather you know that going in.</li>
+      <li><b>I run outside businesses.</b> FieldCommand and a partner-managed advisory practice both continue, both are disclosable, and neither competes with Headway. Raising it here rather than in a final round.</li>
+    </ul>
+  </section>
+
+  <section class="cta">
+    <h2>If a build-the-primitives hire is what you want, I'd like to talk.</h2>
+    <p>If you need someone who has already run this exact platform, I am not that. If you want someone who is genuinely bothered by numbers he cannot explain and who has shipped the boring machinery that makes them explainable, that part is real.</p>
+    <div class="btns">
+      <a class="btn p" href="https://portfolio.andrewzoll.com">See the portfolio</a>
+      <a class="btn s" href="https://linkedin.com/in/andrewzoll">Connect on LinkedIn</a>
+    </div>
+  </section>
+
+  <footer>Andrew Zoll &middot; Pueblo, CO &middot; built for the Staff Software Engineer, Experimentation role at Headway</footer>
+
+</div>
+
+<script>
+(function(){
+  var plan  = document.getElementById('plan');
+  var xps   = [].slice.call(plan.querySelectorAll('.xp'));
+  var modes = [].slice.call(document.querySelectorAll('.modes button'));
+  var hint  = document.getElementById('hint');
+  var mode  = 'full';
+
+  xps.forEach(function(x){
+    var b = x.querySelector('button');
+    b.addEventListener('click', function(){
+      if (mode === 'threats') return;          // threats mode is already fully open
+      var open = x.getAttribute('data-o') === '1';
+      x.setAttribute('data-o', open ? '0' : '1');
+      b.setAttribute('aria-expanded', open ? 'false' : 'true');
+    });
+  });
+
+  function setMode(m){
+    mode = m;
+    modes.forEach(function(b){ b.setAttribute('aria-pressed', b.dataset.m === m ? 'true' : 'false'); });
+    if (m === 'threats') {
+      plan.classList.add('threats');
+      hint.textContent = 'Caveats only. Every claim above, stripped down to what would undermine it.';
+      xps.forEach(function(x){ x.setAttribute('data-o','1'); x.querySelector('button').setAttribute('aria-expanded','true'); });
+    } else {
+      plan.classList.remove('threats');
+      hint.textContent = 'Four claims, each expandable. Threats are shown inside each one.';
+      xps.forEach(function(x){ x.setAttribute('data-o','0'); x.querySelector('button').setAttribute('aria-expanded','false'); });
+    }
+  }
+  modes.forEach(function(b){ b.addEventListener('click', function(){ setMode(b.dataset.m); }); });
+  setMode('full');
+})();
+</script>
+</body>
+</html>
