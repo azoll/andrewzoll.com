@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>Andrew Zoll for Staff Product Engineer at Ashby</title>
+<style>
+  :root{
+    --paper:#fcfcfd;
+    --ink:#16181d;
+    --ink2:#3d424c;
+    --mut:#6e747f;
+    --mut2:#a2a8b3;
+    --line:#e4e6ea;
+    --line2:#f0f1f4;
+    --violet:#5c4ee5;
+    --violet-w:#f0eeff;
+    --amber:#b26a00;
+    --amber-w:#fdf3e3;
+    --green:#127a4c;
+    --green-w:#e8f6ef;
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif;
+    --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+    --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--paper);color:var(--ink);font-family:var(--serif);
+    font-size:17.5px;line-height:1.68;-webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1120px;margin:0 auto;padding:0 28px}
+  a{color:var(--violet)}
+
+  .head{border-bottom:1px solid var(--line);padding:18px 0}
+  .head .wrap{display:flex;align-items:baseline;gap:10px;font-family:var(--sans);font-size:13.5px;color:var(--mut)}
+  .head b{color:var(--ink);font-weight:600}
+  .head .r{margin-left:auto;font-family:var(--mono);font-size:11.5px;color:var(--mut2)}
+  .disc{font-family:var(--sans);font-size:12.5px;color:var(--mut);padding:11px 0;border-bottom:1px solid var(--line2)}
+
+  /* ---------- letterhead ---------- */
+  .open{padding:74px 0 22px;max-width:36rem}
+  .open .to{font-family:var(--mono);font-size:12px;color:var(--mut2);letter-spacing:.05em;margin-bottom:26px}
+  .open h1{
+    font-family:var(--serif);font-size:clamp(31px,4.6vw,46px);line-height:1.16;letter-spacing:-.018em;
+    font-weight:600;margin-bottom:24px;
+  }
+  .open p{color:var(--ink2);margin-bottom:17px}
+  .open p.sig{font-family:var(--sans);font-size:14.5px;color:var(--mut);margin-top:26px}
+
+  /* ---------- the two-column letter ---------- */
+  .letter{display:grid;grid-template-columns:270px 1fr;gap:56px;padding:34px 0 20px;align-items:start}
+  .rail{position:sticky;top:26px}
+  .rail .rk{
+    font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--mut2);margin-bottom:14px;
+  }
+  .rail ol{list-style:none;counter-reset:q}
+  .rail li{counter-increment:q;margin-bottom:3px}
+  .rail button{
+    display:block;width:100%;text-align:left;font:inherit;font-family:var(--sans);font-size:13.5px;line-height:1.42;
+    background:transparent;border:0;border-left:2px solid var(--line);cursor:pointer;
+    padding:9px 12px;color:var(--mut);transition:all .17s ease;
+  }
+  .rail button:before{content:counter(q) ". ";color:var(--mut2);font-variant-numeric:tabular-nums}
+  .rail button:hover{color:var(--ink);border-left-color:var(--mut2);background:var(--line2)}
+  .rail button.act{color:var(--violet);border-left-color:var(--violet);background:var(--violet-w);font-weight:530}
+
+  .thread > section{padding:0 0 52px;scroll-margin-top:26px}
+  .said{
+    border-left:3px solid var(--violet);background:var(--violet-w);border-radius:0 10px 10px 0;
+    padding:16px 20px;margin-bottom:22px;
+  }
+  .said .who{font-family:var(--mono);font-size:11px;color:var(--mut);letter-spacing:.05em;margin-bottom:7px}
+  .said p{font-size:16px;color:var(--ink2);font-style:italic}
+  .thread h2{
+    font-family:var(--serif);font-size:clamp(22px,2.8vw,28px);line-height:1.28;letter-spacing:-.014em;
+    font-weight:600;margin-bottom:15px;max-width:26ch;
+  }
+  .thread p{color:var(--ink2);margin-bottom:15px;max-width:64ch}
+  .thread p:last-child{margin-bottom:0}
+  .thread strong{font-weight:640;color:var(--ink)}
+  .note{
+    font-family:var(--sans);font-size:14px;color:var(--mut);border-top:1px solid var(--line2);
+    padding-top:13px;margin-top:19px;max-width:62ch;
+  }
+
+  /* ---------- their own checklist, answered ---------- */
+  .check{border-top:1px solid var(--line);padding:56px 0 10px}
+  .check .ck{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--mut2);margin-bottom:13px}
+  .check h2{font-family:var(--serif);font-size:clamp(24px,3.2vw,32px);letter-spacing:-.02em;font-weight:600;margin-bottom:12px;max-width:24ch}
+  .check .sub{font-family:var(--sans);font-size:15.5px;color:var(--mut);max-width:60ch;margin-bottom:26px}
+  .swit{display:flex;gap:8px;margin-bottom:20px;font-family:var(--sans);flex-wrap:wrap;align-items:center}
+  .swit .l{font-size:12px;color:var(--mut2);letter-spacing:.04em;text-transform:uppercase;font-family:var(--mono)}
+  .swit button{
+    font:inherit;font-size:13.5px;background:#fff;border:1px solid var(--line);border-radius:8px;
+    padding:7px 14px;color:var(--mut);cursor:pointer;transition:all .16s ease;
+  }
+  .swit button:hover{border-color:var(--mut2);color:var(--ink)}
+  .swit button[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
+  .swit .tally{font-size:13px;color:var(--mut2);margin-left:auto;font-family:var(--mono)}
+
+  .rows{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff}
+  .row{display:flex;gap:16px;align-items:flex-start;padding:17px 20px;border-bottom:1px solid var(--line2);font-family:var(--sans)}
+  .row:last-child{border-bottom:0}
+  .row.hide{display:none}
+  .mk{
+    font-family:var(--mono);font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;border-radius:5px;
+    padding:3px 9px;flex-shrink:0;margin-top:2px;min-width:66px;text-align:center;
+  }
+  .m-yes{background:var(--green-w);color:var(--green);border:1px solid #cfe9dd}
+  .m-part{background:var(--amber-w);color:var(--amber);border:1px solid #f2e0c0}
+  .row .txt{flex:1}
+  .row .txt b{display:block;font-size:15px;font-weight:600;color:var(--ink);margin-bottom:4px;line-height:1.4}
+  .row .txt span{display:block;font-size:14.5px;color:var(--mut);line-height:1.55}
+
+  /* ---------- close ---------- */
+  .close{border-top:1px solid var(--line);margin-top:52px;padding:56px 0 20px;max-width:38rem}
+  .close h2{font-family:var(--serif);font-size:clamp(24px,3.2vw,32px);letter-spacing:-.02em;font-weight:600;margin-bottom:15px}
+  .close p{color:var(--ink2);margin-bottom:16px}
+  .btns{display:flex;gap:11px;flex-wrap:wrap;margin-top:28px;font-family:var(--sans)}
+  .btn{
+    font-size:15px;font-weight:540;border-radius:9px;padding:12px 22px;text-decoration:none;
+    border:1px solid transparent;transition:transform .15s ease,box-shadow .15s ease;display:inline-block;
+  }
+  .btn:hover{transform:translateY(-1px)}
+  .btn.p{background:var(--violet);color:#fff}
+  .btn.p:hover{box-shadow:0 7px 20px rgba(92,78,229,.28)}
+  .btn.s{background:#fff;color:var(--ink);border-color:var(--line)}
+  .btn.s:hover{border-color:var(--ink)}
+
+  footer{border-top:1px solid var(--line);margin-top:48px;padding:24px 0 44px;font-family:var(--mono);font-size:11.5px;color:var(--mut2)}
+
+  @media(max-width:900px){
+    .letter{grid-template-columns:1fr;gap:26px}
+    .rail{position:static;border-bottom:1px solid var(--line);padding-bottom:18px}
+    .rail ol{display:flex;flex-wrap:wrap;gap:6px}
+    .rail li{margin:0}
+    .rail button{border-left:0;border:1px solid var(--line);border-radius:8px;padding:7px 12px}
+    .rail button.act{border-color:var(--violet)}
+  }
+  @media(max-width:560px){
+    .open{padding-top:48px}
+    .row{flex-wrap:wrap;gap:10px}
+  }
+</style>
+</head>
+<body>
+
+<div class="head"><div class="wrap">
+  <b>Andrew Zoll</b><span>&rarr;</span><span>Staff Product Engineer, Americas</span>
+  <span class="r">remote &middot; us</span>
+</div></div>
+<div class="wrap"><div class="disc">Not affiliated with Ashby. This is a personal page I built as part of my own application for the Staff Product Engineer role.</div></div>
+
+<div class="wrap">
+
+  <section class="open">
+    <div class="to">re: your posting, which is a letter, so this is a reply</div>
+    <h1>Abhik, you wrote that you studied computer science to solve problems, not tickets. I left a career to go do that.</h1>
+    <p>Your posting is the only one I have read this year that is written by a person rather than a committee, so a bulleted resume seemed like the wrong shape to answer it with. This is a reply instead.</p>
+    <p>The short version: I have spent the last two years being the whole loop you describe. I talked to the users, decided what mattered, designed it, built it, shipped it, watched people use it, and then decided what to do next. Nobody handed me a spec, because there was nobody to hand me one.</p>
+    <p class="sig">Andrew Zoll &middot; Pueblo, CO &middot; Senior Software Engineer, AI Solutions at Coder</p>
+  </section>
+
+  <div class="letter">
+
+    <nav class="rail" aria-label="Jump to a reply">
+      <div class="rk">what you said</div>
+      <ol>
+        <li><button data-t="t1">"Ship features end to end at a high pace"</button></li>
+        <li><button data-t="t2">"Product and technical ambiguity, at the intersection"</button></li>
+        <li><button data-t="t3">"Strike the right balance between speed and quality"</button></li>
+        <li><button data-t="t4">"You seek to create leverage in your work"</button></li>
+        <li><button data-t="t5">"Not afraid to tackle any part of the stack"</button></li>
+      </ol>
+    </nav>
+
+    <div class="thread">
+
+      <section id="t1">
+        <div class="said">
+          <div class="who">Abhik, in the posting</div>
+          <p>"At Ashby, all our engineers ship features end-to-end at a high pace... you'll take ownership over a large portion of one of our products and own projects end-to-end (wearing hats traditionally worn by product and design). You'll research competitors, write product specs, make wireframes, and more."</p>
+        </div>
+        <h2>I have only ever worked this way, because I have never had the option not to.</h2>
+        <p><strong>FieldCommand</strong> is a multi-tenant SaaS for commercial trade contractors. I did the customer interviews, the competitor research, the specs, the wireframes, the schema, the API, the frontend, the billing, and the support. <strong>187,745 lines of TypeScript</strong> on PostgreSQL and Supabase, alone, including role-based access control and tenant isolation.</p>
+        <p><strong>Veritas</strong> checks citations in legal filings against source records. I found the problem by reading about lawyers getting sanctioned for citing cases that did not exist, decided the verdict language had to hedge, and built the pipeline that produces an auditable record.</p>
+        <p><strong>AndrewOS</strong> is the agent operating system that runs my own operations. It has been in production a year, and its users are real in the way that matters most: when it breaks, my work stops until I fix it.</p>
+        <p class="note">Three products, all shipped solo, all still running. The hats you describe as "traditionally worn by product and design" are just the job to me. I have never handed a spec to anybody, including myself.</p>
+      </section>
+
+      <section id="t2">
+        <div class="said">
+          <div class="who">Abhik, in the posting</div>
+          <p>"You've tackled projects with a lot of product and technical ambiguity, and you thrive at the intersection of the two. We're not building a simple CRUD app, and many of the challenges we tackle require you to use your knowledge of our customers to build powerful abstractions and flexibility in the system to solve a class of problems."</p>
+        </div>
+        <h2>The abstraction I am proudest of exists because I got the specific version wrong first.</h2>
+        <p>My early automation could send the same message to the same person twice. That is a bug that costs you a relationship rather than a request, and I had built it as a one-off check in one code path. <strong>The fix was to stop solving the instance and solve the class:</strong> a single deterministic guard, keyed on the recipient, that reads the live sent record, fails closed when it cannot read it, and refuses the send. Every outbound path now routes through it.</p>
+        <p>The same instinct produced the gate layer underneath my agents. Rather than asking each agent to behave, there is one machine-checkable rule set that everything generated has to clear before it can leave. Models decide what to say. Code decides whether it is allowed out.</p>
+        <p>I mention these rather than a feature list because your posting asks about a class of problems, and both of these started as one embarrassing instance.</p>
+      </section>
+
+      <section id="t3">
+        <div class="said">
+          <div class="who">Abhik, in the posting</div>
+          <p>"You know how to strike the right balance between speed and quality. Ashby wasn't built quickly. We took four years to launch publicly because convincing customers to switch required a high-quality product. However, time isn't infinite, especially for a startup."</p>
+        </div>
+        <h2>I came from a job where being fast and wrong was a compliance event.</h2>
+        <p>Before engineering I spent six years as a financial advisor under FINRA and SEC oversight, with real recordkeeping and audit requirements. That is a genuinely useful thing to have absorbed before writing software, because it teaches you which mistakes are recoverable and which ones are not, and those are not the same category.</p>
+        <p>It shows up directly in how I ship. Veritas gates every release on a fixed fixture suite, and correctness lives in deterministic code rather than model judgment, because a confident wrong answer about a court filing is worse than no answer. Meanwhile FieldCommand shipped four AI features behind per-tenant flags, which is the fast path, because a flag makes the mistake recoverable.</p>
+        <p class="note">At <strong>Coder</strong> I own the quality practice for the platform I work on: test coverage, release process, and the operating docs the rest of the team works from. Two-person team, Python, large production codebase, shipping straight to prod.</p>
+      </section>
+
+      <section id="t4">
+        <div class="said">
+          <div class="who">Abhik, in the posting</div>
+          <p>"You seek to create leverage in your work... Your impatience usually leads to new abstractions, tools to allow Support to debug before Engineering, new lint rules to prevent common bugs, etc."</p>
+        </div>
+        <h2>Your parenthetical about lint rules is the most specific thing in the posting, and it is the thing I would point at.</h2>
+        <p>I wrote a linter. It catches the writing patterns I keep making, it runs on everything before it goes out under my name, and it exits non-zero rather than warning, because a warning is a suggestion and I will ignore my own suggestions.</p>
+        <p>Underneath that, every agent in my pipeline appends a structured trace: what it received, what it decided, why, and what it handed off. A finished run reads top to bottom as a replayable audit record. <strong>I built it so I could debug a run without rerunning it,</strong> which is the same reason you would want Support to debug before Engineering.</p>
+        <p>And no agent reviews its own work. A builder produces, and an independent reviewer runs in a separate context where it cannot quietly agree with itself. That rule exists because the first version did agree with itself, constantly, and was useless.</p>
+      </section>
+
+      <section id="t5">
+        <div class="said">
+          <div class="who">Abhik, in the posting</div>
+          <p>"You're not afraid to tackle any part of a technology stack. You do what's necessary to successfully deliver a feature, whether writing frontend or choosing new infrastructure."</p>
+        </div>
+        <h2>The honest inventory, including where it runs out.</h2>
+        <p><strong>Where I am strong:</strong> TypeScript and Python, React and Node, PostgreSQL and Supabase, REST integrations, Stripe billing, RBAC and tenant isolation, and the deployment and monitoring that keeps all of it alive. I designed the schemas and I answer the pager, because there is nobody else on it.</p>
+        <p><strong>Where I am not:</strong> I have never run anything at tens of thousands of daily users. My systems serve one operator and a small customer base. Load, failover, and the kind of query performance work that only shows up at your scale would all be new, and I would be slow on them for a while.</p>
+        <p><strong>Two more, said plainly.</strong> My formal Senior Software Engineer title is about a year old, so if you count years on a badge, mine is short. And I run outside businesses, FieldCommand and a partner-managed advisory practice, both disclosable and neither competing with Ashby. I would rather raise that on a page you are already reading than in a final round.</p>
+        <p class="note">You also wrote that mentorship opportunities are very limited because the team is already senior. That reads as a warning to some candidates. I read it as the appeal.</p>
+      </section>
+
+    </div>
+  </div>
+
+  <section class="check">
+    <div class="ck">your section, answered</div>
+    <h2>You listed the reasons not to apply. I went through them one at a time.</h2>
+    <p class="sub">Your "Why You Should or Shouldn't Apply" section does more filtering than most interview loops, so it seemed fair to answer it directly rather than around it. Nothing here is graded higher than I would defend out loud.</p>
+
+    <div class="swit" role="group" aria-label="Filter self-assessment rows">
+      <span class="l">show</span>
+      <button data-v="all" aria-pressed="true">Everything</button>
+      <button data-v="yes" aria-pressed="false">Clear yes</button>
+      <button data-v="part" aria-pressed="false">Qualified</button>
+      <span class="tally" id="tally"></span>
+    </div>
+
+    <div class="rows" id="rows">
+      <div class="row" data-v="yes">
+        <span class="mk m-yes">clear yes</span>
+        <span class="txt"><b>"You haven't led or taken ownership of projects before" is your disqualifier.</b><span>Ownership is the only mode I have worked in. Three products, specced and shipped solo, still in production. There was never a tech lead distributing tasks to me.</span></span>
+      </div>
+      <div class="row" data-v="yes">
+        <span class="mk m-yes">clear yes</span>
+        <span class="txt"><b>"You need company-driven process and structure."</b><span>I built my own process because none existed, then wrote it down so agents could follow it. An almost-no-meeting culture is the environment I already work in.</span></span>
+      </div>
+      <div class="row" data-v="yes">
+        <span class="mk m-yes">clear yes</span>
+        <span class="txt"><b>"You only want to do exciting work."</b><span>I run support for my own product. When a contractor cannot log in on a Saturday, the person investigating it is me. Customer issues are not somebody else's queue.</span></span>
+      </div>
+      <div class="row" data-v="yes">
+        <span class="mk m-yes">clear yes</span>
+        <span class="txt"><b>"You want to mentor earlier-career engineers."</b><span>Not what I am looking for right now. I want to be the least experienced person in a room of senior engineers for a while, which is the opposite problem.</span></span>
+      </div>
+      <div class="row" data-v="part">
+        <span class="mk m-part">qualified</span>
+        <span class="txt"><b>"A staff engineer is someone who spends most of their time project managing."</b><span>I agree with your version and want the building one. The honest caveat is that I have never held the staff title inside a real engineering org, so I am asserting a preference I have not yet been tested on at your scale.</span></span>
+      </div>
+      <div class="row" data-v="part">
+        <span class="mk m-part">qualified</span>
+        <span class="txt"><b>"You can get lost in the details."</b><span>This is my actual failure mode and I would rather name it. I go deep and lose the shape of the project. What fixes it for me is writing the spec first and rereading it, which is a habit rather than a natural instinct.</span></span>
+      </div>
+    </div>
+  </section>
+
+  <section class="close">
+    <h2>You said you read every application and reply within three or four days.</h2>
+    <p>That is a rare thing to put in writing, and it is part of why I spent an evening on this page rather than a cover letter. The comp band for my location is published too, which is also rare, so there is nothing here for either of us to dance around.</p>
+    <p>If the shape fits, I would rather show you the systems than describe them. The agent trace and the verification pipeline are both easier to look at than to read about.</p>
+    <div class="btns">
+      <a class="btn p" href="https://portfolio.andrewzoll.com">See the portfolio</a>
+      <a class="btn s" href="https://linkedin.com/in/andrewzoll">Connect on LinkedIn</a>
+    </div>
+  </section>
+
+  <footer>Andrew Zoll &middot; Pueblo, CO &middot; built for the Staff Product Engineer, Americas role at Ashby</footer>
+
+</div>
+
+<script>
+(function(){
+  // ---- rail: real scrollspy + jump ----
+  var btns = [].slice.call(document.querySelectorAll('.rail button'));
+  var secs = btns.map(function(b){ return document.getElementById(b.dataset.t); });
+
+  btns.forEach(function(b){
+    b.addEventListener('click', function(){
+      document.getElementById(b.dataset.t).scrollIntoView({behavior:'smooth', block:'start'});
+    });
+  });
+
+  function mark(){
+    var best = 0, bestTop = -Infinity;
+    secs.forEach(function(s, i){
+      var top = s.getBoundingClientRect().top - 90;
+      if (top <= 0 && top > bestTop) { bestTop = top; best = i; }
+    });
+    btns.forEach(function(b, i){ b.classList.toggle('act', i === best); });
+  }
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(mark, {threshold:[0, .25, .5, 1]});
+    secs.forEach(function(s){ io.observe(s); });
+  }
+  window.addEventListener('scroll', mark, {passive:true});
+  mark();
+
+  // ---- checklist filter ----
+  var rows = [].slice.call(document.querySelectorAll('#rows .row'));
+  var sw   = [].slice.call(document.querySelectorAll('.swit button'));
+  var tally= document.getElementById('tally');
+  function apply(v){
+    var n = 0;
+    rows.forEach(function(r){
+      var m = (v === 'all') || (r.dataset.v === v);
+      r.classList.toggle('hide', !m);
+      if (m) n++;
+    });
+    sw.forEach(function(b){ b.setAttribute('aria-pressed', b.dataset.v === v ? 'true' : 'false'); });
+    tally.textContent = n + ' of ' + rows.length + ' shown';
+  }
+  sw.forEach(function(b){ b.addEventListener('click', function(){ apply(b.dataset.v); }); });
+  apply('all');
+})();
+</script>
+</body>
+</html>
