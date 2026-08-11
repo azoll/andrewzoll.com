@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>Andrew Zoll for AI Solutions Engineer at Affirm</title>
+<style>
+  :root{
+    --ink:#0a0b0d;
+    --ink2:#3a3f47;
+    --mut:#6b7280;
+    --mut2:#9ca3af;
+    --paper:#ffffff;
+    --cream:#f7f5f1;
+    --line:#e8e6e1;
+    --violet:#4a4af4;
+    --violet-d:#3535c9;
+    --sky:#c8e7ff;
+    --mint:#b6f0cd;
+    --lav:#ddd9ff;
+    --coral:#ffcabf;
+    --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+    --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--cream);color:var(--ink);font-family:var(--sans);
+    font-size:16.5px;line-height:1.6;-webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1000px;margin:0 auto;padding:0 24px}
+  a{color:var(--violet);text-decoration:none}
+  a:hover{text-decoration:underline}
+
+  /* ---------- nav ---------- */
+  .nav{padding:20px 0}
+  .nav .wrap{display:flex;align-items:center;gap:12px}
+  .logo{
+    font-size:20px;font-weight:700;letter-spacing:-.045em;color:var(--violet);
+  }
+  .nav .role{font-size:14.5px;color:var(--mut);margin-left:4px}
+  .nav .tag{
+    margin-left:auto;font-size:13px;font-weight:560;background:var(--mint);color:#0b5132;
+    border-radius:999px;padding:6px 15px;
+  }
+  .disc{font-size:13px;color:var(--mut);padding:0 0 14px}
+
+  /* ---------- hero ---------- */
+  .hero{
+    background:var(--paper);border-radius:28px;padding:64px 52px 58px;margin-bottom:18px;
+    position:relative;overflow:hidden;
+  }
+  .hero:after{
+    content:"";position:absolute;right:-90px;top:-90px;width:320px;height:320px;border-radius:50%;
+    background:radial-gradient(circle at 30% 30%,var(--lav),transparent 68%);pointer-events:none;
+  }
+  .kicker{
+    font-size:13px;font-weight:620;letter-spacing:.02em;color:var(--violet);margin-bottom:20px;
+  }
+  .hero h1{
+    font-size:clamp(33px,5.4vw,58px);line-height:1.02;letter-spacing:-.045em;font-weight:680;
+    max-width:17ch;margin-bottom:26px;position:relative;
+  }
+  .hero h1 span{
+    background:linear-gradient(180deg,transparent 62%,var(--sky) 62%);padding:0 2px;
+  }
+  .hero p{font-size:19px;line-height:1.52;color:var(--ink2);max-width:58ch;margin-bottom:14px;position:relative}
+  .hero p.small{font-size:16.5px;color:var(--mut)}
+
+  /* ---------- the schedule ---------- */
+  .sched{background:var(--paper);border-radius:28px;padding:52px 52px 56px;margin-bottom:18px}
+  .sched h2{font-size:clamp(25px,3.4vw,36px);letter-spacing:-.038em;font-weight:670;max-width:22ch;margin-bottom:12px;line-height:1.1}
+  .sched .sub{color:var(--mut);max-width:60ch;margin-bottom:30px}
+
+  .toggle{
+    display:inline-flex;background:var(--cream);border-radius:999px;padding:4px;gap:2px;margin-bottom:12px;
+  }
+  .toggle button{
+    font:inherit;font-size:14.5px;font-weight:580;border:0;background:transparent;color:var(--mut);
+    border-radius:999px;padding:9px 22px;cursor:pointer;transition:all .18s ease;
+  }
+  .toggle button[aria-pressed="true"]{background:var(--ink);color:#fff}
+  .toggle button:hover[aria-pressed="false"]{color:var(--ink)}
+
+  .prog{margin:22px 0 26px}
+  .prog .track{height:6px;background:var(--cream);border-radius:999px;overflow:hidden}
+  .prog .fill{height:100%;width:0;background:linear-gradient(90deg,var(--violet),#7b7bff);border-radius:999px;transition:width .45s cubic-bezier(.34,1.4,.5,1)}
+  .prog .lbl{font-size:13px;color:var(--mut);margin-top:9px}
+
+  .plan{display:grid;gap:12px}
+  .plan.full{gap:0}
+
+  .inst{
+    border:1px solid var(--line);border-radius:20px;background:var(--paper);overflow:hidden;
+    transition:border-color .18s ease,box-shadow .18s ease;
+  }
+  .inst:hover{border-color:#cfcbc3}
+  .inst[data-open="1"]{border-color:var(--violet);box-shadow:0 4px 22px rgba(74,74,244,.09)}
+  .inst > button{
+    width:100%;display:flex;align-items:center;gap:18px;text-align:left;
+    background:transparent;border:0;padding:20px 24px;cursor:pointer;font:inherit;color:inherit;
+  }
+  .num{
+    width:44px;height:44px;border-radius:14px;display:grid;place-items:center;flex-shrink:0;
+    font-size:16px;font-weight:680;letter-spacing:-.02em;
+  }
+  .n1{background:var(--lav);color:#3232a8}
+  .n2{background:var(--sky);color:#0d5182}
+  .n3{background:var(--mint);color:#0b5132}
+  .n4{background:var(--coral);color:#8c3520}
+  .inst .ttl{flex:1}
+  .inst .ttl b{display:block;font-size:17px;font-weight:620;letter-spacing:-.02em;line-height:1.25}
+  .inst .ttl i{display:block;font-style:normal;font-size:13.5px;color:var(--mut);margin-top:3px}
+  .inst .plus{
+    width:28px;height:28px;border-radius:50%;background:var(--cream);flex-shrink:0;
+    display:grid;place-items:center;color:var(--ink2);font-size:16px;line-height:1;
+    transition:transform .25s cubic-bezier(.34,1.4,.5,1),background .18s ease;
+  }
+  .inst[data-open="1"] .plus{transform:rotate(45deg);background:var(--violet);color:#fff}
+
+  .inst .drawer{display:none;padding:0 24px 26px 86px}
+  .inst[data-open="1"] .drawer{display:block;animation:rise .26s ease}
+  @keyframes rise{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+  .quoted{
+    background:var(--cream);border-radius:14px;padding:14px 17px;font-size:14.5px;color:var(--ink2);
+    margin-bottom:16px;
+  }
+  .quoted em{font-style:italic;color:var(--mut)}
+  .drawer p{margin-bottom:13px;color:var(--ink2);max-width:66ch}
+  .drawer p:last-child{margin-bottom:0}
+  .drawer strong{font-weight:640;color:var(--ink)}
+  .chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:16px}
+  .chips span{font-size:12.5px;font-weight:540;background:var(--cream);border-radius:999px;padding:5px 12px;color:var(--mut)}
+
+  /* full-read variant */
+  .plan.full .inst{border:0;border-radius:0;border-bottom:1px solid var(--line);box-shadow:none;background:transparent}
+  .plan.full .inst:last-child{border-bottom:0}
+  .plan.full .inst > button{cursor:default;padding:26px 0 12px}
+  .plan.full .inst .plus{display:none}
+  .plan.full .inst .drawer{display:block;padding:0 0 24px 62px}
+  .plan.full .num{width:38px;height:38px;border-radius:11px;font-size:14px}
+
+  /* ---------- fine print ---------- */
+  .fine{background:var(--ink);color:#f2f3f5;border-radius:28px;padding:52px;margin-bottom:18px}
+  .fine h2{font-size:clamp(24px,3.2vw,33px);letter-spacing:-.035em;font-weight:670;margin-bottom:10px;line-height:1.12;max-width:22ch}
+  .fine .sub{color:#9aa1ac;max-width:58ch;margin-bottom:28px}
+  .fine ul{list-style:none;display:grid;gap:17px}
+  .fine li{padding-left:26px;position:relative;color:#ccd2da;max-width:74ch;font-size:15.5px}
+  .fine li:before{
+    content:"";position:absolute;left:0;top:10px;width:11px;height:2px;background:var(--violet);border-radius:2px;
+  }
+  .fine b{color:#fff;font-weight:620}
+
+  /* ---------- cta ---------- */
+  .cta{background:var(--paper);border-radius:28px;padding:64px 52px 68px;text-align:center;margin-bottom:26px}
+  .cta h2{font-size:clamp(26px,3.7vw,40px);letter-spacing:-.04em;font-weight:680;max-width:19ch;margin:0 auto 14px;line-height:1.08}
+  .cta p{color:var(--mut);max-width:52ch;margin:0 auto 30px}
+  .btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+  .btn{
+    font-size:15.5px;font-weight:600;border-radius:999px;padding:14px 28px;display:inline-block;
+    transition:transform .16s cubic-bezier(.34,1.4,.5,1),box-shadow .16s ease;border:1.5px solid transparent;
+  }
+  .btn:hover{text-decoration:none;transform:translateY(-2px)}
+  .btn.p{background:var(--violet);color:#fff}
+  .btn.p:hover{box-shadow:0 8px 22px rgba(74,74,244,.3)}
+  .btn.s{background:transparent;color:var(--ink);border-color:var(--line)}
+  .btn.s:hover{border-color:var(--ink)}
+
+  footer{padding:6px 0 44px;font-size:13px;color:var(--mut2)}
+
+  @media(max-width:720px){
+    .hero,.sched,.fine,.cta{padding-left:26px;padding-right:26px;border-radius:22px}
+    .hero{padding-top:44px;padding-bottom:40px}
+    .inst .drawer{padding-left:24px}
+    .plan.full .inst .drawer{padding-left:0}
+    .inst > button{gap:13px;padding:17px 18px}
+  }
+</style>
+</head>
+<body>
+
+<div class="nav">
+  <div class="wrap">
+    <span class="logo">andrew zoll</span>
+    <span class="role">for AI Solutions Engineer</span>
+    <span class="tag">remote, US</span>
+  </div>
+</div>
+<div class="wrap"><div class="disc">Not affiliated with Affirm. This is a personal page I built as part of my own application for the AI Solutions Engineer role on People Tech &amp; Analytics.</div></div>
+
+<div class="wrap">
+
+  <section class="hero">
+    <div class="kicker">People Tech &amp; Analytics &middot; req 7778204003</div>
+    <h1>You want someone who has <span>built something from nothing</span>, with no spec. That's most of what I've done.</h1>
+    <p>I'm Andrew. Your posting asks for a builder disposition, defined as having created a system in an environment where nobody handed you a spec. I've done that three times, and all three are still running in production.</p>
+    <p class="small">You also describe turning fragmented knowledge and manual processes into working software for a function full of non-technical stakeholders. I've spent four years on the non-technical side of exactly that conversation, and the last year building the software side of it.</p>
+  </section>
+
+  <section class="sched">
+    <h2>The case, in four parts.</h2>
+    <p class="sub">Your product splits a big thing into pieces you can actually get through. Seemed like the right way to hand you mine. Open one, or switch to the full read if you'd rather have it all at once.</p>
+
+    <div class="toggle" role="group" aria-label="Reading mode">
+      <button data-m="4" aria-pressed="true">Read in 4</button>
+      <button data-m="full" aria-pressed="false">Read in full</button>
+    </div>
+
+    <div class="prog" id="prog">
+      <div class="track"><div class="fill" id="fill"></div></div>
+      <div class="lbl" id="proglbl">0 of 4 opened</div>
+    </div>
+
+    <div class="plan" id="plan">
+
+      <div class="inst" data-open="0">
+        <button aria-expanded="false">
+          <span class="num n1">1</span>
+          <span class="ttl"><b>I built the thing you're describing, for myself, first.</b><i>Builder disposition, no spec</i></span>
+          <span class="plus">+</span>
+        </button>
+        <div class="drawer">
+          <div class="quoted"><em>"You have created something from nothing: a system, a tool, a platform, in an environment where nobody handed you a spec. You identified the problem, designed the solution, and shipped it."</em></div>
+          <p><strong>AndrewOS</strong> is an agent operating system I built that runs marketing, content, and operations across two businesses. Nobody scoped it. I identified that my own bottleneck was coordination rather than effort, designed a delegation hierarchy around it, and shipped it. It has run for a year and it still runs today.</p>
+          <p><strong>FieldCommand</strong> is a multi-tenant SaaS for commercial trade contractors I designed and shipped alone: <strong>187,745 lines of TypeScript</strong> on a PostgreSQL and Supabase backend, from the schema through the API layer to the interface. Role-based access control, tenant isolation, Stripe billing, and the pipelines between them are all mine.</p>
+          <p><strong>Veritas</strong> verifies citations in legal filings against source records and returns an auditable verification record. Different problem, same pattern: I found it, scoped it, built it, and own it when it breaks.</p>
+          <div class="chips"><span>3 products shipped solo</span><span>187,745 lines of TypeScript</span><span>all still in production</span></div>
+        </div>
+      </div>
+
+      <div class="inst" data-open="0">
+        <button aria-expanded="false">
+          <span class="num n2">2</span>
+          <span class="ttl"><b>The hallucination problem is the one I've actually worked on.</b><i>Reliability infrastructure for LLM services</i></span>
+          <span class="plus">+</span>
+        </button>
+        <div class="drawer">
+          <div class="quoted"><em>"Design reliability infrastructure for multi-model LLM services. Structured output validation, fallback chains, circuit breakers for external APIs, and quality controls that catch hallucination before users see it."</em></div>
+          <p>This is the paragraph that made me apply. <strong>Veritas exists because of the hallucination problem specifically.</strong> Lawyers were filing briefs citing cases that did not exist. The product checks every citation against source records, and its verdict language is deliberately hedged, because a confident wrong answer about a court filing is worse than no answer at all.</p>
+          <p>Across my systems, the pattern is the same: <strong>hard gates written in plain code around the places where a model being creative would be a disaster.</strong> A deterministic linter blocks anything going out under my name. A duplicate-send guard reads the live sent record and fails closed when it can't. A freeze flag halts all sending when the bounce rate crosses a threshold. Models decide what to say. Code decides whether it's allowed to leave.</p>
+          <p>I learned that the expensive way. An early version of my outreach automation could message the same person twice, which costs you a relationship rather than a request. The fix wasn't a better prompt.</p>
+          <div class="chips"><span>hedged verdict semantics</span><span>fails closed</span><span>deterministic output gates</span><span>circuit-breaker on bounce rate</span></div>
+        </div>
+      </div>
+
+      <div class="inst" data-open="0">
+        <button aria-expanded="false">
+          <span class="num n3">3</span>
+          <span class="ttl"><b>I've built access control, and I've lived under a regulator.</b><i>Governance on people data</i></span>
+          <span class="plus">+</span>
+        </button>
+        <div class="drawer">
+          <div class="quoted"><em>"Navigate Affirm's existing security and data governance infrastructure to get AI systems running safely on people data. RBACs, data classification, and access policies already exist, but connecting them across systems is where it gets messy."</em></div>
+          <p>Two halves of this, and I have both.</p>
+          <p><strong>The building half:</strong> I implemented role-based access control, tenant isolation, and audit-ready data handling across FieldCommand by hand. I know exactly how messy the seams get when access policy has to hold across a database, an API layer, and a third-party service that has its own opinions.</p>
+          <p><strong>The regulated half:</strong> I spent four years as a financial advisor operating under FINRA and SEC oversight, with real confidentiality, recordkeeping and audit requirements. I'm used to the constraint that some data simply may not move, and to designing around that rather than asking for an exception. Employee data deserves the same instinct.</p>
+          <p>I'll say the obvious thing plainly: I run outside businesses, one of which is a partner-managed advisory practice. It's disclosable, my partner runs the day to day, and I'd want to talk it through early rather than late.</p>
+          <div class="chips"><span>RBAC built by hand</span><span>tenant isolation</span><span>FINRA / SEC environment</span><span>4 years regulated</span></div>
+        </div>
+      </div>
+
+      <div class="inst" data-open="0">
+        <button aria-expanded="false">
+          <span class="num n4">4</span>
+          <span class="ttl"><b>Translating in both directions is the part I'm best at.</b><i>The technical-business boundary</i></span>
+          <span class="plus">+</span>
+        </button>
+        <div class="drawer">
+          <div class="quoted"><em>"You can sit in a meeting with non-technical stakeholders, understand the real problem behind the stated request, and come back with a solution that actually addresses it."</em></div>
+          <p>At <strong>Coder</strong> I'm a Senior Software Engineer on AI Solutions, embedded in the revenue organization. I build an internal AI agent platform that turns CRM, support, and call-transcript data into answers and workflows for revenue teams. Two-person team, Python, large production codebase, shipping straight to production. <strong>That is structurally the same job as this one, pointed at a different function.</strong></p>
+          <p>Before engineering, I sat on the other side of the table. Four years advising 120-plus households at Edward Jones with 95% retention, running workshops that turned genuinely complicated financial mechanics into something a normal person could act on. The skill that made that work is the same one your posting is asking for, and it's harder to teach than Python.</p>
+          <p>It also means I'm comfortable with the second half of your sentence: pushing back when a technical constraint changes what's possible. Telling someone their idea won't work is a conversation I've had a few hundred times.</p>
+          <div class="chips"><span>Python daily at Coder</span><span>internal agent platform, now</span><span>120+ households advised</span><span>95% retention</span></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="fine">
+    <h2>No hidden fees. Here's the fine print anyway.</h2>
+    <p class="sub">Your whole pitch is that nothing is buried, so it would be strange for me to bury anything. These are the four things I'd want to know if I were reading this.</p>
+    <ul>
+      <li><b>I have never touched Snowflake, Snowpark Container Services, or dbt.</b> That's a real chunk of your stack and I'd be starting at zero on it. My data work is PostgreSQL, Supabase, and Microsoft SQL Server. I'd expect the first few weeks to be slow and I'd rather say so now.</li>
+      <li><b>No Workday experience.</b> I've built integrations against CRMs and third-party APIs, so the shape is familiar, but I have not worked in the HR systems layer specifically.</li>
+      <li><b>My Senior Software Engineer title is about a year old.</b> I've been building and shipping software much longer, but if you're counting years on a badge, mine is short. I'd rather you weigh what I built.</li>
+      <li><b>I run outside businesses.</b> FieldCommand and a partner-managed advisory practice both continue. Both are disclosable, neither competes with Affirm, and I'd want that on the table in the first conversation rather than the last.</li>
+    </ul>
+  </section>
+
+  <section class="cta">
+    <h2>If this reads like the right shape, I'd like to talk.</h2>
+    <p>The systems are easier to look at than to read about. I'd rather walk you through the verification pipeline than describe it.</p>
+    <div class="btns">
+      <a class="btn p" href="https://portfolio.andrewzoll.com">See the portfolio</a>
+      <a class="btn s" href="https://linkedin.com/in/andrewzoll">Connect on LinkedIn</a>
+    </div>
+  </section>
+
+  <footer>Andrew Zoll &middot; Pueblo, CO &middot; built for the AI Solutions Engineer role at Affirm</footer>
+
+</div>
+
+<script>
+(function(){
+  var plan   = document.getElementById('plan');
+  var insts  = [].slice.call(plan.querySelectorAll('.inst'));
+  var modes  = [].slice.call(document.querySelectorAll('.toggle button'));
+  var fill   = document.getElementById('fill');
+  var lbl    = document.getElementById('proglbl');
+  var prog   = document.getElementById('prog');
+  var opened = {};
+  var mode   = '4';
+
+  function paint(){
+    var n = Object.keys(opened).length;
+    fill.style.width = (n / insts.length * 100) + '%';
+    lbl.textContent = n + ' of ' + insts.length + ' opened';
+  }
+
+  insts.forEach(function(inst, i){
+    var btn = inst.querySelector('button');
+    btn.addEventListener('click', function(){
+      if (mode === 'full') return;              // full read is already open; button is inert by design
+      var open = inst.getAttribute('data-open') === '1';
+      inst.setAttribute('data-open', open ? '0' : '1');
+      btn.setAttribute('aria-expanded', open ? 'false' : 'true');
+      if (!open) { opened[i] = 1; }
+      paint();
+    });
+  });
+
+  function setMode(m){
+    mode = m;
+    modes.forEach(function(b){ b.setAttribute('aria-pressed', b.dataset.m === m ? 'true' : 'false'); });
+    if (m === 'full') {
+      plan.classList.add('full');
+      prog.style.display = 'none';
+      insts.forEach(function(inst, i){
+        inst.setAttribute('data-open','1');
+        inst.querySelector('button').setAttribute('aria-expanded','true');
+        opened[i] = 1;
+      });
+    } else {
+      plan.classList.remove('full');
+      prog.style.display = '';
+      insts.forEach(function(inst){
+        inst.setAttribute('data-open','0');
+        inst.querySelector('button').setAttribute('aria-expanded','false');
+      });
+    }
+    paint();
+  }
+  modes.forEach(function(b){ b.addEventListener('click', function(){ setMode(b.dataset.m); }); });
+  paint();
+})();
+</script>
+</body>
+</html>

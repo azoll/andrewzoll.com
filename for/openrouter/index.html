@@ -25,6 +25,16 @@
   .pill{margin-left:auto;border:1px solid var(--line);border-radius:999px;padding:3px 11px;font-size:11px;color:var(--ok)}
   .note{background:#0b0c0f;border-bottom:1px solid var(--line);font-size:11.5px;color:var(--mut2);padding:9px 0}
 
+  /* ---------- role switch: two open reqs, one page ---------- */
+  .swap{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:22px 0 0}
+  .swap .lab{font-size:11.5px;color:var(--mut2);letter-spacing:.04em}
+  .swap .opt{
+    font:inherit;font-size:12.5px;background:transparent;color:var(--mut);cursor:pointer;
+    border:1px solid var(--line);border-radius:7px;padding:7px 13px;transition:all .16s ease;
+  }
+  .swap .opt:hover{border-color:var(--mut2);color:var(--ink)}
+  .swap .opt[aria-pressed="true"]{background:var(--acc);border-color:var(--acc);color:#fff}
+
   /* ---------- hero: a request being routed ---------- */
   .hero{padding:60px 0 34px}
   .hero h1{font-size:clamp(27px,4.4vw,44px);line-height:1.12;letter-spacing:-.02em;font-weight:600;max-width:26ch;margin-bottom:18px}
@@ -93,11 +103,17 @@
 
 <div class="bar"><div class="wrap">
   <span>andrewzoll.com</span><b>/</b><span>for</span><b>/</b><span style="color:var(--ink)">openrouter</span>
-  <span class="pill">applied-ai-engineer</span>
+  <span class="pill" id="pill">applied-ai-engineer</span>
 </div></div>
 <div class="note"><div class="wrap">Not affiliated with OpenRouter. A personal page I built as part of my own application.</div></div>
 
 <div class="wrap">
+
+  <div class="swap" role="group" aria-label="Choose which open role to read this page against">
+    <span class="lab">you have two reqs open. I'd take either. pick one and this page adjusts:</span>
+    <button class="opt" data-r="applied" aria-pressed="true">Applied AI Engineer</button>
+    <button class="opt" data-r="fde" aria-pressed="false">Forward Deployed Engineer</button>
+  </div>
 
   <section class="hero">
     <h1>I already pay for OpenRouter. That's <em>why I'm applying.</em></h1>
@@ -105,10 +121,10 @@
 
     <div class="route">
       <div class="route-head"><span class="dot"></span> how I'd describe the fit, in the shape of your product</div>
-      <div class="hop"><div class="k">request</div><div class="v">Applied AI Engineer, <b>Remote (US)</b>, $215K to $280K</div></div>
+      <div class="hop"><div class="k">request</div><div class="v" id="v-req">Applied AI Engineer, <b>Remote (US)</b>, $215K to $280K</div></div>
       <div class="hop"><div class="k">day job</div><div class="v">Senior Software Engineer, AI Solutions at <b>Coder</b>. Two-person team, Python daily, large production codebase, shipping straight to prod.</div></div>
       <div class="hop"><div class="k">proof</div><div class="v"><b>AndrewOS</b> (agent OS I run daily, with cost-per-model instrumentation) &middot; <b>Veritas</b> (deterministic verdicts over model output) &middot; <b>FieldCommand</b> (187,745 lines of TypeScript, solo)</div></div>
-      <div class="hop"><div class="k">walls</div><div class="v">Your posting has <b>no years-of-experience requirement and no degree requirement.</b> I checked. That is rarer than it should be.</div></div>
+      <div class="hop"><div class="k">walls</div><div class="v" id="v-walls">Your posting has <b>no years-of-experience requirement and no degree requirement.</b> I checked. That is rarer than it should be.</div></div>
       <div class="hop"><div class="k">gap</div><div class="v">I have never operated inference infrastructure at provider scale. Detail below, not buried.</div></div>
     </div>
   </section>
@@ -124,12 +140,13 @@
         <button class="tab" role="tab" aria-selected="false" data-p="trust">model trust <span class="b">2</span></button>
         <button class="tab" role="tab" aria-selected="false" data-p="range">full-stack range <span class="b">3</span></button>
         <button class="tab" role="tab" aria-selected="false" data-p="user">I'm a user <span class="b">4</span></button>
+        <button class="tab tab-fde" role="tab" aria-selected="false" data-p="cust" style="display:none">in the customer's codebase <span class="b">5</span></button>
       </div>
       <div class="panes">
 
         <div class="pane on" id="p-cost">
           <h3>I built the cost instrumentation because I couldn't answer the question otherwise.</h3>
-          <p><strong>AndrewOS</strong> is an agent operating system I built and run every day. The part most relevant to you isn't the agents, it's the accounting: usage and spend broken out <strong>by model and by workload</strong>, surfaced on a dashboard I actually look at, next to job health, queue depth and failure signals.</p>
+          <p><strong>AndrewOS</strong> is an agent operating system I built and run every day. The part most relevant to you is the accounting rather than the agents: usage and spend broken out <strong>by model and by workload</strong>, surfaced on a dashboard I actually look at, next to job health, queue depth and failure signals.</p>
           <p>I built it because an agent workflow will happily cost ten times what you assumed and report nothing. There is no way to make an efficiency argument without the number, and no way to get the number by asking people.</p>
           <p>That is the same instinct a routing product runs on. You are in the business of making a cost-and-capability tradeoff legible to someone who would otherwise guess.</p>
           <dl class="kv">
@@ -168,6 +185,18 @@
           </dl>
         </div>
 
+        <div class="pane" id="p-cust">
+          <h3>The forward deployed job is mostly translation, and that's the part I've done longest.</h3>
+          <p>Your FDE posting asks for <strong>4+ years in a technical customer-facing role</strong>, which I clear, and names a stack I work in daily: <em>Python, TypeScript, REST APIs, streaming APIs, and common backend application architectures.</em></p>
+          <p>At <strong>Coder</strong> I sit inside the revenue organization rather than beside it. I build the internal agent platform for the people carrying quota, which means most of my week is understanding what someone actually needs before writing anything, then telling them honestly when the thing they asked for is the wrong thing.</p>
+          <p>Before engineering I advised 120-plus households for four years at 95% retention, and ran workshops turning genuinely complicated mechanics into something a normal person could act on. <strong>That skill transfers to a customer's engineering team more directly than people expect,</strong> and it is harder to teach than the stack.</p>
+          <p>The honest edge: I have deployed into my own environments and a client's, not into dozens of enterprise ones. The pattern is familiar. The volume is not.</p>
+          <dl class="kv">
+            <dt>bar</dt><dd>4+ yrs technical customer-facing. Cleared.</dd>
+            <dt>stack</dt><dd>Python, TypeScript, REST. Daily.</dd>
+          </dl>
+        </div>
+
       </div>
     </div>
   </section>
@@ -195,7 +224,7 @@
 
 </div>
 
-<footer><div class="wrap">Andrew Zoll &middot; Pueblo, CO &middot; built for the Applied AI Engineer role at OpenRouter</div></footer>
+<footer><div class="wrap">Andrew Zoll &middot; Pueblo, CO &middot; <span id="foot-role">built for the Applied AI Engineer role at OpenRouter</span></div></footer>
 
 <script>
 (function(){
@@ -214,6 +243,42 @@
     });
   });
   show('cost');
+
+  // ---- role switch: the page reads against whichever req you pick ----
+  var opts  = [].slice.call(document.querySelectorAll('.swap .opt'));
+  var pill  = document.getElementById('pill');
+  var vReq  = document.getElementById('v-req');
+  var vWall = document.getElementById('v-walls');
+  var fdeTab= document.querySelector('.tab-fde');
+  var foot  = document.getElementById('foot-role');
+
+  var COPY = {
+    applied: {
+      pill:  'applied-ai-engineer',
+      req:   'Applied AI Engineer, <b>Remote (US)</b>, $215K to $280K',
+      walls: 'Your posting has <b>no years-of-experience requirement and no degree requirement.</b> I checked. That is rarer than it should be.',
+      foot:  'built for the Applied AI Engineer role at OpenRouter'
+    },
+    fde: {
+      pill:  'forward-deployed-engineer',
+      req:   'Forward Deployed Engineer, <b>Remote (US)</b>, OTE $220K to $260K',
+      walls: 'One bar: <b>4+ years in a technical customer-facing role.</b> I clear it, and there is no degree requirement.',
+      foot:  'built for the Forward Deployed Engineer role at OpenRouter'
+    }
+  };
+
+  function setRole(r){
+    var c = COPY[r];
+    opts.forEach(function(o){ o.setAttribute('aria-pressed', o.dataset.r === r ? 'true' : 'false'); });
+    pill.textContent  = c.pill;
+    vReq.innerHTML    = c.req;
+    vWall.innerHTML   = c.walls;
+    if (foot) foot.textContent = c.foot;
+    fdeTab.style.display = (r === 'fde') ? '' : 'none';
+    if (r === 'fde') { show('cust'); } else if (document.getElementById('p-cust').classList.contains('on')) { show('cost'); }
+  }
+  opts.forEach(function(o){ o.addEventListener('click', function(){ setRole(o.dataset.r); }); });
+  setRole('applied');
 })();
 </script>
 </body>

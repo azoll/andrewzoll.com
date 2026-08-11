@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>Andrew Zoll for Applied AI Engineer at WorkOS</title>
+<style>
+  :root{
+    --paper:#ffffff;
+    --ink:#08090a;
+    --ink2:#3c4149;
+    --mut:#6a7280;
+    --mut2:#9aa1ab;
+    --line:#e6e8ec;
+    --line2:#f1f3f5;
+    --wash:#fafbfc;
+    --indigo:#6363f1;
+    --indigo-w:#eeeefe;
+    --grant:#0f9960;
+    --grant-w:#e9f7f0;
+    --part:#b7791f;
+    --part-w:#fdf6e7;
+    --deny:#98a1ac;
+    --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+    --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--paper);color:var(--ink);font-family:var(--sans);
+    font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:980px;margin:0 auto;padding:0 24px}
+  a{color:var(--indigo);text-decoration:none}
+  a:hover{text-decoration:underline}
+
+  /* ---------- top rule ---------- */
+  .top{border-bottom:1px solid var(--line);position:sticky;top:0;background:rgba(255,255,255,.88);backdrop-filter:blur(8px);z-index:20}
+  .top .wrap{display:flex;align-items:center;gap:12px;height:56px}
+  .mark{
+    width:22px;height:22px;border-radius:6px;background:var(--ink);
+    display:grid;place-items:center;color:#fff;font-family:var(--mono);font-size:11px;font-weight:600;
+  }
+  .top .who{font-size:14px;font-weight:560;letter-spacing:-.01em}
+  .top .sep{color:var(--mut2)}
+  .top .role{font-size:14px;color:var(--mut)}
+  .live{
+    margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--grant);
+    border:1px solid #cfeadd;background:var(--grant-w);border-radius:999px;padding:3px 10px;
+    display:flex;align-items:center;gap:6px;
+  }
+  .dot{width:6px;height:6px;border-radius:50%;background:var(--grant);animation:blip 2.4s ease-in-out infinite}
+  @keyframes blip{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(.8)}}
+
+  .disc{background:var(--wash);border-bottom:1px solid var(--line);font-size:12.5px;color:var(--mut);padding:10px 0}
+
+  /* ---------- hero ---------- */
+  .hero{padding:76px 0 56px;border-bottom:1px solid var(--line)}
+  .eyebrow{
+    font-family:var(--mono);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;
+    color:var(--indigo);margin-bottom:20px;
+  }
+  .hero h1{
+    font-size:clamp(32px,5.2vw,54px);line-height:1.06;letter-spacing:-.035em;font-weight:640;
+    max-width:19ch;margin-bottom:24px;
+  }
+  .hero h1 em{font-style:normal;color:var(--indigo)}
+  .lede{font-size:19px;line-height:1.55;color:var(--ink2);max-width:60ch;margin-bottom:16px}
+  .lede + .lede{font-size:17px;color:var(--mut)}
+
+  .quoteback{
+    margin-top:38px;border-left:3px solid var(--indigo);background:var(--indigo-w);
+    padding:18px 22px;border-radius:0 10px 10px 0;max-width:64ch;
+  }
+  .quoteback p{font-size:16px;color:var(--ink2)}
+  .quoteback .src{font-family:var(--mono);font-size:11.5px;color:var(--mut);margin-top:9px}
+
+  /* ---------- section frame ---------- */
+  .sec{padding:64px 0;border-bottom:1px solid var(--line)}
+  .kicker{
+    font-family:var(--mono);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;
+    color:var(--mut2);margin-bottom:14px;
+  }
+  .sec h2{font-size:clamp(24px,3.2vw,32px);line-height:1.18;letter-spacing:-.025em;font-weight:620;max-width:24ch;margin-bottom:14px}
+  .sec .sub{color:var(--mut);max-width:62ch;font-size:16px}
+
+  /* ---------- scope table (the interactive core) ---------- */
+  .filters{display:flex;flex-wrap:wrap;gap:8px;margin:30px 0 20px;align-items:center}
+  .filters .lbl{font-family:var(--mono);font-size:11px;color:var(--mut2);letter-spacing:.06em;text-transform:uppercase;margin-right:4px}
+  .chip{
+    font-family:var(--mono);font-size:12px;border:1px solid var(--line);background:#fff;color:var(--mut);
+    border-radius:7px;padding:6px 12px;cursor:pointer;transition:all .16s ease;
+  }
+  .chip:hover{border-color:var(--mut2);color:var(--ink2)}
+  .chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
+  .count{font-family:var(--mono);font-size:12px;color:var(--mut2);margin-left:auto}
+
+  .scopes{border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .scope{border-bottom:1px solid var(--line2)}
+  .scope:last-child{border-bottom:0}
+  .scope.hide{display:none}
+  .scope > button{
+    width:100%;display:flex;align-items:center;gap:14px;text-align:left;
+    background:#fff;border:0;padding:16px 18px;cursor:pointer;font:inherit;color:inherit;
+    transition:background .14s ease;
+  }
+  .scope > button:hover{background:var(--wash)}
+  .scope[open-state="1"] > button{background:var(--wash)}
+  .badge{
+    font-family:var(--mono);font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;
+    border-radius:5px;padding:3px 8px;white-space:nowrap;flex-shrink:0;min-width:74px;text-align:center;
+  }
+  .b-grant{background:var(--grant-w);color:var(--grant);border:1px solid #cfeadd}
+  .b-part{background:var(--part-w);color:var(--part);border:1px solid #f0e2bd}
+  .b-deny{background:#f4f5f7;color:var(--deny);border:1px solid var(--line)}
+  .scope .name{font-family:var(--mono);font-size:13.5px;color:var(--ink);letter-spacing:-.01em;flex:1}
+  .scope .chev{color:var(--mut2);font-size:13px;transition:transform .2s ease;flex-shrink:0}
+  .scope[open-state="1"] .chev{transform:rotate(90deg)}
+
+  .body{display:none;padding:2px 18px 22px 18px;background:var(--wash);border-top:1px solid var(--line2)}
+  .scope[open-state="1"] .body{display:block;animation:drop .22s ease}
+  @keyframes drop{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+  .body .req{
+    font-size:14px;color:var(--mut);font-style:italic;padding:14px 0 12px;max-width:70ch;
+  }
+  .body p{font-size:15.5px;color:var(--ink2);margin-bottom:12px;max-width:70ch}
+  .body p:last-child{margin-bottom:0}
+  .body strong{color:var(--ink);font-weight:600}
+  .meta{
+    display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;
+  }
+  .tag{font-family:var(--mono);font-size:11px;color:var(--mut);background:#fff;border:1px solid var(--line);border-radius:6px;padding:4px 9px}
+
+  /* ---------- ledger ---------- */
+  .ledger{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-top:34px}
+  .cell{background:#fff;padding:22px 20px}
+  .cell .n{font-size:27px;font-weight:640;letter-spacing:-.03em;margin-bottom:5px}
+  .cell .n small{font-size:14px;color:var(--mut2);font-weight:500;letter-spacing:0}
+  .cell .d{font-size:13.5px;color:var(--mut);line-height:1.45}
+
+  /* ---------- gaps ---------- */
+  .gaps{background:var(--wash);border:1px solid var(--line);border-radius:12px;padding:28px 26px;margin-top:26px}
+  .gaps ul{list-style:none;display:grid;gap:15px}
+  .gaps li{padding-left:20px;position:relative;font-size:15.5px;color:var(--ink2);max-width:74ch}
+  .gaps li:before{content:"";position:absolute;left:0;top:9px;width:7px;height:2px;background:var(--mut2)}
+  .gaps b{font-weight:600;color:var(--ink)}
+
+  /* ---------- cta ---------- */
+  .cta{padding:76px 0 84px;text-align:center}
+  .cta h2{font-size:clamp(25px,3.6vw,36px);letter-spacing:-.03em;font-weight:640;margin:0 auto 14px;max-width:20ch}
+  .cta p{color:var(--mut);max-width:52ch;margin:0 auto 30px;font-size:16.5px}
+  .btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+  .btn{
+    font-size:15px;font-weight:540;border-radius:9px;padding:12px 22px;border:1px solid transparent;
+    transition:transform .14s ease,box-shadow .14s ease,background .14s ease;display:inline-block;
+  }
+  .btn:hover{text-decoration:none;transform:translateY(-1px)}
+  .btn.p{background:var(--ink);color:#fff}
+  .btn.p:hover{box-shadow:0 6px 18px rgba(8,9,10,.18)}
+  .btn.s{background:#fff;color:var(--ink);border-color:var(--line)}
+  .btn.s:hover{border-color:var(--mut2)}
+
+  footer{border-top:1px solid var(--line);padding:26px 0 40px;font-family:var(--mono);font-size:12px;color:var(--mut2)}
+
+  @media(max-width:640px){
+    .hero{padding:52px 0 40px}
+    .sec{padding:48px 0}
+    .scope > button{flex-wrap:wrap;gap:10px}
+    .scope .name{flex-basis:100%;order:3}
+    .count{margin-left:0;flex-basis:100%}
+  }
+</style>
+</head>
+<body>
+
+<div class="top">
+  <div class="wrap">
+    <div class="mark">AZ</div>
+    <span class="who">Andrew Zoll</span>
+    <span class="sep">/</span>
+    <span class="role">Applied AI Engineer</span>
+    <span class="live"><span class="dot"></span>open to talk</span>
+  </div>
+</div>
+
+<div class="disc"><div class="wrap">Not affiliated with WorkOS. This is a personal page I built as part of my own application for the Applied AI Engineer role.</div></div>
+
+<div class="wrap">
+
+  <section class="hero">
+    <div class="eyebrow">Applied AI Engineer &middot; Remote, United States</div>
+    <h1>You ask who your agents are and <em>what they're allowed to do</em>. I've been answering that for myself for a year.</h1>
+    <p class="lede">I'm Andrew. I build agent systems that run real operations, and I've spent the last year on the unglamorous half of that problem: what an agent is permitted to touch, what it has to hand back to a human, and how you find out when it quietly went wrong.</p>
+    <p class="lede">Not as a thought exercise. As the thing my own business actually runs on, and now as my day job.</p>
+
+    <div class="quoteback">
+      <p>Your posting describes "a GTM intelligence layer that gives reps live account context, meeting prep, and follow-up from CRM, product usage, and conversation history."</p>
+      <p class="src">That's not an example problem for me. That is my current job description at Coder, where I'm a Senior Software Engineer on AI Solutions building exactly that platform.</p>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="kicker">The case, as scopes</div>
+    <h2>Every line you asked for, and what I can actually put behind it.</h2>
+    <p class="sub">You're an access-control company, so I framed this the way you'd read it. Each row is something your posting asks for. Open one and you get the receipt, not a claim. Filter by what I've actually got.</p>
+
+    <div class="filters" role="group" aria-label="Filter requirements by status">
+      <span class="lbl">Filter</span>
+      <button class="chip" data-f="all" aria-pressed="true">All 8</button>
+      <button class="chip" data-f="grant" aria-pressed="false">Granted</button>
+      <button class="chip" data-f="part" aria-pressed="false">Partial</button>
+      <button class="chip" data-f="deny" aria-pressed="false">Not granted</button>
+      <span class="count" id="count">showing 8 of 8</span>
+    </div>
+
+    <div class="scopes" id="scopes">
+
+      <div class="scope" data-s="grant" open-state="0">
+        <button aria-expanded="false">
+          <span class="badge b-grant">granted</span>
+          <span class="name">ai_systems:idea_to_production</span>
+          <span class="chev">&#9656;</span>
+        </button>
+        <div class="body">
+          <p class="req">"You've taken AI-powered systems from idea to production and through at least one iteration cycle with real users."</p>
+          <p>I built <strong>AndrewOS</strong>, an agent operating system that runs marketing, content, and operations across two businesses. It's been in production for a year, and the users are real in the way that matters most: when it breaks, my own revenue work stops. It's gone through many iteration cycles because it had to.</p>
+          <p>At <strong>Coder</strong> I ship an internal AI agent platform that turns CRM, support, and call-transcript data into answers and workflows for the revenue org. Two-person team, straight to production.</p>
+          <div class="meta"><span class="tag">1 year in production</span><span class="tag">two businesses on it</span><span class="tag">still running today</span></div>
+        </div>
+      </div>
+
+      <div class="scope" data-s="grant" open-state="0">
+        <button aria-expanded="false">
+          <span class="badge b-grant">granted</span>
+          <span class="name">internal_tools:daily_work</span>
+          <span class="chev">&#9656;</span>
+        </button>
+        <div class="body">
+          <p class="req">"Build internal tools that become part of people's daily work: agents, automations, and workflows that are stable, observable, and easy to maintain."</p>
+          <p>This is the part of the posting I'd point at first. AndrewOS has a delegation hierarchy, scheduled jobs that run without me, and a dashboard I open every morning to see what the agents did overnight. <strong>Observability wasn't a nice-to-have, it was the thing that made autonomy survivable.</strong></p>
+          <p>Every agent in the pipeline writes a structured trace: what it received, what it decided, why, and what it handed off. A finished run reads top to bottom as a replayable audit record. That's what I review, instead of raw agent output.</p>
+          <div class="meta"><span class="tag">structured agent traces</span><span class="tag">scheduled autonomous jobs</span><span class="tag">live ops dashboard</span></div>
+        </div>
+      </div>
+
+      <div class="scope" data-s="grant" open-state="0">
+        <button aria-expanded="false">
+          <span class="badge b-grant">granted</span>
+          <span class="name">gtm_intelligence:crm_to_workflow</span>
+          <span class="chev">&#9656;</span>
+        </button>
+        <div class="body">
+          <p class="req">"A GTM intelligence layer that gives reps live account context, meeting prep, and follow-up from CRM, product usage, and conversation history."</p>
+          <p>This is my actual job right now. At Coder I'm building the internal AI agent platform for the revenue organization, working in Python on a large production codebase, and I own the quality practice around it: test coverage, release process, and the operating docs the rest of the team works from.</p>
+          <p>Before that I built the integration layer between Redtail CRM, external services, and the OpenAI API at an advisory practice, which took out more than twenty hours of manual work a month. Same shape of problem, smaller blast radius.</p>
+          <div class="meta"><span class="tag">Python</span><span class="tag">CRM + transcripts + support</span><span class="tag">shipping now</span></div>
+        </div>
+      </div>
+
+      <div class="scope" data-s="grant" open-state="0">
+        <button aria-expanded="false">
+          <span class="badge b-grant">granted</span>
+          <span class="name">engineering:own_services_end_to_end</span>
+          <span class="chev">&#9656;</span>
+        </button>
+        <div class="body">
+          <p class="req">"Strong engineering fundamentals. You're comfortable owning services, data flows, and integrations end-to-end."</p>
+          <p><strong>FieldCommand</strong> is a multi-tenant SaaS for commercial trade contractors that I designed and shipped alone: <strong>187,745 lines of TypeScript</strong> on a PostgreSQL and Supabase backend, from the schema up through the API layer to the interface contractors use. Role-based access control, tenant isolation, Stripe billing, and the pipelines connecting all of it are mine.</p>
+          <p>I mention the RBAC and tenant-isolation work specifically because it's the closest thing I've built to your product's problem, and because building it is why I read your docs for fun before I ever saw this posting.</p>
+          <div class="meta"><span class="tag">TypeScript</span><span class="tag">PostgreSQL / Supabase</span><span class="tag">RBAC + tenant isolation</span><span class="tag">Stripe billing</span></div>
+        </div>
+      </div>
+
+      <div class="scope" data-s="grant" open-state="0">
+        <button aria-expanded="false">
+          <span class="badge b-grant">granted</span>
+          <span class="name">llm_apis:tool_calling</span>
+          <span class="chev">&#9656;</span>
+        </button>
+        <div class="body">
+          <p class="req">"Experience building with LLM APIs" and "structured tool-calling or agents."</p>
+          <p>Daily, across Claude and the OpenAI API. AndrewOS is built on tool-calling agents with a defined delegation pattern: a chief-of-staff layer routes work, arena managers own outcomes, and junior agents execute inside a scoped task packet. Reviewers always run in a fresh context, because an agent that audits its own work isn't auditing anything.</p>
+          <p><strong>Veritas</strong>, my citation-verification platform for legal filings, is the strictest version of this. It checks cited cases and quotations against source records and returns an auditable verification record, with deliberately hedged verdict semantics, because a confident wrong answer about a court filing is worse than no answer.</p>
+          <div class="meta"><span class="tag">Claude + OpenAI APIs</span><span class="tag">multi-agent orchestration</span><span class="tag">independent-reviewer pattern</span></div>
+        </div>
+      </div>
+
+      <div class="scope" data-s="grant" open-state="0">
+        <button aria-expanded="false">
+          <span class="badge b-grant">granted</span>
+          <span class="name">failure_modes:not_just_the_demo</span>
+          <span class="chev">&#9656;</span>
+        </button>
+        <div class="body">
+          <p class="req">"You think about failure modes, observability, and ownership, not just whether the demo works."</p>
+          <p>My honest answer here is that I learned this the expensive way. An early version of my outreach automation could send the same message twice to the same person, which is the kind of bug that costs you a relationship rather than a request. The fix wasn't a better prompt. It was a deterministic dedupe layer that reads the live sent-mail record, fails closed when it can't read it, and refuses the send.</p>
+          <p>That pattern is now everywhere in the system: <strong>hard gates written in plain code around the parts where a model being creative would be a disaster.</strong> A deterministic linter blocks anything going out under my name. A freeze flag halts all sending when the bounce rate crosses a threshold. Models decide what to say. Code decides whether it's allowed to leave.</p>
+          <div class="meta"><span class="tag">fails closed</span><span class="tag">deterministic gates</span><span class="tag">learned from a real bug</span></div>
+        </div>
+      </div>
+
+      <div class="scope" data-s="part" open-state="0">
+        <button aria-expanded="false">
+          <span class="badge b-part">partial</span>
+          <span class="name">retrieval:embeddings_rag</span>
+          <span class="chev">&#9656;</span>
+        </button>
+        <div class="body">
+          <p class="req">"Experience with embeddings, retrieval/RAG architectures" and "Exposure to MCP or similar protocols."</p>
+          <p>Partial, and I'd rather grade myself honestly than have you find out in week two.</p>
+          <p><strong>What's real:</strong> I use MCP daily and have wired agents to real systems through it. Veritas does retrieval against source records, and my knowledge layer is structured retrieval over a curated corpus. I'm fluent in the shape of the problem.</p>
+          <p><strong>What isn't:</strong> I haven't tuned a vector store at scale, and I haven't owned an embedding pipeline where recall quality was the product. I've been the consumer of good retrieval more than the person accountable for it.</p>
+          <div class="meta"><span class="tag">MCP daily</span><span class="tag">retrieval yes</span><span class="tag">vector tuning no</span></div>
+        </div>
+      </div>
+
+      <div class="scope" data-s="deny" open-state="0">
+        <button aria-expanded="false">
+          <span class="badge b-deny">not granted</span>
+          <span class="name">scale:enterprise_identity_infra</span>
+          <span class="chev">&#9656;</span>
+        </button>
+        <div class="body">
+          <p class="req">The thing you'd be right to push on.</p>
+          <p>I have not operated identity infrastructure at your scale, and I won't pretend the gap is small. My systems serve one operator and a small customer base. WorkOS powers enterprise auth for OpenAI, Cursor, Vercel and Plaid. Those are different sports.</p>
+          <p>What I'd bring instead is that I've been on the other side of your API as a builder who had to implement tenant isolation and role-based access by hand, badly at first, and I remember exactly which parts were confusing. If any of my first work is customer-facing, that memory is worth something.</p>
+          <div class="meta"><span class="tag">honest gap</span><span class="tag">no hand-waving</span></div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="ledger">
+      <div class="cell"><div class="n">187,745</div><div class="d">Lines of TypeScript in FieldCommand, built solo, in production.</div></div>
+      <div class="cell"><div class="n">3 <small>products</small></div><div class="d">FieldCommand, Veritas, and AndrewOS. All shipped, all mine, all still running.</div></div>
+      <div class="cell"><div class="n">2 <small>person team</small></div><div class="d">The size of the group shipping the AI agent platform at Coder. There's nowhere to hide.</div></div>
+      <div class="cell"><div class="n">20+ <small>hrs/mo</small></div><div class="d">Manual work removed by one CRM integration, measured after the fact.</div></div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="kicker">What I don't have</div>
+    <h2>The four things I'd want to know if I were reading this.</h2>
+    <div class="gaps">
+      <ul>
+        <li><b>I'm about a year into the formal Senior Software Engineer title.</b> I've been building software far longer than that, and shipping it solo, but if you're counting years on a badge, mine is short. I'd rather you weigh what I built than when I started calling it my job.</li>
+        <li><b>No production Go or Rust.</b> I can read both and have shipped neither. TypeScript and Python are where I'm genuinely strong, and I'd be honest about the ramp on anything else.</li>
+        <li><b>I haven't run infrastructure at your traffic.</b> Failover, capacity planning and multi-region behavior at WorkOS scale would be new to me, and I'd expect to be slow on it for a while.</li>
+        <li><b>I run outside businesses.</b> FieldCommand and a partner-managed advisory practice both continue, both are disclosable, and neither competes with WorkOS. I'd rather raise it on a page you're already reading than in week three.</li>
+      </ul>
+    </div>
+  </section>
+
+</div>
+
+<div class="wrap">
+  <section class="cta">
+    <h2>If this is the shape you're hiring, I'd like to talk.</h2>
+    <p>The systems are easier to look at than to read about. I'd rather walk you through the agent trace than describe it.</p>
+    <div class="btns">
+      <a class="btn p" href="https://portfolio.andrewzoll.com">See the portfolio</a>
+      <a class="btn s" href="https://linkedin.com/in/andrewzoll">Connect on LinkedIn</a>
+    </div>
+  </section>
+</div>
+
+<footer><div class="wrap">Andrew Zoll &middot; Pueblo, CO &middot; built for the Applied AI Engineer role at WorkOS</div></footer>
+
+<script>
+(function(){
+  var scopes = [].slice.call(document.querySelectorAll('.scope'));
+  var chips  = [].slice.call(document.querySelectorAll('.chip'));
+  var count  = document.getElementById('count');
+
+  // expand / collapse
+  scopes.forEach(function(s){
+    var btn = s.querySelector('button');
+    btn.addEventListener('click', function(){
+      var open = s.getAttribute('open-state') === '1';
+      s.setAttribute('open-state', open ? '0' : '1');
+      btn.setAttribute('aria-expanded', open ? 'false' : 'true');
+    });
+  });
+
+  // filter
+  function apply(f){
+    var shown = 0;
+    scopes.forEach(function(s){
+      var match = (f === 'all') || (s.dataset.s === f);
+      s.classList.toggle('hide', !match);
+      if (match) shown++;
+      if (!match) { s.setAttribute('open-state','0'); s.querySelector('button').setAttribute('aria-expanded','false'); }
+    });
+    chips.forEach(function(c){ c.setAttribute('aria-pressed', c.dataset.f === f ? 'true' : 'false'); });
+    count.textContent = 'showing ' + shown + ' of ' + scopes.length;
+  }
+  chips.forEach(function(c){ c.addEventListener('click', function(){ apply(c.dataset.f); }); });
+  apply('all');
+})();
+</script>
+</body>
+</html>
