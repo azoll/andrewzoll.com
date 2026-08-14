@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stewardship Plan Builder | Ryleigh Wealth Management</title>
+  <meta name="description" content="A 10-minute tool that turns your priorities and constraints into a personalized 90-day stewardship plan with three moves and a 30/60/90 checklist.">
+  <link rel="icon" href="/favicon.ico">
+  <link rel="stylesheet" href="../_lib/engine.css">
+</head>
+<body>
+  <div id="app"></div>
+
+  <script src="../_lib/jspdf.umd.min.js"></script>
+  <script src="../_lib/engine.js"></script>
+  <script src="config.js"></script>
+  <script>
+    RWMQuiz.mount({
+      rootEl: document.getElementById('app'),
+      config: window.TOOL_CONFIG,
+    });
+  </script>
+</body>
+</html>
