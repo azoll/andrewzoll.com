@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>Andrew Zoll for Senior Software Engineer, Vanta for Government</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#07120E; --ink2:#0D1D17; --card:#102A21; --line:#1C3A2E; --line2:#16302620;
+    --paper:#F4F3EE; --paper2:#E9E7DD;
+    --txt:#EAF3EE; --mut:#8FA79C; --mut2:#61776D;
+    --lime:#C9F24E; --lime2:#A8D62E; --amber:#F2B33D;
+    --sans:'Manrope',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    --mono:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--ink);color:var(--txt);font-family:var(--sans);font-size:15.5px;line-height:1.65;-webkit-font-smoothing:antialiased}
+  a{color:var(--lime);text-decoration:none}
+  .wrap{max-width:1000px;margin:0 auto;padding:0 24px}
+  @media(max-width:640px){.wrap{padding:0 17px}}
+
+  /* ==== top status strip ==== */
+  .strip{border-bottom:1px solid var(--line);background:var(--ink2);position:sticky;top:0;z-index:50}
+  .strip .wrap{display:flex;align-items:center;gap:12px;height:52px;font-family:var(--mono);font-size:11.5px;color:var(--mut2)}
+  .mark{display:flex;align-items:center;gap:8px;color:var(--txt);font-family:var(--sans);font-weight:700;font-size:14px;letter-spacing:-.01em}
+  .mark .sq{width:15px;height:15px;border-radius:4px;background:var(--lime);position:relative;flex:none}
+  .mark .sq:after{content:"";position:absolute;left:4px;top:6.5px;width:6px;height:3px;border-left:1.8px solid var(--ink);border-bottom:1.8px solid var(--ink);transform:rotate(-45deg)}
+  .strip .st{margin-left:auto;display:flex;align-items:center;gap:7px}
+  .strip .dot{width:6px;height:6px;border-radius:50%;background:var(--lime);box-shadow:0 0 0 3px rgba(201,242,78,.16)}
+
+  /* ==== hero ==== */
+  .hero{padding:74px 0 52px;border-bottom:1px solid var(--line)}
+  .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.11em;text-transform:uppercase;color:var(--lime2);margin-bottom:19px}
+  .hero h1{font-size:clamp(31px,5vw,52px);line-height:1.07;letter-spacing:-.033em;font-weight:800;max-width:20ch;margin-bottom:20px}
+  .hero h1 u{text-decoration:none;color:var(--lime)}
+  .hero p{color:var(--mut);font-size:17px;max-width:60ch}
+  .hero p+p{margin-top:13px}
+  .hero p strong{color:var(--txt);font-weight:600}
+
+  .meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:11px;overflow:hidden;margin-top:34px}
+  .meta div{background:var(--ink2);padding:14px 16px}
+  .meta .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--mut2);margin-bottom:5px}
+  .meta .v{font-size:14px;font-weight:600;color:var(--txt);line-height:1.35}
+
+  /* ==== sections ==== */
+  section{padding:62px 0;border-bottom:1px solid var(--line)}
+  h2{font-size:clamp(22px,3.2vw,31px);font-weight:700;letter-spacing:-.025em;line-height:1.16;margin-bottom:12px;max-width:24ch}
+  .lede{color:var(--mut);max-width:66ch;font-size:16px;margin-bottom:28px}
+  p+p{margin-top:12px}
+  p strong{color:var(--txt);font-weight:600}
+  .body{color:var(--mut);max-width:70ch}
+
+  /* ==== the control monitor: real, computed ==== */
+  .monitor{border:1px solid var(--line);border-radius:13px;overflow:hidden;background:var(--ink2)}
+  .mon-head{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:17px 19px;border-bottom:1px solid var(--line);background:var(--card)}
+  .mon-head .ttl{font-size:14px;font-weight:700;letter-spacing:-.01em}
+  .mon-head .ttl span{display:block;font-family:var(--mono);font-size:10.5px;font-weight:400;color:var(--mut2);letter-spacing:.02em;margin-top:3px}
+  .gauge{margin-left:auto;display:flex;align-items:center;gap:11px;min-width:0}
+  .gauge .pct{font-family:var(--mono);font-size:20px;font-weight:500;color:var(--lime);line-height:1}
+  .track{width:132px;height:6px;border-radius:3px;background:#1B352A;overflow:hidden}
+  .fill{height:100%;width:0;background:linear-gradient(90deg,var(--lime2),var(--lime));border-radius:3px;transition:width .45s cubic-bezier(.4,0,.2,1)}
+
+  .filters{display:flex;gap:7px;flex-wrap:wrap;padding:13px 19px;border-bottom:1px solid var(--line);background:#0B1C16}
+  .fbtn{font:inherit;font-family:var(--mono);font-size:11px;letter-spacing:.03em;background:transparent;color:var(--mut);border:1px solid var(--line);border-radius:999px;padding:5px 13px;cursor:pointer;transition:all .14s}
+  .fbtn:hover{color:var(--txt);border-color:var(--mut2)}
+  .fbtn[aria-pressed="true"]{background:var(--lime);border-color:var(--lime);color:var(--ink);font-weight:500}
+
+  .ctrl{border-bottom:1px solid var(--line)}
+  .ctrl:last-child{border-bottom:0}
+  .ctrl-top{display:grid;grid-template-columns:auto 1fr auto auto;gap:13px;align-items:center;width:100%;text-align:left;background:none;border:0;font:inherit;color:inherit;padding:15px 19px;cursor:pointer;transition:background .13s}
+  .ctrl-top:hover{background:#0C201A}
+  .badge{width:19px;height:19px;border-radius:6px;display:grid;place-items:center;flex:none;font-size:11px;font-weight:700}
+  .badge.ok{background:var(--lime);color:var(--ink)}
+  .badge.part{background:transparent;border:1.6px solid var(--amber);color:var(--amber)}
+  .ctrl-name{font-size:14.5px;font-weight:600;line-height:1.4;min-width:0}
+  .ctrl-name em{display:block;font-style:normal;font-family:var(--mono);font-size:10.5px;color:var(--mut2);font-weight:400;margin-top:4px;line-height:1.5}
+  .tag{font-family:var(--mono);font-size:9.5px;letter-spacing:.07em;text-transform:uppercase;padding:3px 8px;border-radius:5px;white-space:nowrap;flex:none}
+  .tag.ok{background:rgba(201,242,78,.12);color:var(--lime)}
+  .tag.part{background:rgba(242,179,61,.12);color:var(--amber)}
+  .caret{font-family:var(--mono);color:var(--mut2);font-size:13px;transition:transform .2s;flex:none}
+  .ctrl.open .caret{transform:rotate(90deg);color:var(--lime)}
+  .ev{display:none;padding:2px 19px 20px 51px;color:var(--mut);font-size:14.5px;max-width:78ch}
+  .ctrl.open .ev{display:block}
+  .ev strong{color:var(--txt);font-weight:600}
+  .ev .src{font-family:var(--mono);font-size:10.5px;color:var(--mut2);margin-top:10px;padding-top:9px;border-top:1px dashed var(--line)}
+  @media(max-width:640px){
+    .ctrl-top{grid-template-columns:auto 1fr auto;gap:11px}
+    .tag{display:none}
+    .ev{padding-left:22px}
+  }
+
+  /* ==== paper block for the gap ==== */
+  .paper{background:var(--paper);color:#1B2A24;border-radius:13px;padding:28px 30px}
+  @media(max-width:640px){.paper{padding:22px 20px}}
+  .paper h3{font-size:19px;font-weight:800;letter-spacing:-.02em;margin-bottom:11px}
+  .paper p{color:#3F5249;max-width:70ch;font-size:15px}
+  .paper p+p{margin-top:11px}
+  .paper strong{color:#12211B;font-weight:700}
+  .stamp{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#6E8378;border:1px solid #C9C6B8;border-radius:999px;padding:4px 11px;margin-bottom:15px}
+
+  /* ==== two-up ==== */
+  .two{display:grid;grid-template-columns:repeat(auto-fit,minmax(258px,1fr));gap:13px;margin-top:8px}
+  .box{border:1px solid var(--line);border-radius:11px;padding:19px 20px;background:var(--ink2)}
+  .box .h{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--lime2);margin-bottom:9px}
+  .box .b{font-size:15px;font-weight:600;margin-bottom:6px;letter-spacing:-.01em}
+  .box .s{font-size:14px;color:var(--mut);line-height:1.6}
+
+  /* ==== cta ==== */
+  .cta{display:flex;flex-wrap:wrap;gap:11px;margin-top:24px}
+  .btn{font-size:14.5px;font-weight:600;border-radius:9px;padding:12px 21px;border:1px solid var(--line);color:var(--txt);transition:all .15s}
+  .btn:hover{border-color:var(--mut2)}
+  .btn.p{background:var(--lime);border-color:var(--lime);color:var(--ink)}
+  .btn.p:hover{background:#D6FA6B;border-color:#D6FA6B}
+  footer{padding:30px 0 46px;font-family:var(--mono);font-size:11.5px;color:var(--mut2);line-height:1.85}
+</style>
+</head>
+<body>
+
+<div class="strip"><div class="wrap">
+  <span class="mark"><span class="sq"></span>andrew zoll</span>
+  <span class="st"><span class="dot"></span>applying · Vanta for Government</span>
+</div></div>
+
+<div class="wrap">
+
+  <div class="hero">
+    <div class="eyebrow">Senior Software Engineer · Vanta for Government</div>
+    <h1>I've spent ten years being the person the <u>audit</u> lands on.</h1>
+    <p>I'm Andrew. I write software now, but before that I ran a book of business under FINRA and SEC oversight, where recordkeeping and evidence weren't a quarterly exercise, they were the thing that could end my license. That's an unusual place to have learned engineering taste from, and it's the reason I build systems where the verdict is reproducible and the trail is already there.</p>
+    <p>You're building compliance tooling for <strong>FedRAMP, CMMC and NIST</strong> from a 0 to 1 position, alongside design partners, while requirements are still moving. I've built the 0 to 1 half three times and lived the regulated half for a decade.</p>
+    <div class="meta">
+      <div><div class="k">Req</div><div class="v">Senior SWE, Vanta for Government</div></div>
+      <div><div class="k">Posted geo</div><div class="v">Remote U.S.</div></div>
+      <div><div class="k">Band</div><div class="v">$224K to $263K</div></div>
+      <div><div class="k">Me</div><div class="v">Pueblo, Colorado</div></div>
+    </div>
+  </div>
+
+  <section>
+    <h2>Every requirement, treated like a control.</h2>
+    <p class="lede">Your product monitors controls continuously and shows the evidence behind each one, so that's how I've laid out my own case. Six controls pulled from your posting. Filter them, or open one to read the evidence. Two are partial, and I've marked them that way rather than rounding up.</p>
+
+    <div class="monitor">
+      <div class="mon-head">
+        <div class="ttl">Candidate readiness<span>ANDREW ZOLL · continuous self-assessment</span></div>
+        <div class="gauge">
+          <span class="pct" id="pct">0%</span>
+          <span class="track"><span class="fill" id="fill"></span></span>
+        </div>
+      </div>
+
+      <div class="filters">
+        <button class="fbtn" data-f="all" aria-pressed="true">All controls</button>
+        <button class="fbtn" data-f="ok">Met</button>
+        <button class="fbtn" data-f="part">Partial</button>
+      </div>
+
+      <div id="ctrls">
+
+        <div class="ctrl" data-s="ok">
+          <button class="ctrl-top"><span class="badge ok">&#10003;</span>
+            <span class="ctrl-name">Highly regulated industry experience<em>"Experience in highly regulated industries such as fintech or healthcare"</em></span>
+            <span class="tag ok">Met</span><span class="caret">&#9656;</span></button>
+          <div class="ev"><p>Ten years of it. Four at <strong>Edward Jones</strong> and then my own practice at <strong>Ryleigh Wealth Management</strong>, both under FINRA and SEC oversight, with the confidentiality, recordkeeping and audit obligations that come with a registration. I've been examined, and I've built the process that survives being examined.</p><p>The transfer to your customer is direct. When a federal vendor tells you their evidence collection has to hold up to a third party who is actively looking for the gap, I don't need that explained.</p><p class="src">Evidence: cv.md · Edward Jones 2020-2024, RWM 2024-present</p></div>
+        </div>
+
+        <div class="ctrl" data-s="ok">
+          <button class="ctrl-top"><span class="badge ok">&#10003;</span>
+            <span class="ctrl-name">Systems thinking and platform architecture, designed for reuse<em>"you design for reuse, scalability, and long-term maintainability"</em></span>
+            <span class="tag ok">Met</span><span class="caret">&#9656;</span></button>
+          <div class="ev"><p><strong>FieldCommand</strong> is 187,745 lines of TypeScript on PostgreSQL and Supabase, designed and shipped alone, with role-based access control, tenant isolation and Stripe billing. The interesting part for this req isn't the size, it's that a multi-tenant compliance-shaped product forces the reuse question immediately: what belongs in the shared platform and what is genuinely per-tenant.</p><p>Your posting frames the government line as adapting core platform capability rather than forking it, and building on shared infrastructure and tagging systems rather than starting from scratch. That's the same decision, and I've made it under load.</p><p class="src">Evidence: FieldCommand, 2025-present</p></div>
+        </div>
+
+        <div class="ctrl" data-s="ok">
+          <button class="ctrl-top"><span class="badge ok">&#10003;</span>
+            <span class="ctrl-name">0 to 1 with evolving requirements, alongside design partners<em>"Comfortable operating in early-stage, 0→1 environments where requirements evolve"</em></span>
+            <span class="tag ok">Met</span><span class="caret">&#9656;</span></button>
+          <div class="ev"><p>Three products from nothing: FieldCommand, <strong>Veritas</strong> (citation verification for legal filings), and <strong>AndrewOS</strong> (the agent operating system I run daily). Each one changed shape because a real user told me the thing I'd built solved the wrong problem.</p><p>Veritas is the sharpest example. I raised a reasoning cap from 600 to 2,000 characters because three specific case fixtures failed validation, not because it felt better. The requirement moved, the fixture suite caught it, the decision was evidence-driven.</p><p class="src">Evidence: Veritas fixture suite · FieldCommand · AndrewOS</p></div>
+        </div>
+
+        <div class="ctrl" data-s="ok">
+          <button class="ctrl-top"><span class="badge ok">&#10003;</span>
+            <span class="ctrl-name">Using AI to amplify the work, with sound judgment<em>"demonstrating curiosity, a willingness to learn, and sound judgment in applying AI responsibly"</em></span>
+            <span class="tag ok">Met</span><span class="caret">&#9656;</span></button>
+          <div class="ev"><p>This is the part I'd bring the most opinion to. Agentic coding is my primary build method, but the discipline that matters is what constrains it. In Veritas, a model extracts each claim and <strong>deterministic code renders the verdict</strong>, because a probabilistic system should not be the thing that says "this citation is real." A fixed fixture suite gates every release.</p><p>In AndrewOS, generated output passes deterministic pre-commit gates before it can land, and every stage writes an append-only trace so a finished run replays as an audit record. Responsible AI in a compliance product means exactly that: the model can propose, but the record has to be reproducible.</p><p class="src">Evidence: Veritas verdict pipeline · AndrewOS trace layer</p></div>
+        </div>
+
+        <div class="ctrl" data-s="part">
+          <button class="ctrl-top"><span class="badge part">~</span>
+            <span class="ctrl-name">FedRAMP, CMMC or NIST domain experience<em>"government domain experience is a plus, but not required"</em></span>
+            <span class="tag part">Partial</span><span class="caret">&#9656;</span></button>
+          <div class="ev"><p>Partial, and I'd rather say so here than discover it in an interview. I've worked inside a regulated framework for a decade, but that framework was <strong>FINRA and SEC, not FedRAMP or CMMC</strong>. I've read the NIST control families and I understand the shape, evidence, control mapping, continuous monitoring, an authorizing official who has to sign. I have not shipped against them.</p><p>What I'd claim is that the second regulatory framework is much cheaper to learn than the first, and you already wrote that this one is a plus rather than a requirement.</p><p class="src">Honest gap · stated, not hedged</p></div>
+        </div>
+
+        <div class="ctrl" data-s="part">
+          <button class="ctrl-top"><span class="badge part">~</span>
+            <span class="ctrl-name">5+ years of industry experience<em>"5+ years of industry experience"</em></span>
+            <span class="tag part">Partial</span><span class="caret">&#9656;</span></button>
+          <div class="ev"><p>Depends which clock you read, so here are both. Industry experience, counted from IT and systems work in 2017 through advisory and now engineering, is comfortably past five. <strong>Shipping production software</strong>, counted strictly, starts in 2025, so that half is closer to two.</p><p>Your line says industry experience, and I clear that as written. But I'd rather you have the second number too, because it's the one that would actually surprise you later. What those two years contain is dense: three products built solo, plus a current W-2 seat writing Python on a large production codebase, shipping to AWS on a two-person team where there is nobody to hand the ambiguous half to.</p><p class="src">Honest gap · both clocks stated</p></div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>What I'd actually be useful for in the first ninety days.</h2>
+    <p class="lede">Not a plan, since I haven't seen the codebase. Two things I'm confident transfer on day one.</p>
+    <div class="two">
+      <div class="box"><div class="h">01</div><div class="b">Translating the auditor's question into a data model</div><div class="s">The hard part of compliance software isn't the workflow, it's that the evidence has to answer a question somebody will ask two years later in a different context. I've been the person answering that question about my own records, which changes how you design the schema.</div></div>
+      <div class="box"><div class="h">02</div><div class="b">Owning the quality practice while the product is still moving</div><div class="s">At Coder I own test coverage, release process and the operating docs for the platform I work on. In a 0 to 1 line where requirements shift weekly, that's the thing that usually gets deferred and then costs the most.</div></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="paper">
+      <span class="stamp">Disclosure</span>
+      <h3>Two things worth knowing before you spend time on me.</h3>
+      <p>First, I'm employed. I'm a Senior Software Engineer at <strong>Coder</strong> and I'm not unhappy there. I'm writing because the combination of regulated-domain product and 0 to 1 platform work is unusually close to what I'm actually good at, not because I need a seat.</p>
+      <p>Second, I hold a securities registration through my remaining advisory work, which is winding down. It's an outside business activity, it's disclosed, and it has never conflicted with an engineering role. I mention it because a compliance company should hear it from me first rather than from a background check.</p>
+    </div>
+  </section>
+
+  <section style="border-bottom:0">
+    <h2>If this reads like a fit, I'd like to talk.</h2>
+    <p class="lede">The posting says Remote U.S. I'm in Pueblo, Colorado, and I've worked fully remote for years.</p>
+    <div class="cta">
+      <a class="btn p" href="https://portfolio.andrewzoll.com">See the portfolio</a>
+      <a class="btn" href="https://linkedin.com/in/andrewzoll">Connect on LinkedIn</a>
+    </div>
+  </section>
+
+  <footer>
+    Not affiliated with Vanta. A personal page I built as part of my own application.<br>
+    Built for the Senior Software Engineer, Vanta for Government role.
+  </footer>
+
+</div>
+
+<script>
+(function(){
+  var ctrls = Array.prototype.slice.call(document.querySelectorAll('#ctrls .ctrl'));
+  var fbtns = Array.prototype.slice.call(document.querySelectorAll('.fbtn'));
+  var pct = document.getElementById('pct'), fill = document.getElementById('fill');
+
+  // rows genuinely expand
+  ctrls.forEach(function(c){
+    c.querySelector('.ctrl-top').addEventListener('click', function(){ c.classList.toggle('open'); });
+  });
+
+  // filters genuinely filter, and the gauge recomputes from what is shown
+  function apply(f){
+    fbtns.forEach(function(b){ b.setAttribute('aria-pressed', b.dataset.f === f ? 'true' : 'false'); });
+    var shown = 0, met = 0;
+    ctrls.forEach(function(c){
+      var vis = (f === 'all') || (c.dataset.s === f);
+      c.style.display = vis ? '' : 'none';
+      if (!vis) c.classList.remove('open');
+      if (vis) { shown++; if (c.dataset.s === 'ok') met++; }
+    });
+    var p = shown ? Math.round(met / shown * 100) : 0;
+    pct.textContent = p + '%';
+    fill.style.width = p + '%';
+  }
+  fbtns.forEach(function(b){ b.addEventListener('click', function(){ apply(b.dataset.f); }); });
+  apply('all');
+})();
+</script>
+</body>
+</html>
