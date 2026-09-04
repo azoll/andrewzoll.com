@@ -81,7 +81,7 @@
   .tag.mod{background:#3A5A2E44;color:#9FD07A}
   .ptitle{font-size:17.5px;font-weight:600;letter-spacing:-.015em;line-height:1.35;margin-bottom:8px}
   .quote{font-family:var(--mono);font-size:12.5px;line-height:1.6;color:var(--mut);border-left:2px solid var(--line2);padding:2px 0 2px 12px;margin-bottom:10px}
-  .quote span{color:var(--mut3)}
+  .quote span{display:block;margin-top:5px;color:var(--mut3);font-size:11px;letter-spacing:.03em;text-transform:uppercase}
   .ptext{font-size:14.5px;line-height:1.68;color:#CFD8DA;margin-bottom:11px}
   .ptext strong{color:var(--txt);font-weight:600}
   .actions{display:flex;align-items:center;gap:5px;border-top:1px solid var(--line);margin:0 -17px;padding:7px 12px}
@@ -221,7 +221,7 @@
         <div class="pbody">
           <div class="meta"><span class="tag ok">agentic systems</span><span>JD requirement</span></div>
           <div class="ptitle">Deciding whether a thing should be an agent loop at all is the actual job</div>
-          <div class="quote">"Make the right architectural calls on if and how to use generative AI, whether it's a single-shot LLM call, a workflow, a skill, a retrieval system, an agent loop, human review, or no AI at all."<span> &mdash; Reddit JD, Agentic Systems Design</span></div>
+          <div class="quote">"Make the right architectural calls on if and how to use generative AI, whether it's a single-shot LLM call, a workflow, a skill, a retrieval system, an agent loop, human review, or no AI at all."<span>Reddit JD, Agentic Systems Design</span></div>
           <div class="ptext">This is the call I get wrong least often, because I have paid for getting it wrong. In <strong>Veritas</strong> I built an extract-with-model, decide-with-code pipeline: the model extracts each cited claim, and deterministic code renders the verdict. The verdict is the part a lawyer stakes a filing on, so it does not get to be a model output. That one boundary is the difference between a product that shows its work and one that has an opinion.</div>
           <div class="actions"><button class="act" aria-expanded="false"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a8 8 0 0 1-8 8H4l2-3a8 8 0 1 1 15-5z"/></svg><span class="ct">1 comment</span></button></div>
           <div class="thread"><div class="cmt">
@@ -237,7 +237,7 @@
         <div class="pbody">
           <div class="meta"><span class="tag ok">agentic systems</span><span>JD requirement</span></div>
           <div class="ptitle">Structured outputs, tool calling, retrieval and model routing are my daily surface</div>
-          <div class="quote">"Hands-on experience building generative AI applications: structured outputs, function/tool calling, prompt and context design, RAG, model routing, and handling model failure modes."<span> &mdash; Reddit JD, Required Qualifications</span></div>
+          <div class="quote">"Hands-on experience building generative AI applications: structured outputs, function/tool calling, prompt and context design, RAG, model routing, and handling model failure modes."<span>Reddit JD, Required Qualifications</span></div>
           <div class="ptext">At <strong>Coder</strong> I am one of two engineers on an internal AI agent platform for the revenue organization. It turns CRM, support and call-transcript data into answers and workflows for people who do not write code. That is the same shape as a campaign assistant: retrieval over the customer's own records, tools that take real actions, and an interface a non-engineer trusts.</div>
           <div class="actions"><button class="act" aria-expanded="false"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a8 8 0 0 1-8 8H4l2-3a8 8 0 1 1 15-5z"/></svg><span class="ct">2 comments</span></button></div>
           <div class="thread">
@@ -259,7 +259,7 @@
         <div class="pbody">
           <div class="meta"><span class="tag ok">evals + guardrails</span><span>JD requirement</span></div>
           <div class="ptitle">I gate releases on evals I wrote from real failures, not on vibes</div>
-          <div class="quote">"Experience defining evals and measurement for AI systems, offline datasets, online metrics, and knowing when and how to measure a launch quality bar."<span> &mdash; Reddit JD, Required Qualifications</span></div>
+          <div class="quote">"Experience defining evals and measurement for AI systems, offline datasets, online metrics, and knowing when and how to measure a launch quality bar."<span>Reddit JD, Required Qualifications</span></div>
           <div class="ptext"><strong>Veritas</strong> ships behind a fixture suite that no release is allowed to fail. I did not write those fixtures up front from imagination. I wrote them one at a time, from failures the pipeline actually produced, which is the only way I have found to get an eval set that predicts anything. The quality bar is the fixture suite, and it is enforced by the release process rather than by a person remembering.</div>
           <div class="actions"><button class="act" aria-expanded="false"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a8 8 0 0 1-8 8H4l2-3a8 8 0 1 1 15-5z"/></svg><span class="ct">1 comment</span></button></div>
           <div class="thread"><div class="cmt">
@@ -275,7 +275,7 @@
         <div class="pbody">
           <div class="meta"><span class="tag ok">evals + guardrails</span><span>JD requirement</span></div>
           <div class="ptitle">Tracing, cost controls and human review, placed where they earn their keep</div>
-          <div class="quote">"Build for the failure modes of LLMs, structured outputs, tool/action boundaries, retries, cost controls, tracing, evals, and human-in-the-loop where it matters."<span> &mdash; Reddit JD, Reliability and Guardrails</span></div>
+          <div class="quote">"Build for the failure modes of LLMs, structured outputs, tool/action boundaries, retries, cost controls, tracing, evals, and human-in-the-loop where it matters."<span>Reddit JD, Reliability and Guardrails</span></div>
           <div class="ptext">AndrewOS writes an append-only trace at every stage recording what it received, what it decided, why, and what it handed off, so a finished run reads top to bottom as a replayable audit record. That is the surface I review instead of raw agent output. I also cut agent cost and wall-clock time by changing the architecture rather than the model, which is usually where the money actually is.</div>
           <div class="actions"><button class="act" aria-expanded="false"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a8 8 0 0 1-8 8H4l2-3a8 8 0 1 1 15-5z"/></svg><span class="ct">1 comment</span></button></div>
           <div class="thread"><div class="cmt">
@@ -291,7 +291,7 @@
         <div class="pbody">
           <div class="meta"><span class="tag ok">systems + trust</span><span>JD requirement</span></div>
           <div class="ptitle">Auth, idempotency, retries and service ownership, learned by owning the pager</div>
-          <div class="quote">"Strong systems fundamentals: APIs, distributed systems, queues, data stores, service ownership, auth, idempotency, retries, and observability."<span> &mdash; Reddit JD, Required Qualifications</span></div>
+          <div class="quote">"Strong systems fundamentals: APIs, distributed systems, queues, data stores, service ownership, auth, idempotency, retries, and observability."<span>Reddit JD, Required Qualifications</span></div>
           <div class="ptext"><strong>FieldCommand</strong> is where I earned this. Multi-tenant SaaS on PostgreSQL and Supabase, built solo and full-stack, with role-based access control, tenant isolation, Stripe billing and automated pipelines between billing, AI services and CRM data. Four AI features shipped behind per-tenant feature flags. When you are the only engineer there is nobody to hand the hard part to, so I took every one of those end to end.</div>
           <div class="actions"><button class="act" aria-expanded="false"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a8 8 0 0 1-8 8H4l2-3a8 8 0 1 1 15-5z"/></svg><span class="ct">1 comment</span></button></div>
           <div class="thread"><div class="cmt">
@@ -307,7 +307,7 @@
         <div class="pbody">
           <div class="meta"><span class="tag ok">systems + trust</span><span>JD requirement</span></div>
           <div class="ptitle">I have spent ten years in an industry where auditability is not a feature request</div>
-          <div class="quote">"Design for data isolation, permissioning, auditability, and policy compliance when AI systems take action on behalf of advertisers."<span> &mdash; Reddit JD, Safety and Trust</span></div>
+          <div class="quote">"Design for data isolation, permissioning, auditability, and policy compliance when AI systems take action on behalf of advertisers."<span>Reddit JD, Safety and Trust</span></div>
           <div class="ptext">I operated in financial advisory under FINRA and SEC oversight, where recordkeeping, confidentiality and access control are examined rather than assumed. That is an unusual background for this seat and I think it is the most transferable thing I have. When a system acts on a customer's behalf, the question auditors ask is not whether it worked, it is whether you can show what it did and who was allowed to make it do that. I build for that question first.</div>
           <div class="actions"><button class="act" aria-expanded="false"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a8 8 0 0 1-8 8H4l2-3a8 8 0 1 1 15-5z"/></svg><span class="ct">1 comment</span></button></div>
           <div class="thread"><div class="cmt">
@@ -323,7 +323,7 @@
         <div class="pbody">
           <div class="meta"><span class="tag ok">agentic systems</span><span>JD requirement</span></div>
           <div class="ptitle">Agent coding tools are how I work, not something I have opinions about from a distance</div>
-          <div class="quote">"Fluent with AI coding tools and code-assistant workflows as part of your day-to-day engineering practice."<span> &mdash; Reddit JD, Required Qualifications</span></div>
+          <div class="quote">"Fluent with AI coding tools and code-assistant workflows as part of your day-to-day engineering practice."<span>Reddit JD, Required Qualifications</span></div>
           <div class="ptext">This line is the reason I applied. Every system on this page was built with agentic coding tooling as the method: MCP servers I configured, agent skills I authored, delegation across implementation, review and validation, and deterministic pre-commit gates that machine-check generated output before it lands. I did not adopt this after it was safe. I built my whole working practice on it and then found out where it breaks.</div>
           <div class="actions"><button class="act" aria-expanded="false"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a8 8 0 0 1-8 8H4l2-3a8 8 0 1 1 15-5z"/></svg><span class="ct">1 comment</span></button></div>
           <div class="thread"><div class="cmt">
@@ -339,7 +339,7 @@
         <div class="pbody">
           <div class="meta"><span class="tag ok">systems + trust</span><span>JD requirement</span></div>
           <div class="ptitle">Explaining a trade-off to someone who does not write code is most of the job</div>
-          <div class="quote">"Write clear design docs, explain trade-offs to non-engineers, and raise the bar on how the org ships gen AI features."<span> &mdash; Reddit JD, Craft and Communication</span></div>
+          <div class="quote">"Write clear design docs, explain trade-offs to non-engineers, and raise the bar on how the org ships gen AI features."<span>Reddit JD, Craft and Communication</span></div>
           <div class="ptext">My seat at Coder sits inside the revenue organization, so my day is translating what the agent platform can do into what non-technical operators need it to do, and back again. Before that I spent years explaining analytical concepts to people making consequential decisions with their own money. Advertisers are that same audience: they will not adopt a system they cannot reason about, no matter how good the model is.</div>
           <div class="actions"><button class="act" aria-expanded="false"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a8 8 0 0 1-8 8H4l2-3a8 8 0 1 1 15-5z"/></svg><span class="ct">1 comment</span></button></div>
           <div class="thread"><div class="cmt">
@@ -355,7 +355,7 @@
         <div class="pbody">
           <div class="meta"><span class="tag gap">honest gap</span><span>JD requirement</span></div>
           <div class="ptitle">Ads, marketplaces, recommendations and search: I have none of this</div>
-          <div class="quote">"Experience in Ads, marketing technology, marketplaces, growth, recommendations, search, or analytics."<span> &mdash; Reddit JD, Bonus Points</span></div>
+          <div class="quote">"Experience in Ads, marketing technology, marketplaces, growth, recommendations, search, or analytics."<span>Reddit JD, Bonus Points</span></div>
           <div class="ptext">No hedge available. I have never worked on an ads platform or a marketplace, and I do not have recommendations or search experience. It sits under Bonus Points rather than Required Qualifications, which is the only reason this page exists, and I would rather name it plainly than let you discover it in a screen. The closest true thing I can say is that I have built revenue-facing tooling for people whose job is spending a budget well, which is adjacent and is not the same.</div>
           <div class="actions"><button class="act" aria-expanded="false"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a8 8 0 0 1-8 8H4l2-3a8 8 0 1 1 15-5z"/></svg><span class="ct">1 comment</span></button></div>
           <div class="thread"><div class="cmt">
@@ -371,7 +371,7 @@
         <div class="pbody">
           <div class="meta"><span class="tag gap">honest gap</span><span>JD requirement</span></div>
           <div class="ptitle">Five years as a software engineer, measured by title versus measured by shipping</div>
-          <div class="quote">"5+ years of experience as a software engineer, with a track record of shipping and operating production systems."<span> &mdash; Reddit JD, Required Qualifications</span></div>
+          <div class="quote">"5+ years of experience as a software engineer, with a track record of shipping and operating production systems."<span>Reddit JD, Required Qualifications</span></div>
           <div class="ptext">The second half of that sentence I can answer without qualification. The first half I cannot. My formal Senior Software Engineer title began in 2026 at Coder. Before that I was building and operating production software as a founder rather than as an employee, and the systems are checkable: FieldCommand, Veritas and AndrewOS are all real, all mine, and all still running. Whether founder years count toward that five is your call, and I would rather you make it with the facts than with a resume line that blurs them.</div>
           <div class="actions"><button class="act" aria-expanded="false"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a8 8 0 0 1-8 8H4l2-3a8 8 0 1 1 15-5z"/></svg><span class="ct">1 comment</span></button></div>
           <div class="thread"><div class="cmt">
