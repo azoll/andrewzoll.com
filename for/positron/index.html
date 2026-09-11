@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>Andrew Zoll for AI Forward Deployed Engineer, Lead</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* Palette borrowed from positron.ai's own tokens (k, k2, lb-100/200/400, y). Dark only, like the brand. */
+  :root{
+    --k:#030812; --k2:#050e15; --k3:#0a1822; --k4:#0f2230;
+    --wire:#16303f; --wire2:#21465a;
+    --lb100:#fbfefe; --lb200:#e6f8f8; --teal:#6dd6d2; --tealDim:#6dd6d21f; --tealLine:#6dd6d255;
+    --amber:#e8b42e; --amberDim:#e8b42e1c;
+    --txt:#dcebec; --mut:#8ea9b0; --mut2:#5f7c85;
+    --sans:'IBM Plex Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    --mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+    --r:4px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{background:var(--k);color-scheme:dark}
+  body{background:var(--k);color:var(--txt);font-family:var(--sans);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+  a{color:var(--teal);text-decoration:none}
+  a:hover{text-decoration:underline}
+  button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+  :focus-visible{outline:2px solid var(--amber);outline-offset:2px}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px}
+  .mono{font-family:var(--mono)}
+
+  /* top bar */
+  header.bar{position:sticky;top:0;z-index:20;background:#030812e8;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--wire)}
+  header.bar .wrap{display:flex;align-items:center;justify-content:space-between;height:60px;gap:20px}
+  .who{font-family:var(--mono);font-size:13px;color:var(--lb200);white-space:nowrap}
+  .who b{color:var(--teal);font-weight:500}
+  nav.jump{display:flex;gap:22px;font-family:var(--mono);font-size:12.5px;white-space:nowrap}
+  nav.jump a{color:var(--mut)}
+  nav.jump a:hover{color:var(--lb100);text-decoration:none}
+
+  /* hero */
+  .hero{padding:72px 0 64px;border-bottom:1px solid var(--wire)}
+  .hero .wrap{display:grid;grid-template-columns:1.05fr 1fr;gap:56px;align-items:center}
+  .hero h1{font-weight:500;font-size:clamp(34px,4.2vw,52px);line-height:1.08;letter-spacing:-0.02em;color:var(--lb100)}
+  .hero h1 em{font-style:italic;color:var(--teal)}
+  .hero p.sub{margin-top:20px;font-size:18px;color:var(--mut);max-width:34ch}
+  .cta{display:flex;gap:12px;margin-top:30px;flex-wrap:wrap}
+  .btn{display:inline-flex;align-items:center;height:44px;padding:0 20px;border-radius:var(--r);font-family:var(--mono);font-size:13.5px;font-weight:500;white-space:nowrap;transition:transform .15s cubic-bezier(.16,1,.3,1),background .2s}
+  .btn:active{transform:translateY(1px)}
+  .btn.solid{background:var(--teal);color:var(--k)}
+  .btn.solid:hover{background:var(--lb200);text-decoration:none}
+  .btn.line{border:1px solid var(--wire2);color:var(--lb200)}
+  .btn.line:hover{border-color:var(--teal);text-decoration:none}
+
+  /* die floorplan */
+  .die{position:relative;border:1px solid var(--wire2);border-radius:var(--r);padding:18px;background:
+      repeating-linear-gradient(0deg,transparent 0 23px,#6dd6d20a 23px 24px),
+      repeating-linear-gradient(90deg,transparent 0 23px,#6dd6d20a 23px 24px),var(--k2)}
+  .die-label{display:flex;justify-content:space-between;font-family:var(--mono);font-size:11.5px;color:var(--mut2);margin-bottom:12px}
+  .floor{display:grid;grid-template-columns:repeat(6,1fr);grid-template-rows:repeat(4,64px);gap:6px}
+  .blk{position:relative;border:1px solid var(--wire2);border-radius:2px;background:var(--k3);font-family:var(--mono);font-size:11px;letter-spacing:.04em;color:var(--mut);text-align:left;padding:8px 9px;display:flex;flex-direction:column;justify-content:space-between;transition:background .2s,border-color .2s,color .2s}
+  .blk small{font-size:10px;color:var(--mut2)}
+  .blk:hover{border-color:var(--tealLine);color:var(--lb200)}
+  .blk[aria-selected="true"]{background:var(--tealDim);border-color:var(--teal);color:var(--lb100)}
+  .blk[aria-selected="true"] small{color:var(--teal)}
+  .blk.core{background:#e8b42e10;border-color:#e8b42e55;color:var(--amber)}
+  .blk.core[aria-selected="true"]{background:var(--amberDim);border-color:var(--amber);color:#fff3cf}
+  .blk.core small{color:#e8b42e99}
+  .b-fw{grid-column:1/3;grid-row:1/3}
+  .b-rt{grid-column:3/5;grid-row:1/2}
+  .b-os{grid-column:5/7;grid-row:1/3}
+  .b-core{grid-column:3/5;grid-row:2/4}
+  .b-sim{grid-column:1/3;grid-row:3/5}
+  .b-perf{grid-column:5/7;grid-row:3/4}
+  .b-sec{grid-column:3/5;grid-row:4/5}
+  .b-ci{grid-column:5/7;grid-row:4/5}
+  .readout{margin-top:14px;border-top:1px solid var(--wire);padding-top:14px;min-height:196px}
+  .readout h3{font-family:var(--mono);font-size:12.5px;font-weight:500;color:var(--teal);letter-spacing:.03em}
+  .readout dl{margin-top:10px;display:grid;grid-template-columns:118px 1fr;gap:8px 14px;font-size:14px}
+  .readout dt{font-family:var(--mono);font-size:11.5px;color:var(--mut2);padding-top:2px}
+  .readout dd{color:var(--txt)}
+  .readout .fade{animation:fin .35s cubic-bezier(.16,1,.3,1)}
+  @keyframes fin{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+  section{padding:88px 0;border-bottom:1px solid var(--wire)}
+  h2{font-weight:500;font-size:clamp(26px,3vw,36px);letter-spacing:-0.015em;color:var(--lb100);line-height:1.15;max-width:22ch}
+  .lede{margin-top:14px;color:var(--mut);max-width:62ch}
+
+  /* register map */
+  .regtools{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-top:36px;margin-bottom:14px;flex-wrap:wrap}
+  .legend{display:flex;gap:18px;font-family:var(--mono);font-size:12px;color:var(--mut)}
+  .legend i{display:inline-block;width:12px;height:12px;border-radius:1px;vertical-align:-1px;margin-right:6px}
+  .legend .s{background:var(--teal)} .legend .c{background:transparent;border:1px dashed var(--amber)}
+  .toggle{display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:12.5px;color:var(--lb200);cursor:pointer}
+  .toggle input{appearance:none;width:34px;height:18px;border-radius:9px;background:var(--wire2);position:relative;cursor:pointer;transition:background .2s}
+  .toggle input::after{content:"";position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;background:var(--lb200);transition:transform .2s cubic-bezier(.16,1,.3,1)}
+  .toggle input:checked{background:var(--amber)}
+  .toggle input:checked::after{transform:translateX(16px);background:var(--k)}
+  .regs{border:1px solid var(--wire2);border-radius:var(--r);overflow:hidden}
+  .reg{border-top:1px solid var(--wire)}
+  .reg:first-child{border-top:0}
+  .reg-h{width:100%;display:grid;grid-template-columns:92px 1fr auto;align-items:center;gap:18px;padding:16px 18px;text-align:left;background:var(--k2);transition:background .2s}
+  .reg-h:hover{background:var(--k3)}
+  .off{font-family:var(--mono);font-size:12px;color:var(--mut2)}
+  .rname{font-family:var(--mono);font-size:13.5px;color:var(--lb200)}
+  .rname span{display:block;font-family:var(--sans);font-size:14px;color:var(--mut);margin-top:2px}
+  .bits{display:flex;gap:3px}
+  .bit{width:26px;height:26px;border-radius:1px;font-family:var(--mono);font-size:10px;display:grid;place-items:center;transition:opacity .25s}
+  .bit.s{background:var(--teal);color:var(--k)}
+  .bit.c{border:1px dashed var(--amber);color:var(--amber)}
+  .regs.gaps .bit.s{opacity:.18}
+  .regs.gaps .reg.clean{opacity:.45}
+  .reg-b{display:none;padding:4px 18px 22px 128px;background:var(--k2)}
+  .reg[data-open="true"] .reg-b{display:block}
+  .reg[data-open="true"] .reg-h{background:var(--k3)}
+  .quote{font-size:14.5px;color:var(--mut);border-left:2px solid var(--wire2);padding-left:12px;font-style:italic;max-width:70ch}
+  .fields{margin-top:14px;display:grid;gap:10px}
+  .field{display:grid;grid-template-columns:70px 1fr;gap:12px;font-size:15px}
+  .field .tag{font-family:var(--mono);font-size:11px;padding-top:3px}
+  .field.s .tag{color:var(--teal)} .field.c .tag{color:var(--amber)}
+
+  /* trace */
+  .scope{margin-top:40px;border:1px solid var(--wire2);border-radius:var(--r);background:var(--k2);padding:22px 22px 18px}
+  .lanes{position:relative;display:grid;gap:10px}
+  .lane{display:grid;grid-template-columns:96px 1fr;align-items:center;gap:14px}
+  .lane b{font-family:var(--mono);font-size:11.5px;font-weight:500;color:var(--mut)}
+  .track{position:relative;height:22px;border-bottom:1px solid var(--wire)}
+  .seg{position:absolute;bottom:0;height:18px;border:1px solid var(--tealLine);border-bottom:0;background:var(--tealDim);border-radius:2px 2px 0 0}
+  .seg.amber{border-color:#e8b42e66;background:var(--amberDim)}
+  .cursor{position:absolute;top:0;bottom:0;width:1px;background:var(--amber);pointer-events:none;transition:left .12s linear}
+  .cursor::before{content:"";position:absolute;top:-4px;left:-4px;width:9px;height:9px;background:var(--amber);transform:rotate(45deg)}
+  .ovl{position:absolute;top:-6px;bottom:-6px;left:110px;right:0;pointer-events:none}
+  .scrub{margin-top:18px;display:grid;grid-template-columns:96px 1fr;gap:14px;align-items:center}
+  .scrub label{font-family:var(--mono);font-size:11.5px;color:var(--mut2)}
+  input[type=range]{width:100%;accent-color:var(--amber)}
+  .dayread{margin-top:18px;display:grid;grid-template-columns:96px 1fr;gap:14px;border-top:1px solid var(--wire);padding-top:16px}
+  .dayread .d{font-family:var(--mono);font-size:22px;color:var(--amber);line-height:1}
+  .dayread .d small{display:block;font-size:10.5px;color:var(--mut2);margin-top:6px}
+  .dayread p{font-size:15.5px;max-width:64ch}
+
+  /* errata */
+  .errata{margin-top:36px;display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--wire2);border-radius:var(--r);overflow:hidden}
+  details{border-top:1px solid var(--wire);border-left:1px solid var(--wire);background:var(--k2)}
+  details:nth-child(-n+2){border-top:0}
+  details:nth-child(odd){border-left:0}
+  summary{list-style:none;cursor:pointer;padding:20px 22px;display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:baseline}
+  summary::-webkit-details-marker{display:none}
+  summary .eid{font-family:var(--mono);font-size:11.5px;color:var(--amber);border:1px solid #e8b42e55;padding:1px 6px;border-radius:2px}
+  summary .et{font-size:16px;color:var(--lb200)}
+  details[open] summary{background:var(--k3)}
+  .ebody{padding:0 22px 22px 22px;font-size:15px;color:var(--mut);display:grid;gap:10px}
+  .ebody b{font-family:var(--mono);font-size:11.5px;font-weight:500;color:var(--teal);display:block;margin-bottom:2px}
+
+  /* close */
+  .close .wrap{display:grid;grid-template-columns:1.2fr 1fr;gap:48px;align-items:end}
+  .close p{color:var(--mut);max-width:52ch;margin-top:14px}
+  .rules{font-size:14px;color:var(--mut);display:grid;gap:8px;padding-left:18px}
+  footer{padding:36px 0 56px;font-size:13px;color:var(--mut2)}
+  footer .wrap{display:grid;gap:6px}
+
+  .rv{opacity:0;transform:translateY(12px);transition:opacity .6s cubic-bezier(.16,1,.3,1),transform .6s cubic-bezier(.16,1,.3,1)}
+  .rv.in{opacity:1;transform:none}
+  @media (prefers-reduced-motion:reduce){
+    .rv{opacity:1;transform:none;transition:none}
+    .readout .fade{animation:none}
+    .cursor,.bit,.blk,.btn{transition:none}
+  }
+
+  @media (max-width:900px){
+    .hero .wrap,.close .wrap{grid-template-columns:1fr;gap:40px}
+    nav.jump{display:none}
+    .errata{grid-template-columns:1fr}
+    details{border-left:0!important}
+    details:nth-child(2){border-top:1px solid var(--wire)}
+    .reg-b{padding-left:18px}
+  }
+  @media (max-width:560px){
+    .wrap{padding:0 18px}
+    .reg-h{grid-template-columns:1fr;gap:10px}
+    .off{display:none}
+    .floor{grid-template-rows:repeat(4,58px)}
+    .blk{font-size:10px;padding:6px}
+    .blk small{display:none}
+    .readout dl{grid-template-columns:1fr;gap:2px 0}
+    .readout dd{margin-bottom:8px}
+    .lane,.scrub,.dayread{grid-template-columns:70px 1fr}
+    .ovl{left:84px}
+  }
+</style>
+</head>
+<body>
+
+<header class="bar">
+  <div class="wrap">
+    <div class="who">Andrew Zoll <b>/</b> for Positron APS</div>
+    <nav class="jump" aria-label="Sections">
+      <a href="#floorplan">Floorplan</a>
+      <a href="#registers">Register map</a>
+      <a href="#trace">First 30 days</a>
+      <a href="#errata">Errata</a>
+    </nav>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap">
+    <div class="rv">
+      <h1>My agents earn their keep in <em>production</em>.</h1>
+      <p class="sub">Hi, I'm Andrew. I built the AI-assisted engineering toolchain I work inside every day, and I test it like production.</p>
+      <div class="cta">
+        <a class="btn solid" href="https://portfolio.andrewzoll.com">See the work</a>
+        <a class="btn line" href="https://linkedin.com/in/andrewzoll">LinkedIn</a>
+      </div>
+    </div>
+
+    <div class="die rv" id="floorplan">
+      <div class="die-label"><span>APS, as I read it from your posting</span><span>click a block</span></div>
+      <div class="floor" role="tablist" aria-label="APS sub-teams">
+        <button class="blk b-fw" role="tab" data-k="fw" aria-selected="false">FIRMWARE<small>device side</small></button>
+        <button class="blk b-rt" role="tab" data-k="rt" aria-selected="false">RUNTIME<small>host + device</small></button>
+        <button class="blk b-os" role="tab" data-k="os" aria-selected="false">DEVICE OS<small>linux</small></button>
+        <button class="blk core b-core" role="tab" data-k="core" aria-selected="true">SKILLS REPO<small>the seat you're hiring</small></button>
+        <button class="blk b-sim" role="tab" data-k="sim" aria-selected="false">SIM + EMU<small>ahead of silicon</small></button>
+        <button class="blk b-perf" role="tab" data-k="perf" aria-selected="false">PERF + DEBUG<small>tooling</small></button>
+        <button class="blk b-sec" role="tab" data-k="sec" aria-selected="false">SECURITY<small>product</small></button>
+        <button class="blk b-ci" role="tab" data-k="ci" aria-selected="false">CI + REVIEW<small>every team</small></button>
+      </div>
+      <div class="readout" id="readout" role="tabpanel" aria-live="polite"></div>
+    </div>
+  </div>
+</div>
+
+<section id="registers">
+  <div class="wrap">
+    <h2 class="rv">Your required qualifications, read as a register map.</h2>
+    <p class="lede rv">Each register is one line from your posting. A solid bit is something I've actually built. A dashed bit is a gap, and I'd rather you see those now than find them in the interview. Click a register to read it.</p>
+    <div class="regtools">
+      <div class="legend"><span><i class="s"></i>SET: built it</span><span><i class="c"></i>CLR: gap</span></div>
+      <label class="toggle"><input type="checkbox" id="gapToggle"> show only the gaps</label>
+    </div>
+    <div class="regs" id="regs"></div>
+  </div>
+</section>
+
+<section id="trace">
+  <div class="wrap">
+    <h2 class="rv">What the first 30 days would look like.</h2>
+    <p class="lede rv">This is a plan, not a claim. You said the roadmap is mine to define from the friction I observe, so the first thing I'd do is observe. Drag the cursor to scrub through it.</p>
+    <div class="scope rv">
+      <div class="lanes" id="lanes"></div>
+      <div class="scrub"><label for="day">cursor</label><input type="range" id="day" min="1" max="30" value="1"></div>
+      <div class="dayread"><div class="d" id="dnum">D01<small id="dlane">SHADOW</small></div><p id="dtext"></p></div>
+    </div>
+  </div>
+</section>
+
+<section id="errata">
+  <div class="wrap">
+    <h2 class="rv">Known errata, with workarounds.</h2>
+    <p class="lede rv">Every chip ships with an errata sheet. Here's mine.</p>
+    <div class="errata rv">
+      <details>
+        <summary><span class="eid">E1</span><span class="et">I have no firmware, kernel or silicon background.</span></summary>
+        <div class="ebody">
+          <div><b>Impact</b>I won't be credible pairing on a kernel driver or a trace-analysis session on day one. Your posting lists that as preferred, and I'd be kidding myself to pretend otherwise.</div>
+          <div><b>Workaround</b>The job, as I read it, is to make the people who can do that faster. I'd start by sitting in on their triage and reviews and learning where their week goes before I build anything.</div>
+        </div>
+      </details>
+      <details>
+        <summary><span class="eid">E2</span><span class="et">My tooling hasn't been adopted by a team of senior systems engineers yet.</span></summary>
+        <div class="ebody">
+          <div><b>Impact</b>The internal agent platform I work on at Coder is used by revenue teams. On the engineering side, the adopter count for AndrewOS is one, and it's me.</div>
+          <div><b>Workaround</b>Earn it the way your posting says: one reclaimed hour at a time, measured with an eval, never with a demo.</div>
+        </div>
+      </details>
+      <details>
+        <summary><span class="eid">E3</span><span class="et">My languages are Python and TypeScript, not C, C++ or Rust.</span></summary>
+        <div class="ebody">
+          <div><b>Impact</b>I'd be reading your systems code long before I'd be writing any of it.</div>
+          <div><b>Workaround</b>This role builds workflows, evals and agent tooling around that code, which is the part I do write every day.</div>
+        </div>
+      </details>
+      <details>
+        <summary><span class="eid">E4</span><span class="et">My formal Senior Software Engineer title is under a year old.</span></summary>
+        <div class="ebody">
+          <div><b>Impact</b>If you're counting titled years, I come up short.</div>
+          <div><b>Workaround</b>Count shipped systems instead. FieldCommand, Veritas and AndrewOS are all in production, and I built each one myself.</div>
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section class="close">
+  <div class="wrap">
+    <div class="rv">
+      <h2>If a hung device is the failure mode, I'm your kind of careful.</h2>
+      <p>Your posting says you're hiring one person and giving them the whole thing. I've spent the last year building exactly that kind of thing alone, and I'd love to do it for a team that ships silicon.</p>
+      <div class="cta">
+        <a class="btn solid" href="https://portfolio.andrewzoll.com">See the work</a>
+        <a class="btn line" href="https://linkedin.com/in/andrewzoll">LinkedIn</a>
+      </div>
+    </div>
+    <ol class="rules rv">
+      <li>Every quoted line comes from the actual Positron job posting.</li>
+      <li>Every claim maps to a system that exists and that I built.</li>
+      <li>There are no invented numbers on this page.</li>
+      <li>The gaps are on the errata sheet instead of left out.</li>
+      <li>Not affiliated with Positron AI. I made this myself.</li>
+    </ol>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>Not affiliated with Positron AI. This is a personal page I built as part of my own application, and it borrows Positron's colors and type on purpose as a piece of the application.</span>
+    <span>Built for AI Forward Deployed Engineer, Lead, Accelerator Platform Software. Remote (United States).</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  /* floorplan */
+  var BLOCKS={
+    core:{t:'SKILLS REPO: the seat you\'re hiring',
+      ask:'Which skills already exist, who wrote them, and which ones people actually reach for?',
+      built:'AndrewOS is a versioned skills repository with hooks and routing rules. Claude Code and OpenAI Codex both read it directly, so one set of written doctrine drives two agent runtimes.',
+      note:'This is the closest thing on your whole posting to what I already do every day.'},
+    fw:{t:'FIRMWARE',
+      ask:'Where does a firmware engineer lose time that isn\'t writing firmware? Log reading, repro steps, and keeping docs honest are my guesses.',
+      built:'A deterministic gate layer that machine-checks generated output against written rules before it lands, so the model never gets the final word on something that has to be correct.',
+      note:'I don\'t write firmware. See errata E1.'},
+    rt:{t:'RUNTIME',
+      ask:'What does a runtime regression look like when it first shows up, and who notices it?',
+      built:'Append-only per-stage tracing in AndrewOS that records what each agent received, decided and handed off, so a failed run reads top to bottom during triage.',
+      note:'Tracing agent runs is not tracing a runtime. The habit of making failure legible carries over.'},
+    os:{t:'DEVICE OS',
+      ask:'How much of the Linux-based device OS work is build and packaging toil versus real design work?',
+      built:'Scheduled autonomous loops that I hardened against duplicate sends, double-firing schedulers and retries that weren\'t idempotent.',
+      note:'Build and release engineering is listed as preferred. I have the CI side, not the embedded side.'},
+    sim:{t:'SIM + EMU',
+      ask:'What breaks when software gets built ahead of silicon, and where does an agent have enough context to help?',
+      built:'Veritas: the model extracts each claim and deterministic code renders the verdict, gated by fixtures I wrote from real failures.',
+      note:'The lesson I\'d bring: decide which parts the model is allowed to decide.'},
+    perf:{t:'PERF + DEBUG',
+      ask:'Which trace-analysis steps are the same every time? Those are the first candidates.',
+      built:'A live dashboard over job health, queues and freshness, so the system reports on itself instead of waiting for me to go look.',
+      note:'Your posting names silicon-debug assistance. I\'d build it with your debuggers in the room.'},
+    sec:{t:'SECURITY',
+      ask:'Where must an agent never be allowed to act, and is that written down anywhere yet?',
+      built:'Hard stops before any irreversible step in my own loops, plus audit-ready recordkeeping habits from years under FINRA and SEC oversight.',
+      note:'Product security is its own discipline. I\'d follow your lead, not set it.'},
+    ci:{t:'CI + REVIEW',
+      ask:'What does code review cost your senior engineers per week, and what would they happily hand off?',
+      built:'A pull-request loop that reviews, watches CI and merges only what the written rules allow, with a hard rule that no agent ever reviews its own work.',
+      note:'Your posting asks for agents wired into CI and code review. This one is live today.'}
+  };
+  var readout=document.getElementById('readout');
+  var tabs=[].slice.call(document.querySelectorAll('.blk'));
+  function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;')}
+  function show(k){
+    var b=BLOCKS[k];
+    tabs.forEach(function(t){t.setAttribute('aria-selected',t.dataset.k===k?'true':'false')});
+    readout.innerHTML='<div class="fade"><h3>'+esc(b.t)+'</h3><dl>'+
+      '<dt>I\'d ask first</dt><dd>'+esc(b.ask)+'</dd>'+
+      '<dt>Closest I\'ve built</dt><dd>'+esc(b.built)+'</dd>'+
+      '<dt>Honest note</dt><dd>'+esc(b.note)+'</dd></dl></div>';
+  }
+  tabs.forEach(function(t,i){
+    t.addEventListener('click',function(){show(t.dataset.k)});
+    t.addEventListener('keydown',function(e){
+      var d=e.key==='ArrowRight'||e.key==='ArrowDown'?1:e.key==='ArrowLeft'||e.key==='ArrowUp'?-1:0;
+      if(!d)return; e.preventDefault();
+      var n=tabs[(i+d+tabs.length)%tabs.length]; n.focus(); show(n.dataset.k);
+    });
+  });
+  show('core');
+
+  /* register map */
+  var REGS=[
+    {off:'0x00',name:'AGENTIC_TOOLS',q:'Hands-on, expert experience using agentic development tools such as OpenAI Codex and Claude Code, integrating LLM APIs, and building evaluations.',
+      f:[['s','CODEX','I run Claude Code and OpenAI Codex as parallel runtimes over one shared skills directory, with written rules for who works on what so they don\'t collide.'],
+         ['s','LLM','I\'ve integrated Anthropic, OpenAI and Google models across Veritas, AndrewOS and client work.'],
+         ['s','EVAL','Veritas ships only when its fixture suite passes. I wrote those fixtures from real failures, one at a time.']]},
+    {off:'0x04',name:'INTERNAL_TOOLING',q:'A shipped track record of internal tooling or developer-productivity work that engineers actually adopted.',
+      f:[['s','SHIP','AndrewOS is the toolchain I build inside: skills, hooks, deterministic gates, a PR loop, tracing and a live dashboard.'],
+         ['c','ADOPT','Its engineering adopter count is one, and it\'s me. The Coder platform is adopted by revenue teams, not engineers. See errata E2.']]},
+    {off:'0x08',name:'SWE_BACKGROUND',q:'A strong software engineering background, with systems or infrastructure experience strongly preferred; this is an engineering role, not a prompt-writing role.',
+      f:[['s','PROD','At Coder I write Python on a large production codebase that ships straight to production on AWS.'],
+         ['s','SOLO','FieldCommand is a multi-tenant SaaS I designed and shipped alone at 187,745 lines of TypeScript on PostgreSQL and Supabase.'],
+         ['c','SYS','No systems background in the C, kernel or driver sense. See errata E1 and E3.']]},
+    {off:'0x0C',name:'WIN_SKEPTICS',q:'The credibility and patience to win over skeptical senior systems engineers with results rather than demos.',
+      f:[['s','RESULT','My default is to prove a gain with a measurement. My own gate layer exists because I stopped trusting output that only looked right.'],
+         ['c','CRED','I haven\'t earned credibility with a room of silicon engineers yet. I\'d have to earn it here.']]},
+    {off:'0x10',name:'SELF_DIRECTED',q:'Self-directed working style, comfortable defining your own roadmap from observed friction without a team around you.',
+      f:[['s','ROAD','FieldCommand, Veritas and AndrewOS each started as friction I kept running into, with nobody assigning the work.'],
+         ['s','SOLO','I\'ve spent the last year building systems alone end to end, so a one-person mission doesn\'t scare me.']]},
+    {off:'0x14',name:'WRITTEN_COMMS',q:'Excellent written communication skills, since we run on written plans, design docs, and async updates.',
+      f:[['s','SPEC','AndrewOS runs on written doctrine. Specs come before code, and every agent reads the rules before it acts.'],
+         ['s','ASYNC','My loops report asynchronously through daily, weekly and monthly sweeps, so nobody has to ask me what happened.']]}
+  ];
+  var regs=document.getElementById('regs');
+  REGS.forEach(function(r,idx){
+    var hasGap=r.f.some(function(x){return x[0]==='c'});
+    var el=document.createElement('div'); el.className='reg'+(hasGap?'':' clean'); el.dataset.open='false';
+    var bits=r.f.map(function(x){return '<span class="bit '+x[0]+'" title="'+x[1]+'">'+(x[0]==='s'?'1':'0')+'</span>'}).join('');
+    var fields=r.f.map(function(x){return '<div class="field '+x[0]+'"><span class="tag">'+x[1]+(x[0]==='s'?' = 1':' = 0')+'</span><span>'+esc(x[2])+'</span></div>'}).join('');
+    el.innerHTML='<button class="reg-h" aria-expanded="false" aria-controls="rb'+idx+'"><span class="off">'+r.off+'</span><span class="rname">'+r.name+'<span>'+(hasGap?'has a gap bit':'all bits set')+'</span></span><span class="bits" aria-hidden="true">'+bits+'</span></button>'+
+      '<div class="reg-b" id="rb'+idx+'"><p class="quote">"'+esc(r.q)+'"</p><div class="fields">'+fields+'</div></div>';
+    var h=el.querySelector('.reg-h');
+    h.addEventListener('click',function(){var o=el.dataset.open!=='true';el.dataset.open=o?'true':'false';h.setAttribute('aria-expanded',o?'true':'false')});
+    regs.appendChild(el);
+  });
+  document.getElementById('gapToggle').addEventListener('change',function(e){
+    regs.classList.toggle('gaps',e.target.checked);
+    [].slice.call(regs.querySelectorAll('.reg')).forEach(function(el){
+      var gap=!el.classList.contains('clean');
+      var open=e.target.checked?gap:false;
+      el.dataset.open=open?'true':'false';
+      el.querySelector('.reg-h').setAttribute('aria-expanded',open?'true':'false');
+    });
+  });
+
+  /* trace */
+  var LANES=[
+    {k:'SHADOW',segs:[[1,10]]},
+    {k:'MEASURE',segs:[[6,14]],amber:true},
+    {k:'BUILD',segs:[[12,24]]},
+    {k:'EVAL',segs:[[15,30]],amber:true},
+    {k:'SHIP',segs:[[22,30]]}
+  ];
+  var DAYS=[
+    [1,'SHADOW','Read the skills repository that already exists and the design docs behind it. Meet the Director of APS and each sub-team lead. Build nothing.'],
+    [4,'SHADOW','Sit in on firmware and runtime triage. Write down every step that\'s the same each time and every place someone waits.'],
+    [6,'MEASURE','Pick three candidate workflows from the friction log, then measure how long each one takes today so there\'s a baseline to beat.'],
+    [10,'MEASURE','Share the friction log with the teams in writing. Let them tell me what I got wrong before I build a single thing.'],
+    [12,'BUILD','Build the first workflow for the most boring, most repeated task on the list. Boring is good. Boring is where the week goes.'],
+    [15,'EVAL','Write the eval before calling anything done: known-good cases from real history, plus the failure cases that would embarrass us.'],
+    [19,'EVAL','Run it against the baseline. If it doesn\'t beat the manual path, say so plainly and cut it. Some tasks shouldn\'t be automated.'],
+    [22,'SHIP','Put the survivor where engineers already work, which means CI, code review or the triage channel, not a new dashboard nobody opens.'],
+    [26,'SHIP','Regression-test the automation like production code. When it breaks, it should fail loudly and never quietly.'],
+    [30,'EVAL','Write up what paid off, what didn\'t, and what the numbers say. That writeup becomes the roadmap for the next thirty days.']
+  ];
+  var lanes=document.getElementById('lanes');
+  var html='';
+  LANES.forEach(function(l){
+    html+='<div class="lane"><b>'+l.k+'</b><div class="track">'+l.segs.map(function(s){
+      var left=(s[0]-1)/29*100, w=(s[1]-s[0])/29*100;
+      return '<span class="seg'+(l.amber?' amber':'')+'" style="left:'+left+'%;width:'+w+'%"></span>'}).join('')+'</div></div>';
+  });
+  lanes.innerHTML=html+'<div class="ovl"><span class="cursor" id="cur" style="left:0"></span></div>';
+  var day=document.getElementById('day'),cur=document.getElementById('cur'),dnum=document.getElementById('dnum'),dlane=document.getElementById('dlane'),dtext=document.getElementById('dtext');
+  function scrub(){
+    var d=+day.value, e=DAYS[0];
+    DAYS.forEach(function(x){if(x[0]<=d)e=x});
+    cur.style.left=((d-1)/29*100)+'%';
+    dnum.firstChild.nodeValue='D'+(d<10?'0':'')+d;
+    dlane.textContent=e[1];
+    dtext.textContent=e[2];
+  }
+  day.addEventListener('input',scrub); scrub();
+
+  /* reveal */
+  var rv=[].slice.call(document.querySelectorAll('.rv'));
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target)}})},{threshold:.12});
+    rv.forEach(function(el){io.observe(el)});
+  } else rv.forEach(function(el){el.classList.add('in')});
+})();
+</script>
+</body>
+</html>
