@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>Andrew Zoll for Netflix TV Product UI and TV Client Foundations</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0f0f0f; --bg2:#181818; --bg3:#232323; --line:#2e2e2e;
+    --red:#e50914; --red2:#b20710;
+    --txt:#f3f3f3; --mut:#b3b3b3; --mut2:#808080;
+    --sans:'Manrope',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{background:var(--bg);color-scheme:dark}
+  body{background:var(--bg);color:var(--txt);font-family:var(--sans);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+  a{color:var(--txt)}
+  button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+  :focus-visible{outline:2px solid #fff;outline-offset:2px}
+  .wrap{max-width:1200px;margin:0 auto;padding:0 28px}
+
+  header.bar .wrap{display:flex;justify-content:space-between;align-items:center;height:64px}
+  .who{font-weight:800;letter-spacing:-.01em}
+  .who span{color:var(--red)}
+  nav.jump{display:flex;gap:24px;font-size:14px;color:var(--mut)}
+  nav.jump a{color:var(--mut);text-decoration:none}
+  nav.jump a:hover{color:#fff}
+
+  .hero{padding:40px 0 80px}
+  .hero .wrap{display:grid;grid-template-columns:350px 1fr;gap:48px;align-items:start}
+  .hero h1{font-size:clamp(32px,3.4vw,42px);line-height:1.1;font-weight:800;letter-spacing:-.025em}
+  .hero .sub{margin-top:18px;color:var(--mut);font-size:17px}
+  .cta{display:flex;gap:10px;margin-top:26px;flex-wrap:wrap}
+  .btn{display:inline-flex;align-items:center;height:44px;padding:0 20px;border-radius:4px;font-weight:700;font-size:15px;text-decoration:none;white-space:nowrap;transition:transform .15s,background .2s}
+  .btn:active{transform:scale(.98)}
+  .btn.solid{background:var(--red);color:#fff}
+  .btn.solid:hover{background:#f6121d}
+  .btn.ghost{background:#6d6d6e66;color:#fff}
+  .btn.ghost:hover{background:#6d6d6e99}
+  .howto{margin-top:30px;font-size:14px;color:var(--mut2);border-top:1px solid var(--line);padding-top:16px}
+  .howto kbd{font-family:var(--sans);font-size:12px;border:1px solid #444;border-radius:3px;padding:0 5px;color:var(--mut)}
+
+  /* the set */
+  .setup{display:grid;grid-template-columns:1fr 92px;gap:22px;align-items:center}
+  .tv{position:relative;background:#050505;border-radius:14px;padding:12px;box-shadow:0 0 0 1px #2a2a2a,0 30px 80px -30px #e5091433}
+  .tv::after{content:"";position:absolute;left:50%;bottom:-26px;width:120px;height:14px;margin-left:-60px;background:#1c1c1c;border-radius:0 0 8px 8px}
+  .screen{position:relative;aspect-ratio:16/9;background:var(--bg);border-radius:4px;overflow:hidden;outline:none}
+  .screen:focus-visible{box-shadow:inset 0 0 0 2px #fff}
+  .scn{position:absolute;inset:0;display:none;flex-direction:column}
+  .scn.on{display:flex}
+
+  /* profiles screen */
+  .prof{align-items:center;justify-content:center;gap:4%}
+  .prof h2{font-size:clamp(18px,2.6vw,30px);font-weight:500}
+  .plist{display:flex;gap:6%;justify-content:center;width:100%}
+  .pf{display:flex;flex-direction:column;align-items:center;gap:10px;width:26%;max-width:170px;color:var(--mut2);transition:color .2s}
+  .pf .av{width:100%;aspect-ratio:1;border-radius:6px;border:3px solid transparent;display:grid;place-items:center;font-size:clamp(20px,3.4vw,40px);font-weight:800;color:#fff;transition:border-color .2s,transform .2s}
+  .pf:nth-child(1) .av{background:linear-gradient(135deg,#e50914,#6b0006)}
+  .pf:nth-child(2) .av{background:linear-gradient(135deg,#2b5bd7,#10205a)}
+  .pf span{font-size:clamp(10px,1.2vw,14px);text-align:center;line-height:1.3}
+  .pf.f{color:#fff}
+  .pf.f .av{border-color:#fff;transform:scale(1.04)}
+
+  /* home screen */
+  .bill{position:relative;flex:0 0 46%;padding:3.2% 4% 0;background:radial-gradient(120% 90% at 85% 10%,#e5091430,transparent 60%),linear-gradient(180deg,#1b1b1b,var(--bg))}
+  .bill .kind{font-size:clamp(9px,1vw,12px);font-weight:700;letter-spacing:.12em;color:var(--red)}
+  .bill h3{font-size:clamp(15px,2.3vw,28px);font-weight:800;letter-spacing:-.02em;margin-top:.3em;line-height:1.1;max-width:80%}
+  .bill p{margin-top:.6em;font-size:clamp(10px,1.25vw,15px);color:#d6d6d6;max-width:88%;line-height:1.45}
+  .bill .meta{margin-top:.6em;font-size:clamp(9px,1vw,12px);color:var(--mut)}
+  .bill .meta b{color:#46d369;font-weight:700}
+  .bill .meta b.warn{color:#f5a623}
+  .rows{flex:1;padding:1.2% 0 0 4%;overflow:hidden;position:relative}
+  .rows-in{transition:transform .25s cubic-bezier(.16,1,.3,1)}
+  .row{padding-bottom:1.2%}
+  .row h4{font-size:clamp(9px,1.1vw,13px);font-weight:700;color:#e5e5e5;margin-bottom:.5%}
+  .row.dim h4{color:var(--mut2)}
+  .tiles{display:flex;gap:1.1%;transition:transform .25s cubic-bezier(.16,1,.3,1)}
+  .tl{flex:0 0 19%;aspect-ratio:16/9.5;border-radius:4px;background:var(--bg3);padding:.55em .7em;display:flex;flex-direction:column;justify-content:flex-end;text-align:left;font-size:clamp(8px,.82vw,11px);font-weight:700;line-height:1.2;color:#eee;border:2px solid transparent;transition:transform .2s,border-color .2s;position:relative;overflow:hidden}
+  .tl::before{content:"";position:absolute;inset:0;background:linear-gradient(160deg,var(--c1,#333),var(--c2,#191919));z-index:0}
+  .tl span{position:relative;z-index:1}
+  .tl.f{border-color:#fff;transform:scale(1.07);z-index:2}
+  .tl.gap{--c1:#3a2a12;--c2:#1c140a}
+  .tl.go{--c1:#5a0409;--c2:#230103}
+
+  /* remote */
+  .remote{background:#1e1e1e;border-radius:40px;padding:22px 12px;display:grid;justify-items:center;gap:14px;box-shadow:inset 0 1px 0 #333,0 20px 40px -20px #000}
+  .dpad{position:relative;width:74px;height:74px;border-radius:50%;background:#2c2c2c}
+  .dpad button{position:absolute;width:26px;height:26px;display:grid;place-items:center;color:#cfcfcf;font-size:12px;border-radius:50%}
+  .dpad button:hover{color:#fff;background:#3a3a3a}
+  .dpad .u{top:2px;left:24px}.dpad .d{bottom:2px;left:24px}.dpad .l{left:2px;top:24px}.dpad .r{right:2px;top:24px}
+  .dpad .ok{top:22px;left:22px;width:30px;height:30px;background:#3b3b3b;font-size:10px;font-weight:800;color:#fff}
+  .rbtn{width:52px;height:26px;border-radius:13px;background:#2c2c2c;font-size:10px;font-weight:700;color:#cfcfcf}
+  .rbtn:hover{background:#3a3a3a;color:#fff}
+  .rbtn.red{background:var(--red2);color:#fff}
+  .rlogo{font-size:9px;letter-spacing:.2em;color:#555;margin-top:6px}
+
+  section{padding:80px 0;border-top:1px solid var(--line)}
+  h2.s{font-size:clamp(24px,2.8vw,34px);font-weight:800;letter-spacing:-.02em;max-width:24ch;line-height:1.15}
+  .lede{color:var(--mut);margin-top:12px;max-width:62ch}
+
+  /* side by side */
+  .pair{margin-top:40px;display:grid;grid-template-columns:1fr 1fr;gap:20px}
+  .role{background:var(--bg2);border-radius:6px;padding:28px;border-top:3px solid var(--red)}
+  .role:nth-child(2){border-top-color:#2b5bd7}
+  .role .code{font-size:13px;color:var(--mut2);font-weight:600}
+  .role h3{font-size:22px;font-weight:800;margin-top:4px;letter-spacing:-.01em}
+  .role .pay{margin-top:6px;color:var(--mut);font-size:15px}
+  .role blockquote{margin-top:18px;font-size:14.5px;color:var(--mut);border-left:2px solid var(--line);padding-left:12px;font-style:italic}
+  .role h5{margin-top:20px;font-size:13px;font-weight:700;color:#e5e5e5}
+  .role ul{margin-top:8px;padding-left:18px;display:grid;gap:6px;font-size:15px;color:#d8d8d8}
+
+  .close .wrap{display:grid;grid-template-columns:1.3fr 1fr;gap:48px;align-items:end}
+  .close p{color:var(--mut);margin-top:12px;max-width:52ch}
+  .rules{padding-left:18px;display:grid;gap:8px;font-size:14px;color:var(--mut)}
+  footer{border-top:1px solid var(--line);padding:32px 0 56px;font-size:13px;color:var(--mut2)}
+  footer .wrap{display:grid;gap:6px}
+
+  @media (prefers-reduced-motion:reduce){.tl,.row,.tiles,.pf .av,.btn{transition:none}}
+  @media (max-width:980px){
+    .hero .wrap{grid-template-columns:1fr}
+    .close .wrap,.pair{grid-template-columns:1fr}
+    nav.jump{display:none}
+  }
+  @media (max-width:640px){
+    .wrap{padding:0 16px}
+    .setup{grid-template-columns:1fr}
+    .remote{grid-template-columns:auto auto auto;align-items:center;border-radius:20px;padding:12px 16px;justify-content:center;gap:18px}
+    .rlogo{display:none}
+    .tl{flex-basis:30%;font-size:9.5px}
+    .screen{aspect-ratio:4/5}
+    .bill{flex-basis:44%}
+    .tv::after{display:none}
+  }
+</style>
+</head>
+<body>
+
+<header class="bar">
+  <div class="wrap">
+    <div class="who">Andrew Zoll <span>for</span> Netflix TV</div>
+    <nav class="jump" aria-label="Sections"><a href="#set">The set</a><a href="#roles">Both roles</a><a href="#hello">Say hello</a></nav>
+  </div>
+</header>
+
+<div class="hero" id="set">
+  <div class="wrap">
+    <div>
+      <h1>My application runs on a TV.</h1>
+      <p class="sub">I'm Andrew. I wrote this for two of your openings, and it works like your app does: arrows to browse, OK to open.</p>
+      <div class="cta">
+        <a class="btn solid" href="https://portfolio.andrewzoll.com">See the work</a>
+        <a class="btn ghost" href="https://linkedin.com/in/andrewzoll">LinkedIn</a>
+      </div>
+      <p class="howto">Click the screen and use <kbd>&larr;</kbd> <kbd>&rarr;</kbd> <kbd>&uarr;</kbd> <kbd>&darr;</kbd>, <kbd>Enter</kbd> for OK and <kbd>Esc</kbd> for Back. Or use the remote. Tiles are clickable too.</p>
+    </div>
+
+    <div class="setup">
+      <div class="tv">
+        <div class="screen" id="screen" tabindex="0" role="application" aria-label="TV screen. Use arrow keys to browse, Enter to open, Escape to go back.">
+          <div class="scn prof on" id="s-prof">
+            <h2>Who's hiring?</h2>
+            <div class="plist">
+              <button class="pf f" data-p="ui"><div class="av">UI</div><span>TV Product UI<br>Software Engineer 4</span></button>
+              <button class="pf" data-p="cf"><div class="av">CF</div><span>TV Client Foundations<br>Software Engineer 5</span></button>
+            </div>
+          </div>
+          <div class="scn" id="s-home">
+            <div class="bill" aria-live="polite">
+              <div class="kind" id="b-kind"></div>
+              <h3 id="b-title"></h3>
+              <p id="b-body"></p>
+              <div class="meta" id="b-meta"></div>
+            </div>
+            <div class="rows" id="rows"></div>
+          </div>
+        </div>
+      </div>
+      <div class="remote" aria-label="Remote control">
+        <div class="dpad">
+          <button class="u" data-k="up" aria-label="Up">&#9650;</button>
+          <button class="l" data-k="left" aria-label="Left">&#9664;</button>
+          <button class="ok" data-k="ok" aria-label="OK">OK</button>
+          <button class="r" data-k="right" aria-label="Right">&#9654;</button>
+          <button class="d" data-k="down" aria-label="Down">&#9660;</button>
+        </div>
+        <button class="rbtn" data-k="back">BACK</button>
+        <button class="rbtn red" data-k="home">HOME</button>
+        <div class="rlogo">AZ</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section id="roles">
+  <div class="wrap">
+    <h2 class="s">Both roles, side by side, without the remote.</h2>
+    <p class="lede">Same content as the TV, laid flat. The lines in italics are quoted from your postings.</p>
+    <div class="pair">
+      <div class="role">
+        <div class="code">JR42145 &middot; USA, Remote</div>
+        <h3>Software Engineer 4, TV Product UI</h3>
+        <div class="pay">$260,000 to $380,000, per the posting</div>
+        <blockquote>"Work on a code base that is TypeScript/JavaScript based, built with React Frameworks &amp; Redux architecture fine-tuned for TV platforms."</blockquote>
+        <h5>What I'd bring</h5>
+        <ul>
+          <li>FieldCommand: 187,745 lines of TypeScript I wrote alone on Next.js and React, every screen from spec to production.</li>
+          <li>Quality I own myself: the test coverage and release process at Coder, and a fixture suite that gates every Veritas release.</li>
+          <li>Risky changes shipped behind per-tenant feature flags, so one customer sees a change before everyone does.</li>
+        </ul>
+        <h5>What I'd be new at</h5>
+        <ul>
+          <li>TV devices and their memory budgets.</li>
+          <li>Formal A/B experimentation, Redux and GraphQL in production.</li>
+          <li>Consumer scale. My users are business customers, not members.</li>
+        </ul>
+      </div>
+      <div class="role">
+        <div class="code">JR42179 &middot; USA, Remote</div>
+        <h3>Software Engineer 5, TV Client Foundations</h3>
+        <div class="pay">$388,000 to $558,000, per the posting</div>
+        <blockquote>"We enable engineers to deliver product initiatives that bring joy to people worldwide by focusing on a high-quality, high-velocity, joyful developer experience."</blockquote>
+        <h5>What I'd bring</h5>
+        <ul>
+          <li>AndrewOS: the developer tooling I built for my own engineering, with a skills repository two AI coding agents read and checks that run before anything lands.</li>
+          <li>A review pipeline where nothing reviews its own work, which is developer experience treated as a product.</li>
+          <li>API and architecture design across FieldCommand's multi-tenant platform and Veritas.</li>
+        </ul>
+        <h5>What I'd be new at</h5>
+        <ul>
+          <li>Performance and memory profiling on devices. This one is the core of the job, and I'd be learning it.</li>
+          <li>Supporting 70 engineers. My tooling's engineering user count is one, and it's me.</li>
+          <li>C++ and a custom TV platform.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="close" id="hello">
+  <div class="wrap">
+    <div>
+      <h2 class="s">Still watching? I'd love to talk.</h2>
+      <p>TV Product UI is the one I fit best today. TV Client Foundations is the one I'd grow into. Both teams write the sentence about remote work in the posting itself, and that's a big part of why I'm writing from Colorado.</p>
+      <div class="cta">
+        <a class="btn solid" href="https://portfolio.andrewzoll.com">See the work</a>
+        <a class="btn ghost" href="https://linkedin.com/in/andrewzoll">LinkedIn</a>
+      </div>
+    </div>
+    <ol class="rules">
+      <li>Every quoted line comes from the actual Netflix job postings.</li>
+      <li>Every claim maps to a system that exists and that I built.</li>
+      <li>There are no invented numbers on this page.</li>
+      <li>Every gap is listed, on the TV and off it.</li>
+      <li>Not affiliated with Netflix. I made this myself.</li>
+    </ol>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>Not affiliated with Netflix, Inc. This is a personal page I built as part of my own application. It borrows the look of a TV home screen on purpose and uses no Netflix logos or assets.</span>
+    <span>Built for Software Engineer 4, TV Product UI (JR42145) and Software Engineer 5, TV Client Foundations (JR42179). USA, Remote.</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var ROLE={
+    ui:{name:'TV Product UI',tag:'SOFTWARE ENGINEER 4',req:[
+      ['TypeScript, React & Redux','"Work on a code base that is TypeScript/JavaScript based, built with React Frameworks & Redux architecture."','FieldCommand is 187,745 lines of TypeScript I wrote alone on Next.js and React, every screen from spec to production. I haven\'t used Redux in production.','partial'],
+      ['Own your feature\'s quality','"Own the quality of your features by writing testable code and crafting automation to validate functionality."','At Coder I own the test coverage and release process for the platform I work on. At Veritas, a fixture suite I wrote from real failures gates every release.','match'],
+      ['A/B test real variants','"We validate our judgment by A/B testing product variants with real customers."','I ship risky changes behind per-tenant feature flags, so one customer sees a change first. I haven\'t run formal A/B experiments, and I\'d be learning your way of doing it.','gap'],
+      ['Node.js, GraphQL, other stacks','"You are proficient in JavaScript/TypeScript, and can navigate different languages and technology stacks (eg. Node.js, GraphQL, etc)."','Node, Python, PostgreSQL and AWS in production. GraphQL would be new to me.','partial'],
+      ['Collaborate across disciplines','"Collaborate cross-functionally with product, design, algo, and other engineering partners."','At Coder I sit inside the revenue organization and turn what the platform can do into what non-engineers actually need. Explaining technical work to people who don\'t write code is most of my career.','match']
+    ]},
+    cf:{name:'TV Client Foundations',tag:'SOFTWARE ENGINEER 5',req:[
+      ['A joyful developer experience','"A high-quality, high-velocity, joyful developer experience."','AndrewOS is the developer tooling I built for my own engineering: a skills repository two AI coding agents read, checks that run before anything lands, and a review pipeline where nothing reviews its own work.','match'],
+      ['Scale across 70+ engineers','"You\'ll enable over 70 engineers to create best-in-class streaming UIs."','Honest answer: my tooling\'s engineering user count is one, and it\'s me. I\'ve never supported a team this size.','gap'],
+      ['Performance & memory','"Performance & memory profiling."','New to me on devices, and it\'s the core of this job. I\'d be learning your profilers and your platform\'s constraints.','gap'],
+      ['API design','"API design."','I designed the APIs behind FieldCommand and Veritas, including multi-tenant access control where one tenant must never see another\'s data.','match'],
+      ['Systems thinking','"Comfortable applying systems thinking to application architecture."','FieldCommand\'s architecture is mine end to end: tenant isolation, role-based access, and feature flags per tenant, designed and built alone.','match']
+    ]}
+  };
+  var GAPS=[
+    ['No TV devices yet','Streaming sticks, smart TVs and cable boxes, with real memory budgets, would all be new to me.'],
+    ['Business customers, not members','My products serve contractors, lawyers and advisors. Hundreds of millions of members is a different world.'],
+    ['A young title','My formal Senior Software Engineer title is under a year old, though FieldCommand, Veritas and AndrewOS are production systems I built.'],
+    ['Redux, GraphQL, C++','None of these in production yet.']
+  ];
+  var GO=[
+    ['See the work','Portfolio','https://portfolio.andrewzoll.com'],
+    ['Connect on LinkedIn','LinkedIn','https://linkedin.com/in/andrewzoll'],
+    ['Switch profile','Back to the profile screen',null]
+  ];
+  var screen=document.getElementById('screen');
+  var sProf=document.getElementById('s-prof'), sHome=document.getElementById('s-home');
+  var rowsEl=document.getElementById('rows');
+  var pfs=[].slice.call(document.querySelectorAll('.pf'));
+  var st={view:'prof',p:0,role:'ui',r:0,c:[0,0,0]};
+  var MAP={match:['Strong match','b'],partial:['Partial match','b warn'],gap:['Honest gap','b warn']};
+  function rowsData(){
+    var R=ROLE[st.role];
+    return [
+      {h:'Because you\'re hiring: '+R.name,items:R.req.map(function(x){return {t:x[0],kind:'FROM THE POSTING',title:x[0],body:x[2],q:x[1],m:x[3]}})},
+      {h:'Known issues',gap:true,items:GAPS.map(function(x){return {t:x[0],kind:'KNOWN ISSUE',title:x[0],body:x[1],m:'gap'}})},
+      {h:'Start watching',go:true,items:GO.map(function(x){return {t:x[0],kind:'NEXT',title:x[0],body:x[2]?'Opens '+x[1]+' in a new tab.':'Pick the other role, or come back to this one.',href:x[2]}})}
+    ];
+  }
+  function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;')}
+  function render(){
+    sProf.classList.toggle('on',st.view==='prof');
+    sHome.classList.toggle('on',st.view==='home');
+    pfs.forEach(function(p,i){p.classList.toggle('f',i===st.p)});
+    if(st.view!=='home')return;
+    var data=rowsData(), html='';
+    data.forEach(function(row,ri){
+      var shift=Math.max(0,st.c[ri]-3);
+      html+='<div class="row'+(ri===st.r?'':' dim')+'"><h4>'+esc(row.h)+'</h4><div class="tiles" style="transform:translateX(-'+(shift*20.1)+'%)">'+
+        row.items.map(function(it,ci){return '<button class="tl'+(row.gap?' gap':'')+(row.go?' go':'')+(ri===st.r&&ci===st.c[ri]?' f':'')+'" data-r="'+ri+'" data-c="'+ci+'"><span>'+esc(it.t)+'</span></button>'}).join('')+'</div></div>';
+    });
+    rowsEl.innerHTML='<div class="rows-in">'+html+'</div>';
+    var rowEls=rowsEl.querySelectorAll('.row'), inner=rowsEl.firstChild;
+    var need=rowEls[st.r].offsetTop+rowEls[st.r].offsetHeight-rowsEl.clientHeight;
+    inner.style.transform=need>0?'translateY(-'+Math.min(need,rowEls[st.r].offsetTop)+'px)':'none';
+    var it=data[st.r].items[st.c[st.r]];
+    document.getElementById('b-kind').textContent=it.kind+' · '+ROLE[st.role].tag;
+    document.getElementById('b-title').textContent=it.q?it.q:it.title;
+    document.getElementById('b-body').textContent=it.body;
+    var meta=document.getElementById('b-meta');
+    if(it.m&&MAP[it.m]){meta.innerHTML='<b class="'+(MAP[it.m][1]==='b'?'':'warn')+'">'+MAP[it.m][0]+'</b>'}else{meta.textContent=''}
+  }
+  function act(k){
+    if(st.view==='prof'){
+      if(k==='left'||k==='right')st.p=st.p?0:1;
+      else if(k==='ok'){st.role=st.p?'cf':'ui';st.view='home';st.r=0;st.c=[0,0,0]}
+      render();return;
+    }
+    var data=rowsData();
+    if(k==='up')st.r=Math.max(0,st.r-1);
+    else if(k==='down')st.r=Math.min(data.length-1,st.r+1);
+    else if(k==='left')st.c[st.r]=Math.max(0,st.c[st.r]-1);
+    else if(k==='right')st.c[st.r]=Math.min(data[st.r].items.length-1,st.c[st.r]+1);
+    else if(k==='back'||k==='home'){st.view='prof'}
+    else if(k==='ok'){
+      var it=data[st.r].items[st.c[st.r]];
+      if(data[st.r].go){ if(it.href){window.open(it.href,'_blank','noopener')} else {st.view='prof'} }
+    }
+    render();
+  }
+  document.querySelectorAll('.remote [data-k]').forEach(function(b){b.addEventListener('click',function(){act(b.dataset.k)})});
+  screen.addEventListener('keydown',function(e){
+    var k={ArrowUp:'up',ArrowDown:'down',ArrowLeft:'left',ArrowRight:'right',Enter:'ok',' ':'ok',Escape:'back',Backspace:'back'}[e.key];
+    if(k){e.preventDefault();act(k)}
+  });
+  pfs.forEach(function(p,i){p.addEventListener('click',function(){st.p=i;act('ok');screen.focus()})});
+  rowsEl.addEventListener('click',function(e){
+    var t=e.target.closest('.tl'); if(!t)return;
+    var r=+t.dataset.r,c=+t.dataset.c, same=(st.r===r&&st.c[r]===c);
+    st.r=r;st.c[r]=c; if(same)act('ok'); else render();
+    screen.focus();
+  });
+  render();
+})();
+</script>
+</body>
+</html>
