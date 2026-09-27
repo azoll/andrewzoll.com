@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>Andrew Zoll API Reference</title>
+<meta name="description" content="A personal application page by Andrew Zoll for the Full Stack Engineer, Enterprise & Ecosystem role. Not affiliated with or endorsed by Stripe.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* Brand-inspired only. Tokens follow a public analysis of Stripe's design language
+   (indigo primary, deep navy ink, thin display type, angled gradient mesh).
+   No Stripe logos or assets are used. Hanken Grotesk stands in for Sohne. */
+:root{
+  --primary:#533afd;
+  --primary-deep:#4434d4;
+  --primary-press:#2e2b8c;
+  --primary-soft:#665efd;
+  --primary-tint:#eeedff;
+  --ink:#0d253d;
+  --ink-2:#273951;
+  --mute:#5b6b82;
+  --canvas:#ffffff;
+  --canvas-soft:#f6f9fc;
+  --hair:#e3e8ee;
+  --hair-2:#eef2f6;
+  --ok:#0e8a5f;
+  --ok-tint:#e3f6ee;
+  --warn:#a15c07;
+  --warn-tint:#fdf1dc;
+  --err:#c0123c;
+  --err-tint:#fde8ee;
+  --code-bg:#1c1e54;
+  --code-bg-2:#15173f;
+  --code-head:#25286a;
+  --code-ink:#e6e8ff;
+  --code-mute:#9ea3d6;
+  --code-key:#9fd4ff;
+  --code-str:#ffd29a;
+  --code-num:#f9a8ef;
+  --code-lit:#8ff0c4;
+  --shadow-1:0 1px 3px rgba(0,55,112,.08);
+  --shadow-2:0 8px 24px rgba(0,55,112,.08),0 2px 6px rgba(0,55,112,.04);
+  --sans:"Hanken Grotesk","SF Pro Display",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --r-lg:12px;
+  --r-md:8px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ink:#e7ecf5;
+    --ink-2:#c3cddd;
+    --mute:#98a6bb;
+    --canvas:#0a1628;
+    --canvas-soft:#0f1d33;
+    --hair:#1f3048;
+    --hair-2:#172740;
+    --primary-tint:#1f1d55;
+    --ok:#4fd6a0; --ok-tint:#0f3328;
+    --warn:#f5b75c; --warn-tint:#3a2a10;
+    --err:#ff7aa0; --err-tint:#3d1426;
+    --code-bg:#121436;
+    --code-bg-2:#0d0f2b;
+    --code-head:#1b1e4f;
+    --shadow-1:0 1px 3px rgba(0,0,0,.4);
+    --shadow-2:0 8px 24px rgba(0,0,0,.35),0 2px 6px rgba(0,0,0,.25);
+  }
+}
+:root[data-theme="dark"]{
+  --ink:#e7ecf5; --ink-2:#c3cddd; --mute:#98a6bb;
+  --canvas:#0a1628; --canvas-soft:#0f1d33; --hair:#1f3048; --hair-2:#172740;
+  --primary-tint:#1f1d55;
+  --ok:#4fd6a0; --ok-tint:#0f3328; --warn:#f5b75c; --warn-tint:#3a2a10; --err:#ff7aa0; --err-tint:#3d1426;
+  --code-bg:#121436; --code-bg-2:#0d0f2b; --code-head:#1b1e4f;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+body{
+  font-family:var(--sans);font-weight:400;font-size:16px;line-height:1.55;
+  color:var(--ink);background:var(--canvas);
+  font-feature-settings:"ss01";overflow-x:hidden;
+}
+a{color:var(--primary);text-decoration:none}
+a:hover{text-decoration:underline}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+code,pre,.mono{font-family:var(--mono)}
+.tnum{font-feature-settings:"tnum"}
+:focus-visible{outline:2px solid var(--primary);outline-offset:2px;border-radius:4px}
+
+/* top strip + header */
+.strip{background:var(--ink);color:var(--canvas);font-size:13px;padding:8px 16px;text-align:center}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .strip{background:#050d19;color:#c3cddd}}
+.hdr{
+  position:sticky;top:0;z-index:30;background:color-mix(in srgb,var(--canvas) 88%,transparent);
+  backdrop-filter:saturate(180%) blur(12px);-webkit-backdrop-filter:saturate(180%) blur(12px);
+  border-bottom:1px solid var(--hair);
+}
+.hdr-in{max-width:1320px;margin:0 auto;height:60px;display:flex;align-items:center;gap:20px;padding:0 24px}
+.mark{display:flex;align-items:center;gap:10px;color:var(--ink);font-weight:600;letter-spacing:-.2px;white-space:nowrap}
+.mark:hover{text-decoration:none}
+.mark-glyph{width:26px;height:26px;border-radius:7px;background:linear-gradient(135deg,var(--primary),#f96bee 70%,#ffb35c);display:grid;place-items:center;color:#fff;font-size:13px;font-weight:600}
+.mark small{font-weight:400;color:var(--mute);font-size:14px}
+.hdr nav{display:flex;gap:22px;margin-left:12px;font-size:15px}
+.hdr nav a{color:var(--ink-2)}
+.hdr nav a:hover{color:var(--primary);text-decoration:none}
+.hdr .sp{flex:1}
+.pill{
+  display:inline-flex;align-items:center;gap:6px;border-radius:9999px;padding:9px 18px;
+  font-size:15px;font-weight:500;line-height:1;white-space:nowrap;transition:transform .15s ease,background .2s ease,box-shadow .2s ease;
+}
+.pill:hover{text-decoration:none}
+.pill:active{transform:translateY(1px) scale(.99)}
+.pill-p{background:var(--primary);color:#fff}
+.pill-p:hover{background:var(--primary-deep)}
+.pill-p:active{background:var(--primary-press)}
+.pill-s{background:var(--canvas);color:var(--primary);box-shadow:inset 0 0 0 1px var(--hair)}
+.pill-s:hover{box-shadow:inset 0 0 0 1px var(--primary)}
+.arrow{display:inline-block;transition:transform .2s ease}
+.pill:hover .arrow{transform:translateX(3px)}
+@media (max-width:860px){.hdr nav{display:none}.hdr-in{padding:0 16px}}
+@media (max-width:420px){.mark small{display:none}.hdr .pill{padding:8px 14px;font-size:14px}}
+
+/* hero with angled mesh */
+.hero{position:relative;overflow:hidden;isolation:isolate}
+.mesh{
+  position:absolute;left:0;right:0;top:-300px;height:760px;z-index:-1;
+  transform:skewY(-9deg);transform-origin:0 0;overflow:hidden;background:#f5e9d4;
+}
+.mesh i{position:absolute;border-radius:50%;filter:blur(70px);opacity:.95;will-change:transform}
+.mesh .b1{width:60vw;height:520px;left:-10vw;top:180px;background:#ffb35c}
+.mesh .b2{width:50vw;height:520px;left:22vw;top:120px;background:#f96bee}
+.mesh .b3{width:55vw;height:560px;left:50vw;top:160px;background:#533afd}
+.mesh .b4{width:40vw;height:420px;left:70vw;top:360px;background:#ea2261;opacity:.75}
+.mesh .b5{width:45vw;height:380px;left:8vw;top:440px;background:#b9b9f9}
+@media (prefers-reduced-motion: no-preference){
+  .mesh .b1{animation:drift1 22s ease-in-out infinite alternate}
+  .mesh .b2{animation:drift2 26s ease-in-out infinite alternate}
+  .mesh .b3{animation:drift1 30s ease-in-out infinite alternate-reverse}
+  .mesh .b4{animation:drift2 24s ease-in-out infinite alternate-reverse}
+  .mesh .b5{animation:drift1 28s ease-in-out infinite alternate}
+}
+@keyframes drift1{to{transform:translate3d(6vw,40px,0) scale(1.08)}}
+@keyframes drift2{to{transform:translate3d(-5vw,-30px,0) scale(.94)}}
+.mesh::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(255,255,255,.0))}
+.hero-in{max-width:1320px;margin:0 auto;padding:72px 24px 96px;display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center}
+.hero h1{
+  font-weight:300;font-size:clamp(40px,5.2vw,64px);line-height:1.04;letter-spacing:-1.6px;color:#0d253d;max-width:12ch;
+}
+.hero p.lede{margin-top:22px;font-size:20px;line-height:1.45;color:#273951;max-width:40ch;font-weight:400}
+.hero .ctas{margin-top:30px;display:flex;gap:12px;flex-wrap:wrap}
+.hero .pill-s{background:#fff;color:#533afd;box-shadow:none}
+.hero .pill-s:hover{box-shadow:inset 0 0 0 1px #533afd}
+
+/* connections card (hero asset, a real working component) */
+.conn{
+  background:var(--canvas);border-radius:var(--r-lg);box-shadow:var(--shadow-2),0 30px 60px -20px rgba(28,30,84,.35);
+  overflow:hidden;border:1px solid var(--hair);
+}
+.conn-hd{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 20px;border-bottom:1px solid var(--hair)}
+.conn-hd h2{font-size:16px;font-weight:500;letter-spacing:-.1px}
+.conn-hd span{font-size:13px;color:var(--mute)}
+.conn ul{list-style:none}
+.conn li a{
+  display:grid;grid-template-columns:1fr auto;gap:4px 12px;align-items:center;padding:14px 20px;color:var(--ink);
+  border-bottom:1px solid var(--hair-2);transition:background .15s ease;
+}
+.conn li:last-child a{border-bottom:0}
+.conn li a:hover{background:var(--canvas-soft);text-decoration:none}
+.conn .route{font-size:15px;font-weight:500;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.conn .route .sep{color:var(--mute);font-family:var(--mono);font-size:13px}
+.conn .where{grid-column:1;font-size:13px;color:var(--mute)}
+.badge{
+  grid-row:1 / span 2;grid-column:2;font-size:12.5px;font-weight:500;border-radius:9999px;padding:4px 10px;
+  display:inline-flex;align-items:center;gap:6px;white-space:nowrap
+}
+.badge::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor}
+.b-ok{color:var(--ok);background:var(--ok-tint)}
+.b-no{color:var(--warn);background:var(--warn-tint)}
+@media (max-width:980px){
+  .hero-in{grid-template-columns:1fr;padding:48px 16px 64px;gap:36px}
+  .hero h1{max-width:14ch}
+}
+@media (max-width:480px){
+  .hero p.lede{font-size:18px}
+  .conn li a{grid-template-columns:1fr;padding:14px 16px}
+  .badge{grid-row:auto;grid-column:1;justify-self:start;margin-top:6px}
+  .conn-hd{padding:14px 16px}
+}
+
+/* docs layout */
+.docs{max-width:1320px;margin:0 auto;display:grid;grid-template-columns:232px minmax(0,1fr);gap:0;padding:0 24px}
+.side{position:sticky;top:60px;align-self:start;height:calc(100vh - 60px);overflow:auto;padding:32px 20px 32px 0;border-right:1px solid var(--hair)}
+.side h3{font-size:12px;font-weight:600;color:var(--mute);letter-spacing:.2px;margin:18px 0 8px}
+.side h3:first-child{margin-top:0}
+.side a{display:flex;align-items:center;gap:8px;padding:6px 10px;border-radius:6px;font-size:14.5px;color:var(--ink-2);line-height:1.3}
+.side a:hover{background:var(--canvas-soft);text-decoration:none;color:var(--ink)}
+.side a.on{background:var(--primary-tint);color:var(--primary);font-weight:500}
+.m{font-family:var(--mono);font-size:10.5px;font-weight:500;border-radius:4px;padding:2px 5px;letter-spacing:.3px;flex:none}
+.m-get{color:var(--ok);background:var(--ok-tint)}
+.m-post{color:var(--primary);background:var(--primary-tint)}
+.m-err{color:var(--err);background:var(--err-tint)}
+.m-evt{color:var(--warn);background:var(--warn-tint)}
+.main{min-width:0;padding-left:48px}
+.jump{display:none}
+@media (max-width:1024px){
+  .docs{grid-template-columns:1fr;padding:0 16px}
+  .side{display:none}
+  .main{padding-left:0}
+  .jump{
+    display:block;position:sticky;top:60px;z-index:20;margin:0 -16px;padding:10px 16px;
+    background:color-mix(in srgb,var(--canvas) 92%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--hair)
+  }
+  .jump-btn{width:100%;display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-radius:var(--r-md);box-shadow:inset 0 0 0 1px var(--hair);background:var(--canvas);font-size:15px}
+  .jump-btn .chev{transition:transform .2s ease}
+  .jump-btn[aria-expanded="true"] .chev{transform:rotate(180deg)}
+  .jump-list{margin-top:8px;border-radius:var(--r-md);box-shadow:var(--shadow-2);background:var(--canvas);padding:6px;max-height:60vh;overflow:auto}
+  .jump-list[hidden]{display:none}
+  .jump-list a{display:flex;gap:8px;align-items:center;padding:10px;border-radius:6px;color:var(--ink-2);font-size:15px}
+  .jump-list a:hover{background:var(--canvas-soft);text-decoration:none}
+}
+
+.intro{padding:56px 0 8px;max-width:68ch}
+.intro h2{font-size:32px;font-weight:300;letter-spacing:-.64px;line-height:1.15}
+.intro p{margin-top:14px;color:var(--ink-2);font-size:17px}
+.langbar{margin-top:22px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.langbar .lbl{font-size:14px;color:var(--mute)}
+.seg{display:inline-flex;background:var(--canvas-soft);border-radius:9999px;padding:3px;box-shadow:inset 0 0 0 1px var(--hair)}
+.seg button{padding:6px 14px;border-radius:9999px;font-size:14px;color:var(--ink-2);font-weight:500}
+.seg button[aria-selected="true"]{background:var(--canvas);color:var(--primary);box-shadow:var(--shadow-1)}
+
+.ep{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.02fr);gap:40px;padding:56px 0;border-top:1px solid var(--hair);scroll-margin-top:72px}
+.ep:first-of-type{border-top:0}
+.ep-doc h2{font-size:26px;font-weight:300;letter-spacing:-.4px;line-height:1.15}
+.path{margin-top:12px;display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:13.5px;color:var(--ink-2);flex-wrap:wrap}
+.path .m{font-size:11px}
+.jd{
+  margin-top:18px;padding:12px 14px;border-radius:var(--r-md);background:var(--canvas-soft);box-shadow:inset 3px 0 0 var(--primary);
+  font-size:14.5px;color:var(--ink-2)
+}
+.jd b{display:block;font-size:12px;font-weight:600;color:var(--mute);margin-bottom:2px}
+.ep-doc > p{margin-top:16px;color:var(--ink-2);font-size:16.5px;max-width:62ch}
+.attrs{margin-top:24px}
+.attrs h4{font-size:15px;font-weight:600;padding-bottom:10px;border-bottom:1px solid var(--hair)}
+.attr{padding:14px 0;border-bottom:1px solid var(--hair-2)}
+.attr:last-child{border-bottom:0}
+.attr .nm{font-family:var(--mono);font-size:13.5px;font-weight:500;color:var(--ink)}
+.attr .ty{font-size:13px;color:var(--mute);margin-left:6px}
+.attr p{font-size:15px;color:var(--ink-2);margin-top:4px}
+.kids-btn{
+  margin-top:10px;font-size:13px;color:var(--mute);border-radius:9999px;padding:5px 12px;box-shadow:inset 0 0 0 1px var(--hair);
+  display:inline-flex;align-items:center;gap:6px
+}
+.kids-btn:hover{color:var(--primary);box-shadow:inset 0 0 0 1px var(--primary)}
+.kids-btn .pm{font-family:var(--mono)}
+.kids{margin-top:10px;border-radius:var(--r-md);box-shadow:inset 0 0 0 1px var(--hair);padding:0 14px}
+.kids[hidden]{display:none}
+.kids .attr{padding:12px 0}
+
+/* code panes */
+.ep-code{position:relative}
+.stick{position:sticky;top:84px;display:flex;flex-direction:column;gap:16px}
+.pane{background:var(--code-bg);border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--shadow-2);color:var(--code-ink)}
+.pane-hd{display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--code-head);padding:9px 12px 9px 16px;font-size:13px;color:var(--code-mute)}
+.pane-hd .ttl{display:flex;align-items:center;gap:8px;min-width:0}
+.pane-hd .ttl span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.status{font-family:var(--mono);font-size:11.5px;color:#8ff0c4;background:rgba(143,240,196,.12);padding:2px 7px;border-radius:4px}
+.status.draft{color:#ffd29a;background:rgba(255,210,154,.12)}
+.cbtn{font-size:12.5px;color:var(--code-mute);padding:4px 10px;border-radius:9999px;box-shadow:inset 0 0 0 1px rgba(158,163,214,.3);white-space:nowrap}
+.cbtn:hover{color:#fff;box-shadow:inset 0 0 0 1px rgba(255,255,255,.6)}
+.pane pre{
+  margin:0;padding:16px;font-size:13px;line-height:1.65;white-space:pre-wrap;word-break:break-word;overflow-wrap:anywhere;
+  font-feature-settings:"tnum";tab-size:2
+}
+.pane pre.req{background:var(--code-bg-2)}
+.k{color:var(--code-key)}.s{color:var(--code-str)}.n{color:var(--code-num)}.l{color:var(--code-lit)}.c{color:var(--code-mute);font-style:italic}.p{color:#c6c9f5}
+@media (max-width:1100px){
+  .ep{grid-template-columns:1fr;gap:24px}
+  .stick{position:static}
+}
+@media (max-width:480px){
+  .ep{padding:40px 0}
+  .ep-doc h2{font-size:24px}
+  .pane pre{font-size:12.5px;padding:14px}
+}
+
+/* errors */
+.sec-hd{padding:64px 0 8px;border-top:1px solid var(--hair);scroll-margin-top:72px;max-width:68ch}
+.sec-hd h2{font-size:32px;font-weight:300;letter-spacing:-.64px;line-height:1.15}
+.sec-hd p{margin-top:12px;color:var(--ink-2);font-size:17px}
+.errs{margin-top:24px;border-radius:var(--r-lg);box-shadow:inset 0 0 0 1px var(--hair);overflow:hidden}
+.err{border-bottom:1px solid var(--hair)}
+.err:last-child{border-bottom:0}
+.err-row{width:100%;text-align:left;display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:14px;align-items:center;padding:16px 18px;transition:background .15s ease}
+.err-row:hover{background:var(--canvas-soft)}
+.err-row code{font-size:13.5px;color:var(--err);font-weight:500;word-break:break-word}
+.err-row .mid{display:flex;flex-direction:column;gap:2px;min-width:0}
+.err-row .sum{font-size:15px;color:var(--ink-2)}
+.err-row .chev{color:var(--mute);transition:transform .2s ease;font-family:var(--mono)}
+.err-row[aria-expanded="true"] .chev{transform:rotate(90deg)}
+.err-body{padding:0 18px 18px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px}
+.err-body[hidden]{display:none}
+.err-body p{font-size:15.5px;color:var(--ink-2)}
+@media (max-width:760px){
+  .err-row{grid-template-columns:minmax(0,1fr) auto;padding:14px}
+  .err-row .m{display:none}
+  .err-body{grid-template-columns:1fr;padding:0 14px 14px}
+}
+
+/* webhook log (dashboard component) */
+.log{margin-top:24px;border-radius:var(--r-lg);background:var(--canvas);box-shadow:var(--shadow-2);border:1px solid var(--hair);overflow:hidden}
+.log-tb{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 16px;border-bottom:1px solid var(--hair);flex-wrap:wrap}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{font-size:13.5px;padding:6px 12px;border-radius:9999px;box-shadow:inset 0 0 0 1px var(--hair);color:var(--ink-2)}
+.chip:hover{box-shadow:inset 0 0 0 1px var(--primary);color:var(--primary)}
+.chip[aria-pressed="true"]{background:var(--primary);color:#fff;box-shadow:none}
+.chip .ct{font-feature-settings:"tnum";opacity:.75;margin-left:4px}
+.log-tb .pill{padding:7px 14px;font-size:14px}
+.log-head,.evt-row{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1.6fr) 70px 24px;gap:12px;align-items:center}
+.log-head{padding:10px 16px;font-size:12px;font-weight:600;color:var(--mute);background:var(--canvas-soft);border-bottom:1px solid var(--hair)}
+.evt{border-bottom:1px solid var(--hair-2)}
+.evt:last-child{border-bottom:0}
+.evt[hidden]{display:none}
+.evt-row{width:100%;text-align:left;padding:13px 16px;font-size:14.5px;transition:background .15s ease}
+.evt-row:hover{background:var(--canvas-soft)}
+.evt-row code{font-size:13px;color:var(--ink);font-weight:500;word-break:break-word}
+.evt-row .d{color:var(--ink-2)}
+.evt-row .y{color:var(--mute);font-feature-settings:"tnum";font-size:14px}
+.evt-row .chev{color:var(--mute);font-family:var(--mono);transition:transform .2s ease}
+.evt-row[aria-expanded="true"] .chev{transform:rotate(90deg)}
+.evt-body{padding:0 16px 16px}
+.evt-body[hidden]{display:none}
+.evt.in{animation:rowin .45s cubic-bezier(.16,1,.3,1) both}
+@keyframes rowin{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+.log-empty{padding:28px 16px;text-align:center;color:var(--mute);font-size:15px}
+.log-empty[hidden]{display:none}
+.log-foot{padding:10px 16px;font-size:13px;color:var(--mute);border-top:1px solid var(--hair);background:var(--canvas-soft)}
+@media (max-width:640px){
+  .log-head{display:none}
+  .evt-row{grid-template-columns:minmax(0,1fr) auto;gap:4px 10px}
+  .evt-row code{grid-column:1}
+  .evt-row .d{grid-column:1 / -1;grid-row:2;font-size:14px}
+  .evt-row .y{grid-column:2;grid-row:1;justify-self:end}
+  .evt-row .chev{display:none}
+}
+
+/* closing */
+.close{
+  margin:72px 0 0;border-radius:16px;background:var(--code-bg);color:#fff;padding:48px;position:relative;overflow:hidden;isolation:isolate
+}
+.close::before{content:"";position:absolute;inset:auto -10% -60% 30%;height:120%;background:radial-gradient(closest-side,#533afd,transparent),radial-gradient(closest-side at 70% 40%,#f96bee55,transparent);z-index:-1;filter:blur(20px)}
+.close h2{font-size:clamp(28px,3.4vw,40px);font-weight:300;letter-spacing:-.8px;line-height:1.1;max-width:20ch}
+.close p{margin-top:14px;color:#c9ccf3;font-size:17px;max-width:56ch}
+.close .ctas{margin-top:26px;display:flex;gap:12px;flex-wrap:wrap}
+.close .pill-s{background:transparent;color:#fff;box-shadow:inset 0 0 0 1px rgba(255,255,255,.4)}
+.close .pill-s:hover{box-shadow:inset 0 0 0 1px #fff}
+@media (max-width:560px){.close{padding:32px 20px;margin-top:56px}}
+footer{max-width:1320px;margin:0 auto;padding:40px 24px 56px;color:var(--mute);font-size:14px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+@media (max-width:560px){footer{padding:32px 16px 48px}}
+.toast{
+  position:fixed;left:50%;bottom:24px;transform:translate(-50%,20px);opacity:0;pointer-events:none;
+  background:var(--ink);color:var(--canvas);font-size:14px;padding:10px 16px;border-radius:9999px;transition:all .25s ease;z-index:50
+}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+</style>
+</head>
+<body>
+
+<div class="strip" id="top">This is a personal page by Andrew Zoll. It is not affiliated with or endorsed by Stripe.</div>
+
+<header class="hdr">
+  <div class="hdr-in">
+    <a class="mark" href="#top" aria-label="Andrew Zoll API, back to top"><span class="mark-glyph" aria-hidden="true">az</span>Andrew Zoll <small>API reference</small></a>
+    <nav aria-label="Sections">
+      <a href="#engineer">Reference</a>
+      <a href="#errors">Errors</a>
+      <a href="#webhooks">Webhooks</a>
+    </nav>
+    <span class="sp"></span>
+    <a class="pill pill-p" href="https://portfolio.andrewzoll.com" target="_blank" rel="noopener">See the portfolio <span class="arrow" aria-hidden="true">&rarr;</span></a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="mesh" aria-hidden="true"><i class="b1"></i><i class="b2"></i><i class="b3"></i><i class="b4"></i><i class="b5"></i></div>
+  <div class="hero-in">
+    <div>
+      <h1>I wrote myself up as an API.</h1>
+      <p class="lede">Hi, I'm Andrew. You're hiring someone to build connectors, so every requirement below is an endpoint and every response is real work.</p>
+      <div class="ctas">
+        <a class="pill pill-p" href="#engineer">Read the reference <span class="arrow" aria-hidden="true">&rarr;</span></a>
+        <a class="pill pill-s" href="https://www.linkedin.com/in/andrewzoll" target="_blank" rel="noopener">Connect on LinkedIn</a>
+      </div>
+    </div>
+    <div class="conn" aria-label="Integrations I have built">
+      <div class="conn-hd"><h2>Connections</h2><span>Tap one to see its endpoint</span></div>
+      <ul>
+        <li><a href="#payments_subscriptions"><span class="route">Stripe Billing <span class="sep" aria-label="connected to">&#8644;</span> FieldCommand</span><span class="where">Automated billing and reporting pipelines</span><span class="badge b-ok">Live</span></a></li>
+        <li><a href="#connectors"><span class="route">Redtail CRM <span class="sep" aria-label="connected to">&#8644;</span> ChatGPT API</span><span class="where">Ryleigh Wealth Management, 20+ hours a month saved</span><span class="badge b-ok">Live</span></a></li>
+        <li><a href="#partner_systems"><span class="route">CRM, support, transcripts <span class="sep" aria-label="connected to">&#8644;</span> agents</span><span class="where">Internal AI agent platform at Coder</span><span class="badge b-ok">Live</span></a></li>
+        <li><a href="#errors"><span class="route">Shopify, Salesforce, NetSuite <span class="sep" aria-label="connected to">&#8644;</span> Stripe</span><span class="where">The work this role does, and the work I want next</span><span class="badge b-no">Not yet built</span></a></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="docs">
+  <aside class="side" aria-label="API reference navigation" id="side"></aside>
+  <main class="main" id="main">
+    <div class="jump">
+      <button class="jump-btn" id="jumpBtn" aria-expanded="false" aria-controls="jumpList"><span id="jumpLbl">Jump to an endpoint</span><span class="chev" aria-hidden="true">&#9662;</span></button>
+      <div class="jump-list" id="jumpList" hidden></div>
+    </div>
+
+    <div class="intro">
+      <h2>How to read this page</h2>
+      <p>The endpoints are pretend, but the responses aren't. Each section quotes one line from the job listing, and its code pane answers with something I actually built or did. The gaps live in the errors section, because a good API tells you when it can't do something.</p>
+      <div class="langbar">
+        <span class="lbl" id="langLbl">Request language</span>
+        <div class="seg" role="tablist" aria-labelledby="langLbl" id="langTabs">
+          <button role="tab" data-lang="curl" aria-selected="true">curl</button>
+          <button role="tab" data-lang="node" aria-selected="false">Node.js</button>
+          <button role="tab" data-lang="python" aria-selected="false">Python</button>
+          <button role="tab" data-lang="ruby" aria-selected="false">Ruby</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="endpoints"></div>
+
+    <div class="sec-hd" id="errors">
+      <h2>Errors</h2>
+      <p>Here's where I'm honest about what I don't have yet. Each one is a real gap against the listing, so I'd rather you read it here than find it later.</p>
+    </div>
+    <div class="errs" id="errList"></div>
+
+    <div class="sec-hd" id="webhooks">
+      <h2>Webhooks</h2>
+      <p>This is my career as an event log, oldest first. Filter by type, open any event to read its payload, or replay the whole stream and watch it arrive in order.</p>
+    </div>
+    <div class="log" id="log">
+      <div class="log-tb">
+        <div class="chips" role="group" aria-label="Filter events by type" id="chips"></div>
+        <button class="pill pill-s" id="replay">Replay events</button>
+      </div>
+      <div class="log-head" aria-hidden="true"><span>Event</span><span>Description</span><span>Year</span><span></span></div>
+      <div id="evts"></div>
+      <div class="log-empty" id="empty" hidden>No events match that filter.</div>
+      <div class="log-foot" id="logFoot" aria-live="polite"></div>
+    </div>
+
+    <section class="close" id="contact">
+      <h2>If this looks like a fit, I'd love to talk.</h2>
+      <p>I'm Andrew Zoll, and I live in Pueblo, Colorado. The portfolio has more of the work behind these responses, and LinkedIn is the easiest place to reach me.</p>
+      <div class="ctas">
+        <a class="pill pill-p" href="https://portfolio.andrewzoll.com" target="_blank" rel="noopener">See the portfolio <span class="arrow" aria-hidden="true">&rarr;</span></a>
+        <a class="pill pill-s" href="https://www.linkedin.com/in/andrewzoll" target="_blank" rel="noopener">Connect on LinkedIn</a>
+      </div>
+    </section>
+  </main>
+</div>
+
+<footer>
+  <span>A personal application page by Andrew Zoll for the Full Stack Engineer, Enterprise &amp; Ecosystem role. It is not affiliated with or endorsed by Stripe, and it uses no Stripe logos or assets.</span>
+  <a href="#top">Back to top</a>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* data: every requirement is an endpoint */
+  var ENDPOINTS = [
+    {
+      id:"engineer", group:"Core", nav:"The engineer object", method:"GET",
+      path:"/v1/engineers/andrew_zoll", res:"engineers", arg:"andrew_zoll", cls:"Engineer",
+      title:"Retrieve the engineer",
+      jd:null,
+      body:"I'm a Senior Software Engineer (AI Solutions) at Coder, where I'm embedded in the revenue organization. Before that I was a financial advisor, and before that I ran IT for a 1,200-member organization. I'd work this role remotely from Pueblo.",
+      attrs:[
+        {n:"current_role", t:"object", d:"Where I work today and what I do there.", kids:[
+          {n:"title", t:"string", d:"Senior Software Engineer (AI Solutions)."},
+          {n:"team", t:"string", d:"A two-person team embedded in the revenue organization."},
+          {n:"ships_to", t:"string", d:"Production on AWS, from a large Python codebase."}
+        ]},
+        {n:"location", t:"string", d:"Pueblo, Colorado. I'm applying for the remote option."},
+        {n:"languages", t:"array of strings", d:"What I write in production today."}
+      ],
+      resp:{
+        id:"eng_andrew_zoll", object:"engineer", name:"Andrew Zoll",
+        current_role:{ title:"Senior Software Engineer (AI Solutions)", company:"Coder", since:2026, team:"two engineers, revenue organization", ships_to:"production on AWS" },
+        location:"Pueblo, Colorado", work_mode:"remote",
+        applying_for:"Full Stack Engineer, Enterprise & Ecosystem",
+        languages:["TypeScript","Python","SQL"],
+        links:{ portfolio:"https://portfolio.andrewzoll.com", linkedin:"https://www.linkedin.com/in/andrewzoll" }
+      }
+    },
+    {
+      id:"industry_experience", group:"Minimum requirements", nav:"Industry experience", method:"GET",
+      path:"/v1/requirements/industry_experience", res:"requirements", arg:"industry_experience", cls:"Requirement",
+      title:"Two years of industry engineering",
+      jd:"2+ years of industry software engineering experience",
+      body:"I'll be straight with you on this one. My formal software engineering title starts in 2026 at Coder. The rest of my production code is founder-built, starting in 2025 with FieldCommand. Whether founder work counts toward your two years is your call, so this response leaves that field empty on purpose.",
+      attrs:[
+        {n:"evidence", t:"array of objects", d:"Each stretch of production engineering, labeled by what kind it was.", kids:[
+          {n:"kind", t:"enum", d:"Either w2_engineering or founder_production_code."},
+          {n:"start", t:"integer", d:"The year it started."}
+        ]},
+        {n:"counts_toward_minimum", t:"nullable boolean", d:"Null until Stripe decides. I'm not going to fill this in for you."}
+      ],
+      resp:{
+        object:"requirement", requirement:"2+ years of industry software engineering experience",
+        evidence:[
+          { kind:"w2_engineering", role:"Senior Software Engineer (AI Solutions)", company:"Coder", start:2026, end:null },
+          { kind:"founder_production_code", role:"Founder, sole engineer", company:"FieldCommand", start:2025, end:null },
+          { kind:"founder_production_code", role:"Founder and engineer", company:"Veritas", start:2026, end:null }
+        ],
+        counts_toward_minimum:null, decided_by:"stripe"
+      }
+    },
+    {
+      id:"full_stack", group:"Minimum requirements", nav:"Full-stack capability", method:"GET",
+      path:"/v1/requirements/full_stack", res:"requirements", arg:"full_stack", cls:"Requirement",
+      title:"Strong full-stack capability",
+      jd:"Strong full-stack capabilities",
+      body:"FieldCommand is the clearest answer I have. I built it solo: a multi-tenant SaaS for commercial trade contractors, from the Postgres schema to the Next.js front end. It has role-based access control, tenant isolation, audit-ready data handling, and four AI features running in production behind per-tenant feature flags.",
+      attrs:[
+        {n:"lines_of_typescript", t:"integer", d:"The size of the codebase I wrote and maintain by myself."},
+        {n:"layers", t:"object", d:"Every layer of the stack, all mine.", kids:[
+          {n:"frontend", t:"string", d:"Next.js."},
+          {n:"backend", t:"string", d:"Node."},
+          {n:"database", t:"string", d:"PostgreSQL on Supabase."}
+        ]},
+        {n:"ai_features_in_production", t:"integer", d:"Each one ships behind a per-tenant feature flag."}
+      ],
+      resp:{
+        object:"receipt", project:"FieldCommand", kind:"multi-tenant SaaS for commercial trade contractors",
+        built_by:"solo", lines_of_typescript:187745,
+        layers:{ frontend:"Next.js", backend:"Node", database:"PostgreSQL on Supabase" },
+        security:["RBAC","tenant isolation","audit-ready data handling"],
+        ai_features_in_production:4, feature_flags:"per_tenant"
+      }
+    },
+    {
+      id:"production_code", group:"Minimum requirements", nav:"Production code", method:"GET",
+      path:"/v1/requirements/production_code", res:"requirements", arg:"production_code", cls:"Requirement",
+      title:"A modern web stack, shipped to production",
+      jd:"Proficient in a modern web stack and have shipped production level code",
+      body:"At Coder I write Python on a large production codebase with one other engineer, and we ship to production on AWS. I own our test coverage, our release process, and our operating docs, so release readiness is my job. On my own products I ship TypeScript, Next.js, and Postgres.",
+      attrs:[
+        {n:"shipped", t:"array of objects", d:"Places where my code runs for real users.", kids:[
+          {n:"stack", t:"array of strings", d:"The languages and platforms in that codebase."},
+          {n:"i_own", t:"array of strings", d:"The parts of shipping that are my responsibility."}
+        ]}
+      ],
+      resp:{
+        object:"receipt",
+        shipped:[
+          { where:"Coder", stack:["Python","AWS"], codebase:"large production codebase", team_size:2, i_own:["test coverage","release process","operating docs"] },
+          { where:"FieldCommand", stack:["TypeScript","Next.js","Node","PostgreSQL","Supabase"], built_by:"solo" },
+          { where:"Veritas", ships:"citation verification that returns an auditable record", i_designed:["verification pipeline","hedged-verdict semantics"] }
+        ]
+      }
+    },
+    {
+      id:"partner_systems", group:"Minimum requirements", nav:"Partner systems", method:"GET",
+      path:"/v1/requirements/partner_systems", res:"requirements", arg:"partner_systems", cls:"Requirement",
+      title:"Reading other people's interfaces",
+      jd:"Foundational understanding and ability to read the code/interfaces of partner systems (e.g., Salesforce, Oracle, Netsuite)",
+      body:"I haven't worked inside Salesforce, Oracle, or NetSuite yet, and the errors section says so. What I have done is build on systems I didn't write. At Coder, our agent platform turns CRM, support, and call-transcript data into answers for revenue teams, which means reading those source systems closely enough to trust what comes out.",
+      attrs:[
+        {n:"partner_interfaces", t:"array of objects", d:"Outside systems I've read and built against."},
+        {n:"salesforce, oracle, netsuite", t:"enum", d:"All three read not_yet. That's the honest value."}
+      ],
+      resp:{
+        object:"receipt",
+        partner_interfaces:[
+          { system:"Stripe", used_for:"billing pipelines in FieldCommand" },
+          { system:"Redtail CRM", used_for:"integration with external services and the ChatGPT API" },
+          { system:"CRM, support, and call-transcript data", used_for:"internal AI agent platform at Coder" }
+        ],
+        salesforce:"not_yet", oracle:"not_yet", netsuite:"not_yet"
+      }
+    },
+    {
+      id:"connectors", group:"Preferred qualifications", nav:"Connectors", method:"GET",
+      path:"/v1/preferred/connectors", res:"preferred", arg:"connectors", cls:"Preferred",
+      title:"Building connectors and deep integrations",
+      jd:"Prior experience building connectors, or deep integrations with major Ecommerce, CRM, or ERP platforms",
+      body:"My favorite one is small. At Ryleigh Wealth Management I built the integration architecture between Redtail CRM, external services, and the ChatGPT API, and it took more than 20 hours a month of manual work off the team. In FieldCommand I built automated pipelines that connect Stripe billing, AI services, CRM data, and operational reporting.",
+      attrs:[
+        {n:"integrations", t:"array of objects", d:"Each system I connected, and what it changed.", kids:[
+          {n:"connects", t:"array of strings", d:"The systems on either side of the connector."},
+          {n:"result", t:"string", d:"Only present where I have a real number."}
+        ]}
+      ],
+      resp:{
+        object:"receipt",
+        integrations:[
+          { name:"Redtail CRM bridge", at:"Ryleigh Wealth Management", connects:["Redtail CRM","external services","ChatGPT API"], result:"eliminated 20+ hours of monthly manual work" },
+          { name:"FieldCommand pipelines", connects:["Stripe billing","AI services","CRM data","operational reporting"], automated:true },
+          { name:"Revenue agent platform", at:"Coder", connects:["CRM","support","call transcripts"] }
+        ]
+      }
+    },
+    {
+      id:"payments_subscriptions", group:"Preferred qualifications", nav:"Payments and subscriptions", method:"GET",
+      path:"/v1/preferred/payments_subscriptions", res:"preferred", arg:"payments_subscriptions", cls:"Preferred",
+      title:"Payments and subscriptions",
+      jd:"Experience with payments or subscriptions systems",
+      body:"FieldCommand bills through Stripe, and I built the pipelines that carry billing data into the rest of the product. I also spent four years as a financial advisor at Edward Jones, serving more than 120 households, so money that doesn't reconcile bothers me on a personal level.",
+      attrs:[
+        {n:"stripe_billing", t:"object", d:"Where Stripe billing sits in something I built."},
+        {n:"money_domain", t:"object", d:"The years I spent on the other side of the ledger."}
+      ],
+      resp:{
+        object:"receipt",
+        stripe_billing:{ where:"FieldCommand", built:"automated pipelines from Stripe billing into AI services, CRM data, and reporting" },
+        money_domain:{ where:"Edward Jones", role:"financial advisor", years:"2020 to 2024", households:"120+", client_retention:"95%" }
+      }
+    },
+    {
+      id:"rapid_learning", group:"Preferred qualifications", nav:"Learning new systems", method:"GET",
+      path:"/v1/preferred/rapid_learning", res:"preferred", arg:"rapid_learning", cls:"Preferred",
+      title:"Learning new systems quickly",
+      jd:"A background that demonstrates an ability to rapidly learn new systems",
+      body:"My path hasn't been a straight line, and I think that's the evidence. I went from SQL Server administration and a website rebuild with content migration, to advising clients on their money, to building a SaaS product solo, a legal verification platform, an agent operating system that runs my businesses, and now production AI tooling at Coder.",
+      attrs:[
+        {n:"path", t:"array of objects", d:"Every system I had to learn from scratch, in order."}
+      ],
+      resp:{
+        object:"receipt",
+        path:[
+          { years:"2017 to 2019", role:"IT lead, 1,200-member organization", learned:["SQL Server administration","website rebuild with content migration"] },
+          { years:"2020 to 2024", role:"Financial advisor, Edward Jones", learned:["financial planning for 120+ households"] },
+          { years:"2024 to present", role:"Ryleigh Wealth Management", learned:["Redtail CRM","ChatGPT API"] },
+          { years:"2025 to present", role:"Founder, FieldCommand and AndrewOS", learned:["Next.js","Node","PostgreSQL","Supabase","Stripe billing"] },
+          { years:"2026 to present", role:"Founder, Veritas; engineer, Coder", learned:["verification pipelines","shipping Python to production on AWS"] }
+        ]
+      }
+    },
+    {
+      id:"billing_connector", group:"First six months", nav:"Billing connector plan", method:"POST",
+      path:"/v1/projects/billing_connector", res:"projects", arg:null, cls:"Project",
+      title:"How I'd start the billing connector",
+      jd:"High-impact projects in the first six months, such as a new payments-agnostic billing connector",
+      body:"This one is a plan, not a receipt, so the status says draft. I'd start by reading the partner system's objects before writing any mapping code. I've done a content migration before, during a website rebuild in my IT years, and I'd want reconciliation in place early so drift shows up before a customer finds it.",
+      draft:true,
+      attrs:[
+        {n:"first_steps", t:"array of strings", d:"The order I'd take on the work."},
+        {n:"status", t:"enum", d:"Draft. It becomes real once I've read your code."}
+      ],
+      params:{ name:"payments_agnostic_billing_connector", owner:"andrew_zoll" },
+      resp:{
+        object:"project_plan", name:"payments_agnostic_billing_connector", status:"draft",
+        first_steps:[
+          "read the partner system's billing objects and interfaces first",
+          "write the object mapping down and get it reviewed",
+          "make every sync idempotent so a retried event never double-bills",
+          "build reconciliation reports before the connector goes wide"
+        ],
+        owner:"andrew_zoll"
+      }
+    }
+  ];
+
+  var ERRORS = [
+    { code:"title_since_2026", type:"experience_gap", sum:"My formal engineering title dates from 2026.",
+      body:"My W-2 software engineering title starts in 2026 at Coder. The rest of my production code is founder-built since 2025. Whether that adds up to 2+ years of industry software engineering is Stripe's call, and I'm fine with whichever way you count it.",
+      resp:{ error:{ type:"experience_gap", code:"title_since_2026", message:"Formal software engineering title since 2026. Founder-built production code since 2025.", counts_toward_minimum:null, decided_by:"stripe" } } },
+    { code:"no_partner_connector_yet", type:"experience_gap", sum:"I haven't built a Shopify, Salesforce, or NetSuite connector.",
+      body:"My integration work is Stripe billing, Redtail CRM, and CRM data at Coder. I haven't shipped a connector for Shopify, Salesforce, NetSuite, or Oracle, so those would be new systems for me.",
+      resp:{ error:{ type:"experience_gap", code:"no_partner_connector_yet", message:"No Shopify, Salesforce, or NetSuite connector built yet.", built_instead:["Stripe billing","Redtail CRM","CRM data at Coder"] } } },
+    { code:"language_not_in_production", type:"experience_gap", sum:"I haven't written production Ruby or Java.",
+      body:"My production languages are TypeScript and Python. I haven't shipped Ruby or Java, which is also why the Ruby tab in the code panes admits it.",
+      resp:{ error:{ type:"experience_gap", code:"language_not_in_production", message:"No production Ruby or Java.", production_languages:["TypeScript","Python"] } } }
+  ];
+
+  var EVENTS = [
+    { type:"career.started", cat:"career", year:2017, d:"IT lead for a 1,200-member organization", data:{ role:"IT lead", organization_size:"1,200 members", work:["SQL Server administration","website rebuild with content migration"], ended:2019 } },
+    { type:"career.started", cat:"career", year:2020, d:"Financial advisor at Edward Jones", data:{ role:"financial advisor", company:"Edward Jones", households:"120+", client_retention:"95%", ended:2024 } },
+    { type:"integration.shipped", cat:"integration", year:2024, d:"Redtail CRM to ChatGPT API bridge", data:{ at:"Ryleigh Wealth Management", connects:["Redtail CRM","external services","ChatGPT API"], manual_work_eliminated:"20+ hours per month" } },
+    { type:"build.shipped", cat:"build", year:2025, d:"FieldCommand, multi-tenant SaaS, built solo", data:{ lines_of_typescript:187745, ai_features_in_production:4, database:"PostgreSQL on Supabase" } },
+    { type:"integration.shipped", cat:"integration", year:2025, d:"FieldCommand billing and data pipelines", data:{ connects:["Stripe billing","AI services","CRM data","operational reporting"], automated:true } },
+    { type:"build.shipped", cat:"build", year:2025, d:"AndrewOS, an agent operating system", data:{ what:"an agent operating system that runs operations across my businesses" } },
+    { type:"build.shipped", cat:"build", year:2026, d:"Veritas citation verification", data:{ what:"checks cited cases and quotations against source records", returns:"an auditable verification record", i_designed:["verification pipeline","hedged-verdict semantics"] } },
+    { type:"career.started", cat:"career", year:2026, d:"Senior Software Engineer (AI Solutions) at Coder", data:{ company:"Coder", team_size:2, language:"Python", ships_to:"production on AWS", i_own:["test coverage","release process","operating docs"] } },
+    { type:"application.submitted", cat:"career", year:2026, d:"Full Stack Engineer, Enterprise & Ecosystem", data:{ company:"Stripe", req:"8118929", status:"pending", note:"This is the one I'm hoping you'll handle." } }
+  ];
+
+  /* helpers */
+  function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
+  function $(sel,root){ return (root||document).querySelector(sel); }
+  function $all(sel,root){ return Array.prototype.slice.call((root||document).querySelectorAll(sel)); }
+
+  function json(v, ind){
+    ind = ind || "";
+    var nx = ind + "  ";
+    if (v === null) return '<span class="l">null</span>';
+    if (typeof v === "boolean") return '<span class="l">'+v+'</span>';
+    if (typeof v === "number") return '<span class="n">'+v+'</span>';
+    if (typeof v === "string") return '<span class="s">"'+esc(v)+'"</span>';
+    if (Array.isArray(v)){
+      if (!v.length) return '<span class="p">[]</span>';
+      var simple = v.every(function(x){ return typeof x !== "object" || x === null; });
+      if (simple && JSON.stringify(v).length < 56){
+        return '<span class="p">[</span>' + v.map(function(x){ return json(x, nx); }).join('<span class="p">, </span>') + '<span class="p">]</span>';
+      }
+      return '<span class="p">[</span>\n' + v.map(function(x){ return nx + json(x, nx); }).join('<span class="p">,</span>\n') + '\n' + ind + '<span class="p">]</span>';
+    }
+    var keys = Object.keys(v);
+    return '<span class="p">{</span>\n' + keys.map(function(k){
+      return nx + '<span class="k">"'+esc(k)+'"</span><span class="p">: </span>' + json(v[k], nx);
+    }).join('<span class="p">,</span>\n') + '\n' + ind + '<span class="p">}</span>';
+  }
+
+  var HOST = "https://api.andrewzoll.example";
+  function reqText(ep, lang){
+    var isPost = ep.method === "POST";
+    var p = ep.params || {};
+    if (lang === "curl"){
+      var t = "curl " + HOST + ep.path + " \\\n  -u hiring_team:";
+      if (isPost){ Object.keys(p).forEach(function(k){ t += " \\\n  -d " + k + "=" + p[k]; }); }
+      return { raw:t, html: esc(t).replace(/(-u|-d)/g,'<span class="k">$1</span>') };
+    }
+    if (lang === "node"){
+      var n = "const andrew = require('andrew-zoll')('hiring_team');\n\n";
+      if (isPost){
+        n += "const project = await andrew." + ep.res + ".create({\n" + Object.keys(p).map(function(k){ return "  " + k + ": '" + p[k] + "',"; }).join("\n") + "\n});";
+      } else {
+        var v = ep.res === "engineers" ? "engineer" : "receipt";
+        n += "const " + v + " = await andrew." + ep.res + ".retrieve('" + ep.arg + "');";
+      }
+      return { raw:n, html: esc(n).replace(/(const|await|require)/g,'<span class="k">$1</span>').replace(/(&#39;|')([^'\n]*)(')/g,'<span class="s">\'$2\'</span>') };
+    }
+    if (lang === "python"){
+      var y = "import andrew_zoll\nandrew_zoll.api_key = \"hiring_team\"\n\n";
+      if (isPost){
+        y += "andrew_zoll." + ep.cls + ".create(\n" + Object.keys(p).map(function(k){ return "  " + k + "=\"" + p[k] + "\","; }).join("\n") + "\n)";
+      } else {
+        y += "andrew_zoll." + ep.cls + ".retrieve(\"" + ep.arg + "\")";
+      }
+      return { raw:y, html: esc(y).replace(/\bimport\b/g,'<span class="k">import</span>').replace(/(&quot;)([^&\n]*)(&quot;)/g,'<span class="s">"$2"</span>') };
+    }
+    var r = "# Honest note: I haven't shipped production Ruby yet.\n# The response still holds. See the errors section.\nrequire 'andrew_zoll'\nAndrewZoll.api_key = 'hiring_team'\n\n";
+    if (isPost){
+      r += "AndrewZoll::" + ep.cls + ".create(\n" + Object.keys(p).map(function(k){ return "  " + k + ": '" + p[k] + "',"; }).join("\n") + "\n)";
+    } else {
+      r += "AndrewZoll::" + ep.cls + ".retrieve('" + ep.arg + "')";
+    }
+    var rh = esc(r).split("\n").map(function(line){
+      if (line.indexOf("#") === 0) return '<span class="c">'+line+'</span>';
+      return line.replace(/\brequire\b/,'<span class="k">require</span>').replace(/(&#39;|')([^'\n]*)(')/g,'<span class="s">\'$2\'</span>');
+    }).join("\n");
+    return { raw:r, html:rh };
+  }
+
+  var LANG_LABEL = { curl:"cURL", node:"Node.js", python:"Python", ruby:"Ruby" };
+  var lang = "curl";
+  try { var saved = localStorage.getItem("az-lang"); if (saved && LANG_LABEL[saved]) lang = saved; } catch(e){}
+
+  /* render endpoints */
+  var epWrap = $("#endpoints");
+  var kidSeq = 0;
+  function attrHTML(a){
+    var h = '<div class="attr"><span class="nm">'+esc(a.n)+'</span><span class="ty">'+esc(a.t)+'</span><p>'+esc(a.d)+'</p>';
+    if (a.kids){
+      var id = "kids-" + (++kidSeq);
+      h += '<button class="kids-btn" aria-expanded="false" aria-controls="'+id+'"><span class="pm">+</span> <span class="kl">Show child attributes</span></button>';
+      h += '<div class="kids" id="'+id+'" hidden>' + a.kids.map(attrHTML).join("") + '</div>';
+    }
+    return h + '</div>';
+  }
+  ENDPOINTS.forEach(function(ep){
+    var s = document.createElement("section");
+    s.className = "ep"; s.id = ep.id;
+    s.innerHTML =
+      '<div class="ep-doc">' +
+        '<h2>'+esc(ep.title)+'</h2>' +
+        '<div class="path"><span class="m '+(ep.method==="POST"?"m-post":"m-get")+'">'+ep.method+'</span>'+esc(ep.path)+'</div>' +
+        (ep.jd ? '<div class="jd"><b>From the listing</b>&quot;'+esc(ep.jd)+'&quot;</div>' : '') +
+        '<p>'+esc(ep.body)+'</p>' +
+        '<div class="attrs"><h4>Response attributes</h4>' + ep.attrs.map(attrHTML).join("") + '</div>' +
+      '</div>' +
+      '<div class="ep-code"><div class="stick">' +
+        '<div class="pane"><div class="pane-hd"><div class="ttl"><span class="m '+(ep.method==="POST"?"m-post":"m-get")+'">'+ep.method+'</span><span class="langname"></span></div>' +
+          '<button class="cbtn" data-copy="req">Copy</button></div><pre class="req" data-req></pre></div>' +
+        '<div class="pane"><div class="pane-hd"><div class="ttl"><span>Response</span></div>' +
+          '<div style="display:flex;gap:8px;align-items:center"><span class="status'+(ep.draft?" draft":"")+'">'+(ep.draft?"202 draft":"200 OK")+'</span><button class="cbtn" data-copy="res">Copy</button></div></div>' +
+          '<pre data-res>'+json(ep.resp)+'</pre></div>' +
+      '</div></div>';
+    s._ep = ep;
+    epWrap.appendChild(s);
+  });
+
+  function applyLang(){
+    $all(".ep").forEach(function(s){
+      var r = reqText(s._ep, lang);
+      $("[data-req]", s).innerHTML = r.html;
+      $(".langname", s).textContent = LANG_LABEL[lang];
+    });
+    $all("#langTabs button").forEach(function(b){ b.setAttribute("aria-selected", b.dataset.lang === lang ? "true" : "false"); b.tabIndex = b.dataset.lang === lang ? 0 : -1; });
+  }
+  applyLang();
+  $("#langTabs").addEventListener("click", function(e){
+    var b = e.target.closest("button[data-lang]"); if (!b) return;
+    lang = b.dataset.lang;
+    try { localStorage.setItem("az-lang", lang); } catch(err){}
+    applyLang();
+  });
+  $("#langTabs").addEventListener("keydown", function(e){
+    if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
+    var bs = $all("#langTabs button"); var i = bs.findIndex(function(b){ return b.dataset.lang === lang; });
+    i = (i + (e.key === "ArrowRight" ? 1 : -1) + bs.length) % bs.length;
+    lang = bs[i].dataset.lang; applyLang(); bs[i].focus();
+  });
+
+  /* child attribute toggles */
+  document.addEventListener("click", function(e){
+    var b = e.target.closest(".kids-btn"); if (!b) return;
+    var open = b.getAttribute("aria-expanded") === "true";
+    var box = document.getElementById(b.getAttribute("aria-controls"));
+    b.setAttribute("aria-expanded", open ? "false" : "true");
+    box.hidden = open;
+    $(".pm", b).textContent = open ? "+" : "-";
+    $(".kl", b).textContent = open ? "Show child attributes" : "Hide child attributes";
+  });
+
+  /* copy buttons */
+  var toast = $("#toast"), tt;
+  function showToast(msg){ toast.textContent = msg; toast.classList.add("show"); clearTimeout(tt); tt = setTimeout(function(){ toast.classList.remove("show"); }, 1600); }
+  function copyText(txt, btn){
+    function done(ok){
+      btn.textContent = ok ? "Copied" : "Select and copy";
+      showToast(ok ? "Copied to clipboard" : "Your browser blocked the clipboard");
+      setTimeout(function(){ btn.textContent = "Copy"; }, 1500);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(txt).then(function(){ done(true); }, function(){ done(false); });
+    } else { done(false); }
+  }
+  document.addEventListener("click", function(e){
+    var b = e.target.closest("[data-copy]"); if (!b) return;
+    var pane = b.closest(".pane");
+    var pre = $("pre", pane);
+    copyText(pre.textContent, b);
+  });
+
+  /* nav (sidebar + mobile jump) */
+  var groups = [];
+  ENDPOINTS.forEach(function(ep){ var g = groups.find(function(x){ return x.name === ep.group; }); if (!g){ g = {name:ep.group, items:[]}; groups.push(g); } g.items.push({id:ep.id, label:ep.nav, m:ep.method}); });
+  groups.push({ name:"More", items:[ {id:"errors", label:"Errors", m:"ERR"}, {id:"webhooks", label:"Webhooks", m:"EVT"} ] });
+  function mCls(m){ return m === "POST" ? "m-post" : m === "ERR" ? "m-err" : m === "EVT" ? "m-evt" : "m-get"; }
+  var side = $("#side"), jl = $("#jumpList");
+  groups.forEach(function(g){
+    var h = document.createElement("h3"); h.textContent = g.name; side.appendChild(h);
+    g.items.forEach(function(it){
+      var a = document.createElement("a"); a.href = "#" + it.id; a.dataset.target = it.id;
+      a.innerHTML = '<span class="m '+mCls(it.m)+'">'+it.m+'</span>'+esc(it.label);
+      side.appendChild(a);
+      var b = a.cloneNode(true); jl.appendChild(b);
+    });
+  });
+  var jb = $("#jumpBtn");
+  jb.addEventListener("click", function(){ var o = jb.getAttribute("aria-expanded") === "true"; jb.setAttribute("aria-expanded", o ? "false" : "true"); jl.hidden = o; });
+  jl.addEventListener("click", function(e){ if (e.target.closest("a")){ jb.setAttribute("aria-expanded","false"); jl.hidden = true; } });
+
+  var labelFor = {}; groups.forEach(function(g){ g.items.forEach(function(it){ labelFor[it.id] = it.label; }); });
+  function setActive(id){
+    $all(".side a").forEach(function(a){ a.classList.toggle("on", a.dataset.target === id); });
+    $("#jumpLbl").textContent = labelFor[id] ? "On this page: " + labelFor[id] : "Jump to an endpoint";
+  }
+  if ("IntersectionObserver" in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){ if (en.isIntersecting) setActive(en.target.id); });
+    }, { rootMargin:"-30% 0px -60% 0px", threshold:0 });
+    ENDPOINTS.forEach(function(ep){ io.observe(document.getElementById(ep.id)); });
+    io.observe($("#errors")); io.observe($("#webhooks"));
+  }
+
+  /* errors */
+  var errList = $("#errList");
+  ERRORS.forEach(function(er, i){
+    var d = document.createElement("div"); d.className = "err";
+    var bid = "err-body-" + i;
+    d.innerHTML =
+      '<button class="err-row" aria-expanded="false" aria-controls="'+bid+'"><span class="m m-err">GAP</span><span class="mid"><code>'+esc(er.code)+'</code><span class="sum">'+esc(er.sum)+'</span></span><span class="chev" aria-hidden="true">&#8250;</span></button>' +
+      '<div class="err-body" id="'+bid+'" hidden><p>'+esc(er.body)+'</p><div class="pane"><div class="pane-hd"><div class="ttl"><span>Error object</span></div><button class="cbtn" data-copy="err">Copy</button></div><pre>'+json(er.resp)+'</pre></div></div>';
+    errList.appendChild(d);
+  });
+  $all(".err-row").forEach(function(b){
+    b.addEventListener("click", function(){
+      var o = b.getAttribute("aria-expanded") === "true";
+      b.setAttribute("aria-expanded", o ? "false" : "true");
+      document.getElementById(b.getAttribute("aria-controls")).hidden = o;
+    });
+  });
+
+  /* webhook log */
+  var evWrap = $("#evts"), chipsEl = $("#chips"), empty = $("#empty"), foot = $("#logFoot");
+  var filter = "all";
+  var CATS = [ {k:"all", l:"All events"}, {k:"career", l:"Career"}, {k:"build", l:"Builds"}, {k:"integration", l:"Integrations"} ];
+  CATS.forEach(function(c){
+    var n = c.k === "all" ? EVENTS.length : EVENTS.filter(function(e){ return e.cat === c.k; }).length;
+    var b = document.createElement("button"); b.className = "chip"; b.dataset.cat = c.k;
+    b.setAttribute("aria-pressed", c.k === "all" ? "true" : "false");
+    b.innerHTML = esc(c.l) + '<span class="ct">'+n+'</span>';
+    chipsEl.appendChild(b);
+  });
+  function evtNode(ev, i){
+    var d = document.createElement("div"); d.className = "evt"; d.dataset.cat = ev.cat;
+    var bid = "evt-body-" + i;
+    var payload = { id:"evt_" + ev.year + "_" + String(i+1).padStart(2,"0"), object:"event", type:ev.type, year:ev.year, data:{ object:ev.data } };
+    d.innerHTML =
+      '<button class="evt-row" aria-expanded="false" aria-controls="'+bid+'"><code>'+esc(ev.type)+'</code><span class="d">'+esc(ev.d)+'</span><span class="y">'+ev.year+'</span><span class="chev" aria-hidden="true">&#8250;</span></button>' +
+      '<div class="evt-body" id="'+bid+'" hidden><div class="pane"><div class="pane-hd"><div class="ttl"><span>Event payload</span></div><button class="cbtn" data-copy="evt">Copy</button></div><pre>'+json(payload)+'</pre></div></div>';
+    $(".evt-row", d).addEventListener("click", function(){
+      var b = this, o = b.getAttribute("aria-expanded") === "true";
+      b.setAttribute("aria-expanded", o ? "false" : "true");
+      document.getElementById(bid).hidden = o;
+    });
+    return d;
+  }
+  function applyFilter(){
+    var shown = 0;
+    $all(".evt", evWrap).forEach(function(d){ var vis = filter === "all" || d.dataset.cat === filter; d.hidden = !vis; if (vis) shown++; });
+    empty.hidden = shown !== 0 || evWrap.children.length === 0 ? true : false;
+    if (evWrap.children.length && shown === 0) empty.hidden = false;
+    var total = $all(".evt", evWrap).length;
+    foot.textContent = "Showing " + shown + " of " + total + " delivered events" + (filter === "all" ? "" : " (filtered)") + ".";
+  }
+  function renderAll(){
+    evWrap.innerHTML = "";
+    EVENTS.forEach(function(ev, i){ evWrap.appendChild(evtNode(ev, i)); });
+    applyFilter();
+  }
+  renderAll();
+  chipsEl.addEventListener("click", function(e){
+    var b = e.target.closest(".chip"); if (!b) return;
+    filter = b.dataset.cat;
+    $all(".chip", chipsEl).forEach(function(c){ c.setAttribute("aria-pressed", c === b ? "true" : "false"); });
+    applyFilter();
+  });
+
+  var replayBtn = $("#replay"), replaying = false;
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  replayBtn.addEventListener("click", function(){
+    if (replaying) return;
+    replaying = true; replayBtn.disabled = true; replayBtn.textContent = "Replaying";
+    evWrap.innerHTML = ""; empty.hidden = true;
+    foot.textContent = "Replaying 0 of " + EVENTS.length + " events.";
+    var i = 0;
+    function next(){
+      if (i >= EVENTS.length){
+        replaying = false; replayBtn.disabled = false; replayBtn.textContent = "Replay events";
+        applyFilter();
+        showToast("All " + EVENTS.length + " events delivered");
+        return;
+      }
+      var n = evtNode(EVENTS[i], i);
+      if (!reduce) n.classList.add("in");
+      evWrap.appendChild(n);
+      n.hidden = !(filter === "all" || n.dataset.cat === filter);
+      i++;
+      foot.textContent = "Replaying " + i + " of " + EVENTS.length + " events.";
+      setTimeout(next, reduce ? 0 : 280);
+    }
+    next();
+  });
+})();
+</script>
+</body>
+</html>
