@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>Andrew Zoll for Origin, Forward Deployed Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1a1614; --ink2:#33302e; --mut:#6f6760; --mut2:#9a9088;
+    --cream:#fff1e5; --cream2:#f7e6d6; --card:#fffaf5; --rule:#e6d5c4;
+    --gold:#c49a52; --gold2:#e3c48c; --night:#0f0c0a; --night2:#1b1612;
+    --ok:#4f7a4a; --part:#a8781f; --gap:#9b4a35;
+    --sans:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    --mono:"Geist Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--cream);color:var(--ink2);font-family:var(--sans);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+  .eye{font-size:11px;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:var(--gold)}
+  .btn{display:inline-flex;align-items:center;gap:10px;font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:12px 18px;text-decoration:none;border:1px solid transparent;transition:transform .15s ease,background .15s ease}
+  .btn:hover{transform:translateY(-1px)}
+  .btn.light{background:var(--cream);color:var(--ink)}
+  .btn.ghost{color:var(--cream);border-color:rgba(255,241,229,.35)}
+  .btn.dark{background:var(--ink2);color:var(--cream)}
+  .btn.line{color:var(--ink2);border-color:var(--ink2)}
+
+  /* ---------- top bar ---------- */
+  .top{position:sticky;top:0;z-index:20;background:rgba(15,12,10,.92);backdrop-filter:blur(8px);border-bottom:1px solid rgba(255,241,229,.08)}
+  .top .wrap{display:flex;align-items:center;gap:22px;height:56px}
+  .mark{font-size:17px;color:var(--cream);font-weight:400;letter-spacing:-.01em}
+  .mark b{font-family:var(--mono);font-weight:400;color:var(--gold2)}
+  .top nav{display:flex;gap:20px;margin-left:8px}
+  .top nav a{font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,241,229,.7);text-decoration:none}
+  .top nav a:hover{color:var(--cream)}
+  .top .btn{margin-left:auto;padding:9px 13px}
+  .disc{background:var(--night);color:rgba(255,241,229,.5);font-size:11.5px;padding:7px 0;border-bottom:1px solid rgba(255,241,229,.06)}
+
+  /* ---------- hero: the spiral of my own trace lines ---------- */
+  .hero{position:relative;overflow:hidden;background:radial-gradient(120% 90% at 72% 45%,#2a2018 0%,#14100d 45%,var(--night) 75%);color:var(--cream);padding:96px 0 104px}
+  .vortex{position:absolute;right:-180px;top:50%;width:900px;height:900px;transform:translateY(-50%);pointer-events:none;opacity:.9}
+  .vortex svg{width:100%;height:100%}
+  .ring{transform-origin:450px 450px;animation:spin linear infinite}
+  .ring text{font-family:var(--mono);text-transform:uppercase;letter-spacing:.14em;fill:rgba(255,241,229,.32)}
+  .ring.g text{fill:rgba(227,196,140,.55)}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .hero .wrap{position:relative}
+  .hero h1{font-size:clamp(40px,6.4vw,70px);font-weight:400;line-height:1.04;letter-spacing:-.045em;max-width:12.5ch;margin:18px 0 26px}
+  .hero h1 em{font-style:normal;background:linear-gradient(90deg,#d9b072,#f0d9a8 60%,#c49a52);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero p{max-width:44ch;color:rgba(255,241,229,.86);font-size:17px}
+  .hero p + p{color:rgba(255,241,229,.62);font-size:15.5px;margin-top:14px}
+  sup a{color:var(--gold2);text-decoration:none;font-size:.7em;padding-left:1px}
+  .hero .cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:34px}
+  .facts{display:flex;flex-wrap:wrap;gap:8px 26px;margin-top:44px;font-family:var(--mono);font-size:12px;color:rgba(255,241,229,.55)}
+  .facts b{color:var(--gold2);font-weight:500}
+
+  /* ---------- section frame ---------- */
+  section.s{padding:92px 0 20px;scroll-margin-top:56px}
+  .s h2{font-size:clamp(30px,4vw,46px);font-weight:400;letter-spacing:-.035em;line-height:1.08;color:var(--ink);max-width:20ch;margin:14px 0 14px}
+  .s .lede{color:var(--mut);max-width:60ch;font-size:16.5px}
+
+  /* ---------- the trace viewer: real filter, search, detail ---------- */
+  .viewer{margin-top:36px;background:var(--card);border:1px solid var(--rule);box-shadow:0 18px 40px -28px rgba(60,40,20,.35)}
+  .vhead{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;padding:14px 16px;border-bottom:1px solid var(--rule);background:var(--cream2)}
+  .vhead .sess{font-family:var(--mono);font-size:12px;color:var(--mut)}
+  .vhead .sess b{color:var(--ink);font-weight:500}
+  .chips{display:flex;gap:6px;flex-wrap:wrap;margin-left:auto}
+  .chip{font:500 11px/1 var(--mono);letter-spacing:.04em;text-transform:uppercase;padding:7px 10px;border:1px solid var(--rule);background:var(--card);color:var(--mut);cursor:pointer}
+  .chip[aria-pressed="true"]{background:var(--ink2);border-color:var(--ink2);color:var(--cream)}
+  .chip .n{opacity:.6;margin-left:5px}
+  .q{font:13px var(--mono);padding:7px 10px;border:1px solid var(--rule);background:var(--card);color:var(--ink);width:210px;max-width:100%}
+  .q:focus{outline:2px solid var(--gold);outline-offset:-1px}
+  .vbody{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);min-height:440px}
+  .events{list-style:none;border-right:1px solid var(--rule);max-height:520px;overflow:auto}
+  .ev{display:grid;grid-template-columns:58px 92px 1fr auto;gap:10px;align-items:baseline;width:100%;text-align:left;font:inherit;background:none;border:0;border-bottom:1px solid #f0e3d6;padding:12px 16px;cursor:pointer;color:var(--ink2)}
+  .ev:hover{background:#fdf3ea}
+  .ev[aria-selected="true"]{background:#f9eadc;box-shadow:inset 3px 0 0 var(--gold)}
+  .ev .t{font:12px var(--mono);color:var(--mut2)}
+  .ev .a{font:12px var(--mono);color:var(--gold);text-transform:uppercase;letter-spacing:.06em}
+  .ev .x{font-size:14.5px;line-height:1.4}
+  .tag{font:500 10px/1 var(--mono);text-transform:uppercase;letter-spacing:.06em;padding:4px 6px;border:1px solid currentColor;white-space:nowrap}
+  .tag.match{color:var(--ok)} .tag.partial{color:var(--part)} .tag.gap{color:var(--gap)}
+  .empty{padding:28px 16px;color:var(--mut);font-size:14.5px}
+  .detail{padding:24px 24px 28px}
+  .detail .k{font:11px var(--mono);text-transform:uppercase;letter-spacing:.1em;color:var(--mut2);margin:18px 0 6px}
+  .detail .k:first-child{margin-top:0}
+  .detail blockquote{font-size:15px;color:var(--ink);border-left:2px solid var(--gold);padding:2px 0 2px 12px}
+  .detail p{font-size:15px;color:var(--ink2)}
+  .detail h3{font-size:21px;font-weight:400;letter-spacing:-.02em;color:var(--ink);line-height:1.25}
+
+  /* ---------- investigations: real expanding cards ---------- */
+  .inv{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:36px;align-items:start}
+  .card{background:var(--cream2);border:1px solid var(--rule);padding:20px;display:flex;flex-direction:column}
+  .card .sheet{background:var(--card);padding:20px 18px;box-shadow:0 16px 30px -26px rgba(60,40,20,.5);flex:1}
+  .card .when{font:11px var(--mono);color:var(--mut2);text-transform:uppercase;letter-spacing:.08em}
+  .card h3{font-size:20px;font-weight:400;letter-spacing:-.02em;line-height:1.25;color:var(--ink);margin:10px 0 8px}
+  .card p{font-size:14.5px;color:var(--mut)}
+  .card .more{overflow:hidden;max-height:0;transition:max-height .35s ease}
+  .card .more p{color:var(--ink2);margin-top:12px}
+  .card.open .more{max-height:640px}
+  .card .btn{margin-top:16px;align-self:flex-start;cursor:pointer;font-family:var(--sans)}
+  .card .btn .arr{display:inline-block;transition:transform .2s ease}
+  .card.open .btn .arr{transform:rotate(90deg)}
+
+  /* ---------- gaps ---------- */
+  .gaps{margin-top:36px;border-top:1px solid var(--ink2)}
+  .gaps li{list-style:none;display:grid;grid-template-columns:200px 1fr;gap:20px;padding:18px 0;border-bottom:1px solid var(--rule)}
+  .gaps li b{font-weight:500;color:var(--ink)}
+  .gaps li span{color:var(--mut)}
+
+  /* ---------- close ---------- */
+  .close{margin-top:92px;background:var(--night);color:var(--cream);padding:80px 0 60px}
+  .close h2{font-size:clamp(30px,4vw,46px);font-weight:400;letter-spacing:-.035em;line-height:1.08;max-width:18ch;margin:14px 0 16px}
+  .close p{color:rgba(255,241,229,.7);max-width:56ch}
+  .close .cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
+  .notes{margin-top:60px;padding-top:20px;border-top:1px solid rgba(255,241,229,.12);font-size:12.5px;color:rgba(255,241,229,.5);display:grid;gap:6px}
+  .notes b{color:var(--gold2);font-weight:500}
+
+  @media (prefers-reduced-motion:reduce){.ring{animation:none}.card .more{transition:none}}
+  @media (max-width:900px){
+    .vbody{grid-template-columns:1fr}
+    .events{border-right:0;border-bottom:1px solid var(--rule);max-height:360px}
+    .inv{grid-template-columns:1fr}
+    .vortex{right:-420px;opacity:.5}
+    .top nav{display:none}
+  }
+  @media (max-width:560px){
+    .wrap{padding:0 16px}
+    .ev{grid-template-columns:50px 1fr auto}
+    .ev .a{display:none}
+    .gaps li{grid-template-columns:1fr;gap:4px}
+    .q{width:100%}
+    .chips{margin-left:0}
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <span class="mark"><b>[AZ]</b> Andrew Zoll</span>
+    <nav aria-label="Sections"><a href="#trace">The trace</a><a href="#investigations">Investigations</a><a href="#gaps">Gaps</a></nav>
+    <a class="btn light" href="https://linkedin.com/in/andrewzoll">Say hello &rarr;</a>
+  </div>
+</header>
+<div class="disc"><div class="wrap">Not affiliated with Origin. I made this page myself as part of my application, in a style that nods to yours.</div></div>
+
+<section class="hero">
+  <div class="vortex" aria-hidden="true">
+    <svg viewBox="0 0 900 900">
+      <defs>
+        <path id="c1" d="M450,450 m-400,0 a400,400 0 1,1 800,0 a400,400 0 1,1 -800,0"/>
+        <path id="c2" d="M450,450 m-330,0 a330,330 0 1,1 660,0 a330,330 0 1,1 -660,0"/>
+        <path id="c3" d="M450,450 m-265,0 a265,265 0 1,1 530,0 a265,265 0 1,1 -530,0"/>
+        <path id="c4" d="M450,450 m-205,0 a205,205 0 1,1 410,0 a205,205 0 1,1 -410,0"/>
+        <path id="c5" d="M450,450 m-150,0 a150,150 0 1,1 300,0 a150,150 0 1,1 -300,0"/>
+        <path id="c6" d="M450,450 m-100,0 a100,100 0 1,1 200,0 a100,100 0 1,1 -200,0"/>
+      </defs>
+      <g class="ring" style="animation-duration:240s"><text font-size="15"><textPath href="#c1">builder handed off · reviewer opened fresh context · gate checked output against rules · trace appended · scheduler fired once · builder handed off · reviewer opened fresh context ·</textPath></text></g>
+      <g class="ring g" style="animation-duration:190s;animation-direction:reverse"><text font-size="13"><textPath href="#c2">board returned 200 with an empty list · guard flagged it · token corrected · sweep re-ran · board returned 200 with an empty list ·</textPath></text></g>
+      <g class="ring" style="animation-duration:150s"><text font-size="12"><textPath href="#c3">a fixture failed · verdict withheld · claim re-extracted · fixture passed · release gated · a fixture failed ·</textPath></text></g>
+      <g class="ring g" style="animation-duration:120s;animation-direction:reverse"><text font-size="11"><textPath href="#c4">ci red · failure read · fix pushed · cross-family review · ci green · ci red ·</textPath></text></g>
+      <g class="ring" style="animation-duration:90s"><text font-size="10"><textPath href="#c5">who did what · and why · who did what · and why ·</textPath></text></g>
+      <g class="ring g" style="animation-duration:60s;animation-direction:reverse"><text font-size="9"><textPath href="#c6">every stage leaves a trace · every stage leaves a trace ·</textPath></text></g>
+    </svg>
+  </div>
+  <div class="wrap">
+    <div class="eye">Candidate investigation &middot; Forward Deployed Engineer</div>
+    <h1>I've been reading my own <em>agents' traces</em> for a year.</h1>
+    <p>I'm Andrew. I run a small army of agents on my own machines, and the only way I've kept them honest is by making every one of them leave a record<sup><a href="#n1">1</a></sup> of what it did and why.</p>
+    <p>Your FDE posting asks someone to sit inside a customer's traces and come back with something they didn't know to ask for. That's my favorite kind of work, so I wrote this page in your shape.</p>
+    <div class="cta">
+      <a class="btn light" href="#trace">Open the trace &darr;</a>
+      <a class="btn ghost" href="https://portfolio.andrewzoll.com">See the work &rarr;</a>
+    </div>
+    <div class="facts"><span>role <b>FDE</b></span><span>req <b>United States, remote</b></span><span>band <b>$200K to $320K</b></span><span>me <b>Pueblo, CO</b></span></div>
+  </div>
+</section>
+
+<section class="s" id="trace">
+  <div class="wrap">
+    <div class="eye">The record of the work</div>
+    <h2>Your posting, replayed as a trace.</h2>
+    <p class="lede">Each event is a line from your job description and what I've actually done about it. Filter by signal, search for a word, and open any event for the detail. The gaps are in here too, flagged like anything else would be.</p>
+
+    <div class="viewer">
+      <div class="vhead">
+        <span class="sess">session <b>az-fde-origin</b> &middot; <span id="count">0</span> events shown</span>
+        <div class="chips" role="group" aria-label="Filter events by signal">
+          <button class="chip" data-f="all" aria-pressed="true">All<span class="n" id="n-all"></span></button>
+          <button class="chip" data-f="match" aria-pressed="false">Match<span class="n" id="n-match"></span></button>
+          <button class="chip" data-f="partial" aria-pressed="false">Partial<span class="n" id="n-partial"></span></button>
+          <button class="chip" data-f="gap" aria-pressed="false">Gap<span class="n" id="n-gap"></span></button>
+        </div>
+        <input class="q" id="q" type="search" placeholder="search events" aria-label="Search events">
+      </div>
+      <div class="vbody">
+        <ul class="events" id="events" role="listbox" aria-label="Events"></ul>
+        <div class="detail" id="detail" aria-live="polite"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="s" id="investigations">
+  <div class="wrap">
+    <div class="eye">Investigations</div>
+    <h2>Three times my own traces caught something.</h2>
+    <p class="lede">These all happened in systems I built and run. None of them were dramatic, which is sort of the point: the boring ones are the ones you only find by looking.</p>
+    <div class="inv">
+      <article class="card">
+        <div class="sheet">
+          <div class="when">AndrewOS &middot; job-search pipeline</div>
+          <h3>A job board answered 200 and served nothing.</h3>
+          <p>A company moved its board to a new token. The old one didn't 404. It returned success with an empty list.</p>
+          <div class="more" id="m1">
+            <p>Every status-code check read that as "no open roles," which is a believable answer, so nothing complained. Live roles would have quietly dropped out of my pipeline.</p>
+            <p>The fix wasn't a smarter check. I started keeping per-board counts over time and flagging any healthy board that collapses to zero on a 200. Its first run caught a second board with the exact same lie. The lesson I keep relearning: an empty success is the most dangerous answer a system can give, because it looks like an answer.</p>
+          </div>
+        </div>
+        <button class="btn dark" aria-expanded="false" aria-controls="m1">Read the investigation <span class="arr">&rarr;</span></button>
+      </article>
+      <article class="card">
+        <div class="sheet">
+          <div class="when">AndrewOS &middot; review pipeline</div>
+          <h3>Why no agent of mine grades its own homework.</h3>
+          <p>An agent asked to review its own work tends to agree with itself. That's not a trace you want to find later.</p>
+          <div class="more" id="m2">
+            <p>So I made it a hard rule: no agent ever audits its own work. A reviewer runs in a separate context where it can't see the builder's reasoning, and for anything that matters I send the review to a model from a different family, because a same-family reviewer tends to nod along.</p>
+            <p>Underneath that sits a deterministic gate that machine-checks output against written rules before anything ships. That moves correctness out of model judgment and into code, which is the same idea Veritas is built on.</p>
+          </div>
+        </div>
+        <button class="btn dark" aria-expanded="false" aria-controls="m2">Read the investigation <span class="arr">&rarr;</span></button>
+      </article>
+      <article class="card">
+        <div class="sheet">
+          <div class="when">AndrewOS &middot; scheduled agents</div>
+          <h3>Two machines, one schedule, every job twice.</h3>
+          <p>Autonomous loops run on schedules. Load the same schedule on a second machine and every job fires twice.</p>
+          <div class="more" id="m3">
+            <p>For most jobs that's waste. For outreach it's a duplicate message to a real person, which is the kind of mistake that costs trust rather than compute.</p>
+            <p>I hardened the loops against duplicate sends, double-firing schedulers and retries that weren't idempotent, and I wrote down that a second machine must never load the same automations. That's the kind of guardrail that only shows up after you've watched an agent do something you didn't expect.</p>
+          </div>
+        </div>
+        <button class="btn dark" aria-expanded="false" aria-controls="m3">Read the investigation <span class="arr">&rarr;</span></button>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="s" id="gaps">
+  <div class="wrap">
+    <div class="eye">What I don't have</div>
+    <h2>The gaps, stated plainly.</h2>
+    <ul class="gaps">
+      <li><b>Five years on paper</b><span>Your bar is at least five years building and delivering production software. My software engineering title dates from 2026, and before that I shipped production software as a founder. I'm short, and I'd rather you hear it from me.</span></li>
+      <li><b>Enterprise customers</b><span>My customer-facing years were with households and small businesses, not enterprise security and platform teams. The translation skill transfers. The logos don't.</span></li>
+      <li><b>Endpoint and security ops</b><span>I haven't worked with EDR, SIEM or SOAR, and my Windows and macOS internals are a user's, not an engineer's.</span></li>
+      <li><b>ClickHouse and Rust</b><span>My SQL is PostgreSQL. I've never queried ClickHouse in production, and I haven't shipped Rust.</span></li>
+      <li><b>Scale</b><span>My systems serve one operator and a small customer base. Your customers' telemetry volume would be new.</span></li>
+    </ul>
+  </div>
+</section>
+
+<section class="close">
+  <div class="wrap">
+    <div class="eye">Next step</div>
+    <h2>If that looks like your kind of FDE, I'd love to talk.</h2>
+    <p>The systems are easier to show than describe. I'd happily walk you through a real trace from my own setup and the thing it caught.</p>
+    <div class="cta">
+      <a class="btn light" href="https://portfolio.andrewzoll.com">See the portfolio &rarr;</a>
+      <a class="btn ghost" href="https://linkedin.com/in/andrewzoll">Connect on LinkedIn &rarr;</a>
+    </div>
+    <div class="notes">
+      <span id="n1"><b>1.</b> Not a metaphor. Every stage in AndrewOS appends a structured record of what it received, what it decided, why, and what it handed off, so a finished run reads top to bottom as an audit record.</span>
+      <span>Every quoted line comes from Origin's Forward Deployed Engineer posting. Every claim maps to a system I built. There are no invented numbers here.</span>
+      <span>Andrew Zoll &middot; Pueblo, CO &middot; Not affiliated with Origin. Built for the Forward Deployed Engineer role.</span>
+    </div>
+  </div>
+</section>
+
+<script>
+(function(){
+  var EV=[
+    ['00:00','discovery','Work inside customer systems and find the problem they can\'t name yet','"Uncover valuable problems the customer may not yet know how to articulate, and build the first solution."','At Coder I\'m embedded in the revenue organization, building an internal agent platform that turns CRM, support and call-transcript data into answers for the people carrying quota. Most of my week starts with figuring out what someone actually needs before I write anything, and some of it is telling them the thing they asked for is the wrong thing.','match'],
+    ['00:07','traces','Interrogate traces and bring back discoveries','"Independently interrogate traces using Origin\'s dashboard, SQL and ClickHouse, APIs, and MCP-based tools."','Every stage in AndrewOS appends a structured trace, and reading those traces is how I find what broke. I write PostgreSQL daily and use MCP tools in my own harness every day. ClickHouse would be new.','partial'],
+    ['00:14','build','Turn findings into queries, dashboards, signals and prototypes','"Turn discoveries into working artifacts, such as queries, canvases, dashboards, signals, integrations, workflows, prototypes, and production code."','I built the operating surface AndrewOS reports through: daily, weekly and monthly sweeps plus a live dashboard covering job health, queues, freshness and unresolved signals. The board-health guard in the investigations below is a signal I wrote after a near miss.','match'],
+    ['00:21','ship','Contribute production code when a capability is missing','"Contributing production code when a missing capability stands between a customer and a meaningful outcome."','I ship to production on AWS at Coder in Python. Before that I shipped FieldCommand, a multi-tenant SaaS at 187,745 lines of TypeScript, by myself.','match'],
+    ['00:28','agents','Experience with AI agents, evals and agent observability','"Experience with AI agents, LLM applications, evaluation systems, MCP, model gateways, or agent observability."','This one is my whole year. AndrewOS is an agent operating system with independent reviewers, deterministic gates and append-only tracing. Veritas runs a model-extracts, code-decides pipeline behind a fixture suite that gates every release. I route traffic across model families on purpose.','match'],
+    ['00:35','stack','Python, TypeScript, React, APIs, data pipelines, cloud','"Strong hands-on engineering ability across some combination of Python, TypeScript/JavaScript, React, Rust, APIs, backend systems, data pipelines, and cloud infrastructure."','Python daily at Coder, TypeScript and React across FieldCommand, PostgreSQL and Supabase underneath, AWS in production, and pipelines connecting Stripe billing, AI services and CRM data. No Rust.','match'],
+    ['00:42','people','Work credibly with engineers and executives','"Operating credibly with both hands-on engineers and senior executives."','Before engineering I spent four years as a financial advisor and kept 95% of more than 120 households, explaining complicated mechanics to people who had real money on the line. It taught me to say the uncomfortable thing calmly. Enterprise executives specifically would be newer.','partial'],
+    ['00:49','judgment','Know a one-customer workaround from a platform capability','"You can distinguish a one-customer workaround from a reusable platform capability and synthesize feature requests into the underlying problem."','My chief-of-staff agent either runs an existing playbook or writes a new one, so the question of whether something is a one-off or a reusable skill comes up every day across two businesses. I\'ve gotten opinionated about which things deserve to become shared skills.','match'],
+    ['00:56','write','Document findings so the org can learn','"You document findings, decisions, delivered artifacts, outcomes, and product implications so the organization can learn from the work."','At Coder I own the operating documentation other people work from. In my own systems every decision lands in a written canon file or a one-fact memory entry, because an agent that forgets is an agent that repeats its mistakes.','match'],
+    ['01:03','tenure','At least five years building production software','"At least five years of experience building and delivering production software, data systems, security products, or technically complex enterprise solutions."','I don\'t have five years on paper. My engineering title dates from 2026, and the production systems before that were ones I built as a founder.','gap'],
+    ['01:10','endpoint','Endpoint, security operations and OS fundamentals','"Operating system fundamentals across Windows and/or macOS... Background in security operations, incident response, red teaming, or endpoint security products."','These are nice-to-haves on your posting, and I don\'t have them. I\'d be learning endpoint security from your team.','gap']
+  ];
+  var LBL={match:'Match',partial:'Partial',gap:'Gap'};
+  var list=document.getElementById('events'), det=document.getElementById('detail'), q=document.getElementById('q');
+  var chips=[].slice.call(document.querySelectorAll('.chip'));
+  var st={f:'all',q:'',sel:0};
+  ['match','partial','gap'].forEach(function(k){document.getElementById('n-'+k).textContent=EV.filter(function(e){return e[5]===k}).length});
+  document.getElementById('n-all').textContent=EV.length;
+  function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;')}
+  function visible(){
+    var term=st.q.trim().toLowerCase();
+    return EV.map(function(e,i){return i}).filter(function(i){
+      var e=EV[i];
+      if(st.f!=='all'&&e[5]!==st.f)return false;
+      return !term||e.join(' ').toLowerCase().indexOf(term)>-1;
+    });
+  }
+  function render(){
+    var v=visible();
+    if(v.indexOf(st.sel)<0&&v.length)st.sel=v[0];
+    document.getElementById('count').textContent=v.length;
+    list.innerHTML=v.length?v.map(function(i){var e=EV[i];return '<li><button class="ev" role="option" data-i="'+i+'" aria-selected="'+(i===st.sel)+'"><span class="t">'+e[0]+'</span><span class="a">'+e[1]+'</span><span class="x">'+esc(e[2])+'</span><span class="tag '+e[5]+'">'+LBL[e[5]]+'</span></button></li>'}).join(''):'<li class="empty">No events match that. Try another word, or clear the filter.</li>';
+    if(!v.length){det.innerHTML='';return}
+    var e=EV[st.sel];
+    det.innerHTML='<div class="k">event '+e[0]+' &middot; '+e[1]+'</div><h3>'+esc(e[2])+'</h3><div class="k">from the posting</div><blockquote>'+esc(e[3])+'</blockquote><div class="k">what I\'ve done</div><p>'+esc(e[4])+'</p><div class="k">signal</div><span class="tag '+e[5]+'">'+LBL[e[5]]+'</span>';
+  }
+  chips.forEach(function(c){c.addEventListener('click',function(){st.f=c.dataset.f;chips.forEach(function(x){x.setAttribute('aria-pressed',x===c?'true':'false')});render()})});
+  q.addEventListener('input',function(){st.q=q.value;render()});
+  list.addEventListener('click',function(ev){var b=ev.target.closest('.ev');if(!b)return;st.sel=+b.dataset.i;render();var nb=list.querySelector('[data-i="'+st.sel+'"]');if(nb)nb.focus()});
+  list.addEventListener('keydown',function(ev){
+    if(ev.key!=='ArrowDown'&&ev.key!=='ArrowUp')return;
+    ev.preventDefault();var v=visible(),i=v.indexOf(st.sel);
+    i=ev.key==='ArrowDown'?Math.min(v.length-1,i+1):Math.max(0,i-1);
+    st.sel=v[i];render();var nb=list.querySelector('[data-i="'+st.sel+'"]');if(nb)nb.focus();
+  });
+  render();
+
+  [].slice.call(document.querySelectorAll('.card')).forEach(function(card){
+    var b=card.querySelector('button.btn');
+    b.addEventListener('click',function(){
+      var open=card.classList.toggle('open');
+      b.setAttribute('aria-expanded',open?'true':'false');
+      b.firstChild.nodeValue=open?'Close the investigation ':'Read the investigation ';
+    });
+  });
+})();
+</script>
+</body>
+</html>
