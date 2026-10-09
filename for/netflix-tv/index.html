@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex,nofollow">
-<title>Andrew Zoll for Netflix TV Product UI and TV Client Foundations</title>
+<title>Andrew Zoll for Netflix TV Test Infrastructure and TV Client Foundations</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -164,7 +164,7 @@
           <div class="scn prof on" id="s-prof">
             <h2>Who's hiring?</h2>
             <div class="plist">
-              <button class="pf f" data-p="ui"><div class="av">UI</div><span>TV Product UI<br>Software Engineer 4</span></button>
+              <button class="pf f" data-p="ti"><div class="av">TI</div><span>TV Test Infrastructure<br>Software Engineer 5</span></button>
               <button class="pf" data-p="cf"><div class="av">CF</div><span>TV Client Foundations<br>Software Engineer 5</span></button>
             </div>
           </div>
@@ -201,21 +201,21 @@
     <p class="lede">Same content as the TV, laid flat. The lines in italics are quoted from your postings.</p>
     <div class="pair">
       <div class="role">
-        <div class="code">JR42145 &middot; USA, Remote</div>
-        <h3>Software Engineer 4, TV Product UI</h3>
-        <div class="pay">$260,000 to $380,000, per the posting</div>
-        <blockquote>"Work on a code base that is TypeScript/JavaScript based, built with React Frameworks &amp; Redux architecture fine-tuned for TV platforms."</blockquote>
+        <div class="code">JR42270 &middot; USA, Remote</div>
+        <h3>Software Engineer 5, TV Developer Lifecycle: Test Infrastructure</h3>
+        <div class="pay">$388,000 to $558,000, per the posting</div>
+        <blockquote>"We have a distributed team with teammates across the US. While some of us are in person, the team is committed to ensuring remote work is a collaborative and productive experience for everyone, regardless of where you commit code."</blockquote>
         <h5>What I'd bring</h5>
         <ul>
-          <li>FieldCommand: 187,745 lines of TypeScript I wrote alone on Next.js and React, every screen from spec to production.</li>
-          <li>Quality I own myself: the test coverage and release process at Coder, and a fixture suite that gates every Veritas release.</li>
-          <li>Risky changes shipped behind per-tenant feature flags, so one customer sees a change before everyone does.</li>
+          <li>An agent loop I use daily that takes pull requests to green: it watches CI, reads the failure, pushes the fix, and hands the change to a reviewer from a different model family.</li>
+          <li>Playwright as an everyday tool, including the click-test that verified this page before it shipped.</li>
+          <li>Ownership of the test coverage and release process at Coder, and a fixture suite that gates every Veritas release.</li>
         </ul>
         <h5>What I'd be new at</h5>
         <ul>
-          <li>TV devices and their memory budgets.</li>
-          <li>Formal A/B experimentation, Redux and GraphQL in production.</li>
-          <li>Consumer scale. My users are business customers, not members.</li>
+          <li>Distributed test infrastructure at scale: sharding, predictive test selection, device pools. This is the core of the job.</li>
+          <li>Serving 140 engineers. My test tooling's user count is one, and it's me.</li>
+          <li>The custom TV platform and physical devices.</li>
         </ul>
       </div>
       <div class="role">
@@ -244,7 +244,7 @@
   <div class="wrap">
     <div>
       <h2 class="s">Still watching? I'd love to talk.</h2>
-      <p>TV Product UI is the one I fit best today. TV Client Foundations is the one I'd grow into. Both teams write the sentence about remote work in the posting itself, and that's a big part of why I'm writing from Colorado.</p>
+      <p>TV Test Infrastructure is the one I fit best today, because agentic PR and CI work is what I already do every day. TV Client Foundations is the one I'd grow into. Both teams write the sentence about remote work in the posting itself, and that's a big part of why I'm writing from Colorado.</p>
       <div class="cta">
         <a class="btn solid" href="https://portfolio.andrewzoll.com">See the work</a>
         <a class="btn ghost" href="https://linkedin.com/in/andrewzoll">LinkedIn</a>
@@ -263,19 +263,20 @@
 <footer>
   <div class="wrap">
     <span>Not affiliated with Netflix, Inc. This is a personal page I built as part of my own application. It borrows the look of a TV home screen on purpose and uses no Netflix logos or assets.</span>
-    <span>Built for Software Engineer 4, TV Product UI (JR42145) and Software Engineer 5, TV Client Foundations (JR42179). USA, Remote.</span>
+    <span>Built for Software Engineer 5, TV Developer Lifecycle: Test Infrastructure (JR42270) and Software Engineer 5, TV Client Foundations (JR42179). USA, Remote.</span>
   </div>
 </footer>
 
 <script>
 (function(){
   var ROLE={
-    ui:{name:'TV Product UI',tag:'SOFTWARE ENGINEER 4',req:[
-      ['TypeScript, React & Redux','"Work on a code base that is TypeScript/JavaScript based, built with React Frameworks & Redux architecture."','FieldCommand is 187,745 lines of TypeScript I wrote alone on Next.js and React, every screen from spec to production. I haven\'t used Redux in production.','partial'],
-      ['Own your feature\'s quality','"Own the quality of your features by writing testable code and crafting automation to validate functionality."','At Coder I own the test coverage and release process for the platform I work on. At Veritas, a fixture suite I wrote from real failures gates every release.','match'],
-      ['A/B test real variants','"We validate our judgment by A/B testing product variants with real customers."','I ship risky changes behind per-tenant feature flags, so one customer sees a change first. I haven\'t run formal A/B experiments, and I\'d be learning your way of doing it.','gap'],
-      ['Node.js, GraphQL, other stacks','"You are proficient in JavaScript/TypeScript, and can navigate different languages and technology stacks (eg. Node.js, GraphQL, etc)."','Node, Python, PostgreSQL and AWS in production. GraphQL would be new to me.','partial'],
-      ['Collaborate across disciplines','"Collaborate cross-functionally with product, design, algo, and other engineering partners."','At Coder I sit inside the revenue organization and turn what the platform can do into what non-engineers actually need. Explaining technical work to people who don\'t write code is most of my career.','match']
+    ti:{name:'TV Test Infrastructure',tag:'SOFTWARE ENGINEER 5',req:[
+      ['Agentic PR & CI workflows','"Agentic PR/CI workflows."','I run an agent loop that takes my pull requests to green: it watches CI, reads the failure, pushes the fix, and has a model from a different family review the change before a person sees it. That is most of how I ship code today.','match'],
+      ['UI test automation','"Familiarity with UI Test Frameworks & Automation (Puppeteer, Playwright, Jest, Vitest)."','I drive Playwright to click-test every interactive control on the pages I ship, this one included, and to check dozens of live web pages for me every week.','match'],
+      ['Flaky tests','"Test stability and flakiness mitigation."','I keep a written record of known flakes, so a rerun-only failure doesn\'t get filed as a bug and a real failure doesn\'t get waved off as noise. I\'ve done this for one repo, not a fleet.','partial'],
+      ['Infrastructure at scale','"Operating distributed test infrastructure at scale."','Honest answer: I haven\'t. Sharding, predictive test selection and physical device pools would all be new to me, and they\'re the center of this job.','gap'],
+      ['Own it in production','"Strong ownership of reliability and incident response for owned systems."','At Coder I own the test coverage and release process for our platform and ship straight to production on AWS. In AndrewOS I hardened scheduled agents against double-firing and duplicate sends after they happened.','match'],
+      ['TypeScript & JavaScript','"While our stack is primarily JavaScript and TypeScript, you\'ll build on our custom TV platform."','FieldCommand is 187,745 lines of TypeScript I wrote alone. The custom TV platform would be new.','partial']
     ]},
     cf:{name:'TV Client Foundations',tag:'SOFTWARE ENGINEER 5',req:[
       ['A joyful developer experience','"A high-quality, high-velocity, joyful developer experience."','AndrewOS is the developer tooling I built for my own engineering: a skills repository two AI coding agents read, checks that run before anything lands, and a review pipeline where nothing reviews its own work.','match'],
@@ -289,7 +290,7 @@
     ['No TV devices yet','Streaming sticks, smart TVs and cable boxes, with real memory budgets, would all be new to me.'],
     ['Business customers, not members','My products serve contractors, lawyers and advisors. Hundreds of millions of members is a different world.'],
     ['A young title','My formal Senior Software Engineer title is under a year old, though FieldCommand, Veritas and AndrewOS are production systems I built.'],
-    ['Redux, GraphQL, C++','None of these in production yet.']
+    ['Device pools, C++','I haven\'t run tests on physical device fleets, and I haven\'t shipped C++.']
   ];
   var GO=[
     ['See the work','Portfolio','https://portfolio.andrewzoll.com'],
@@ -300,7 +301,7 @@
   var sProf=document.getElementById('s-prof'), sHome=document.getElementById('s-home');
   var rowsEl=document.getElementById('rows');
   var pfs=[].slice.call(document.querySelectorAll('.pf'));
-  var st={view:'prof',p:0,role:'ui',r:0,c:[0,0,0]};
+  var st={view:'prof',p:0,role:'ti',r:0,c:[0,0,0]};
   var MAP={match:['Strong match','b'],partial:['Partial match','b warn'],gap:['Honest gap','b warn']};
   function rowsData(){
     var R=ROLE[st.role];
@@ -336,7 +337,7 @@
   function act(k){
     if(st.view==='prof'){
       if(k==='left'||k==='right')st.p=st.p?0:1;
-      else if(k==='ok'){st.role=st.p?'cf':'ui';st.view='home';st.r=0;st.c=[0,0,0]}
+      else if(k==='ok'){st.role=st.p?'cf':'ti';st.view='home';st.r=0;st.c=[0,0,0]}
       render();return;
     }
     var data=rowsData();
