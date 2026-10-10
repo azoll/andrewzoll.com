@@ -187,7 +187,7 @@ footer{border-top:1px solid var(--hairline);padding-block:22px 40px;font-size:12
     <div>
       <p class="kicker">This is a note for the GTM AI Engineering team.</p>
       <h1>Your sellers already work alongside agents. I spent this fall <em>building that</em> for a revenue team.</h1>
-      <p class="lede">I'm a Senior Software Engineer (AI Solutions) at Coder. There I built Scout, an internal AI sales-intelligence platform for Coder's revenue org, with autonomous agents, a Slack bot, a hosted MCP server, and gates that keep people in control. Your posting reads like the next chapter of that work, so I put my receipts in the shape you'd recognize: a queue of drafted actions waiting on a human.</p>
+      <p class="lede">I'm a Senior Software Engineer (AI Solutions) at Coder. There I built an internal AI sales-intelligence platform for Coder's revenue org, with autonomous agents, a Slack bot, a hosted MCP server, and gates that keep people in control. Your posting reads like the next chapter of that work, so I put my receipts in the shape you'd recognize: a queue of drafted actions waiting on a human.</p>
     </div>
     <aside class="note">
       <p>Each item below is one line from your job description, drafted as a proposed action with the evidence attached. You're the seller here. Approve it, ask for more, or send it back.</p>
@@ -299,16 +299,16 @@ footer{border-top:1px solid var(--hairline);padding-block:22px 40px;font-size:12
   var ITEMS = [
     {id:'motion', cat:'agents', tag:'agents / end to end', title:'Run a revenue motion from signal to answer',
      jd:'Build and operate autonomous agents that run go-to-market motions end to end.',
-     ev:['I built Scout, an internal AI sales-intelligence platform that turns Salesforce, support, and Granola call-transcript data into answers for Coder\'s sellers, delivered through a Slack bot.',
+     ev:['I built an internal AI sales-intelligence platform that turns Salesforce, support, and Granola call-transcript data into answers for Coder\'s sellers, delivered through a Slack bot.',
          'An event poller turned Granola meeting action items, Slack requests, new Linear assignments, and failed CI runs into queued work for agents. It has a kill switch, because anything that acts on its own needs an off button.'],
      more:'Granola transcripts come in on a 5-minute poll with a nightly reconcile, and they pass through Federal fail-closed filtering before any model sees them.',
      src:'Source: my resume, Coder role'},
     {id:'gates', cat:'oversight', tag:'oversight / approval gates', title:'Keep sellers in control of what agents write',
      jd:'Design the human oversight for each motion: approval gates, handoffs, and escalation paths that keep sellers in control.',
-     ev:['Scout wrote deal signals back to Salesforce only through a field allow-list. For forecast calls, I specced the next step: split a call by deal, resolve each mention to one opportunity, and refuse to write on an ambiguous match. Those go to a human review list instead, with attribution and an audit log on every write.',
+     ev:['The platform wrote deal signals back to Salesforce only through a field allow-list. For forecast calls, I specced the next step: split a call by deal, resolve each mention to one opportunity, and refuse to write on an ambiguous match. Those go to a human review list instead, with attribution and an audit log on every write.',
          'My own build loop works the same way. Agents stop at gates I set, and a different model family has to clear each change before it merges.'],
      more:'I added a round cap after one spec spent 14 review rounds over 12 hours without converging. Past round 3, hard work escalates to stronger models instead of looping.',
-     src:'Source: Scout forecast-call spec; loop-control scripts'},
+     src:'Source: forecast-call spec; loop-control scripts'},
     {id:'evals', cat:'evals', tag:'evals / readiness', title:'Prove the agents are ready before they ship',
      jd:'Develop evaluation frameworks for agent behavior, and run them in development and in production.',
      ev:['I designed a cross-family review gate with mutation tests. A reviewer from a different model family than the builder must clear each change, and mutation tests confirm the tests can actually fail.',
@@ -323,10 +323,10 @@ footer{border-top:1px solid var(--hairline);padding-block:22px 40px;font-size:12
      src:'Source: dispatch telemetry and the chats usage API'},
     {id:'mcp', cat:'mcp', tag:'mcp / governed access', title:'Give sellers and agents governed access to revenue data',
      jd:'Ship MCP servers, agent skills, and web applications that connect to systems like our CRM, communication tools, and data warehouse.',
-     ev:['I shipped a hosted MCP server with Okta identity, then built an OAuth authorization server inside Scout that gates hosted MCP access to the platform.',
+     ev:['I shipped a hosted MCP server with Okta identity, then built an OAuth authorization server inside the platform that gates hosted MCP access to the platform.',
          'A cross-model reviewer caught a production blocker in that authorization server at review round 5. The token-rotation transaction would have failed on every refresh in cluster-mode Redis.'],
      more:'Separately, as a heavy user of Coder Agents, I wrote a runbook after the Coder Agents MCP route on Coder\'s internal deployment returned 404 for more than 2 hours following a redeploy. The 404 was correct under the spec, and it still looked exactly like an outage from the client side.',
-     src:'Source: my resume; Scout PR #2196'},
+     src:'Source: my resume; platform PR #2196'},
     {id:'data', cat:'data', tag:'data / sql', title:'Work fluently with the data underneath',
      jd:'Working fluency with data, including SQL.',
      ev:['I built FieldCommand solo: a multi-tenant SaaS on PostgreSQL and Supabase with role-based access control and tenant isolation, in 187,745 lines of TypeScript.',
