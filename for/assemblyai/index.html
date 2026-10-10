@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>Andrew Zoll for AssemblyAI &middot; Senior GTM AI Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #fdfcf8;
+    --paper-2: #f5f3eb;
+    --paper-3: #ecebe5;
+    --line: #dad7cb;
+    --line-2: #c7c3b2;
+    --ink: #1d1b16;
+    --ink-2: #4a4945;
+    --ink-3: #777673;
+    --ink-4: #a5a4a2;
+    --cobalt: #3923c7;
+    --cobalt-2: #614fd2;
+    --cobalt-3: #b0a7e9;
+    --cobalt-4: #e8e4f9;
+    --blush: #e39389;
+    --blush-2: #fde6e3;
+    --green: #2d915c;
+    --serif: "Instrument Serif", Georgia, serif;
+    --sans: "Geist", system-ui, -apple-system, sans-serif;
+    --mono: "JetBrains Mono", ui-monospace, monospace;
+    --shadow: 0 4px 20px 4px rgba(29,27,22,.08);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--paper); color: var(--ink-2); font-family: var(--sans); font-size: 15px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+  a { color: var(--cobalt); }
+  button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+  button:focus-visible, a:focus-visible { outline: 2px solid var(--cobalt); outline-offset: 2px; border-radius: 4px; }
+  .wrap { max-width: 1240px; margin: 0 auto; padding: 0 20px; }
+  .mono { font-family: var(--mono); }
+
+  /* top strip */
+  .strip { border-bottom: 1px solid var(--line); background: var(--paper); }
+  .strip .wrap { display: flex; align-items: center; justify-content: space-between; gap: 12px; height: 56px; }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 600; color: var(--ink); letter-spacing: -.01em; }
+  .brand svg { flex: none; }
+  .strip .disc { font-family: var(--mono); font-size: 11px; color: var(--ink-3); text-transform: lowercase; text-align: right; }
+
+  /* hero */
+  .hero { padding: 56px 0 28px; }
+  .eyebrow { font-family: var(--mono); font-size: 12px; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-3); display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+  .eyebrow .pill { border: 1px solid var(--line-2); border-radius: 999px; padding: 2px 10px; color: var(--ink-2); background: var(--paper-2); }
+  .eyebrow .pill.live { color: var(--green); border-color: #a8cbb5; background: #e6f6eb; }
+  h1 { font-family: var(--serif); font-weight: 400; color: var(--ink); font-size: clamp(40px, 6.4vw, 78px); line-height: 1.02; letter-spacing: -.02em; margin: 18px 0 18px; max-width: 15ch; }
+  h1 em { color: var(--cobalt); font-style: italic; }
+  .lede { max-width: 640px; font-size: 17px; color: var(--ink-2); }
+  .lede b { color: var(--ink); font-weight: 600; }
+
+  /* player shell */
+  .player { border: 1px solid var(--line); border-radius: 18px; background: #fff; box-shadow: var(--shadow); overflow: hidden; margin-bottom: 64px; }
+  .controls { display: grid; grid-template-columns: auto 1fr auto; gap: 18px; align-items: center; padding: 18px 20px; border-bottom: 1px solid var(--line); background: linear-gradient(180deg, #fff, var(--paper)); }
+  .play { width: 52px; height: 52px; border-radius: 50%; background: var(--ink); color: var(--paper); display: grid; place-items: center; transition: transform .15s ease, background .2s ease; }
+  .play:hover { background: var(--cobalt); transform: scale(1.04); }
+  .play svg { width: 20px; height: 20px; }
+  .scrub-wrap { min-width: 0; }
+  .meta-row { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; margin-bottom: 8px; font-family: var(--mono); font-size: 12px; color: var(--ink-3); }
+  .meta-row .now { color: var(--ink); font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .scrub { position: relative; height: 44px; cursor: pointer; touch-action: none; user-select: none; }
+  .wave { position: absolute; inset: 0; display: flex; align-items: center; gap: 2px; }
+  .wave i { flex: 1; min-width: 1px; background: var(--line-2); border-radius: 2px; transition: background .2s; }
+  .wave i.on { background: var(--cobalt); }
+  .wave i.low { background: var(--blush); opacity: .55; }
+  .wave i.low.on { background: var(--blush); opacity: 1; }
+  .ticks { position: absolute; inset: 0; pointer-events: none; }
+  .ticks b { position: absolute; top: -2px; bottom: -2px; width: 1px; background: var(--ink-4); opacity: .6; }
+  .head { position: absolute; top: -4px; bottom: -4px; width: 2px; background: var(--ink); border-radius: 2px; pointer-events: none; }
+  .head::after { content: ""; position: absolute; top: -4px; left: -4px; width: 10px; height: 10px; border-radius: 50%; background: var(--ink); }
+  .right-ctl { display: flex; gap: 8px; align-items: center; }
+  .seg-btn { display: inline-flex; border: 1px solid var(--line-2); border-radius: 999px; padding: 3px; background: var(--paper-2); }
+  .seg-btn button { font-family: var(--mono); font-size: 12px; padding: 5px 10px; border-radius: 999px; color: var(--ink-3); }
+  .seg-btn button[aria-pressed="true"], .seg-btn button[aria-selected="true"] { background: #fff; color: var(--ink); box-shadow: 0 1px 2px rgba(0,0,0,.08); }
+  .follow { font-family: var(--mono); font-size: 12px; color: var(--ink-3); display: inline-flex; gap: 6px; align-items: center; cursor: pointer; white-space: nowrap; }
+  .follow input { accent-color: var(--cobalt); }
+
+  .grid { display: grid; grid-template-columns: 230px minmax(0,1fr) 300px; }
+  .col { min-width: 0; }
+  .col-h { font-family: var(--mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); padding: 18px 18px 10px; display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+  .col-h button { text-transform: none; letter-spacing: 0; color: var(--cobalt); font-size: 11px; }
+  .chapters { border-right: 1px solid var(--line); background: var(--paper); }
+  .chapters ol { list-style: none; padding: 0 10px 18px; position: sticky; top: 0; }
+  .chapters li button { width: 100%; text-align: left; display: grid; grid-template-columns: 48px 1fr; gap: 8px; padding: 8px 8px; border-radius: 10px; font-size: 13.5px; line-height: 1.35; color: var(--ink-2); }
+  .chapters li button:hover { background: var(--paper-3); }
+  .chapters li button .ts { font-family: var(--mono); font-size: 11.5px; color: var(--cobalt); padding-top: 1px; }
+  .chapters li button.cur { background: var(--cobalt-4); color: var(--ink); }
+  .chapters li button.lowc .ts { color: #b5584c; }
+
+  .transcript-col { padding: 0 0 24px; }
+  .view { padding: 4px 26px 10px; }
+  .utt { display: grid; grid-template-columns: 112px 1fr; gap: 14px; padding: 16px 12px; border-radius: 12px; border-left: 3px solid transparent; transition: background .25s, opacity .25s, border-color .25s; }
+  .utt + .utt { margin-top: 2px; }
+  .utt .who { display: flex; flex-direction: column; gap: 6px; align-items: flex-start; }
+  .spk { font-family: var(--mono); font-size: 11.5px; font-weight: 500; border-radius: 6px; padding: 2px 8px; white-space: nowrap; }
+  .spk.A { background: var(--ink); color: var(--paper); }
+  .spk.B { background: var(--paper-3); color: var(--ink-2); border: 1px solid var(--line); }
+  .ts-btn { font-family: var(--mono); font-size: 11.5px; color: var(--cobalt); padding: 1px 2px; }
+  .ts-btn:hover { text-decoration: underline; }
+  .tag-low { font-family: var(--mono); font-size: 10.5px; color: #9b4136; background: var(--blush-2); border: 1px solid #f4d4d0; border-radius: 6px; padding: 1px 6px; white-space: nowrap; }
+  .txt { font-size: 16.5px; line-height: 1.75; color: var(--ink-4); }
+  .utt.B .txt { font-style: italic; }
+  .w { cursor: pointer; border-radius: 3px; transition: color .12s; }
+  .w.sp { color: var(--ink); }
+  .utt.B .w.sp { color: var(--ink-2); }
+  .w.cur { background: var(--cobalt); color: #fff !important; box-shadow: 0 0 0 2px var(--cobalt); }
+  .w:hover { text-decoration: underline; text-decoration-color: var(--cobalt-3); }
+  .utt.low .w { text-decoration: underline dotted var(--blush); text-underline-offset: 4px; }
+  .w.kw { background: #fff3a6; color: var(--ink); }
+  .w.kw.cur { background: var(--cobalt); }
+  .utt.active { background: var(--paper); }
+  .dimming .utt { opacity: .35; }
+  .dimming .utt.hit { opacity: 1; background: var(--cobalt-4); border-left-color: var(--cobalt); }
+  .src { margin-top: 8px; font-family: var(--mono); font-size: 11px; color: var(--ink-3); }
+
+  pre.json { margin: 4px 26px 18px; padding: 18px; background: var(--ink); color: #ecebe5; border-radius: 12px; font-family: var(--mono); font-size: 12px; line-height: 1.6; overflow: auto; max-height: 720px; }
+  pre.json .k { color: var(--cobalt-3); } pre.json .s { color: #cee0d4; } pre.json .n { color: #f4d4d0; }
+
+  .entities { border-left: 1px solid var(--line); background: var(--paper); }
+  .ent-list { padding: 0 14px 10px; display: flex; flex-direction: column; gap: 6px; }
+  .ent { text-align: left; border: 1px solid var(--line); background: #fff; border-radius: 12px; padding: 10px 12px; transition: border-color .2s, box-shadow .2s, transform .15s; }
+  .ent:hover { border-color: var(--cobalt-3); transform: translateY(-1px); }
+  .ent[aria-pressed="true"] { border-color: var(--cobalt); box-shadow: 0 0 0 3px var(--cobalt-4); }
+  .ent .row { display: flex; justify-content: space-between; gap: 8px; align-items: center; }
+  .ent .type { font-family: var(--mono); font-size: 10.5px; color: var(--ink-3); text-transform: lowercase; }
+  .ent .cnt { font-family: var(--mono); font-size: 10.5px; color: var(--cobalt); white-space: nowrap; }
+  .ent .name { font-size: 13.5px; color: var(--ink); line-height: 1.35; margin-top: 3px; font-weight: 500; }
+  .ent.low { background: #fffaf8; border-color: #f4d4d0; }
+  .ent.low .cnt { color: #9b4136; }
+  .ent.none .cnt { color: var(--ink-3); }
+  .note { margin: 6px 14px 16px; font-size: 12.5px; color: var(--ink-3); line-height: 1.5; }
+
+  .gapcard { margin: 0 14px 18px; padding: 14px; border-radius: 12px; background: var(--blush-2); border: 1px solid #f4d4d0; }
+  .gapcard h3 { font-family: var(--mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: #9b4136; font-weight: 500; margin-bottom: 6px; }
+  .gapcard p { font-size: 13px; color: var(--ink-2); line-height: 1.55; }
+  .gapcard button { margin-top: 8px; font-family: var(--mono); font-size: 11.5px; color: #9b4136; text-decoration: underline; }
+
+  /* summary + cta */
+  .summary { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; padding: 0 0 64px; }
+  .summary h2 { font-family: var(--serif); font-weight: 400; font-size: clamp(30px, 4vw, 44px); color: var(--ink); line-height: 1.08; letter-spacing: -.01em; margin-bottom: 14px; }
+  .summary h2 em { color: var(--cobalt); }
+  .summary p { margin-bottom: 12px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
+  .chip { font-family: var(--mono); font-size: 12px; border: 1px solid var(--line-2); border-radius: 999px; padding: 4px 11px; background: var(--paper-2); color: var(--ink-2); }
+  .cta { border-radius: 18px; background: var(--ink); color: var(--paper-3); padding: 30px; display: flex; flex-direction: column; gap: 14px; justify-content: space-between; position: relative; overflow: hidden; }
+  .cta h2 { color: var(--paper); }
+  .cta h2 em { color: var(--cobalt-3); }
+  .cta p { color: #c7c3b2; }
+  .btns { display: flex; flex-wrap: wrap; gap: 10px; }
+  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 11px 18px; border-radius: 999px; text-decoration: none; font-weight: 500; font-size: 14.5px; transition: transform .15s, background .2s; }
+  .btn.pri { background: var(--paper); color: var(--ink); }
+  .btn.pri:hover { background: var(--cobalt-4); transform: translateY(-1px); }
+  .btn.sec { border: 1px solid #4a4945; color: var(--paper); }
+  .btn.sec:hover { border-color: var(--cobalt-3); transform: translateY(-1px); }
+  .cta .mini-wave { position: absolute; right: -10px; top: 18px; opacity: .18; }
+
+  footer { border-top: 1px solid var(--line); padding: 22px 0 40px; font-family: var(--mono); font-size: 11.5px; color: var(--ink-3); }
+  footer .wrap { display: flex; justify-content: space-between; gap: 14px; flex-wrap: wrap; }
+
+  .kbd { font-family: var(--mono); font-size: 10.5px; border: 1px solid var(--line-2); border-bottom-width: 2px; border-radius: 4px; padding: 0 4px; background: #fff; color: var(--ink-2); }
+  .hint { font-family: var(--mono); font-size: 11.5px; color: var(--ink-3); padding: 10px 20px; border-top: 1px solid var(--line); background: var(--paper); display: flex; gap: 14px; flex-wrap: wrap; }
+
+  @media (max-width: 1060px) {
+    .grid { grid-template-columns: 1fr; }
+    .chapters { border-right: 0; border-bottom: 1px solid var(--line); order: 1; }
+    .chapters ol { display: flex; overflow-x: auto; gap: 6px; padding: 0 14px 14px; position: static; scrollbar-width: thin; }
+    .chapters li { flex: none; }
+    .chapters li button { grid-template-columns: auto; gap: 2px; width: auto; min-width: 150px; max-width: 190px; border: 1px solid var(--line); background: #fff; }
+    .entities { border-left: 0; border-bottom: 1px solid var(--line); order: 2; }
+    .ent-list { flex-direction: row; flex-wrap: wrap; }
+    .ent { flex: 1 1 200px; }
+    .transcript-col { order: 3; }
+    .summary { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 620px) {
+    .hero { padding: 36px 0 20px; }
+    .controls { grid-template-columns: auto 1fr; gap: 12px; padding: 14px; }
+    .right-ctl { grid-column: 1 / -1; justify-content: space-between; flex-wrap: wrap; }
+    .play { width: 46px; height: 46px; }
+    .view { padding: 4px 8px 10px; }
+    .utt { grid-template-columns: 1fr; gap: 6px; padding: 14px 10px; }
+    .utt .who { flex-direction: row; flex-wrap: wrap; align-items: center; }
+    .txt { font-size: 16px; }
+    pre.json { margin: 4px 8px 16px; }
+    .strip .disc { display: none; }
+    .ent-list { gap: 6px; flex-wrap: nowrap; overflow-x: auto; padding-bottom: 12px; scrollbar-width: thin; }
+    .ent { flex: none; white-space: nowrap; padding: 6px 10px; border-radius: 999px; display: flex; flex-direction: row-reverse; align-items: center; gap: 8px; }
+    .ent .row { display: contents; }
+    .ent .type { display: none; }
+    .ent .name { margin-top: 0; font-size: 12.5px; }
+    .ent .cnt { font-size: 10px; }
+    .note { font-size: 12px; }
+    .cta { padding: 22px; }
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } html { scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+
+<div class="strip">
+  <div class="wrap">
+    <div class="brand">
+      <svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true"><rect width="26" height="26" rx="7" fill="#1d1b16"/><g fill="#fdfcf8"><rect x="5" y="10" width="2" height="6" rx="1"/><rect x="9" y="7" width="2" height="12" rx="1"/><rect x="13" y="4" width="2" height="18" rx="1"/><rect x="17" y="8" width="2" height="10" rx="1"/><rect x="21" y="11" width="2" height="4" rx="1" fill="#b0a7e9"/></g></svg>
+      <span>andrew zoll <span class="mono" style="color:var(--ink-3);font-weight:400;font-size:12px">/ transcript</span></span>
+    </div>
+    <div class="disc">This is a personal page, and it isn't affiliated with AssemblyAI.</div>
+  </div>
+</div>
+
+<main>
+  <section class="hero">
+    <div class="wrap">
+      <div class="eyebrow"><span class="pill live">status: completed</span><span class="pill">speaker_labels: true</span><span class="pill">for: Senior GTM AI Engineer</span></div>
+      <h1>Hi, AssemblyAI. Here's my intro, <em>transcribed.</em></h1>
+      <p class="lede">You're hiring your <b>first GTM AI engineer</b>, a software engineer who sits inside the revenue org. That's close to the job I've been doing at Coder. So instead of a normal page, I wrote my intro the way your customers see their calls: speakers, timestamps, chapters, and detected entities. Press play and the cursor walks through it. Click a requirement in the detected entities panel and it lights up the parts of the transcript that cover it. There's no audio, I promise. The timings are just for fun.</p>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <section class="player" aria-label="Interactive transcript">
+      <div class="controls">
+        <button class="play" id="play" aria-label="Play transcript">
+          <svg id="ico" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M5 3.5v13a.8.8 0 0 0 1.2.7l10.6-6.5a.8.8 0 0 0 0-1.4L6.2 2.8A.8.8 0 0 0 5 3.5z"/></svg>
+        </button>
+        <div class="scrub-wrap">
+          <div class="meta-row"><span class="now" id="nowChap">00 &middot; Hello</span><span><span id="tNow">00:00</span> / <span id="tEnd">00:00</span></span></div>
+          <div class="scrub" id="scrub" role="slider" tabindex="0" aria-label="Seek" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+            <div class="wave" id="wave"></div>
+            <div class="ticks" id="ticks"></div>
+            <div class="head" id="head" style="left:0"></div>
+          </div>
+        </div>
+        <div class="right-ctl">
+          <div class="seg-btn" role="group" aria-label="Playback speed" id="speeds">
+            <button aria-pressed="false" data-s="1">1x</button>
+            <button aria-pressed="true" data-s="2">2x</button>
+            <button aria-pressed="false" data-s="4">4x</button>
+          </div>
+          <div class="seg-btn" role="tablist" aria-label="View" id="views">
+            <button role="tab" aria-selected="true" data-v="text">Transcript</button>
+            <button role="tab" aria-selected="false" data-v="json">JSON</button>
+          </div>
+          <label class="follow"><input type="checkbox" id="follow" checked> follow</label>
+        </div>
+      </div>
+
+      <div class="grid">
+        <aside class="col chapters" aria-label="Chapters">
+          <div class="col-h"><span>Chapters</span></div>
+          <ol id="chapters"></ol>
+        </aside>
+
+        <div class="col transcript-col">
+          <div class="col-h"><span id="viewLabel">Transcript &middot; 2 speakers</span><button id="clearBtn" hidden>clear highlight</button></div>
+          <div class="view" id="textView"></div>
+          <pre class="json" id="jsonView" hidden></pre>
+        </div>
+
+        <aside class="col entities" aria-label="Detected entities">
+          <div class="col-h"><span>Detected entities</span><span style="text-transform:none;letter-spacing:0">from the JD</span></div>
+          <div class="ent-list" id="ents"></div>
+          <p class="note">Each entity is a line from your posting. The count is how many transcript segments cover it. Click one to highlight them, and click it again to clear.</p>
+          <div class="gapcard">
+            <h3>Low confidence</h3>
+            <p>You ask for 4+ years shipping systems other people depend on. I have about two and a half. I've also never used BigQuery, Looker, dbt, or Clay. The full version is in chapter 07.</p>
+            <button id="gapJump">jump to the honest part</button>
+          </div>
+        </aside>
+      </div>
+      <div class="hint"><span><span class="kbd">space</span> play or pause</span><span><span class="kbd">&larr;</span> <span class="kbd">&rarr;</span> skip 5s</span><span>Click any word to jump there.</span></div>
+    </section>
+
+    <section class="summary" aria-label="Summary and links">
+      <div>
+        <h2>Auto summary, <em>written by a human.</em></h2>
+        <p>I'm a Senior Software Engineer on AI Solutions at Coder. Since July 2026 I've built an internal AI agent platform for the revenue organization, with Salesforce data, Granola meeting transcripts, and a Slack bot feeding answers and workflows to sellers. I write Python every day, I run my builds through a multi-model agent loop with a cross-family review gate, and I keep scheduled jobs running with kill switches, watchdogs, and nightly reconciles.</p>
+        <p>Before that I was the seller. I spent years as a financial advisor, and I built CRM automation for an advisory practice. I care how deals get found because I used to be the one finding them.</p>
+        <div class="chips"><span class="chip">Python</span><span class="chip">SQL (Postgres, SQL Server)</span><span class="chip">Claude Code</span><span class="chip">Salesforce integration</span><span class="chip">Granola</span><span class="chip">Slack bots</span><span class="chip">AWS + Terraform</span><span class="chip">agent evals</span></div>
+      </div>
+      <div class="cta">
+        <svg class="mini-wave" width="220" height="90" viewBox="0 0 220 90" aria-hidden="true"><g fill="#b0a7e9"><rect x="0" y="35" width="8" height="20" rx="4"/><rect x="16" y="20" width="8" height="50" rx="4"/><rect x="32" y="5" width="8" height="80" rx="4"/><rect x="48" y="25" width="8" height="40" rx="4"/><rect x="64" y="12" width="8" height="66" rx="4"/><rect x="80" y="30" width="8" height="30" rx="4"/><rect x="96" y="18" width="8" height="54" rx="4"/><rect x="112" y="38" width="8" height="14" rx="4"/><rect x="128" y="22" width="8" height="46" rx="4"/><rect x="144" y="8" width="8" height="74" rx="4"/><rect x="160" y="28" width="8" height="34" rx="4"/><rect x="176" y="34" width="8" height="22" rx="4"/></g></svg>
+        <div>
+          <h2>Want the <em>full recording?</em></h2>
+          <p>My portfolio has the projects behind every chapter here, and LinkedIn is the fastest way to reach me. I'd love to talk about what your sellers should see when they open their laptops.</p>
+        </div>
+        <div class="btns">
+          <a class="btn pri" href="https://portfolio.andrewzoll.com" target="_blank" rel="noopener">See my portfolio &rarr;</a>
+          <a class="btn sec" href="https://www.linkedin.com/in/andrewzoll" target="_blank" rel="noopener">Connect on LinkedIn</a>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Andrew Zoll, Pueblo, CO. I built this page by hand for one job posting.</span>
+    <span>This is a personal page. It's not affiliated with, endorsed by, or sponsored by AssemblyAI.</span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+
+  // ---------- data ----------
+  // speaker A = Andrew, B = the posting (paraphrased in my own words)
+  var SEGMENTS = [
+    { id: "s0", ch: "Hello", sp: "A", text: "Hi, I'm Andrew Zoll. I'm a Senior Software Engineer on AI Solutions at Coder, and since July 2026 I've built an internal AI agent platform for Coder's revenue organization. Your posting says you want your first GTM AI engineer to write software inside the revenue org. That's the work I've been doing, so I figured I'd introduce myself in the format you know best." },
+    { id: "s1", ch: "What I built for sellers", sp: "B", text: "Okay, so who are your users, and what did you build for them?" },
+    { id: "s2", ch: "What I built for sellers", sp: "A", text: "My users are sellers and revenue leaders. The platform turns Salesforce, support, and call-transcript data into answers and workflows for them. I built the Salesforce data integration, the Granola meeting-transcript ingestion, and a Slack bot for the revenue team, so a rep can ask about an account right where they already work. I also shipped an OAuth authorization server that gates hosted MCP access to the platform.", src: "Coder, Jul 2026 to present" },
+    { id: "s3", ch: "The Granola part", sp: "A", text: "Here's the part that made me smile. Granola is on your customer list, and I built Granola transcript ingestion. It runs on a five minute poll with a nightly reconcile, and it filters Federal accounts fail closed before anything reaches a model. So I've lived downstream of a transcript pipeline, and I care a lot about what happens to the words after they're transcribed.", src: "Coder ingestion job" },
+    { id: "s4", ch: "Production automations", sp: "B", text: "Have you owned production automations end to end, including scheduled jobs, error handling, and monitoring?" },
+    { id: "s5", ch: "Production automations", sp: "A", text: "Yes, and most of them exist because something broke first. I built an event poller that turns failed CI runs, new Linear assignments, Slack requests, and Granola meeting action items into queued work, with a kill switch that turns it off. Around it sit about twenty Python loop control scripts with ten test files. A round cap stops a review loop after a set number of rounds, because one spec once spent fourteen rounds over twelve hours without converging. A watchdog acts when a runtime goes quiet, because a stopped runtime once went unnoticed for more than eight hours. A cleanup job keeps a forty slot workspace quota from filling up.", src: "Loop controls, Sep to Oct 2026" },
+    { id: "s6", ch: "Production automations", sp: "A", text: "On the infrastructure side, I keep the AWS stack in Terraform with a CI plan gate, ECS tasks, and Lambda jobs. I also cut cold dashboard load from five to ten seconds down to about two seconds by replacing a serial per account S3 read loop with a bounded fan out.", src: "AWS, Terraform" },
+    { id: "s7", ch: "Agents and evals", sp: "B", text: "Tell us about building with LLMs beyond a single prompt. How do you know when an agent's output is good?" },
+    { id: "s8", ch: "Agents and evals", sp: "A", text: "I run my builds as a multi model agent loop. Open weight Kimi models build, GLM models review, and hard fixes escalate to GPT, Claude Opus, and Fable. The rule I care most about is that a reviewer from a different model family than the builder has to clear every change, and mutation tests check that the tests can actually fail. Across about twelve hundred review verdicts on about three hundred fifty pull requests, reviewers recorded more than four hundred thirty confirmed defect catches and twenty one false flags. One catch was a Redis cluster mode blocker in the authorization server. It passed every test against an in memory fake, and a reviewer model from another family caught it inside my review gate in round five.", src: "Cross-family review gate, Sep 8 to Oct 9 2026" },
+    { id: "s9", ch: "Agents and evals", sp: "A", text: "And yes, I know when a plain script is the better tool. The round cap and the watchdog are plain Python on purpose. An agent shouldn't get to decide when to stop an agent." },
+    { id: "s10", ch: "Claude Code, daily", sp: "B", text: "Is AI assisted development how you actually work?" },
+    { id: "s11", ch: "Claude Code, daily", sp: "A", text: "Yes, I use it every day. I authored 884 merged pull requests between July 27 and October 9, 2026, many of them built by agents under my account. In the week of September 29 the loop ran 602 agent launches and merged 193 pull requests at about thirty eight dollars of model cost per merged PR, and about seventy five percent of 860 launches started with no human prompt. I priced every chat from token usage. My first token based estimate badly undercounted spend, because cache reads bill at the full input rate, so I fixed it and calibrated it against the dashboard total of about $1,300 a week. Standing behind the output looks like 26 merged pull requests of fail closed Federal access controls, with tests on every access tier.", src: "Coder Agents telemetry and GitHub" },
+    { id: "s12", ch: "How deals get found", sp: "B", text: "You don't need a RevOps background, but do you care how a sales org works?" },
+    { id: "s13", ch: "How deals get found", sp: "A", text: "I used to be the seller. I was a financial advisor for years, and I kept ninety five percent client retention across more than 120 households at Edward Jones. Later, at an advisory practice, I built integrations between Redtail CRM, outside services, and the ChatGPT API that removed more than twenty hours of manual work a month, and I designed lead capture and onboarding pipelines that converted more than seven percent of visitors into leads. I've been the person opening the laptop in the morning, hoping the CRM tells the truth.", src: "Edward Jones 2020 to 2024, Ryleigh Wealth Management 2024 to present" },
+    { id: "s14", ch: "The honest part", sp: "A", low: true, text: "Here's the low confidence part. You ask for four plus years shipping systems other people depend on. I have about two and a half: the Redtail and ChatGPT integrations starting in 2024, FieldCommand in 2025, and Coder since July 2026. My engineering title started in July 2026. I've never used BigQuery, Looker, dbt, or Clay, and my SQL is PostgreSQL, Supabase, and SQL Server. My Salesforce work is at the integration level, not deep object design. Your posting says you're open to people with more or less experience than listed, so I'm taking you at your word, and I'd learn the warehouse and BI stack first.", src: "self reported" },
+    { id: "s15", ch: "Owning a whole domain", sp: "B", text: "Can you be the single threaded owner of an entire domain, and document it so it runs without you?" },
+    { id: "s16", ch: "Owning a whole domain", sp: "A", text: "Outside Coder I've been the only engineer on everything I've shipped. FieldCommand is a multi tenant SaaS for contractors, 187,745 lines of TypeScript built solo, with pipelines connecting Stripe billing, AI services, and CRM data. Veritas checks citations in legal filings and returns hedged verdicts with a Verification Certificate. I write specs before code, and I write runbooks when something surprises me, like the one I wrote after the Coder Agents MCP route on Coder's dogfood deployment returned 404 following a redeploy. It tells that kind of route change apart from a real outage.", src: "FieldCommand 2025, Veritas 2026" },
+    { id: "s17", ch: "Thanks for listening", sp: "A", text: "That's me. If this reads like a fit, my portfolio and LinkedIn are just below. Thanks for listening, or reading, since there was never any audio." }
+  ];
+
+  var ENTITIES = [
+    { id: "e1", type: "requirement", name: "Software engineer inside the revenue org", segs: ["s0", "s2"], kw: ["revenue", "sellers", "rep"] },
+    { id: "e2", type: "requirement", name: "Strong Python and SQL", segs: ["s5", "s9", "s14"], kw: ["python", "sql", "postgresql"] },
+    { id: "e3", type: "requirement", name: "Production automations: scheduled jobs, error handling, monitoring", segs: ["s3", "s5", "s6"], kw: ["poll", "reconcile", "poller", "watchdog", "kill", "switch", "cleanup", "terraform", "lambda"] },
+    { id: "e4", type: "requirement", name: "Agents beyond one prompt, plus evaluation", segs: ["s8", "s9"], kw: ["agent", "reviewer", "mutation", "verdicts", "catches"] },
+    { id: "e5", type: "requirement", name: "Claude Code daily, with judgment to stand behind it", segs: ["s11", "s8"], kw: ["agents", "pull", "requests", "tests", "reconcile"] },
+    { id: "e6", type: "requirement", name: "Integrate CRM, enrichment, and outbound systems", segs: ["s2", "s3", "s13"], kw: ["salesforce", "granola", "slack", "crm", "redtail", "integration", "integrations", "ingestion"] },
+    { id: "e7", type: "requirement", name: "Curiosity about how deals get found and closed", segs: ["s13"], kw: ["seller", "leads", "crm", "retention"] },
+    { id: "e8", type: "requirement", name: "Single threaded owner who documents the work", segs: ["s16"], kw: ["solo", "only", "runbooks", "specs"] },
+    { id: "e9", type: "requirement", name: "4+ years shipping systems people depend on", segs: ["s14"], kw: ["years", "half"], low: true },
+    { id: "e10", type: "nice_to_have", name: "dbt, BigQuery, Looker, or Clay", segs: ["s14"], kw: ["bigquery", "looker", "dbt", "clay"], low: true },
+    { id: "e11", type: "nice_to_have", name: "First engineer in a sales or growth org", segs: ["s0", "s16"], kw: ["first", "only"] }
+  ];
+
+  // ---------- timing ----------
+  var WPS = 2.6, GAP = 0.9;
+  var words = [];     // {el, t, seg}
+  var segStart = {};  // id -> t
+  var segEnd = {};
+  var t = 0;
+  SEGMENTS.forEach(function (s) {
+    var toks = s.text.split(/\s+/);
+    segStart[s.id] = t;
+    s.toks = toks.map(function (w) {
+      var start = t;
+      var d = 1 / WPS + (/[.?!:]$/.test(w) ? 0.45 : /[,;]$/.test(w) ? 0.22 : 0);
+      t += d;
+      return { w: w, t: start };
+    });
+    segEnd[s.id] = t;
+    t += GAP;
+  });
+  var DURATION = t;
+
+  function fmt(sec) {
+    sec = Math.max(0, Math.floor(sec));
+    var m = Math.floor(sec / 60), s = sec % 60;
+    return (m < 10 ? "0" : "") + m + ":" + (s < 10 ? "0" : "") + s;
+  }
+
+  // chapters
+  var CHAPTERS = [];
+  SEGMENTS.forEach(function (s) {
+    if (!CHAPTERS.length || CHAPTERS[CHAPTERS.length - 1].name !== s.ch) {
+      CHAPTERS.push({ name: s.ch, t: segStart[s.id], low: !!s.low, first: s.id });
+    }
+  });
+
+  // ---------- render transcript ----------
+  var textView = document.getElementById("textView");
+  var segEls = {};
+  SEGMENTS.forEach(function (s) {
+    var u = document.createElement("div");
+    u.className = "utt " + s.sp + (s.low ? " low" : "");
+    u.id = s.id;
+    var who = document.createElement("div");
+    who.className = "who";
+    var spk = document.createElement("span");
+    spk.className = "spk " + s.sp;
+    spk.textContent = s.sp === "A" ? "A \u00b7 Andrew" : "B \u00b7 Posting";
+    var ts = document.createElement("button");
+    ts.className = "ts-btn";
+    ts.textContent = fmt(segStart[s.id]);
+    ts.setAttribute("aria-label", "Jump to " + fmt(segStart[s.id]));
+    ts.addEventListener("click", function () { seek(segStart[s.id]); });
+    who.appendChild(spk); who.appendChild(ts);
+    if (s.low) { var lt = document.createElement("span"); lt.className = "tag-low"; lt.textContent = "low confidence"; who.appendChild(lt); }
+    var body = document.createElement("div");
+    var txt = document.createElement("p");
+    txt.className = "txt";
+    s.toks.forEach(function (tok, i) {
+      var sp = document.createElement("span");
+      sp.className = "w";
+      sp.textContent = tok.w;
+      sp.dataset.i = words.length;
+      words.push({ el: sp, t: tok.t, seg: s.id, norm: tok.w.toLowerCase().replace(/[^a-z0-9+]/g, "") });
+      txt.appendChild(sp);
+      if (i < s.toks.length - 1) txt.appendChild(document.createTextNode(" "));
+    });
+    body.appendChild(txt);
+    if (s.src) { var src = document.createElement("div"); src.className = "src"; src.textContent = "source: " + s.src; body.appendChild(src); }
+    u.appendChild(who); u.appendChild(body);
+    textView.appendChild(u);
+    segEls[s.id] = u;
+  });
+  textView.addEventListener("click", function (e) {
+    var w = e.target.closest(".w");
+    if (w) seek(words[+w.dataset.i].t + 0.001);
+  });
+
+  // chapters list
+  var chapOl = document.getElementById("chapters");
+  var chapBtns = [];
+  CHAPTERS.forEach(function (c, i) {
+    var li = document.createElement("li");
+    var b = document.createElement("button");
+    if (c.low) b.classList.add("lowc");
+    b.innerHTML = '<span class="ts"></span><span class="nm"></span>';
+    b.querySelector(".ts").textContent = fmt(c.t);
+    b.querySelector(".nm").textContent = (i < 10 ? "0" : "") + i + " \u00b7 " + c.name;
+    b.addEventListener("click", function () { seek(c.t); scrollToSeg(c.first, true); });
+    li.appendChild(b); chapOl.appendChild(li);
+    chapBtns.push(b);
+  });
+
+  // waveform bars (deterministic)
+  var wave = document.getElementById("wave");
+  var NB = window.innerWidth < 620 ? 70 : 140;
+  var bars = [];
+  var seed = 7;
+  function rnd() { seed = (seed * 9301 + 49297) % 233280; return seed / 233280; }
+  var lowSeg = SEGMENTS.filter(function (s) { return s.low; })[0];
+  for (var i = 0; i < NB; i++) {
+    var b = document.createElement("i");
+    var mid = (i + 0.5) / NB * DURATION;
+    var h = 18 + rnd() * 70;
+    // quieter in the gaps between segments
+    var inGap = SEGMENTS.every(function (s) { return mid < segStart[s.id] || mid > segEnd[s.id]; });
+    if (inGap) h = 8;
+    b.style.height = h + "%";
+    if (lowSeg && mid >= segStart[lowSeg.id] && mid <= segEnd[lowSeg.id]) b.classList.add("low");
+    wave.appendChild(b); bars.push({ el: b, t: mid });
+  }
+  var ticks = document.getElementById("ticks");
+  CHAPTERS.forEach(function (c, i) { if (i === 0) return; var k = document.createElement("b"); k.style.left = (c.t / DURATION * 100) + "%"; ticks.appendChild(k); });
+  document.getElementById("tEnd").textContent = fmt(DURATION);
+
+  // ---------- entities ----------
+  var entWrap = document.getElementById("ents");
+  var activeEnt = null;
+  var entBtns = {};
+  ENTITIES.forEach(function (e) {
+    var b = document.createElement("button");
+    b.className = "ent" + (e.low ? " low" : "");
+    b.setAttribute("aria-pressed", "false");
+    var cnt = e.low ? "low confidence" : e.segs.length + (e.segs.length === 1 ? " segment" : " segments");
+    b.innerHTML = '<div class="row"><span class="type"></span><span class="cnt"></span></div><div class="name"></div>';
+    b.querySelector(".type").textContent = e.type;
+    b.querySelector(".cnt").textContent = cnt;
+    b.querySelector(".name").textContent = e.name;
+    b.addEventListener("click", function () { toggleEnt(e.id); });
+    entWrap.appendChild(b); entBtns[e.id] = b;
+  });
+  var clearBtn = document.getElementById("clearBtn");
+  function toggleEnt(id) {
+    var view = textView;
+    words.forEach(function (w) { w.el.classList.remove("kw"); });
+    Object.keys(segEls).forEach(function (k) { segEls[k].classList.remove("hit"); });
+    Object.keys(entBtns).forEach(function (k) { entBtns[k].setAttribute("aria-pressed", "false"); });
+    if (activeEnt === id) { activeEnt = null; view.classList.remove("dimming"); clearBtn.hidden = true; return; }
+    activeEnt = id;
+    var e = ENTITIES.filter(function (x) { return x.id === id; })[0];
+    entBtns[id].setAttribute("aria-pressed", "true");
+    view.classList.add("dimming");
+    clearBtn.hidden = false;
+    e.segs.forEach(function (sid) { segEls[sid].classList.add("hit"); });
+    words.forEach(function (w) { if (e.segs.indexOf(w.seg) > -1 && e.kw.indexOf(w.norm) > -1) w.el.classList.add("kw"); });
+    if (currentView !== "text") setView("text");
+    var first = e.segs.slice().sort(function (a, b) { return segStart[a] - segStart[b]; })[0];
+    scrollToSeg(first, true);
+  }
+  clearBtn.addEventListener("click", function () { if (activeEnt) toggleEnt(activeEnt); });
+
+  function scrollToSeg(id, force) {
+    var el = segEls[id];
+    if (!el) return;
+    var r = el.getBoundingClientRect();
+    if (force || r.top < 80 || r.bottom > window.innerHeight - 40) el.scrollIntoView({ block: "center", behavior: "smooth" });
+  }
+  document.getElementById("gapJump").addEventListener("click", function () { seek(segStart[lowSeg.id]); if (activeEnt !== "e9") toggleEnt("e9"); });
+
+  // ---------- JSON view ----------
+  var jsonView = document.getElementById("jsonView");
+  (function buildJson() {
+    var obj = {
+      id: "andrew-zoll-intro",
+      status: "completed",
+      audio_url: null,
+      speaker_labels: true,
+      audio_duration: Math.round(DURATION),
+      chapters: CHAPTERS.map(function (c) { return { headline: c.name, start: Math.round(c.t * 1000) }; }),
+      utterances: SEGMENTS.map(function (s) {
+        return { speaker: s.sp, start: Math.round(segStart[s.id] * 1000), end: Math.round(segEnd[s.id] * 1000), confidence_label: s.low ? "low" : "high", text: s.text };
+      }),
+      entities: ENTITIES.map(function (e) { return { entity_type: e.type, text: e.name, segments: e.segs }; })
+    };
+    var s = JSON.stringify(obj, null, 2);
+    s = s.replace(/[&<>]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]; });
+    s = s.replace(/("(?:\\.|[^"\\])*")(\s*:)?|\b(-?\d+)\b|\b(null|true)\b/g, function (m, str, colon, num, lit) {
+      if (str) return colon ? '<span class="k">' + str + '</span>' + colon : '<span class="s">' + str + '</span>';
+      return '<span class="n">' + m + '</span>';
+    });
+    jsonView.innerHTML = s;
+  })();
+
+  var currentView = "text";
+  var viewBtns = document.querySelectorAll("#views button");
+  function setView(v) {
+    currentView = v;
+    viewBtns.forEach(function (b) { b.setAttribute("aria-selected", b.dataset.v === v ? "true" : "false"); });
+    textView.hidden = v !== "text";
+    jsonView.hidden = v !== "json";
+    document.getElementById("viewLabel").textContent = v === "text" ? "Transcript \u00b7 2 speakers" : "Response \u00b7 GET /intro";
+  }
+  viewBtns.forEach(function (b) { b.addEventListener("click", function () { setView(b.dataset.v); }); });
+
+  // ---------- playback ----------
+  var playBtn = document.getElementById("play");
+  var ico = document.getElementById("ico");
+  var PLAY = '<path d="M5 3.5v13a.8.8 0 0 0 1.2.7l10.6-6.5a.8.8 0 0 0 0-1.4L6.2 2.8A.8.8 0 0 0 5 3.5z"/>';
+  var PAUSE = '<rect x="4.5" y="3" width="4" height="14" rx="1"/><rect x="11.5" y="3" width="4" height="14" rx="1"/>';
+  var playing = false, speed = 2, pos = 0, last = 0, lastIdx = -1, lastChap = -1;
+  var head = document.getElementById("head");
+  var tNow = document.getElementById("tNow");
+  var nowChap = document.getElementById("nowChap");
+  var scrub = document.getElementById("scrub");
+  var follow = document.getElementById("follow");
+
+  function idxAt(time) {
+    var lo = 0, hi = words.length - 1, ans = -1;
+    while (lo <= hi) { var m = (lo + hi) >> 1; if (words[m].t <= time) { ans = m; lo = m + 1; } else hi = m - 1; }
+    return ans;
+  }
+  function render() {
+    var idx = pos <= 0 ? -1 : idxAt(pos);
+    if (idx !== lastIdx) {
+      if (lastIdx >= 0 && words[lastIdx]) words[lastIdx].el.classList.remove("cur");
+      if (idx > lastIdx) { for (var i = Math.max(0, lastIdx + 1); i <= idx; i++) words[i].el.classList.add("sp"); }
+      else { for (var j = lastIdx; j > idx; j--) if (j >= 0) words[j].el.classList.remove("sp"); }
+      var prevSeg = lastIdx >= 0 ? words[lastIdx].seg : null;
+      if (idx >= 0) {
+        words[idx].el.classList.add("cur");
+        var seg = words[idx].seg;
+        if (seg !== prevSeg) {
+          if (prevSeg) segEls[prevSeg].classList.remove("active");
+          segEls[seg].classList.add("active");
+        }
+        if (playing && follow.checked && currentView === "text") {
+          var r = words[idx].el.getBoundingClientRect();
+          if (r.top < 70 || r.bottom > window.innerHeight - 50) words[idx].el.scrollIntoView({ block: "center", behavior: "smooth" });
+        }
+      } else if (prevSeg) segEls[prevSeg].classList.remove("active");
+      lastIdx = idx;
+    }
+    var pct = pos / DURATION * 100;
+    head.style.left = pct + "%";
+    scrub.setAttribute("aria-valuenow", Math.round(pct));
+    bars.forEach(function (b) { b.el.classList.toggle("on", b.t <= pos); });
+    tNow.textContent = fmt(pos);
+    var ci = 0;
+    for (var c = 0; c < CHAPTERS.length; c++) if (CHAPTERS[c].t <= pos + 0.0001) ci = c;
+    if (ci !== lastChap) {
+      chapBtns.forEach(function (b, k) { b.classList.toggle("cur", k === ci); });
+      nowChap.textContent = (ci < 10 ? "0" : "") + ci + " \u00b7 " + CHAPTERS[ci].name;
+      if (window.innerWidth <= 1060) { var cb = chapBtns[ci], ol = cb.parentNode.parentNode; ol.scrollTo({ left: Math.max(0, cb.parentNode.offsetLeft - ol.offsetLeft - 14) }); }
+      lastChap = ci;
+    }
+  }
+  function tick(now) {
+    if (!playing) return;
+    var dt = (now - last) / 1000; last = now;
+    pos += dt * speed;
+    if (pos >= DURATION) { pos = DURATION; render(); setPlaying(false); return; }
+    render();
+    requestAnimationFrame(tick);
+  }
+  function setPlaying(p) {
+    playing = p;
+    ico.innerHTML = p ? PAUSE : PLAY;
+    playBtn.setAttribute("aria-label", p ? "Pause transcript" : "Play transcript");
+    if (p) {
+      if (pos >= DURATION) { pos = 0; render(); }
+      if (currentView !== "text") setView("text");
+      last = performance.now(); requestAnimationFrame(tick);
+    }
+  }
+  function seek(time) {
+    pos = Math.min(DURATION, Math.max(0, time));
+    render();
+  }
+  playBtn.addEventListener("click", function () { setPlaying(!playing); });
+  document.querySelectorAll("#speeds button").forEach(function (b) {
+    b.addEventListener("click", function () {
+      speed = +b.dataset.s;
+      document.querySelectorAll("#speeds button").forEach(function (x) { x.setAttribute("aria-pressed", x === b ? "true" : "false"); });
+    });
+  });
+
+  // scrubbing
+  var dragging = false;
+  function posFromEvent(e) { var r = scrub.getBoundingClientRect(); return Math.min(1, Math.max(0, (e.clientX - r.left) / r.width)) * DURATION; }
+  scrub.addEventListener("pointerdown", function (e) { dragging = true; scrub.setPointerCapture(e.pointerId); seek(posFromEvent(e)); });
+  scrub.addEventListener("pointermove", function (e) { if (dragging) seek(posFromEvent(e)); });
+  scrub.addEventListener("pointerup", function () { dragging = false; });
+  scrub.addEventListener("pointercancel", function () { dragging = false; });
+  scrub.addEventListener("keydown", function (e) {
+    if (e.key === "ArrowRight") { seek(pos + 5); e.preventDefault(); }
+    if (e.key === "ArrowLeft") { seek(pos - 5); e.preventDefault(); }
+  });
+  document.addEventListener("keydown", function (e) {
+    var tag = (e.target.tagName || "").toLowerCase();
+    if (tag === "input" || tag === "textarea") return;
+    if (e.code === "Space" && tag !== "button" && tag !== "a") { e.preventDefault(); setPlaying(!playing); }
+    if (e.target === scrub) return;
+    if (e.key === "ArrowRight" && tag !== "button") { seek(pos + 5); }
+    if (e.key === "ArrowLeft" && tag !== "button") { seek(pos - 5); }
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>
