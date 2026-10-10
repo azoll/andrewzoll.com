@@ -185,7 +185,7 @@ footer{border-top:1px solid var(--hairline);padding-block:22px 40px;font-size:12
 
   <header class="hero">
     <div>
-      <p class="kicker">A note for the GTM AI Engineering team</p>
+      <p class="kicker">This is a note for the GTM AI Engineering team.</p>
       <h1>Your sellers already work alongside agents. I spent this fall <em>building that</em> for a revenue team.</h1>
       <p class="lede">I'm a Senior Software Engineer (AI Solutions) at Coder. There I built Scout, an internal AI sales-intelligence platform for Coder's revenue org, with autonomous agents, a Slack bot, a hosted MCP server, and gates that keep people in control. Your posting reads like the next chapter of that work, so I put my receipts in the shape you'd recognize: a queue of drafted actions waiting on a human.</p>
     </div>
@@ -197,20 +197,20 @@ footer{border-top:1px solid var(--hairline);padding-block:22px 40px;font-size:12
   </header>
 
   <nav class="strip" aria-label="Jump to a stage">
-    <button data-go="inbox" data-filter="agents"><b>01 signal</b><span>Agents</span><small>Motions that run end to end</small></button>
-    <button data-go="inbox" data-filter="oversight"><b>02 gate</b><span>Oversight</span><small>Approval and escalation</small></button>
-    <button data-go="transcripts"><b>03 eval</b><span>Transcripts</span><small>Real failures, traced</small></button>
-    <button data-go="inbox" data-filter="measure"><b>04 measure</b><span>Cost and value</span><small>Instrumented calls</small></button>
-    <button data-go="gaps"><b>05 human</b><span>Honest gaps</span><small>Where I'm short</small></button>
+    <button data-go="inbox" data-filter="agents"><b>01 signal</b><span>Agents</span><small>Agents run motions end to end.</small></button>
+    <button data-go="inbox" data-filter="oversight"><b>02 gate</b><span>Oversight</span><small>Sellers approve what agents write.</small></button>
+    <button data-go="transcripts"><b>03 eval</b><span>Transcripts</span><small>I traced real failures.</small></button>
+    <button data-go="inbox" data-filter="measure"><b>04 measure</b><span>Cost and value</span><small>Every run is priced.</small></button>
+    <button data-go="gaps"><b>05 human</b><span>Honest gaps</span><small>I name where I'm short.</small></button>
   </nav>
 </div>
 
 <section id="inbox" class="wrap" aria-labelledby="inbox-h">
-  <h2 id="inbox-h">Drafted for your review</h2>
+  <h2 id="inbox-h">I drafted these for your review.</h2>
   <p class="sec-lede">Seven actions, each tied to a line in your posting. The evidence comes from work I've shipped, and every figure is one I've tracked.</p>
   <div class="console">
     <div class="chead">
-      <div class="title"><strong>andrew.queue</strong> / pending human review</div>
+      <div class="title"><strong>andrew.queue</strong>: these actions wait for a human.</div>
       <div class="filters" role="group" aria-label="Filter the queue">
         <button data-f="all" aria-pressed="true">All</button>
         <button data-f="agents" aria-pressed="false">Agents</button>
@@ -220,7 +220,7 @@ footer{border-top:1px solid var(--hairline);padding-block:22px 40px;font-size:12
         <button data-f="mcp" aria-pressed="false">MCP</button>
         <button data-f="data" aria-pressed="false">Data</button>
       </div>
-      <div class="meter"><span id="count">0 of 7 reviewed</span><span class="bar"><i id="barfill"></i></span></div>
+      <div class="meter"><span id="count">You've reviewed 0 of 7.</span><span class="bar"><i id="barfill"></i></span></div>
     </div>
     <div class="cbody">
       <ul class="queue" id="queue" role="listbox" aria-label="Drafted actions"></ul>
@@ -245,23 +245,23 @@ footer{border-top:1px solid var(--hairline);padding-block:22px 40px;font-size:12
 </section>
 
 <section id="transcripts" class="wrap sec" aria-labelledby="tx-h">
-  <h2 id="tx-h">Four failures, read like transcripts</h2>
+  <h2 id="tx-h">Here are four failures, read like transcripts.</h2>
   <p class="sec-lede">Your posting asks for experience using evals and transcript analysis to find and fix real problems. These are four I hit running agents at production volume. Each one changed how the system works.</p>
   <div class="tx">
     <div class="tabs" role="tablist" aria-label="Failure stories" id="tabs"></div>
     <div>
       <div class="log" id="log" role="tabpanel"></div>
-      <p class="caveat">Reconstructed from my notes and the merged fixes. These are summaries, not verbatim logs.</p>
+      <p class="caveat">I reconstructed these from my notes and the merged fixes. They are summaries, not verbatim logs.</p>
     </div>
   </div>
 </section>
 
 <section id="evals" class="wrap sec" aria-labelledby="ev-h">
-  <h2 id="ev-h">An eval suite for this page</h2>
+  <h2 id="ev-h">This page has its own eval suite.</h2>
   <p class="sec-lede">You'd want a regression run before anything customer-facing ships, so this page has one. The checks below read the live page in your browser and score it.</p>
   <div class="evalbox">
     <div class="evalhead">
-      <div class="score" id="score">Not run yet</div>
+      <div class="score" id="score">The suite hasn't run yet.</div>
       <button class="btn btn-ink" id="run">Run the suite</button>
     </div>
     <ul class="checks" id="checks"></ul>
@@ -269,7 +269,7 @@ footer{border-top:1px solid var(--hairline);padding-block:22px 40px;font-size:12
 </section>
 
 <section id="gaps" class="wrap sec" aria-labelledby="gap-h">
-  <h2 id="gap-h">Where I'm short</h2>
+  <h2 id="gap-h">Here's where I'm short.</h2>
   <p class="sec-lede">I'd rather you hear these from me first.</p>
   <div class="gaps" id="gaplist">
     <div class="gap"><h4>Years</h4><p>You prefer 8+ years as an engineer, and I don't have that. My engineering title at Coder started in July 2026, and before that I shipped my own products solo starting in 2025. I came to code from pastoring and financial advising. Your note that former technical founders are encouraged to apply is the door I'm walking through.</p></div>
@@ -325,7 +325,7 @@ footer{border-top:1px solid var(--hairline);padding-block:22px 40px;font-size:12
      jd:'Ship MCP servers, agent skills, and web applications that connect to systems like our CRM, communication tools, and data warehouse.',
      ev:['I shipped a hosted MCP server with Okta identity, then built an OAuth authorization server inside Scout that gates hosted MCP access to the platform.',
          'A cross-model reviewer caught a production blocker in that authorization server at review round 5. The token-rotation transaction would have failed on every refresh in cluster-mode Redis.'],
-     more:'I also wrote the runbook for an MCP route that returned 404 for more than 2 hours after a redeploy. The 404 was correct under the spec, and it still looked exactly like an outage from the client side.',
+     more:'Separately, as a heavy user of Coder Agents, I wrote a runbook after the Coder Agents MCP route on Coder\'s internal deployment returned 404 for more than 2 hours following a redeploy. The 404 was correct under the spec, and it still looked exactly like an outage from the client side.',
      src:'Source: my resume; Scout PR #2196'},
     {id:'data', cat:'data', tag:'data / sql', title:'Work fluently with the data underneath',
      jd:'Working fluency with data, including SQL.',
@@ -369,13 +369,13 @@ footer{border-top:1px solid var(--hairline);padding-block:22px 40px;font-size:12
     paintVerdict();
     ev.innerHTML = ''; clearTimeout(thinkTimer);
     var render = function(){ think.textContent=''; it.ev.forEach(function(p){ var el=document.createElement('p'); el.textContent=p; ev.appendChild(el); }); };
-    if(animate){ think.textContent = 'reading the receipts\u2026'; pulse(); thinkTimer = setTimeout(render, 420); } else { render(); }
+    if(animate){ think.textContent = 'I\'m reading the receipts.'; pulse(); thinkTimer = setTimeout(render, 420); } else { render(); }
   }
   function pulse(){ spark.classList.remove('spin'); void spark.offsetWidth; spark.classList.add('spin'); }
   function paintVerdict(){
     var v = document.getElementById('d-verdict'), s = state[current];
     v.className = 'verdict' + (s==='approved'?' ok':s==='returned'?' err':'');
-    v.textContent = s==='approved' ? 'Approved. Logged with your name on it.' : s==='returned' ? 'Sent back. Fair enough, that\'s what a call is for.' : '';
+    v.textContent = s==='approved' ? 'Approved. I logged it with your name on it.' : s==='returned' ? 'You sent it back. Fair enough, that\'s what a call is for.' : '';
     document.getElementById('b-approve').disabled = s==='approved';
     document.getElementById('b-return').disabled = s==='returned';
   }
@@ -388,7 +388,7 @@ footer{border-top:1px solid var(--hairline);padding-block:22px 40px;font-size:12
   }
   function tally(){
     var done = ITEMS.filter(function(i){return state[i.id]!=='pending';}).length;
-    document.getElementById('count').textContent = done + ' of ' + ITEMS.length + ' reviewed';
+    document.getElementById('count').textContent = 'You\'ve reviewed ' + done + ' of ' + ITEMS.length + '.';
     document.getElementById('barfill').style.width = (done/ITEMS.length*100)+'%';
     document.getElementById('cleared').classList.toggle('show', done===ITEMS.length);
   }
@@ -429,10 +429,10 @@ footer{border-top:1px solid var(--hairline);padding-block:22px 40px;font-size:12
       ['runtime','Separately, a stopped runtime goes unnoticed for more than 8 hours.','hit'],
       ['fix','A watchdog reads the work log, claim ledger, and branch activity, and it acts on silence.','fix'],
       ['lesson','An unattended agent needs a reason to stop as much as a reason to start.','learn']]},
-    {t:'The outage that wasn\'t', s:'MCP route 404', lines:[
-      ['client','After a redeploy, the MCP routes return 404 for more than 2 hours. From here it looks like the service is down.','hit'],
+    {t:'The outage that wasn\'t', s:'A vendor MCP route 404', lines:[
+      ['client','After a redeploy of Coder Agents on Coder\'s internal deployment, its MCP route returns 404 to my agents for more than 2 hours. From my side it looks like the service is down.','hit'],
       ['trace','An upstream change put the OAuth2 provider behind a new flag. Under RFC 8414 and RFC 9728, the 404 is correct behavior.'],
-      ['fix','A runbook that separates route churn from a real fault, plus product feedback asking for a release note or an admin hint.','fix'],
+      ['fix','I wrote a runbook that separates route churn from a real fault, and I sent product feedback asking for a release note or an admin hint.','fix'],
       ['lesson','Correct behavior that reads as an outage is still a product problem worth reporting.','learn']]}
   ];
   var tabs = document.getElementById('tabs'), log = document.getElementById('log');
@@ -457,16 +457,16 @@ footer{border-top:1px solid var(--hairline);padding-block:22px 40px;font-size:12
   /* eval suite: every check reads the live page */
   var VERIFIED = ['1','2','3','4','5','8','9','27','10','12','14','21','26','29','38','75','90','100','193','350','404','430','602','630','860','884','1,200','1,300','2026','2196','8414','9728','30576','187,745'];
   var CHECKS = [
-    {n:'Every drafted action cites a source', why:'No receipt, no approval.', run:function(){ var bad = ITEMS.filter(function(i){return !/Source:/.test(i.src);}); return [bad.length===0, ITEMS.length+' of '+ITEMS.length+' cite a source']; }},
-    {n:'No em or en dashes anywhere', why:'A house style rule I keep.', run:function(){ var t = document.body.innerText + ITEMS.map(function(i){return i.ev.join(' ')+i.more;}).join(' '); var hits = (t.match(/[\u2013\u2014]/g)||[]).length; return [hits===0, hits+' found']; }},
-    {n:'Every figure is on my verified list', why:'Numbers come from tracked sources, nothing invented.', run:function(){
+    {n:'Every drafted action cites a source', why:'An action without a receipt doesn\'t get approved.', run:function(){ var bad = ITEMS.filter(function(i){return !/Source:/.test(i.src);}); return [bad.length===0, ITEMS.length+' of '+ITEMS.length+' cite a source']; }},
+    {n:'No em or en dashes anywhere', why:'This is a house style rule I keep.', run:function(){ var t = document.body.innerText + ITEMS.map(function(i){return i.ev.join(' ')+i.more;}).join(' '); var hits = (t.match(/[\u2013\u2014]/g)||[]).length; return [hits===0, hits+' dashes were found']; }},
+    {n:'Every figure is on my verified list', why:'Every number comes from a tracked source.', run:function(){
       var t = ITEMS.map(function(i){return i.ev.join(' ')+' '+i.more+' '+i.jd;}).join(' ') + ' ' + STORIES.map(function(s){return s.lines.map(function(l){return l[1];}).join(' ');}).join(' ');
       var nums = (t.match(/\d[\d,]*/g)||[]).map(function(n){return n.replace(/,$/,'');});
       var off = nums.filter(function(n){return VERIFIED.indexOf(n)<0;});
-      return [off.length===0, nums.length+' figures checked'+(off.length?', off list: '+off.join(' '):'')]; }},
-    {n:'The honest-gap section is present', why:'A candidate page with no gaps is hiding something.', run:function(){ var g = document.querySelectorAll('#gaplist .gap').length; return [g>=3, g+' gaps listed']; }},
-    {n:'Search engines are asked not to index this page', why:'It\'s meant for you, not for Google.', run:function(){ var m = document.querySelector('meta[name="robots"]'); var ok = !!m && /noindex/.test(m.content); return [ok, ok?m.content:'missing']; }},
-    {n:'Every control on the page does something', why:'A button that does nothing is worse than no button.', run:function(){ var all = Array.prototype.slice.call(document.querySelectorAll('button')).filter(function(b){return b.id!=='run';}); var dead = all.filter(function(b){return !wired.has(b);}); return [dead.length===0, (all.length-dead.length)+' of '+all.length+' wired']; }}
+      return [off.length===0, nums.length+' figures were checked'+(off.length?', and these were off the list: '+off.join(' '):'')]; }},
+    {n:'The honest-gap section is present', why:'A candidate page with no gaps is hiding something.', run:function(){ var g = document.querySelectorAll('#gaplist .gap').length; return [g>=3, g+' gaps are listed']; }},
+    {n:'Search engines are asked not to index this page', why:'It\'s meant for you, not for Google.', run:function(){ var m = document.querySelector('meta[name="robots"]'); var ok = !!m && /noindex/.test(m.content); return [ok, ok?'the robots tag reads '+m.content:'the robots tag is missing']; }},
+    {n:'Every control on the page does something', why:'A button that does nothing is worse than no button.', run:function(){ var all = Array.prototype.slice.call(document.querySelectorAll('button')).filter(function(b){return b.id!=='run';}); var dead = all.filter(function(b){return !wired.has(b);}); return [dead.length===0, (all.length-dead.length)+' of '+all.length+' controls are wired']; }}
   ];
   var ul = document.getElementById('checks');
   CHECKS.forEach(function(c){
@@ -477,7 +477,7 @@ footer{border-top:1px solid var(--hairline);padding-block:22px 40px;font-size:12
   });
   on(document.getElementById('run'),'click',function(){
     var btn = this; btn.disabled = true; var pass = 0;
-    document.getElementById('score').textContent = 'Running\u2026';
+    document.getElementById('score').textContent = 'The suite is running.';
     ul.querySelectorAll('.st').forEach(function(s){ s.className='st'; s.textContent='\u00b7'; });
     CHECKS.forEach(function(c, i){
       setTimeout(function(){
@@ -487,7 +487,7 @@ footer{border-top:1px solid var(--hairline);padding-block:22px 40px;font-size:12
         li.querySelector('.why').textContent = c.why + ' Result: ' + r[1] + '.';
         li.querySelector('.ms').textContent = dt + 'ms';
         if(r[0]) pass++;
-        if(i===CHECKS.length-1){ document.getElementById('score').textContent = pass + ' / ' + CHECKS.length + ' passing'; btn.disabled=false; btn.textContent='Run it again'; pulse(); }
+        if(i===CHECKS.length-1){ document.getElementById('score').textContent = pass + ' of ' + CHECKS.length + ' checks pass.'; btn.disabled=false; btn.textContent='Run it again'; pulse(); }
       }, 380*(i+1));
     });
   });
