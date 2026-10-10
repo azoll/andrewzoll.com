@@ -319,7 +319,7 @@ footer{border-top:1px solid var(--hairline);padding-block:22px 40px;font-size:12
      jd:'Instrument model and tool calls in production, and build the observability and measurement that ties agent actions to pipeline and revenue.',
      ev:['In the week of September 29, my loop ran 602 Coder Agents launches and merged 193 pull requests at about $38 of model cost per merged PR. About 75% of 860 launches that week started with no human prompt.',
          'The product UI showed no cost per chat, so I priced each chat from its token usage and reconciled the tool against the dashboard total.'],
-     more:'My first estimate came in at less than half the dashboard total. Cache reads were billed at the full input rate, and they were most of the tokens. The story is in the transcripts below.',
+     more:'My first token-based estimate badly undercounted spend, because cache reads bill at the full input rate and they were most of the tokens. I calibrated the tool against the dashboard total of about $1,300 per week. The story is in the transcripts below.',
      src:'Source: dispatch telemetry and the chats usage API'},
     {id:'mcp', cat:'mcp', tag:'mcp / governed access', title:'Give sellers and agents governed access to revenue data',
      jd:'Ship MCP servers, agent skills, and web applications that connect to systems like our CRM, communication tools, and data warehouse.',
@@ -418,9 +418,9 @@ footer{border-top:1px solid var(--hairline);padding-block:22px 40px;font-size:12
       ['lesson','A fake that forgives more than production is a test that can\'t fail. That\'s why mutation tests sit in the gate.','learn']]},
     {t:'The cost that didn\'t add up', s:'Pricing chats from tokens', lines:[
       ['ui','Agent chats show no cost. I need cost per chat to know whether the loop is worth running.'],
-      ['me','I price each chat from its token usage. First estimate: about $630 a week.'],
-      ['dashboard','The billing dashboard says about $1,300 a week.','hit'],
-      ['trace','Cache reads were about 90% of the tokens, and the gateway billed them at the full input rate. My multiplier assumed a discount.'],
+      ['me','I price each chat from its token usage and add up the week.'],
+      ['dashboard','The billing dashboard says about $1,300 a week, and my estimate badly undercounts it.','hit'],
+      ['trace','Cache reads were most of the tokens, and the gateway billed them at the full input rate. My multiplier assumed a discount.'],
       ['fix','Fix the multiplier, then reconcile the tool against the dashboard total every time it runs.','fix'],
       ['lesson','Instrumentation you never reconcile against the bill is a guess.','learn']]},
     {t:'The spec that wouldn\'t converge', s:'Round caps and watchdogs', lines:[
@@ -455,7 +455,7 @@ footer{border-top:1px solid var(--hairline);padding-block:22px 40px;font-size:12
   showStory(0);
 
   /* eval suite: every check reads the live page */
-  var VERIFIED = ['1','2','3','4','5','8','9','27','10','12','14','21','26','29','38','75','90','100','193','350','404','430','602','630','860','884','1,200','1,300','2026','2196','8414','9728','30576','187,745'];
+  var VERIFIED = ['1','2','3','4','5','8','9','27','10','12','14','21','26','29','38','75','100','193','350','404','430','602','860','884','1,200','1,300','2026','2196','8414','9728','30576','187,745'];
   var CHECKS = [
     {n:'Every drafted action cites a source', why:'An action without a receipt doesn\'t get approved.', run:function(){ var bad = ITEMS.filter(function(i){return !/Source:/.test(i.src);}); return [bad.length===0, ITEMS.length+' of '+ITEMS.length+' cite a source']; }},
     {n:'No em or en dashes anywhere', why:'This is a house style rule I keep.', run:function(){ var t = document.body.innerText + ITEMS.map(function(i){return i.ev.join(' ')+i.more;}).join(' '); var hits = (t.match(/[\u2013\u2014]/g)||[]).length; return [hits===0, hits+' dashes were found']; }},
