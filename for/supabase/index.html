@@ -285,7 +285,7 @@ footer .row{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
     <button class="btn btn-green" data-goto="sql" data-snippet="all">Run the receipts</button>
     <button class="btn btn-outline" data-goto="advisors">Read the gaps first</button>
   </div>
-  <p class="meta mono">Pueblo, Colorado · fully remote · US citizen</p>
+  <p class="meta mono">I live in Pueblo, Colorado, I work fully remote, and I'm a US citizen.</p>
 </header>
 
 <section class="studio-band wrap" id="studio">
@@ -307,7 +307,7 @@ footer .row{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
         <li><button class="navbtn" role="tab" data-pane="logs" aria-selected="false"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 4h10M3 8h10M3 12h6"/></svg>Logs<span class="count" id="cntLogs"></span></button></li>
         <li><button class="navbtn" role="tab" data-pane="advisors" aria-selected="false"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M8 2.5 14 13H2L8 2.5Z"/><path d="M8 7v2.5M8 11.2v.1"/></svg>Advisors<span class="count" id="cntAdv"></span></button></li>
       </ul>
-      <div class="side-foot"><span class="dot"></span>Healthy · Pueblo, CO (us-mountain)</div>
+      <div class="side-foot"><span class="dot"></span>All systems are healthy in Pueblo, CO.</div>
     </aside>
 
     <div class="main">
@@ -332,7 +332,7 @@ footer .row{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
           <div class="editor">
             <div class="edit-top"><span class="mono">query.sql</span><span class="sp"></span><span class="mono" style="color:#6b6b6b">role: hiring_manager</span><button class="run" id="runBtn">Run <kbd>⌘ ↵</kbd></button></div>
             <textarea class="sql" id="sqlText" spellcheck="false" aria-label="SQL query"></textarea>
-            <div class="result-head" id="resultHead">Press Run, or edit the where clause yourself. Columns you can filter: area, source, strength.</div>
+            <div class="result-head" id="resultHead">Press Run, or edit the where clause yourself. You can filter on area, source, and strength.</div>
             <div class="gridwrap" id="resultWrap"><table class="grid" id="resultGrid"><thead><tr><th></th><th>jd_requirement</th><th>receipt</th><th>source</th><th>strength</th></tr></thead><tbody></tbody></table></div>
           </div>
         </div>
@@ -412,7 +412,7 @@ footer .row{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
   <p class="sub">The posting reads like a description of the problems I've spent this year on, just pointed at a whole company instead of one engineering loop. Three things I'd bring on day one:</p>
   <div class="cards">
     <article class="card"><span class="num">~1,200 verdicts</span><h3>Gates that get graded</h3><p>A reviewer from a different model family clears every change, and mutation tests prove the tests can fail. On about 350 pull requests that gate logged more than 430 confirmed catches and 21 false flags, so the grader has a scorecard too.</p></article>
-    <article class="card"><span class="num">~$38 per merged PR</span><h3>Spend you can query</h3><p>The UI didn't show cost per chat, so I priced each run from its token usage. My first estimate came in far too low because cache reads bill at the full input rate. I fixed the multiplier and now reconcile it to the billing dashboard.</p></article>
+    <article class="card"><span class="num">~$38 per merged PR</span><h3>Spend you can query</h3><p>The UI didn't show cost per chat, so I priced each run from its token usage. My first estimate badly undercounted spend because cache reads bill at the full input rate. I fixed the rate and calibrated against the dashboard total of about $1,300 per week.</p></article>
     <article class="card"><span class="num">RLS on every table</span><h3>Postgres, the long way</h3><p>I built FieldCommand on Supabase, with row level security on every tenant table gated by a JWT claim. On Veritas I held back an RLS migration because its 195 green tests never touched the real entry point.</p></article>
   </div>
 </div></section>
@@ -422,9 +422,9 @@ footer .row{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
   <h2>Pick a plan.</h2>
   <p class="sub">Every tier is free, and none of them come with an interruption budget problem. I'll keep the contact rare and useful.</p>
   <div class="tiers">
-    <div class="tier"><div class="tn">Read</div><div class="price">$0 <small>/ five minutes</small></div><ul><li>Portfolio and shipped products</li><li>FieldCommand and Veritas, live</li></ul><a class="btn btn-outline" href="https://portfolio.andrewzoll.com">Open portfolio</a></div>
-    <div class="tier feat"><div class="tn">Talk</div><div class="price">$0 <small>/ thirty minutes</small></div><ul><li>Walk through the gate design</li><li>The incidents, in detail</li><li>Your open runtime decision</li></ul><a class="btn btn-green" href="https://www.linkedin.com/in/andrewzoll">Message me on LinkedIn</a></div>
-    <div class="tier"><div class="tn">Inspect</div><div class="price">$0 <small>/ self-serve</small></div><ul><li>coder/coder#30576, an open Go PR</li><li>My public repos</li></ul><a class="btn btn-dark" href="https://github.com/azoll">View GitHub</a></div>
+    <div class="tier"><div class="tn">Read</div><div class="price">$0 <small>/ five minutes</small></div><ul><li>See my portfolio and shipped work.</li><li>Try FieldCommand and Veritas live.</li></ul><a class="btn btn-outline" href="https://portfolio.andrewzoll.com">Open portfolio</a></div>
+    <div class="tier feat"><div class="tn">Talk</div><div class="price">$0 <small>/ thirty minutes</small></div><ul><li>We walk through the gate design.</li><li>I tell the incidents in detail.</li><li>We talk about your open runtime decision.</li></ul><a class="btn btn-green" href="https://www.linkedin.com/in/andrewzoll">Message me on LinkedIn</a></div>
+    <div class="tier"><div class="tn">Inspect</div><div class="price">$0 <small>/ self-serve</small></div><ul><li>Read coder/coder#30576, an open Go PR.</li><li>Browse my public repos.</li></ul><a class="btn btn-dark" href="https://github.com/azoll">View GitHub</a></div>
   </div>
 </div></section>
 
@@ -437,15 +437,15 @@ footer .row{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
 (function(){
 const R = [
  {area:'agents',req:'Shipped production LLM agent systems other people depended on',receipt:'Built an internal AI agent platform at Coder that turns CRM, support, and call-transcript data into answers and workflows for the revenue organization, with Salesforce, Granola transcript, and Slack bot integrations. I authored 884 merged pull requests on it between July 27 and October 9, 2026.',source:'Coder',strength:'strong'},
- {area:'incidents',req:'At least one incident you can talk through',receipt:'An OAuth token-rotation transaction passed every test against an in-memory fake. A cross-family reviewer caught at round 5 that production Redis runs in cluster mode, so it would have failed on every refresh. The fix put the keys in one hash slot and added a test that checks the slot of each key.',source:'Coder',strength:'strong'},
+ {area:'incidents',req:'At least one incident you can talk through',receipt:'An OAuth token-rotation transaction passed every test against an in-memory fake. A cross-family reviewer model caught at round 5 that production Redis runs in cluster mode, so it would have failed on every refresh. The fix put the keys in one hash slot and added a test that checks the slot of each key.',source:'Coder',strength:'strong'},
  {area:'evals',req:'Gate CI on the result, not on "they looked good"',receipt:'Designed a merge gate where a reviewer from a different model family than the builder must clear each change, and mutation tests confirm the tests can fail. About 1,200 verdicts on about 350 pull requests, with more than 430 confirmed defect catches.',source:'Coder',strength:'strong'},
  {area:'evals',req:'The thing that grades has to be graded too',receipt:'The gate tracks its own false flags (21 against more than 430 confirmed catches), and mutation testing exists precisely to grade the tests. Security and Federal changes get two cross-family reviewers plus mutation testing.',source:'Coder',strength:'strong'},
- {area:'evals',req:'Golden suites with behavioral assertions and judge rubrics',receipt:'Veritas gates every release on a fixture suite with documented verdicts. A model extracts citations and deterministic checks render the verdict, with hedged semantics so it never claims more than the evidence supports. It is one product, not a portfolio of agents.',source:'Veritas',strength:'partial'},
- {area:'mcp',req:'Authored MCP servers; know the API failure modes',receipt:'Shipped an OAuth authorization server that gates hosted MCP access to the platform. When an MCP route returned 404 for over two hours after a redeploy, I traced it to a provider moved behind a new flag; the 404 was correct under RFC 8414 and RFC 9728. I wrote the runbook that separates route churn from a real fault.',source:'Coder',strength:'strong'},
+ {area:'evals',req:'Golden suites with behavioral assertions and judge rubrics',receipt:'Veritas gates every release on a fixture suite with documented verdicts. Citations are parsed from the brief, four deterministic checks run against court records, and an optional fifth check asks a model whether the opinion supports the proposition. Hedged semantics keep it from claiming more than the evidence supports. It is one product, not a portfolio of agents.',source:'Veritas',strength:'partial'},
+ {area:'mcp',req:'Authored MCP servers; know the API failure modes',receipt:'Shipped an OAuth authorization server that gates hosted MCP access to the platform. Separately, when the Coder Agents MCP route my loop depended on returned 404 for more than two hours after a redeploy, I traced it to the OAuth2 provider moving behind a new flag. The 404 was correct under RFC 8414 and RFC 9728, and I wrote the runbook that separates route churn from a real fault.',source:'Coder',strength:'strong'},
  {area:'governance',req:'The dangerous class has no code path',receipt:'Shipped fail-closed Federal data access controls across 26 merged pull requests. The platform classifies Federal accounts, withholds unproven Federal history from model input for uncleared users, and tests every access tier.',source:'Coder',strength:'strong'},
  {area:'governance',req:'Least privilege the pipeline actually enforces',receipt:'FieldCommand runs on Supabase with row level security enabled on every tenant-scoped table, gated by a tenant claim read from the JWT. Isolation lives in the database, not in application code.',source:'FieldCommand',strength:'strong'},
  {area:'governance',req:'Close architecture decisions yourself',receipt:'On Veritas I held back an RLS migration whose 195 passing tests never exercised the real entry point. I traced that it would break sign-in, the trial flow, and background jobs, and wrote the privileged-path design it needs before it ships.',source:'Veritas',strength:'strong'},
- {area:'observability',req:'Attribute spend per run',receipt:'Priced each agent run from token usage because the UI had no cost per chat, then reconciled to the billing dashboard after cache reads turned out to bill at the full input rate. The peak week ran about $38 of model cost per merged pull request.',source:'Coder',strength:'strong'},
+ {area:'observability',req:'Attribute spend per run',receipt:'Priced each agent run from token usage because the UI had no cost per chat. My first estimate badly undercounted spend because cache reads bill at the full input rate, so I fixed the rate and calibrated against the dashboard total of about $1,300 per week. The peak week ran about $38 of model cost per merged pull request.',source:'Coder',strength:'strong'},
  {area:'runtime',req:'Event-triggered queue; work survives a failed run',receipt:'Built an event poller that turns failed CI runs on main, new ticket assignments, Slack requests, and meeting action items into queued work, with a kill switch, plus a watchdog that reads a claim ledger and acts on silence. It is a loop, not yet the durable runtime with atomic rollback you describe.',source:'Coder',strength:'partial'},
  {area:'infra',req:'Own infrastructure end to end; provision, deploy, roll back',receipt:'Maintain the AWS stack through Terraform with a CI plan gate, ECS tasks, and Lambda jobs. Cut cold dashboard load from 5 to 10 seconds to about 2 seconds by replacing a serial per-account S3 read loop with a bounded fan-out.',source:'Coder',strength:'strong'},
  {area:'infra',req:'Python on GCP with a cloud warehouse',receipt:'My Python runs on AWS, not GCP, and I have not run BigQuery or another cloud warehouse in production. See Advisors.',source:'Coder',strength:'gap'},
@@ -453,26 +453,26 @@ const R = [
  {area:'public',req:'Public work in this space',receipt:'coder/coder#30576, an open Go pull request that makes the API tell a disabled chat model config apart from a missing one.',source:'GitHub',strength:'partial'}
 ];
 const LOGS = [
- {lv:'ERROR',ts:'round 5',svc:'redis',msg:'CROSSSLOT keys in request don\'t hash to the same slot (caught in review, never shipped)',what:'The MCP authorization server rotated tokens in a multi-key transaction. Every test passed against an in-memory fake.',fix:'A cross-family reviewer flagged cluster mode at round 5. I put the keys in one hash slot with a hash tag.',lesson:'Fakes hide topology. I added a test that checks the slot of each key, so the fake can\'t lie again.'},
- {lv:'ERROR',ts:'8h silent',svc:'runtime',msg:'sibling runtime stopped; no error raised for more than 8 hours',what:'A runtime stopped and nothing errored, so nothing alerted. Work just quietly didn\'t happen.',fix:'Built a watchdog that reads the work log, the claim ledger, and branch activity, and acts on silence.',lesson:'The scariest failure doesn\'t throw. Measure the absence of progress, not only the presence of errors.'},
- {lv:'WARN',ts:'2026-09-14',svc:'mcp',msg:'GET mcp route 404 for more than 2 hours after redeploy',what:'After a dogfood redeploy, the MCP route returned 404. From the client side it looked like an outage.',fix:'Traced it to the OAuth2 provider moving behind a new flag. The 404 was correct under RFC 8414 and RFC 9728.',lesson:'Wrote a runbook that separates route churn from a real fault, and filed it as product feedback.'},
- {lv:'WARN',ts:'12h',svc:'review-gate',msg:'spec at review round 14 without converging',what:'One spec spent 14 review rounds over 12 hours. Builder and reviewer kept trading the same findings.',fix:'Added a round cap keyed to the ticket. Past round 3, hard work escalates to stronger models.',lesson:'An adversarial loop needs a stop condition, or it spends money proving it can\'t agree.'},
- {lv:'WARN',ts:'2026-09-29',svc:'workspaces',msg:'pool at 41 of 40 quota slots with one chat running',what:'Stopped workspaces still held quota slots, so new work couldn\'t start.',fix:'A cleanup job deletes finished lanes every tick, and dispatch refuses a new chat when the pool is nearly full.',lesson:'Capacity is state too. Garbage-collect it on a schedule, and fail loudly before you hit the wall.'},
- {lv:'INFO',ts:'cost',svc:'billing',msg:'first cost estimate far below the billing dashboard',what:'I priced chats from token usage and came in far too low.',fix:'Cache reads bill at the full input rate, and they were most of the tokens. I fixed the multiplier.',lesson:'Reconcile your instrument to the bill. A cost number nobody reconciles is a guess.'},
- {lv:'INFO',ts:'veritas',svc:'migrations',msg:'held: RLS migration with 195 green tests',what:'The tests called the scoped wrapper directly and never hit the real entry point against a forced-RLS database.',fix:'Deferred the migration and wrote the privileged-path design: what runs as BYPASSRLS, and what stays tenant-scoped.',lesson:'A green suite that never exercises the real path is a story, not an evaluation.'}
+ {lv:'ERROR',ts:'round 5',svc:'redis',msg:'A cluster-mode CROSSSLOT failure was caught in review and never shipped.',what:'The MCP authorization server rotated tokens in a multi-key transaction, and every test passed against an in-memory fake.',fix:'A cross-family reviewer model flagged at round 5 that production Redis runs in cluster mode. I put the keys in one hash slot with a hash tag.',lesson:'Fakes hide topology. I added a test that checks the slot of each key, so the fake can\'t lie again.'},
+ {lv:'ERROR',ts:'8h silent',svc:'runtime',msg:'A sibling runtime stopped, and nothing raised an error for more than 8 hours.',what:'A runtime stopped and nothing errored, so nothing alerted. Work just quietly didn\'t happen.',fix:'I built a watchdog that reads the work log, the claim ledger, and branch activity, and acts on silence.',lesson:'The scariest failure doesn\'t throw. Measure the absence of progress, not only the presence of errors.'},
+ {lv:'WARN',ts:'2026-09-14',svc:'mcp',msg:'The Coder Agents MCP route my loop depended on returned 404 for more than 2 hours after a redeploy.',what:'After a dogfood redeploy, the Coder Agents MCP route returned 404. From my side as a client, it looked like an outage.',fix:'I traced it to the OAuth2 provider moving behind a new flag. The 404 was correct under RFC 8414 and RFC 9728.',lesson:'I wrote a runbook that separates route churn from a real fault, and I listed the case as product feedback.'},
+ {lv:'WARN',ts:'12h',svc:'review-gate',msg:'One spec reached review round 14 without converging.',what:'One spec spent 14 review rounds over 12 hours while the builder and reviewer kept trading the same findings.',fix:'I added a round cap keyed to the ticket. Past round 3, hard work escalates to stronger models.',lesson:'An adversarial loop needs a stop condition, or it spends money proving it can\'t agree.'},
+ {lv:'WARN',ts:'2026-09-29',svc:'workspaces',msg:'The pool sat at 41 of 40 quota slots with one chat running.',what:'Stopped workspaces still held quota slots, so new work couldn\'t start.',fix:'A cleanup job deletes finished lanes every tick, and dispatch refuses a new chat when the pool is nearly full.',lesson:'Capacity is state too. Garbage-collect it on a schedule, and fail loudly before you hit the wall.'},
+ {lv:'INFO',ts:'cost',svc:'billing',msg:'My first cost estimate badly undercounted spend.',what:'The UI showed no cost per chat, so I priced each chat from its token usage.',fix:'Cache reads bill at the full input rate, and they were most of the tokens. I fixed the rate and calibrated against the dashboard total of about $1,300 per week.',lesson:'Reconcile your instrument to the bill. A cost number nobody reconciles is a guess.'},
+ {lv:'INFO',ts:'veritas',svc:'migrations',msg:'I held back an RLS migration that had 195 green tests.',what:'The tests called the scoped wrapper directly and never hit the real entry point against a forced-RLS database.',fix:'I deferred the migration and wrote the privileged-path design: what runs as BYPASSRLS, and what stays tenant-scoped.',lesson:'A green suite that never exercises the real path is a story, not an evaluation.'}
 ];
 const JOBS = [
- {name:'event-poller',sched:'on event',trigger:'A failed CI run on main, a new ticket assignment, a Slack request, or a meeting action item.',touch:'The work queue only. It enqueues; it doesn\'t build.',human:'A kill switch turns the whole poller off.',logs:'One queued item per event.',broke:'No incident to report on this one. The kill switch is there for the day it gets noisy.'},
- {name:'builder',sched:'on queue',trigger:'A queued ticket with a written spec.',touch:'Its own branch and its own pull request. Open-weight Kimi models build by default.',human:'Specs come before code. Infrastructure changes past a narrow low-risk class wait for me.',logs:'A dispatch line with the chat id and the model.',broke:'Hard work that needs more than three review rounds escalates to stronger models instead of looping.'},
- {name:'cross-family-review',sched:'on push',trigger:'A new push to a pull request.',touch:'A verdict, nothing else. A GLM model reviews a Kimi build, so no family grades itself.',human:'Security and Federal changes get two cross-family reviewers plus mutation tests.',logs:'An outcome line per verdict: PR, model, role, round, and outcome.',broke:'The Redis cluster-mode catch at round 5 is this job working.'},
- {name:'mutation-gate',sched:'on review pass',trigger:'A change that cleared review.',touch:'A throwaway copy of the code it mutates.',human:'None needed when it passes. A surviving mutant blocks the merge.',logs:'A verdict line, in the same shape as review.',broke:'Its whole job is to catch a test that can\'t fail before that test is trusted.'},
- {name:'round-cap',sched:'per round',trigger:'Each review round on a ticket.',touch:'A counter keyed to the ticket.',human:'Past the cap, the work escalates to stronger models or to me.',logs:'The round count.',broke:'Added after one spec spent 14 rounds over 12 hours.'},
- {name:'watchdog',sched:'every tick',trigger:'A clock, not an error.',touch:'Read access to the work log, claim ledger, and branch activity.',human:'None in the loop. It acts on silence by itself.',logs:'Its checks against the work log, the claim ledger, and branch activity.',broke:'Added after a stopped runtime went unnoticed for more than 8 hours.'},
- {name:'quota-cleanup',sched:'every tick',trigger:'A finished lane.',touch:'Finished workspaces only.',human:'None. Dispatch refuses a new chat when the pool is nearly full.',logs:'The lanes it deleted.',broke:'Added after the pool sat at 41 of 40.'}
+ {name:'event-poller',sched:'runs on events',trigger:'It wakes on a failed CI run on main, a new ticket assignment, a Slack request, or a meeting action item.',touch:'It can touch the work queue and nothing else. It enqueues work; it doesn\'t build.',human:'A kill switch turns the whole poller off.',logs:'It logs one queued item per event.',broke:'I have no incident to report on this one. The kill switch is there for the day it gets noisy.'},
+ {name:'builder',sched:'runs on queued work',trigger:'It starts on a queued ticket that has a written spec.',touch:'It can touch its own branch and its own pull request. Open-weight Kimi models build by default.',human:'Specs come before code, and infrastructure changes past a narrow low-risk class wait for me.',logs:'It logs a dispatch line with the chat id and the model.',broke:'Hard work that needs more than three review rounds escalates to stronger models instead of looping.'},
+ {name:'cross-family-review',sched:'runs on every push',trigger:'It starts on a new push to a pull request.',touch:'It writes a verdict and nothing else. A GLM model reviews a Kimi build, so no model family grades itself.',human:'Security and Federal changes get two cross-family reviewers plus mutation tests.',logs:'It logs one outcome line per verdict with the PR, model, role, round, and outcome.',broke:'The Redis cluster-mode catch at round 5 came from a reviewer model in this job.'},
+ {name:'mutation-gate',sched:'runs after review passes',trigger:'It starts on a change that cleared review.',touch:'It works on a throwaway copy of the code it mutates.',human:'No human is needed when it passes, and a surviving mutant blocks the merge.',logs:'It logs a verdict line in the same shape as review.',broke:'Its whole job is to catch a test that can\'t fail before that test is trusted.'},
+ {name:'round-cap',sched:'runs every round',trigger:'It counts each review round on a ticket.',touch:'It can touch a counter keyed to the ticket.',human:'Past the cap, the work escalates to stronger models or to me.',logs:'It logs the round count.',broke:'I added it after one spec spent 14 rounds over 12 hours.'},
+ {name:'watchdog',sched:'runs every tick',trigger:'A clock wakes it, not an error.',touch:'It has read access to the work log, the claim ledger, and branch activity.',human:'It needs no human in the loop, because it acts on silence by itself.',logs:'It logs its checks against the work log, the claim ledger, and branch activity.',broke:'I added it after a stopped runtime went unnoticed for more than 8 hours.'},
+ {name:'quota-cleanup',sched:'runs every tick',trigger:'It wakes when a lane finishes.',touch:'It can delete finished workspaces and nothing else.',human:'It needs no human, and dispatch refuses a new chat when the pool is nearly full.',logs:'It logs the lanes it deleted.',broke:'I added it after the pool sat at 41 of 40.'}
 ];
 const ADV = [
  {lv:'WARN',t:'GCP not detected',d:'Your stack is Python on GCP. My production cloud work is AWS.',fix:'The pieces map closely: ECS and Lambda to Cloud Run and Cloud Functions, S3 to GCS, EventBridge to Pub/Sub and Cloud Scheduler, and Terraform stays Terraform. I won\'t claim GCP history I don\'t have. I\'d expect to be productive in it fast because I\'ve already owned a Terraform-managed stack with a CI plan gate.'},
- {lv:'WARN',t:'Cloud warehouse not found',d:'You want complete run logging in the warehouse. I haven\'t run BigQuery or Snowflake in production.',fix:'My run logs today are structured telemetry lines (PR, model, role, round, outcome) plus Postgres. I know the shape of the data you want to land; the warehouse itself would be new to me.'},
+ {lv:'WARN',t:'Cloud warehouse not found',d:'You want complete run logging in the warehouse. I haven\'t run BigQuery or Snowflake in production.',fix:'My run logs today are structured telemetry lines with the PR, model, role, round, and outcome. I know the shape of the data you want to land, but the warehouse itself would be new to me.'},
  {lv:'INFO',t:'Sole infrastructure owner at company scale',d:'You\'re asking one engineer to own the platform for about 400 people across 60+ countries.',fix:'I\'ve built two products solo and run a two-person platform at Coder, and I\'m used to closing decisions myself. I haven\'t been the only infrastructure owner for a company this size, and I\'d rather say that here than in round three.'},
  {lv:'INFO',t:'Golden suites at portfolio scale',d:'You want a real suite with safety cases for every registered agent.',fix:'My strongest evaluation work is a gate on code changes, plus a release-gating fixture suite on Veritas. Judge rubrics across thirty agents would be new scale for me. The method carries; the volume would be new.'}
 ];
@@ -571,9 +571,9 @@ function runSql(){
     for(const c of clauses){
       if(/^(and|or)$/i.test(c)){ op=c.toLowerCase(); continue; }
       const cm = c.trim().match(/^(\w+) ?(=|!=|<>) ?'([^']*)'$/);
-      if(!cm) return fail('could not parse condition "'+c.trim()+'"','Use column = \'value\', joined with and / or.');
+      if(!cm) return fail('could not parse condition "'+c.trim()+'"','Write each condition as column = \'value\', joined with and or or.');
       const col = cm[1].toLowerCase();
-      if(!COLS.includes(col)) return fail('column "'+cm[1]+'" does not exist','Filterable columns: '+COLS.join(', '));
+      if(!COLS.includes(col)) return fail('column "'+cm[1]+'" does not exist','You can filter on '+COLS.join(', ')+'.');
       const neg = cm[2]!=='=';
       const set = new Set(R.filter(r=>(r[col].toLowerCase()===cm[3].toLowerCase())!==neg));
       acc = acc===null ? set : (op==='or' ? new Set([...acc,...set]) : new Set([...acc].filter(x=>set.has(x))));
@@ -582,14 +582,14 @@ function runSql(){
   }
   if(m[4]){
     const col = m[4].toLowerCase();
-    if(!COLS.includes(col)) return fail('column "'+m[4]+'" does not exist','Sortable columns: '+COLS.join(', '));
+    if(!COLS.includes(col)) return fail('column "'+m[4]+'" does not exist','You can sort on '+COLS.join(', ')+'.');
     rows.sort((a,b)=> col==='strength' ? rank[a.strength]-rank[b.strength] : a[col].localeCompare(b[col]));
     if((m[5]||'').toLowerCase()==='desc') rows.reverse();
   }
   if(m[6]) rows = rows.slice(0,+m[6]);
   wrap.innerHTML = '<table class="grid" id="resultGrid"><thead><tr><th></th><th>jd_requirement</th><th>receipt</th><th>source</th><th>strength</th></tr></thead><tbody>'+rowsHtml(rows)+'</tbody></table>';
   const ms = Math.max(1,Math.round(performance.now()-t0));
-  head.innerHTML = `<span class="ok">Success.</span> ${rows.length} row${rows.length===1?'':'s'} · ${ms} ms${rows.length?'':' · no rows. Honest answer, though.'}`;
+  head.innerHTML = `<span class="ok">Success.</span> ${rows.length} row${rows.length===1?'':'s'} · ${ms} ms${rows.length?'':'. No rows matched, which is an honest answer.'}`;
 }
 $('#runBtn').addEventListener('click',runSql);
 $('#sqlText').addEventListener('keydown',e=>{ if((e.metaKey||e.ctrlKey) && e.key==='Enter'){ e.preventDefault(); runSql(); }});
@@ -642,7 +642,7 @@ $('#adv').addEventListener('click',e=>{const b=e.target.closest('.advrow > butto
 let tt;
 $('#connectBtn').addEventListener('click',()=>{
   const t=$('#toast');
-  t.innerHTML = 'Connection string: <a href="https://www.linkedin.com/in/andrewzoll">linkedin.com/in/andrewzoll</a>. Pooling not required.';
+  t.innerHTML = 'My connection string is <a href="https://www.linkedin.com/in/andrewzoll">linkedin.com/in/andrewzoll</a>, and no pooler is required.';
   t.classList.add('show'); clearTimeout(tt); tt=setTimeout(()=>t.classList.remove('show'),4200);
 });
 })();
