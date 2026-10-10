@@ -1,0 +1,497 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Drafted for your review &middot; Andrew Zoll for GTM AI Engineering</title>
+<meta name="description" content="An informal introduction from Andrew Zoll for the Staff Software Engineer, GTM AI Engineering role: receipts presented as an approval queue you can work through."/>
+<meta name="robots" content="noindex, nofollow"/>
+<link rel="icon" href="/assets/favicon-primary.png"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+/* Tokens follow the public Claude design language: cream canvas, coral action color,
+   serif display, humanist sans body, dark product surfaces. */
+:root{
+  --primary:#cc785c; --primary-active:#a9583e; --primary-soft:#f3e3da;
+  --ink:#141413; --body:#3d3d3a; --body-strong:#252523; --muted:#6c6a64; --muted-soft:#8e8b82;
+  --hairline:#e6dfd8; --canvas:#faf9f5; --surface-soft:#f5f0e8; --surface-card:#efe9de; --cream-strong:#e8e0d2;
+  --dark:#181715; --dark-up:#252320; --dark-soft:#1f1e1b; --on-dark:#faf9f5; --on-dark-soft:#a09d96;
+  --teal:#5db8a6; --amber:#e8a55a; --ok:#5db872; --err:#c64545;
+  --serif:'Newsreader','Tiempos Headline',Georgia,serif;
+  --sans:'DM Sans','Helvetica Neue',Arial,system-ui,sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--canvas);color:var(--body);font-family:var(--sans);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:var(--primary-active)}
+button{font-family:var(--sans);cursor:pointer}
+.wrap{max-width:1120px;margin:0 auto;padding-inline:24px}
+.ribbon{font-size:12.5px;color:var(--muted);text-align:center;padding:8px 16px;border-bottom:1px solid var(--hairline);background:var(--surface-soft)}
+
+/* top line */
+.top{display:flex;justify-content:space-between;align-items:center;padding-block:22px;font-size:14px;font-weight:500;color:var(--ink)}
+.top{gap:16px}
+.top .who{display:flex;gap:10px;align-items:center;white-space:nowrap}
+.top > a{text-align:right}
+.top a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--hairline)}
+.spark{width:22px;height:22px;color:var(--primary);transition:transform .9s cubic-bezier(.2,.8,.2,1)}
+.spark.spin{animation:spin 1.2s cubic-bezier(.5,0,.3,1)}
+.who:hover .spark{transform:rotate(90deg)}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* hero */
+.hero{padding-block:56px 40px;display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:56px;align-items:end}
+.kicker{font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);font-weight:500;margin:0 0 18px}
+h1{font-family:var(--serif);font-weight:400;font-size:clamp(38px,5.6vw,64px);line-height:1.05;letter-spacing:-1.2px;color:var(--ink);margin:0}
+h1 em{font-style:italic;color:var(--primary-active)}
+.lede{font-size:18px;color:var(--body);margin:22px 0 0;max-width:40em}
+.note{background:var(--surface-card);border-radius:16px;padding:24px 24px 20px;font-size:15px}
+.note p{margin:0 0 10px}
+.note .sig{font-family:var(--serif);font-style:italic;font-size:20px;color:var(--ink);margin-top:14px}
+
+/* motion strip: real navigation */
+.strip{margin:28px 0 72px;display:flex;flex-wrap:wrap;gap:0;align-items:stretch;border:1px solid var(--hairline);border-radius:12px;overflow:hidden;background:#fff}
+.strip button{flex:1 1 150px;background:transparent;border:0;border-right:1px solid var(--hairline);padding:16px 18px;text-align:left;transition:background .2s}
+.strip button:last-child{border-right:0}
+.strip button:hover,.strip button:focus-visible{background:var(--primary-soft);outline:none}
+.strip b{display:block;font-family:var(--mono);font-size:11px;font-weight:500;color:var(--primary-active);letter-spacing:.5px}
+.strip span{display:block;font-size:15px;font-weight:500;color:var(--ink);margin-top:4px}
+.strip small{display:block;font-size:12.5px;color:var(--muted);margin-top:2px}
+
+h2{font-family:var(--serif);font-weight:400;font-size:clamp(30px,3.6vw,44px);line-height:1.1;letter-spacing:-.6px;color:var(--ink);margin:0 0 12px}
+.sec-lede{max-width:44em;margin:0 0 28px;font-size:16.5px}
+
+/* inbox (dark product surface) */
+.console{background:var(--dark);color:var(--on-dark);border-radius:20px;padding:22px;box-shadow:0 30px 60px -30px rgba(20,20,19,.45)}
+.chead{display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between;align-items:center;padding:4px 4px 18px;border-bottom:1px solid #2f2d29}
+.chead .title{font-family:var(--mono);font-size:13px;color:var(--on-dark-soft)}
+.chead .title strong{color:var(--on-dark);font-weight:500}
+.filters{display:flex;flex-wrap:wrap;gap:6px}
+.filters button{background:var(--dark-up);color:var(--on-dark-soft);border:1px solid #34312c;border-radius:9999px;padding:6px 12px;font-size:13px}
+.filters button[aria-pressed="true"]{background:var(--on-dark);color:var(--ink);border-color:var(--on-dark)}
+.meter{display:flex;align-items:center;gap:10px;font-family:var(--mono);font-size:12.5px;color:var(--on-dark-soft)}
+.bar{width:120px;height:6px;border-radius:9px;background:#34312c;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--primary);transition:width .5s}
+.cbody{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.4fr);gap:18px;padding-top:18px;min-height:470px}
+.queue{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+.queue li button{width:100%;text-align:left;background:transparent;border:1px solid transparent;color:var(--on-dark);border-radius:10px;padding:12px 14px;display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;transition:background .15s,opacity .3s}
+.queue li button:hover{background:var(--dark-soft)}
+.queue li button[aria-selected="true"]{background:var(--dark-up);border-color:#3b3833}
+.queue .dot{width:9px;height:9px;border-radius:50%;background:var(--amber)}
+.queue [data-state="approved"] .dot{background:var(--ok)}
+.queue [data-state="returned"] .dot{background:var(--err)}
+.queue [data-state="approved"],.queue [data-state="returned"]{opacity:.62}
+.queue .q-t{font-size:14.5px;font-weight:500;line-height:1.3}
+.queue .q-c{font-family:var(--mono);font-size:11px;color:var(--on-dark-soft);text-transform:lowercase}
+.queue li[hidden]{display:none}
+.detail{background:var(--dark-soft);border:1px solid #2f2d29;border-radius:14px;padding:24px;display:flex;flex-direction:column}
+.detail .tag{font-family:var(--mono);font-size:11.5px;color:var(--teal)}
+.detail h3{font-family:var(--serif);font-weight:400;font-size:28px;line-height:1.15;margin:6px 0 16px;color:var(--on-dark)}
+.jd{border-left:2px solid var(--primary);padding:2px 0 2px 14px;color:var(--on-dark-soft);font-size:14px;margin:0 0 18px}
+.jd b{display:block;font-family:var(--mono);font-size:10.5px;font-weight:500;color:var(--primary);letter-spacing:.6px;margin-bottom:2px}
+.thinking{font-family:var(--mono);font-size:12.5px;color:var(--on-dark-soft);min-height:1.4em;margin-bottom:8px}
+.ev{font-size:15.5px;line-height:1.6;color:#e9e6df}
+.ev p{margin:0 0 12px}
+.more{font-size:14.5px;color:var(--on-dark-soft);border-top:1px dashed #3b3833;padding-top:12px;margin-top:4px}
+.src{font-family:var(--mono);font-size:11.5px;color:var(--on-dark-soft);margin-top:auto;padding-top:16px}
+.src a{color:var(--amber)}
+.acts{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.btn{border-radius:8px;padding:11px 18px;font-size:14px;font-weight:500;border:1px solid transparent}
+.btn-p{background:var(--primary);color:#fff}
+.btn-p:hover{background:var(--primary-active)}
+.btn-d{background:var(--dark-up);color:var(--on-dark);border-color:#3b3833}
+.btn-d:hover{border-color:var(--on-dark-soft)}
+.btn[disabled]{opacity:.4;cursor:default}
+.verdict{font-family:var(--mono);font-size:12.5px;margin-top:12px;min-height:1.4em}
+.verdict.ok{color:var(--ok)} .verdict.err{color:#e58b7a}
+.cleared{display:none;margin-top:18px;padding:18px 20px;border-radius:12px;background:var(--primary);color:#fff;font-size:15.5px}
+.cleared.show{display:block;animation:rise .6s cubic-bezier(.2,.8,.2,1)}
+.cleared a{color:#fff;font-weight:600}
+@keyframes rise{from{opacity:0;transform:translateY(10px)}}
+
+/* transcripts */
+.sec{padding-block:96px 0}
+.tx{display:grid;grid-template-columns:240px minmax(0,1fr);gap:28px}
+.tabs{display:flex;flex-direction:column;gap:6px}
+.tabs button{background:transparent;border:1px solid var(--hairline);border-radius:10px;padding:14px 16px;text-align:left;color:var(--ink);font-size:14.5px;font-weight:500}
+.tabs button small{display:block;font-weight:400;color:var(--muted);font-size:12.5px;margin-top:2px}
+.tabs button[aria-selected="true"]{background:var(--ink);color:var(--canvas);border-color:var(--ink)}
+.tabs button[aria-selected="true"] small{color:var(--on-dark-soft)}
+.log{background:#fff;border:1px solid var(--hairline);border-radius:16px;padding:8px 0;font-family:var(--mono);font-size:13.5px;line-height:1.6}
+.log .ln{display:grid;grid-template-columns:130px minmax(0,1fr);gap:16px;padding:10px 22px;border-left:3px solid transparent}
+.log .who{color:var(--muted);font-size:12px;padding-top:2px}
+.log .ln.hit{background:var(--primary-soft);border-left-color:var(--primary)}
+.log .ln.fix{background:#eef6f1;border-left-color:var(--ok)}
+.log .ln.learn{font-family:var(--serif);font-size:17px;font-style:italic;color:var(--ink)}
+.caveat{font-size:12.5px;color:var(--muted);margin-top:10px}
+
+/* eval runner */
+.evalbox{border:1px solid var(--hairline);border-radius:16px;background:var(--surface-soft);padding:26px}
+.evalhead{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;align-items:center;margin-bottom:16px}
+.score{font-family:var(--serif);font-size:34px;color:var(--ink)}
+.checks{list-style:none;margin:0;padding:0;border-top:1px solid var(--hairline)}
+.checks li{display:grid;grid-template-columns:28px minmax(0,1fr) auto;gap:12px;padding:13px 0;border-bottom:1px solid var(--hairline);align-items:start}
+.checks .st{font-family:var(--mono);font-size:13px;color:var(--muted-soft)}
+.checks .st.pass{color:#2f8a4a} .checks .st.fail{color:var(--err)}
+.checks .name{color:var(--ink);font-weight:500;font-size:15px}
+.checks .why{display:block;color:var(--muted);font-weight:400;font-size:13.5px}
+.checks .ms{font-family:var(--mono);font-size:12px;color:var(--muted-soft)}
+.btn-ink{background:var(--ink);color:var(--canvas)}
+.btn-ink:hover{background:#2c2b28}
+
+/* gaps */
+.gaps{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.gap{background:var(--surface-card);border-radius:14px;padding:22px 24px}
+.gap h4{font-family:var(--serif);font-weight:500;font-size:21px;color:var(--ink);margin:0 0 8px}
+.gap p{margin:0;font-size:15px}
+
+/* close */
+.close{padding-block:96px 72px;text-align:left}
+.close h2{max-width:16em}
+.ctas{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.ctas a{text-decoration:none}
+.btn-s{background:#fff;color:var(--ink);border:1px solid var(--hairline)}
+.btn-s:hover{border-color:var(--ink)}
+footer{border-top:1px solid var(--hairline);padding-block:22px 40px;font-size:12.5px;color:var(--muted)}
+
+@media (max-width:860px){
+  .hero{grid-template-columns:1fr;gap:28px;padding-block:32px 24px}
+  .cbody{grid-template-columns:1fr}
+  .tx{grid-template-columns:1fr}
+  .tabs{flex-direction:row;overflow-x:auto}
+  .tabs button{flex:0 0 200px}
+  .log .ln{grid-template-columns:1fr;gap:2px}
+  .gaps{grid-template-columns:1fr}
+  .strip button{border-right:0;border-bottom:1px solid var(--hairline)}
+  .top{font-size:13px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div class="ribbon">A personal introduction by Andrew Zoll. Not affiliated with or endorsed by Anthropic.</div>
+
+<div class="wrap">
+  <div class="top">
+    <div class="who">
+      <svg class="spark" id="spark" viewBox="0 0 24 24" aria-hidden="true"><g stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 2.5v6.2"/><path d="M12 15.3v6.2"/><path d="M2.5 12h6.2"/><path d="M15.3 12h6.2"/><path d="M5.3 5.3l4.3 4.3"/><path d="M14.4 14.4l4.3 4.3"/><path d="M18.7 5.3l-4.3 4.3"/><path d="M9.6 14.4l-4.3 4.3"/></g></svg>
+      <span>Andrew Zoll</span>
+    </div>
+    <a href="https://job-boards.greenhouse.io/anthropic/jobs/5390966008" rel="noopener">Staff Software Engineer, GTM AI Engineering</a>
+  </div>
+
+  <header class="hero">
+    <div>
+      <p class="kicker">A note for the GTM AI Engineering team</p>
+      <h1>Your sellers already work alongside agents. I spent this fall <em>building that</em> for a revenue team.</h1>
+      <p class="lede">I'm a Senior Software Engineer (AI Solutions) at Coder. There I built Scout, an internal AI sales-intelligence platform for Coder's revenue org, with autonomous agents, a Slack bot, a hosted MCP server, and gates that keep people in control. Your posting reads like the next chapter of that work, so I put my receipts in the shape you'd recognize: a queue of drafted actions waiting on a human.</p>
+    </div>
+    <aside class="note">
+      <p>Each item below is one line from your job description, drafted as a proposed action with the evidence attached. You're the seller here. Approve it, ask for more, or send it back.</p>
+      <p>Nothing auto-sends. That felt like the right way to introduce myself to this team.</p>
+      <div class="sig">Andrew</div>
+    </aside>
+  </header>
+
+  <nav class="strip" aria-label="Jump to a stage">
+    <button data-go="inbox" data-filter="agents"><b>01 signal</b><span>Agents</span><small>Motions that run end to end</small></button>
+    <button data-go="inbox" data-filter="oversight"><b>02 gate</b><span>Oversight</span><small>Approval and escalation</small></button>
+    <button data-go="transcripts"><b>03 eval</b><span>Transcripts</span><small>Real failures, traced</small></button>
+    <button data-go="inbox" data-filter="measure"><b>04 measure</b><span>Cost and value</span><small>Instrumented calls</small></button>
+    <button data-go="gaps"><b>05 human</b><span>Honest gaps</span><small>Where I'm short</small></button>
+  </nav>
+</div>
+
+<section id="inbox" class="wrap" aria-labelledby="inbox-h">
+  <h2 id="inbox-h">Drafted for your review</h2>
+  <p class="sec-lede">Seven actions, each tied to a line in your posting. The evidence comes from work I've shipped, and every figure is one I've tracked.</p>
+  <div class="console">
+    <div class="chead">
+      <div class="title"><strong>andrew.queue</strong> / pending human review</div>
+      <div class="filters" role="group" aria-label="Filter the queue">
+        <button data-f="all" aria-pressed="true">All</button>
+        <button data-f="agents" aria-pressed="false">Agents</button>
+        <button data-f="oversight" aria-pressed="false">Oversight</button>
+        <button data-f="evals" aria-pressed="false">Evals</button>
+        <button data-f="measure" aria-pressed="false">Measure</button>
+        <button data-f="mcp" aria-pressed="false">MCP</button>
+        <button data-f="data" aria-pressed="false">Data</button>
+      </div>
+      <div class="meter"><span id="count">0 of 7 reviewed</span><span class="bar"><i id="barfill"></i></span></div>
+    </div>
+    <div class="cbody">
+      <ul class="queue" id="queue" role="listbox" aria-label="Drafted actions"></ul>
+      <div class="detail" id="detail" aria-live="polite">
+        <div class="tag" id="d-tag"></div>
+        <h3 id="d-title"></h3>
+        <p class="jd"><b>FROM YOUR POSTING</b><span id="d-jd"></span></p>
+        <div class="thinking" id="d-think"></div>
+        <div class="ev" id="d-ev"></div>
+        <div class="more" id="d-more" hidden></div>
+        <div class="src" id="d-src"></div>
+        <div class="acts">
+          <button class="btn btn-p" id="b-approve">Approve</button>
+          <button class="btn btn-d" id="b-more">Ask for more</button>
+          <button class="btn btn-d" id="b-return">Send back</button>
+        </div>
+        <div class="verdict" id="d-verdict"></div>
+      </div>
+    </div>
+    <div class="cleared" id="cleared">The queue is clear. The last step in any good motion is a human conversation, and I'd love to have it. <a href="#close">Here's how to reach me.</a></div>
+  </div>
+</section>
+
+<section id="transcripts" class="wrap sec" aria-labelledby="tx-h">
+  <h2 id="tx-h">Four failures, read like transcripts</h2>
+  <p class="sec-lede">Your posting asks for experience using evals and transcript analysis to find and fix real problems. These are four I hit running agents at production volume. Each one changed how the system works.</p>
+  <div class="tx">
+    <div class="tabs" role="tablist" aria-label="Failure stories" id="tabs"></div>
+    <div>
+      <div class="log" id="log" role="tabpanel"></div>
+      <p class="caveat">Reconstructed from my notes and the merged fixes. These are summaries, not verbatim logs.</p>
+    </div>
+  </div>
+</section>
+
+<section id="evals" class="wrap sec" aria-labelledby="ev-h">
+  <h2 id="ev-h">An eval suite for this page</h2>
+  <p class="sec-lede">You'd want a regression run before anything customer-facing ships, so this page has one. The checks below read the live page in your browser and score it.</p>
+  <div class="evalbox">
+    <div class="evalhead">
+      <div class="score" id="score">Not run yet</div>
+      <button class="btn btn-ink" id="run">Run the suite</button>
+    </div>
+    <ul class="checks" id="checks"></ul>
+  </div>
+</section>
+
+<section id="gaps" class="wrap sec" aria-labelledby="gap-h">
+  <h2 id="gap-h">Where I'm short</h2>
+  <p class="sec-lede">I'd rather you hear these from me first.</p>
+  <div class="gaps" id="gaplist">
+    <div class="gap"><h4>Years</h4><p>You prefer 8+ years as an engineer, and I don't have that. My engineering title at Coder started in July 2026, and before that I shipped my own products solo starting in 2025. I came to code from pastoring and financial advising. Your note that former technical founders are encouraged to apply is the door I'm walking through.</p></div>
+    <div class="gap"><h4>Applied ML</h4><p>I haven't built propensity models or run formal A/B tests. My measurement work has been cost per merged PR, defect catch rates, and latency. A predictive model that explains itself to a seller is something I'd be learning on the job.</p></div>
+    <div class="gap"><h4>Many human contributors</h4><p>My codebases have had a lot of agent contributors and few human ones. I've set review rules and conventions that agents follow, but I haven't grown a repository with dozens of engineers committing to it.</p></div>
+    <div class="gap"><h4>Location</h4><p>I live in Pueblo, Colorado. I've read the office expectation in the posting, and I'd want to talk through the cadence early so there are no surprises on either side.</p></div>
+  </div>
+</section>
+
+<section id="close" class="wrap close" aria-labelledby="close-h">
+  <h2 id="close-h">If this looks useful, I'd love to talk.</h2>
+  <p class="sec-lede">I built agents that answer sellers, gates that keep them in control, and the measurement that tells you whether any of it was worth the tokens. I'd like to do that work where the model comes from.</p>
+  <div class="ctas">
+    <a class="btn btn-p" href="https://portfolio.andrewzoll.com" rel="noopener">See my portfolio</a>
+    <a class="btn btn-s" href="https://www.linkedin.com/in/andrewzoll" rel="noopener">Connect on LinkedIn</a>
+    <a class="btn btn-s" href="mailto:zoll.andrew@me.com">zoll.andrew@me.com</a>
+  </div>
+</section>
+
+<footer class="wrap">This page is a personal introduction by Andrew Zoll for a job application. It is not affiliated with, sponsored by, or endorsed by Anthropic or Coder. Colors and type nod to Claude's public design language out of respect, not as a claim of association.</footer>
+
+<script>
+(function(){
+  var wired = new Set();
+  function on(el, ev, fn){ el.addEventListener(ev, fn); wired.add(el); }
+
+  var ITEMS = [
+    {id:'motion', cat:'agents', tag:'agents / end to end', title:'Run a revenue motion from signal to answer',
+     jd:'Build and operate autonomous agents that run go-to-market motions end to end.',
+     ev:['I built Scout, an internal AI sales-intelligence platform that turns Salesforce, support, and Granola call-transcript data into answers for Coder\'s sellers, delivered through a Slack bot.',
+         'An event poller turned Granola meeting action items, Slack requests, new Linear assignments, and failed CI runs into queued work for agents. It has a kill switch, because anything that acts on its own needs an off button.'],
+     more:'Granola transcripts come in on a 5-minute poll with a nightly reconcile, and they pass through Federal fail-closed filtering before any model sees them.',
+     src:'Source: my resume, Coder role'},
+    {id:'gates', cat:'oversight', tag:'oversight / approval gates', title:'Keep sellers in control of what agents write',
+     jd:'Design the human oversight for each motion: approval gates, handoffs, and escalation paths that keep sellers in control.',
+     ev:['Scout wrote deal signals back to Salesforce only through a field allow-list. For forecast calls, I specced the next step: split a call by deal, resolve each mention to one opportunity, and refuse to write on an ambiguous match. Those go to a human review list instead, with attribution and an audit log on every write.',
+         'My own build loop works the same way. Agents stop at gates I set, and a different model family has to clear each change before it merges.'],
+     more:'I added a round cap after one spec spent 14 review rounds over 12 hours without converging. Past round 3, hard work escalates to stronger models instead of looping.',
+     src:'Source: Scout forecast-call spec; loop-control scripts'},
+    {id:'evals', cat:'evals', tag:'evals / readiness', title:'Prove the agents are ready before they ship',
+     jd:'Develop evaluation frameworks for agent behavior, and run them in development and in production.',
+     ev:['I designed a cross-family review gate with mutation tests. A reviewer from a different model family than the builder must clear each change, and mutation tests confirm the tests can actually fail.',
+         'Across about 1,200 review verdicts on about 350 pull requests, reviewers recorded more than 430 confirmed defect catches and 21 false flags. I track the false flags because a gate that cries wolf gets ignored.'],
+     more:'For Veritas, my citation-verification product for legal filings, I designed hedged verdict semantics so the product says how sure it is, and a fixture suite runs before any release.',
+     src:'Source: review telemetry, Sep 8 to Oct 9, 2026'},
+    {id:'measure', cat:'measure', tag:'measure / roi', title:'Tie every agent run to what it cost',
+     jd:'Instrument model and tool calls in production, and build the observability and measurement that ties agent actions to pipeline and revenue.',
+     ev:['In the week of September 29, my loop ran 602 Coder Agents launches and merged 193 pull requests at about $38 of model cost per merged PR. About 75% of 860 launches that week started with no human prompt.',
+         'The product UI showed no cost per chat, so I priced each chat from its token usage and reconciled the tool against the dashboard total.'],
+     more:'My first estimate came in at less than half the dashboard total. Cache reads were billed at the full input rate, and they were most of the tokens. The story is in the transcripts below.',
+     src:'Source: dispatch telemetry and the chats usage API'},
+    {id:'mcp', cat:'mcp', tag:'mcp / governed access', title:'Give sellers and agents governed access to revenue data',
+     jd:'Ship MCP servers, agent skills, and web applications that connect to systems like our CRM, communication tools, and data warehouse.',
+     ev:['I shipped a hosted MCP server with Okta identity, then built an OAuth authorization server inside Scout that gates hosted MCP access to the platform.',
+         'A cross-model reviewer caught a production blocker in that authorization server at review round 5. The token-rotation transaction would have failed on every refresh in cluster-mode Redis.'],
+     more:'I also wrote the runbook for an MCP route that returned 404 for more than 2 hours after a redeploy. The 404 was correct under the spec, and it still looked exactly like an outage from the client side.',
+     src:'Source: my resume; Scout PR #2196'},
+    {id:'data', cat:'data', tag:'data / sql', title:'Work fluently with the data underneath',
+     jd:'Working fluency with data, including SQL.',
+     ev:['I built FieldCommand solo: a multi-tenant SaaS on PostgreSQL and Supabase with role-based access control and tenant isolation, in 187,745 lines of TypeScript.',
+         'At Coder I shipped fail-closed Federal data access controls across 26 merged pull requests, and I cut cold dashboard load from 5 to 10 seconds down to about 2 seconds by replacing a serial per-account S3 read loop with a bounded fan-out.'],
+     more:'Earlier, I ran Microsoft SQL Server administration for a 1,200-member organization for two years, including access management and data integrity.',
+     src:'Source: my resume'},
+    {id:'patterns', cat:'agents', tag:'platform / patterns', title:'Send what we learn back to the product teams',
+     jd:'Identify repeatable patterns and contribute insights back to Anthropic\'s Product and Engineering teams.',
+     ev:['I ran my engineering on Coder Agents at production volume and turned the rough edges into root-caused reports. I opened coder/coder#30576 so the API tells a disabled chat model config apart from a missing one.',
+         'I authored 884 merged pull requests between July 27 and October 9, 2026. Agents built many of them under my account, so the count is really a measure of how much the loop could carry with review rules holding.'],
+     more:'Other reports included a chat that stays in an error state after its workspace restarts, and an MCP list tool that can\'t page past 100 chats.',
+     src:'Source: <a href="https://github.com/coder/coder/pull/30576" rel="noopener">coder/coder#30576</a>; GitHub'}
+  ];
+  var state = {}; ITEMS.forEach(function(i){ state[i.id]='pending'; });
+  var current = ITEMS[0].id, filter = 'all';
+  var q = document.getElementById('queue');
+  var spark = document.getElementById('spark');
+
+  ITEMS.forEach(function(it){
+    var li = document.createElement('li'); li.dataset.cat = it.cat;
+    var b = document.createElement('button'); b.setAttribute('role','option'); b.dataset.id = it.id; b.dataset.state='pending';
+    b.innerHTML = '<span class="dot"></span><span><span class="q-t"></span><br><span class="q-c"></span></span><span class="q-c q-s">pending</span>';
+    b.querySelector('.q-t').textContent = it.title; b.querySelector('.q-c').textContent = it.tag;
+    on(b,'click',function(){ select(it.id, true); });
+    li.appendChild(b); q.appendChild(li);
+  });
+
+  function byId(id){ return ITEMS.filter(function(i){return i.id===id;})[0]; }
+  var thinkTimer;
+  function select(id, animate){
+    current = id; var it = byId(id);
+    q.querySelectorAll('button').forEach(function(b){ b.setAttribute('aria-selected', b.dataset.id===id ? 'true':'false'); });
+    document.getElementById('d-tag').textContent = it.tag;
+    document.getElementById('d-title').textContent = it.title;
+    document.getElementById('d-jd').textContent = it.jd;
+    var ev = document.getElementById('d-ev'), more = document.getElementById('d-more'), think = document.getElementById('d-think');
+    more.hidden = true; more.textContent = it.more;
+    document.getElementById('d-src').innerHTML = it.src;
+    document.getElementById('b-more').disabled = false;
+    paintVerdict();
+    ev.innerHTML = ''; clearTimeout(thinkTimer);
+    var render = function(){ think.textContent=''; it.ev.forEach(function(p){ var el=document.createElement('p'); el.textContent=p; ev.appendChild(el); }); };
+    if(animate){ think.textContent = 'reading the receipts\u2026'; pulse(); thinkTimer = setTimeout(render, 420); } else { render(); }
+  }
+  function pulse(){ spark.classList.remove('spin'); void spark.offsetWidth; spark.classList.add('spin'); }
+  function paintVerdict(){
+    var v = document.getElementById('d-verdict'), s = state[current];
+    v.className = 'verdict' + (s==='approved'?' ok':s==='returned'?' err':'');
+    v.textContent = s==='approved' ? 'Approved. Logged with your name on it.' : s==='returned' ? 'Sent back. Fair enough, that\'s what a call is for.' : '';
+    document.getElementById('b-approve').disabled = s==='approved';
+    document.getElementById('b-return').disabled = s==='returned';
+  }
+  function decide(s){
+    state[current] = s;
+    var b = q.querySelector('[data-id="'+current+'"]'); b.dataset.state = s; b.querySelector('.q-s').textContent = s==='approved'?'approved':'sent back';
+    paintVerdict(); tally(); pulse();
+    var next = ITEMS.filter(function(i){ return state[i.id]==='pending' && visible(i); })[0];
+    if(next) setTimeout(function(){ select(next.id, true); }, 650);
+  }
+  function tally(){
+    var done = ITEMS.filter(function(i){return state[i.id]!=='pending';}).length;
+    document.getElementById('count').textContent = done + ' of ' + ITEMS.length + ' reviewed';
+    document.getElementById('barfill').style.width = (done/ITEMS.length*100)+'%';
+    document.getElementById('cleared').classList.toggle('show', done===ITEMS.length);
+  }
+  function visible(it){ return filter==='all' || it.cat===filter; }
+  function applyFilter(f){
+    filter = f;
+    document.querySelectorAll('.filters button').forEach(function(b){ b.setAttribute('aria-pressed', b.dataset.f===f?'true':'false'); });
+    q.querySelectorAll('li').forEach(function(li){ li.hidden = !(f==='all' || li.dataset.cat===f); });
+    var first = ITEMS.filter(visible)[0]; if(first) select(first.id, true);
+  }
+  on(document.getElementById('b-approve'),'click',function(){ decide('approved'); });
+  on(document.getElementById('b-return'),'click',function(){ decide('returned'); });
+  on(document.getElementById('b-more'),'click',function(){ document.getElementById('d-more').hidden=false; this.disabled=true; });
+  document.querySelectorAll('.filters button').forEach(function(b){ on(b,'click',function(){ applyFilter(b.dataset.f); }); });
+  document.querySelectorAll('.strip button').forEach(function(b){
+    on(b,'click',function(){ if(b.dataset.filter) applyFilter(b.dataset.filter); document.getElementById(b.dataset.go).scrollIntoView({behavior:'smooth'}); });
+  });
+  select(current, false);
+
+  /* transcripts */
+  var STORIES = [
+    {t:'The round-5 catch', s:'Redis cluster mode', lines:[
+      ['builder','Token rotation for the MCP authorization server. Every test passes against the in-memory Redis fake.'],
+      ['reviewers','Rounds 1 to 4 clear the change. Nobody is looking at how production Redis is deployed.'],
+      ['reviewer, r5','Production Redis runs in cluster mode. This multi-key transaction spans hash slots, so it fails on every token refresh.','hit'],
+      ['fix','Put the keys in one hash slot, and add a test that checks the slot of each key.','fix'],
+      ['lesson','A fake that forgives more than production is a test that can\'t fail. That\'s why mutation tests sit in the gate.','learn']]},
+    {t:'The cost that didn\'t add up', s:'Pricing chats from tokens', lines:[
+      ['ui','Agent chats show no cost. I need cost per chat to know whether the loop is worth running.'],
+      ['me','I price each chat from its token usage. First estimate: about $630 a week.'],
+      ['dashboard','The billing dashboard says about $1,300 a week.','hit'],
+      ['trace','Cache reads were about 90% of the tokens, and the gateway billed them at the full input rate. My multiplier assumed a discount.'],
+      ['fix','Fix the multiplier, then reconcile the tool against the dashboard total every time it runs.','fix'],
+      ['lesson','Instrumentation you never reconcile against the bill is a guess.','learn']]},
+    {t:'The spec that wouldn\'t converge', s:'Round caps and watchdogs', lines:[
+      ['gate','One spec goes through 14 review rounds over 12 hours. Every round finds something new and nothing converges.','hit'],
+      ['fix','A round cap keyed to the Linear ticket stops the gate after a set number of rounds. Past round 3, hard work escalates to stronger models.','fix'],
+      ['runtime','Separately, a stopped runtime goes unnoticed for more than 8 hours.','hit'],
+      ['fix','A watchdog reads the work log, claim ledger, and branch activity, and it acts on silence.','fix'],
+      ['lesson','An unattended agent needs a reason to stop as much as a reason to start.','learn']]},
+    {t:'The outage that wasn\'t', s:'MCP route 404', lines:[
+      ['client','After a redeploy, the MCP routes return 404 for more than 2 hours. From here it looks like the service is down.','hit'],
+      ['trace','An upstream change put the OAuth2 provider behind a new flag. Under RFC 8414 and RFC 9728, the 404 is correct behavior.'],
+      ['fix','A runbook that separates route churn from a real fault, plus product feedback asking for a release note or an admin hint.','fix'],
+      ['lesson','Correct behavior that reads as an outage is still a product problem worth reporting.','learn']]}
+  ];
+  var tabs = document.getElementById('tabs'), log = document.getElementById('log');
+  STORIES.forEach(function(st, i){
+    var b = document.createElement('button'); b.setAttribute('role','tab'); b.dataset.i=i;
+    b.innerHTML = '<span></span><small></small>'; b.firstChild.textContent = st.t; b.lastChild.textContent = st.s;
+    on(b,'click',function(){ showStory(i); }); tabs.appendChild(b);
+  });
+  function showStory(i){
+    tabs.querySelectorAll('button').forEach(function(b){ b.setAttribute('aria-selected', +b.dataset.i===i?'true':'false'); });
+    log.innerHTML='';
+    STORIES[i].lines.forEach(function(l, k){
+      var row = document.createElement('div'); row.className = 'ln' + (l[2]?' '+l[2]:'');
+      row.innerHTML = '<span class="who"></span><span class="say"></span>';
+      row.firstChild.textContent = l[0]; row.lastChild.textContent = l[1];
+      row.style.opacity = 0; log.appendChild(row);
+      setTimeout(function(){ row.style.transition='opacity .35s'; row.style.opacity=1; }, 90*k);
+    });
+  }
+  showStory(0);
+
+  /* eval suite: every check reads the live page */
+  var VERIFIED = ['1','2','3','4','5','8','9','27','10','12','14','21','26','29','38','75','90','100','193','350','404','430','602','630','860','884','1,200','1,300','2026','2196','8414','9728','30576','187,745'];
+  var CHECKS = [
+    {n:'Every drafted action cites a source', why:'No receipt, no approval.', run:function(){ var bad = ITEMS.filter(function(i){return !/Source:/.test(i.src);}); return [bad.length===0, ITEMS.length+' of '+ITEMS.length+' cite a source']; }},
+    {n:'No em or en dashes anywhere', why:'A house style rule I keep.', run:function(){ var t = document.body.innerText + ITEMS.map(function(i){return i.ev.join(' ')+i.more;}).join(' '); var hits = (t.match(/[\u2013\u2014]/g)||[]).length; return [hits===0, hits+' found']; }},
+    {n:'Every figure is on my verified list', why:'Numbers come from tracked sources, nothing invented.', run:function(){
+      var t = ITEMS.map(function(i){return i.ev.join(' ')+' '+i.more+' '+i.jd;}).join(' ') + ' ' + STORIES.map(function(s){return s.lines.map(function(l){return l[1];}).join(' ');}).join(' ');
+      var nums = (t.match(/\d[\d,]*/g)||[]).map(function(n){return n.replace(/,$/,'');});
+      var off = nums.filter(function(n){return VERIFIED.indexOf(n)<0;});
+      return [off.length===0, nums.length+' figures checked'+(off.length?', off list: '+off.join(' '):'')]; }},
+    {n:'The honest-gap section is present', why:'A candidate page with no gaps is hiding something.', run:function(){ var g = document.querySelectorAll('#gaplist .gap').length; return [g>=3, g+' gaps listed']; }},
+    {n:'Search engines are asked not to index this page', why:'It\'s meant for you, not for Google.', run:function(){ var m = document.querySelector('meta[name="robots"]'); var ok = !!m && /noindex/.test(m.content); return [ok, ok?m.content:'missing']; }},
+    {n:'Every control on the page does something', why:'A button that does nothing is worse than no button.', run:function(){ var all = Array.prototype.slice.call(document.querySelectorAll('button')).filter(function(b){return b.id!=='run';}); var dead = all.filter(function(b){return !wired.has(b);}); return [dead.length===0, (all.length-dead.length)+' of '+all.length+' wired']; }}
+  ];
+  var ul = document.getElementById('checks');
+  CHECKS.forEach(function(c){
+    var li = document.createElement('li');
+    li.innerHTML = '<span class="st">\u00b7</span><span class="name"></span><span class="ms"></span>';
+    li.children[1].textContent = c.n; var w = document.createElement('span'); w.className='why'; w.textContent=c.why; li.children[1].appendChild(w);
+    ul.appendChild(li);
+  });
+  on(document.getElementById('run'),'click',function(){
+    var btn = this; btn.disabled = true; var pass = 0;
+    document.getElementById('score').textContent = 'Running\u2026';
+    ul.querySelectorAll('.st').forEach(function(s){ s.className='st'; s.textContent='\u00b7'; });
+    CHECKS.forEach(function(c, i){
+      setTimeout(function(){
+        var t0 = performance.now(); var r = c.run(); var dt = (performance.now()-t0).toFixed(1);
+        var li = ul.children[i], st = li.querySelector('.st');
+        st.className = 'st ' + (r[0]?'pass':'fail'); st.textContent = r[0]?'pass':'fail';
+        li.querySelector('.why').textContent = c.why + ' Result: ' + r[1] + '.';
+        li.querySelector('.ms').textContent = dt + 'ms';
+        if(r[0]) pass++;
+        if(i===CHECKS.length-1){ document.getElementById('score').textContent = pass + ' / ' + CHECKS.length + ' passing'; btn.disabled=false; btn.textContent='Run it again'; pulse(); }
+      }, 380*(i+1));
+    });
+  });
+})();
+</script>
+</body>
+</html>
