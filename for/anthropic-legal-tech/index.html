@@ -1,0 +1,586 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>A sealed record of one candidate · Andrew Zoll for Anthropic Legal Tech</title>
+<meta name="description" content="Andrew Zoll's application page for the Senior+ Software Engineer, Legal Tech role at Anthropic, written as a verification record with hedged verdicts and a live SHA-256 seal."/>
+<meta name="robots" content="noindex, nofollow"/>
+<link rel="icon" href="/assets/favicon-primary.png"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Hanken+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+/* Tokens from the Claude DESIGN.md (getdesign.md / VoltAgent): cream canvas, scarce coral,
+   dark product surfaces, serif display at weight 400. Newsreader stands in for Copernicus,
+   Hanken Grotesk for Styrene. This page is an homage, not an Anthropic property. */
+:root{
+  --primary:#cc785c; --primary-active:#a9583e;
+  --ink:#141413; --body:#3d3d3a; --strong:#252523; --muted:#6c6a64; --muted-soft:#8e8b82;
+  --hair:#e6dfd8; --hair-soft:#ebe6df;
+  --canvas:#faf9f5; --soft:#f5f0e8; --card:#efe9de; --cream-strong:#e8e0d2;
+  --dark:#181715; --dark-2:#252320; --dark-3:#1f1e1b; --on-dark:#faf9f5; --on-dark-soft:#a09d96;
+  --teal:#5db8a6; --amber:#e8a55a; --ok:#3f8f55; --warn:#a87a0c; --err:#c64545;
+  --serif:'Newsreader','Tiempos Headline',Georgia,serif;
+  --sans:'Hanken Grotesk','Helvetica Neue',Arial,sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,monospace;
+  --r-sm:6px; --r-md:8px; --r-lg:12px; --pill:9999px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--canvas);color:var(--body);font-family:var(--sans);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:var(--ink);text-underline-offset:3px;text-decoration-color:var(--primary)}
+.wrap{max-width:1160px;margin:0 auto;padding:0 28px}
+h1,h2,h3{font-family:var(--serif);font-weight:400;color:var(--ink);margin:0}
+code,.mono{font-family:var(--mono)}
+
+.disc{background:var(--soft);border-bottom:1px solid var(--hair);font-size:13px;color:var(--muted);text-align:center;padding:8px 20px}
+
+nav.top{position:sticky;top:0;z-index:30;background:rgba(250,249,245,.92);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--hair)}
+nav.top .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+.wordmark{font-family:var(--serif);font-size:21px;color:var(--ink);text-decoration:none;letter-spacing:-.2px}
+.navlinks{display:flex;gap:26px;align-items:center}
+.navlinks a{font-size:14px;font-weight:500;color:var(--body);text-decoration:none}
+.navlinks a:hover{color:var(--ink)}
+.navlinks a.btn-dark,.navlinks a.btn-dark:hover{color:var(--canvas)}
+.btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--sans);font-size:14px;font-weight:500;line-height:1;border-radius:var(--r-md);padding:12px 18px;text-decoration:none;cursor:pointer;border:1px solid transparent;white-space:nowrap;transition:transform .15s ease,background .15s ease}
+.btn:active{transform:translateY(1px)}
+.btn-primary{background:var(--primary);color:#fff}
+.btn-primary:hover{background:var(--primary-active)}
+.btn-quiet{background:transparent;color:var(--ink);border-color:var(--cream-strong)}
+.btn-dark{background:var(--ink);color:var(--canvas)}
+@media(max-width:820px){.navlinks a.hide-sm{display:none}}
+
+/* hero */
+.hero{padding:72px 0 80px}
+.hero .wrap{display:grid;grid-template-columns:1.25fr .95fr;gap:56px;align-items:center}
+.hero h1{font-size:clamp(36px,5vw,58px);line-height:1.07;letter-spacing:-1.2px;max-width:13.5em}
+.hero h1 em{font-style:italic;color:var(--primary-active)}
+.hero p.lede{font-size:19px;color:var(--body);max-width:34em;margin:22px 0 30px}
+.hero .ctas{display:flex;gap:12px;flex-wrap:wrap}
+@media(max-width:900px){.hero .wrap{grid-template-columns:1fr;gap:40px}.hero{padding:48px 0 56px}}
+
+/* seal */
+.seal{background:var(--card);border-radius:var(--r-lg);padding:26px 26px 22px;position:relative;overflow:hidden}
+.seal-top{display:flex;gap:20px;align-items:center}
+.stamp{flex:0 0 112px;height:112px;position:relative}
+.stamp svg{width:112px;height:112px;display:block}
+.stamp .ring{transform-origin:56px 56px;animation:spin 40s linear infinite}
+.stamp .core{transition:fill .4s ease}
+.stamp.broken{animation:shake .45s ease}
+.stamp.pressed{animation:press .5s cubic-bezier(.2,1.6,.4,1)}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes shake{20%{transform:translateX(-5px) rotate(-3deg)}40%{transform:translateX(5px) rotate(3deg)}60%{transform:translateX(-3px)}80%{transform:translateX(2px)}}
+@keyframes press{0%{transform:scale(1.18)}100%{transform:scale(1)}}
+.seal h3{font-size:24px;line-height:1.2;letter-spacing:-.3px}
+.seal .status{font-size:14px;margin-top:6px;color:var(--ok);font-weight:500}
+.seal .status.bad{color:var(--err)}
+.digest{margin-top:20px;background:var(--canvas);border-radius:var(--r-md);padding:12px 14px;font-family:var(--mono);font-size:12.5px;line-height:1.6;color:var(--strong);word-break:break-all;min-height:62px}
+.digest .lbl{display:block;font-family:var(--sans);font-size:12px;color:var(--muted);margin-bottom:4px}
+.digest .cmp{display:block;color:var(--muted-soft);margin-top:6px}
+.digest .diff{color:var(--err)}
+.seal .meta{display:flex;justify-content:space-between;gap:12px;margin-top:14px;font-size:13px;color:var(--muted);flex-wrap:wrap}
+.seal .meta button{font:inherit;background:none;border:0;color:var(--primary-active);cursor:pointer;padding:0;text-decoration:underline;text-underline-offset:3px}
+
+/* claims band */
+.band-card{background:var(--soft);padding:88px 0}
+.sec-h{font-size:clamp(30px,3.6vw,42px);line-height:1.12;letter-spacing:-.8px;max-width:18em}
+.sec-p{font-size:17px;max-width:40em;margin:16px 0 0}
+.toolbar{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin:36px 0 18px}
+.filters{display:flex;gap:8px;flex-wrap:wrap}
+.chip{font:500 14px/1 var(--sans);padding:10px 14px;border-radius:var(--pill);border:1px solid var(--cream-strong);background:var(--canvas);color:var(--body);cursor:pointer;display:inline-flex;gap:8px;align-items:center}
+.chip .n{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--canvas);border-color:var(--ink)}
+.chip[aria-pressed="true"] .n{color:var(--on-dark-soft)}
+.tamper{display:inline-flex;align-items:center;gap:10px;font-size:14px;color:var(--body);cursor:pointer;user-select:none}
+.tamper input{appearance:none;width:38px;height:22px;border-radius:var(--pill);background:var(--cream-strong);position:relative;cursor:pointer;transition:background .2s}
+.tamper input::after{content:"";position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:#fff;transition:transform .2s}
+.tamper input:checked{background:var(--err)}
+.tamper input:checked::after{transform:translateX(16px)}
+.tamper-note{font-size:14px;color:var(--err);margin:-6px 0 14px;display:none}
+.tampering .tamper-note{display:block}
+
+.claims{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.claim{background:var(--canvas);border-radius:var(--r-lg);transition:opacity .25s ease,transform .25s ease}
+.claim[hidden]{display:none}
+.claim-head{display:grid;grid-template-columns:1fr auto 28px;gap:18px;align-items:center;width:100%;text-align:left;background:none;border:0;padding:20px 22px;cursor:pointer;font:inherit;color:inherit}
+.claim-q{font-family:var(--serif);font-size:19px;line-height:1.35;color:var(--ink)}
+.claim-q::before{content:"\201C"}.claim-q::after{content:"\201D"}
+.verdict{font:500 13px/1 var(--sans);padding:7px 11px;border-radius:var(--pill);white-space:nowrap}
+.v-verified{background:#e3efe5;color:#2c6b3e}
+.v-partial{background:#f4ead2;color:#7a5a0d}
+.v-notlocated{background:var(--card);color:var(--muted)}
+.chev{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:var(--soft);transition:transform .25s ease;font-size:14px;color:var(--muted)}
+.claim.open .chev{transform:rotate(45deg)}
+.claim-body{display:grid;grid-template-rows:0fr;transition:grid-template-rows .3s ease}
+.claim.open .claim-body{grid-template-rows:1fr}
+.claim-body > div{overflow:hidden}
+.claim-inner{padding:0 22px 22px;display:grid;grid-template-columns:1fr 240px;gap:28px}
+.claim-inner p{margin:0;font-size:16px;max-width:44em}
+.claim-inner p[contenteditable="true"]{outline:1px dashed var(--err);outline-offset:6px;border-radius:2px}
+.receipt{font-size:13px;color:var(--muted);border-left:2px solid var(--hair);padding-left:14px}
+.receipt b{display:block;font-weight:600;color:var(--strong);margin-bottom:4px}
+@media(max-width:760px){.claim-inner{grid-template-columns:1fr}.claim-head{grid-template-columns:1fr 28px}.claim-head .verdict{grid-column:1;justify-self:start}.claim-head .chev{grid-row:1;grid-column:2}}
+
+/* dark ladder */
+.band-dark{background:var(--dark);color:var(--on-dark);padding:92px 0}
+.band-dark h2{color:var(--on-dark)}
+.band-dark .sec-p{color:var(--on-dark-soft)}
+.ladder{display:grid;grid-template-columns:280px minmax(0,1fr);gap:28px;margin-top:40px}
+.ladder > *{min-width:0}
+.rungs{display:flex;flex-direction:column;gap:6px}
+.rung{display:flex;align-items:center;justify-content:space-between;gap:10px;text-align:left;font:500 15px/1.2 var(--sans);color:var(--on-dark-soft);background:transparent;border:1px solid var(--dark-2);border-radius:var(--r-md);padding:14px 16px;cursor:pointer}
+.rung .k{font-family:var(--mono);font-size:12px}
+.rung[aria-selected="true"]{background:var(--dark-2);color:var(--on-dark);border-color:#3a3732}
+.panel{background:var(--dark-3);border-radius:var(--r-lg);padding:26px 28px;min-height:280px}
+.panel h3{color:var(--on-dark);font-size:26px;letter-spacing:-.3px}
+.panel p{color:#d6d2c9;max-width:40em}
+.panel pre{margin:18px 0 0;background:var(--dark);border-radius:var(--r-md);padding:16px 18px;font:13px/1.65 var(--mono);color:#e8e4da;overflow-x:auto;white-space:pre}
+.panel pre .c{color:#8e8b82}.panel pre .s{color:var(--amber)}.panel pre .t{color:var(--teal)}
+@media(max-width:820px){.ladder{grid-template-columns:minmax(0,1fr)}.rungs{flex-direction:row;overflow-x:auto}.rung{flex:0 0 auto}}
+
+/* not proved */
+.band-plain{padding:92px 0}
+.gaps{display:grid;grid-template-columns:repeat(2,1fr);gap:0 56px;margin-top:40px;border-top:1px solid var(--hair)}
+.gap{padding:24px 0;border-bottom:1px solid var(--hair-soft)}
+.gap h3{font-size:22px;letter-spacing:-.2px;line-height:1.25}
+.gap p{margin:8px 0 0;font-size:15.5px;max-width:34em}
+@media(max-width:760px){.gaps{grid-template-columns:1fr}}
+
+/* custody */
+.band-custody{background:var(--soft);padding:92px 0}
+.custody-grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:56px;margin-top:8px}
+.custody-side{position:sticky;top:96px;align-self:start}
+.custody-side .btn{margin-top:22px}
+.chain-status{margin-top:14px;font-size:14px;color:var(--muted);min-height:22px}
+.chain-status.ok{color:var(--ok)}
+.log{list-style:none;margin:0;padding:0;position:relative}
+.log::before{content:"";position:absolute;left:11px;top:8px;bottom:8px;width:1px;background:var(--cream-strong)}
+.entry{position:relative;padding:0 0 22px 40px}
+.entry .node{position:absolute;left:4px;top:6px;width:15px;height:15px;border-radius:50%;background:var(--canvas);border:1.5px solid var(--muted-soft);transition:background .25s,border-color .25s}
+.entry.checked .node{background:var(--ok);border-color:var(--ok)}
+.entry.checking .node{border-color:var(--primary);transform:scale(1.25)}
+.entry button{all:unset;cursor:pointer;display:block;width:100%}
+.entry .when,.entry .what{display:block}
+.entry .when{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.entry .what{font-family:var(--serif);font-size:20px;color:var(--ink);line-height:1.3;margin-top:2px}
+.entry .more{display:none;margin-top:8px;font-size:15px;max-width:38em}
+.entry.open .more{display:block}
+.entry .h{display:block;font-family:var(--mono);font-size:11.5px;color:var(--muted-soft);margin-top:6px;word-break:break-all}
+@media(max-width:860px){.custody-grid{grid-template-columns:1fr;gap:32px}.custody-side{position:static}}
+
+/* coral callout */
+.band-coral{background:var(--primary);color:#fff;padding:84px 0}
+.band-coral h2{color:#fff;font-size:clamp(30px,4vw,46px);letter-spacing:-.8px;line-height:1.1;max-width:16em}
+.band-coral p{font-size:18px;max-width:36em;color:#fff7f2;margin:18px 0 30px}
+.band-coral .ctas{display:flex;gap:12px;flex-wrap:wrap}
+.btn-cream{background:var(--canvas);color:var(--ink)}
+.btn-line{border-color:rgba(255,255,255,.6);color:#fff}
+
+footer{background:var(--dark);color:var(--on-dark-soft);padding:44px 0 56px;font-size:13.5px}
+footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
+footer a{color:var(--on-dark);text-decoration-color:var(--on-dark-soft)}
+footer p{margin:0;max-width:44em}
+
+.reveal{opacity:0;transform:translateY(14px);transition:opacity .6s cubic-bezier(.16,1,.3,1),transform .6s cubic-bezier(.16,1,.3,1)}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  .stamp .ring{animation:none}.stamp.broken,.stamp.pressed{animation:none}
+  .reveal{opacity:1;transform:none;transition:none}
+  .claim-body,.chev{transition:none}
+}
+</style>
+</head>
+<body>
+
+<div class="disc">I'm not affiliated with Anthropic. This is my own page for the Senior+ Software Engineer, Legal Tech opening, built in the spirit of Anthropic's design.</div>
+
+<nav class="top" aria-label="Page">
+  <div class="wrap">
+    <a class="wordmark" href="#top">Andrew Zoll</a>
+    <div class="navlinks">
+      <a href="#claims">Claims</a>
+      <a class="hide-sm" href="#ladder">Verdicts</a>
+      <a class="hide-sm" href="#unproved">Not proved</a>
+      <a class="hide-sm" href="#custody">Custody log</a>
+      <a class="btn btn-dark" href="https://portfolio.andrewzoll.com">Portfolio</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap">
+    <div class="reveal">
+      <h1>I built a verifier for lawyers. So here's my candidacy, <em>verified the same way.</em></h1>
+      <p class="lede">Every claim below carries a hedged verdict and a receipt. The whole record is sealed with a live SHA-256 digest.</p>
+      <div class="ctas">
+        <a class="btn btn-primary" href="#claims">Read the claims</a>
+        <a class="btn btn-quiet" href="https://linkedin.com/in/andrewzoll">LinkedIn</a>
+      </div>
+    </div>
+
+    <aside class="seal reveal" aria-live="polite">
+      <div class="seal-top">
+        <div class="stamp" id="stamp" aria-hidden="true">
+          <svg viewBox="0 0 112 112">
+            <defs><path id="circ" d="M56,56 m-44,0 a44,44 0 1,1 88,0 a44,44 0 1,1 -88,0"/></defs>
+            <circle cx="56" cy="56" r="54" fill="none" stroke="#cc785c" stroke-width="1.2"/>
+            <g class="ring"><text font-family="JetBrains Mono, monospace" font-size="8.6" letter-spacing="2.2" fill="#a9583e"><textPath href="#circ">SEALED · SHA-256 · CANONICAL JSON · </textPath></text></g>
+            <circle class="core" id="core" cx="56" cy="56" r="27" fill="#cc785c"/>
+            <path id="mark" d="M44 57 l8 8 l16 -18" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div>
+          <h3>Record of one candidate</h3>
+          <div class="status" id="sealStatus">Computing the seal…</div>
+        </div>
+      </div>
+      <div class="digest" id="digest"><span class="lbl">SHA-256 of the claims, sorted keys</span><span id="digestNow">…</span></div>
+      <div class="meta"><span id="sealMeta">14 claims sealed when this page loaded.</span><button type="button" id="jumpTamper">Try to tamper with it</button></div>
+    </aside>
+  </div>
+</header>
+
+<section class="band-card" id="claims">
+  <div class="wrap">
+    <h2 class="sec-h reveal">Fourteen lines from your posting, each with a verdict I'd defend.</h2>
+    <p class="sec-p reveal">I used the same hedges Veritas uses. "Verified" means I can point at shipped work. "Partially supported" means real but smaller than your scale. "Not located in record" means I don't have it, and I'm not going to dress it up.</p>
+
+    <div class="toolbar">
+      <div class="filters" role="group" aria-label="Filter claims by verdict">
+        <button class="chip" type="button" data-f="all" aria-pressed="true">All <span class="n" data-count="all"></span></button>
+        <button class="chip" type="button" data-f="verified" aria-pressed="false">Verified <span class="n" data-count="verified"></span></button>
+        <button class="chip" type="button" data-f="partial" aria-pressed="false">Partially supported <span class="n" data-count="partial"></span></button>
+        <button class="chip" type="button" data-f="notlocated" aria-pressed="false">Not located <span class="n" data-count="notlocated"></span></button>
+      </div>
+      <label class="tamper"><input type="checkbox" id="tamperToggle"/> Tamper mode</label>
+    </div>
+    <p class="tamper-note">Tamper mode is on. Open any claim and edit its text, and watch the seal at the top of the page. Turn it off to restore the sealed record.</p>
+
+    <ul class="claims" id="claimList"></ul>
+  </div>
+</section>
+
+<section class="band-dark" id="ladder">
+  <div class="wrap">
+    <h2 class="sec-h reveal">How Veritas decides what to say.</h2>
+    <p class="sec-p reveal">Each citation in a filing runs five checks: existence, name match, treatment, pincite, and proposition. The roll-up is the worst verdict across them. Pick a rung to see what puts a citation there.</p>
+    <div class="ladder">
+      <div class="rungs" role="tablist" aria-label="Verdict ladder">
+        <button class="rung" role="tab" id="t-risk" aria-controls="p-ladder" aria-selected="true" data-r="risk">Risk <span class="k">worst</span></button>
+        <button class="rung" role="tab" id="t-warning" aria-controls="p-ladder" aria-selected="false" data-r="warning">Warning <span class="k">soft</span></button>
+        <button class="rung" role="tab" id="t-unknown" aria-controls="p-ladder" aria-selected="false" data-r="unknown">Unknown <span class="k">couldn't finish</span></button>
+        <button class="rung" role="tab" id="t-verified" aria-controls="p-ladder" aria-selected="false" data-r="verified">Verified <span class="k">best</span></button>
+        <button class="rung" role="tab" id="t-cert" aria-controls="p-ladder" aria-selected="false" data-r="cert">The certificate <span class="k">custody</span></button>
+      </div>
+      <div class="panel" role="tabpanel" id="p-ladder" aria-labelledby="t-risk"></div>
+    </div>
+  </div>
+</section>
+
+<section class="band-plain" id="unproved">
+  <div class="wrap">
+    <h2 class="sec-h reveal">What this record doesn't prove.</h2>
+    <p class="sec-p reveal">Your posting asks for someone who plainly names what isn't proved. Here's my list, without the varnish.</p>
+    <div class="gaps">
+      <div class="gap"><h3>A whole cloud account, secured end to end, at your scale.</h3><p>I run an AWS stack through Terraform with a CI plan gate, ECS, Lambda, and S3, and I've built fail-closed access tiers. I haven't been the sole owner of an account's network design, KMS key policy, and org-level guardrails for a company like Anthropic.</p></div>
+      <div class="gap"><h3>Large-scale data tooling.</h3><p>I haven't run lakehouse table formats, distributed processing, or a query engine in production. My data work is pipelines and bounded fan-outs at product scale.</p></div>
+      <div class="gap"><h3>Secure enclaves, confidential computing, and clean rooms.</h3><p>I've designed privacy boundaries in application code and in the database. I haven't built on purpose-built hardware or isolated environments for sensitive data.</p></div>
+      <div class="gap"><h3>eDiscovery and records retention at scale.</h3><p>Veritas lives next door, since it audits legal filings and keeps a custody record for each one. I haven't run litigation support or a retention program for a large organization.</p></div>
+      <div class="gap"><h3>Senior+ years.</h3><p>My software engineering title dates from 2026. I've shipped production software as a founder since 2025, and before that I spent a decade in ministry and regulated financial advice.</p></div>
+      <div class="gap"><h3>Living near one of your offices.</h3><p>I live in Pueblo, Colorado with my family. I'd want to talk honestly about the 25% in-office expectation before anyone spends time on a loop.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="band-custody" id="custody">
+  <div class="wrap custody-grid">
+    <div class="custody-side reveal">
+      <h2 class="sec-h">Custody log.</h2>
+      <p class="sec-p">Each entry's hash covers its own text plus the hash before it, so you can't quietly rewrite an earlier year. Open an entry to read it, or walk the chain.</p>
+      <button class="btn btn-dark" type="button" id="verifyChain">Verify the chain</button>
+      <div class="chain-status" id="chainStatus" aria-live="polite"></div>
+    </div>
+    <ol class="log" id="log"></ol>
+  </div>
+</section>
+
+<section class="band-coral">
+  <div class="wrap">
+    <h2>I'd like to build systems your lawyers can show to a skeptic.</h2>
+    <p>My portfolio has the longer story, and LinkedIn is the fastest way to reach me. I'm glad you read this far.</p>
+    <div class="ctas">
+      <a class="btn btn-cream" href="https://portfolio.andrewzoll.com">Portfolio</a>
+      <a class="btn btn-line" href="https://linkedin.com/in/andrewzoll">LinkedIn</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>Andrew Zoll, Pueblo, Colorado. Senior Software Engineer (AI Solutions) at Coder, and founder of <a href="https://veritaslaw.app">Veritas</a>. This page isn't affiliated with or endorsed by Anthropic. Every number on it comes from work I've tracked.</p>
+    <p><a href="https://portfolio.andrewzoll.com">portfolio.andrewzoll.com</a><br/><a href="https://linkedin.com/in/andrewzoll">linkedin.com/in/andrewzoll</a></p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var CLAIMS = [
+    {id:"c01", v:"verified", q:"Demonstrating to skeptical audiences exactly how they worked and why results can be trusted.",
+     a:"Veritas runs five checks on every citation in a legal filing and reports the worst verdict, with the reason, on each one. The output is a Verification Certificate a lawyer can hand to a partner, a client, or an insurer.",
+     r:"veritaslaw.app, verification pipeline and certificate"},
+    {id:"c02", v:"verified", q:"A habit of verifying rather than assuming: designing checks for invariants and plainly naming what isn't proved.",
+     a:"At Coder I built review gates where a model from a different family than the builder has to clear each change, and mutation tests confirm the tests can fail. Across about 1,200 verdicts on about 350 pull requests they recorded more than 430 confirmed defect catches and 21 false flags. One catch was a Redis cluster-mode blocker that passed every test against an in-memory fake.",
+     r:"Coder, cross-family review and mutation gates"},
+    {id:"c03", v:"verified", q:"Ability to translate legal and privacy requirements into sound technical designs and implementations.",
+     a:"I shipped fail-closed Federal data access controls across 26 merged pull requests. Uncleared users never get Federal history in model input, and the tests cover every access tier. In Veritas, a strict projection type keeps privileged brief text off the public certificate, and a test asserts it never appears in the frozen snapshot.",
+     r:"Coder, 26 merged Federal access-control PRs; Veritas certificate projection test"},
+    {id:"c04", v:"verified", q:"Support complex and novel legal requests on controlled infrastructure, with verifiable chain of custody.",
+     a:"Veritas freezes each certificate into an INSERT-only table whose trigger blocks UPDATE and DELETE. The snapshot is canonicalized, hashed with SHA-256, and signed with Ed25519, and public endpoints let anyone verify it with the published key. A rescan rotates the token, so one URL never represents two results. This is product scale, not Anthropic scale.",
+     r:"Veritas, immutable certificates and Ed25519 signing (merged June 2026)"},
+    {id:"c05", v:"verified", q:"Clear communication with nontechnical stakeholders, and an understanding of their needs.",
+     a:"I was a financial advisor under FINRA and SEC oversight and kept 95% of more than 120 households at Edward Jones. Before that I was a pastor. Explaining a hard constraint calmly to someone who didn't ask for jargon is most of what I did for a decade.",
+     r:"Edward Jones 2020 to 2024; Ryleigh Wealth Management"},
+    {id:"c06", v:"verified", q:"Self-directed in a high-change environment, and comfortable resequencing quickly when new needs emerge.",
+     a:"I built and run three products on my own: Veritas, FieldCommand (187,745 lines of TypeScript, solo), and the agent operating system I use to run my work. At Coder I authored 884 merged pull requests between July 27 and October 9, 2026 while priorities moved under me.",
+     r:"Coder; Veritas; FieldCommand"},
+    {id:"c07", v:"verified", q:"Proactively designing new approaches to prevent classes of problems.",
+     a:"In Veritas, rate limits and transport failures resolve to unknown, never risk, and a 'not located' verdict now requires the source to affirmatively return a 404. That closed a whole class of false accusations instead of one bug.",
+     r:"Veritas scan self-verify gate (closed June 2026)"},
+    {id:"c08", v:"partial", q:"Experience designing, building, and operating highly trusted infrastructure and data systems in production, including owning architectural decisions.",
+     a:"I own the architecture of Veritas end to end and maintain an AWS stack at Coder through Terraform with a CI plan gate, ECS tasks, and Lambda jobs. I cut a cold dashboard load from 5 to 10 seconds to about 2 by replacing a serial S3 read loop with a bounded fan-out. It's real production work, at a smaller scale than yours.",
+     r:"Coder AWS stack; Veritas architecture"},
+    {id:"c09", v:"partial", q:"Experience working across large, complex, multi-team environments, including in stacks and code you don't own.",
+     a:"I opened coder/coder#30576 in Coder's upstream Go codebase, and I've built integrations for Salesforce, Granola transcripts, and Slack. I haven't worked inside an organization the size of Anthropic's.",
+     r:"coder/coder#30576"},
+    {id:"c10", v:"partial", q:"Ability to take ownership of a cloud account and secure it end to end on AWS and/or GCP.",
+     a:"I've built least-privilege access tiers, an OAuth authorization server that gates hosted MCP access, and infrastructure changes that go through a CI plan gate. I haven't owned every layer of an account by myself. The full story is in the not-proved list below.",
+     r:"Coder, OAuth authorization server and Terraform"},
+    {id:"c11", v:"partial", q:"Understanding of data processing pipelines, LLM training, and/or provenance and lineage.",
+     a:"Veritas stores every model prompt as a firm-scoped, content-addressed receipt, so a verdict can be traced back to the exact prompt behind it by its SHA-256. I haven't worked on LLM training pipelines.",
+     r:"Veritas prompt receipts"},
+    {id:"c12", v:"notlocated", q:"Proficiency with large-scale data tooling, such as distributed processing, lakehouse table formats, and/or query engines.",
+     a:"Not located in my record. I'd be learning this on the job.",
+     r:"None"},
+    {id:"c13", v:"notlocated", q:"Experience with secure enclaves, confidential computing, clean rooms, or other purpose-built environments for sensitive data.",
+     a:"Not located in my record. My privacy boundaries live in application code and the database, not in hardware isolation.",
+     r:"None"},
+    {id:"c14", v:"notlocated", q:"Background in eDiscovery, litigation support, or records retention at scale.",
+     a:"Not located at scale. Veritas audits legal filings and keeps a custody record per filing, which is adjacent, and I worked under FINRA and SEC recordkeeping rules. I haven't run eDiscovery.",
+     r:"Adjacent only"}
+  ];
+  var LABEL = {verified:"Verified", partial:"Partially supported", notlocated:"Not located in record"};
+  var LOG = [
+    {w:"2013", t:"B.A., Ozark Christian College.", m:"Where I learned to read a text closely and argue from what it actually says."},
+    {w:"2015 to 2017", t:"Senior pastor, Colony, Kansas.", m:"Operations, budgets, and a lot of hard conversations with people who trusted me."},
+    {w:"2017 to 2019", t:"Communications director and IT lead, Flagstaff.", m:"I owned IT for a 1,200-member organization, including SQL Server administration and user access."},
+    {w:"2020 to 2024", t:"Financial advisor, Edward Jones.", m:"FINRA and SEC rules, confidentiality, recordkeeping, and 95% retention across more than 120 households."},
+    {w:"2025", t:"Founder of FieldCommand.", m:"A multi-tenant SaaS for commercial contractors with tenant isolation and role-based access control. I built it solo with AI-assisted development, 187,745 lines of TypeScript."},
+    {w:"2026", t:"Founder of Veritas.", m:"Citation verification for legal filings, with hedged verdicts and a signed Verification Certificate."},
+    {w:"Jul 2026", t:"Senior Software Engineer (AI Solutions), Coder.", m:"An internal AI agent platform on AWS, 26 Federal access-control pull requests, and review gates that check the checks."},
+    {w:"Oct 2026", t:"This page.", m:"Every hash in this log is computed in your browser when the page loads."}
+  ];
+
+  function canon(v){
+    if (Array.isArray(v)) return "[" + v.map(canon).join(",") + "]";
+    if (v && typeof v === "object") return "{" + Object.keys(v).sort().map(function(k){return JSON.stringify(k)+":"+canon(v[k]);}).join(",") + "}";
+    return JSON.stringify(v);
+  }
+  function sha256(str){
+    if (!(window.crypto && crypto.subtle)) return Promise.resolve(null);
+    return crypto.subtle.digest("SHA-256", new TextEncoder().encode(str)).then(function(b){
+      return Array.prototype.map.call(new Uint8Array(b), function(x){return x.toString(16).padStart(2,"0");}).join("");
+    });
+  }
+  var reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c];});}
+
+  /* claims */
+  var list = document.getElementById("claimList");
+  list.innerHTML = CLAIMS.map(function(c){
+    return '<li class="claim" data-v="'+c.v+'" id="'+c.id+'">' +
+      '<button class="claim-head" type="button" aria-expanded="false" aria-controls="'+c.id+'-b">' +
+        '<span class="claim-q">'+esc(c.q)+'</span>' +
+        '<span class="verdict v-'+c.v+'">'+LABEL[c.v]+'</span>' +
+        '<span class="chev" aria-hidden="true">+</span></button>' +
+      '<div class="claim-body" id="'+c.id+'-b"><div><div class="claim-inner">' +
+        '<p data-id="'+c.id+'">'+esc(c.a)+'</p>' +
+        '<div class="receipt"><b>Receipt</b>'+esc(c.r)+'</div>' +
+      '</div></div></div></li>';
+  }).join("");
+  ["all","verified","partial","notlocated"].forEach(function(k){
+    var n = k==="all" ? CLAIMS.length : CLAIMS.filter(function(c){return c.v===k;}).length;
+    document.querySelector('[data-count="'+k+'"]').textContent = n;
+  });
+  list.addEventListener("click", function(e){
+    var head = e.target.closest(".claim-head"); if (!head) return;
+    var li = head.parentNode, open = !li.classList.contains("open");
+    li.classList.toggle("open", open); head.setAttribute("aria-expanded", String(open));
+  });
+  document.querySelectorAll(".chip").forEach(function(chip){
+    chip.addEventListener("click", function(){
+      document.querySelectorAll(".chip").forEach(function(c){c.setAttribute("aria-pressed","false");});
+      chip.setAttribute("aria-pressed","true");
+      var f = chip.getAttribute("data-f");
+      document.querySelectorAll(".claim").forEach(function(li){ li.hidden = !(f==="all" || li.getAttribute("data-v")===f); });
+    });
+  });
+
+  /* seal */
+  var sealed = null;
+  var stamp = document.getElementById("stamp"), core = document.getElementById("core"), mark = document.getElementById("mark");
+  var statusEl = document.getElementById("sealStatus"), nowEl = document.getElementById("digestNow"), metaEl = document.getElementById("sealMeta");
+  function currentRecord(){
+    return CLAIMS.map(function(c){
+      var p = list.querySelector('p[data-id="'+c.id+'"]');
+      return {id:c.id, claim:c.q, verdict:c.v, evidence:p ? p.textContent : c.a, receipt:c.r};
+    });
+  }
+  function scramble(el, finalText){
+    if (reduce) { el.textContent = finalText; return; }
+    var hex = "0123456789abcdef", i = 0, len = finalText.length;
+    var t = setInterval(function(){
+      i += 4;
+      var out = finalText.slice(0, i);
+      for (var j = i; j < len; j++) out += hex[(Math.random()*16)|0];
+      el.textContent = out;
+      if (i >= len) { clearInterval(t); el.textContent = finalText; }
+    }, 18);
+  }
+  var lastBroken = false;
+  function reseal(first){
+    sha256(canon(currentRecord())).then(function(h){
+      if (h === null){ statusEl.textContent = "Your browser can't compute SHA-256 here, so the seal is unavailable."; nowEl.textContent = "unavailable"; return; }
+      if (first){ sealed = h; scramble(nowEl, h); statusEl.textContent = "Seal intact. The record matches what was sealed."; return; }
+      var ok = h === sealed;
+      if (ok){
+        nowEl.textContent = h;
+        statusEl.textContent = "Seal intact. The record matches what was sealed.";
+        statusEl.classList.remove("bad"); core.setAttribute("fill","#cc785c");
+        mark.setAttribute("d","M44 57 l8 8 l16 -18");
+        metaEl.textContent = "14 claims sealed when this page loaded.";
+        if (lastBroken){ stamp.classList.remove("pressed"); void stamp.offsetWidth; stamp.classList.add("pressed"); }
+      } else {
+        var k = 0; while (k < h.length && h[k] === sealed[k]) k++;
+        nowEl.innerHTML = esc(h.slice(0,k)) + '<span class="diff">' + esc(h.slice(k)) + '</span><span class="cmp">sealed: ' + esc(sealed) + '</span>';
+        statusEl.textContent = "Digest mismatch. This record changed after it was sealed.";
+        statusEl.classList.add("bad"); core.setAttribute("fill","#c64545");
+        mark.setAttribute("d","M47 47 l18 18 M65 47 l-18 18");
+        metaEl.textContent = "One edited character is enough to change the whole digest.";
+        if (!lastBroken){ stamp.classList.remove("broken"); void stamp.offsetWidth; stamp.classList.add("broken"); }
+      }
+      lastBroken = !ok;
+    });
+  }
+  reseal(true);
+
+  var toggle = document.getElementById("tamperToggle"), band = document.getElementById("claims");
+  list.addEventListener("input", function(e){ if (e.target.matches('p[data-id]')) reseal(false); });
+  toggle.addEventListener("change", function(){
+    var on = toggle.checked;
+    band.classList.toggle("tampering", on);
+    list.querySelectorAll("p[data-id]").forEach(function(p){
+      if (on){ p.setAttribute("contenteditable","true"); p.setAttribute("spellcheck","false"); }
+      else {
+        p.removeAttribute("contenteditable");
+        var c = CLAIMS.filter(function(x){return x.id===p.getAttribute("data-id");})[0];
+        p.textContent = c.a;
+      }
+    });
+    if (on){
+      var first = list.querySelector(".claim:not([hidden])");
+      if (first && !first.classList.contains("open")) first.querySelector(".claim-head").click();
+    }
+    reseal(false);
+  });
+  document.getElementById("jumpTamper").addEventListener("click", function(){
+    if (!toggle.checked){ toggle.checked = true; toggle.dispatchEvent(new Event("change")); }
+    band.scrollIntoView({behavior: reduce ? "auto" : "smooth"});
+  });
+
+  /* verdict ladder */
+  var PANELS = {
+    risk:{h:"Risk", p:"At least one check found a serious problem. The citation wasn't located in the reporter, the cited names are very different from the actual case, or the quote doesn't appear anywhere in the opinion. Even here the copy says 'Not located in reporter,' never 'Fabricated.'",
+      c:'<span class="c">// a not-located verdict needs an affirmative 404</span>\nlookup(<span class="s">"123 F.3d 456"</span>) <span class="c">=&gt;</span> { kind: <span class="t">"not_found"</span> }\nverdict <span class="c">=&gt;</span> <span class="t">"risk"</span>\ncopy    <span class="c">=&gt;</span> <span class="s">"Not located in reporter. Verify by hand."</span>'},
+    warning:{h:"Warning", p:"A soft problem. The quote was found on a different page than the pincite, the names only partly match, or the opinion is non-precedential. Each one renders a suggested attorney action from a frozen table, never from a model.",
+      c:'<span class="c">// render-only, deterministic, keyed by verdict:kind</span>\n<span class="s">"warning:pincite"</span>   <span class="c">=&gt;</span> <span class="s">"Compare the quoted language against the opinion at the cited page."</span>\n<span class="s">"warning:treatment"</span> <span class="c">=&gt;</span> <span class="s">"Confirm this authority is still good law before relying on it."</span>'},
+    unknown:{h:"Unknown", p:"A check couldn't finish, because of a rate limit, a transport error, or a failed model call. Unknown is not an accusation, and an infrastructure failure can never become a risk verdict. Out-of-corpus citations land here too, instead of a confident pass.",
+      c:'<span class="c">// infra failure degrades to unknown, never risk</span>\nlookup(<span class="s">"329 U.S. 495"</span>) <span class="c">=&gt;</span> { kind: <span class="t">"rate_limited"</span> }\nverdict <span class="c">=&gt;</span> <span class="t">"unknown"</span>'},
+    verified:{h:"Verified", p:"Every check that ran passed: the citation exists, the names match, the opinion is precedential, and the quote sits at the cited page. Proposition checks run only on a deep scan, and a standard scan never charges for one or flags one.",
+      c:'existence <span class="c">ok</span>   names <span class="c">ok</span>   treatment <span class="c">ok</span>   pincite <span class="c">ok</span>\nroll-up <span class="c">=&gt;</span> worst(<span class="t">"verified"</span>, ...) <span class="c">=&gt;</span> <span class="t">"verified"</span>'},
+    cert:{h:"The certificate", p:"The result freezes into a row that can't be updated or deleted. Its snapshot is canonicalized, hashed with SHA-256, and signed with Ed25519, so a skeptic can check it with the public key and doesn't have to trust my database. The seal at the top of this page works the same way in miniature.",
+      c:'snapshot  <span class="c">=&gt;</span> canonical JSON (sorted keys)\ndigest    <span class="c">=&gt;</span> sha256(snapshot)\nsignature <span class="c">=&gt;</span> ed25519.sign(digest, <span class="s">private key in env, never in repo</span>)\nverify    <span class="c">=&gt;</span> GET /api/certificates/verify  +  /api/certificates/public-key'}
+  };
+  var panel = document.getElementById("p-ladder");
+  function showRung(r){
+    document.querySelectorAll(".rung").forEach(function(b){ b.setAttribute("aria-selected", String(b.getAttribute("data-r")===r)); });
+    var d = PANELS[r];
+    panel.setAttribute("aria-labelledby","t-"+r);
+    panel.innerHTML = "<h3>"+d.h+"</h3><p>"+esc(d.p)+"</p><pre>"+d.c+"</pre>";
+  }
+  document.querySelectorAll(".rung").forEach(function(b){ b.addEventListener("click", function(){ showRung(b.getAttribute("data-r")); }); });
+  document.querySelector(".rungs").addEventListener("keydown", function(e){
+    if (e.key!=="ArrowDown" && e.key!=="ArrowUp" && e.key!=="ArrowRight" && e.key!=="ArrowLeft") return;
+    var tabs = Array.prototype.slice.call(document.querySelectorAll(".rung"));
+    var i = tabs.indexOf(document.activeElement); if (i<0) return;
+    e.preventDefault();
+    var n = tabs[(i + ((e.key==="ArrowDown"||e.key==="ArrowRight") ? 1 : tabs.length-1)) % tabs.length];
+    n.focus(); n.click();
+  });
+  showRung("risk");
+
+  /* custody chain */
+  var logEl = document.getElementById("log"), chainHashes = [];
+  logEl.innerHTML = LOG.map(function(e,i){
+    return '<li class="entry" data-i="'+i+'"><span class="node"></span><button type="button" aria-expanded="false">' +
+      '<span class="when">'+esc(e.w)+'</span><span class="what">'+esc(e.t)+'</span>' +
+      '<span class="more">'+esc(e.m)+'</span><span class="h" data-h="'+i+'">hash pending</span></button></li>';
+  }).join("");
+  (function build(){
+    var prev = "0".repeat(64), p = Promise.resolve();
+    LOG.forEach(function(e,i){
+      p = p.then(function(){ return sha256(prev + canon(e)); }).then(function(h){
+        if (h===null) return;
+        chainHashes[i] = h; prev = h;
+        document.querySelector('[data-h="'+i+'"]').textContent = "sha256(prev + entry) = " + h.slice(0,24) + "…";
+      });
+    });
+  })();
+  logEl.addEventListener("click", function(e){
+    var b = e.target.closest("button"); if (!b) return;
+    var li = b.parentNode, open = !li.classList.contains("open");
+    li.classList.toggle("open", open); b.setAttribute("aria-expanded", String(open));
+  });
+  var chainBtn = document.getElementById("verifyChain"), chainStatus = document.getElementById("chainStatus");
+  chainBtn.addEventListener("click", function(){
+    var entries = logEl.querySelectorAll(".entry");
+    entries.forEach(function(li){ li.classList.remove("checked","checking"); });
+    chainBtn.disabled = true; chainStatus.className = "chain-status"; chainStatus.textContent = "Walking the chain…";
+    var prev = "0".repeat(64), i = 0;
+    (function step(){
+      if (i >= LOG.length){ chainBtn.disabled = false; chainStatus.className = "chain-status ok"; chainStatus.textContent = "All " + LOG.length + " links recomputed and matched. The chain is intact."; return; }
+      var li = entries[i]; li.classList.add("checking");
+      sha256(prev + canon(LOG[i])).then(function(h){
+        setTimeout(function(){
+          li.classList.remove("checking");
+          if (h === null){ chainBtn.disabled = false; chainStatus.textContent = "Your browser can't compute SHA-256 here."; return; }
+          if (h !== chainHashes[i]){ chainBtn.disabled = false; chainStatus.textContent = "Link " + (i+1) + " didn't match."; return; }
+          li.classList.add("checked"); prev = h; i++; step();
+        }, reduce ? 0 : 220);
+      });
+    })();
+  });
+
+  /* reveal */
+  var els = document.querySelectorAll(".reveal");
+  if (reduce || !("IntersectionObserver" in window)) { els.forEach(function(el){el.classList.add("in");}); }
+  else {
+    var io = new IntersectionObserver(function(entries){ entries.forEach(function(en){ if (en.isIntersecting){ en.target.classList.add("in"); io.unobserve(en.target); } }); }, {threshold:.15});
+    els.forEach(function(el){ io.observe(el); });
+  }
+})();
+</script>
+</body>
+</html>
