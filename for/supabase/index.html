@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta name="robots" content="noindex, nofollow"/>
+<title>Built for Supabase · Andrew Zoll</title>
+<meta name="description" content="Andrew Zoll's application for the AI Platform Engineer role, built as a working dashboard you can query."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --emerald:#3ecf8e; --emerald-deep:#24b47e; --emerald-soft:#4ade80;
+  --ink:#171717; --ink-2:#212121; --mute:#707070; --mute-2:#9a9a9a; --faint:#b2b2b2;
+  --canvas:#ffffff; --canvas-soft:#fafafa; --night:#1c1c1c; --night-2:#202020; --night-3:#262626; --night-line:#2e2e2e; --night-line-2:#3a3a3a;
+  --hair:#dfdfdf; --hair-strong:#c7c7c7; --hair-cool:#ededed;
+  --warn:#ffdb13; --err:#ff6b5e; --violet:#8b7ae6;
+  --sans:Inter,Circular,'Helvetica Neue',Helvetica,Arial,sans-serif;
+  --mono:ui-monospace,Menlo,Monaco,Consolas,'Liberation Mono',monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--canvas);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+button{font-family:inherit;cursor:pointer}
+.wrap{max-width:1280px;margin:0 auto;padding-inline:24px}
+.mono{font-family:var(--mono)}
+
+/* nav */
+.nav{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.92);backdrop-filter:saturate(1.4) blur(8px);border-bottom:1px solid var(--hair-cool)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:60px;gap:16px}
+.mark{display:flex;align-items:center;gap:10px;white-space:nowrap;font-weight:500;letter-spacing:-.01em;text-decoration:none}
+.mark .bolt{width:22px;height:22px;border-radius:6px;background:var(--night);display:grid;place-items:center}
+.mark .bolt i{width:8px;height:8px;border-radius:50%;background:var(--emerald);box-shadow:0 0 0 0 rgba(62,207,142,.6);animation:pulse 2.4s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(62,207,142,.55)}70%{box-shadow:0 0 0 7px rgba(62,207,142,0)}100%{box-shadow:0 0 0 0 rgba(62,207,142,0)}}
+.navlinks{display:flex;align-items:center;gap:22px;font-size:14px;color:var(--mute)}
+.navlinks a{text-decoration:none}
+.navlinks a:hover{color:var(--ink)}
+.btn{display:inline-flex;align-items:center;gap:8px;border-radius:6px;padding:8px 16px;font-size:14px;font-weight:500;line-height:1;border:1px solid transparent;text-decoration:none;transition:background .15s,border-color .15s,transform .15s}
+.btn-green{background:var(--emerald);color:var(--ink)}
+.btn-green:hover{background:var(--emerald-deep)}
+.btn-outline{background:var(--canvas);color:var(--ink);border-color:var(--hair-strong)}
+.btn-outline:hover{border-color:var(--ink)}
+.btn-dark{background:var(--night);color:#fff}
+.btn-dark:hover{background:#000}
+.btn:active{transform:translateY(1px)}
+.mark-sub{color:#9a9a9a;font-weight:400}
+.navlinks .btn{white-space:nowrap}
+@media (max-width:720px){.navlinks .hide-sm{display:none}.mark-sub{display:none}}
+
+/* hero */
+.hero{padding-block:72px 40px;text-align:center}
+.pill{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--hair);border-radius:9999px;padding:4px 12px 4px 4px;font-size:13px;color:var(--mute);background:var(--canvas)}
+.pill b{background:var(--emerald);color:var(--ink);border-radius:9999px;padding:2px 8px;font-weight:500;font-size:12px}
+.hero h1{margin:22px auto 0;max-width:15ch;font-size:clamp(36px,6vw,64px);font-weight:500;line-height:1.1;letter-spacing:-.03em}
+.hero h1 .g{color:var(--emerald-deep)}
+.hero .lede{margin:22px auto 0;max-width:60ch;font-size:18px;line-height:1.55;color:var(--mute)}
+.hero .lede strong{color:var(--ink);font-weight:500}
+.hero .ctas{margin-top:30px;display:flex;justify-content:center;gap:12px;flex-wrap:wrap}
+.hero .meta{margin-top:18px;font-size:13px;color:var(--mute-2)}
+
+/* studio */
+.studio-band{padding-block:8px 88px;scroll-margin-top:72px}
+#why,#plans{scroll-margin-top:60px}
+.studio{position:relative;border-radius:12px;background:var(--night);color:#ededed;border:1px solid #111;box-shadow:0 16px 48px rgba(0,0,0,.12),0 8px 24px rgba(0,0,0,.08);overflow:hidden;display:grid;grid-template-columns:220px 1fr;min-height:640px;font-size:14px}
+.side{background:var(--night-2);border-right:1px solid var(--night-line);display:flex;flex-direction:column}
+.proj{padding:14px 14px 12px;border-bottom:1px solid var(--night-line)}
+.proj .org{font-size:12px;color:var(--mute-2)}
+.proj .name{display:flex;align-items:center;gap:8px;margin-top:2px;font-weight:500}
+.tag-prod{font-size:10px;letter-spacing:.06em;border:1px solid #2f5f49;color:var(--emerald);border-radius:9999px;padding:1px 7px}
+.sidenav{list-style:none;margin:0;padding:10px 8px;display:flex;flex-direction:column;gap:2px}
+.sidenav .grp{font-size:11px;color:#7b7b7b;text-transform:uppercase;letter-spacing:.06em;padding:12px 10px 4px}
+.navbtn{width:100%;display:flex;align-items:center;gap:10px;background:transparent;border:0;color:#bdbdbd;padding:7px 10px;border-radius:6px;font-size:13.5px;text-align:left}
+.navbtn svg{width:16px;height:16px;flex:none;opacity:.8}
+.navbtn:hover{background:var(--night-3);color:#fff}
+.navbtn[aria-selected="true"]{background:#2a2a2a;color:#fff}
+.navbtn[aria-selected="true"] svg{color:var(--emerald);opacity:1}
+.navbtn .count{margin-left:auto;font-size:11px;color:#8a8a8a;font-family:var(--mono)}
+.side-foot{margin-top:auto;padding:12px 14px;border-top:1px solid var(--night-line);font-size:12px;color:#8a8a8a;display:flex;align-items:center;gap:8px}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--emerald)}
+.main{display:flex;flex-direction:column;min-width:0}
+.bar{display:flex;align-items:center;gap:10px;height:46px;padding:0 16px;border-bottom:1px solid var(--night-line);font-size:13px;color:#a0a0a0;flex-wrap:nowrap;overflow:hidden}
+.bar .crumb b{color:#ededed;font-weight:500}
+.bar .sp{flex:1}
+.bar .connect{background:transparent;border:1px solid var(--night-line-2);color:#ededed;border-radius:6px;padding:5px 10px;font-size:12.5px;display:inline-flex;gap:6px;align-items:center}
+.bar .connect:hover{border-color:var(--emerald)}
+.pane{display:none;flex:1;min-height:0;flex-direction:column}
+.pane.on{display:flex;animation:fade .25s ease}
+@keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+.pane-head{display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid var(--night-line);flex-wrap:wrap}
+.pane-head h3{margin:0;font-size:15px;font-weight:500;color:#fff}
+.pane-head p{margin:0;color:#9a9a9a;font-size:13px}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{background:transparent;border:1px solid var(--night-line-2);color:#bdbdbd;border-radius:9999px;padding:3px 10px;font-size:12px}
+.chip:hover{color:#fff}
+.chip[aria-pressed="true"]{border-color:var(--emerald);color:var(--emerald);background:rgba(62,207,142,.08)}
+
+/* grid table */
+.gridwrap{overflow:auto;flex:1}
+table.grid{border-collapse:collapse;width:100%;min-width:760px;font-size:13px}
+.grid th{position:sticky;top:0;background:var(--night-2);text-align:left;font-weight:500;color:#a0a0a0;padding:8px 12px;border-bottom:1px solid var(--night-line);border-right:1px solid var(--night-line);white-space:nowrap}
+.grid th .ty{color:#6b6b6b;font-family:var(--mono);font-size:11px;margin-left:6px}
+.grid td{padding:8px 12px;border-bottom:1px solid var(--night-line);border-right:1px solid var(--night-line);vertical-align:top;color:#dcdcdc}
+.grid td.idx{color:#6b6b6b;font-family:var(--mono);font-size:12px;width:44px}
+.grid tbody tr{cursor:pointer}
+.grid tbody tr:hover td{background:#232323}
+.grid tbody tr.sel td{background:rgba(62,207,142,.07)}
+.trunc{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;max-width:46ch}
+.badge{display:inline-block;font-family:var(--mono);font-size:11px;border-radius:4px;padding:1px 6px;border:1px solid}
+.b-strong{color:var(--emerald);border-color:#2f5f49;background:rgba(62,207,142,.07)}
+.b-partial{color:var(--warn);border-color:#5f5520;background:rgba(255,219,19,.06)}
+.b-gap{color:var(--err);border-color:#6a2e2a;background:rgba(255,107,94,.07)}
+
+/* row drawer */
+.drawer{position:absolute;top:0;right:0;bottom:0;width:min(420px,100%);background:var(--night-2);border-left:1px solid var(--night-line-2);transform:translateX(102%);transition:transform .28s cubic-bezier(.2,.8,.2,1);z-index:5;display:flex;flex-direction:column;box-shadow:-16px 0 48px rgba(0,0,0,.35)}
+.drawer.open{transform:none}
+.drawer header{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid var(--night-line)}
+.drawer header b{font-weight:500}
+.drawer .x{background:transparent;border:1px solid var(--night-line-2);color:#bdbdbd;border-radius:6px;padding:4px 9px}
+.drawer .body{padding:16px;overflow:auto;display:flex;flex-direction:column;gap:14px}
+.field label{display:block;font-size:12px;color:#8a8a8a;margin-bottom:4px;font-family:var(--mono)}
+.field div{background:var(--night);border:1px solid var(--night-line);border-radius:6px;padding:9px 11px;color:#e6e6e6;line-height:1.5}
+
+/* sql editor */
+.sqlwrap{display:grid;grid-template-columns:200px 1fr;flex:1;min-height:0}
+.snips{border-right:1px solid var(--night-line);padding:10px 8px;display:flex;flex-direction:column;gap:2px;overflow:auto}
+.snips .grp{font-size:11px;color:#7b7b7b;text-transform:uppercase;letter-spacing:.06em;padding:4px 8px 6px}
+.snip{background:transparent;border:0;color:#bdbdbd;text-align:left;padding:6px 8px;border-radius:6px;font-size:12.5px;font-family:var(--mono)}
+.snip:hover{background:var(--night-3);color:#fff}
+.snip[aria-pressed="true"]{background:#2a2a2a;color:var(--emerald)}
+.editor{display:flex;flex-direction:column;min-width:0;min-height:0}
+.edit-top{display:flex;align-items:center;gap:8px;padding:8px 12px;border-bottom:1px solid var(--night-line);font-size:12px;color:#8a8a8a}
+.edit-top .sp{flex:1}
+.run{background:var(--emerald);color:var(--ink);border:0;border-radius:6px;padding:6px 12px;font-size:12.5px;font-weight:500;display:inline-flex;align-items:center;gap:8px}
+.run:hover{background:var(--emerald-deep)}
+.run kbd{font-family:var(--mono);font-size:10.5px;background:rgba(0,0,0,.15);border-radius:4px;padding:1px 5px}
+textarea.sql{width:100%;min-height:118px;resize:vertical;background:var(--night);color:#e6e6e6;border:0;border-bottom:1px solid var(--night-line);padding:14px 16px;font-family:var(--mono);font-size:13.5px;line-height:1.6;outline:none;caret-color:var(--emerald)}
+.result-head{display:flex;align-items:center;gap:10px;padding:8px 12px;font-size:12px;color:#8a8a8a;border-bottom:1px solid var(--night-line);font-family:var(--mono)}
+.result-head .ok{color:var(--emerald)}
+.result-head .bad{color:var(--err)}
+.sqlerr{margin:14px 16px;padding:12px 14px;border:1px solid #6a2e2a;background:rgba(255,107,94,.06);border-radius:6px;color:#ffb3ab;font-family:var(--mono);font-size:12.5px;white-space:pre-wrap}
+
+/* policies */
+.pol{padding:16px;display:grid;grid-template-columns:1fr 1fr;gap:16px;overflow:auto}
+.code{background:#151515;border:1px solid var(--night-line);border-radius:6px;padding:14px 16px;font-family:var(--mono);font-size:12.5px;line-height:1.65;color:#d6d6d6;white-space:pre;overflow:auto}
+.code .k{color:var(--emerald)} .code .s{color:#f2c879} .code .c{color:#6b6b6b} .code .f{color:var(--violet)}
+.tester{border:1px solid var(--night-line);border-radius:8px;padding:16px;display:flex;flex-direction:column;gap:12px;background:var(--night-2)}
+.tester h4{margin:0;font-size:14px;font-weight:500;color:#fff}
+.seg{display:inline-flex;border:1px solid var(--night-line-2);border-radius:6px;overflow:hidden;width:max-content}
+.seg button{background:transparent;border:0;color:#bdbdbd;padding:6px 12px;font-size:12.5px}
+.seg button[aria-pressed="true"]{background:#2e2e2e;color:#fff}
+.tester .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.tester .act{background:transparent;border:1px solid var(--night-line-2);color:#e6e6e6;border-radius:6px;padding:6px 10px;font-size:12.5px;font-family:var(--mono)}
+.tester .act:hover{border-color:var(--emerald)}
+.consent{display:flex;align-items:center;gap:8px;font-size:13px;color:#bdbdbd}
+.consent input{accent-color:var(--emerald)}
+.out{min-height:84px;background:#151515;border:1px solid var(--night-line);border-radius:6px;padding:12px 14px;font-family:var(--mono);font-size:12.5px;line-height:1.55;white-space:pre-wrap;color:#bdbdbd}
+.out .e{color:var(--err)} .out .o{color:var(--emerald)}
+.shake{animation:shake .38s}
+@keyframes shake{0%,100%{transform:none}20%{transform:translateX(-5px)}40%{transform:translateX(5px)}60%{transform:translateX(-3px)}80%{transform:translateX(3px)}}
+
+/* logs */
+.logtools{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.search{background:var(--night);border:1px solid var(--night-line-2);color:#e6e6e6;border-radius:6px;padding:6px 10px;font-size:13px;font-family:var(--mono);min-width:220px;outline:none}
+.search:focus{border-color:var(--emerald)}
+.logs{overflow:auto;flex:1;font-family:var(--mono);font-size:12.5px}
+.log{border-bottom:1px solid var(--night-line)}
+.log button{width:100%;display:grid;grid-template-columns:96px 64px 120px 1fr 16px;gap:12px;align-items:center;text-align:left;background:transparent;border:0;color:#d6d6d6;padding:9px 16px;font-family:var(--mono);font-size:12.5px}
+.log button:hover{background:#232323}
+.lv{font-size:11px;border-radius:4px;padding:1px 6px;text-align:center;border:1px solid}
+.lv-ERROR{color:var(--err);border-color:#6a2e2a}
+.lv-WARN{color:var(--warn);border-color:#5f5520}
+.lv-INFO{color:#8ab4ff;border-color:#2b3f66}
+.log .ts{color:#7b7b7b}
+.log .svc{color:#a0a0a0}
+.log .chev{transition:transform .2s;color:#7b7b7b}
+.log.open .chev{transform:rotate(90deg)}
+.log .detail{display:none;padding:4px 16px 16px 16px;color:#cfcfcf;font-family:var(--sans);font-size:13.5px;line-height:1.6}
+.log.open .detail{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.log .detail div{background:#151515;border:1px solid var(--night-line);border-radius:6px;padding:10px 12px}
+.log .detail b{display:block;font-family:var(--mono);font-size:11px;color:#8a8a8a;font-weight:400;margin-bottom:4px;text-transform:uppercase;letter-spacing:.05em}
+.empty{padding:28px 16px;color:#8a8a8a;font-size:13px}
+
+/* cron */
+.cron{display:grid;grid-template-columns:minmax(260px,340px) 1fr;flex:1;min-height:0}
+.jobs{border-right:1px solid var(--night-line);overflow:auto}
+.job{width:100%;display:flex;flex-direction:column;gap:3px;text-align:left;background:transparent;border:0;border-bottom:1px solid var(--night-line);color:#d6d6d6;padding:11px 16px}
+.job:hover{background:#232323}
+.job[aria-pressed="true"]{background:rgba(62,207,142,.07);box-shadow:inset 2px 0 0 var(--emerald)}
+.job .jn{font-family:var(--mono);font-size:13px;color:#fff;display:flex;align-items:center;gap:8px}
+.job .js{font-size:12px;color:#8a8a8a;font-family:var(--mono)}
+.jobdetail{padding:16px;overflow:auto;display:grid;grid-template-columns:1fr 1fr;gap:12px;align-content:start}
+.jobdetail .field{grid-column:span 1}
+.jobdetail .wide{grid-column:1 / -1}
+.toggle{width:30px;height:17px;border-radius:9999px;background:var(--emerald);position:relative;flex:none}
+.toggle::after{content:"";position:absolute;top:2px;right:2px;width:13px;height:13px;border-radius:50%;background:#111}
+
+/* advisors */
+.adv{overflow:auto;flex:1}
+.advrow{border-bottom:1px solid var(--night-line)}
+.advrow button{width:100%;display:flex;gap:12px;align-items:flex-start;text-align:left;background:transparent;border:0;color:#e6e6e6;padding:14px 16px}
+.advrow button:hover{background:#232323}
+.advrow .t{font-weight:500}
+.advrow .d{font-size:13px;color:#9a9a9a;margin-top:2px}
+.advrow .fix{display:none;margin:0 16px 16px 92px;padding:12px 14px;background:#151515;border:1px solid var(--night-line);border-radius:6px;font-size:13.5px;line-height:1.6;color:#cfcfcf}
+.advrow.open .fix{display:block}
+.advrow .fix b{font-family:var(--mono);font-size:11px;color:var(--emerald);font-weight:400;text-transform:uppercase;letter-spacing:.05em;display:block;margin-bottom:4px}
+
+.toast{position:absolute;left:50%;bottom:18px;transform:translate(-50%,20px);opacity:0;background:#ededed;color:var(--ink);border-radius:8px;padding:10px 14px;font-size:13px;box-shadow:0 8px 24px rgba(0,0,0,.3);transition:all .25s;pointer-events:none;z-index:9;max-width:90%}
+.toast.show{opacity:1;transform:translate(-50%,0);pointer-events:auto}
+.toast a{color:var(--emerald-deep);font-weight:500}
+
+@media (max-width:900px){
+  .studio{grid-template-columns:1fr;min-height:0}
+  .side{border-right:0;border-bottom:1px solid var(--night-line)}
+  .proj,.side-foot,.sidenav .grp{display:none}
+  .sidenav{flex-direction:row;overflow-x:auto;padding:8px}
+  .navbtn{white-space:nowrap;width:auto}
+  .navbtn .count{display:none}
+  .pane{min-height:560px}
+  .sqlwrap,.cron{grid-template-columns:1fr}
+  .snips{flex-direction:row;overflow-x:auto;border-right:0;border-bottom:1px solid var(--night-line)}
+  .snips .grp{display:none}
+  .snip{white-space:nowrap}
+  .jobs{border-right:0;border-bottom:1px solid var(--night-line);max-height:220px}
+  .pol{grid-template-columns:1fr}
+  .log button{grid-template-columns:64px 1fr 16px}
+  .log .ts,.log .svc{display:none}
+  .log.open .detail{grid-template-columns:1fr}
+  .advrow .fix{margin-left:16px}
+  .jobdetail{grid-template-columns:1fr}
+  .bar .crumb .opt{display:none}
+}
+
+/* below studio */
+.band{padding-block:88px;border-top:1px solid var(--hair-cool)}
+.band.soft{background:var(--canvas-soft)}
+.eyebrow{font-size:13px;color:var(--emerald-deep);font-weight:500;font-family:var(--mono)}
+.band h2{margin:10px 0 0;font-size:clamp(28px,4vw,48px);font-weight:500;letter-spacing:-.03em;line-height:1.1;max-width:20ch}
+.band .sub{margin-top:14px;color:var(--mute);font-size:18px;max-width:62ch}
+.cards{margin-top:40px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.card{background:var(--canvas);border:1px solid var(--hair);border-radius:12px;padding:32px;transition:box-shadow .2s,transform .2s}
+.card:hover{box-shadow:0 8px 24px rgba(0,0,0,.08);transform:translateY(-2px)}
+.card h3{margin:0;font-size:22px;font-weight:500;letter-spacing:-.01em}
+.card p{margin:12px 0 0;color:var(--mute);font-size:15.5px}
+.card .num{font-family:var(--mono);font-size:13px;color:var(--ink);background:var(--canvas-soft);border:1px solid var(--hair-cool);border-radius:9999px;padding:2px 10px;display:inline-block;margin-bottom:16px}
+.tiers{margin-top:40px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px;align-items:stretch}
+.tier{border:1px solid var(--hair);border-radius:12px;padding:32px;display:flex;flex-direction:column;gap:10px;background:var(--canvas)}
+.tier .tn{font-size:22px;font-weight:500}
+.tier .price{font-size:28px;font-weight:500;letter-spacing:-.02em}
+.tier .price small{font-size:14px;color:var(--mute);font-weight:400;letter-spacing:0}
+.tier ul{margin:6px 0 18px;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px;color:var(--mute);font-size:15px}
+.tier li::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--emerald);margin-right:10px;vertical-align:middle}
+.tier .btn{margin-top:auto;justify-content:center}
+.tier.feat{background:var(--night);color:#fff;border-color:var(--night)}
+.tier.feat ul{color:#bdbdbd}
+.tier.feat .price small{color:#9a9a9a}
+@media (max-width:900px){.cards,.tiers{grid-template-columns:1fr}}
+
+footer{border-top:1px solid var(--hair-cool);padding-block:48px 64px;color:var(--mute);font-size:13px}
+footer .wrap{display:flex;flex-direction:column;gap:14px}
+footer .disclaim{max-width:78ch;line-height:1.6}
+footer .row{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<nav class="nav"><div class="wrap">
+  <a class="mark" href="#top"><span class="bolt"><i></i></span>andrew zoll <span class="mark-sub">/ for supabase</span></a>
+  <div class="navlinks">
+    <a class="hide-sm" href="#studio">Dashboard</a>
+    <a class="hide-sm" href="#why">Why me</a>
+    <a class="hide-sm" href="https://portfolio.andrewzoll.com">Portfolio</a>
+    <a class="btn btn-green" href="#plans">Get in touch</a>
+  </div>
+</div></nav>
+
+<header class="hero wrap" id="top">
+  <span class="pill"><b>Application</b> AI Platform Engineer, Business Operations</span>
+  <h1>I build the part that decides whether an agent <span class="g">ships</span>.</h1>
+  <p class="lede">Hi, I'm Andrew. I'm a Senior Software Engineer (AI Solutions) at <strong>Coder</strong>, where I've built an internal AI agent platform and the review gates that run underneath my own engineering. I made this page as a little project dashboard instead of a resume, because your product taught me that the best argument is a working one. Every pane below actually works. Go ahead and query me.</p>
+  <div class="ctas">
+    <button class="btn btn-green" data-goto="sql" data-snippet="all">Run the receipts</button>
+    <button class="btn btn-outline" data-goto="advisors">Read the gaps first</button>
+  </div>
+  <p class="meta mono">Pueblo, Colorado · fully remote · US citizen</p>
+</header>
+
+<section class="studio-band wrap" id="studio">
+  <div class="studio" id="studioEl">
+    <aside class="side">
+      <div class="proj">
+        <div class="org">andrew-zoll's org</div>
+        <div class="name">supabase-application <span class="tag-prod">PRODUCTION</span></div>
+      </div>
+      <ul class="sidenav" role="tablist" aria-label="Dashboard sections">
+        <li class="grp">Database</li>
+        <li><button class="navbtn" role="tab" data-pane="table" aria-selected="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="2" y="3" width="12" height="10" rx="1.5"/><path d="M2 6.5h12M6 6.5V13"/></svg>Table Editor<span class="count" id="cntTable"></span></button></li>
+        <li><button class="navbtn" role="tab" data-pane="sql" aria-selected="false"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M5 5 2.5 8 5 11M11 5l2.5 3L11 11M9.5 3.5l-3 9"/></svg>SQL Editor</button></li>
+        <li class="grp">Auth</li>
+        <li><button class="navbtn" role="tab" data-pane="policies" aria-selected="false"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M8 2 3 4v4c0 3 2.2 5 5 6 2.8-1 5-3 5-6V4L8 2Z"/><path d="m6 8 1.5 1.5L10.5 6.5"/></svg>Policies</button></li>
+        <li class="grp">Integrations</li>
+        <li><button class="navbtn" role="tab" data-pane="cron" aria-selected="false"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="8" cy="8" r="5.5"/><path d="M8 5v3.2l2 1.3"/></svg>Cron<span class="count" id="cntCron"></span></button></li>
+        <li class="grp">Observability</li>
+        <li><button class="navbtn" role="tab" data-pane="logs" aria-selected="false"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 4h10M3 8h10M3 12h6"/></svg>Logs<span class="count" id="cntLogs"></span></button></li>
+        <li><button class="navbtn" role="tab" data-pane="advisors" aria-selected="false"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M8 2.5 14 13H2L8 2.5Z"/><path d="M8 7v2.5M8 11.2v.1"/></svg>Advisors<span class="count" id="cntAdv"></span></button></li>
+      </ul>
+      <div class="side-foot"><span class="dot"></span>Healthy · Pueblo, CO (us-mountain)</div>
+    </aside>
+
+    <div class="main">
+      <div class="bar">
+        <span class="crumb"><span class="opt">andrew-zoll / </span><b id="crumbName">Table Editor</b></span>
+        <span class="sp"></span>
+        <button class="connect" id="connectBtn"><svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6.5 9.5 9.5 6.5M7 4.5l1-1a2.8 2.8 0 0 1 4 4l-1 1M9 11.5l-1 1a2.8 2.8 0 0 1-4-4l1-1"/></svg>Connect</button>
+      </div>
+      <section class="pane on" id="pane-table" role="tabpanel">
+        <div class="pane-head">
+          <h3 class="mono">public.receipts</h3>
+          <p>Your requirements, my evidence. Click any row to open it.</p>
+          <div class="chips" id="areaChips" style="margin-left:auto"></div>
+        </div>
+        <div class="gridwrap"><table class="grid" id="receiptGrid"><thead><tr>
+          <th></th><th>jd_requirement<span class="ty">text</span></th><th>receipt<span class="ty">text</span></th><th>source<span class="ty">text</span></th><th>strength<span class="ty">enum</span></th>
+        </tr></thead><tbody></tbody></table></div>
+      </section>
+      <section class="pane" id="pane-sql" role="tabpanel">
+        <div class="sqlwrap">
+          <div class="snips" id="snips"><div class="grp">Saved queries</div></div>
+          <div class="editor">
+            <div class="edit-top"><span class="mono">query.sql</span><span class="sp"></span><span class="mono" style="color:#6b6b6b">role: hiring_manager</span><button class="run" id="runBtn">Run <kbd>⌘ ↵</kbd></button></div>
+            <textarea class="sql" id="sqlText" spellcheck="false" aria-label="SQL query"></textarea>
+            <div class="result-head" id="resultHead">Press Run, or edit the where clause yourself. Columns you can filter: area, source, strength.</div>
+            <div class="gridwrap" id="resultWrap"><table class="grid" id="resultGrid"><thead><tr><th></th><th>jd_requirement</th><th>receipt</th><th>source</th><th>strength</th></tr></thead><tbody></tbody></table></div>
+          </div>
+        </div>
+      </section>
+      <section class="pane" id="pane-policies" role="tabpanel">
+        <div class="pane-head"><h3>Row level security</h3><p>Your posting says the dangerous write should be impossible, not discouraged. I agree, so here's that rule as a policy you can try to break.</p></div>
+        <div class="pol">
+<pre class="code"><span class="c">/* Agents may read, report, and carry a human's update
+   once a human consents. They never write a commitment. */</span>
+<span class="k">alter table</span> work_items <span class="k">enable row level security</span>;
+
+<span class="k">create policy</span> <span class="s">"agents_read"</span> <span class="k">on</span> work_items
+  <span class="k">for select to</span> agent <span class="k">using</span> (<span class="k">true</span>);
+
+<span class="k">create policy</span> <span class="s">"agents_carry_consented_updates"</span>
+  <span class="k">on</span> work_items <span class="k">for update to</span> agent
+  <span class="k">using</span> (<span class="f">human_consented</span>(id))
+  <span class="k">with check</span> (
+    owner     <span class="k">is not distinct from</span> <span class="f">old_owner</span>(id)
+    <span class="k">and</span> due_date  <span class="k">is not distinct from</span> <span class="f">old_due</span>(id)
+    <span class="k">and</span> status    <span class="k">is not distinct from</span> <span class="f">old_status</span>(id)
+  );
+
+<span class="c">/* and the credential itself has no grant on those columns */</span>
+<span class="k">revoke update</span> (owner, due_date, status)
+  <span class="k">on</span> work_items <span class="k">from</span> agent;</pre>
+          <div class="tester" id="tester">
+            <h4>Try it</h4>
+            <div class="row"><span style="font-size:13px;color:#9a9a9a">Run as</span>
+              <div class="seg" role="group" aria-label="Role"><button data-role="agent" aria-pressed="true">agent</button><button data-role="human" aria-pressed="false">human</button></div>
+            </div>
+            <label class="consent"><input type="checkbox" id="consentBox"/> A human consented to this update</label>
+            <div class="row">
+              <button class="act" data-act="read">select summary</button>
+              <button class="act" data-act="note">update progress_note</button>
+              <button class="act" data-act="due">set due_date = 'friday'</button>
+              <button class="act" data-act="owner">set owner = 'andrew'</button>
+            </div>
+            <div class="out" id="polOut">Pick a role and an action. Prompt injection won't help; the grant isn't there.</div>
+            <p style="margin:0;font-size:12.5px;color:#8a8a8a;line-height:1.55">This is a sketch of your rule, not code I shipped at Coder. The shipped version of the idea is my Federal work: 26 pull requests that withhold unproven Federal history from model input for uncleared users, with a test for every access tier.</p>
+          </div>
+        </div>
+      </section>
+      <section class="pane" id="pane-cron" role="tabpanel">
+        <div class="pane-head"><h3>My setup, mechanically</h3><p>You asked what triggers it, what it can touch, where the human approves, what it logs, and how I found out when it broke. Pick a job.</p></div>
+        <div class="cron">
+          <div class="jobs" id="jobs"></div>
+          <div class="jobdetail" id="jobDetail"></div>
+        </div>
+      </section>
+      <section class="pane" id="pane-logs" role="tabpanel">
+        <div class="pane-head"><h3>Logs explorer</h3>
+          <div class="logtools" style="margin-left:auto">
+            <input class="search" id="logSearch" placeholder="search logs, e.g. redis" aria-label="Search logs"/>
+            <div class="chips" id="lvChips"></div>
+          </div>
+        </div>
+        <div class="logs" id="logs"></div>
+      </section>
+      <section class="pane" id="pane-advisors" role="tabpanel">
+        <div class="pane-head"><h3>Advisors</h3><p>The honest gaps, ranked the way your security advisor would rank them. Click one for the remediation.</p></div>
+        <div class="adv" id="adv"></div>
+      </section>
+
+      <aside class="drawer" id="drawer" aria-hidden="true">
+        <header><b class="mono" id="drawerTitle">row</b><button class="x" id="drawerClose">Close</button></header>
+        <div class="body" id="drawerBody"></div>
+      </aside>
+      <div class="toast" id="toast"></div>
+    </div>
+  </div>
+</section>
+
+<section class="band soft" id="why"><div class="wrap">
+  <div class="eyebrow">// why this seat</div>
+  <h2>You're building the generator. I've been building one too.</h2>
+  <p class="sub">The posting reads like a description of the problems I've spent this year on, just pointed at a whole company instead of one engineering loop. Three things I'd bring on day one:</p>
+  <div class="cards">
+    <article class="card"><span class="num">~1,200 verdicts</span><h3>Gates that get graded</h3><p>A reviewer from a different model family clears every change, and mutation tests prove the tests can fail. On about 350 pull requests that gate logged more than 430 confirmed catches and 21 false flags, so the grader has a scorecard too.</p></article>
+    <article class="card"><span class="num">~$38 per merged PR</span><h3>Spend you can query</h3><p>The UI didn't show cost per chat, so I priced each run from its token usage. My first estimate came in far too low because cache reads bill at the full input rate. I fixed the multiplier and now reconcile it to the billing dashboard.</p></article>
+    <article class="card"><span class="num">RLS on every table</span><h3>Postgres, the long way</h3><p>I built FieldCommand on Supabase, with row level security on every tenant table gated by a JWT claim. On Veritas I held back an RLS migration because its 195 green tests never touched the real entry point.</p></article>
+  </div>
+</div></section>
+
+<section class="band" id="plans"><div class="wrap">
+  <div class="eyebrow">// pricing (it's free)</div>
+  <h2>Pick a plan.</h2>
+  <p class="sub">Every tier is free, and none of them come with an interruption budget problem. I'll keep the contact rare and useful.</p>
+  <div class="tiers">
+    <div class="tier"><div class="tn">Read</div><div class="price">$0 <small>/ five minutes</small></div><ul><li>Portfolio and shipped products</li><li>FieldCommand and Veritas, live</li></ul><a class="btn btn-outline" href="https://portfolio.andrewzoll.com">Open portfolio</a></div>
+    <div class="tier feat"><div class="tn">Talk</div><div class="price">$0 <small>/ thirty minutes</small></div><ul><li>Walk through the gate design</li><li>The incidents, in detail</li><li>Your open runtime decision</li></ul><a class="btn btn-green" href="https://www.linkedin.com/in/andrewzoll">Message me on LinkedIn</a></div>
+    <div class="tier"><div class="tn">Inspect</div><div class="price">$0 <small>/ self-serve</small></div><ul><li>coder/coder#30576, an open Go PR</li><li>My public repos</li></ul><a class="btn btn-dark" href="https://github.com/azoll">View GitHub</a></div>
+  </div>
+</div></section>
+
+<footer><div class="wrap">
+  <p class="disclaim">This is a candidate's pitch for your AI Platform Engineer role, built in your design language on purpose. I'm not affiliated with Supabase, and nothing here is Supabase's code or data. It's just me showing the work in a shape I hope feels familiar. The policy in the Policies pane is a sketch of the rule in your posting, not something I shipped.</p>
+  <div class="row"><span>Andrew Zoll · Pueblo, Colorado · built for Supabase, unaffiliated</span><span>andrewzoll.com</span></div>
+</div></footer>
+
+<script>
+(function(){
+const R = [
+ {area:'agents',req:'Shipped production LLM agent systems other people depended on',receipt:'Built an internal AI agent platform at Coder that turns CRM, support, and call-transcript data into answers and workflows for the revenue organization, with Salesforce, Granola transcript, and Slack bot integrations. I authored 884 merged pull requests on it between July 27 and October 9, 2026.',source:'Coder',strength:'strong'},
+ {area:'incidents',req:'At least one incident you can talk through',receipt:'An OAuth token-rotation transaction passed every test against an in-memory fake. A cross-family reviewer caught at round 5 that production Redis runs in cluster mode, so it would have failed on every refresh. The fix put the keys in one hash slot and added a test that checks the slot of each key.',source:'Coder',strength:'strong'},
+ {area:'evals',req:'Gate CI on the result, not on "they looked good"',receipt:'Designed a merge gate where a reviewer from a different model family than the builder must clear each change, and mutation tests confirm the tests can fail. About 1,200 verdicts on about 350 pull requests, with more than 430 confirmed defect catches.',source:'Coder',strength:'strong'},
+ {area:'evals',req:'The thing that grades has to be graded too',receipt:'The gate tracks its own false flags (21 against more than 430 confirmed catches), and mutation testing exists precisely to grade the tests. Security and Federal changes get two cross-family reviewers plus mutation testing.',source:'Coder',strength:'strong'},
+ {area:'evals',req:'Golden suites with behavioral assertions and judge rubrics',receipt:'Veritas gates every release on a fixture suite with documented verdicts. A model extracts citations and deterministic checks render the verdict, with hedged semantics so it never claims more than the evidence supports. It is one product, not a portfolio of agents.',source:'Veritas',strength:'partial'},
+ {area:'mcp',req:'Authored MCP servers; know the API failure modes',receipt:'Shipped an OAuth authorization server that gates hosted MCP access to the platform. When an MCP route returned 404 for over two hours after a redeploy, I traced it to a provider moved behind a new flag; the 404 was correct under RFC 8414 and RFC 9728. I wrote the runbook that separates route churn from a real fault.',source:'Coder',strength:'strong'},
+ {area:'governance',req:'The dangerous class has no code path',receipt:'Shipped fail-closed Federal data access controls across 26 merged pull requests. The platform classifies Federal accounts, withholds unproven Federal history from model input for uncleared users, and tests every access tier.',source:'Coder',strength:'strong'},
+ {area:'governance',req:'Least privilege the pipeline actually enforces',receipt:'FieldCommand runs on Supabase with row level security enabled on every tenant-scoped table, gated by a tenant claim read from the JWT. Isolation lives in the database, not in application code.',source:'FieldCommand',strength:'strong'},
+ {area:'governance',req:'Close architecture decisions yourself',receipt:'On Veritas I held back an RLS migration whose 195 passing tests never exercised the real entry point. I traced that it would break sign-in, the trial flow, and background jobs, and wrote the privileged-path design it needs before it ships.',source:'Veritas',strength:'strong'},
+ {area:'observability',req:'Attribute spend per run',receipt:'Priced each agent run from token usage because the UI had no cost per chat, then reconciled to the billing dashboard after cache reads turned out to bill at the full input rate. The peak week ran about $38 of model cost per merged pull request.',source:'Coder',strength:'strong'},
+ {area:'runtime',req:'Event-triggered queue; work survives a failed run',receipt:'Built an event poller that turns failed CI runs on main, new ticket assignments, Slack requests, and meeting action items into queued work, with a kill switch, plus a watchdog that reads a claim ledger and acts on silence. It is a loop, not yet the durable runtime with atomic rollback you describe.',source:'Coder',strength:'partial'},
+ {area:'infra',req:'Own infrastructure end to end; provision, deploy, roll back',receipt:'Maintain the AWS stack through Terraform with a CI plan gate, ECS tasks, and Lambda jobs. Cut cold dashboard load from 5 to 10 seconds to about 2 seconds by replacing a serial per-account S3 read loop with a bounded fan-out.',source:'Coder',strength:'strong'},
+ {area:'infra',req:'Python on GCP with a cloud warehouse',receipt:'My Python runs on AWS, not GCP, and I have not run BigQuery or another cloud warehouse in production. See Advisors.',source:'Coder',strength:'gap'},
+ {area:'contact',req:'Taste about how software contacts humans',receipt:'The agent system I run my own work on bundles open decisions into one ask and only surfaces items I can act on, because every ping spends trust. It is my own system, not a company-wide rollout.',source:'AndrewOS',strength:'partial'},
+ {area:'public',req:'Public work in this space',receipt:'coder/coder#30576, an open Go pull request that makes the API tell a disabled chat model config apart from a missing one.',source:'GitHub',strength:'partial'}
+];
+const LOGS = [
+ {lv:'ERROR',ts:'round 5',svc:'redis',msg:'CROSSSLOT keys in request don\'t hash to the same slot (caught in review, never shipped)',what:'The MCP authorization server rotated tokens in a multi-key transaction. Every test passed against an in-memory fake.',fix:'A cross-family reviewer flagged cluster mode at round 5. I put the keys in one hash slot with a hash tag.',lesson:'Fakes hide topology. I added a test that checks the slot of each key, so the fake can\'t lie again.'},
+ {lv:'ERROR',ts:'8h silent',svc:'runtime',msg:'sibling runtime stopped; no error raised for more than 8 hours',what:'A runtime stopped and nothing errored, so nothing alerted. Work just quietly didn\'t happen.',fix:'Built a watchdog that reads the work log, the claim ledger, and branch activity, and acts on silence.',lesson:'The scariest failure doesn\'t throw. Measure the absence of progress, not only the presence of errors.'},
+ {lv:'WARN',ts:'2026-09-14',svc:'mcp',msg:'GET mcp route 404 for more than 2 hours after redeploy',what:'After a dogfood redeploy, the MCP route returned 404. From the client side it looked like an outage.',fix:'Traced it to the OAuth2 provider moving behind a new flag. The 404 was correct under RFC 8414 and RFC 9728.',lesson:'Wrote a runbook that separates route churn from a real fault, and filed it as product feedback.'},
+ {lv:'WARN',ts:'12h',svc:'review-gate',msg:'spec at review round 14 without converging',what:'One spec spent 14 review rounds over 12 hours. Builder and reviewer kept trading the same findings.',fix:'Added a round cap keyed to the ticket. Past round 3, hard work escalates to stronger models.',lesson:'An adversarial loop needs a stop condition, or it spends money proving it can\'t agree.'},
+ {lv:'WARN',ts:'2026-09-29',svc:'workspaces',msg:'pool at 41 of 40 quota slots with one chat running',what:'Stopped workspaces still held quota slots, so new work couldn\'t start.',fix:'A cleanup job deletes finished lanes every tick, and dispatch refuses a new chat when the pool is nearly full.',lesson:'Capacity is state too. Garbage-collect it on a schedule, and fail loudly before you hit the wall.'},
+ {lv:'INFO',ts:'cost',svc:'billing',msg:'first cost estimate far below the billing dashboard',what:'I priced chats from token usage and came in far too low.',fix:'Cache reads bill at the full input rate, and they were most of the tokens. I fixed the multiplier.',lesson:'Reconcile your instrument to the bill. A cost number nobody reconciles is a guess.'},
+ {lv:'INFO',ts:'veritas',svc:'migrations',msg:'held: RLS migration with 195 green tests',what:'The tests called the scoped wrapper directly and never hit the real entry point against a forced-RLS database.',fix:'Deferred the migration and wrote the privileged-path design: what runs as BYPASSRLS, and what stays tenant-scoped.',lesson:'A green suite that never exercises the real path is a story, not an evaluation.'}
+];
+const JOBS = [
+ {name:'event-poller',sched:'on event',trigger:'A failed CI run on main, a new ticket assignment, a Slack request, or a meeting action item.',touch:'The work queue only. It enqueues; it doesn\'t build.',human:'A kill switch turns the whole poller off.',logs:'One queued item per event.',broke:'No incident to report on this one. The kill switch is there for the day it gets noisy.'},
+ {name:'builder',sched:'on queue',trigger:'A queued ticket with a written spec.',touch:'Its own branch and its own pull request. Open-weight Kimi models build by default.',human:'Specs come before code. Infrastructure changes past a narrow low-risk class wait for me.',logs:'A dispatch line with the chat id and the model.',broke:'Hard work that needs more than three review rounds escalates to stronger models instead of looping.'},
+ {name:'cross-family-review',sched:'on push',trigger:'A new push to a pull request.',touch:'A verdict, nothing else. A GLM model reviews a Kimi build, so no family grades itself.',human:'Security and Federal changes get two cross-family reviewers plus mutation tests.',logs:'An outcome line per verdict: PR, model, role, round, and outcome.',broke:'The Redis cluster-mode catch at round 5 is this job working.'},
+ {name:'mutation-gate',sched:'on review pass',trigger:'A change that cleared review.',touch:'A throwaway copy of the code it mutates.',human:'None needed when it passes. A surviving mutant blocks the merge.',logs:'A verdict line, in the same shape as review.',broke:'Its whole job is to catch a test that can\'t fail before that test is trusted.'},
+ {name:'round-cap',sched:'per round',trigger:'Each review round on a ticket.',touch:'A counter keyed to the ticket.',human:'Past the cap, the work escalates to stronger models or to me.',logs:'The round count.',broke:'Added after one spec spent 14 rounds over 12 hours.'},
+ {name:'watchdog',sched:'every tick',trigger:'A clock, not an error.',touch:'Read access to the work log, claim ledger, and branch activity.',human:'None in the loop. It acts on silence by itself.',logs:'Its checks against the work log, the claim ledger, and branch activity.',broke:'Added after a stopped runtime went unnoticed for more than 8 hours.'},
+ {name:'quota-cleanup',sched:'every tick',trigger:'A finished lane.',touch:'Finished workspaces only.',human:'None. Dispatch refuses a new chat when the pool is nearly full.',logs:'The lanes it deleted.',broke:'Added after the pool sat at 41 of 40.'}
+];
+const ADV = [
+ {lv:'WARN',t:'GCP not detected',d:'Your stack is Python on GCP. My production cloud work is AWS.',fix:'The pieces map closely: ECS and Lambda to Cloud Run and Cloud Functions, S3 to GCS, EventBridge to Pub/Sub and Cloud Scheduler, and Terraform stays Terraform. I won\'t claim GCP history I don\'t have. I\'d expect to be productive in it fast because I\'ve already owned a Terraform-managed stack with a CI plan gate.'},
+ {lv:'WARN',t:'Cloud warehouse not found',d:'You want complete run logging in the warehouse. I haven\'t run BigQuery or Snowflake in production.',fix:'My run logs today are structured telemetry lines (PR, model, role, round, outcome) plus Postgres. I know the shape of the data you want to land; the warehouse itself would be new to me.'},
+ {lv:'INFO',t:'Sole infrastructure owner at company scale',d:'You\'re asking one engineer to own the platform for about 400 people across 60+ countries.',fix:'I\'ve built two products solo and run a two-person platform at Coder, and I\'m used to closing decisions myself. I haven\'t been the only infrastructure owner for a company this size, and I\'d rather say that here than in round three.'},
+ {lv:'INFO',t:'Golden suites at portfolio scale',d:'You want a real suite with safety cases for every registered agent.',fix:'My strongest evaluation work is a gate on code changes, plus a release-gating fixture suite on Veritas. Judge rubrics across thirty agents would be new scale for me. The method carries; the volume would be new.'}
+];
+
+const $ = s=>document.querySelector(s), $$ = s=>[...document.querySelectorAll(s)];
+const esc = s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const badge = s=>`<span class="badge b-${s}">${s}</span>`;
+const names = {table:'Table Editor',sql:'SQL Editor',policies:'Policies',cron:'Cron',logs:'Logs',advisors:'Advisors'};
+
+/* pane switching */
+function show(p){
+  $$('.navbtn').forEach(b=>b.setAttribute('aria-selected', b.dataset.pane===p ? 'true':'false'));
+  $$('.pane').forEach(el=>el.classList.toggle('on', el.id==='pane-'+p));
+  $('#crumbName').textContent = names[p];
+  closeDrawer();
+}
+$$('.navbtn').forEach(b=>b.addEventListener('click',()=>show(b.dataset.pane)));
+$$('[data-goto]').forEach(b=>b.addEventListener('click',()=>{
+  show(b.dataset.goto);
+  if(b.dataset.snippet) loadSnippet(b.dataset.snippet,true);
+  $('#studio').scrollIntoView({behavior:'smooth',block:'start'});
+}));
+
+/* counts */
+$('#cntTable').textContent = R.length; $('#cntCron').textContent = JOBS.length;
+$('#cntLogs').textContent = LOGS.length; $('#cntAdv').textContent = ADV.length;
+
+/* table editor */
+let area = 'all';
+const areas = ['all',...new Set(R.map(r=>r.area))];
+$('#areaChips').innerHTML = areas.map(a=>`<button class="chip" data-area="${a}" aria-pressed="${a==='all'}">${a}</button>`).join('');
+function rowsHtml(list){
+  return list.map(r=>{const i=R.indexOf(r);return `<tr data-i="${i}"><td class="idx">${i+1}</td><td><div class="trunc">${esc(r.req)}</div></td><td><div class="trunc">${esc(r.receipt)}</div></td><td>${esc(r.source)}</td><td>${badge(r.strength)}</td></tr>`}).join('');
+}
+function renderTable(){
+  const list = area==='all' ? R : R.filter(r=>r.area===area);
+  $('#receiptGrid tbody').innerHTML = rowsHtml(list);
+}
+$('#areaChips').addEventListener('click',e=>{
+  const c=e.target.closest('.chip'); if(!c) return;
+  area=c.dataset.area; $$('#areaChips .chip').forEach(x=>x.setAttribute('aria-pressed', x===c?'true':'false')); renderTable();
+});
+renderTable();
+
+/* drawer */
+function openRow(i){
+  const r=R[i];
+  $$('.grid tbody tr').forEach(tr=>tr.classList.toggle('sel', +tr.dataset.i===i));
+  $('#drawerTitle').textContent = 'receipts · row '+(i+1);
+  $('#drawerBody').innerHTML = [['jd_requirement',esc(r.req)],['receipt',esc(r.receipt)],['source',esc(r.source)],['area',esc(r.area)],['strength',badge(r.strength)]]
+    .map(([k,v])=>`<div class="field"><label>${k}</label><div>${v}</div></div>`).join('');
+  $('#drawer').classList.add('open'); $('#drawer').setAttribute('aria-hidden','false');
+}
+function closeDrawer(){ $('#drawer').classList.remove('open'); $('#drawer').setAttribute('aria-hidden','true'); $$('.grid tbody tr.sel').forEach(t=>t.classList.remove('sel')); }
+document.addEventListener('click',e=>{
+  const tr=e.target.closest('.grid tbody tr'); if(tr) openRow(+tr.dataset.i);
+});
+$('#drawerClose').addEventListener('click',closeDrawer);
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeDrawer(); });
+
+/* sql editor */
+const SNIPS = {
+  all:"select *\nfrom receipts\norder by strength;",
+  evals:"select *\nfrom receipts\nwhere area = 'evals';",
+  governance:"select *\nfrom receipts\nwhere area = 'governance';",
+  gaps:"select *\nfrom receipts\nwhere strength = 'gap'\n   or strength = 'partial';",
+  supabase:"select *\nfrom receipts\nwhere source = 'FieldCommand';",
+  top3:"select *\nfrom receipts\nwhere strength = 'strong'\nlimit 3;"
+};
+const snipLabels = {all:'all_receipts.sql',evals:'evals_only.sql',governance:'governance.sql',gaps:'where_im_short.sql',supabase:'built_on_supabase.sql',top3:'top_three.sql'};
+$('#snips').insertAdjacentHTML('beforeend', Object.keys(SNIPS).map(k=>`<button class="snip" data-k="${k}" aria-pressed="false">${snipLabels[k]}</button>`).join(''));
+function loadSnippet(k,autorun){
+  $$('.snip').forEach(s=>s.setAttribute('aria-pressed', s.dataset.k===k?'true':'false'));
+  $('#sqlText').value = SNIPS[k];
+  if(autorun) runSql();
+}
+$('#snips').addEventListener('click',e=>{const s=e.target.closest('.snip'); if(s) loadSnippet(s.dataset.k,true);});
+const COLS = ['area','source','strength'];
+const rank = {strong:0,partial:1,gap:2};
+function runSql(){
+  const t0 = performance.now();
+  const raw = $('#sqlText').value.trim().replace(/;\s*$/,'');
+  const q = raw.replace(/\s+/g,' ');
+  const head = $('#resultHead'), wrap = $('#resultWrap');
+  const fail = (msg,hint)=>{
+    head.innerHTML = '<span class="bad">ERROR</span> query failed';
+    wrap.innerHTML = `<div class="sqlerr">ERROR: ${esc(msg)}${hint?'\nHINT:  '+esc(hint):''}</div>`;
+  };
+  const m = q.match(/^select (\*|[\w, ]+) from (\w+)(?: where (.+?))?(?: order by (\w+)(?: (asc|desc))?)?(?: limit (\d+))?$/i);
+  if(!m) return fail('syntax error at or near "'+(q.split(' ')[0]||'')+'"','Try: select * from receipts where area = \'evals\';');
+  if(m[2].toLowerCase()!=='receipts') return fail('relation "'+m[2]+'" does not exist','There is one table here, and it is called receipts.');
+  let rows = R.slice();
+  if(m[3]){
+    const clauses = m[3].split(/ (and|or) /i);
+    let acc = null, op = null;
+    for(const c of clauses){
+      if(/^(and|or)$/i.test(c)){ op=c.toLowerCase(); continue; }
+      const cm = c.trim().match(/^(\w+) ?(=|!=|<>) ?'([^']*)'$/);
+      if(!cm) return fail('could not parse condition "'+c.trim()+'"','Use column = \'value\', joined with and / or.');
+      const col = cm[1].toLowerCase();
+      if(!COLS.includes(col)) return fail('column "'+cm[1]+'" does not exist','Filterable columns: '+COLS.join(', '));
+      const neg = cm[2]!=='=';
+      const set = new Set(R.filter(r=>(r[col].toLowerCase()===cm[3].toLowerCase())!==neg));
+      acc = acc===null ? set : (op==='or' ? new Set([...acc,...set]) : new Set([...acc].filter(x=>set.has(x))));
+    }
+    rows = R.filter(r=>acc.has(r));
+  }
+  if(m[4]){
+    const col = m[4].toLowerCase();
+    if(!COLS.includes(col)) return fail('column "'+m[4]+'" does not exist','Sortable columns: '+COLS.join(', '));
+    rows.sort((a,b)=> col==='strength' ? rank[a.strength]-rank[b.strength] : a[col].localeCompare(b[col]));
+    if((m[5]||'').toLowerCase()==='desc') rows.reverse();
+  }
+  if(m[6]) rows = rows.slice(0,+m[6]);
+  wrap.innerHTML = '<table class="grid" id="resultGrid"><thead><tr><th></th><th>jd_requirement</th><th>receipt</th><th>source</th><th>strength</th></tr></thead><tbody>'+rowsHtml(rows)+'</tbody></table>';
+  const ms = Math.max(1,Math.round(performance.now()-t0));
+  head.innerHTML = `<span class="ok">Success.</span> ${rows.length} row${rows.length===1?'':'s'} · ${ms} ms${rows.length?'':' · no rows. Honest answer, though.'}`;
+}
+$('#runBtn').addEventListener('click',runSql);
+$('#sqlText').addEventListener('keydown',e=>{ if((e.metaKey||e.ctrlKey) && e.key==='Enter'){ e.preventDefault(); runSql(); }});
+loadSnippet('all',false);
+
+/* policies tester */
+let role='agent';
+$$('.seg button').forEach(b=>b.addEventListener('click',()=>{ role=b.dataset.role; $$('.seg button').forEach(x=>x.setAttribute('aria-pressed', x===b?'true':'false')); }));
+$$('.act').forEach(b=>b.addEventListener('click',()=>{
+  const a=b.dataset.act, consent=$('#consentBox').checked, out=$('#polOut');
+  const sql = {read:"select summary from work_items where id = 42;",note:"update work_items set progress_note = 'draft attached' where id = 42;",due:"update work_items set due_date = 'friday' where id = 42;",owner:"update work_items set owner = 'andrew' where id = 42;"}[a];
+  let res;
+  if(a==='read') res = '<span class="o">1 row</span>\nsummary: "Q4 board pack, two sections waiting on finance"';
+  else if(role==='human') res = '<span class="o">UPDATE 1</span>\nHumans can commit. That\'s the whole point of a human.';
+  else if(a==='note') res = consent ? '<span class="o">UPDATE 1</span>\nCarried a human-authored update after consent.' : '<span class="e">ERROR:  new row violates row-level security policy "agents_carry_consented_updates"</span>\nNo human consent on record, so the agent can only draft.';
+  else res = `<span class="e">ERROR:  permission denied for table work_items</span>\nThe agent role has no update grant on ${a==='due'?'due_date':'owner'}. There's no prompt that can talk a missing grant into existing.`;
+  out.innerHTML = '<span style="color:#6b6b6b">'+(role)+'=&gt; '+esc(sql)+'</span>\n'+res;
+  if(res.includes('class="e"')){ const t=$('#tester'); t.classList.remove('shake'); void t.offsetWidth; t.classList.add('shake'); }
+}));
+
+/* cron */
+$('#jobs').innerHTML = JOBS.map((j,i)=>`<button class="job" data-i="${i}" aria-pressed="${i===0}"><span class="jn"><span class="toggle" aria-hidden="true"></span>${j.name}</span><span class="js">${j.sched}</span></button>`).join('');
+function showJob(i){
+  const j=JOBS[i];
+  $$('.job').forEach(b=>b.setAttribute('aria-pressed', +b.dataset.i===i?'true':'false'));
+  $('#jobDetail').innerHTML = [['what triggers it',j.trigger],['what it can touch',j.touch],['where the human approves',j.human],['what it logs',j.logs],['how I found out it broke',j.broke,'wide']]
+    .map(([k,v,w])=>`<div class="field ${w||''}"><label>${k}</label><div>${esc(v)}</div></div>`).join('');
+}
+$('#jobs').addEventListener('click',e=>{const b=e.target.closest('.job'); if(b) showJob(+b.dataset.i);});
+showJob(0);
+
+/* logs */
+let lv='ALL';
+$('#lvChips').innerHTML = ['ALL','ERROR','WARN','INFO'].map(l=>`<button class="chip" data-lv="${l}" aria-pressed="${l==='ALL'}">${l.toLowerCase()}</button>`).join('');
+function renderLogs(){
+  const q=$('#logSearch').value.toLowerCase().trim();
+  const list=LOGS.filter(l=>(lv==='ALL'||l.lv===lv) && (!q || (l.msg+' '+l.svc+' '+l.what+' '+l.fix+' '+l.lesson).toLowerCase().includes(q)));
+  $('#logs').innerHTML = list.length ? list.map(l=>`<div class="log"><button aria-expanded="false"><span class="ts">${esc(l.ts)}</span><span class="lv lv-${l.lv}">${l.lv}</span><span class="svc">${esc(l.svc)}</span><span>${esc(l.msg)}</span><span class="chev">›</span></button><div class="detail"><div><b>what happened</b>${esc(l.what)}</div><div><b>the fix</b>${esc(l.fix)}</div><div><b>what I took from it</b>${esc(l.lesson)}</div></div></div>`).join('') : '<div class="empty">No logs match. That\'s either a very clean system or a very specific search.</div>';
+}
+$('#logs').addEventListener('click',e=>{const b=e.target.closest('.log > button'); if(!b) return; const el=b.parentElement; const o=el.classList.toggle('open'); b.setAttribute('aria-expanded',o);});
+$('#lvChips').addEventListener('click',e=>{const c=e.target.closest('.chip'); if(!c) return; lv=c.dataset.lv; $$('#lvChips .chip').forEach(x=>x.setAttribute('aria-pressed',x===c?'true':'false')); renderLogs();});
+$('#logSearch').addEventListener('input',renderLogs);
+renderLogs();
+
+/* advisors */
+$('#adv').innerHTML = ADV.map(a=>`<div class="advrow"><button aria-expanded="false"><span class="lv lv-${a.lv}" style="min-width:56px">${a.lv}</span><span><div class="t">${esc(a.t)}</div><div class="d">${esc(a.d)}</div></span></button><div class="fix"><b>remediation</b>${esc(a.fix)}</div></div>`).join('');
+$('#adv').addEventListener('click',e=>{const b=e.target.closest('.advrow > button'); if(!b) return; const o=b.parentElement.classList.toggle('open'); b.setAttribute('aria-expanded',o);});
+
+/* connect toast */
+let tt;
+$('#connectBtn').addEventListener('click',()=>{
+  const t=$('#toast');
+  t.innerHTML = 'Connection string: <a href="https://www.linkedin.com/in/andrewzoll">linkedin.com/in/andrewzoll</a>. Pooling not required.';
+  t.classList.add('show'); clearTimeout(tt); tt=setTimeout(()=>t.classList.remove('show'),4200);
+});
+})();
+</script>
+</body>
+</html>
