@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Andrew Zoll for LangChain, Deployed Engineer</title>
+<meta name="description" content="A personal application page from Andrew Zoll for the LangChain Deployed Engineer, Professional Services role. Not affiliated with LangChain.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#030710; --bg2:#0b111d; --bg3:#0d1322; --bg4:#161f34;
+    --line:#1a2231; --line2:#25324a;
+    --tx:#e8edf5; --tx2:#b9c3d3; --mut:#8b96a8; --mut2:#5b6678;
+    --sky:#7fc8ff; --sky2:#9ed2fa; --sky3:#e5f4ff; --blue:#006ddd;
+    --ok:#5fd3a0; --okbg:rgba(95,211,160,.12);
+    --part:#f2c46d; --partbg:rgba(242,196,109,.12);
+    --rev:#ff8a5c; --revbg:rgba(255,138,92,.13);
+    --err:#f07a83;
+    --violet:#beb4fd;
+    --sans:Manrope,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--tx2);font-family:var(--sans);font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased;padding-bottom:env(safe-area-inset-bottom,0px)}
+  a{color:var(--sky)}
+  button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+  :focus-visible{outline:2px solid var(--sky);outline-offset:2px;border-radius:4px}
+  .wrap{max-width:1240px;margin:0 auto;padding-inline:24px}
+  .mono{font-family:var(--mono)}
+
+  /* disclaimer + nav */
+  .disc{background:var(--bg3);border-bottom:1px solid var(--line);font-family:var(--mono);font-size:11.5px;color:var(--mut);padding:8px 0;text-align:center}
+  .disc b{color:var(--tx2);font-weight:500}
+  nav.top{border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20;background:rgba(3,7,16,.86);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+  nav.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:14px;height:56px}
+  .crumbs{font-family:var(--mono);font-size:12.5px;color:var(--mut);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+  .crumbs b{color:var(--tx);font-weight:500}
+  .crumbs i{font-style:normal;color:var(--mut2);padding:0 6px}
+  .navbtns{display:flex;gap:8px;flex-shrink:0}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:var(--mono);font-size:12.5px;padding:9px 14px;border-radius:8px;text-decoration:none;border:1px solid var(--line2);color:var(--tx);transition:background .15s,border-color .15s,transform .15s}
+  .btn:hover{border-color:var(--sky);transform:translateY(-1px)}
+  .btn.solid{background:var(--sky3);color:var(--bg);border-color:var(--sky3)}
+  .btn.solid:hover{background:#fff}
+
+  /* hero */
+  header.hero{padding:64px 0 36px;position:relative;overflow:hidden}
+  header.hero::before{content:"";position:absolute;inset:-40% -10% auto auto;width:720px;height:720px;background:radial-gradient(closest-side,rgba(127,200,255,.16),transparent 70%);pointer-events:none}
+  .eyebrow{display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:12.5px;color:var(--sky2)}
+  .eyebrow .sq{width:26px;height:26px;border-radius:7px;background:var(--sky2);display:grid;place-items:center}
+  .eyebrow .sq svg{width:15px;height:15px}
+  h1{font-weight:300;color:var(--sky2);font-size:clamp(38px,6.4vw,74px);line-height:1.04;letter-spacing:-.025em;margin:22px 0 22px;max-width:900px}
+  h1 em{font-style:normal;color:var(--tx)}
+  .lede{max-width:700px;font-size:17px;color:var(--tx2)}
+  .lede+.lede{margin-top:12px}
+  .runhead{margin-top:34px;border:1px solid var(--line);background:var(--bg2);border-radius:12px;padding:16px 18px;display:flex;flex-wrap:wrap;gap:10px 22px;align-items:center}
+  .runhead .rid{font-family:var(--mono);color:var(--tx);font-size:14px;display:flex;align-items:center;gap:10px}
+  .pulse{width:9px;height:9px;border-radius:50%;background:var(--sky);box-shadow:0 0 0 0 rgba(127,200,255,.6);animation:pulse 1.8s infinite}
+  @keyframes pulse{70%{box-shadow:0 0 0 9px rgba(127,200,255,0)}100%{box-shadow:0 0 0 0 rgba(127,200,255,0)}}
+  .kv{font-family:var(--mono);font-size:12px;color:var(--mut)}
+  .kv b{color:var(--tx2);font-weight:500}
+  .tagrow{display:flex;flex-wrap:wrap;gap:6px}
+  .tag{font-family:var(--mono);font-size:11px;padding:3px 8px;border-radius:5px;background:var(--bg4);color:var(--tx2);border:1px solid var(--line2)}
+  .deco{font-family:var(--mono);font-size:11px;color:var(--mut2);width:100%}
+
+  /* trace shell */
+  section.trace{padding:12px 0 48px}
+  .shell{border:1px solid var(--line);border-radius:14px;background:var(--bg2);overflow:clip;display:grid;grid-template-columns:minmax(0,1.08fr) minmax(0,1fr);min-height:640px;align-items:start}
+  .pane-l{border-right:1px solid var(--line);display:flex;flex-direction:column;min-width:0;min-height:640px}
+  .toolbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;padding:12px 14px;border-bottom:1px solid var(--line);background:var(--bg3)}
+  .filters{display:flex;gap:6px;flex-wrap:wrap}
+  .fchip{font-family:var(--mono);font-size:11.5px;padding:5px 10px;border-radius:999px;border:1px solid var(--line2);color:var(--mut);display:inline-flex;gap:6px;align-items:center}
+  .fchip .n{color:var(--mut2)}
+  .fchip[aria-pressed="true"]{background:var(--sky3);color:var(--bg);border-color:var(--sky3)}
+  .fchip[aria-pressed="true"] .n{color:#40668d}
+  .tbtns{display:flex;gap:6px}
+  .tbtn{font-family:var(--mono);font-size:11.5px;color:var(--mut);padding:5px 8px;border-radius:6px;border:1px solid transparent}
+  .tbtn:hover{color:var(--tx);border-color:var(--line2)}
+  .colhead{display:grid;grid-template-columns:minmax(0,1fr) 120px 96px;gap:10px;padding:8px 14px;font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--mut2);border-bottom:1px solid var(--line)}
+  ul.tree{list-style:none;overflow:auto;flex:1;padding:6px 0 10px}
+  ul.tree ul{list-style:none}
+  .row{display:grid;grid-template-columns:minmax(0,1fr) 120px 96px;gap:10px;align-items:center;padding:5px 14px 5px 0;cursor:pointer;border-left:2px solid transparent;position:relative}
+  .row:hover{background:rgba(127,200,255,.05)}
+  .row[aria-selected="true"]{background:rgba(127,200,255,.10);border-left-color:var(--sky)}
+  .nm{display:flex;align-items:center;gap:6px;min-width:0}
+  .tw{width:18px;height:18px;flex-shrink:0;display:grid;place-items:center;color:var(--mut);border-radius:4px;transition:transform .15s}
+  .tw:hover{background:var(--bg4);color:var(--tx)}
+  .tw svg{width:10px;height:10px}
+  li[aria-expanded="false"] > .row .tw{transform:rotate(-90deg)}
+  li[aria-expanded="false"] > ul{display:none}
+  .tw.leaf{visibility:hidden}
+  .ico{width:20px;height:20px;border-radius:5px;display:grid;place-items:center;flex-shrink:0;font-family:var(--mono);font-size:9.5px;font-weight:600}
+  .ico.chain{background:rgba(127,200,255,.14);color:var(--sky)}
+  .ico.llm{background:rgba(190,180,253,.15);color:var(--violet)}
+  .ico.tool{background:rgba(95,211,160,.13);color:var(--ok)}
+  .ico.retriever{background:rgba(242,196,109,.13);color:var(--part)}
+  .ico.error{background:rgba(240,122,131,.14);color:var(--err)}
+  .sname{font-family:var(--mono);font-size:12.5px;color:var(--tx);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .errdot{width:7px;height:7px;border-radius:50%;background:var(--err);flex-shrink:0}
+  .wf{height:6px;background:var(--bg4);border-radius:3px;position:relative;overflow:hidden}
+  .wf span{position:absolute;top:0;bottom:0;border-radius:3px;background:linear-gradient(90deg,var(--blue),var(--sky));opacity:.85}
+  .row[data-status="error"] .wf span{background:linear-gradient(90deg,#a3404a,var(--err))}
+  .chip{font-family:var(--mono);font-size:10.5px;padding:2px 7px;border-radius:999px;white-space:nowrap;justify-self:start;border:1px solid transparent}
+  .chip.pass{color:var(--ok);background:var(--okbg);border-color:rgba(95,211,160,.3)}
+  .chip.partial{color:var(--part);background:var(--partbg);border-color:rgba(242,196,109,.3)}
+  .chip.review{color:var(--rev);background:var(--revbg);border-color:rgba(255,138,92,.35)}
+  .chip.none{color:var(--mut2);border-color:var(--line2)}
+  .row.dim{opacity:.38}
+  li.hide{display:none}
+
+  /* detail panel */
+  .pane-r{display:flex;flex-direction:column;min-width:0;background:var(--bg2);position:sticky;top:56px;max-height:calc(100vh - 56px)}
+  .dhead{padding:16px 18px 0;border-bottom:1px solid var(--line)}
+  .dtop{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+  .dtitle{display:flex;align-items:center;gap:10px;min-width:0}
+  .dtitle .sname{font-size:14.5px;white-space:normal;word-break:break-word}
+  .dclose{display:none;font-family:var(--mono);font-size:12px;color:var(--mut);border:1px solid var(--line2);border-radius:6px;padding:4px 9px;flex-shrink:0}
+  .dmeta{display:flex;flex-wrap:wrap;gap:6px 14px;margin:10px 0 12px}
+  .tabs{display:flex;gap:2px}
+  .tab{font-family:var(--mono);font-size:12px;color:var(--mut);padding:9px 12px;border-bottom:2px solid transparent;margin-bottom:-1px}
+  .tab:hover{color:var(--tx)}
+  .tab[aria-selected="true"]{color:var(--tx);border-bottom-color:var(--sky)}
+  .dbody{padding:18px;overflow:auto;flex:1}
+  .blk{margin-bottom:18px}
+  .blk h4{font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--mut);margin-bottom:8px;display:flex;align-items:center;gap:8px}
+  .blk h4::after{content:"";flex:1;height:1px;background:var(--line)}
+  .io{border:1px solid var(--line);border-radius:10px;background:var(--bg);padding:12px 14px;font-size:14.5px;color:var(--tx2)}
+  .io.in{font-family:var(--mono);font-size:12.5px;line-height:1.65;color:var(--sky2)}
+  .io.in .k{color:var(--mut)}
+  .io p+p{margin-top:10px}
+  .io strong{color:var(--tx);font-weight:600}
+  .io ul{padding-left:18px}
+  .io li{margin:4px 0}
+  .fbcard{border:1px solid var(--line);border-radius:10px;padding:14px;background:var(--bg)}
+  .fbrow{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+  .fbkey{font-family:var(--mono);font-size:12px;color:var(--tx)}
+  .fbnote{font-size:14px;color:var(--tx2)}
+  .fbwho{font-family:var(--mono);font-size:11px;color:var(--mut2);margin-top:10px}
+  table.md{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:12px}
+  table.md td{padding:7px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+  table.md td:first-child{color:var(--mut);width:38%}
+  table.md td:last-child{color:var(--tx2);word-break:break-word}
+  .navpair{display:flex;gap:8px;justify-content:space-between;padding:12px 18px;border-top:1px solid var(--line)}
+  .navpair .tbtn{border-color:var(--line2)}
+  .scrim{display:none}
+
+  /* summary */
+  section.sum{padding:24px 0 40px}
+  .sumgrid{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:22px}
+  .card{border:1px solid var(--line);border-radius:14px;background:var(--bg2);padding:24px}
+  h2{font-weight:300;color:var(--sky2);font-size:clamp(28px,3.6vw,40px);letter-spacing:-.02em;line-height:1.1;margin-bottom:14px}
+  .card p{color:var(--tx2)}
+  .card p+p{margin-top:12px}
+  .scorebar{display:flex;height:10px;border-radius:5px;overflow:hidden;margin:18px 0 10px;background:var(--bg4)}
+  .scorebar span{display:block;height:100%;transition:flex-grow .4s}
+  .legend{display:flex;flex-wrap:wrap;gap:8px 16px;font-family:var(--mono);font-size:12px;color:var(--mut)}
+  .legend i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:6px;vertical-align:middle}
+  .gaps{list-style:none;display:flex;flex-direction:column;gap:10px}
+  .gap{border:1px solid var(--line);border-radius:10px;background:var(--bg);padding:14px 16px;display:flex;gap:14px;align-items:flex-start;text-align:left;width:100%;transition:border-color .15s}
+  .gap:hover{border-color:var(--rev)}
+  .gap .gt{flex:1;min-width:0}
+  .gap .gn{font-family:var(--mono);font-size:12.5px;color:var(--tx);display:block;margin-bottom:4px;word-break:break-word}
+  .gap .gd{font-size:14px;color:var(--tx2);display:block}
+  .gap .go{font-family:var(--mono);font-size:11.5px;color:var(--sky);white-space:nowrap;margin-top:2px}
+
+  /* cta */
+  section.cta{padding:20px 0 70px}
+  .ctabox{border:1px solid var(--line2);border-radius:16px;padding:36px;background:linear-gradient(135deg,rgba(0,109,221,.18),rgba(127,200,255,.04) 60%),var(--bg2);display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:24px;align-items:center}
+  .ctabox p{color:var(--tx2);max-width:560px}
+  .ctas{display:flex;flex-direction:column;gap:10px}
+  .ctas .btn{padding:13px 16px;font-size:13px}
+  .small{font-family:var(--mono);font-size:12px;color:var(--mut);margin-top:12px}
+  footer{border-top:1px solid var(--line);padding:26px 0 40px;font-family:var(--mono);font-size:11.5px;color:var(--mut2)}
+  footer p+p{margin-top:6px}
+
+  @media (max-width:960px){
+    .shell{grid-template-columns:1fr;min-height:0}
+    .pane-l{border-right:0}
+    ul.tree{max-height:none}
+    .pane-l{min-height:0}
+    .pane-r{position:fixed;top:auto;left:0;right:0;bottom:0;z-index:40;max-height:82vh;border-top:1px solid var(--line2);border-radius:16px 16px 0 0;transform:translateY(105%);transition:transform .28s ease;box-shadow:0 -20px 50px rgba(0,0,0,.5);padding-bottom:env(safe-area-inset-bottom,0px)}
+    .pane-r.open{transform:none}
+    .dclose{display:inline-block}
+    .scrim{display:block;position:fixed;inset:0;background:rgba(3,7,16,.6);z-index:35;opacity:0;pointer-events:none;transition:opacity .25s}
+    .scrim.open{opacity:1;pointer-events:auto}
+    .sumgrid,.ctabox{grid-template-columns:1fr}
+  }
+  @media (max-width:560px){
+    .wrap{padding-inline:16px}
+    .navbtns .btn.hide-sm{display:none}
+    .colhead,.row{grid-template-columns:minmax(0,1fr) 88px}
+    .colhead .c-wf,.row .wf{display:none}
+    .sname{white-space:normal;overflow-wrap:anywhere;font-size:12px}
+    .row{padding-top:7px;padding-bottom:7px}
+    .ctabox{padding:24px}
+    .gap{flex-wrap:wrap;gap:8px 12px}
+    .gap .gt{order:3;flex-basis:100%}
+    .gap .go{margin-left:auto}
+    header.hero{padding-top:44px}
+    .lede{font-size:16px}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<div class="disc">Personal application page by <b>Andrew Zoll</b>. Not affiliated with, sponsored by, or endorsed by LangChain.</div>
+
+<nav class="top" aria-label="Page">
+  <div class="wrap">
+    <div class="crumbs">andrewzoll.com<i>/</i>for<i>/</i><b>langchain</b><i>/</i>andrew_zoll.run</div>
+    <div class="navbtns">
+      <a class="btn hide-sm" href="https://portfolio.andrewzoll.com">Portfolio</a>
+      <a class="btn solid" href="https://www.linkedin.com/in/andrewzoll">LinkedIn</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow"><span class="sq" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none"><path d="M2 3h5v3H2zM9 7h5v3H9zM5 11h5v3H5z" fill="#030710"/><path d="M4.5 6v5M7 4.5h4.5V7" stroke="#030710" stroke-width="1.2"/></svg></span>Tracing project: deployed-engineer-professional-services</div>
+    <h1>I traced my own run so you <em>don't have to guess.</em></h1>
+    <p class="lede">Hi LangChain folks, I'm Andrew. I'm a Senior Software Engineer (AI Solutions) at Coder, where I build an internal AI agent platform for the revenue organization. I figured a resume wall was the wrong shape for a team that lives in traces, so this page is one run.</p>
+    <p class="lede">Every span is a line from your posting. Open one and the input is your words and the output is what I actually did. I scored each span myself, and where I'm short I marked it <span class="chip review" style="font-size:12px">needs review</span> instead of hiding it.</p>
+    <div class="runhead" aria-label="Run summary">
+      <div class="rid"><span class="pulse" aria-hidden="true"></span>andrew_zoll.run</div>
+      <div class="kv">run_type: <b>chain</b></div>
+      <div class="kv">status: <b>still running</b></div>
+      <div class="kv">model: <b>human, 1 of 1</b></div>
+      <div class="tagrow"><span class="tag">remote</span><span class="tag">pueblo-co</span><span class="tag">python</span><span class="tag">typescript</span><span class="tag">aws</span></div>
+      <div class="deco">The waterfall bars below are decorative. They don't measure anything about me. The receipts in each span are real.</div>
+    </div>
+  </div>
+</header>
+
+<section class="trace" id="trace" aria-label="Trace">
+  <div class="wrap">
+    <div class="shell">
+      <div class="pane-l">
+        <div class="toolbar">
+          <div class="filters" role="group" aria-label="Filter spans by self-eval score">
+            <button class="fchip" data-f="all" aria-pressed="true">all <span class="n" data-count="all"></span></button>
+            <button class="fchip" data-f="pass" aria-pressed="false">pass <span class="n" data-count="pass"></span></button>
+            <button class="fchip" data-f="partial" aria-pressed="false">partial <span class="n" data-count="partial"></span></button>
+            <button class="fchip" data-f="review" aria-pressed="false">needs review <span class="n" data-count="review"></span></button>
+          </div>
+          <div class="tbtns">
+            <button class="tbtn" id="expandAll">expand all</button>
+            <button class="tbtn" id="collapseAll">collapse</button>
+          </div>
+        </div>
+        <div class="colhead" aria-hidden="true"><span>span</span><span class="c-wf">waterfall</span><span>self-eval</span></div>
+        <ul class="tree" id="tree" role="tree" aria-label="andrew_zoll.run trace tree"></ul>
+      </div>
+
+      <div class="scrim" id="scrim"></div>
+      <aside class="pane-r" id="panel" aria-label="Span detail">
+        <div class="dhead">
+          <div class="dtop">
+            <div class="dtitle"><span class="ico chain" id="dIco">CH</span><span class="sname" id="dName">andrew_zoll.run</span></div>
+            <button class="dclose" id="dClose">close</button>
+          </div>
+          <div class="dmeta" id="dMeta"></div>
+          <div class="tabs" role="tablist" aria-label="Span detail tabs">
+            <button class="tab" role="tab" id="t-run" aria-controls="p-run" aria-selected="true">Run</button>
+            <button class="tab" role="tab" id="t-fb" aria-controls="p-fb" aria-selected="false" tabindex="-1">Feedback</button>
+            <button class="tab" role="tab" id="t-meta" aria-controls="p-meta" aria-selected="false" tabindex="-1">Metadata</button>
+          </div>
+        </div>
+        <div class="dbody">
+          <div role="tabpanel" id="p-run" aria-labelledby="t-run">
+            <div class="blk"><h4>Input</h4><div class="io in" id="dIn"></div></div>
+            <div class="blk"><h4>Output</h4><div class="io" id="dOut"></div></div>
+          </div>
+          <div role="tabpanel" id="p-fb" aria-labelledby="t-fb" hidden>
+            <div class="fbcard">
+              <div class="fbrow"><span class="fbkey">self_eval</span><span class="chip" id="dScore"></span></div>
+              <p class="fbnote" id="dNote"></p>
+              <p class="fbwho">Scored by andrew, which is a conflict of interest. Grade it yourself.</p>
+            </div>
+          </div>
+          <div role="tabpanel" id="p-meta" aria-labelledby="t-meta" hidden>
+            <table class="md"><tbody id="dMd"></tbody></table>
+          </div>
+        </div>
+        <div class="navpair">
+          <button class="tbtn" id="prevSpan">&larr; prev span</button>
+          <button class="tbtn" id="nextSpan">next span &rarr;</button>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section class="sum" id="feedback" aria-label="Feedback summary">
+  <div class="wrap">
+    <div class="sumgrid">
+      <div class="card">
+        <h2>Feedback summary</h2>
+        <p>Here's how I scored my own run against your posting. Most of the responsibilities line up with work I've shipped. The requirements are where it gets honest.</p>
+        <div class="scorebar" id="scorebar" aria-hidden="true"></div>
+        <div class="legend" id="legend"></div>
+        <p style="margin-top:18px">The short version: I've built and run a production multi-model agent system at real volume, with review gates, cost tracking, and fixes that came straight out of the traces. I haven't done it for four years, and I haven't done it on LangGraph.</p>
+      </div>
+      <div class="card">
+        <h2>Spans that need review</h2>
+        <p style="margin-bottom:16px">These are the gaps, in plain words. Tap one to open its span in the trace.</p>
+        <ul class="gaps" id="gaps"></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta" id="contact" aria-label="Contact">
+  <div class="wrap">
+    <div class="ctabox">
+      <div>
+        <h2>Want to annotate this run?</h2>
+        <p>I'd love to talk through any span, especially the ones marked needs review. If the gaps are dealbreakers I'd rather know early, and if they aren't, I'm ready to close them on a customer engagement.</p>
+        <p class="small">zoll.andrew@me.com</p>
+      </div>
+      <div class="ctas">
+        <a class="btn solid" href="https://portfolio.andrewzoll.com">See my portfolio</a>
+        <a class="btn" href="https://www.linkedin.com/in/andrewzoll">Connect on LinkedIn</a>
+        <a class="btn" href="#trace" id="restart">Back to the top of the trace</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>Built by Andrew Zoll as a personal application page. Not affiliated with, sponsored by, or endorsed by LangChain. LangChain, LangGraph, LangSmith, and Deep Agents are names of LangChain, Inc.</p>
+    <p>Every number on this page comes from my own work records. The waterfall bars and the run header are decoration.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  // Each span: id, parent, name, type, score, status, input (JD line), output (receipt), note (self-eval), meta
+  var S = [
+    {id:"root", parent:null, name:"andrew_zoll.run", type:"chain", score:"partial",
+     input:"Deployed Engineer, Professional Services. You are someone who's built real AI systems for production and can defend the technical tradeoffs within them.",
+     output:"<p>I build an internal AI agent platform for the revenue organization at <strong>Coder</strong>, in Python and TypeScript on AWS. I authored <strong>884 merged pull requests</strong> there between July 27 and October 9, 2026, most of them built by agents I orchestrated and cleared through review gates I designed.</p><p>Before Coder I shipped <strong>FieldCommand</strong>, a multi-tenant SaaS for contractors at 187,745 lines of TypeScript, built solo. I also built <strong>Veritas</strong>, which verifies citations in legal filings, and <strong>AndrewOS</strong>, the agent system I run my own work on.</p>",
+     note:"I'm strong on production agent orchestration and on translating for customers. I'm short on years and on LangGraph specifically. Both gaps are spelled out in their own spans.",
+     meta:{run_type:"chain", children:"4 groups", tags:"remote, pueblo-co"}},
+
+    {id:"resp", parent:"root", name:"key_responsibilities", type:"chain", score:null,
+     input:"KEY RESPONSIBILITIES: Advising, Building, Embedding, Agent Engineering, Applied AI.",
+     output:"<p>Your posting lists five responsibilities, so this span has five children. Applied AI fans out further because it's really four different skills wearing one label.</p>",
+     note:"This is a group span, so open the children for scores.", meta:{run_type:"chain"}},
+
+    {id:"adv", parent:"resp", name:"advising.architecture_and_evals", type:"llm", score:"pass",
+     input:"Advising: Agent architecture design, evaluation strategy review, and best-practice production guidance.",
+     output:"<p>I designed the architecture my agents run on at Coder. An orchestrator writes the specs, and a routing table sends each task to a model by task class. Open-weight <strong>Kimi</strong> models build, <strong>GLM</strong> models review, GPT models run mutation tests, and <strong>Claude Opus and Fable</strong> take the sensitive core. A pull request that needs more than three review rounds escalates to stronger models.</p><p>The part I'd bring to a customer is the tradeoff reasoning behind that table: which work deserves an expensive model, which work a cheap one handles fine, and why a second opinion has to come from a different model family.</p>",
+     note:"This is the work I'd most enjoy doing for customers, and I've already done it for my own system at volume.",
+     meta:{run_type:"llm", where:"Coder", since:"2026"}},
+
+    {id:"build", parent:"resp", name:"building.co_build_adlc", type:"chain", score:"pass",
+     input:"Building: Co-build with the customer's engineering team across the full Agent Development Lifecycle (ADLC) in outcome-scoped engagements.",
+     output:"<p>At Coder I own the whole lifecycle on my platform work: spec, build, review, deploy, and the fix after it meets production. The child spans are three concrete pieces.</p>",
+     note:"I own the full lifecycle on my own work. Co-building alongside a customer's own engineering team is the newer part, which the embedding span covers.",
+     meta:{run_type:"chain", children:"3"}},
+
+    {id:"build-int", parent:"build", name:"integrations.salesforce_granola_slack", type:"tool", score:"pass",
+     input:"Co-build across the full ADLC.",
+     output:"<p>I built the platform's data integrations for <strong>Salesforce</strong>, <strong>Granola</strong> meeting transcripts, and a <strong>Slack bot</strong> the revenue team talks to. The Granola ingestion runs a 5-minute poll and a nightly reconcile, with fail-closed filtering for Federal accounts.</p><p>I also shipped an OAuth authorization server that gates hosted MCP access to the platform.</p>",
+     note:"It's shipped, and the revenue team uses it.", meta:{run_type:"tool", stack:"Python, TypeScript, AWS"}},
+
+    {id:"build-perf", parent:"build", name:"dashboard.cold_load_fanout", type:"tool", score:"pass",
+     input:"Production deployment.",
+     output:"<p>I cut cold dashboard load from <strong>5 to 10 seconds down to about 2 seconds</strong> by replacing a serial per-account S3 read loop with a bounded fan-out. I maintain the AWS stack through Terraform with a CI plan gate, ECS tasks, and Lambda jobs.</p>",
+     note:"It's a small win, but I measured it before and after.", meta:{run_type:"tool", infra:"ECS, Lambda, S3, Terraform"}},
+
+    {id:"build-oss", parent:"build", name:"upstream.coder_pr_30576", type:"tool", score:"pass",
+     input:"Defend the technical tradeoffs within them.",
+     output:"<p>When I hit a confusing error in the product I was building on, I fixed it upstream. <a href=\"https://github.com/coder/coder/pull/30576\">coder/coder#30576</a> is an open Go pull request that makes the API tell a disabled chat model config apart from a missing one.</p>",
+     note:"It's still open and not merged, so I'm not claiming more than that.", meta:{run_type:"tool", language:"Go", state:"open"}},
+
+    {id:"emb", parent:"resp", name:"embedding.inside_their_team", type:"tool", score:"partial",
+     input:"Embedding: Serve as a deployed engineer inside the customer's team for extended engagements, operating as a de facto member of their org to ship agent systems directly.",
+     output:"<p>My Coder seat is already an embedded one. I sit inside the revenue organization and act as the translation layer between what the agent platform can do and what non-technical revenue operators need from it.</p><p>Before that, from December 2025 to July 2026, I was an AI systems consultant for an early-stage subscription business. I designed its data-flow architecture, integration patterns, and agent workflows.</p>",
+     note:"I've embedded with an internal customer and with one startup. I haven't yet embedded at a large enterprise with its own platform team, procurement, and security review.",
+     meta:{run_type:"tool", embedded_with:"revenue org at Coder; one startup"}},
+
+    {id:"ae", parent:"resp", name:"agent_engineering.adlc_end_to_end", type:"chain", score:"pass",
+     input:"Agent Engineering: ADLC end-to-end, architecture design, orchestration patterns, evals, custom conversational UIs, and production deployment.",
+     output:"<ul><li><strong>Orchestration:</strong> about 20 Python loop-control scripts with 10 test files keep my build loop running without a person watching it.</li><li><strong>Conversational UI:</strong> the Slack bot the revenue team uses to ask the platform questions.</li><li><strong>Deployment:</strong> ECS tasks and Lambda jobs on AWS, managed in Terraform behind a CI plan gate.</li><li><strong>Evals:</strong> covered in their own span under requirements, because they deserve the honesty.</li></ul>",
+     note:"Every stage on your list has a shipped example behind it.", meta:{run_type:"chain"}},
+
+    {id:"aai", parent:"resp", name:"applied_ai", type:"chain", score:"partial",
+     input:"Applied AI: Post-training, supervised fine-tuning, harness engineering, trace mining, model selection and evaluation methodology.",
+     output:"<p>Harness engineering, trace mining, and model selection are where I've spent most of my last two months. Post-training is a blank, and I'd rather say so here than in an interview.</p>",
+     note:"Three of four children pass. Post-training needs review.", meta:{run_type:"chain", children:"4"}},
+
+    {id:"aai-h", parent:"aai", name:"harness_engineering.loop_controls", type:"tool", score:"pass",
+     input:"Harness engineering.",
+     output:"<ul><li><strong>Round cap:</strong> a counter keyed to the ticket stops a review gate after a set number of rounds. I added it after one spec spent 14 review rounds over 12 hours without converging.</li><li><strong>Watchdog:</strong> it checks a sibling runtime's work log, claim ledger, and branch activity, and acts on silence. I added it after a stopped runtime went unnoticed for more than 8 hours.</li><li><strong>Quota cleanup:</strong> a stopped workspace still holds one of 40 quota slots. On September 29 the pool sat at 41 of 40, so now finished lanes get deleted every tick and dispatch refuses a new chat when the pool is nearly full.</li><li><strong>Event poller:</strong> it turns failed CI runs, new ticket assignments, Slack requests, and meeting action items into queued work, with a kill switch.</li></ul>",
+     note:"Each control exists because a trace showed me the failure first.", meta:{run_type:"tool", scripts:"about 20 Python, 10 test files"}},
+
+    {id:"aai-t", parent:"aai", name:"trace_mining.outcome_telemetry", type:"retriever", score:"pass",
+     input:"Trace mining.",
+     output:"<p>Every agent dispatch writes a telemetry line. I de-duplicate review and mutation outcomes on pull request, model, role, round, and outcome. That's where my numbers come from: about <strong>1,200 verdicts</strong> on about 350 pull requests, with <strong>more than 430 confirmed defect catches</strong> and <strong>21 false flags</strong>.</p><p>The same records are how I price each agent chat from its token usage and track model cost per merged pull request.</p>",
+     note:"I mined these by hand with scripts, not with a tracing product. I'd be glad to swap my scripts for a real one.", meta:{run_type:"retriever", window:"Sep 8 to Oct 9, 2026"}},
+
+    {id:"aai-m", parent:"aai", name:"model_selection.cost_per_merged_pr", type:"llm", score:"pass",
+     input:"Model selection.",
+     output:"<p>In the week of September 29, <strong>75% of 860 agent launches</strong> ran with no human prompt, at about <strong>$38 of model cost per merged pull request</strong>, with open-weight builders and reviewers doing most of the work.</p><p>My first token-based estimate badly undercounted spend, because the gateway bills cache reads at the full input rate. I calibrated the tool against the dashboard total of about $1,300 per week, and it stays reconciled to that total.</p>",
+     note:"I select models by task class and judge them on cost and on review outcomes.", meta:{run_type:"llm", models:"Kimi, GLM, GPT, Claude Opus, Fable"}},
+
+    {id:"aai-p", parent:"aai", name:"post_training.sft", type:"llm", score:"review",
+     input:"Post-training, supervised fine-tuning.",
+     output:"<p>I have nothing to show here yet. I haven't run supervised fine-tuning, DPO, or RLHF, and I haven't curated a training dataset for an open-weight model. My model work so far is selection, routing, and evaluation, not changing weights.</p>",
+     note:"This is a real gap. It's also listed as a nice-to-have, so I've kept it honest in both places.", meta:{run_type:"llm", shipped:"none"}},
+
+    {id:"req", parent:"root", name:"requirements", type:"chain", score:null,
+     input:"REQUIREMENTS",
+     output:"<p>Your posting lists seven requirements. This is the group where the scores get mixed, and I'd rather you see that here than find it later.</p>",
+     note:"This is a group span, so open the children for scores.", meta:{run_type:"chain"}},
+
+    {id:"r-py", parent:"req", name:"python.four_plus_years", type:"chain", score:"review",
+     input:"4+ years of software engineering experience with deep expertise in Python. TypeScript/JavaScript a plus.",
+     output:"<p>Honest count: about two years of shipped production software. That's ChatGPT API integrations for an advisory practice in 2024, FieldCommand and its AI features in 2025, and Python at Coder since July 2026. My software engineering title is three months old.</p><p>The Python at Coder is real volume on a production codebase, and FieldCommand is 187,745 lines of TypeScript I wrote solo. It still isn't four years.</p>",
+     note:"I'm below your bar on years. I'd ask you to weigh the volume and the receipts, and I understand if you can't.", meta:{run_type:"chain", swe_title_since:"Jul 2026"}},
+
+    {id:"r-ag", parent:"req", name:"production_agents.two_plus_years", type:"chain", score:"review",
+     input:"2+ years of hands-on experience building and shipping production agent systems.",
+     output:"<p>Agents have done real work for me since my advisory practice put them on marketing and prospecting in 2024, and AndrewOS has run scheduled agent loops across two businesses since 2025.</p><p>A production multi-agent system at the depth you mean, with review gates and cost tracking at volume, is my Coder work from 2026. Depending on how you count, I'm at or under your two years.</p>",
+     note:"This one is borderline, and I'd rather flag it than round up.", meta:{run_type:"chain"}},
+
+    {id:"r-cl", parent:"req", name:"client_facing.articulate_architecture", type:"llm", score:"pass",
+     input:"Strong client-facing communication skills, with the ability to confidently articulate architectural decisions to technical stakeholders (engineers, architects, CTOs).",
+     output:"<p>Before engineering I was a financial advisor at Edward Jones for four years and kept <strong>95% client retention across more than 120 households</strong>, under FINRA and SEC rules. I've explained hard tradeoffs to people whose money depended on getting them right.</p><p>At Coder I explain what the agent platform can and can't do to revenue leaders who don't write code.</p>",
+     note:"The communication is strong. A room full of CTOs is newer to me than a kitchen table, so call this a pass with a small asterisk.", meta:{run_type:"llm", years_client_facing:"Edward Jones 2020 to 2024"}},
+
+    {id:"r-fw", parent:"req", name:"frameworks.langgraph_or_comparable", type:"tool", score:"review",
+     input:"Strong experience with LangChain/LangGraph/Deep Agents or comparable frameworks, including multi-agent patterns and state management (short and long-term memory).",
+     output:"<p>I haven't shipped LangGraph or Deep Agents in production. What I built instead is the comparable plumbing by hand:</p><ul><li>routing by task class across model families,</li><li>a claim ledger so two runtimes don't grab the same work,</li><li>loop state that lets a bounded session resume where the last one stopped,</li><li>and a versioned memory store in AndrewOS that every agent reads at task start.</li></ul><p>I've already hit the problems LangGraph's state and checkpoint model solves, which is why I want to work with it.</p>",
+     note:"This is comparable work, not the real thing. If hands-on LangGraph is required on day one, this is a miss.", meta:{run_type:"tool", langgraph_in_prod:"no"}},
+
+    {id:"r-ev", parent:"req", name:"evals.non_deterministic_systems", type:"retriever", score:"partial",
+     input:"Deep familiarity designing and implementing evaluation methodologies for non-deterministic AI systems.",
+     output:"<p>My eval work is real but adjacent. The cross-family review gate makes a model from a different family than the builder clear each change, and mutation tests confirm that the tests can actually fail.</p><p>Veritas pulls citations out of a legal filing, checks them against source records, and returns an auditable verification record. Its deep scan includes a model verdict, so I designed hedged verdicts that never claim more certainty than the evidence supports, and a fixture suite gates releases.</p><p>What I haven't built is a formal eval harness with curated datasets, scored experiments, and regression tracking across prompt versions. That's the gap I'd close first.</p>",
+     note:"It's adjacent and tested in production, but it isn't the formal methodology you describe.", meta:{run_type:"retriever"}},
+
+    {id:"r-sp", parent:"req", name:"range.advisory_to_embedded", type:"chain", score:"pass",
+     input:"Comfortable operating across the full spectrum from advisory to embedded delivery.",
+     output:"<p>I've worked across that range: routing doctrine as the advisor, every integration as the builder, and a seat inside the revenue org as the embedded engineer. Running my own products solo also means I've been the person with nobody to hand the hard part to.</p>",
+     note:"I'm comfortable on both ends.", meta:{run_type:"chain"}},
+
+    {id:"r-tr", parent:"req", name:"travel.up_to_twenty_percent", type:"tool", score:"pass",
+     input:"Willing to travel up to 20% of the time.",
+     output:"<p>I'm remote in Pueblo, Colorado, and travel up to 20% works for me.</p>",
+     note:"There's no asterisk on this one.", meta:{run_type:"tool", location:"Pueblo, CO"}},
+
+    {id:"nth", parent:"root", name:"nice_to_have", type:"chain", score:null,
+     input:"NICE TO HAVE",
+     output:"<p>One of these I have and one I don't.</p>",
+     note:"This is a group span, so its children carry the scores.", meta:{run_type:"chain"}},
+
+    {id:"n-pt", parent:"nth", name:"post_training.tooling", type:"llm", score:"review",
+     input:"Exposure to dataset curation and post-training techniques (SFT, DPO, RLHF) on open-weight models using tools like Axolotl, Unsloth, Hugging Face transformers, or TRL.",
+     output:"<p>I haven't used Axolotl, Unsloth, TRL, or Hugging Face transformers for training. I've run open-weight models heavily for inference, which isn't the same thing.</p>",
+     note:"I don't have this yet.", meta:{run_type:"llm"}},
+
+    {id:"n-tm", parent:"nth", name:"trace_mining.improvement_loops", type:"retriever", score:"pass",
+     input:"Experience with trace mining to drive continuous improvement loops.",
+     output:"<p>This is how my whole loop got built. A trace shows a failure, the failure becomes a rule or a control, and the control gets its own test. The round cap, the watchdog, the quota cleanup, and the cost calibration fix all started as something odd in a log.</p>",
+     note:"This is my favorite part of the job.", meta:{run_type:"retriever"}},
+
+    {id:"errs", parent:"root", name:"errors_caught_and_fixed", type:"chain", score:null, status:"error",
+     input:"You... can defend the technical tradeoffs within them.",
+     output:"<p>A trace without errors is lying. These are four real failures from my agent work, with the fix for each.</p>",
+     note:"This is a group span, so its children carry the scores.", meta:{run_type:"chain", children:"4"}},
+
+    {id:"e-redis", parent:"errs", name:"redis.cluster_mode_crossslot", type:"error", score:"pass", status:"error",
+     input:"<span class=\"k\">error:</span> token rotation transaction would fail on every refresh in production.",
+     output:"<p>The token-rotation transaction in my MCP authorization server passed every test against an in-memory fake. A reviewer model from a different family, running inside my review gate, caught it at <strong>review round 5</strong>: production Redis runs in cluster mode, so the transaction would have failed on every token refresh.</p><p>The fix put the keys in one hash slot and added a test that checks the slot of each key.</p>",
+     note:"The gate caught it before production, which is the whole point of a cross-family reviewer.", meta:{run_type:"error", found_by:"cross-family reviewer model in my gate", round:"5"}},
+
+    {id:"e-cost", parent:"errs", name:"cost.estimate_undercounted", type:"error", score:"pass", status:"error",
+     input:"<span class=\"k\">error:</span> estimated agent spend did not match the dashboard.",
+     output:"<p>The product UI showed no cost per chat, so I priced each chat from token usage. My first estimate badly undercounted spend, because the gateway bills cache reads at the full input rate.</p><p>I fixed the cache-read pricing and calibrated the tool against the dashboard total of about $1,300 per week.</p>",
+     note:"I fixed it, and the tool is calibrated against the dashboard total.", meta:{run_type:"error"}},
+
+    {id:"e-loop", parent:"errs", name:"review.fourteen_rounds_no_converge", type:"error", score:"pass", status:"error",
+     input:"<span class=\"k\">error:</span> one spec spent 14 review rounds over 12 hours without converging.",
+     output:"<p>I added a round cap keyed to the ticket, so a review gate stops after a set number of rounds and escalates instead of looping forever.</p>",
+     note:"I fixed it with a control and a test.", meta:{run_type:"error"}},
+
+    {id:"e-404", parent:"errs", name:"mcp.route_404_after_redeploy", type:"error", score:"pass", status:"error",
+     input:"<span class=\"k\">error:</span> the Coder Agents MCP route on Coder's internal dogfood deployment returned 404 for more than 2 hours after a redeploy.",
+     output:"<p>This was Coder's own Coder Agents deployment, not a server I run. On September 14 an upstream change put the OAuth2 provider behind a new flag, and my agents lost the route. The 404 is correct under RFC 8414 and RFC 9728, but from the client side it looked like an outage.</p><p>I wrote a runbook for my loop that separates route churn from a real fault, and I sent the case back as product feedback: a note in the release or the admin UI would have saved hours of tracing.</p>",
+     note:"I root-caused it and wrote it up for the Coder Agents team.", meta:{run_type:"error", date:"2026-09-14"}}
+  ];
+
+  var byId = {}, kids = {};
+  S.forEach(function(s){ byId[s.id]=s; kids[s.id]=[]; });
+  S.forEach(function(s){ if(s.parent) kids[s.parent].push(s.id); });
+
+  var ICON = {chain:"CH", llm:"LLM", tool:"TL", retriever:"RT", error:"!"};
+  var LABEL = {pass:"pass", partial:"partial", review:"needs review"};
+  var COLORS = {pass:"var(--ok)", partial:"var(--part)", review:"var(--rev)"};
+
+  // decorative waterfall: lay spans out in tree order
+  var order = [];
+  (function walk(id, depth){ byId[id].depth=depth; order.push(id); kids[id].forEach(function(k){walk(k,depth+1);}); })("root",0);
+  order.forEach(function(id, i){
+    var s = byId[id];
+    if(id==="root"){ s.w0=0; s.w1=100; return; }
+    var p = byId[s.parent], sib = kids[s.parent], j = sib.indexOf(id), n = sib.length;
+    var span = (p.w1-p.w0)/n;
+    s.w0 = p.w0 + span*j + span*0.06;
+    s.w1 = s.w0 + span*(0.55 + ((i*37)%40)/100);
+    if(s.w1>p.w1) s.w1=p.w1;
+  });
+
+  var tree = document.getElementById("tree");
+  function esc(t){ var d=document.createElement("div"); d.textContent=t; return d.innerHTML; }
+
+  function build(id){
+    var s = byId[id], li = document.createElement("li");
+    li.setAttribute("role","treeitem");
+    li.dataset.id = id;
+    var hasKids = kids[id].length>0;
+    if(hasKids) li.setAttribute("aria-expanded","true");
+    var row = document.createElement("div");
+    row.className="row"; row.dataset.id=id; row.tabIndex=-1;
+    row.setAttribute("aria-selected","false");
+    if(s.status==="error") row.dataset.status="error";
+    row.style.paddingLeft = (6 + s.depth*16) + "px";
+    var chip = s.score ? '<span class="chip '+s.score+'">'+LABEL[s.score]+'</span>' : '<span class="chip none">group</span>';
+    row.innerHTML =
+      '<div class="nm">'+
+        '<span class="tw'+(hasKids?'':' leaf')+'" data-toggle="'+id+'" aria-hidden="true"><svg viewBox="0 0 10 10"><path d="M2 3.5l3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></span>'+
+        '<span class="ico '+s.type+'">'+ICON[s.type]+'</span>'+
+        '<span class="sname">'+esc(s.name)+'</span>'+
+        (s.status==="error"?'<span class="errdot" title="error span"></span>':'')+
+      '</div>'+
+      '<div class="wf" aria-hidden="true"><span style="left:'+s.w0.toFixed(1)+'%;width:'+Math.max(2,(s.w1-s.w0)).toFixed(1)+'%"></span></div>'+
+      chip;
+    li.appendChild(row);
+    if(hasKids){
+      var ul=document.createElement("ul"); ul.setAttribute("role","group");
+      kids[id].forEach(function(k){ ul.appendChild(build(k)); });
+      li.appendChild(ul);
+    }
+    return li;
+  }
+  tree.appendChild(build("root"));
+
+  // counts
+  var counts={all:0,pass:0,partial:0,review:0};
+  S.forEach(function(s){ if(s.score){ counts.all++; counts[s.score]++; } });
+  document.querySelectorAll("[data-count]").forEach(function(el){ el.textContent = counts[el.dataset.count]; });
+
+  // score bar + legend
+  var bar=document.getElementById("scorebar"), leg=document.getElementById("legend");
+  ["pass","partial","review"].forEach(function(k){
+    var sp=document.createElement("span"); sp.style.flexGrow=counts[k]; sp.style.background=COLORS[k]; bar.appendChild(sp);
+    var l=document.createElement("span"); l.innerHTML='<i style="background:'+COLORS[k]+'"></i>'+LABEL[k]+': '+counts[k]+' of '+counts.all+' scored spans'; leg.appendChild(l);
+  });
+
+  // gaps list
+  var gaps=document.getElementById("gaps");
+  S.filter(function(s){return s.score==="review"||s.score==="partial";}).sort(function(a,b){ return (a.score==="review"?0:1)-(b.score==="review"?0:1); }).forEach(function(s){
+    var li=document.createElement("li");
+    li.innerHTML='<button class="gap" data-goto="'+s.id+'"><span class="chip '+s.score+'">'+LABEL[s.score]+'</span><span class="gt"><span class="gn">'+esc(s.name)+'</span><span class="gd">'+esc(s.note)+'</span></span><span class="go">open &rarr;</span></button>';
+    gaps.appendChild(li);
+  });
+
+  // panel
+  var panel=document.getElementById("panel"), scrim=document.getElementById("scrim");
+  var mq = window.matchMedia("(max-width:960px)");
+  var current="root";
+
+  function visibleRows(){
+    return Array.prototype.filter.call(tree.querySelectorAll(".row"), function(r){ return r.offsetParent!==null; });
+  }
+
+  function select(id, opts){
+    opts = opts||{};
+    var s=byId[id]; if(!s) return;
+    current=id;
+    tree.querySelectorAll(".row").forEach(function(r){ var on=r.dataset.id===id; r.setAttribute("aria-selected",on?"true":"false"); r.tabIndex=on?0:-1; });
+    var ico=document.getElementById("dIco"); ico.className="ico "+s.type; ico.textContent=ICON[s.type];
+    document.getElementById("dName").textContent=s.name;
+    var meta='<span class="kv">run_type: <b>'+s.type+'</b></span>'+
+      '<span class="kv">status: <b>'+(s.status==="error"?"error, then fixed":"success")+'</b></span>'+
+      '<span class="kv">parent: <b>'+(s.parent?esc(byId[s.parent].name):"none")+'</b></span>';
+    document.getElementById("dMeta").innerHTML=meta;
+    var inp=document.getElementById("dIn");
+    inp.innerHTML = s.input.indexOf('<span class="k">')===0 ? s.input : '<span class="k">jd_line:</span> "'+esc(s.input)+'"';
+    document.getElementById("dOut").innerHTML=s.output;
+    var sc=document.getElementById("dScore");
+    sc.className="chip "+(s.score||"none"); sc.textContent=s.score?LABEL[s.score]:"group, not scored";
+    document.getElementById("dNote").textContent=s.note;
+    var md=document.getElementById("dMd"); md.innerHTML="";
+    var m = Object.assign({span_id:s.id, depth:String(s.depth)}, s.meta||{}, {latency:"decorative, measures nothing"});
+    Object.keys(m).forEach(function(k){ var tr=document.createElement("tr"); tr.innerHTML="<td>"+esc(k)+"</td><td>"+esc(String(m[k]))+"</td>"; md.appendChild(tr); });
+    // expand ancestors so the row is visible
+    var p=s.parent; while(p){ var li=tree.querySelector('li[data-id="'+p+'"]'); if(li) li.setAttribute("aria-expanded","true"); p=byId[p].parent; }
+    if(opts.focus){ var r=tree.querySelector('.row[data-id="'+id+'"]'); if(r){ r.focus({preventScroll:true}); r.scrollIntoView({block:"nearest"}); } }
+    if(opts.open && mq.matches) openSheet();
+    document.querySelector(".dbody").scrollTop=0;
+  }
+
+  function openSheet(){ panel.classList.add("open"); scrim.classList.add("open"); }
+  function closeSheet(){ panel.classList.remove("open"); scrim.classList.remove("open"); }
+  document.getElementById("dClose").addEventListener("click", closeSheet);
+  scrim.addEventListener("click", closeSheet);
+  document.addEventListener("keydown", function(e){ if(e.key==="Escape") closeSheet(); });
+
+  tree.addEventListener("click", function(e){
+    var t=e.target.closest("[data-toggle]");
+    if(t && !t.classList.contains("leaf")){
+      var li=t.closest("li"); li.setAttribute("aria-expanded", li.getAttribute("aria-expanded")==="true"?"false":"true");
+      e.stopPropagation(); return;
+    }
+    var row=e.target.closest(".row"); if(row) select(row.dataset.id,{open:true});
+  });
+
+  tree.addEventListener("keydown", function(e){
+    var rows=visibleRows(), i=rows.findIndex(function(r){return r.dataset.id===current;});
+    var li=tree.querySelector('li[data-id="'+current+'"]');
+    if(e.key==="ArrowDown"){ e.preventDefault(); if(i<rows.length-1) select(rows[i+1].dataset.id,{focus:true}); }
+    else if(e.key==="ArrowUp"){ e.preventDefault(); if(i>0) select(rows[i-1].dataset.id,{focus:true}); }
+    else if(e.key==="ArrowRight"){ e.preventDefault(); if(li.hasAttribute("aria-expanded")) li.setAttribute("aria-expanded","true"); }
+    else if(e.key==="ArrowLeft"){ e.preventDefault(); if(li.getAttribute("aria-expanded")==="true") li.setAttribute("aria-expanded","false"); else if(byId[current].parent) select(byId[current].parent,{focus:true}); }
+    else if(e.key==="Enter"||e.key===" "){ e.preventDefault(); select(current,{open:true}); }
+  });
+
+  // tabs
+  var tabs=Array.prototype.slice.call(document.querySelectorAll('.tab'));
+  function setTab(tab){
+    tabs.forEach(function(t){ var on=t===tab; t.setAttribute("aria-selected",on?"true":"false"); t.tabIndex=on?0:-1; document.getElementById(t.getAttribute("aria-controls")).hidden=!on; });
+  }
+  tabs.forEach(function(t, i){
+    t.addEventListener("click", function(){ setTab(t); });
+    t.addEventListener("keydown", function(e){
+      if(e.key==="ArrowRight"||e.key==="ArrowLeft"){ e.preventDefault(); var n=tabs[(i+(e.key==="ArrowRight"?1:tabs.length-1))%tabs.length]; setTab(n); n.focus(); }
+    });
+  });
+
+  // prev / next across visible rows
+  function step(d){
+    var rows=visibleRows(), i=rows.findIndex(function(r){return r.dataset.id===current;});
+    var n=rows[i+d]; if(n) select(n.dataset.id,{focus:false});
+    var r=tree.querySelector('.row[data-id="'+current+'"]'); if(r && !mq.matches) r.scrollIntoView({block:"nearest"});
+  }
+  document.getElementById("prevSpan").addEventListener("click", function(){ step(-1); });
+  document.getElementById("nextSpan").addEventListener("click", function(){ step(1); });
+
+  // expand / collapse all
+  document.getElementById("expandAll").addEventListener("click", function(){ tree.querySelectorAll("li[aria-expanded]").forEach(function(li){ li.setAttribute("aria-expanded","true"); }); });
+  document.getElementById("collapseAll").addEventListener("click", function(){
+    tree.querySelectorAll("li[aria-expanded]").forEach(function(li){ if(li.dataset.id!=="root") li.setAttribute("aria-expanded","false"); });
+    if(byId[current].depth>1){ var p=current; while(byId[p].depth>1) p=byId[p].parent; select(p); }
+  });
+
+  // filters: show matching spans plus their ancestors; dim ancestors that don't match themselves
+  var fchips=document.querySelectorAll(".fchip");
+  function applyFilter(f){
+    fchips.forEach(function(c){ c.setAttribute("aria-pressed", c.dataset.f===f?"true":"false"); });
+    var keep={};
+    S.forEach(function(s){
+      if(f==="all" || s.score===f){ var x=s.id; while(x){ keep[x]=true; x=byId[x].parent; } }
+    });
+    tree.querySelectorAll("li[data-id]").forEach(function(li){
+      var id=li.dataset.id, s=byId[id];
+      li.classList.toggle("hide", !keep[id]);
+      li.querySelector(":scope > .row").classList.toggle("dim", f!=="all" && s.score!==f);
+      if(f!=="all" && keep[id] && li.hasAttribute("aria-expanded")) li.setAttribute("aria-expanded","true");
+    });
+    if(f!=="all"){
+      var first=S.filter(function(s){return s.score===f;})[0];
+      if(first && byId[current].score!==f) select(first.id);
+    }
+  }
+  fchips.forEach(function(c){ c.addEventListener("click", function(){ applyFilter(c.dataset.f); }); });
+
+  // gap buttons jump into the trace
+  gaps.addEventListener("click", function(e){
+    var b=e.target.closest("[data-goto]"); if(!b) return;
+    applyFilter("all");
+    document.getElementById("trace").scrollIntoView({behavior:"smooth", block:"start"});
+    select(b.dataset.goto,{open:true});
+    setTab(tabs[0]);
+    setTimeout(function(){ var r=tree.querySelector('.row[data-id="'+b.dataset.goto+'"]'); if(r){ r.scrollIntoView({block:"nearest"}); r.focus({preventScroll:true}); } }, 450);
+  });
+
+  document.getElementById("restart").addEventListener("click", function(){ select("root"); });
+
+  mq.addEventListener ? mq.addEventListener("change", function(){ if(!mq.matches) closeSheet(); }) : null;
+  select("root");
+})();
+</script>
+</body>
+</html>
