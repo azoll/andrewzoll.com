@@ -190,13 +190,13 @@
 
   <section class="hero">
     <div class="eyebrow">Applied AI Engineer &middot; Remote, United States</div>
-    <h1>You ask who your agents are and <em>what they're allowed to do</em>. I've been answering that for myself for a year.</h1>
-    <p class="lede">I'm Andrew. I build agent systems that run real operations, and I've spent the last year on the unglamorous half of that problem: what an agent is permitted to touch, what it has to hand back to a human, and how you find out when it quietly went wrong.</p>
-    <p class="lede">Not as a thought exercise. As the thing my own business actually runs on, and now as my day job.</p>
+    <h1>You ask who your agents are and <em>what they're allowed to do</em>. I've been answering that in production code all year.</h1>
+    <p class="lede">I'm Andrew. I build agent systems that run real work, and I've spent this year on the unglamorous half of that problem: what an agent is permitted to touch, what it has to hand back to a human, and how you find out when it quietly went wrong.</p>
+    <p class="lede">It isn't a thought exercise for me. At Coder I built an agent platform for a revenue organization and ran its engineering on agents, and my own businesses run on the same patterns.</p>
 
     <div class="quoteback">
       <p>Your posting describes "a GTM intelligence layer that gives reps live account context, meeting prep, and follow-up from CRM, product usage, and conversation history."</p>
-      <p class="src">That's not an example problem for me. That is my current job description at Coder, where I'm a Senior Software Engineer on AI Solutions building exactly that platform.</p>
+      <p class="src">That's not an example problem for me. I built that platform at Coder, where I'm a Senior Software Engineer on AI Solutions, on top of Salesforce, Granola meeting transcripts, and a Slack bot.</p>
     </div>
   </section>
 
@@ -207,11 +207,11 @@
 
     <div class="filters" role="group" aria-label="Filter requirements by status">
       <span class="lbl">Filter</span>
-      <button class="chip" data-f="all" aria-pressed="true">All 8</button>
+      <button class="chip" data-f="all" aria-pressed="true">All 10</button>
       <button class="chip" data-f="grant" aria-pressed="false">Granted</button>
       <button class="chip" data-f="part" aria-pressed="false">Partial</button>
       <button class="chip" data-f="deny" aria-pressed="false">Not granted</button>
-      <span class="count" id="count">showing 8 of 8</span>
+      <span class="count" id="count">showing 10 of 10</span>
     </div>
 
     <div class="scopes" id="scopes">
@@ -224,23 +224,37 @@
         </button>
         <div class="body">
           <p class="req">"You've taken AI-powered systems from idea to production and through at least one iteration cycle with real users."</p>
-          <p>I built <strong>AndrewOS</strong>, an agent operating system that runs marketing, content, and operations across two businesses. It's been in production for a year, and the users are real in the way that matters most: when it breaks, my own revenue work stops. It's gone through many iteration cycles because it had to.</p>
-          <p>At <strong>Coder</strong> I ship an internal AI agent platform that turns CRM, support, and call-transcript data into answers and workflows for the revenue org. Two-person team, straight to production.</p>
-          <div class="meta"><span class="tag">1 year in production</span><span class="tag">two businesses on it</span><span class="tag">still running today</span></div>
+          <p>At <strong>Coder</strong> I built an internal AI agent platform that turns CRM, support, and call-transcript data into answers and workflows for the revenue organization. It went from idea to production with real users in that org, and I iterated on it constantly: I authored <strong>884 merged pull requests</strong> in Python and TypeScript between July 27 and October 9, 2026. In fairness, agents built many of those under my account, and the count includes spec and docs pull requests.</p>
+          <p>Before that, <strong>AndrewOS</strong>, the agent operating system I built for my own work, had already been through more iteration cycles than I can count, because when it breaks my own work stops.</p>
+          <div class="meta"><span class="tag">884 merged PRs</span><span class="tag">Jul 27 to Oct 9, 2026</span><span class="tag">real users in the revenue org</span></div>
         </div>
       </div>
 
       <div class="scope" data-s="grant" open-state="0">
         <button aria-expanded="false">
           <span class="badge b-grant">granted</span>
-          <span class="name">internal_tools:daily_work</span>
+          <span class="name">agents:who_and_what_allowed</span>
           <span class="chev">&#9656;</span>
         </button>
         <div class="body">
-          <p class="req">"Build internal tools that become part of people's daily work: agents, automations, and workflows that are stable, observable, and easy to maintain."</p>
-          <p>This is the part of the posting I'd point at first. AndrewOS has a delegation hierarchy, scheduled jobs that run without me, and a dashboard I open every morning to see what the agents did overnight. <strong>Observability wasn't a nice-to-have, it was the thing that made autonomy survivable.</strong></p>
-          <p>Every agent in the pipeline writes a structured trace: what it received, what it decided, why, and what it handed off. A finished run reads top to bottom as a replayable audit record. That's what I review, instead of raw agent output.</p>
-          <div class="meta"><span class="tag">structured agent traces</span><span class="tag">scheduled autonomous jobs</span><span class="tag">live ops dashboard</span></div>
+          <p class="req">"Exposure to MCP or similar protocols for connecting AI agents to real systems," and your company's own question: who are your agents, and what are they allowed to do?</p>
+          <p>I shipped an <strong>OAuth authorization server</strong> that gates hosted MCP access to the Coder platform. That's the closest thing on this page to your product, and building it is a big part of why I wanted to apply.</p>
+          <p>I also shipped <strong>fail-closed Federal data access controls across 26 merged pull requests</strong>. The platform classifies Federal accounts, withholds unproven Federal history from model input for uncleared users, and has a test for every access tier. When the classifier isn't sure, the data stays out. A model can't leak what it never received.</p>
+          <div class="meta"><span class="tag">OAuth for hosted MCP</span><span class="tag">fails closed</span><span class="tag">every tier tested</span></div>
+        </div>
+      </div>
+
+      <div class="scope" data-s="grant" open-state="0">
+        <button aria-expanded="false">
+          <span class="badge b-grant">granted</span>
+          <span class="name">coding_harness:spec_to_deployed_change</span>
+          <span class="chev">&#9656;</span>
+        </button>
+        <div class="body">
+          <p class="req">"A sandboxed coding harness that can safely take a bug report or feature spec all the way to a deployed change."</p>
+          <p>This is how I ran my own engineering. I orchestrated builds through <strong>Coder Agents</strong>, which run each agent in its own workspace. Open-weight Kimi models built, GLM models reviewed, and hard fixes escalated to GPT, Claude Opus, and Fable. An event poller turned failed CI runs on main, new Linear assignments, Slack requests, and meeting action items into queued work, with a kill switch to turn it off.</p>
+          <p>In the week of September 29 it ran <strong>602 agent launches and 193 merged pull requests at about $38 of model cost per merged PR</strong>, and about 75% of 860 launches that week started with no human prompt. I priced every chat from token usage, because nobody had a per-chat cost to give me.</p>
+          <div class="meta"><span class="tag">602 launches in a week</span><span class="tag">~$38 per merged PR</span><span class="tag">~75% autonomous</span></div>
         </div>
       </div>
 
@@ -252,37 +266,23 @@
         </button>
         <div class="body">
           <p class="req">"A GTM intelligence layer that gives reps live account context, meeting prep, and follow-up from CRM, product usage, and conversation history."</p>
-          <p>This is my actual job right now. At Coder I'm building the internal AI agent platform for the revenue organization, working in Python on a large production codebase, and I own the quality practice around it: test coverage, release process, and the operating docs the rest of the team works from.</p>
-          <p>Before that I built the integration layer between Redtail CRM, external services, and the OpenAI API at an advisory practice, which took out more than twenty hours of manual work a month. Same shape of problem, smaller blast radius.</p>
-          <div class="meta"><span class="tag">Python</span><span class="tag">CRM + transcripts + support</span><span class="tag">shipping now</span></div>
+          <p>I built the integrations behind exactly this at Coder: <strong>Salesforce</strong> data, <strong>Granola</strong> meeting-transcript ingestion with a frequent poll and a nightly reconcile, and a <strong>Slack bot</strong> the revenue team talks to. Meeting action items even flowed back into the work queue.</p>
+          <p>Before that I built the integration layer between Redtail CRM, external services, and the ChatGPT API at an advisory practice, which took out more than twenty hours of manual work a month. Same shape of problem, with a smaller blast radius.</p>
+          <div class="meta"><span class="tag">Salesforce</span><span class="tag">Granola transcripts</span><span class="tag">Slack bot</span></div>
         </div>
       </div>
 
       <div class="scope" data-s="grant" open-state="0">
         <button aria-expanded="false">
           <span class="badge b-grant">granted</span>
-          <span class="name">engineering:own_services_end_to_end</span>
+          <span class="name">internal_tools:daily_work</span>
           <span class="chev">&#9656;</span>
         </button>
         <div class="body">
-          <p class="req">"Strong engineering fundamentals. You're comfortable owning services, data flows, and integrations end-to-end."</p>
-          <p><strong>FieldCommand</strong> is a multi-tenant SaaS for commercial trade contractors that I designed and shipped alone: <strong>187,745 lines of TypeScript</strong> on a PostgreSQL and Supabase backend, from the schema up through the API layer to the interface contractors use. Role-based access control, tenant isolation, Stripe billing, and the pipelines connecting all of it are mine.</p>
-          <p>I mention the RBAC and tenant-isolation work specifically because it's the closest thing I've built to your product's problem, and because building it is why I read your docs for fun before I ever saw this posting.</p>
-          <div class="meta"><span class="tag">TypeScript</span><span class="tag">PostgreSQL / Supabase</span><span class="tag">RBAC + tenant isolation</span><span class="tag">Stripe billing</span></div>
-        </div>
-      </div>
-
-      <div class="scope" data-s="grant" open-state="0">
-        <button aria-expanded="false">
-          <span class="badge b-grant">granted</span>
-          <span class="name">llm_apis:tool_calling</span>
-          <span class="chev">&#9656;</span>
-        </button>
-        <div class="body">
-          <p class="req">"Experience building with LLM APIs" and "structured tool-calling or agents."</p>
-          <p>Daily, across Claude and the OpenAI API. AndrewOS is built on tool-calling agents with a defined delegation pattern: a chief-of-staff layer routes work, arena managers own outcomes, and junior agents execute inside a scoped task packet. Reviewers always run in a fresh context, because an agent that audits its own work isn't auditing anything.</p>
-          <p><strong>Veritas</strong>, my citation-verification platform for legal filings, is the strictest version of this. It checks cited cases and quotations against source records and returns an auditable verification record, with deliberately hedged verdict semantics, because a confident wrong answer about a court filing is worse than no answer.</p>
-          <div class="meta"><span class="tag">Claude + OpenAI APIs</span><span class="tag">multi-agent orchestration</span><span class="tag">independent-reviewer pattern</span></div>
+          <p class="req">"Build internal tools that become part of people's daily work: agents, automations, and workflows that are stable, observable, and easy to maintain."</p>
+          <p>Keeping an agent loop running without a person watching it took about twenty small Python control scripts with ten test files. There's a <strong>round cap</strong> keyed to the ticket, a <strong>watchdog</strong> that acts on silence, quota cleanup so finished workspaces stop holding slots, and the event poller. Each one exists because something went wrong once.</p>
+          <p>In AndrewOS every agent writes a structured trace: what it received, what it decided, why, and what it handed off. A finished run reads top to bottom as a replayable record. <strong>Observability wasn't a nice-to-have. It was the thing that made autonomy survivable.</strong></p>
+          <div class="meta"><span class="tag">round caps</span><span class="tag">watchdog</span><span class="tag">structured agent traces</span></div>
         </div>
       </div>
 
@@ -294,9 +294,37 @@
         </button>
         <div class="body">
           <p class="req">"You think about failure modes, observability, and ownership, not just whether the demo works."</p>
-          <p>My honest answer here is that I learned this the expensive way. An early version of my outreach automation could send the same message twice to the same person, which is the kind of bug that costs you a relationship rather than a request. The fix wasn't a better prompt. It was a deterministic dedupe layer that reads the live sent-mail record, fails closed when it can't read it, and refuses the send.</p>
-          <p>That pattern is now everywhere in the system: <strong>hard gates written in plain code around the parts where a model being creative would be a disaster.</strong> A deterministic linter blocks anything going out under my name. A freeze flag halts all sending when the bounce rate crosses a threshold. Models decide what to say. Code decides whether it's allowed to leave.</p>
-          <div class="meta"><span class="tag">fails closed</span><span class="tag">deterministic gates</span><span class="tag">learned from a real bug</span></div>
+          <p>Every change on the Coder platform had to clear a reviewer from a <strong>different model family</strong> than the one that built it, and mutation tests checked that the tests could actually fail. Across about 1,200 review verdicts on about 350 pull requests, that gate recorded <strong>more than 430 confirmed defect catches and 21 false flags</strong>.</p>
+          <p>My favorite catch: the token-rotation transaction in that MCP authorization server passed every test against an in-memory fake. A cross-family reviewer flagged it at review round 5, because production Redis runs in cluster mode and the transaction would have failed on every token refresh. The fix put the keys in one hash slot and added a test that checks the slot of each key. The round cap has a story too. I added it after one spec spent 14 review rounds over 12 hours without converging.</p>
+          <div class="meta"><span class="tag">cross-family review</span><span class="tag">mutation tests</span><span class="tag">caught before prod</span></div>
+        </div>
+      </div>
+
+      <div class="scope" data-s="grant" open-state="0">
+        <button aria-expanded="false">
+          <span class="badge b-grant">granted</span>
+          <span class="name">engineering:own_services_end_to_end</span>
+          <span class="chev">&#9656;</span>
+        </button>
+        <div class="body">
+          <p class="req">"Strong engineering fundamentals. You're comfortable owning services, data flows, and integrations end-to-end."</p>
+          <p><strong>FieldCommand</strong> is a multi-tenant SaaS for commercial contractors that I designed and shipped alone: <strong>187,745 lines of TypeScript</strong> on PostgreSQL and Supabase, from the schema up through the interface. Role-based access control, tenant isolation, Stripe billing, and the pipelines connecting all of it are mine.</p>
+          <p>At Coder I owned services in Python on AWS through Terraform with a CI plan gate, ECS tasks, and Lambda jobs. I cut cold dashboard load from 5 to 10 seconds down to about 2 by replacing a serial per-account S3 read loop with a bounded fan-out.</p>
+          <div class="meta"><span class="tag">TypeScript + Python</span><span class="tag">AWS + Terraform</span><span class="tag">RBAC + tenant isolation</span></div>
+        </div>
+      </div>
+
+      <div class="scope" data-s="grant" open-state="0">
+        <button aria-expanded="false">
+          <span class="badge b-grant">granted</span>
+          <span class="name">llm_apis:tool_calling</span>
+          <span class="chev">&#9656;</span>
+        </button>
+        <div class="body">
+          <p class="req">"Experience building with LLM APIs" and "structured tool-calling or agents."</p>
+          <p>Daily, across Kimi, GLM, GPT, Claude Opus, and Fable models. I routed work by task class: Kimi to build, GLM to review, GPT to run mutation tests, and Claude Opus or Fable for the sensitive core. A hard change that needed more than three review rounds escalated to stronger models. Reviewers always ran in a fresh context, because an agent that audits its own work isn't auditing anything.</p>
+          <p><strong>Veritas</strong>, my citation-verification product for legal filings, is the customer-facing version. It checks cited cases and quotations against source records and returns an auditable verification record with deliberately hedged verdicts, because a confident wrong answer about a court filing is worse than no answer.</p>
+          <div class="meta"><span class="tag">Kimi, GLM, GPT, Opus, Fable</span><span class="tag">routing by task class</span><span class="tag">customer-facing AI</span></div>
         </div>
       </div>
 
@@ -307,11 +335,11 @@
           <span class="chev">&#9656;</span>
         </button>
         <div class="body">
-          <p class="req">"Experience with embeddings, retrieval/RAG architectures" and "Exposure to MCP or similar protocols."</p>
+          <p class="req">"Experience with embeddings, retrieval/RAG architectures."</p>
           <p>Partial, and I'd rather grade myself honestly than have you find out in week two.</p>
-          <p><strong>What's real:</strong> I use MCP daily and have wired agents to real systems through it. Veritas does retrieval against source records, and my knowledge layer is structured retrieval over a curated corpus. I'm fluent in the shape of the problem.</p>
+          <p><strong>What's real:</strong> I've wired agents to real systems through MCP, including the server I built auth for. The Coder platform pulled CRM records and meeting transcripts into model context, and Veritas retrieves against source records. I'm fluent in the shape of the problem.</p>
           <p><strong>What isn't:</strong> I haven't tuned a vector store at scale, and I haven't owned an embedding pipeline where recall quality was the product. I've been the consumer of good retrieval more than the person accountable for it.</p>
-          <div class="meta"><span class="tag">MCP daily</span><span class="tag">retrieval yes</span><span class="tag">vector tuning no</span></div>
+          <div class="meta"><span class="tag">MCP in production</span><span class="tag">retrieval yes</span><span class="tag">vector tuning no</span></div>
         </div>
       </div>
 
@@ -323,8 +351,8 @@
         </button>
         <div class="body">
           <p class="req">The thing you'd be right to push on.</p>
-          <p>I have not operated identity infrastructure at your scale, and I won't pretend the gap is small. My systems serve one operator and a small customer base. WorkOS powers enterprise auth for OpenAI, Cursor, Vercel and Plaid. Those are different sports.</p>
-          <p>What I'd bring instead is that I've been on the other side of your API as a builder who had to implement tenant isolation and role-based access by hand, badly at first, and I remember exactly which parts were confusing. If any of my first work is customer-facing, that memory is worth something.</p>
+          <p>I haven't operated identity infrastructure at your scale, and I won't pretend the gap is small. The largest system I've built served one company's revenue organization. WorkOS powers enterprise features for OpenAI, Cursor, Perplexity, Sierra, and Plaid. Those are different sports.</p>
+          <p>What I'd bring instead is that I've been on the builder's side of this problem twice. I implemented tenant isolation and role-based access by hand in FieldCommand, and I wrote an OAuth server for MCP at Coder. I remember exactly which parts were confusing, and if any of my first work is customer-facing, that memory is worth something.</p>
           <div class="meta"><span class="tag">honest gap</span><span class="tag">no hand-waving</span></div>
         </div>
       </div>
@@ -332,10 +360,10 @@
     </div>
 
     <div class="ledger">
+      <div class="cell"><div class="n">884</div><div class="d">Merged pull requests I authored at Coder from July 27 to October 9, 2026, many of them built by agents under my account.</div></div>
+      <div class="cell"><div class="n">~$38 <small>per PR</small></div><div class="d">Model cost per merged pull request in a 193-PR week, priced from token usage.</div></div>
+      <div class="cell"><div class="n">430+ <small>vs 21</small></div><div class="d">Confirmed defect catches against false flags, across about 1,200 cross-family review verdicts.</div></div>
       <div class="cell"><div class="n">187,745</div><div class="d">Lines of TypeScript in FieldCommand, built solo, in production.</div></div>
-      <div class="cell"><div class="n">3 <small>products</small></div><div class="d">FieldCommand, Veritas, and AndrewOS. All shipped, all mine, all still running.</div></div>
-      <div class="cell"><div class="n">2 <small>person team</small></div><div class="d">The size of the group shipping the AI agent platform at Coder. There's nowhere to hide.</div></div>
-      <div class="cell"><div class="n">20+ <small>hrs/mo</small></div><div class="d">Manual work removed by one CRM integration, measured after the fact.</div></div>
     </div>
   </section>
 
@@ -344,10 +372,10 @@
     <h2>The four things I'd want to know if I were reading this.</h2>
     <div class="gaps">
       <ul>
-        <li><b>I'm about a year into the formal Senior Software Engineer title.</b> I've been building software far longer than that, and shipping it solo, but if you're counting years on a badge, mine is short. I'd rather you weigh what I built than when I started calling it my job.</li>
-        <li><b>No production Go or Rust.</b> I can read both and have shipped neither. TypeScript and Python are where I'm genuinely strong, and I'd be honest about the ramp on anything else.</li>
-        <li><b>I haven't run infrastructure at your traffic.</b> Failover, capacity planning and multi-region behavior at WorkOS scale would be new to me, and I'd expect to be slow on it for a while.</li>
-        <li><b>I run outside businesses.</b> FieldCommand and a partner-managed advisory practice both continue, both are disclosable, and neither competes with WorkOS. I'd rather raise it on a page you're already reading than in week three.</li>
+        <li><b>I've held the formal Senior Software Engineer title since July 2026.</b> I've been building software longer than that, and shipping it solo, but if you're counting years on a badge, mine is short. I'd rather you weigh what I built than when I started calling it my job.</li>
+        <li><b>My Go is one open pull request, and I have no Rust.</b> I opened coder/coder#30576 in Go, which makes the API tell a disabled chat model config apart from a missing one. TypeScript and Python are where I'm genuinely strong, and I'd be honest about the ramp on anything else.</li>
+        <li><b>I haven't run infrastructure at your traffic.</b> Failover, capacity planning, and multi-region behavior at WorkOS scale would be new to me, and I'd expect to be slow on it for a while.</li>
+        <li><b>I run outside projects.</b> Veritas is active, FieldCommand is parked, and a partner-managed advisory practice continues. All of them are disclosable and none of them competes with WorkOS. I'd rather raise it on a page you're already reading than in week three.</li>
       </ul>
     </div>
   </section>
@@ -357,7 +385,7 @@
 <div class="wrap">
   <section class="cta">
     <h2>If this is the shape you're hiring, I'd like to talk.</h2>
-    <p>The systems are easier to look at than to read about. I'd rather walk you through the agent trace than describe it.</p>
+    <p>The systems are easier to look at than to read about. I'd rather walk you through a review gate catching a real bug than describe it.</p>
     <div class="btns">
       <a class="btn p" href="https://portfolio.andrewzoll.com">See the portfolio</a>
       <a class="btn s" href="https://linkedin.com/in/andrewzoll">Connect on LinkedIn</a>
