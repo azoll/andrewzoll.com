@@ -281,7 +281,7 @@
         <div class="body">
           <p class="req">"Build internal tools that become part of people's daily work: agents, automations, and workflows that are stable, observable, and easy to maintain."</p>
           <p>Keeping an agent loop running without a person watching it took about twenty small Python control scripts with ten test files. There's a <strong>round cap</strong> keyed to the ticket, a <strong>watchdog</strong> that acts on silence, quota cleanup so finished workspaces stop holding slots, and the event poller. Each one exists because something went wrong once.</p>
-          <p>In AndrewOS every agent writes a structured trace: what it received, what it decided, why, and what it handed off. A finished run reads top to bottom as a replayable record. <strong>Observability wasn't a nice-to-have. It was the thing that made autonomy survivable.</strong></p>
+          <p>In AndrewOS every agent writes a structured trace: what it received, what it decided, why, and what it handed off. A finished run reads top to bottom as a plain record of what happened. <strong>Observability wasn't a nice-to-have. It was the thing that made autonomy survivable.</strong></p>
           <div class="meta"><span class="tag">round caps</span><span class="tag">watchdog</span><span class="tag">structured agent traces</span></div>
         </div>
       </div>
