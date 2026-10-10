@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>Andrew Zoll for Tailscale, Software Engineer, AI Enablement</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f9f7f6; --panel:#ffffff; --line:#e7e4e2; --line2:#d6d2cf;
+    --ink:#1f1e1e; --ink2:#2e2d2d; --mut:#6b6968; --mut2:#9a9796;
+    --chip:#f1efee; --chipInk:#444342;
+    --blue:#3f5db3; --blue2:#4b70cc; --blueBg:#eef3fe; --blueLine:#cedefd;
+    --green:#1ea672; --greenBg:#e6f6ee;
+    --amber:#b7791f; --amberBg:#fdf3e1; --amberLine:#f3dcae;
+    --red:#b22d30; --redBg:#fdecea;
+    --gray:#9a9796;
+    --sans:Inter,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --mono:"JetBrains Mono",ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--ink2);font-family:var(--sans);font-size:14px;line-height:1.55;-webkit-font-smoothing:antialiased}
+  a{color:var(--blue);text-decoration:none}
+  a:hover{text-decoration:underline}
+  button{font:inherit;color:inherit;cursor:pointer;background:none;border:0}
+  :focus-visible{outline:2px solid var(--blue2);outline-offset:2px;border-radius:4px}
+  .mono{font-family:var(--mono)}
+
+  /* disclaimer strip */
+  .strip{background:var(--ink);color:#d9d6d4;font-size:12px;text-align:center;padding:7px 16px}
+  .strip b{color:#fff;font-weight:500}
+
+  /* header */
+  header.top{background:var(--panel);border-bottom:1px solid var(--line)}
+  .bar{max-width:1180px;margin:0 auto;padding:0 20px;display:flex;align-items:center;justify-content:space-between;height:56px;gap:12px}
+  .brand{display:flex;align-items:center;gap:12px;min-width:0}
+  .dots{display:grid;grid-template-columns:repeat(3,6px);gap:3px}
+  .dots i{width:6px;height:6px;border-radius:50%;background:var(--ink);opacity:.18;animation:wave 2.4s ease-in-out infinite}
+  .dots i:nth-child(1){animation-delay:0s}.dots i:nth-child(2){animation-delay:.15s}.dots i:nth-child(3){animation-delay:.3s}
+  .dots i:nth-child(4){animation-delay:.15s}.dots i:nth-child(5){animation-delay:.3s}.dots i:nth-child(6){animation-delay:.45s}
+  .dots i:nth-child(7){animation-delay:.3s}.dots i:nth-child(8){animation-delay:.45s}.dots i:nth-child(9){animation-delay:.6s}
+  @keyframes wave{0%,100%{opacity:.18}40%{opacity:1}}
+  .tailnet{display:flex;flex-direction:column;line-height:1.2;min-width:0}
+  .tailnet strong{font-weight:600;color:var(--ink);font-size:14px;white-space:nowrap}
+  .tailnet span{font-size:11.5px;color:var(--mut);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .right{display:flex;align-items:center;gap:10px}
+  .btn{display:inline-flex;align-items:center;gap:6px;height:32px;padding:0 12px;border-radius:6px;font-size:13px;font-weight:500;border:1px solid var(--line2);background:var(--panel);color:var(--ink2);white-space:nowrap;transition:background .12s,border-color .12s,transform .12s}
+  .btn:hover{background:#f6f4f3;text-decoration:none}
+  .btn:active{transform:translateY(1px)}
+  .btn.primary{background:var(--blue);border-color:var(--blue);color:#fff}
+  .btn.primary:hover{background:#324994}
+  .avatar{width:30px;height:30px;border-radius:50%;background:var(--blue2);color:#fff;font-size:11.5px;font-weight:600;display:grid;place-items:center;letter-spacing:.02em}
+  nav.tabs{max-width:1180px;margin:0 auto;padding:0 20px;display:flex;gap:22px;overflow-x:auto}
+  nav.tabs button{position:relative;padding:12px 0 13px;font-size:13.5px;font-weight:500;color:var(--mut);white-space:nowrap}
+  nav.tabs button:hover{color:var(--ink)}
+  nav.tabs button[aria-selected="true"]{color:var(--ink)}
+  nav.tabs button[aria-selected="true"]::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--ink);border-radius:2px}
+  nav.tabs .count{display:inline-block;margin-left:6px;font-size:11px;padding:0 6px;border-radius:9px;background:var(--chip);color:var(--chipInk)}
+  nav.tabs .count.warn{background:var(--amberBg);color:var(--amber)}
+
+  main{max-width:1180px;margin:0 auto;padding:24px 20px 56px}
+
+  /* welcome banner */
+  .banner{display:flex;gap:16px;align-items:flex-start;background:var(--blueBg);border:1px solid var(--blueLine);border-radius:10px;padding:16px 18px;margin-bottom:24px}
+  .banner .ico{flex:none;width:22px;height:22px;border-radius:50%;background:var(--blue);color:#fff;display:grid;place-items:center;font-size:12px;font-weight:700;margin-top:1px}
+  .banner h1{font-size:15px;font-weight:600;color:var(--ink);margin-bottom:4px}
+  .banner p{color:#33445f;max-width:780px}
+  .banner .ctas{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+
+  .pagehead{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:16px}
+  .pagehead h2{font-size:22px;font-weight:600;color:var(--ink);letter-spacing:-.01em}
+  .pagehead p{color:var(--mut);margin-top:2px}
+
+  /* toolbar */
+  .toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
+  .search{position:relative;flex:1 1 280px}
+  .search input{width:100%;height:36px;border:1px solid var(--line2);border-radius:6px;background:var(--panel);padding:0 36px 0 34px;font:inherit;color:var(--ink)}
+  .search input:focus{outline:none;border-color:var(--blue2);box-shadow:0 0 0 3px rgba(75,112,204,.18)}
+  .search svg{position:absolute;left:11px;top:11px;color:var(--mut2)}
+  .search kbd{position:absolute;right:9px;top:8px;font-family:var(--mono);font-size:11px;color:var(--mut);border:1px solid var(--line2);border-radius:4px;padding:0 5px;background:#faf9f8}
+  select{height:36px;border:1px solid var(--line2);border-radius:6px;background:var(--panel);padding:0 30px 0 10px;font:inherit;color:var(--ink2);appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%236b6968' fill='none' stroke-width='1.5'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 11px center}
+  .chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+  .chip{font-family:var(--mono);font-size:11.5px;padding:3px 8px;border-radius:5px;background:var(--chip);color:var(--chipInk);border:1px solid transparent;white-space:nowrap}
+  button.chip:hover{border-color:var(--line2)}
+  button.chip[aria-pressed="true"]{background:var(--ink);color:#fff}
+  .resultline{font-size:12.5px;color:var(--mut);margin-bottom:8px}
+
+  /* table */
+  .table{background:var(--panel);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+  .thead,.row{display:grid;grid-template-columns:minmax(0,2.4fr) 1.1fr .8fr 1fr 32px;align-items:center;gap:12px;padding:0 16px}
+  .thead{height:38px;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--mut);border-bottom:1px solid var(--line);background:#fcfbfa}
+  .row{min-height:64px;padding-top:10px;padding-bottom:10px;border-bottom:1px solid var(--line);width:100%;text-align:left;transition:background .1s}
+  .row:last-child{border-bottom:0}
+  .row:hover{background:#faf9f8}
+  .row .name{font-weight:600;color:var(--ink);font-size:14px}
+  .row .owner{font-size:12px;color:var(--mut);margin:1px 0 5px}
+  .row .tags{display:flex;gap:5px;flex-wrap:wrap}
+  .row .addr{font-family:var(--mono);font-size:12.5px;color:var(--ink2)}
+  .row .since{font-size:13px;color:var(--ink2)}
+  .row .more{color:var(--mut2);font-size:18px;text-align:center;letter-spacing:1px}
+  .status{display:inline-flex;align-items:center;gap:7px;font-size:13px;color:var(--ink2)}
+  .dot{position:relative;width:8px;height:8px;border-radius:50%;flex:none}
+  .dot.connected{background:var(--green)}
+  .dot.connected::after{content:"";position:absolute;inset:-4px;border-radius:50%;border:2px solid var(--green);opacity:0;animation:ring 2.6s ease-out infinite}
+  .dot.pending{background:#e2a33b}
+  .dot.idle{background:var(--gray)}
+  @keyframes ring{0%{transform:scale(.4);opacity:.55}80%,100%{transform:scale(1.4);opacity:0}}
+  .empty{padding:36px 16px;text-align:center;color:var(--mut)}
+  .empty button{color:var(--blue);font-weight:500}
+
+  /* drawer */
+  .scrim{position:fixed;inset:0;background:rgba(31,30,30,.28);opacity:0;pointer-events:none;transition:opacity .2s;z-index:20}
+  .scrim.open{opacity:1;pointer-events:auto}
+  aside.drawer{position:fixed;top:0;right:0;bottom:0;width:min(520px,100%);background:var(--panel);border-left:1px solid var(--line);box-shadow:-18px 0 40px rgba(31,30,30,.08);transform:translateX(102%);transition:transform .25s cubic-bezier(.2,.8,.2,1);z-index:21;display:flex;flex-direction:column}
+  aside.drawer.open{transform:none}
+  .dhead{padding:18px 20px 14px;border-bottom:1px solid var(--line)}
+  .dhead .crumb{font-size:12px;color:var(--mut);margin-bottom:6px}
+  .dhead .title{display:flex;align-items:center;gap:10px;justify-content:space-between}
+  .dhead h3{font-size:19px;font-weight:600;color:var(--ink);display:flex;align-items:center;gap:10px;min-width:0;word-break:break-word}
+  .xbtn{width:32px;height:32px;border-radius:6px;display:grid;place-items:center;color:var(--mut);flex:none}
+  .xbtn:hover{background:var(--chip);color:var(--ink)}
+  .dmeta{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:8px;font-size:12.5px;color:var(--mut)}
+  .dmeta .mono{color:var(--ink2)}
+  .dbody{padding:18px 20px 24px;overflow-y:auto;flex:1}
+  .dsec{margin-bottom:22px}
+  .dsec h4{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--mut);margin-bottom:8px}
+  .quote{border-left:3px solid var(--blue2);background:var(--blueBg);padding:10px 12px;border-radius:0 6px 6px 0;color:#33445f;font-size:13.5px}
+  .quote small{display:block;color:var(--mut);font-size:11.5px;margin-top:4px}
+  .receipts{list-style:none;display:flex;flex-direction:column;gap:9px}
+  .receipts li{position:relative;padding-left:18px;font-size:13.5px;color:var(--ink2)}
+  .receipts li::before{content:"";position:absolute;left:2px;top:8px;width:6px;height:6px;border-radius:50%;background:var(--green)}
+  .links{display:flex;flex-wrap:wrap;gap:8px}
+  .term{background:var(--ink);color:#e8e5e3;border-radius:8px;padding:12px 14px;font-family:var(--mono);font-size:12px;min-height:72px;white-space:pre-wrap;word-break:break-word}
+  .term .p{color:#8a8786}
+  .term .ok{color:#7fd6a8}
+  .dfoot{display:flex;justify-content:space-between;gap:8px;padding:12px 20px;border-top:1px solid var(--line);background:#fcfbfa}
+
+  /* ACLs */
+  .aclgrid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:18px;align-items:start}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+  .cardhead{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid var(--line);background:#fcfbfa;font-size:12.5px;color:var(--mut)}
+  .cardhead b{color:var(--ink);font-weight:600}
+  .code{font-family:var(--mono);font-size:12.2px;line-height:1.7;overflow-x:auto;padding:10px 0}
+  .ln{display:flex;padding:0 14px 0 0;white-space:pre;transition:background .2s}
+  .ln .n{flex:none;width:38px;text-align:right;padding-right:14px;color:#bcb8b6;user-select:none}
+  .ln.hl{background:#fff6d9}
+  .ln.hl.deny{background:var(--redBg)}
+  .ln.hl.accept{background:var(--greenBg)}
+  .c{color:#8a8786;font-style:italic}.k{color:#673c87}.s{color:#0e6245}.b{color:#3f5db3}
+  .cardbody{padding:14px}
+  .field{display:grid;grid-template-columns:110px 1fr;align-items:center;gap:10px;margin-bottom:10px;font-size:13px}
+  .field label{color:var(--mut)}
+  .field select{width:100%}
+  .check{display:flex;align-items:center;gap:8px;font-size:13px;margin-bottom:8px}
+  .check input{width:15px;height:15px;accent-color:var(--blue)}
+  input[type=range]{width:100%;accent-color:var(--blue)}
+  .verdict{margin-top:12px;border-radius:8px;padding:12px;border:1px solid var(--line);font-size:13px}
+  .verdict .pill{display:inline-block;font-family:var(--mono);font-size:12px;font-weight:500;padding:2px 8px;border-radius:5px;margin-bottom:6px}
+  .verdict.accept{background:var(--greenBg);border-color:#b9e5cf}.verdict.accept .pill{background:var(--green);color:#fff}
+  .verdict.deny{background:var(--redBg);border-color:#f3c5c2}.verdict.deny .pill{background:var(--red);color:#fff}
+  .tests{list-style:none;margin-top:10px;display:flex;flex-direction:column;gap:6px}
+  .tests li{display:flex;gap:8px;align-items:flex-start;font-size:12.5px;opacity:.45;transition:opacity .2s}
+  .tests li.done{opacity:1}
+  .tests .mark{flex:none;width:16px;height:16px;border-radius:50%;background:var(--line);color:#fff;font-size:10px;display:grid;place-items:center;margin-top:2px}
+  .tests li.pass .mark{background:var(--green)}
+  .tests li.fail .mark{background:var(--red)}
+  .testsum{margin-top:10px;font-size:12.5px;color:var(--mut);min-height:20px}
+  .note{font-size:12.5px;color:var(--mut);margin-top:12px}
+
+  /* Gaps */
+  .gaps .row{grid-template-columns:minmax(0,2.4fr) 1fr 140px;cursor:default}
+  .gaps .row:hover{background:var(--panel)}
+  .gaps .thead{grid-template-columns:minmax(0,2.4fr) 1fr 140px}
+  .badge{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:500;padding:2px 8px;border-radius:5px;background:var(--amberBg);color:var(--amber);border:1px solid var(--amberLine);white-space:nowrap}
+  .badge.gray{background:var(--chip);color:var(--chipInk);border-color:var(--line)}
+  .gapq{font-family:var(--mono);font-size:12px;color:var(--mut);margin-bottom:4px}
+  .gapt{font-size:13.5px;color:var(--ink2)}
+  .gapside{font-size:12.5px;color:var(--mut)}
+
+  footer{border-top:1px solid var(--line);background:var(--panel)}
+  footer .in{max-width:1180px;margin:0 auto;padding:26px 20px 34px;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:flex-start}
+  footer p{font-size:12.5px;color:var(--mut);max-width:620px}
+  footer .ctas{display:flex;gap:8px;flex-wrap:wrap}
+
+  [hidden]{display:none !important}
+  .fade{animation:fade .25s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+  @media (max-width:900px){
+    .aclgrid{grid-template-columns:1fr}
+  }
+  @media (max-width:680px){
+    .bar{padding:0 16px}
+    nav.tabs{padding:0 16px}
+    main{padding:18px 16px 44px}
+    .hide-sm{display:none !important}
+    .thead{display:none}
+    .row{grid-template-columns:minmax(0,1fr) auto;gap:6px 10px}
+    .row .addr,.row .since,.row .more{display:none}
+    .gaps .row{grid-template-columns:1fr}
+    .banner{padding:14px}
+    .field{grid-template-columns:1fr;gap:4px}
+    .dhead,.dbody{padding-left:16px;padding-right:16px}
+    .dfoot{padding:12px 16px}
+    footer .in{padding:22px 16px 30px}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none !important;transition:none !important}
+  }
+</style>
+</head>
+<body>
+
+<div class="strip">This is <b>Andrew Zoll's</b> job application page, styled after the Tailscale admin console. It isn't affiliated with or endorsed by Tailscale Inc.</div>
+
+<header class="top">
+  <div class="bar">
+    <div class="brand">
+      <div class="dots" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <div class="tailnet"><strong>andrew-zoll</strong><span>Software Engineer, AI Enablement applicant</span></div>
+    </div>
+    <div class="right">
+      <a class="btn hide-sm" href="https://portfolio.andrewzoll.com" target="_blank" rel="noopener">Portfolio</a>
+      <a class="btn primary" href="https://job-boards.greenhouse.io/tailscale/jobs/4710755005" target="_blank" rel="noopener">View the role</a>
+      <div class="avatar" title="Andrew Zoll" aria-hidden="true">AZ</div>
+    </div>
+  </div>
+  <nav class="tabs" role="tablist" aria-label="Sections">
+    <button role="tab" id="tab-machines" aria-controls="panel-machines" aria-selected="true" data-tab="machines">Machines<span class="count" id="mcount">0</span></button>
+    <button role="tab" id="tab-acls" aria-controls="panel-acls" aria-selected="false" data-tab="acls" tabindex="-1">Access controls</button>
+    <button role="tab" id="tab-gaps" aria-controls="panel-gaps" aria-selected="false" data-tab="gaps" tabindex="-1">Gaps<span class="count warn" id="gcount">0</span></button>
+  </nav>
+</header>
+
+<main>
+  <section class="banner" id="banner" aria-label="Introduction">
+    <div class="ico" aria-hidden="true">i</div>
+    <div>
+      <h1>Hi Tailscale team, I'm Andrew.</h1>
+      <p>I'm a software engineer at Coder, and I run my own engineering through a pipeline of coding agents that I built and keep on a short leash. Your posting says people will choose AI when it's easy and safe, and that's the exact problem I've been working on. Each machine below is one piece of that work, mapped to a line in your AI Enablement posting. Click one to see the receipts, read the guardrails as a policy file, or skip straight to the gaps.</p>
+      <div class="ctas">
+        <a class="btn primary" href="https://portfolio.andrewzoll.com" target="_blank" rel="noopener">See my portfolio</a>
+        <a class="btn" href="https://www.linkedin.com/in/andrewzoll" target="_blank" rel="noopener">Connect on LinkedIn</a>
+        <button class="btn" data-goto="gaps">Show me the gaps first</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- MACHINES -->
+  <section role="tabpanel" id="panel-machines" aria-labelledby="tab-machines" class="fade">
+    <div class="pagehead">
+      <div>
+        <h2>Machines</h2>
+        <p>These are the pieces of work that make up Andrew's tailnet.</p>
+      </div>
+    </div>
+    <div class="toolbar">
+      <label class="search">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="7" cy="7" r="5.25" stroke="currentColor" stroke-width="1.5"/><path d="M11 11l3.5 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <input id="q" type="search" placeholder="Search by name, tag, or requirement" aria-label="Search machines" autocomplete="off">
+        <kbd aria-hidden="true">/</kbd>
+      </label>
+      <select id="statusSel" aria-label="Filter by status">
+        <option value="all">All statuses</option>
+        <option value="connected">Connected</option>
+        <option value="pending">Pending review</option>
+        <option value="idle">Parked</option>
+      </select>
+    </div>
+    <div class="chips" id="tagChips" aria-label="Filter by tag"></div>
+    <div class="resultline" id="resultline" aria-live="polite"></div>
+    <div class="table" role="table" aria-label="Machines">
+      <div class="thead" role="row"><span>Machine</span><span>Address</span><span>Since</span><span>Status</span><span></span></div>
+      <div id="rows"></div>
+    </div>
+  </section>
+
+  <!-- ACLS -->
+  <section role="tabpanel" id="panel-acls" aria-labelledby="tab-acls" hidden>
+    <div class="pagehead">
+      <div>
+        <h2>Access controls</h2>
+        <p>This is the review gate I run on agent-written code, rewritten as a policy file so it's quick to read.</p>
+      </div>
+    </div>
+    <div class="aclgrid">
+      <div class="card">
+        <div class="cardhead"><span><b>policy.hujson</b> on andrew-zoll</span><span class="mono">5 rules, 7 tests</span></div>
+        <div class="code" id="policy" aria-label="Policy file"></div>
+      </div>
+      <div>
+        <div class="card" style="margin-bottom:18px">
+          <div class="cardhead"><b>Preview a merge request</b><span>Pick a scenario.</span></div>
+          <div class="cardbody">
+            <div class="field"><label for="fBuilder">Builder</label><select id="fBuilder"></select></div>
+            <div class="field"><label for="fReviewer">Reviewer</label><select id="fReviewer"></select></div>
+            <div class="field"><label for="fPath">Path</label><select id="fPath"><option value="app">app code</option><option value="federal">Federal or security</option></select></div>
+            <div class="field"><label for="fRound">Review round <span class="mono" id="roundVal">1</span></label><input id="fRound" type="range" min="1" max="6" value="1"></div>
+            <label class="check"><input type="checkbox" id="fMut" checked> Mutation tests showed the tests can fail.</label>
+            <label class="check"><input type="checkbox" id="fSecond"> A second cross-family reviewer signed off.</label>
+            <div class="verdict" id="verdict" aria-live="polite"></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="cardhead"><b>Policy tests</b><button class="btn" id="runTests">Run tests</button></div>
+          <div class="cardbody">
+            <ul class="tests" id="tests"></ul>
+            <div class="testsum" id="testsum" aria-live="polite">The tests haven't run yet.</div>
+          </div>
+        </div>
+        <p class="note">The real gate lives in Python loop-control scripts and CI, not in a Tailscale policy. The rules are the same ones, and the numbers behind them are on the review-gate machine.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- GAPS -->
+  <section role="tabpanel" id="panel-gaps" aria-labelledby="tab-gaps" hidden>
+    <div class="pagehead">
+      <div>
+        <h2>Gaps</h2>
+        <p>These machines need attention, and I'd rather you hear about them from me.</p>
+      </div>
+    </div>
+    <div class="table gaps" role="table" aria-label="Gaps">
+      <div class="thead" role="row"><span>Requirement</span><span>Where I am</span><span>Status</span></div>
+      <div id="gapRows"></div>
+    </div>
+  </section>
+</main>
+
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="dTitle" aria-hidden="true">
+  <div class="dhead">
+    <div class="crumb">Machines / <span id="dCrumb"></span></div>
+    <div class="title">
+      <h3 id="dTitle"></h3>
+      <button class="xbtn" id="dClose" aria-label="Close details"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M2 2l10 10M12 2L2 12" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
+    </div>
+    <div class="dmeta" id="dMeta"></div>
+  </div>
+  <div class="dbody" id="dBody"></div>
+  <div class="dfoot">
+    <button class="btn" id="dPrev">Previous</button>
+    <button class="btn" id="dPing">Ping this machine</button>
+    <button class="btn" id="dNext">Next</button>
+  </div>
+</aside>
+
+<footer>
+  <div class="in">
+    <p>Andrew Zoll built this page for the Software Engineer, AI Enablement role at Tailscale. It borrows the look of the Tailscale admin console because that felt like the friendliest way to say hello, but it isn't affiliated with or endorsed by Tailscale Inc. Every number here comes from my own records, and anything I couldn't back up isn't on the page.</p>
+    <div class="ctas">
+      <a class="btn primary" href="https://portfolio.andrewzoll.com" target="_blank" rel="noopener">Portfolio</a>
+      <a class="btn" href="https://www.linkedin.com/in/andrewzoll" target="_blank" rel="noopener">LinkedIn</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  const JD = "Tailscale posting";
+  const MACHINES = [
+    {id:"coding-agents", addr:"100.88.1.10", since:"2025", status:"connected",
+     tags:["tag:power-user","tag:claude-code","tag:codex"],
+     req:"Genuine, daily, hands-on fluency with modern AI coding tools (Claude Code, Codex, Pi, or similar)",
+     receipts:[
+      "I use Claude Code and Codex every day. A Claude orchestrator writes my specs, and Codex reads the same skill files my Claude agents read, so both runtimes follow one set of written rules.",
+      "Since September 2, Coder Agents has been the default build and review layer for my work at Coder.",
+      "Between July 27 and October 9, 2026, I authored 884 merged pull requests there. Agents built many of them under my account, and the count includes PRD and docs pull requests, so please read it as volume and not as 884 hand-typed diffs."
+     ],
+     links:[], ping:"I opened Claude Code before I opened this page."},
+    {id:"loop-control", addr:"100.88.1.11", since:"Sep 2026", status:"connected",
+     tags:["tag:internal-tools","tag:python","tag:automation"],
+     req:"Experience building and shipping internal tools or developer-facing automation",
+     receipts:[
+      "I built about 20 Python loop-control scripts with 10 test files that keep the agent loop running without a person watching it.",
+      "The round cap stops a review gate after a set number of rounds. I added it after one spec spent 14 review rounds over 12 hours without converging.",
+      "The watchdog checks a sibling runtime's work log, claim ledger, and branch activity, and it acts on silence. I added it after a stopped runtime went unnoticed for more than 8 hours.",
+      "Quota cleanup deletes finished workspaces every tick. On September 29 the pool sat at 41 of 40 slots with one chat running, and now the dispatch helper refuses a new chat when the pool is nearly full.",
+      "The event poller turns failed CI runs on main, new Linear assignments, Slack requests, and Granola action items into queued work, and a kill switch turns it off."
+     ],
+     links:[], ping:"The watchdog would've noticed if I hadn't answered."},
+    {id:"review-gate", addr:"100.88.1.12", since:"Sep 2026", status:"connected",
+     tags:["tag:guardrails","tag:security","tag:code-review"],
+     req:"Establish the guardrails, review practices, and documentation that make AI-generated code safe to ship",
+     receipts:[
+      "A reviewer from a different model family than the builder has to clear every change, and mutation tests check that the tests can fail. Security and Federal changes get two cross-family reviewers.",
+      "From September 8 to October 9 the gate logged about 1,200 review and mutation verdicts on about 350 pull requests, with more than 430 confirmed defect catches and 21 false flags.",
+      "In review round 5 of one pull request, a cross-family reviewer model caught that a token-rotation transaction would fail on every refresh, because production Redis runs in cluster mode. Every test had passed against an in-memory fake. The fix put the keys in one hash slot and added a test that checks each key's slot.",
+      "I shipped fail-closed Federal access controls across 26 merged pull requests, so uncleared users never get unproven Federal history in model input, and the tests cover every access tier."
+     ],
+     links:[{label:"Read it as a policy file", tab:"acls"}], ping:"A model from another family reviewed this reply first."},
+    {id:"model-router", addr:"100.88.1.13", since:"Sep 2026", status:"connected",
+     tags:["tag:evals","tag:open-weight","tag:routing"],
+     req:"Evaluate new models and tools, making clear calls on what we adopt",
+     receipts:[
+      "I route work by task class. Open-weight Kimi K3 models build, GLM 5.3 models review, GPT models run mutation tests, and Claude Opus and Fable take the sensitive core.",
+      "A hard pull request that needs more than three review rounds escalates to stronger models.",
+      "From September 29 to October 9, 69% of 1,264 agent chats ran on open-weight models. By role, that was 699 reviewers, 378 builders, 111 mutation testers, 56 PRD writers, and 20 investigators.",
+      "These calls came from production outcomes and not from a formal benchmark suite. I'd love to build the benchmark half with you."
+     ],
+     links:[], ping:"This reply was routed by task class, like everything else."},
+    {id:"cost-meter", addr:"100.88.1.14", since:"Sep 2026", status:"connected",
+     tags:["tag:measurement","tag:adoption","tag:gateway"],
+     req:"Track adoption and measure the real impact of AI tooling on velocity and quality, and report back to leadership",
+     receipts:[
+      "In the week of September 29, 642 of 860 agent launches (75%) were autonomous, which means no human started the session or typed a prompt in the 30 minutes before it.",
+      "That same week ran 602 Coder Agents launches and 193 merged pull requests, at about $38 of model cost per merged pull request.",
+      "The UI showed no cost per chat, so I priced each chat from token usage. My first token-based estimate badly undercounted spend, because the gateway billed cache reads at the full input rate. I fixed the math and calibrated it against the dashboard total of about $1,300 per week.",
+      "I track defect catches against false flags too, because a review gate that cries wolf costs more than it saves.",
+      "This is where I'd want to sit close to the Aperture team, since I've already been the customer who got the gateway math wrong once."
+     ],
+     links:[], ping:"This ping cost nothing, and yes, I checked the cache-read rate."},
+    {id:"coder-pr-30576", addr:"100.88.2.20", since:"Oct 2026", status:"pending",
+     tags:["tag:go","tag:open-source"],
+     req:"Experience with a systems language such as Go or Rust, in addition to Python",
+     receipts:[
+      "I opened coder/coder#30576 in Go. It makes the API tell a disabled chat model config apart from a missing one, so the error message says what's actually wrong.",
+      "It's still open, and it's my only Go pull request so far. I'm listing it as a start and not as Go depth.",
+      "I also filed root-caused product feedback from running Coder Agents at volume, such as a chat that stays in error after its workspace restarts and an MCP list tool that can't page past 100 chats."
+     ],
+     links:[{label:"coder/coder#30576", href:"https://github.com/coder/coder/pull/30576"}], ping:"It's still open, still Go, and still hoping for a review."},
+    {id:"revenue-platform", addr:"100.88.2.21", since:"Jul 2026", status:"connected",
+     tags:["tag:support","tag:integrations","tag:aws"],
+     req:"This is a support function, so success means other teams shipping faster because of what you've built",
+     receipts:[
+      "At Coder I build an internal AI agent platform that turns CRM, support, and call-transcript data into answers and workflows for the revenue organization.",
+      "I built integrations for Salesforce, Granola meeting transcripts, and a Slack bot, and I shipped an OAuth authorization server that gates hosted MCP access.",
+      "I cut cold dashboard load from 5 to 10 seconds down to about 2 seconds by replacing a serial per-account S3 read loop with a bounded fan-out.",
+      "Most of my users aren't engineers, so a lot of the job is working out what they need before I write anything."
+     ],
+     links:[], ping:"This one came from the Slack bot side of the house."},
+    {id:"andrewos", addr:"100.88.3.30", since:"2025", status:"connected",
+     tags:["tag:docs","tag:shared-practice","tag:automation"],
+     req:"Build and iterate on the tools, workflows, and shared practices that help engineers get real value from coding agents",
+     receipts:[
+      "AndrewOS is the agent operating system I use to run my own work, with delegation by area, validation gates, and scheduled loops.",
+      "Its rules live in written skill files that Claude Code and Codex both read at task start, which keeps shared practice out of my head and on the page.",
+      "A hard independence rule means no agent reviews its own work, and a deterministic lint checks generated writing before anything goes out under my name."
+     ],
+     links:[], ping:"The writing lint approved this sentence."},
+    {id:"veritas", addr:"100.88.3.31", since:"2026", status:"connected",
+     tags:["tag:founder","tag:product","tag:safety"],
+     req:"Product or systems thinking",
+     receipts:[
+      "Veritas checks the cases and quotations cited in legal filings against source records and returns an auditable verification record.",
+      "I designed the pipeline and its hedged verdicts, so the product never claims more certainty than the evidence supports. Most checks are plain code and one deep-scan check is a model verdict, so I don't call it deterministic."
+     ],
+     links:[{label:"veritaslaw.app", href:"https://veritaslaw.app"}], ping:"Verdict: this machine is probably real, and Veritas hedges on purpose."},
+    {id:"fieldcommand", addr:"100.88.3.32", since:"2025", status:"idle",
+     tags:["tag:founder","tag:typescript","tag:ambiguity"],
+     req:"Comfort with ambiguity and self-directed prioritization on a small, still-forming team",
+     receipts:[
+      "I built FieldCommand solo. It's a multi-tenant SaaS for commercial contractors with 187,745 lines of TypeScript on PostgreSQL and Supabase.",
+      "I built it with AI-assisted development end to end, as a repeatable spec, build, validate, and ship workflow, and I shipped four AI features behind per-tenant feature flags.",
+      "It's parked now, which is why its dot is gray, but the product is still live."
+     ],
+     links:[{label:"fieldcommand.io", href:"https://fieldcommand.io"}], ping:"FieldCommand woke up from a nap. It is parked, but it still answers."},
+    {id:"advocacy", addr:"100.88.4.40", since:"2015", status:"connected",
+     tags:["tag:comms","tag:teaching","tag:devrel-adjacent"],
+     req:"Comfortable teaching, writing, and influencing engineers at very different comfort levels with AI tooling",
+     receipts:[
+      "Before engineering I was a pastor and then a financial advisor under FINRA and SEC rules. Both jobs were mostly explaining hard things to people at very different comfort levels.",
+      "At Edward Jones I taught workshops for non-technical audiences and kept 95% of more than 120 households.",
+      "When the Coder Agents MCP route on Coder's dogfood deployment returned 404 for more than two hours after a redeploy, I traced it to a new feature flag, wrote a runbook that separates route churn from a real fault, and passed the case back as product feedback.",
+      "I haven't done developer relations as a job. This machine is the adjacent version, and it's on the Gaps tab too."
+     ],
+     links:[{label:"See the gaps", tab:"gaps"}], ping:"I'd love to explain this one in person."}
+  ];
+
+  const GAPS = [
+    {q:"5+ years of professional software engineering experience", badge:"Needs approval", warn:true,
+     t:"I have about two years of shipped production software, founder-built since 2025, and my software engineering title dates from July 2026. Your posting invites people who don't meet every line, so I'm applying and saying it plainly here.",
+     side:"This is the big one."},
+    {q:"Rust", badge:"Not installed", warn:true,
+     t:"I haven't written Rust.", side:"I'd learn it on the job."},
+    {q:"Go", badge:"Update available", warn:true,
+     t:"My Go is one open pull request in coder/coder. Python and TypeScript are where my volume is.", side:"It's a start."},
+    {q:"Developer relations or evangelism", badge:"Adjacent", warn:false,
+     t:"I've taught non-technical audiences for years, but I've never held a developer relations or evangelism role.", side:"The advocacy machine has the details."},
+    {q:"Aperture by Tailscale", badge:"Not connected", warn:false,
+     t:"I haven't used Aperture. My gateway lessons come from Coder's gateway, so I'd be learning your product from the inside.", side:"I'm curious about it."},
+    {q:"Benchmarking LLMs and coding agents", badge:"Partial", warn:false,
+     t:"My model calls came from production outcomes. I haven't built a standalone benchmark harness for coding agents.", side:"I'd like to."}
+  ];
+
+  const $ = s => document.querySelector(s);
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+  const STATUS = {connected:"Connected", pending:"Pending review", idle:"Parked"};
+
+  /* tabs */
+  const tabs = [...document.querySelectorAll('[role="tab"]')];
+  function showTab(name, focus){
+    tabs.forEach(t => {
+      const on = t.dataset.tab === name;
+      t.setAttribute("aria-selected", on);
+      t.tabIndex = on ? 0 : -1;
+      const p = document.getElementById("panel-" + t.dataset.tab);
+      p.hidden = !on;
+      if(on){ p.classList.remove("fade"); void p.offsetWidth; p.classList.add("fade"); if(focus) t.focus(); }
+    });
+    document.getElementById("banner").hidden = name !== "machines";
+    if(window.scrollY > 120) window.scrollTo({top:0, behavior:"smooth"});
+    if(location.hash !== "#" + name) history.replaceState(null, "", "#" + name);
+  }
+  tabs.forEach((t, i) => {
+    t.addEventListener("click", () => showTab(t.dataset.tab));
+    t.addEventListener("keydown", e => {
+      if(e.key === "ArrowRight" || e.key === "ArrowLeft"){
+        const n = tabs[(i + (e.key === "ArrowRight" ? 1 : tabs.length - 1)) % tabs.length];
+        showTab(n.dataset.tab, true); e.preventDefault();
+      }
+    });
+  });
+  document.querySelectorAll("[data-goto]").forEach(b => b.addEventListener("click", () => {
+    showTab(b.dataset.goto);
+  }));
+
+  /* machines */
+  $("#mcount").textContent = MACHINES.length;
+  $("#gcount").textContent = GAPS.length;
+  const allTags = [...new Set(MACHINES.flatMap(m => m.tags))];
+  const featured = ["tag:guardrails","tag:internal-tools","tag:measurement","tag:evals","tag:power-user","tag:go","tag:support","tag:founder","tag:comms","tag:docs"];
+  const chipTags = featured.filter(t => allTags.includes(t));
+  let activeTag = null;
+  $("#tagChips").innerHTML = '<button class="chip" aria-pressed="true" data-tag="">all tags</button>' +
+    chipTags.map(t => `<button class="chip" aria-pressed="false" data-tag="${t}">${t}</button>`).join("");
+  $("#tagChips").addEventListener("click", e => {
+    const b = e.target.closest("button.chip"); if(!b) return;
+    activeTag = b.dataset.tag || null;
+    [...$("#tagChips").children].forEach(c => c.setAttribute("aria-pressed", c === b));
+    render();
+  });
+
+  let visible = [];
+  function render(){
+    const q = $("#q").value.trim().toLowerCase();
+    const st = $("#statusSel").value;
+    visible = MACHINES.filter(m => {
+      if(st !== "all" && m.status !== st) return false;
+      if(activeTag && !m.tags.includes(activeTag)) return false;
+      if(!q) return true;
+      const hay = [m.id, m.req, m.tags.join(" "), STATUS[m.status], m.receipts.join(" ")].join(" ").toLowerCase();
+      return q.split(/\s+/).every(w => hay.includes(w));
+    });
+    const rows = $("#rows");
+    if(!visible.length){
+      rows.innerHTML = '<div class="empty">No machines match that search. <button id="clearF">Clear the filters.</button></div>';
+      $("#clearF").addEventListener("click", clearFilters);
+    } else {
+      rows.innerHTML = visible.map(m => `
+        <button class="row" role="row" data-id="${m.id}" aria-label="Open ${m.id} details">
+          <span role="cell"><div class="name">${m.id}</div><div class="owner">andrew@zoll</div>
+            <div class="tags">${m.tags.map(t => `<span class="chip">${t}</span>`).join("")}</div></span>
+          <span role="cell" class="addr">${m.addr}</span>
+          <span role="cell" class="since">${m.since}</span>
+          <span role="cell"><span class="status"><span class="dot ${m.status}"></span>${STATUS[m.status]}</span></span>
+          <span role="cell" class="more" aria-hidden="true">&middot;&middot;&middot;</span>
+        </button>`).join("");
+    }
+    $("#resultline").textContent = `Showing ${visible.length} of ${MACHINES.length} machines.`;
+  }
+  function clearFilters(){
+    $("#q").value = ""; $("#statusSel").value = "all"; activeTag = null;
+    [...$("#tagChips").children].forEach((c, i) => c.setAttribute("aria-pressed", i === 0));
+    render();
+  }
+  $("#q").addEventListener("input", render);
+  $("#statusSel").addEventListener("change", render);
+  $("#rows").addEventListener("click", e => { const r = e.target.closest(".row"); if(r) openDrawer(r.dataset.id); });
+  document.addEventListener("keydown", e => {
+    if(e.key === "/" && document.activeElement.tagName !== "INPUT" && !drawer.classList.contains("open")){
+      showTab("machines"); e.preventDefault(); $("#q").focus();
+    }
+    if(e.key === "Escape" && drawer.classList.contains("open")) closeDrawer();
+  });
+
+  /* drawer */
+  const drawer = $("#drawer"), scrim = $("#scrim");
+  let current = null, lastFocus = null, pingTimer = null;
+  function openDrawer(id){
+    const m = MACHINES.find(x => x.id === id); if(!m) return;
+    current = m;
+    if(!drawer.classList.contains("open")) lastFocus = document.activeElement;
+    clearInterval(pingTimer);
+    $("#dCrumb").textContent = m.id;
+    $("#dTitle").innerHTML = `<span class="dot ${m.status}"></span>${esc(m.id)}`;
+    $("#dMeta").innerHTML = `<span>Address <span class="mono">${m.addr}</span></span><span>Since <span class="mono">${m.since}</span></span><span>Status ${STATUS[m.status]}</span>`;
+    const links = m.links.length ? `<div class="dsec"><h4>Links</h4><div class="links">${m.links.map(l => l.href
+        ? `<a class="btn" href="${l.href}" target="_blank" rel="noopener">${esc(l.label)}</a>`
+        : `<button class="btn" data-jump="${l.tab}">${esc(l.label)}</button>`).join("")}</div></div>` : "";
+    $("#dBody").innerHTML = `
+      <div class="dsec"><h4>Tags</h4><div class="tags" style="display:flex;gap:5px;flex-wrap:wrap">${m.tags.map(t => `<span class="chip">${t}</span>`).join("")}</div></div>
+      <div class="dsec"><h4>Satisfies</h4><div class="quote">"${esc(m.req)}"<small>From the ${JD}.</small></div></div>
+      <div class="dsec"><h4>Receipts</h4><ul class="receipts">${m.receipts.map(r => `<li>${esc(r)}</li>`).join("")}</ul></div>
+      ${links}
+      <div class="dsec"><h4>Ping</h4><div class="term" id="term"><span class="p">$</span> Press "Ping this machine" to say hello.</div></div>`;
+    $("#dBody").scrollTop = 0;
+    $("#dBody").querySelectorAll("[data-jump]").forEach(b => b.addEventListener("click", () => { const t = b.dataset.jump; closeDrawer(); showTab(t); }));
+    const idx = visible.findIndex(x => x.id === m.id);
+    const list = idx === -1 ? MACHINES : visible;
+    const i = list.findIndex(x => x.id === m.id);
+    $("#dPrev").disabled = i <= 0; $("#dNext").disabled = i >= list.length - 1;
+    $("#dPrev").style.opacity = i <= 0 ? .45 : 1; $("#dNext").style.opacity = i >= list.length - 1 ? .45 : 1;
+    $("#dPrev").onclick = () => i > 0 && openDrawer(list[i-1].id);
+    $("#dNext").onclick = () => i < list.length - 1 && openDrawer(list[i+1].id);
+    drawer.classList.add("open"); scrim.classList.add("open"); drawer.setAttribute("aria-hidden", "false");
+    $("#dClose").focus();
+  }
+  function closeDrawer(){
+    clearInterval(pingTimer);
+    drawer.classList.remove("open"); scrim.classList.remove("open"); drawer.setAttribute("aria-hidden", "true");
+    if(lastFocus && document.body.contains(lastFocus)) lastFocus.focus();
+  }
+  $("#dClose").addEventListener("click", closeDrawer);
+  scrim.addEventListener("click", closeDrawer);
+  $("#dPing").addEventListener("click", () => {
+    if(!current) return;
+    const term = $("#term"); clearInterval(pingTimer);
+    const head = `<span class="p">$</span> tailscale ping ${esc(current.id)}\n`;
+    let n = 0;
+    term.innerHTML = head + "waiting";
+    pingTimer = setInterval(() => {
+      n++;
+      if(n < 4){ term.innerHTML = head + "waiting" + ".".repeat(n); return; }
+      clearInterval(pingTimer);
+      term.innerHTML = head + `<span class="ok">pong from ${esc(current.id)} (${current.addr})</span>\n${esc(current.ping)}`;
+    }, 280);
+  });
+
+  /* ACL evaluator */
+  const MODELS = {"kimi-k3":"kimi","glm-5.3":"glm","gpt":"gpt","claude-opus":"claude","claude-fable":"claude"};
+  const ESCALATION = ["gpt","claude-opus","claude-fable"];
+  const RULES = {
+    R1:"A model family never reviews its own build.",
+    R2:"Past round 3, reviews escalate to a stronger model.",
+    R3:"Mutation tests have to prove the tests can fail.",
+    R4:"Federal and security paths need two cross-family reviewers.",
+    R5:"Everything that cleared R1 to R4 can merge."
+  };
+  function evaluate(r){
+    if(MODELS[r.reviewer] === MODELS[r.builder]) return {ok:false, rule:"R1"};
+    if(r.round > 3 && !ESCALATION.includes(r.reviewer)) return {ok:false, rule:"R2"};
+    if(!r.mutation) return {ok:false, rule:"R3"};
+    if(r.path === "federal" && !r.second) return {ok:false, rule:"R4"};
+    return {ok:true, rule:"R5"};
+  }
+  const TESTS = [
+    {name:"Kimi builds and GLM reviews round 1 app code", r:{builder:"kimi-k3",reviewer:"glm-5.3",path:"app",round:1,mutation:true,second:false}, expect:"accept"},
+    {name:"Kimi tries to review its own family's build", r:{builder:"kimi-k3",reviewer:"kimi-k3",path:"app",round:1,mutation:true,second:false}, expect:"deny", rule:"R1"},
+    {name:"GLM keeps reviewing at round 4", r:{builder:"kimi-k3",reviewer:"glm-5.3",path:"app",round:4,mutation:true,second:false}, expect:"deny", rule:"R2"},
+    {name:"Claude Opus takes over at round 4", r:{builder:"kimi-k3",reviewer:"claude-opus",path:"app",round:4,mutation:true,second:false}, expect:"accept"},
+    {name:"Tests pass but mutation found nothing", r:{builder:"kimi-k3",reviewer:"glm-5.3",path:"app",round:1,mutation:false,second:false}, expect:"deny", rule:"R3"},
+    {name:"Federal change with one reviewer", r:{builder:"kimi-k3",reviewer:"glm-5.3",path:"federal",round:1,mutation:true,second:false}, expect:"deny", rule:"R4"},
+    {name:"Federal change with two cross-family reviewers", r:{builder:"kimi-k3",reviewer:"glm-5.3",path:"federal",round:1,mutation:true,second:true}, expect:"accept"}
+  ];
+
+  const S = (t) => `<span class="s">${esc(t)}</span>`;
+  const K = (t) => `<span class="k">${esc(t)}</span>`;
+  const C = (t) => `<span class="c">${esc(t)}</span>`;
+  const B = (t) => `<span class="b">${esc(t)}</span>`;
+  const L = [];
+  const add = (html, rule) => L.push({html, rule});
+  add(C("// andrew-zoll policy file"));
+  add(C("// Default deny: nothing reaches main unless a rule lets it."));
+  add("{");
+  add(`  ${K('"groups"')}: {`);
+  add(`    ${K('"group:builders"')}:   [${S('"kimi-k3"')}],`);
+  add(`    ${K('"group:reviewers"')}:  [${S('"glm-5.3"')}],`);
+  add(`    ${K('"group:escalation"')}: [${S('"gpt"')}, ${S('"claude-opus"')}, ${S('"claude-fable"')}],`);
+  add("  },");
+  add("");
+  add(`  ${K('"grants"')}: [`);
+  const rule = (id, lines) => { add(`    ${C("// " + id + ": " + RULES[id])}`, id); lines.forEach(l => add(l, id)); };
+  rule("R1", [`    { ${K('"src"')}: [${S('"family:builder"')}], ${K('"dst"')}: [${S('"review:same-pr"')}], ${K('"action"')}: ${S('"deny"')} },`]);
+  rule("R2", [`    { ${K('"src"')}: [${S('"group:reviewers"')}], ${K('"dst"')}: [${S('"review:round>3"')}],`,
+              `      ${K('"action"')}: ${S('"deny"')}, ${K('"escalateTo"')}: [${S('"group:escalation"')}] },`]);
+  rule("R3", [`    { ${K('"src"')}: [${S('"*"')}], ${K('"dst"')}: [${S('"main:merge"')}], ${K('"require"')}: [${S('"mutation:pass"')}] },`]);
+  rule("R4", [`    { ${K('"src"')}: [${S('"*"')}], ${K('"dst"')}: [${S('"path:federal"')}],`,
+              `      ${K('"require"')}: [${S('"review:cross-family"')}, ${S('"review:cross-family-2"')}] },`]);
+  rule("R5", [`    { ${K('"src"')}: [${S('"group:reviewers"')}, ${S('"group:escalation"')}],`,
+              `      ${K('"dst"')}: [${S('"main:merge"')}], ${K('"action"')}: ${S('"accept"')} },`]);
+  add("  ],");
+  add("");
+  add(`  ${K('"tests"')}: [`);
+  TESTS.forEach((t, i) => add(`    { ${K('"name"')}: ${S('"' + t.name + '"')}, ${K('"expect"')}: ${t.expect === "accept" ? B('"accept"') : S('"deny"')} }${i < TESTS.length - 1 ? "," : ""}`, "T" + i));
+  add("  ],");
+  add("}");
+  $("#policy").innerHTML = L.map((l, i) => `<div class="ln" data-rule="${l.rule || ""}"><span class="n">${i+1}</span><span>${l.html || " "}</span></div>`).join("");
+
+  function highlight(ruleId, kind){
+    document.querySelectorAll("#policy .ln").forEach(el => {
+      const on = el.dataset.rule === ruleId;
+      el.classList.toggle("hl", on);
+      el.classList.toggle("deny", on && kind === "deny");
+      el.classList.toggle("accept", on && kind === "accept");
+    });
+  }
+
+  const opts = (sel, list, val) => { sel.innerHTML = list.map(m => `<option value="${m}">${m} (${MODELS[m]})</option>`).join(""); sel.value = val; };
+  opts($("#fBuilder"), ["kimi-k3","glm-5.3","gpt","claude-opus"], "kimi-k3");
+  opts($("#fReviewer"), Object.keys(MODELS), "glm-5.3");
+  function preview(){
+    const r = {builder:$("#fBuilder").value, reviewer:$("#fReviewer").value, path:$("#fPath").value,
+               round:+$("#fRound").value, mutation:$("#fMut").checked, second:$("#fSecond").checked};
+    $("#roundVal").textContent = r.round;
+    $("#fSecond").disabled = r.path !== "federal";
+    $("#fSecond").parentElement.style.opacity = r.path === "federal" ? 1 : .5;
+    const v = evaluate(r);
+    const el = $("#verdict");
+    el.className = "verdict " + (v.ok ? "accept" : "deny");
+    el.innerHTML = `<span class="pill">${v.ok ? "ACCEPT" : "DENY"}</span><div>Matched ${v.rule}. ${esc(RULES[v.rule])}${v.ok ? " This one can merge." : " It goes back to the agents."}</div>`;
+    highlight(v.rule, v.ok ? "accept" : "deny");
+  }
+  ["#fBuilder","#fReviewer","#fPath","#fRound","#fMut","#fSecond"].forEach(s => $(s).addEventListener("input", preview));
+  preview();
+
+  $("#tests").innerHTML = TESTS.map(t => `<li><span class="mark" aria-hidden="true"></span><span>${esc(t.name)}, expect <span class="mono">${t.expect}</span>.</span></li>`).join("");
+  let running = false;
+  $("#runTests").addEventListener("click", () => {
+    if(running) return; running = true;
+    const items = [...$("#tests").children];
+    items.forEach(li => { li.className = ""; li.querySelector(".mark").textContent = ""; });
+    $("#testsum").textContent = "Running the tests against the same evaluator as the preview.";
+    let pass = 0;
+    TESTS.forEach((t, i) => setTimeout(() => {
+      const v = evaluate(t.r);
+      const ok = (v.ok ? "accept" : "deny") === t.expect && (!t.rule || t.rule === v.rule);
+      if(ok) pass++;
+      items[i].className = "done " + (ok ? "pass" : "fail");
+      items[i].querySelector(".mark").textContent = ok ? "✓" : "×";
+      highlight("T" + i, ok ? "accept" : "deny");
+      if(i === TESTS.length - 1){
+        $("#testsum").textContent = pass === TESTS.length
+          ? `${pass} of ${TESTS.length} tests passed. The gate would let this application through, too.`
+          : `${pass} of ${TESTS.length} tests passed, so something in the policy needs a look.`;
+        setTimeout(() => { preview(); running = false; }, 900);
+      }
+    }, 260 * (i + 1)));
+  });
+
+  /* gaps */
+  $("#gapRows").innerHTML = GAPS.map(g => `
+    <div class="row" role="row">
+      <span role="cell"><div class="gapq">${esc(g.q)}</div><div class="gapt">${esc(g.t)}</div></span>
+      <span role="cell" class="gapside">${esc(g.side)}</span>
+      <span role="cell"><span class="badge ${g.warn ? "" : "gray"}">${esc(g.badge)}</span></span>
+    </div>`).join("");
+
+  /* boot */
+  render();
+  const h = location.hash.replace("#", "");
+  if(["machines","acls","gaps"].includes(h)) showTab(h);
+})();
+</script>
+</body>
+</html>
