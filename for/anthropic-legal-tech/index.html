@@ -232,19 +232,19 @@ footer p{margin:0;max-width:44em}
           </svg>
         </div>
         <div>
-          <h3>Record of one candidate</h3>
-          <div class="status" id="sealStatus">Computing the seal…</div>
+          <h3>Here's the record of one candidate.</h3>
+          <div class="status" id="sealStatus">The seal is computing now.</div>
         </div>
       </div>
       <div class="digest" id="digest"><span class="lbl">SHA-256 of the claims, sorted keys</span><span id="digestNow">…</span></div>
-      <div class="meta"><span id="sealMeta">14 claims sealed when this page loaded.</span><button type="button" id="jumpTamper">Try to tamper with it</button></div>
+      <div class="meta"><span id="sealMeta">Your browser sealed 14 claims when this page loaded.</span><button type="button" id="jumpTamper">Try to tamper with it</button></div>
     </aside>
   </div>
 </header>
 
 <section class="band-card" id="claims">
   <div class="wrap">
-    <h2 class="sec-h reveal">Fourteen lines from your posting, each with a verdict I'd defend.</h2>
+    <h2 class="sec-h reveal">Here are fourteen lines from your posting, each with a verdict I'd defend.</h2>
     <p class="sec-p reveal">I used the same hedges Veritas uses. "Verified" means I can point at shipped work. "Partially supported" means real but smaller than your scale. "Not located in record" means I don't have it, and I'm not going to dress it up.</p>
 
     <div class="toolbar">
@@ -264,15 +264,15 @@ footer p{margin:0;max-width:44em}
 
 <section class="band-dark" id="ladder">
   <div class="wrap">
-    <h2 class="sec-h reveal">How Veritas decides what to say.</h2>
+    <h2 class="sec-h reveal">Here's how Veritas decides what to say.</h2>
     <p class="sec-p reveal">Each citation in a filing runs five checks: existence, name match, treatment, pincite, and proposition. The roll-up is the worst verdict across them. Pick a rung to see what puts a citation there.</p>
     <div class="ladder">
       <div class="rungs" role="tablist" aria-label="Verdict ladder">
-        <button class="rung" role="tab" id="t-risk" aria-controls="p-ladder" aria-selected="true" data-r="risk">Risk <span class="k">worst</span></button>
-        <button class="rung" role="tab" id="t-warning" aria-controls="p-ladder" aria-selected="false" data-r="warning">Warning <span class="k">soft</span></button>
-        <button class="rung" role="tab" id="t-unknown" aria-controls="p-ladder" aria-selected="false" data-r="unknown">Unknown <span class="k">couldn't finish</span></button>
-        <button class="rung" role="tab" id="t-verified" aria-controls="p-ladder" aria-selected="false" data-r="verified">Verified <span class="k">best</span></button>
-        <button class="rung" role="tab" id="t-cert" aria-controls="p-ladder" aria-selected="false" data-r="cert">The certificate <span class="k">custody</span></button>
+        <button class="rung" role="tab" id="t-risk" aria-controls="p-ladder" aria-selected="true" data-r="risk">Risk</button>
+        <button class="rung" role="tab" id="t-warning" aria-controls="p-ladder" aria-selected="false" data-r="warning">Warning</button>
+        <button class="rung" role="tab" id="t-unknown" aria-controls="p-ladder" aria-selected="false" data-r="unknown">Unknown</button>
+        <button class="rung" role="tab" id="t-verified" aria-controls="p-ladder" aria-selected="false" data-r="verified">Verified</button>
+        <button class="rung" role="tab" id="t-cert" aria-controls="p-ladder" aria-selected="false" data-r="cert">The certificate</button>
       </div>
       <div class="panel" role="tabpanel" id="p-ladder" aria-labelledby="t-risk"></div>
     </div>
@@ -281,15 +281,15 @@ footer p{margin:0;max-width:44em}
 
 <section class="band-plain" id="unproved">
   <div class="wrap">
-    <h2 class="sec-h reveal">What this record doesn't prove.</h2>
+    <h2 class="sec-h reveal">Here's what this record doesn't prove.</h2>
     <p class="sec-p reveal">Your posting asks for someone who plainly names what isn't proved. Here's my list, without the varnish.</p>
     <div class="gaps">
-      <div class="gap"><h3>A whole cloud account, secured end to end, at your scale.</h3><p>I run an AWS stack through Terraform with a CI plan gate, ECS, Lambda, and S3, and I've built fail-closed access tiers. I haven't been the sole owner of an account's network design, KMS key policy, and org-level guardrails for a company like Anthropic.</p></div>
-      <div class="gap"><h3>Large-scale data tooling.</h3><p>I haven't run lakehouse table formats, distributed processing, or a query engine in production. My data work is pipelines and bounded fan-outs at product scale.</p></div>
-      <div class="gap"><h3>Secure enclaves, confidential computing, and clean rooms.</h3><p>I've designed privacy boundaries in application code and in the database. I haven't built on purpose-built hardware or isolated environments for sensitive data.</p></div>
-      <div class="gap"><h3>eDiscovery and records retention at scale.</h3><p>Veritas lives next door, since it audits legal filings and keeps a custody record for each one. I haven't run litigation support or a retention program for a large organization.</p></div>
-      <div class="gap"><h3>Senior+ years.</h3><p>My software engineering title dates from 2026. I've shipped production software as a founder since 2025, and before that I spent a decade in ministry and regulated financial advice.</p></div>
-      <div class="gap"><h3>Living near one of your offices.</h3><p>I live in Pueblo, Colorado with my family. I'd want to talk honestly about the 25% in-office expectation before anyone spends time on a loop.</p></div>
+      <div class="gap"><h3>I haven't secured a whole cloud account end to end at your scale.</h3><p>I run an AWS stack through Terraform with a CI plan gate, ECS, Lambda, and S3, and I've built fail-closed access tiers. I haven't been the sole owner of an account's network design, KMS key policy, and org-level guardrails for a company like Anthropic.</p></div>
+      <div class="gap"><h3>I haven't used large-scale data tooling.</h3><p>I haven't run lakehouse table formats, distributed processing, or a query engine in production. My data work is pipelines and bounded fan-outs at product scale.</p></div>
+      <div class="gap"><h3>I haven't built secure enclaves, confidential computing, or clean rooms.</h3><p>I've designed privacy boundaries in application code and in the database. I haven't built on purpose-built hardware or isolated environments for sensitive data.</p></div>
+      <div class="gap"><h3>I haven't run eDiscovery or records retention at scale.</h3><p>Veritas lives next door, since it audits legal filings and keeps a custody record for each one. I haven't run litigation support or a retention program for a large organization.</p></div>
+      <div class="gap"><h3>I don't have Senior+ years.</h3><p>My software engineering title dates from 2026. I've shipped production software as a founder since 2025, and before that I spent a decade in ministry and regulated financial advice.</p></div>
+      <div class="gap"><h3>I don't live near one of your offices.</h3><p>I live in Pueblo, Colorado with my family. I'd want to talk honestly about the 25% in-office expectation before anyone spends time on a loop.</p></div>
     </div>
   </div>
 </section>
@@ -297,7 +297,7 @@ footer p{margin:0;max-width:44em}
 <section class="band-custody" id="custody">
   <div class="wrap custody-grid">
     <div class="custody-side reveal">
-      <h2 class="sec-h">Custody log.</h2>
+      <h2 class="sec-h">Here's my custody log.</h2>
       <p class="sec-p">Each entry's hash covers its own text plus the hash before it, so you can't quietly rewrite an earlier year. Open an entry to read it, or walk the chain.</p>
       <button class="btn btn-dark" type="button" id="verifyChain">Verify the chain</button>
       <div class="chain-status" id="chainStatus" aria-live="polite"></div>
@@ -319,7 +319,7 @@ footer p{margin:0;max-width:44em}
 
 <footer>
   <div class="wrap">
-    <p>Andrew Zoll, Pueblo, Colorado. Senior Software Engineer (AI Solutions) at Coder, and founder of <a href="https://veritaslaw.app">Veritas</a>. This page isn't affiliated with or endorsed by Anthropic. Every number on it comes from work I've tracked.</p>
+    <p>I'm Andrew Zoll, and I live in Pueblo, Colorado. I'm a Senior Software Engineer (AI Solutions) at Coder and the founder of <a href="https://veritaslaw.app">Veritas</a>. This page isn't affiliated with or endorsed by Anthropic. Every number on it comes from work I've tracked.</p>
     <p><a href="https://portfolio.andrewzoll.com">portfolio.andrewzoll.com</a><br/><a href="https://linkedin.com/in/andrewzoll">linkedin.com/in/andrewzoll</a></p>
   </div>
 </footer>
@@ -330,57 +330,57 @@ footer p{margin:0;max-width:44em}
   var CLAIMS = [
     {id:"c01", v:"verified", q:"Demonstrating to skeptical audiences exactly how they worked and why results can be trusted.",
      a:"Veritas runs five checks on every citation in a legal filing and reports the worst verdict, with the reason, on each one. The output is a Verification Certificate a lawyer can hand to a partner, a client, or an insurer.",
-     r:"veritaslaw.app, verification pipeline and certificate"},
+     r:"You can see the pipeline and the certificate at veritaslaw.app."},
     {id:"c02", v:"verified", q:"A habit of verifying rather than assuming: designing checks for invariants and plainly naming what isn't proved.",
      a:"At Coder I built review gates where a model from a different family than the builder has to clear each change, and mutation tests confirm the tests can fail. Across about 1,200 verdicts on about 350 pull requests they recorded more than 430 confirmed defect catches and 21 false flags. One catch was a Redis cluster-mode blocker that passed every test against an in-memory fake.",
-     r:"Coder, cross-family review and mutation gates"},
+     r:"This comes from the review and mutation gates I built at Coder."},
     {id:"c03", v:"verified", q:"Ability to translate legal and privacy requirements into sound technical designs and implementations.",
      a:"I shipped fail-closed Federal data access controls across 26 merged pull requests. Uncleared users never get Federal history in model input, and the tests cover every access tier. In Veritas, a strict projection type keeps privileged brief text off the public certificate, and a test asserts it never appears in the frozen snapshot.",
-     r:"Coder, 26 merged Federal access-control PRs; Veritas certificate projection test"},
+     r:"The receipts are 26 merged Federal access-control PRs at Coder and the certificate projection test in Veritas."},
     {id:"c04", v:"verified", q:"Support complex and novel legal requests on controlled infrastructure, with verifiable chain of custody.",
      a:"Veritas freezes each certificate into an INSERT-only table whose trigger blocks UPDATE and DELETE. The snapshot is canonicalized, hashed with SHA-256, and signed with Ed25519, and public endpoints let anyone verify it with the published key. A rescan rotates the token, so one URL never represents two results. This is product scale, not Anthropic scale.",
-     r:"Veritas, immutable certificates and Ed25519 signing (merged June 2026)"},
+     r:"Ed25519 signing merged in Veritas in June 2026, on top of the immutable certificate table."},
     {id:"c05", v:"verified", q:"Clear communication with nontechnical stakeholders, and an understanding of their needs.",
      a:"I was a financial advisor under FINRA and SEC oversight and kept 95% of more than 120 households at Edward Jones. Before that I was a pastor. Explaining a hard constraint calmly to someone who didn't ask for jargon is most of what I did for a decade.",
-     r:"Edward Jones 2020 to 2024; Ryleigh Wealth Management"},
+     r:"This comes from Edward Jones (2020 to 2024) and Ryleigh Wealth Management."},
     {id:"c06", v:"verified", q:"Self-directed in a high-change environment, and comfortable resequencing quickly when new needs emerge.",
      a:"I built and run three products on my own: Veritas, FieldCommand (187,745 lines of TypeScript, solo), and the agent operating system I use to run my work. At Coder I authored 884 merged pull requests between July 27 and October 9, 2026 while priorities moved under me.",
-     r:"Coder; Veritas; FieldCommand"},
+     r:"The receipts are Coder, Veritas, and FieldCommand."},
     {id:"c07", v:"verified", q:"Proactively designing new approaches to prevent classes of problems.",
      a:"In Veritas, rate limits and transport failures resolve to unknown, never risk, and a 'not located' verdict now requires the source to affirmatively return a 404. That closed a whole class of false accusations instead of one bug.",
-     r:"Veritas scan self-verify gate (closed June 2026)"},
+     r:"The Veritas scan self-verify gate closed this in June 2026."},
     {id:"c08", v:"partial", q:"Experience designing, building, and operating highly trusted infrastructure and data systems in production, including owning architectural decisions.",
      a:"I own the architecture of Veritas end to end and maintain an AWS stack at Coder through Terraform with a CI plan gate, ECS tasks, and Lambda jobs. I cut a cold dashboard load from 5 to 10 seconds to about 2 by replacing a serial S3 read loop with a bounded fan-out. It's real production work, at a smaller scale than yours.",
-     r:"Coder AWS stack; Veritas architecture"},
+     r:"The receipts are the Coder AWS stack and the Veritas architecture."},
     {id:"c09", v:"partial", q:"Experience working across large, complex, multi-team environments, including in stacks and code you don't own.",
      a:"I opened coder/coder#30576 in Coder's upstream Go codebase, and I've built integrations for Salesforce, Granola transcripts, and Slack. I haven't worked inside an organization the size of Anthropic's.",
-     r:"coder/coder#30576"},
+     r:"You can read coder/coder#30576 on GitHub."},
     {id:"c10", v:"partial", q:"Ability to take ownership of a cloud account and secure it end to end on AWS and/or GCP.",
      a:"I've built least-privilege access tiers, an OAuth authorization server that gates hosted MCP access, and infrastructure changes that go through a CI plan gate. I haven't owned every layer of an account by myself. The full story is in the not-proved list below.",
-     r:"Coder, OAuth authorization server and Terraform"},
+     r:"This comes from the OAuth authorization server and the Terraform work at Coder."},
     {id:"c11", v:"partial", q:"Understanding of data processing pipelines, LLM training, and/or provenance and lineage.",
      a:"Veritas stores every model prompt as a firm-scoped, content-addressed receipt, so a verdict can be traced back to the exact prompt behind it by its SHA-256. I haven't worked on LLM training pipelines.",
-     r:"Veritas prompt receipts"},
+     r:"Veritas stores these prompt receipts today."},
     {id:"c12", v:"notlocated", q:"Proficiency with large-scale data tooling, such as distributed processing, lakehouse table formats, and/or query engines.",
-     a:"Not located in my record. I'd be learning this on the job.",
-     r:"None"},
+     a:"It isn't located in my record, so I'd be learning this on the job.",
+     r:"I don't have a receipt for this one."},
     {id:"c13", v:"notlocated", q:"Experience with secure enclaves, confidential computing, clean rooms, or other purpose-built environments for sensitive data.",
-     a:"Not located in my record. My privacy boundaries live in application code and the database, not in hardware isolation.",
-     r:"None"},
+     a:"It isn't located in my record. My privacy boundaries live in application code and the database, not in hardware isolation.",
+     r:"I don't have a receipt for this one."},
     {id:"c14", v:"notlocated", q:"Background in eDiscovery, litigation support, or records retention at scale.",
-     a:"Not located at scale. Veritas audits legal filings and keeps a custody record per filing, which is adjacent, and I worked under FINRA and SEC recordkeeping rules. I haven't run eDiscovery.",
-     r:"Adjacent only"}
+     a:"It isn't located at scale. Veritas audits legal filings and keeps a custody record per filing, which is adjacent, and I worked under FINRA and SEC recordkeeping rules. I haven't run eDiscovery.",
+     r:"My only receipts here are adjacent ones."}
   ];
   var LABEL = {verified:"Verified", partial:"Partially supported", notlocated:"Not located in record"};
   var LOG = [
-    {w:"2013", t:"B.A., Ozark Christian College.", m:"Where I learned to read a text closely and argue from what it actually says."},
-    {w:"2015 to 2017", t:"Senior pastor, Colony, Kansas.", m:"Operations, budgets, and a lot of hard conversations with people who trusted me."},
-    {w:"2017 to 2019", t:"Communications director and IT lead, Flagstaff.", m:"I owned IT for a 1,200-member organization, including SQL Server administration and user access."},
-    {w:"2020 to 2024", t:"Financial advisor, Edward Jones.", m:"FINRA and SEC rules, confidentiality, recordkeeping, and 95% retention across more than 120 households."},
-    {w:"2025", t:"Founder of FieldCommand.", m:"A multi-tenant SaaS for commercial contractors with tenant isolation and role-based access control. I built it solo with AI-assisted development, 187,745 lines of TypeScript."},
-    {w:"2026", t:"Founder of Veritas.", m:"Citation verification for legal filings, with hedged verdicts and a signed Verification Certificate."},
-    {w:"Jul 2026", t:"Senior Software Engineer (AI Solutions), Coder.", m:"An internal AI agent platform on AWS, 26 Federal access-control pull requests, and review gates that check the checks."},
-    {w:"Oct 2026", t:"This page.", m:"Every hash in this log is computed in your browser when the page loads."}
+    {w:"2013", t:"I earned a B.A. at Ozark Christian College.", m:"Where I learned to read a text closely and argue from what it actually says."},
+    {w:"2015 to 2017", t:"I served as senior pastor in Colony, Kansas.", m:"Operations, budgets, and a lot of hard conversations with people who trusted me."},
+    {w:"2017 to 2019", t:"I led communications and IT in Flagstaff.", m:"I owned IT for a 1,200-member organization, including SQL Server administration and user access."},
+    {w:"2020 to 2024", t:"I worked as a financial advisor at Edward Jones.", m:"FINRA and SEC rules, confidentiality, recordkeeping, and 95% retention across more than 120 households."},
+    {w:"2025", t:"I founded FieldCommand.", m:"A multi-tenant SaaS for commercial contractors with tenant isolation and role-based access control. I built it solo with AI-assisted development, 187,745 lines of TypeScript."},
+    {w:"2026", t:"I founded Veritas.", m:"Citation verification for legal filings, with hedged verdicts and a signed Verification Certificate."},
+    {w:"Jul 2026", t:"I joined Coder as a Senior Software Engineer (AI Solutions).", m:"An internal AI agent platform on AWS, 26 Federal access-control pull requests, and review gates that check the checks."},
+    {w:"Oct 2026", t:"I built this page.", m:"Every hash in this log is computed in your browser when the page loads."}
   ];
 
   function canon(v){
@@ -407,7 +407,7 @@ footer p{margin:0;max-width:44em}
         '<span class="chev" aria-hidden="true">+</span></button>' +
       '<div class="claim-body" id="'+c.id+'-b"><div><div class="claim-inner">' +
         '<p data-id="'+c.id+'">'+esc(c.a)+'</p>' +
-        '<div class="receipt"><b>Receipt</b>'+esc(c.r)+'</div>' +
+        '<div class="receipt"><b>Where to check it</b>'+esc(c.r)+'</div>' +
       '</div></div></div></li>';
   }).join("");
   ["all","verified","partial","notlocated"].forEach(function(k){
@@ -453,19 +453,19 @@ footer p{margin:0;max-width:44em}
   function reseal(first){
     sha256(canon(currentRecord())).then(function(h){
       if (h === null){ statusEl.textContent = "Your browser can't compute SHA-256 here, so the seal is unavailable."; nowEl.textContent = "unavailable"; return; }
-      if (first){ sealed = h; scramble(nowEl, h); statusEl.textContent = "Seal intact. The record matches what was sealed."; return; }
+      if (first){ sealed = h; scramble(nowEl, h); statusEl.textContent = "The seal is intact, and the record matches what was sealed."; return; }
       var ok = h === sealed;
       if (ok){
         nowEl.textContent = h;
-        statusEl.textContent = "Seal intact. The record matches what was sealed.";
+        statusEl.textContent = "The seal is intact, and the record matches what was sealed.";
         statusEl.classList.remove("bad"); core.setAttribute("fill","#cc785c");
         mark.setAttribute("d","M44 57 l8 8 l16 -18");
-        metaEl.textContent = "14 claims sealed when this page loaded.";
+        metaEl.textContent = "Your browser sealed 14 claims when this page loaded.";
         if (lastBroken){ stamp.classList.remove("pressed"); void stamp.offsetWidth; stamp.classList.add("pressed"); }
       } else {
         var k = 0; while (k < h.length && h[k] === sealed[k]) k++;
         nowEl.innerHTML = esc(h.slice(0,k)) + '<span class="diff">' + esc(h.slice(k)) + '</span><span class="cmp">sealed: ' + esc(sealed) + '</span>';
-        statusEl.textContent = "Digest mismatch. This record changed after it was sealed.";
+        statusEl.textContent = "The digest doesn't match, so this record changed after it was sealed.";
         statusEl.classList.add("bad"); core.setAttribute("fill","#c64545");
         mark.setAttribute("d","M47 47 l18 18 M65 47 l-18 18");
         metaEl.textContent = "One edited character is enough to change the whole digest.";
@@ -536,7 +536,7 @@ footer p{margin:0;max-width:44em}
   logEl.innerHTML = LOG.map(function(e,i){
     return '<li class="entry" data-i="'+i+'"><span class="node"></span><button type="button" aria-expanded="false">' +
       '<span class="when">'+esc(e.w)+'</span><span class="what">'+esc(e.t)+'</span>' +
-      '<span class="more">'+esc(e.m)+'</span><span class="h" data-h="'+i+'">hash pending</span></button></li>';
+      '<span class="more">'+esc(e.m)+'</span><span class="h" data-h="'+i+'">The hash is computing.</span></button></li>';
   }).join("");
   (function build(){
     var prev = "0".repeat(64), p = Promise.resolve();
@@ -557,7 +557,7 @@ footer p{margin:0;max-width:44em}
   chainBtn.addEventListener("click", function(){
     var entries = logEl.querySelectorAll(".entry");
     entries.forEach(function(li){ li.classList.remove("checked","checking"); });
-    chainBtn.disabled = true; chainStatus.className = "chain-status"; chainStatus.textContent = "Walking the chain…";
+    chainBtn.disabled = true; chainStatus.className = "chain-status"; chainStatus.textContent = "I'm walking the chain now.";
     var prev = "0".repeat(64), i = 0;
     (function step(){
       if (i >= LOG.length){ chainBtn.disabled = false; chainStatus.className = "chain-status ok"; chainStatus.textContent = "All " + LOG.length + " links recomputed and matched. The chain is intact."; return; }
