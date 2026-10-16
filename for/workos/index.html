@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex,nofollow">
-<title>Andrew Zoll for Applied AI Engineer at WorkOS</title>
+<title>Andrew Zoll for WorkOS: Applied AI Engineer and Product Engineer, Enterprise</title>
 <style>
   :root{
     --paper:#ffffff;
@@ -163,7 +163,20 @@
 
   footer{border-top:1px solid var(--line);padding:26px 0 40px;font-family:var(--mono);font-size:12px;color:var(--mut2)}
 
+  /* ---------- role switch ---------- */
+  .switch{position:relative;display:inline-flex;background:var(--line2);border:1px solid var(--line);border-radius:9px;padding:3px;gap:0}
+  .switch button{position:relative;z-index:1;font:inherit;font-size:13px;font-weight:540;color:var(--mut);background:none;border:0;border-radius:6px;padding:5px 12px;cursor:pointer;transition:color .2s ease;white-space:nowrap}
+  .switch button[aria-selected="true"]{color:var(--ink)}
+  .switch .slide{position:absolute;top:3px;bottom:3px;left:3px;border-radius:6px;background:#fff;box-shadow:0 1px 3px rgba(8,9,10,.12);transition:transform .32s cubic-bezier(.3,1.4,.5,1),width .32s cubic-bezier(.3,1.4,.5,1)}
+  .pane[hidden]{display:none}
+  .pane.enter{animation:drop .28s ease}
+  .two{font-family:var(--mono);font-size:11px;color:var(--mut2);margin-left:10px}
+
   @media(max-width:640px){
+    .top .wrap{height:auto;padding-top:9px;padding-bottom:9px;flex-wrap:wrap}
+    .top .sep,.two{display:none}
+    .switch{order:5;flex-basis:100%;overflow-x:auto}
+    .switch button{font-size:12px;padding:5px 9px}
     .hero{padding:52px 0 40px}
     .sec{padding:48px 0}
     .scope > button{flex-wrap:wrap;gap:10px}
@@ -179,15 +192,21 @@
     <div class="mark">AZ</div>
     <span class="who">Andrew Zoll</span>
     <span class="sep">/</span>
-    <span class="role">Applied AI Engineer</span>
+    <div class="switch" role="tablist" aria-label="Which WorkOS role">
+      <span class="slide" aria-hidden="true"></span>
+      <button role="tab" id="t-applied-ai" data-role="applied-ai" aria-selected="true" aria-controls="p-applied-ai">Applied AI Engineer</button>
+      <button role="tab" id="t-enterprise" data-role="enterprise" aria-selected="false" aria-controls="p-enterprise">Product Engineer, Enterprise</button>
+    </div>
+    <span class="two">two open roles, one candidate</span>
     <span class="live"><span class="dot"></span>open to talk</span>
   </div>
 </div>
 
-<div class="disc"><div class="wrap">Not affiliated with WorkOS. This is a personal page I built as part of my own application for the Applied AI Engineer role.</div></div>
+<div class="disc"><div class="wrap">Not affiliated with WorkOS. This is a personal page I built as part of my own application for the <span class="rname">Applied AI Engineer</span> role.</div></div>
 
 <div class="wrap">
 
+<div class="pane" id="p-applied-ai" data-role="applied-ai" role="tabpanel" aria-labelledby="t-applied-ai">
   <section class="hero">
     <div class="eyebrow">Applied AI Engineer &middot; Remote, United States</div>
     <h1>You ask who your agents are and <em>what they're allowed to do</em>. I've been answering that in production code all year.</h1>
@@ -211,10 +230,10 @@
       <button class="chip" data-f="grant" aria-pressed="false">Granted</button>
       <button class="chip" data-f="part" aria-pressed="false">Partial</button>
       <button class="chip" data-f="deny" aria-pressed="false">Not granted</button>
-      <span class="count" id="count">showing 10 of 10</span>
+      <span class="count">showing 10 of 10</span>
     </div>
 
-    <div class="scopes" id="scopes">
+    <div class="scopes">
 
       <div class="scope" data-s="grant" open-state="0">
         <button aria-expanded="false">
@@ -366,6 +385,134 @@
       <div class="cell"><div class="n">187,745</div><div class="d">Lines of TypeScript in FieldCommand, built solo, in production.</div></div>
     </div>
   </section>
+</div>
+
+<div class="pane" id="p-enterprise" data-role="enterprise" role="tabpanel" aria-labelledby="t-enterprise" hidden>
+  <section class="hero">
+    <div class="eyebrow">Product Engineer, Enterprise &middot; Remote, United States</div>
+    <h1>Enterprise-ready is a list nobody wants to build twice. <em>I've built most of it once, by hand.</em></h1>
+    <p class="lede">I'm Andrew. Roles, tenant walls, audit trails, and access rules that fail closed are the parts of software I've spent the most time on this year, and every time I wrote one myself I wished it were a product I could plug in.</p>
+    <p class="lede">That's the honest reason I'm applying. I'd like to build the thing I kept rebuilding, in the stack I already write every day: TypeScript, React, and Postgres.</p>
+
+    <div class="quoteback">
+      <p>Your posting: "The Enterprise team develops products that enable companies to become 'enterprise-ready,' including SSO, Directory Sync, Audit Logs, and RBAC."</p>
+      <p class="src">I wrote role-based access control, tenant isolation, and audit-ready data handling by hand for FieldCommand, then fail-closed access tiers at Coder. I know which parts hurt.</p>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="kicker">The case, as scopes</div>
+    <h2>Same format, different role. Every line, and its receipt.</h2>
+    <p class="sub">These rows are the Product Engineer, Enterprise posting, graded the way you'd grade a permission check. Open a row for the evidence. The filter is real, and so is the row I couldn't grant myself.</p>
+
+    <div class="filters" role="group" aria-label="Filter requirements by status">
+      <span class="lbl">Filter</span>
+      <button class="chip" data-f="all" aria-pressed="true">All 9</button>
+      <button class="chip" data-f="grant" aria-pressed="false">Granted</button>
+      <button class="chip" data-f="part" aria-pressed="false">Partial</button>
+      <button class="chip" data-f="deny" aria-pressed="false">Not granted</button>
+      <span class="count">showing 9 of 9</span>
+    </div>
+
+    <div class="scopes">
+
+      <div class="scope" data-s="grant" open-state="0">
+        <button aria-expanded="false"><span class="badge b-grant">granted</span><span class="name">rbac:built_by_hand</span><span class="chev">&#9656;</span></button>
+        <div class="body">
+          <p class="req">"Develop a deep understanding of evolving products (RBAC, FGA, Audit Logs) and increase its adoption."</p>
+          <p><strong>FieldCommand</strong> is a multi-tenant SaaS for commercial contractors that I designed and shipped alone, <strong>187,745 lines of TypeScript</strong> on PostgreSQL and Supabase. Its role-based access control and tenant isolation are mine, from the schema to the interface.</p>
+          <p>At <strong>Coder</strong> I shipped <strong>fail-closed data access controls across 26 merged pull requests</strong>. The platform classifies restricted Federal accounts, withholds unproven Federal history from model input for uncleared users, and has a test for every access tier.</p>
+          <div class="meta"><span class="tag">RBAC</span><span class="tag">tenant isolation</span><span class="tag">every tier tested</span></div>
+        </div>
+      </div>
+
+      <div class="scope" data-s="grant" open-state="0">
+        <button aria-expanded="false"><span class="badge b-grant">granted</span><span class="name">architecture:fragmented_to_simple</span><span class="chev">&#9656;</span></button>
+        <div class="body">
+          <p class="req">"Experience distilling complex, fragmented problem spaces into clean, simple architectures (ex: data models, robust state management)."</p>
+          <p>The access-control work at Coder came down to one state decision. An account is cleared, uncleared, or not yet proven, and the third state behaves exactly like the second. <strong>When the classifier isn't sure, the data stays out.</strong> That one rule replaced a pile of special cases.</p>
+          <p>FieldCommand's data model had to hold contractors, crews, jobs, billing, and per-tenant feature flags without one tenant ever seeing another's rows. I designed it from the schema up.</p>
+          <div class="meta"><span class="tag">unsure means no</span><span class="tag">schema first</span></div>
+        </div>
+      </div>
+
+      <div class="scope" data-s="grant" open-state="0">
+        <button aria-expanded="false"><span class="badge b-grant">granted</span><span class="name">api:internal_and_external</span><span class="chev">&#9656;</span></button>
+        <div class="body">
+          <p class="req">"Experience designing well-structured internal and external APIs that balance high scalability with an intuitive developer experience."</p>
+          <p>I built the <strong>OAuth authorization server</strong> that gates hosted MCP access to the Coder platform. A cross-family reviewer caught a bug in its token-rotation path at review round 5: it passed every test against an in-memory fake, but production Redis runs in cluster mode and the transaction would have failed on every token refresh. The fix put the keys in one hash slot and added a test that checks the slot of each key.</p>
+          <p>Upstream, I opened coder/coder#30576 in Go so the API tells a disabled chat model config apart from a missing one. Small change, but it's the kind of distinction a developer on the other end of an API actually needs.</p>
+          <div class="meta"><span class="tag">OAuth server</span><span class="tag">token rotation</span><span class="tag">clear error states</span></div>
+        </div>
+      </div>
+
+      <div class="scope" data-s="grant" open-state="0">
+        <button aria-expanded="false"><span class="badge b-grant">granted</span><span class="name">audit_logs:what_actually_happened</span><span class="chev">&#9656;</span></button>
+        <div class="body">
+          <p class="req">Audit Logs, from the list of products the Enterprise team owns.</p>
+          <p>FieldCommand shipped with audit-ready data handling, and I spent four years before that as a licensed financial advisor under FINRA and SEC recordkeeping rules. I've lived on the side of the table that has to produce the record.</p>
+          <p>In AndrewOS, every agent writes a structured trace of what it received, what it decided, why, and what it handed off. <strong>Veritas</strong> returns an auditable verification record for every legal filing it checks. I like logs that answer a question a year later.</p>
+          <div class="meta"><span class="tag">FINRA / SEC records</span><span class="tag">structured traces</span><span class="tag">auditable output</span></div>
+        </div>
+      </div>
+
+      <div class="scope" data-s="grant" open-state="0">
+        <button aria-expanded="false"><span class="badge b-grant">granted</span><span class="name">personas:needs_to_priorities</span><span class="chev">&#9656;</span></button>
+        <div class="body">
+          <p class="req">"Skilled in collaborating with diverse customer personas and translating their needs into well-designed and prioritized action items."</p>
+          <p>My Coder work is embedded in the revenue organization: reps, managers, and operations people each wanted different answers out of the same CRM and call data. Before engineering, I advised more than 120 households and kept <strong>95% of them</strong>, which is mostly a skill of hearing what someone needs under what they asked for.</p>
+          <div class="meta"><span class="tag">revenue org users</span><span class="tag">120+ households</span></div>
+        </div>
+      </div>
+
+      <div class="scope" data-s="grant" open-state="0">
+        <button aria-expanded="false"><span class="badge b-grant">granted</span><span class="name">stack:typescript_react_postgres</span><span class="chev">&#9656;</span></button>
+        <div class="body">
+          <p class="req">"Bonus: Experienced with our stack of TypeScript, React, and Postgres." And: "Experienced in B2B SaaS, developer tools, or a related industry."</p>
+          <p>FieldCommand is all three, built solo. Coder is a developer tools company, and I write TypeScript and Python there daily. I authored <strong>884 merged pull requests</strong> between July 27 and October 9, 2026. In fairness, agents built many of those under my account, and the count includes spec and docs pull requests.</p>
+          <div class="meta"><span class="tag">TypeScript</span><span class="tag">React</span><span class="tag">Postgres</span><span class="tag">B2B SaaS</span></div>
+        </div>
+      </div>
+
+      <div class="scope" data-s="grant" open-state="0">
+        <button aria-expanded="false"><span class="badge b-grant">granted</span><span class="name">team:small_and_fast</span><span class="chev">&#9656;</span></button>
+        <div class="body">
+          <p class="req">"Familiarity with working on small teams in fast-paced environments," and "Work directly with leadership on greenfield ideas."</p>
+          <p>The smallest team is one person, and I've shipped three products that way: FieldCommand, Veritas, and AndrewOS. At Coder my lane was greenfield from the first week, an agent platform that didn't exist when I started.</p>
+          <div class="meta"><span class="tag">three solo products</span><span class="tag">greenfield</span></div>
+        </div>
+      </div>
+
+      <div class="scope" data-s="part" open-state="0">
+        <button aria-expanded="false"><span class="badge b-part">partial</span><span class="name">sso_scim:mature_products</span><span class="chev">&#9656;</span></button>
+        <div class="body">
+          <p class="req">"Develop a deep understanding of how diverse customer personas interact and integrate with our mature products (SSO, SCIM), and work to reduce friction points."</p>
+          <p><strong>What's real:</strong> OAuth from the server side, token rotation in production, and hand-rolled roles and tenant boundaries. I understand the integrator's pain because I was the integrator.</p>
+          <p><strong>What isn't:</strong> I haven't implemented a SAML provider or a SCIM endpoint. I'd be learning those protocols on your codebase, not arriving fluent.</p>
+          <div class="meta"><span class="tag">OAuth yes</span><span class="tag">SAML / SCIM no</span></div>
+        </div>
+      </div>
+
+      <div class="scope" data-s="deny" open-state="0">
+        <button aria-expanded="false"><span class="badge b-deny">not granted</span><span class="name">tenure:five_years_industry</span><span class="chev">&#9656;</span></button>
+        <div class="body">
+          <p class="req">"5+ years of industry software development experience."</p>
+          <p>I can't grant myself this one. I've held the formal Senior Software Engineer title since July 2026, and I shipped software solo before that, but it doesn't add up to five years on a badge.</p>
+          <p>What I'd ask is that you judge the code. Every claim on this page points at something that exists, and I'd rather walk you through it than argue about the calendar.</p>
+          <div class="meta"><span class="tag">honest gap</span><span class="tag">judge the code</span></div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="ledger">
+      <div class="cell"><div class="n">26</div><div class="d">Merged pull requests of fail-closed access controls at Coder, with a test for every tier.</div></div>
+      <div class="cell"><div class="n">187,745</div><div class="d">Lines of TypeScript in FieldCommand, with RBAC and tenant isolation written by hand.</div></div>
+      <div class="cell"><div class="n">round 5</div><div class="d">The review round where a cross-family reviewer caught the Redis cluster-mode token-rotation bug.</div></div>
+      <div class="cell"><div class="n">95%</div><div class="d">Client retention across 120+ households, before I wrote software for a living.</div></div>
+    </div>
+  </section>
+</div>
 
   <section class="sec">
     <div class="kicker">What I don't have</div>
@@ -393,38 +540,71 @@
   </section>
 </div>
 
-<footer><div class="wrap">Andrew Zoll &middot; Pueblo, CO &middot; built for the Applied AI Engineer role at WorkOS</div></footer>
+<footer><div class="wrap">Andrew Zoll &middot; Pueblo, CO &middot; built for the <span class="rname">Applied AI Engineer</span> role at WorkOS</div></footer>
 
 <script>
 (function(){
-  var scopes = [].slice.call(document.querySelectorAll('.scope'));
-  var chips  = [].slice.call(document.querySelectorAll('.chip'));
-  var count  = document.getElementById('count');
-
-  // expand / collapse
-  scopes.forEach(function(s){
-    var btn = s.querySelector('button');
-    btn.addEventListener('click', function(){
-      var open = s.getAttribute('open-state') === '1';
-      s.setAttribute('open-state', open ? '0' : '1');
-      btn.setAttribute('aria-expanded', open ? 'false' : 'true');
+  // per-pane expand and filter
+  [].slice.call(document.querySelectorAll('.pane')).forEach(function(pane){
+    var scopes = [].slice.call(pane.querySelectorAll('.scope'));
+    var chips  = [].slice.call(pane.querySelectorAll('.chip'));
+    var count  = pane.querySelector('.count');
+    scopes.forEach(function(s){
+      var btn = s.querySelector('button');
+      btn.addEventListener('click', function(){
+        var open = s.getAttribute('open-state') === '1';
+        s.setAttribute('open-state', open ? '0' : '1');
+        btn.setAttribute('aria-expanded', open ? 'false' : 'true');
+      });
     });
+    function apply(f){
+      var shown = 0;
+      scopes.forEach(function(s){
+        var match = (f === 'all') || (s.dataset.s === f);
+        s.classList.toggle('hide', !match);
+        if (match) shown++;
+        if (!match) { s.setAttribute('open-state','0'); s.querySelector('button').setAttribute('aria-expanded','false'); }
+      });
+      chips.forEach(function(c){ c.setAttribute('aria-pressed', c.dataset.f === f ? 'true' : 'false'); });
+      count.textContent = 'showing ' + shown + ' of ' + scopes.length;
+    }
+    chips.forEach(function(c){ c.addEventListener('click', function(){ apply(c.dataset.f); }); });
+    apply('all');
   });
 
-  // filter
-  function apply(f){
-    var shown = 0;
-    scopes.forEach(function(s){
-      var match = (f === 'all') || (s.dataset.s === f);
-      s.classList.toggle('hide', !match);
-      if (match) shown++;
-      if (!match) { s.setAttribute('open-state','0'); s.querySelector('button').setAttribute('aria-expanded','false'); }
+  // role switch
+  var names = {'applied-ai':'Applied AI Engineer','enterprise':'Product Engineer, Enterprise'};
+  var tabs  = [].slice.call(document.querySelectorAll('.switch button'));
+  var slide = document.querySelector('.switch .slide');
+  function place(t){ slide.style.width = t.offsetWidth + 'px'; slide.style.transform = 'translateX(' + (t.offsetLeft - 3) + 'px)'; }
+  function show(role, push){
+    if (!names[role]) role = 'applied-ai';
+    tabs.forEach(function(t){
+      var on = t.dataset.role === role;
+      t.setAttribute('aria-selected', on ? 'true' : 'false');
+      t.tabIndex = on ? 0 : -1;
+      if (on) place(t);
     });
-    chips.forEach(function(c){ c.setAttribute('aria-pressed', c.dataset.f === f ? 'true' : 'false'); });
-    count.textContent = 'showing ' + shown + ' of ' + scopes.length;
+    [].slice.call(document.querySelectorAll('.pane')).forEach(function(p){
+      var on = p.dataset.role === role;
+      if (on && p.hidden) { p.hidden = false; p.classList.remove('enter'); void p.offsetWidth; p.classList.add('enter'); }
+      if (!on) p.hidden = true;
+    });
+    [].slice.call(document.querySelectorAll('.rname')).forEach(function(n){ n.textContent = names[role]; });
+    document.title = 'Andrew Zoll for ' + names[role] + ' at WorkOS';
+    if (push) { try { history.replaceState(null, '', '#' + role); } catch(e) {} }
   }
-  chips.forEach(function(c){ c.addEventListener('click', function(){ apply(c.dataset.f); }); });
-  apply('all');
+  tabs.forEach(function(t, i){
+    t.addEventListener('click', function(){ show(t.dataset.role, true); window.scrollTo({top:0, behavior:'smooth'}); });
+    t.addEventListener('keydown', function(e){
+      if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+      var n = tabs[(i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length];
+      n.focus(); show(n.dataset.role, true);
+    });
+  });
+  window.addEventListener('resize', function(){ var t = document.querySelector('.switch button[aria-selected="true"]'); if (t) place(t); });
+  window.addEventListener('hashchange', function(){ show(location.hash.slice(1), false); });
+  show(location.hash.slice(1), false);
 })();
 </script>
 </body>
