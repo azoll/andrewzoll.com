@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>Andrew Zoll AMA for Senior Forward Deployed Engineer (AI Enablement)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700;800&family=Noto+Sans+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --page:#DAE0E6; --card:#FFFFFF; --soft:#F6F7F8; --line:#EDEFF1; --line2:#CCD6DD;
+    --ink:#1A1A1B; --mut:#576F76; --mut2:#7C7C7C;
+    --or:#FF4500; --or2:#CC3700; --orSoft:#FFE9E0;
+    --blue:#0079D3; --blueSoft:#E3F1FC; --down:#7193FF;
+    --gold:#FFB000; --green:#46D160;
+    --sans:'Noto Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;
+    --mono:'Noto Sans Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--page);color:var(--ink);font-family:var(--sans);font-size:14px;line-height:1.55;-webkit-font-smoothing:antialiased}
+  a{color:var(--blue)}
+  button{font-family:inherit}
+
+  /* header */
+  .hdr{background:var(--card);border-bottom:1px solid var(--line2);height:52px;display:flex;align-items:center;gap:12px;padding:0 16px;position:sticky;top:0;z-index:50}
+  .hdr .wm{font-weight:800;font-size:18px;letter-spacing:-.03em}
+  .hdr .wm b{color:var(--or)}
+  .hdr .crumb{color:var(--mut);font-size:12.5px;font-weight:600}
+  .hdr .grow{flex:1}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;height:32px;padding:0 16px;border-radius:999px;font-size:13px;font-weight:700;text-decoration:none;border:1px solid var(--blue);color:var(--blue);background:transparent;cursor:pointer;transition:background .15s,transform .15s}
+  .btn:hover{background:var(--blueSoft)}
+  .btn.fill{background:var(--blue);color:#fff}
+  .btn.fill:hover{background:#0060A8}
+  .btn:active{transform:scale(.97)}
+  @media(max-width:620px){.hdr .crumb{display:none}}
+
+  /* community banner */
+  .banner{height:84px;background:
+     repeating-linear-gradient(135deg,#FF450022 0 18px,transparent 18px 36px),
+     linear-gradient(90deg,#FF4500,#FF8717)}
+  .comm{background:var(--card);border-bottom:1px solid var(--line2)}
+  .comm-in{max-width:1000px;margin:0 auto;padding:0 16px 12px;display:flex;align-items:flex-end;gap:14px}
+  .icon{width:72px;height:72px;border-radius:50%;background:#fff;border:4px solid #fff;margin-top:-22px;flex:none;box-shadow:0 0 0 1px var(--line2)}
+  .comm h1{font-size:24px;font-weight:800;letter-spacing:-.02em;line-height:1.2}
+  .comm .sub{color:var(--mut);font-size:13px}
+  @media(max-width:560px){.comm h1{font-size:19px}}
+
+  /* layout */
+  .wrap{max-width:1000px;margin:20px auto 40px;padding:0 16px;display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:22px;align-items:start}
+  @media(max-width:900px){.wrap{grid-template-columns:1fr}}
+
+  /* the AMA post */
+  .post{background:var(--card);border:1px solid var(--line2);border-radius:6px;display:grid;grid-template-columns:42px minmax(0,1fr)}
+  .rail{background:var(--soft);border-radius:6px 0 0 6px;display:flex;flex-direction:column;align-items:center;padding-top:10px;gap:2px}
+  .vb{width:26px;height:26px;border:0;background:transparent;border-radius:3px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#878A8C}
+  .vb:hover{background:#E8EAEC}
+  .vb.up.on{color:var(--or)}
+  .vb.down.on{color:var(--down)}
+  .vb svg{width:18px;height:18px}
+  .vt{font-size:12px;font-weight:700;min-height:16px}
+  .pin{padding:10px 14px 4px}
+  .pmeta{font-size:12px;color:var(--mut2);display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+  .pmeta .u{color:var(--ink);font-weight:600}
+  .award{display:inline-flex;align-items:center;gap:3px;font-size:11px;color:var(--mut)}
+  .award i{width:14px;height:14px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#FFE27A,var(--gold));display:inline-block;animation:spin 6s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .ptitle{font-size:20px;font-weight:700;line-height:1.3;margin:6px 0 6px;letter-spacing:-.01em}
+  .flairtag{display:inline-block;font-size:12px;font-weight:700;padding:1px 8px;border-radius:999px;background:var(--blue);color:#fff;vertical-align:2px;margin-right:6px}
+  .ptext p{margin:0 0 10px;font-size:14.5px;line-height:1.6}
+  .ptext ul{margin:0 0 10px 20px}
+  .ptext li{margin:3px 0}
+  .edit{background:var(--soft);border:1px solid var(--line);border-radius:4px;padding:9px 12px;font-size:13.5px;margin:4px 0 10px}
+  .edit b{color:var(--or2)}
+  .pacts{display:flex;flex-wrap:wrap;gap:4px;padding:2px 0 6px}
+  .pa{display:inline-flex;align-items:center;gap:6px;height:30px;padding:0 9px;border:0;background:transparent;border-radius:3px;color:var(--mut);font-size:12px;font-weight:700;cursor:pointer}
+  .pa:hover{background:#E8EAEC}
+
+  /* sort + filter bar */
+  .tools{background:var(--card);border:1px solid var(--line2);border-radius:6px;margin-top:12px;padding:10px 14px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+  .tools label{font-size:12px;font-weight:700;color:var(--mut)}
+  .tools select{height:30px;border:1px solid var(--line2);border-radius:999px;padding:0 10px;font-size:13px;font-weight:600;color:var(--blue);background:#fff;cursor:pointer}
+  .chip{height:28px;padding:0 11px;border-radius:999px;border:1px solid var(--line2);background:#fff;color:var(--mut);font-size:12px;font-weight:700;cursor:pointer}
+  .chip:hover{border-color:var(--blue);color:var(--blue)}
+  .chip[aria-pressed="true"]{background:var(--blue);border-color:var(--blue);color:#fff}
+  .tools .note{margin-left:auto;font-size:12px;color:var(--mut2)}
+
+  /* comments */
+  .cbox{background:var(--card);border:1px solid var(--line2);border-radius:6px;margin-top:12px;padding:8px 14px 16px}
+  .q{padding-top:12px;scroll-margin-top:70px;border-radius:6px;transition:background .6s}
+  .q.flash{background:#FFF4D6}
+  .c{display:grid;grid-template-columns:24px minmax(0,1fr);column-gap:8px}
+  .av{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:#fff}
+  .av.asker{background:#7193FF}
+  .av.op{background:var(--or)}
+  .line{grid-column:1;display:flex;justify-content:center;cursor:pointer;padding-top:4px}
+  .line span{width:2px;background:var(--line2);border-radius:2px;height:100%;transition:background .15s}
+  .line:hover span{background:var(--blue)}
+  .chead{font-size:12px;color:var(--mut2);display:flex;flex-wrap:wrap;gap:6px;align-items:center;min-height:24px}
+  .chead .n{color:var(--ink);font-weight:700}
+  .opb{color:var(--blue);font-weight:800;font-size:11px}
+  .flr{font-size:11px;font-weight:700;padding:0 7px;border-radius:999px}
+  .flr.req{background:var(--blueSoft);color:var(--blue)}
+  .flr.resp{background:#E6F7EA;color:#1E7B34}
+  .flr.pref{background:#F2EAFE;color:#6B3FC4}
+  .flr.gap{background:var(--orSoft);color:var(--or2)}
+  .tog{border:0;background:transparent;color:var(--mut2);font-size:12px;font-weight:700;cursor:pointer;padding:0 2px}
+  .tog:hover{color:var(--blue)}
+  .cbody{font-size:14px;line-height:1.6}
+  .cbody p{margin:2px 0 6px}
+  .cbody code{font-family:var(--mono);font-size:12.5px;background:var(--soft);border:1px solid var(--line);border-radius:3px;padding:0 4px}
+  .jd{font-family:var(--mono);font-size:12.5px;color:var(--mut);border-left:3px solid var(--line2);padding:2px 0 2px 10px;margin:4px 0 6px}
+  .cacts{display:flex;gap:2px;margin:-2px 0 2px -6px}
+  .cacts .pa{height:26px;font-size:11.5px}
+  .kids{margin-top:6px}
+  .c.collapsed > div:last-child{display:none}
+  .c.collapsed > .line{visibility:hidden}
+  .empty{display:none;padding:24px;text-align:center;color:var(--mut2)}
+  .empty.show{display:block}
+
+  /* sidebar */
+  .side{display:flex;flex-direction:column;gap:14px;position:sticky;top:64px}
+  @media(max-width:900px){.side{position:static}}
+  .card{background:var(--card);border:1px solid var(--line2);border-radius:6px;overflow:hidden}
+  .card h3{background:var(--or);color:#fff;font-size:12px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;padding:10px 12px}
+  .card .in{padding:12px;font-size:13.5px;line-height:1.55}
+  .card .in .btn{width:100%;margin-top:8px}
+  .toc{list-style:none}
+  .toc li{border-bottom:1px solid var(--line)}
+  .toc li:last-child{border:0}
+  .toc a{display:block;padding:7px 2px;font-size:13px;text-decoration:none;color:var(--ink)}
+  .toc a:hover{color:var(--blue)}
+  .toc a small{color:var(--mut2);font-size:11px;margin-right:6px}
+  .rules{list-style:none;counter-reset:r}
+  .rules li{counter-increment:r;padding:7px 0;border-bottom:1px solid var(--line);font-size:13px}
+  .rules li:last-child{border:0}
+  .rules li::before{content:counter(r) ". ";font-weight:800;color:var(--mut)}
+  .tally{font-size:12.5px;color:var(--mut);margin-top:8px}
+  .tally b{color:var(--or)}
+
+  footer{max-width:1000px;margin:0 auto 30px;padding:0 16px;font-size:12px;color:var(--mut);line-height:1.6}
+
+  /* tiny snoo wave on load, because why not */
+  .wave{transform-origin:70% 80%;animation:wave 1.4s ease-in-out 1.2s 2}
+  @keyframes wave{0%,100%{transform:rotate(0)}25%{transform:rotate(-14deg)}75%{transform:rotate(10deg)}}
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <span class="wm">andrew<b>zoll</b></span>
+  <span class="crumb">r/AIEnablement &rsaquo; AMA</span>
+  <span class="grow"></span>
+  <a class="btn" href="https://portfolio.andrewzoll.com">Portfolio</a>
+  <a class="btn fill" href="https://linkedin.com/in/andrewzoll">LinkedIn</a>
+</header>
+
+<div class="banner"></div>
+<div class="comm"><div class="comm-in">
+  <svg class="icon" viewBox="0 0 72 72" aria-hidden="true">
+    <circle cx="36" cy="36" r="36" fill="#FF4500"/>
+    <ellipse cx="36" cy="41" rx="20" ry="14" fill="#fff"/>
+    <circle cx="28" cy="40" r="3.4" fill="#FF4500"/><circle cx="44" cy="40" r="3.4" fill="#FF4500"/>
+    <path d="M28 47c2.4 2.2 5 3 8 3s5.6-.8 8-3" stroke="#FF4500" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+    <circle cx="51" cy="19" r="4.6" fill="#fff"/><path d="M38 27l2.6-10 10 2" stroke="#fff" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+    <g class="wave"><ellipse cx="60" cy="40" rx="4.5" ry="7" fill="#fff" transform="rotate(30 60 40)"/></g>
+  </svg>
+  <div>
+    <h1>r/AIEnablement</h1>
+    <div class="sub">One candidate, one AMA, every line of the posting answered</div>
+  </div>
+</div></div>
+
+<div class="wrap">
+<main>
+
+  <article class="post">
+    <div class="rail">
+      <button class="vb up" id="pUp" aria-label="Upvote this AMA" aria-pressed="false"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 3l7 8h-4v6H7v-6H3z"/></svg></button>
+      <span class="vt" id="pV">Vote</span>
+      <button class="vb down" id="pDown" aria-label="Downvote this AMA" aria-pressed="false"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 17l-7-8h4V3h6v6h4z"/></svg></button>
+    </div>
+    <div class="pin">
+      <div class="pmeta"><span>Posted by</span><span class="u">u/andrewzoll</span><span>&middot; Pueblo, Colorado</span><span class="award"><i></i>Wholesome</span></div>
+      <h2 class="ptitle"><span class="flairtag">AMA</span>I built an AI agent platform for a revenue org. You're hiring someone to do that for Sales, Marketing, BD and Finance. Ask me anything.</h2>
+      <div class="ptext">
+        <p>Hi Reddit! I'm Andrew. From July to October 2026 I was a Senior Software Engineer on AI Solutions at Coder, where I built an internal agent platform for the revenue organization. It turned Salesforce, support and call-transcript data into answers for sellers through a Slack bot, and it sat behind a hosted MCP server and an OAuth authorization server that I built.</p>
+        <p>That program ended in October, and I moved to Coder's marketing org as a Senior GTM Engineer (AI), where I'm building marketing-data tools. Your Senior Forward Deployed Engineer (AI Enablement) posting reads like the job I just did, so I figured I'd answer it the Reddit way.</p>
+        <p>The questions below are your posting's own lines, asked as if a hiring manager wandered in. My answers are underneath. Proof that I'm me:</p>
+        <ul>
+          <li><a href="https://portfolio.andrewzoll.com">portfolio.andrewzoll.com</a> has the work.</li>
+          <li><a href="https://veritaslaw.app">veritaslaw.app</a> is a product I built and still run.</li>
+          <li><a href="https://linkedin.com/in/andrewzoll">linkedin.com/in/andrewzoll</a> is where I'd love to hear from you.</li>
+        </ul>
+        <div class="edit"><b>Edit:</b> the gaps are flaired orange and they're real. Pick "Gaps first" in the sort menu if you'd like the bad news before the good news. I would.</div>
+      </div>
+      <div class="pacts">
+        <button class="pa" id="expandAll"><svg width="15" height="15" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 8l6 6 6-6"/></svg>Expand all</button>
+        <button class="pa" id="collapseAll"><svg width="15" height="15" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12l6-6 6 6"/></svg>Collapse all</button>
+      </div>
+    </div>
+  </article>
+
+  <div class="tools" role="toolbar" aria-label="Sort and filter the thread">
+    <label for="sort">Sort by</label>
+    <select id="sort">
+      <option value="best">Best (posting order)</option>
+      <option value="gaps">Gaps first</option>
+      <option value="voted">Your upvotes first</option>
+    </select>
+    <button class="chip" data-f="all" aria-pressed="true">All</button>
+    <button class="chip" data-f="req" aria-pressed="false">Required</button>
+    <button class="chip" data-f="resp" aria-pressed="false">Responsibilities</button>
+    <button class="chip" data-f="pref" aria-pressed="false">Preferred</button>
+    <button class="chip" data-f="gap" aria-pressed="false">Gaps</button>
+    <span class="note" id="count"></span>
+  </div>
+
+  <section class="cbox" id="thread">
+
+    <div class="q" id="q-agents" data-f="req" data-order="1" data-gap="5" data-title="Agent development and deployment">
+      <div class="c">
+        <div class="av asker">H</div>
+        <div class="chead"><span class="n">u/curious_hiring_manager</span><span class="flr req">Required</span><button class="tog" aria-expanded="true" aria-label="Collapse thread">[-]</button></div>
+        <div class="line" title="Collapse thread"><span></span></div>
+        <div>
+          <div class="cbody"><div class="jd">"Hands-on agent development and deployment, including tool/API use, orchestration, state, and failure handling."</div><p>Have you actually shipped agents that call tools, or just demos?</p></div>
+          <div class="cacts"><button class="pa vote" aria-pressed="false">&#9650; Upvote</button><button class="pa reply-toggle">Hide reply</button></div>
+          <div class="kids">
+            <div class="c">
+              <div class="av op">A</div>
+              <div class="chead"><span class="n">u/andrewzoll</span><span class="opb">OP</span><button class="tog" aria-expanded="true" aria-label="Collapse reply">[-]</button></div>
+              <div class="line"><span></span></div>
+              <div>
+                <div class="cbody"><p>Shipped, and I own the scars. At Coder I authored 884 merged pull requests on the revenue platform between July 27 and October 9, in Python and TypeScript on AWS. I ran the build itself as an agent loop: open-weight models built, a model from another family reviewed, and I escalated the hard fixes.</p><p>The failures that actually bit me weren't model failures. They were duplicate sends, schedulers that double-fired, and retries that weren't idempotent. I hardened against all three in AndrewOS, the agent system I run my own work on, and I've been suspicious of every retry loop since.</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="q" id="q-mcp" data-f="req" data-order="2" data-gap="6" data-title="Enterprise integrations with MCP">
+      <div class="c">
+        <div class="av asker">H</div>
+        <div class="chead"><span class="n">u/curious_hiring_manager</span><span class="flr req">Required</span><button class="tog" aria-expanded="true" aria-label="Collapse thread">[-]</button></div>
+        <div class="line"><span></span></div>
+        <div>
+          <div class="cbody"><div class="jd">"Enterprise integrations using MCP or comparable tool integration patterns."</div><p>MCP specifically. What did you connect, and who was allowed through?</p></div>
+          <div class="cacts"><button class="pa vote" aria-pressed="false">&#9650; Upvote</button><button class="pa reply-toggle">Hide reply</button></div>
+          <div class="kids">
+            <div class="c">
+              <div class="av op">A</div>
+              <div class="chead"><span class="n">u/andrewzoll</span><span class="opb">OP</span><button class="tog" aria-expanded="true" aria-label="Collapse reply">[-]</button></div>
+              <div class="line"><span></span></div>
+              <div>
+                <div class="cbody"><p>I built data integrations for Salesforce, Granola meeting transcripts and a Slack bot, and I shipped an OAuth authorization server that gated hosted MCP access to the platform. So "who's allowed through" was literally my code.</p><p>My favorite war story from it: a Redis cluster-mode bug in that authorization server passed every test against an in-memory fake. A reviewer from a different model family caught it in review round 5, before it reached production. That's why I don't trust a green test suite on its own anymore.</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="q" id="q-retrieval" data-f="req" data-order="3" data-gap="7" data-title="Retrieval and structured outputs">
+      <div class="c">
+        <div class="av asker">H</div>
+        <div class="chead"><span class="n">u/curious_hiring_manager</span><span class="flr req">Required</span><button class="tog" aria-expanded="true" aria-label="Collapse thread">[-]</button></div>
+        <div class="line"><span></span></div>
+        <div>
+          <div class="cbody"><div class="jd">"Experience with LLM retrieval and structured outputs."</div><p>Where does the model stop and the code start?</p></div>
+          <div class="cacts"><button class="pa vote" aria-pressed="false">&#9650; Upvote</button><button class="pa reply-toggle">Hide reply</button></div>
+          <div class="kids">
+            <div class="c">
+              <div class="av op">A</div>
+              <div class="chead"><span class="n">u/andrewzoll</span><span class="opb">OP</span><button class="tog" aria-expanded="true" aria-label="Collapse reply">[-]</button></div>
+              <div class="line"><span></span></div>
+              <div>
+                <div class="cbody"><p>That boundary is my favorite question. In Veritas, my citation-verification product for legal filings, the model extracts each cited claim as structured output, and deterministic code renders the verdict. The verdict is what a lawyer stakes a filing on, so it doesn't get to be a model's opinion.</p><p>The Coder platform was the retrieval side of the same idea: CRM, support and transcript records pulled in as context, so a seller's answer came from their own accounts instead of the model's imagination.</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="q" id="q-ops" data-f="req" data-order="4" data-gap="8" data-title="Reliable AI operations">
+      <div class="c">
+        <div class="av asker">H</div>
+        <div class="chead"><span class="n">u/curious_hiring_manager</span><span class="flr req">Required</span><button class="tog" aria-expanded="true" aria-label="Collapse thread">[-]</button></div>
+        <div class="line"><span></span></div>
+        <div>
+          <div class="cbody"><div class="jd">"Reliable AI operations: cloud deployment, access controls, observability, evals, failure analysis, and improvement."</div><p>Okay, but what happens when it's 2am and the agent is wrong about a customer?</p></div>
+          <div class="cacts"><button class="pa vote" aria-pressed="false">&#9650; Upvote</button><button class="pa reply-toggle">Hide reply</button></div>
+          <div class="kids">
+            <div class="c">
+              <div class="av op">A</div>
+              <div class="chead"><span class="n">u/andrewzoll</span><span class="opb">OP</span><button class="tog" aria-expanded="true" aria-label="Collapse reply">[-]</button></div>
+              <div class="line"><span></span></div>
+              <div>
+                <div class="cbody"><p>Access controls first, because the worst 2am is a leak. I shipped fail-closed controls for Federal account data across 26 pull requests. The platform classified Federal accounts, withheld unproven Federal history from model input for uncleared users, and had a test for every access tier. If the check couldn't decide, the answer was no.</p><p>On deployment, I maintained the AWS stack through Terraform with a CI plan gate, ECS tasks and Lambda jobs. On failure analysis, I cut cold dashboard load from 5 to 10 seconds down to about 2 by replacing a serial per-account S3 read loop with a bounded fan-out. Not glamorous, very satisfying.</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="q" id="q-gates" data-f="resp" data-order="5" data-gap="9" data-title="Evals, review gates and humans in the loop">
+      <div class="c">
+        <div class="av asker">H</div>
+        <div class="chead"><span class="n">u/curious_hiring_manager</span><span class="flr resp">Responsibility</span><button class="tog" aria-expanded="true" aria-label="Collapse thread">[-]</button></div>
+        <div class="line"><span></span></div>
+        <div>
+          <div class="cbody"><div class="jd">"Define evals, review gates, human-in-the-loop controls, observability, and evidence."</div><p>"Evidence" is doing a lot of work in that sentence. What's yours?</p></div>
+          <div class="cacts"><button class="pa vote" aria-pressed="false">&#9650; Upvote</button><button class="pa reply-toggle">Hide reply</button></div>
+          <div class="kids">
+            <div class="c">
+              <div class="av op">A</div>
+              <div class="chead"><span class="n">u/andrewzoll</span><span class="opb">OP</span><button class="tog" aria-expanded="true" aria-label="Collapse reply">[-]</button></div>
+              <div class="line"><span></span></div>
+              <div>
+                <div class="cbody"><p>I designed a cross-family review gate: a reviewer from a different model family than the builder had to clear each change, and mutation tests proved the tests could actually fail. Across about 1,200 verdicts on about 350 pull requests, reviewers recorded more than 430 confirmed defect catches and 21 false flags. That's my evidence, and I kept the false flags in the count on purpose.</p><p>For humans, the platform wrote back to Salesforce only through a field allow-list. In AndrewOS the human gate sits at the last irreversible step, which for me is anything that sends, publishes or spends.</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="q" id="q-speed" data-f="resp" data-order="6" data-gap="10" data-title="Prototype in days, ship in weeks">
+      <div class="c">
+        <div class="av asker">H</div>
+        <div class="chead"><span class="n">u/curious_hiring_manager</span><span class="flr resp">Responsibility</span><button class="tog" aria-expanded="true" aria-label="Collapse thread">[-]</button></div>
+        <div class="line"><span></span></div>
+        <div>
+          <div class="cbody"><div class="jd">"Prototype within days and productionize priority workflows within weeks when feasible."</div><p>Is that realistic for you, or is it a slogan?</p></div>
+          <div class="cacts"><button class="pa vote" aria-pressed="false">&#9650; Upvote</button><button class="pa reply-toggle">Hide reply</button></div>
+          <div class="kids">
+            <div class="c">
+              <div class="av op">A</div>
+              <div class="chead"><span class="n">u/andrewzoll</span><span class="opb">OP</span><button class="tog" aria-expanded="true" aria-label="Collapse reply">[-]</button></div>
+              <div class="line"><span></span></div>
+              <div>
+                <div class="cbody"><p>It's my normal pace. The Coder platform went from my first commit to 884 merged pull requests in about eleven weeks, and in its peak week the loop merged 193 pull requests at about $38 of model cost each. I tracked cost per merged change because "fast" without a price tag isn't a plan.</p><p>Since moving to marketing I've been doing the same thing at a smaller scale: a working demo first, then the real build once the people using it confirm it answers their actual question.</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="q" id="q-embed" data-f="resp" data-order="7" data-gap="11" data-title="Embedding with business teams">
+      <div class="c">
+        <div class="av asker">H</div>
+        <div class="chead"><span class="n">u/curious_hiring_manager</span><span class="flr resp">Responsibility</span><button class="tog" aria-expanded="true" aria-label="Collapse thread">[-]</button></div>
+        <div class="line"><span></span></div>
+        <div>
+          <div class="cbody"><div class="jd">"Work closely with internal functions, embedding where needed to understand their work and build trust with AI champions, builders, and subject matter experts."</div><p>Sales and Finance people don't care about your eval suite. Can you talk to them?</p></div>
+          <div class="cacts"><button class="pa vote" aria-pressed="false">&#9650; Upvote</button><button class="pa reply-toggle">Hide reply</button></div>
+          <div class="kids">
+            <div class="c">
+              <div class="av op">A</div>
+              <div class="chead"><span class="n">u/andrewzoll</span><span class="opb">OP</span><button class="tog" aria-expanded="true" aria-label="Collapse reply">[-]</button></div>
+              <div class="line"><span></span></div>
+              <div>
+                <div class="cbody"><p>That's the part I'm most at home in. My Coder seat sat inside the revenue org, not engineering, so my users were sellers. Now I sit in marketing. Before tech I spent about ten years in financial advisory under FINRA and SEC oversight, explaining tradeoffs to people deciding what to do with their own money. Finance folks and I speak the same dialect of "show me the audit trail."</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="q" id="q-reuse" data-f="pref" data-order="8" data-gap="12" data-title="Reusable components and business systems">
+      <div class="c">
+        <div class="av asker">H</div>
+        <div class="chead"><span class="n">u/curious_hiring_manager</span><span class="flr pref">Preferred</span><button class="tog" aria-expanded="true" aria-label="Collapse thread">[-]</button></div>
+        <div class="line"><span></span></div>
+        <div>
+          <div class="cbody"><div class="jd">"Experience with enterprise business systems, internal tools, or embedded delivery." &middot; "Experience creating reusable components or helping teams adopt new tools."</div><p>Do your one-offs ever turn into something the next team can use?</p></div>
+          <div class="cacts"><button class="pa vote" aria-pressed="false">&#9650; Upvote</button><button class="pa reply-toggle">Hide reply</button></div>
+          <div class="kids">
+            <div class="c">
+              <div class="av op">A</div>
+              <div class="chead"><span class="n">u/andrewzoll</span><span class="opb">OP</span><button class="tog" aria-expanded="true" aria-label="Collapse reply">[-]</button></div>
+              <div class="line"><span></span></div>
+              <div>
+                <div class="cbody"><p>Salesforce, Slack and meeting transcripts were my enterprise systems at Coder, and every tool there was internal. For reuse, AndrewOS is basically a library of agent skills and written playbooks that I and my agents read at the start of a task. When something works twice, it becomes a skill. When it breaks, the fix goes into the doc so the next run doesn't repeat it.</p><p>FieldCommand, my multi-tenant SaaS, is 187,745 lines of TypeScript I wrote solo with role-based access control and tenant isolation, so I've also built the "platform pattern" side, not just the one-off side.</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="q" id="q-years" data-f="gap" data-order="9" data-gap="1" data-title="Gap: five years building software">
+      <div class="c">
+        <div class="av asker">H</div>
+        <div class="chead"><span class="n">u/curious_hiring_manager</span><span class="flr gap">Honest gap</span><button class="tog" aria-expanded="true" aria-label="Collapse thread">[-]</button></div>
+        <div class="line"><span></span></div>
+        <div>
+          <div class="cbody"><div class="jd">"5+ years building software, including AI applications, agents, automations, or internal tools."</div><p>Five years. Do you have them?</p></div>
+          <div class="cacts"><button class="pa vote" aria-pressed="false">&#9650; Upvote</button><button class="pa reply-toggle">Hide reply</button></div>
+          <div class="kids">
+            <div class="c">
+              <div class="av op">A</div>
+              <div class="chead"><span class="n">u/andrewzoll</span><span class="opb">OP</span><button class="tog" aria-expanded="true" aria-label="Collapse reply">[-]</button></div>
+              <div class="line"><span></span></div>
+              <div>
+                <div class="cbody"><p>Not as an employee, and I won't blur it. My engineering title started in July 2026. The years before it are founder years: FieldCommand, Veritas and AndrewOS are real systems I built and still run, and you can check them. Whether founder years count toward your five is your call. If your loop has a take-home or a real-code interview, that's the format where I do best.</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="q" id="q-scale" data-f="gap" data-order="10" data-gap="2" data-title="Gap: adoption numbers and Reddit scale">
+      <div class="c">
+        <div class="av asker">H</div>
+        <div class="chead"><span class="n">u/curious_hiring_manager</span><span class="flr gap">Honest gap</span><button class="tog" aria-expanded="true" aria-label="Collapse thread">[-]</button></div>
+        <div class="line"><span></span></div>
+        <div>
+          <div class="cbody"><div class="jd">"Experience redesigning business workflows and measuring gains in quality, speed, capacity, or cost." &middot; "...driving adoption through feedback, onboarding, and training."</div><p>How many people used your platform, and how much did it save them?</p></div>
+          <div class="cacts"><button class="pa vote" aria-pressed="false">&#9650; Upvote</button><button class="pa reply-toggle">Hide reply</button></div>
+          <div class="kids">
+            <div class="c">
+              <div class="av op">A</div>
+              <div class="chead"><span class="n">u/andrewzoll</span><span class="opb">OP</span><button class="tog" aria-expanded="true" aria-label="Collapse reply">[-]</button></div>
+              <div class="line"><span></span></div>
+              <div>
+                <div class="cbody"><p>I don't have an adoption or hours-saved number I can show you, and I'm not going to invent one. The program ended before that measurement existed. What I can show is engineering-side measurement: cost per merged change, review catch rates, and the dashboard load fix. I also haven't run enablement for a company Reddit's size. Driving adoption across Sales, Marketing, BD and Finance at once would be a real step up for me.</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="empty" id="empty">No comments match that filter. Try another flair.</div>
+  </section>
+
+</main>
+
+<aside class="side">
+  <div class="card">
+    <h3>About this AMA</h3>
+    <div class="in">
+      Andrew Zoll, Senior GTM Engineer (AI) at Coder, applying for Senior Forward Deployed Engineer (AI Enablement), remote in the United States.
+      <div class="tally" id="tally">You've upvoted <b>0</b> answers.</div>
+      <a class="btn fill" href="https://portfolio.andrewzoll.com">See the portfolio</a>
+      <a class="btn" href="https://linkedin.com/in/andrewzoll">Say hi on LinkedIn</a>
+    </div>
+  </div>
+  <div class="card">
+    <h3>Jump to a question</h3>
+    <div class="in"><ul class="toc" id="toc"></ul></div>
+  </div>
+  <div class="card">
+    <h3>Community rules</h3>
+    <div class="in"><ol class="rules">
+      <li>Every quoted line comes from the actual Reddit posting.</li>
+      <li>Every answer points at something I really built.</li>
+      <li>No invented numbers. If it isn't measured, I say so.</li>
+      <li>Gaps get flaired, not hidden.</li>
+      <li>Not affiliated with Reddit. I made this myself.</li>
+    </ol></div>
+  </div>
+</aside>
+</div>
+
+<footer>
+  Not affiliated with Reddit, Inc. This is a personal page I built for my own application, and it borrows Reddit's AMA format on purpose. Built for Senior Forward Deployed Engineer (AI Enablement), Remote, United States, Greenhouse req 8301784.
+</footer>
+
+<script>
+(function(){
+  var thread=document.getElementById('thread');
+  var qs=Array.prototype.slice.call(thread.querySelectorAll('.q'));
+  var chips=Array.prototype.slice.call(document.querySelectorAll('.chip'));
+  var sortSel=document.getElementById('sort');
+  var count=document.getElementById('count');
+  var empty=document.getElementById('empty');
+  var tally=document.getElementById('tally');
+  var toc=document.getElementById('toc');
+  var curF='all';
+
+  // each [-] toggle and each thread line collapses the comment it belongs to
+  function setCollapsed(c,collapsed){
+    c.classList.toggle('collapsed',collapsed);
+    var t=c.querySelector(':scope > .chead .tog');
+    if(t){ t.innerHTML=collapsed?'[+]':'[-]'; t.setAttribute('aria-expanded',collapsed?'false':'true'); }
+  }
+  Array.prototype.slice.call(thread.querySelectorAll('.c')).forEach(function(c){
+    var t=c.querySelector(':scope > .chead .tog');
+    var l=c.querySelector(':scope > .line');
+    function flip(){ setCollapsed(c,!c.classList.contains('collapsed')); }
+    if(t) t.addEventListener('click',flip);
+    if(l) l.addEventListener('click',flip);
+  });
+
+  // "Hide reply" hides only OP's answer under a question
+  qs.forEach(function(q){
+    var b=q.querySelector('.reply-toggle');
+    var kids=q.querySelector('.kids');
+    b.addEventListener('click',function(){
+      var hide=kids.style.display!=='none';
+      kids.style.display=hide?'none':'';
+      b.textContent=hide?'Show reply':'Hide reply';
+    });
+  });
+
+  document.getElementById('expandAll').addEventListener('click',function(){
+    thread.querySelectorAll('.c').forEach(function(c){ setCollapsed(c,false); });
+    qs.forEach(function(q){ q.querySelector('.kids').style.display=''; q.querySelector('.reply-toggle').textContent='Hide reply'; });
+  });
+  document.getElementById('collapseAll').addEventListener('click',function(){
+    qs.forEach(function(q){ setCollapsed(q.querySelector('.c'),true); });
+  });
+
+  // upvotes are yours alone; the tally and "Your upvotes first" sort read them
+  function updateTally(){
+    var n=thread.querySelectorAll('.vote[aria-pressed="true"]').length;
+    tally.innerHTML="You've upvoted <b>"+n+"</b> answer"+(n===1?'':'s')+".";
+  }
+  thread.querySelectorAll('.vote').forEach(function(v){
+    v.addEventListener('click',function(){
+      var on=v.getAttribute('aria-pressed')!=='true';
+      v.setAttribute('aria-pressed',on?'true':'false');
+      v.style.color=on?'var(--or)':'';
+      v.innerHTML=on?'&#9650; Upvoted':'&#9650; Upvote';
+      updateTally();
+      if(sortSel.value==='voted') applySort();
+    });
+  });
+
+  // the post's own vote arrows behave like Reddit's: one direction at a time
+  var up=document.getElementById('pUp'), down=document.getElementById('pDown'), pv=document.getElementById('pV');
+  function setPost(dir){
+    up.classList.toggle('on',dir==='up'); down.classList.toggle('on',dir==='down');
+    up.setAttribute('aria-pressed',dir==='up'); down.setAttribute('aria-pressed',dir==='down');
+    pv.textContent=dir==='up'?'Yay':dir==='down'?'Fair':'Vote';
+    pv.style.color=dir==='up'?'var(--or)':dir==='down'?'var(--down)':'';
+  }
+  up.addEventListener('click',function(){ setPost(up.classList.contains('on')?null:'up'); });
+  down.addEventListener('click',function(){ setPost(down.classList.contains('on')?null:'down'); });
+
+  // sort genuinely reorders the questions
+  function applySort(){
+    var k=sortSel.value;
+    qs.slice().sort(function(a,b){
+      if(k==='gaps') return a.dataset.gap-b.dataset.gap;
+      if(k==='voted'){
+        var av=a.querySelector('.vote').getAttribute('aria-pressed')==='true'?0:1;
+        var bv=b.querySelector('.vote').getAttribute('aria-pressed')==='true'?0:1;
+        if(av!==bv) return av-bv;
+      }
+      return a.dataset.order-b.dataset.order;
+    }).forEach(function(q){ thread.insertBefore(q,empty); });
+  }
+  sortSel.addEventListener('change',applySort);
+
+  // flair chips genuinely filter, and the count is computed from what's shown
+  function applyFilter(f){
+    curF=f;
+    chips.forEach(function(c){ c.setAttribute('aria-pressed',c.dataset.f===f?'true':'false'); });
+    var shown=0;
+    qs.forEach(function(q){
+      var vis=f==='all'||q.dataset.f===f;
+      q.hidden=!vis;
+      if(vis) shown++;
+    });
+    count.textContent=shown+(shown===1?' question':' questions');
+    empty.classList.toggle('show',shown===0);
+  }
+  chips.forEach(function(c){ c.addEventListener('click',function(){ applyFilter(c.dataset.f); }); });
+
+  // jump links clear the filter if needed, expand the question, and flash it
+  qs.forEach(function(q,i){
+    var li=document.createElement('li');
+    var a=document.createElement('a');
+    a.href='#'+q.id;
+    a.innerHTML='<small>Q'+(i+1)+'</small>'+q.dataset.title;
+    a.addEventListener('click',function(e){
+      e.preventDefault();
+      if(q.hidden) applyFilter('all');
+      setCollapsed(q.querySelector('.c'),false);
+      q.scrollIntoView({behavior:'smooth',block:'start'});
+      history.replaceState(null,'','#'+q.id);
+      q.classList.add('flash');
+      setTimeout(function(){ q.classList.remove('flash'); },1400);
+    });
+    li.appendChild(a); toc.appendChild(li);
+  });
+
+  applyFilter('all');
+  applySort();
+  updateTally();
+})();
+</script>
+</body>
+</html>
