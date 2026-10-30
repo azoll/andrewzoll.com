@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>Andrew Zoll for Member of Technical Staff, Forward Deployed Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Schibsted+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --red:#FF4B2D; --red2:#E23A1E; --ink:#141414; --ink2:#242424; --gray:#545454; --gray2:#747474;
+    --line:#DEDEDE; --paper:#FFFFFF; --bone:#F6F4F1; --sky:#BAE3EC; --lilac:#D9B7FF; --lime:#C9F850;
+    --serif:'Instrument Serif',Georgia,serif;
+    --sans:'Schibsted Grotesk',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    --mono:'Space Mono',ui-monospace,Menlo,monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:16.5px;line-height:1.6;-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+  button{font:inherit;color:inherit}
+  .wrap{max-width:1140px;margin:0 auto;padding:0 32px}
+  @media(max-width:640px){.wrap{padding:0 18px}}
+
+  /* ---- masthead ---- */
+  .mast{border-bottom:1px solid var(--ink)}
+  .mast .wrap{display:flex;align-items:center;gap:16px;height:60px}
+  .mono{font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase}
+  .cell{width:14px;height:14px;background:var(--red);display:inline-block;animation:breathe 2.6s ease-in-out infinite}
+  @keyframes breathe{50%{transform:scale(.72);border-radius:50%}}
+  .mast .r{margin-left:auto;color:var(--gray2)}
+  @media(max-width:560px){.mast .r{display:none}}
+
+  /* ---- hero ---- */
+  .hero{display:grid;grid-template-columns:1fr 340px;border-bottom:1px solid var(--ink)}
+  @media(max-width:900px){.hero{grid-template-columns:1fr}}
+  .hero .main{padding:70px 48px 60px 0}
+  @media(max-width:900px){.hero .main{padding:52px 0 40px}}
+  .hero h1{font-family:var(--serif);font-weight:400;font-size:clamp(46px,7.4vw,98px);line-height:.95;letter-spacing:-.025em}
+  .hero h1 i{color:var(--red)}
+  .hero p{max-width:58ch;color:var(--gray);font-size:18px;margin-top:28px}
+  .hero p+p{margin-top:12px}
+  .hero p b{color:var(--ink);font-weight:600}
+  .side{background:var(--red);color:#fff;padding:34px 28px;display:flex;flex-direction:column;gap:20px;position:relative;overflow:hidden}
+  @media(max-width:900px){.side{margin:0 -32px}}
+  @media(max-width:640px){.side{margin:0 -18px}}
+  .side:after{content:"";position:absolute;right:-60px;bottom:-60px;width:200px;height:200px;border-radius:50%;border:34px solid rgba(255,255,255,.14)}
+  .kv .k{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;opacity:.75}
+  .kv .v{font-size:19px;font-weight:600;line-height:1.3;margin-top:3px}
+
+  /* ---- section heads ---- */
+  section{padding:84px 0;border-bottom:1px solid var(--ink)}
+  .shead{display:grid;grid-template-columns:120px 1fr;gap:24px;margin-bottom:40px}
+  @media(max-width:700px){.shead{grid-template-columns:1fr;gap:8px}}
+  .num{font-family:var(--mono);font-size:12px;color:var(--red);padding-top:12px}
+  h2{font-family:var(--serif);font-weight:400;font-size:clamp(34px,5vw,58px);line-height:1;letter-spacing:-.02em;max-width:18ch}
+  .sub{color:var(--gray);max-width:62ch;margin-top:16px;font-size:17px}
+
+  /* ---- phase tabs ---- */
+  .tabs{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--ink)}
+  @media(max-width:700px){.tabs{grid-template-columns:repeat(2,1fr)}}
+  .tab{background:var(--paper);border:0;border-right:1px solid var(--ink);padding:16px 18px;text-align:left;cursor:pointer;position:relative;transition:background .15s}
+  .tab:last-child{border-right:0}
+  @media(max-width:700px){.tab:nth-child(2){border-right:0}.tab:nth-child(-n+2){border-bottom:1px solid var(--ink)}}
+  .tab .n{font-family:var(--mono);font-size:11px;color:var(--gray2)}
+  .tab .t{display:block;font-weight:600;font-size:17px;margin-top:4px}
+  .tab:hover{background:var(--bone)}
+  .tab[aria-selected="true"]{background:var(--ink);color:#fff}
+  .tab[aria-selected="true"] .n{color:var(--red)}
+  .prog{height:4px;background:var(--line);margin-top:-1px}
+  .prog i{display:block;height:100%;background:var(--red);width:25%;transition:width .35s cubic-bezier(.4,0,.2,1)}
+  .panel{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--ink);border-top:0;min-height:300px}
+  @media(max-width:800px){.panel{grid-template-columns:1fr}}
+  .panel>div{padding:28px 28px 30px}
+  .ask{background:var(--bone);border-right:1px solid var(--ink)}
+  @media(max-width:800px){.ask{border-right:0;border-bottom:1px solid var(--ink)}}
+  .lbl{font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--gray2);margin-bottom:14px}
+  .ask ul{list-style:none}
+  .ask li{font-family:var(--serif);font-size:23px;line-height:1.22;padding:9px 0;border-bottom:1px solid var(--line)}
+  .ask li:last-child{border-bottom:0}
+  .did p{color:var(--gray);font-size:16px}
+  .did p+p{margin-top:12px}
+  .did p b{color:var(--ink);font-weight:600}
+  .did .src{font-family:var(--mono);font-size:11px;color:var(--gray2);margin-top:18px;padding-top:12px;border-top:1px dashed var(--line)}
+  .pnav{display:flex;justify-content:space-between;align-items:center;margin-top:16px}
+  .pbtn{background:none;border:1px solid var(--ink);padding:9px 16px;cursor:pointer;font-weight:600;font-size:14px;transition:all .15s}
+  .pbtn:hover:not(:disabled){background:var(--ink);color:#fff}
+  .pbtn:disabled{opacity:.3;cursor:default}
+  .fade{animation:fade .3s ease both}
+  @keyframes fade{from{opacity:0;transform:translateY(5px)}}
+
+  /* ---- ledger ---- */
+  .lctl{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:16px}
+  .sw{display:inline-flex;align-items:center;gap:10px;background:none;border:1px solid var(--ink);padding:8px 14px;cursor:pointer;font-weight:600;font-size:14px}
+  .sw .knob{width:30px;height:16px;border-radius:9px;background:var(--line);position:relative;transition:background .2s}
+  .sw .knob:after{content:"";position:absolute;left:2px;top:2px;width:12px;height:12px;border-radius:50%;background:#fff;transition:left .2s}
+  .sw[aria-pressed="true"] .knob{background:var(--red)}
+  .sw[aria-pressed="true"] .knob:after{left:16px}
+  .tally{font-family:var(--mono);font-size:12px;color:var(--gray)}
+  .tally b{color:var(--ink)}
+  .ledger{border-top:1px solid var(--ink)}
+  .row{display:grid;grid-template-columns:28px 1fr 1.15fr;gap:20px;padding:18px 0;border-bottom:1px solid var(--line);align-items:start}
+  @media(max-width:760px){.row{grid-template-columns:28px 1fr}.row .rec{grid-column:2/3}}
+  .dot{width:14px;height:14px;border-radius:50%;margin-top:6px;background:var(--ink)}
+  .row.gap .dot{background:transparent;border:2px solid var(--red)}
+  .req{font-weight:600;font-size:16px;line-height:1.4}
+  .req small{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--gray2);font-weight:400;margin-top:5px}
+  .row.gap .req small{color:var(--red2)}
+  .rec{color:var(--gray);font-size:15.5px}
+  .rec b{color:var(--ink);font-weight:600}
+
+  /* ---- note ---- */
+  .note{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--ink)}
+  @media(max-width:800px){.note{grid-template-columns:1fr}}
+  .note>div{padding:30px}
+  .note .a{background:var(--sky)}
+  .note .b{background:var(--lilac);border-left:1px solid var(--ink)}
+  @media(max-width:800px){.note .b{border-left:0;border-top:1px solid var(--ink)}}
+  .note h3{font-family:var(--serif);font-weight:400;font-size:30px;line-height:1.05;margin-bottom:12px}
+  .note p{font-size:15.5px;color:var(--ink2)}
+  .note p+p{margin-top:10px}
+
+  /* ---- cta ---- */
+  .cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+  .btn{display:inline-block;text-decoration:none;font-weight:600;font-size:15px;padding:14px 24px;border:1px solid var(--ink);transition:all .15s}
+  .btn.p{background:var(--red);border-color:var(--red);color:#fff}
+  .btn.p:hover{background:var(--ink);border-color:var(--ink)}
+  .btn:not(.p):hover{background:var(--ink);color:#fff}
+  footer{padding:30px 0 50px;font-size:13px;color:var(--gray2);line-height:1.8}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="mast"><div class="wrap">
+  <span class="cell" aria-hidden="true"></span>
+  <span class="mono"><b>Andrew Zoll</b></span>
+  <span class="mono r">Deployment brief · MTS, Forward Deployed Engineer</span>
+</div></div>
+
+<div class="wrap">
+  <header class="hero">
+    <div class="main">
+      <div class="mono" style="color:var(--red);margin-bottom:22px">For the stealth startup at Red Cell Partners</div>
+      <h1>I built the agent <i>and</i> the test that told me whether to trust it.</h1>
+      <p>Hi, I'm Andrew. Your posting asks for someone who sits inside a customer's world, figures out what they actually need, then builds the pipelines, the agents and the <b>evaluation systems</b> that prove the thing works. That's the shape of the work I did at <b>Coder</b> from July to October 2026, and it's the reason I built Veritas the way I did.</p>
+      <p>I've also spent years on the regulated side of the table, under FINRA and SEC oversight, so "mission-critical" and "has to hold up later" aren't abstractions to me.</p>
+    </div>
+    <aside class="side">
+      <div class="kv"><div class="k">Role</div><div class="v">Member of Technical Staff, Forward Deployed Engineer</div></div>
+      <div class="kv"><div class="k">Posted</div><div class="v">Remote, United States</div></div>
+      <div class="kv"><div class="k">Band</div><div class="v">$150,000 to $300,000 + equity</div></div>
+      <div class="kv"><div class="k">Me</div><div class="v">Pueblo, Colorado. Happy to travel to customer sites.</div></div>
+    </aside>
+  </header>
+</div>
+
+<div class="wrap">
+
+  <section id="phases">
+    <div class="shead"><div class="num">01 / The deployment</div>
+      <div><h2>Your posting, read as one deployment.</h2>
+      <p class="sub">I've grouped your responsibilities into the four phases a deployment actually runs through. Pick a phase, or step through them, to see what I've already done that matches.</p></div></div>
+
+    <div class="tabs" role="tablist" aria-label="Deployment phases">
+      <button class="tab" role="tab" aria-selected="true" data-i="0"><span class="n">PHASE 1</span><span class="t">Understand</span></button>
+      <button class="tab" role="tab" aria-selected="false" data-i="1"><span class="n">PHASE 2</span><span class="t">Build</span></button>
+      <button class="tab" role="tab" aria-selected="false" data-i="2"><span class="n">PHASE 3</span><span class="t">Evaluate</span></button>
+      <button class="tab" role="tab" aria-selected="false" data-i="3"><span class="n">PHASE 4</span><span class="t">Hand back</span></button>
+    </div>
+    <div class="prog"><i id="prog"></i></div>
+    <div class="panel" role="tabpanel" id="panel" aria-live="polite"></div>
+    <div class="pnav">
+      <button class="pbtn" id="prev">&larr; Previous phase</button>
+      <span class="tally" id="phaseTxt">Phase 1 of 4</span>
+      <button class="pbtn" id="next">Next phase &rarr;</button>
+    </div>
+  </section>
+
+  <section id="ledger">
+    <div class="shead"><div class="num">02 / Qualifications</div>
+      <div><h2>Every line you listed, with the receipt.</h2>
+      <p class="sub">Solid dots are lines I meet with something I shipped. Hollow red dots are gaps, and I'd rather you see them here than find them later. Flip the switch to see only the gaps.</p></div></div>
+
+    <div class="lctl">
+      <button class="sw" id="gapOnly" aria-pressed="false"><span class="knob"></span>Show only gaps</button>
+      <span class="tally" id="tally"></span>
+    </div>
+    <div class="ledger" id="rows"></div>
+  </section>
+
+  <section>
+    <div class="note">
+      <div class="a">
+        <h3>Where I am today.</h3>
+        <p>I'm employed. The Coder agent platform program ran from July to October 2026 and ended, and since October 14 I've been a Senior GTM Engineer (AI) at Coder, building marketing-data tools. I'm writing because this seat is closer to my best work than anything else I've seen this year.</p>
+        <p>I also hold a securities registration through advisory work that's winding down. It's a disclosed outside business activity.</p>
+      </div>
+      <div class="b">
+        <h3>The honest gap, in one place.</h3>
+        <p>My engineering title began in July 2026. Before that I spent the founder years shipping FieldCommand, Veritas and AndrewOS on my own, so the strict count on professional software engineering is shorter than your three years.</p>
+        <p>My customers so far have been an internal revenue org and a book of advisory clients, not an enterprise deployment on a customer's own systems, and I haven't worked in healthcare. I'd expect the first deployment to teach me the domain fast, and I'd want to sit with the users before I prescribed anything.</p>
+      </div>
+    </div>
+  </section>
+
+  <section style="border-bottom:0">
+    <div class="shead"><div class="num">03 / Next</div>
+      <div><h2>If this reads like a fit, I'd like to talk.</h2>
+      <p class="sub">I'm in Pueblo, Colorado, I've worked fully remote for years, and customer travel is fine.</p>
+      <div class="cta">
+        <a class="btn p" href="https://portfolio.andrewzoll.com">See the portfolio</a>
+        <a class="btn" href="https://linkedin.com/in/andrewzoll">Connect on LinkedIn</a>
+      </div></div></div>
+  </section>
+
+  <footer>
+    Not affiliated with Red Cell Partners or the startup it's launching. A personal page I built as part of my own application for the Member of Technical Staff, Forward Deployed Engineer role.
+  </footer>
+</div>
+
+<script>
+(function(){
+  var PHASES = [
+    {ask:['Understand the customer\'s business, environment and workflows','Translate real operational needs into clearly defined AI solutions','Listen before prescribing'],
+     did:'<p>At Coder I was embedded in the <b>revenue organization</b>, and a big part of the job was being the translation layer between what an agent platform could do and what non-technical operators needed it to do.</p><p>Before that I advised <b>120+ households</b> and kept 95% of them, which is mostly a listening job. You learn to hear the real problem under the stated one.</p>',
+     src:'Coder, July to October 2026 · Edward Jones, 2020 to 2024'},
+    {ask:['Build data pipelines, integrations and supporting systems','Own design through deployment of production AI agents','Architectures, implementation plans, measurable outcomes'],
+     did:'<p>I built the data integrations for an internal agent platform at Coder: <b>Salesforce</b>, <b>Granola</b> meeting transcripts and a <b>Slack</b> bot, plus an <b>OAuth authorization server</b> that gated hosted MCP access to it.</p><p>I authored <b>884 merged pull requests</b> in Python and TypeScript between July 27 and October 9, and ran the AWS stack through Terraform with a CI plan gate, ECS and Lambda.</p>',
+     src:'Coder agent platform'},
+    {ask:['Develop evaluation systems that measure agent performance','Use the results to drive continued improvement','Diagnose problems and drive them to resolution'],
+     did:'<p>I designed a review gate in which a reviewer from a <b>different model family</b> than the builder had to clear each change, with mutation tests to prove the tests could fail. Across about <b>1,200 verdicts on about 350 pull requests</b>, reviewers recorded more than 430 confirmed defect catches and 21 false flags.</p><p>In <b>Veritas</b>, my citation-verification product for legal filings, a model extracts each claim, deterministic code renders the verdict, and a fixed fixture suite gates every release.</p>',
+     src:'Coder review gate · Veritas'},
+    {ask:['Codify reusable practices, agent patterns and frameworks','Turn deployment lessons into feedback for platform and product','Communicate risks and results to senior stakeholders'],
+     did:'<p>The clearest example is access control. I shipped <b>fail-closed Federal data access controls</b> across 26 merged pull requests: the platform classified Federal accounts, kept unproven Federal history out of model input for uncleared users, and tested every access tier. If the classifier wasn\'t sure, the data stayed out.</p><p>That kind of rule is a pattern, not a one-off, and it\'s the kind of thing I\'d expect to carry from one regulated customer to the next.</p>',
+     src:'Coder, Federal access controls'}
+  ];
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('.tab'));
+  var panel = document.getElementById('panel'), cur = 0;
+  function show(i){
+    cur = i;
+    tabs.forEach(function(t,k){ t.setAttribute('aria-selected', k===i ? 'true' : 'false'); t.tabIndex = k===i ? 0 : -1; });
+    var p = PHASES[i];
+    panel.innerHTML = '<div class="ask fade"><div class="lbl">You asked for</div><ul>'+p.ask.map(function(a){return '<li>'+a+'</li>';}).join('')+
+      '</ul></div><div class="did fade"><div class="lbl">What I\'ve done</div>'+p.did+'<div class="src">'+p.src+'</div></div>';
+    document.getElementById('prog').style.width = ((i+1)*25)+'%';
+    document.getElementById('phaseTxt').textContent = 'Phase '+(i+1)+' of 4';
+    document.getElementById('prev').disabled = i===0;
+    document.getElementById('next').disabled = i===3;
+  }
+  tabs.forEach(function(t,k){
+    t.addEventListener('click', function(){ show(k); });
+    t.addEventListener('keydown', function(e){
+      if (e.key==='ArrowRight'||e.key==='ArrowLeft'){ var n=(k+(e.key==='ArrowRight'?1:3))%4; show(n); tabs[n].focus(); e.preventDefault(); }
+    });
+  });
+  document.getElementById('prev').addEventListener('click', function(){ if(cur>0) show(cur-1); });
+  document.getElementById('next').addEventListener('click', function(){ if(cur<3) show(cur+1); });
+  show(0);
+
+  var QUAL = [
+    {g:0, r:'Building and shipping AI applications in production', rec:'An internal agent platform at Coder, plus <b>Veritas</b> and four AI features in <b>FieldCommand</b> behind per-tenant feature flags.'},
+    {g:0, r:'AI agent architectures and evaluation methodology', rec:'Kimi builders, GLM reviewers and escalation to GPT, Claude Opus and Fable, gated by cross-family review and <b>mutation testing</b>.'},
+    {g:0, r:'Design evaluation systems and iterate on the data', rec:'21 false flags counted against 430+ real catches, so the review gate was measured, not assumed. Veritas releases pass a fixed fixture suite.'},
+    {g:0, r:'Scalable backend services, APIs, pipelines and integrations', rec:'Salesforce, Granola and Slack integrations, an OAuth server for hosted MCP, and a dashboard cold load cut from 5 to 10 seconds to about 2 with a bounded S3 fan-out.'},
+    {g:0, r:'Full-stack development with a strong backend', rec:'<b>FieldCommand</b>: 187,745 lines of TypeScript on PostgreSQL and Supabase, multi-tenant, with role-based access control and tenant isolation, built solo.'},
+    {g:0, r:'Translate business requirements into technical solutions', rec:'The translation layer between an agent platform and non-technical revenue operators at Coder.'},
+    {g:0, r:'Move between architecture, implementation, deployment and troubleshooting', rec:'On a two-person team there was nobody to hand the other half to. The review gate I built caught a <b>Redis cluster-mode production blocker</b> in round 5.'},
+    {g:0, r:'Clear communication with senior stakeholders', rec:'Years of explaining risk to clients under FINRA and SEC rules, where a vague answer is a compliance problem.'},
+    {g:1, r:'3+ years of professional software engineering', rec:'Partial. My engineering title began in July 2026. Counted strictly, shipping production software starts in 2025 with FieldCommand.'},
+    {g:1, r:'Direct work with enterprise customers in complex environments', rec:'Partial. My customers were an internal revenue org and advisory clients, not an enterprise deployment inside a customer\'s own systems. No healthcare yet.'}
+  ];
+  var rows = document.getElementById('rows'), sw = document.getElementById('gapOnly'), onlyGaps = false;
+  function renderRows(){
+    var list = QUAL.filter(function(q){ return !onlyGaps || q.g; });
+    rows.innerHTML = list.map(function(q){
+      return '<div class="row'+(q.g?' gap':'')+' fade"><span class="dot"></span><div class="req">'+q.r+'<small>'+(q.g?'Gap':'Met')+'</small></div><div class="rec">'+q.rec+'</div></div>';
+    }).join('');
+    var met = QUAL.filter(function(q){return !q.g;}).length, gaps = QUAL.length - met;
+    document.getElementById('tally').innerHTML = onlyGaps ? 'Showing <b>'+gaps+'</b> gaps of '+QUAL.length+' lines' : '<b>'+met+'</b> met · <b>'+gaps+'</b> gaps · '+QUAL.length+' lines';
+  }
+  sw.addEventListener('click', function(){ onlyGaps = !onlyGaps; sw.setAttribute('aria-pressed', onlyGaps ? 'true' : 'false'); renderRows(); });
+  renderRows();
+})();
+</script>
+</body>
+</html>
