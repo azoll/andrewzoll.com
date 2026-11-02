@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>AGENTS.md: Andrew Zoll for Staff Engineer, AI Productivity at Hightouch</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#141213; --panel:#1c1a1b; --panel2:#242122; --line:#302d2e; --ink:#f5f5f5; --mut:#c7c2c3; --dim:#938d8f;
+    --green:#40de9e; --green-d:#2ea281; --red:#f85d3e; --amber:#f5c04e;
+    --sans:'Sora',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    --mono:'Fira Code',ui-monospace,SFMono-Regular,Menlo,monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15.5px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  a{color:var(--green)}
+  button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+  :focus-visible{outline:2px solid var(--green);outline-offset:2px}
+  .wrap{max-width:1120px;margin:0 auto;padding-inline:20px}
+  header{padding-block:56px 30px}
+  .eyebrow{font-family:var(--mono);font-size:.82rem;color:var(--green)}
+  h1{font-size:clamp(2rem,5vw,3.5rem);line-height:1.1;font-weight:700;letter-spacing:-.025em;margin-top:12px;max-width:17em}
+  h1 em{font-style:normal;color:var(--green)}
+  header p{margin-top:16px;max-width:42em;color:var(--mut);font-size:1.06rem}
+  .meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px;font-family:var(--mono);font-size:.8rem}
+  .meta span{border:1px solid var(--line);border-radius:6px;padding:4px 10px;color:var(--mut)}
+  .meta b{color:var(--ink);font-weight:500}
+
+  /* editor */
+  .ed{display:grid;grid-template-columns:230px minmax(0,1fr);border:1px solid var(--line);border-radius:12px;background:var(--panel);overflow:hidden;min-height:540px}
+  .tree{background:#171516;border-right:1px solid var(--line);padding:12px 8px;font-family:var(--mono);font-size:.84rem}
+  .tree h2{font-size:.72rem;font-weight:500;color:var(--dim);padding:4px 10px 10px;letter-spacing:.04em}
+  .tree button{display:flex;gap:8px;width:100%;text-align:left;padding:6px 10px;border-radius:6px;color:var(--mut)}
+  .tree button:hover{background:var(--panel2)}
+  .tree button[aria-selected="true"]{background:rgba(64,222,158,.13);color:var(--green)}
+  .tree .gap-file[aria-selected="false"]{color:var(--red)}
+  .pane{display:flex;flex-direction:column;min-width:0}
+  .tabbar{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding:9px 16px;font-family:var(--mono);font-size:.8rem;color:var(--dim)}
+  .tabbar .path{color:var(--ink)}
+  .seg{display:inline-flex;border:1px solid var(--line);border-radius:7px;overflow:hidden}
+  .seg button{padding:3px 11px;color:var(--mut)}
+  .seg button[aria-pressed="true"]{background:var(--green);color:#10201a;font-weight:600}
+  .doc{padding:22px 24px 28px;overflow-x:auto;flex:1}
+  .doc h3{font-size:1.25rem;font-weight:700;margin:0 0 10px;letter-spacing:-.01em}
+  .doc h4{font-family:var(--mono);font-size:.88rem;font-weight:500;color:var(--green);margin:20px 0 6px}
+  .doc p{color:var(--mut);margin-bottom:10px;max-width:46em}
+  .doc p b,.doc li b{color:var(--ink);font-weight:600}
+  .doc ul{list-style:none;margin-bottom:10px}
+  .doc li{position:relative;padding-left:20px;color:var(--mut);margin-bottom:7px;max-width:46em}
+  .doc li:before{content:"-";position:absolute;left:4px;color:var(--green);font-family:var(--mono)}
+  .doc code{font-family:var(--mono);font-size:.86em;color:var(--green);background:rgba(64,222,158,.08);padding:1px 5px;border-radius:4px}
+  .doc pre.raw{font-family:var(--mono);font-size:.84rem;line-height:1.62;color:var(--mut);white-space:pre-wrap;word-break:break-word}
+
+  /* context lab */
+  .lab{margin-top:34px}
+  .lab h2,.next h2{font-size:clamp(1.4rem,3vw,1.95rem);line-height:1.2;font-weight:700;letter-spacing:-.015em}
+  .lab>p,.next>p{color:var(--mut);max-width:44em;margin-top:8px}
+  .picks{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+  .picks button{border:1px solid var(--line);border-radius:999px;padding:6px 14px;font-size:.88rem;color:var(--mut)}
+  .picks button[aria-pressed="true"]{border-color:var(--green);color:var(--green)}
+  .term{margin-top:14px;border:1px solid var(--line);border-radius:12px;background:#0f0e0e;font-family:var(--mono);font-size:.86rem;overflow:hidden}
+  .term-top{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;padding:9px 14px;border-bottom:1px solid var(--line);color:var(--dim);font-size:.8rem}
+  .switch{display:inline-flex;align-items:center;gap:8px;color:var(--ink)}
+  .switch i{width:34px;height:18px;border-radius:999px;background:#4a4648;position:relative;flex:none;transition:background .15s}
+  .switch i:after{content:"";position:absolute;width:14px;height:14px;border-radius:50%;background:#fff;left:2px;top:2px;transition:transform .15s}
+  .switch[aria-checked="true"] i{background:var(--green-d)}
+  .switch[aria-checked="true"] i:after{transform:translateX(16px)}
+  .out{padding:14px 16px;min-height:158px;white-space:pre-wrap;word-break:break-word;color:var(--mut);line-height:1.6}
+  .out .ok{color:var(--green)} .out .bad{color:var(--red)} .out .p{color:var(--ink)}
+  .caveat{font-size:.85rem;color:var(--dim);margin-top:8px;max-width:50em}
+
+  .next{padding-block:40px 20px}
+  .cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+  .cta a{font-weight:600;border-radius:8px;padding:10px 18px;text-decoration:none}
+  .cta .p{background:var(--green);color:#10201a}
+  .cta .s{border:1px solid var(--line);color:var(--ink)}
+  footer{font-size:.82rem;color:var(--dim);padding-block:10px 40px}
+  @media (max-width:760px){
+    .ed{grid-template-columns:minmax(0,1fr)}
+    .tree{border-right:0;border-bottom:1px solid var(--line);display:flex;gap:4px;overflow-x:auto}
+    .tree h2{display:none}
+    .tree button{width:auto;white-space:nowrap}
+    .doc{padding:18px 16px}
+  }
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">andrew-zoll/ on branch for-hightouch</div>
+    <h1>You'll own a repo-wide <em>agents.md</em>. So here's mine, about me.</h1>
+    <p>Hi, I'm Andrew. You wrote that making agents "truly productive, not just available" is the advantage. I've spent the last year on exactly that, mostly on my own codebases, and for eleven weeks on a production one at Coder. So I wrote this page the way I'd want an agent to read me: what to trust, what's been checked, and where it'll go wrong.</p>
+    <div class="meta">
+      <span><b>role</b> Staff Engineer, AI Productivity</span>
+      <span><b>geo</b> Remote (North America)</span>
+      <span><b>base</b> $180,000 to $400,000, location independent</span>
+      <span><b>me</b> Pueblo, Colorado</span>
+    </div>
+  </header>
+
+  <div class="ed" id="ed">
+    <nav class="tree" role="tablist" aria-label="Files" id="tree"><h2>EXPLORER</h2></nav>
+    <div class="pane">
+      <div class="tabbar">
+        <span class="path" id="path"></span>
+        <span class="seg" role="group" aria-label="View mode">
+          <button id="v-rendered" aria-pressed="true">rendered</button>
+          <button id="v-raw" aria-pressed="false">raw</button>
+        </span>
+      </div>
+      <div class="doc" id="doc" role="tabpanel" tabindex="0"></div>
+    </div>
+  </div>
+
+  <section class="lab" id="lab">
+    <h2>Same agent, with and without the context file.</h2>
+    <p>This is the job in one toggle. Pick a task I hand to agents all the time, then flip the context on and off. These are illustrations of the failure modes I've written rules for, not transcripts from a run.</p>
+    <div class="picks" id="picks" role="group" aria-label="Pick a task"></div>
+    <div class="term">
+      <div class="term-top"><span id="prompt-label"></span>
+        <button class="switch" id="ctx" role="switch" aria-checked="false"><i></i>load AGENTS.md</button></div>
+      <div class="out" id="out" aria-live="polite"></div>
+    </div>
+    <p class="caveat">Most of the rules on the green side exist because an agent did something like the red side to me.</p>
+  </section>
+
+  <section class="next" id="next">
+    <h2>If this reads like a fit, I'd like to talk.</h2>
+    <p>You say your loop is system design and an AI skills interview rather than brainteasers. That's the loop I'd pick. I'm in Pueblo, Colorado and I've worked remotely for years.</p>
+    <div class="cta">
+      <a class="p" href="https://portfolio.andrewzoll.com">See the portfolio</a>
+      <a class="s" href="https://www.linkedin.com/in/andrewzoll">Connect on LinkedIn</a>
+    </div>
+  </section>
+  <footer>Not affiliated with Hightouch. A personal page I built as part of my own application for the Staff Engineer, AI Productivity role.</footer>
+</div>
+
+<script>
+(function(){
+  var F=[
+   {n:'AGENTS.md',h:"AGENTS.md",b:[
+    ['p',"Read this first. <b>Andrew Zoll</b> is a builder who ships through agents and checks their work with code. His title today is Senior GTM Engineer (AI) at Coder, where he builds marketing-data tools."],
+    ['h',"## what you asked for, mapped"],
+    ['l',"<b>Own the agentic development environment.</b> See <code>environments.md</code>."],
+    ['l',"<b>Build MCP integrations.</b> See <code>mcp.md</code>."],
+    ['l',"<b>Documentation and context.</b> See <code>context.md</code>."],
+    ['l',"<b>Enablement, and serve as a PM for internal agents.</b> See <code>enablement.md</code>."],
+    ['h',"## rules for working with him"],
+    ['l',"He'd rather have a failing check than a confident answer."],
+    ['l',"When a claim can't be verified, turn it into a question. Don't state it."],
+    ['l',"Read <code>GAPS.md</code> before you get excited."]]},
+   {n:'context.md',h:"context.md: making agents understand how I build",b:[
+    ['p',"<b>AndrewOS</b> is the agent operating system I built and run my work on. Its top file is a short always-loaded contract that routes to everything else, because I learned the hard way that a long context file gets skimmed by models too."],
+    ['l',"Skills that register themselves, with a manager and junior hierarchy, so a task loads what it needs and nothing else."],
+    ['l',"Memory kept as one fact per file behind an index, so agents can grep for it instead of carrying it."],
+    ['l',"When an agent keeps getting something wrong, the fix becomes a written rule or a hook. It doesn't stay a note to self."],
+    ['h',"## you asked for"],
+    ['p',"\"Experience writing effective agent documentation, custom instructions, or context files that meaningfully improved agent output.\" That's what the last year has been. The honest caveat is that I've measured it by what stops going wrong rather than with a controlled eval."]]},
+   {n:'mcp.md',h:"mcp.md: giving agents access to internal systems",b:[
+    ['p',"At Coder I shipped an <b>OAuth authorization server that gates hosted MCP access</b> to the agent platform, so the question of who an agent acts for had a real answer. I built data integrations for Salesforce, Granola meeting transcripts and a Slack bot on the same platform."],
+    ['p',"AndrewOS runs on MCP servers and skills daily. Veritas, my citation-verification platform, has been my other lesson in tool design, because a tool that returns a confident wrong answer is worse than one that returns nothing."],
+    ['h',"## not yet"],
+    ['p',"I haven't built integrations for CircleCI or Datadog, the two you name. GitHub and Slack I've worked with every day."]]},
+   {n:'environments.md',h:"environments.md: agents running on their own",b:[
+    ['p',"My Coder pipeline ran through <b>Coder Agents</b>: open-weight Kimi models built, GLM models reviewed, and hard fixes escalated to GPT, Claude Opus and Fable. I authored <b>884 merged pull requests</b> in Python and TypeScript between July 27 and October 9, 2026."],
+    ['l',"The peak week ran <b>602 agent launches</b> and 193 merged pull requests."],
+    ['l',"A reviewer from a different model family had to clear each change, and mutation tests proved the tests could fail."],
+    ['l',"Across about 1,200 review verdicts on about 350 pull requests, reviewers recorded more than 430 confirmed catches."],
+    ['l',"I maintained the AWS stack through Terraform with a CI plan gate, ECS tasks and Lambda jobs."],
+    ['p',"I used the environment rather than built it. Sandboxing at scale is the piece I'd be learning."]]},
+   {n:'enablement.md',h:"enablement.md: working with engineers where agents struggle",b:[
+    ['p',"You want someone who asks where agents are struggling and fixes the root cause. That's how I've run my own work: <b>each failure turns into better docs, a tool, or a gate</b>."],
+    ['p',"On the non-engineer tooling you mention, I spent years as a financial advisor and at Coder I was the translation layer for the revenue team, so I'm comfortable sitting with people who've never opened a terminal."],
+    ['p',"Here's the limit. I've done this for myself and a two-person team, not across a whole engineering org. See the next file."]]},
+   {n:'GAPS.md',g:1,h:"GAPS.md: read this one",b:[
+    ['l',"<b>Staff.</b> I've never held a Staff title. My engineering title began in July 2026, and the years before it are founder years shipping FieldCommand, Veritas and AndrewOS alone."],
+    ['l',"<b>Cross-team adoption.</b> You want someone who can drive it across an engineering org. I haven't done that at scale."],
+    ['l',"<b>Your stack.</b> TypeScript monorepos, yes. Go and GraphQL, no."],
+    ['l',"<b>Complex backend code at speed.</b> Agents wrote most of those 884 PRs, and I reviewed and steered. I'd expect your system design interview to test how deep that goes, and it should."],
+    ['p',"<b>Where I am today.</b> I'm employed. The Coder agent platform program ran from July to October 2026 and ended, and since October 14 I've been a Senior GTM Engineer (AI) there. I also hold a securities registration through advisory work that's winding down, and it's a disclosed outside business activity."]]}
+  ];
+  var cur=0,mode='rendered',tree=document.getElementById('tree'),doc=document.getElementById('doc'),path=document.getElementById('path');
+  function strip(s){return s.replace(/<code>/g,'`').replace(/<\/code>/g,'`').replace(/<b>/g,'**').replace(/<\/b>/g,'**')}
+  function draw(){
+    var f=F[cur];path.textContent=f.n;
+    [].forEach.call(tree.querySelectorAll('button'),function(b,i){b.setAttribute('aria-selected',i===cur?'true':'false');b.tabIndex=i===cur?0:-1});
+    if(mode==='raw'){
+      var pre=document.createElement('pre');pre.className='raw';
+      pre.textContent='# '+f.h+'\n\n'+f.b.map(function(x){return x[0]==='l'?'- '+strip(x[1]):strip(x[1])}).join('\n\n');
+      doc.innerHTML='';doc.appendChild(pre);return;
+    }
+    var html='<h3>'+f.h+'</h3>',open=false;
+    f.b.forEach(function(x){
+      if(x[0]==='l'){if(!open){html+='<ul>';open=true}html+='<li>'+x[1]+'</li>';return}
+      if(open){html+='</ul>';open=false}
+      html+=x[0]==='h'?'<h4>'+x[1]+'</h4>':'<p>'+x[1]+'</p>';
+    });
+    if(open)html+='</ul>';
+    doc.innerHTML=html;
+  }
+  F.forEach(function(f,i){
+    var b=document.createElement('button');b.setAttribute('role','tab');b.textContent=f.n;
+    if(f.g)b.className='gap-file';
+    b.addEventListener('click',function(){cur=i;draw()});
+    tree.appendChild(b);
+  });
+  tree.addEventListener('keydown',function(e){
+    var d=(e.key==='ArrowDown'||e.key==='ArrowRight')?1:(e.key==='ArrowUp'||e.key==='ArrowLeft')?-1:0;if(!d)return;
+    e.preventDefault();cur=(cur+d+F.length)%F.length;draw();tree.querySelectorAll('button')[cur].focus();
+  });
+  doc.addEventListener('click',function(e){
+    var c=e.target.closest('code');if(!c)return;
+    var i=F.map(function(f){return f.n}).indexOf(c.textContent);if(i>=0){cur=i;draw()}
+  });
+  var vr=document.getElementById('v-rendered'),vw=document.getElementById('v-raw');
+  function setMode(m){mode=m;vr.setAttribute('aria-pressed',m==='rendered');vw.setAttribute('aria-pressed',m==='raw');draw()}
+  vr.addEventListener('click',function(){setMode('rendered')});vw.addEventListener('click',function(){setMode('raw')});
+  draw();
+
+  var T=[
+   {t:'write the status update',no:[['bad',"All tests pass and the migration is verified in production."],['',"(It ran none of them.)"]],yes:[['ok',"I ran the unit suite: pass. I did not run the migration, so production is unverified."],['p',"rule: never assert a check that didn't happen."]]},
+   {t:'add a Federal field to the prompt',no:[['bad',"Done. I added account history to the model input so answers are richer."],['',"(That includes history this user isn't cleared for.)"]],yes:[['ok',"Stopped. This field needs an access check before model input. Added it with a test per tier."],['p',"rule: if access can't be proven, fail closed."]]},
+   {t:'fix the flaky test',no:[['bad',"Fixed. I loosened the assertion and added a retry."],['',"(The bug is still there.)"]],yes:[['ok',"The assertion was right. Here's the race it caught, and a mutation test proving the test can still fail."],['p',"rule: fix root causes. A reviewer from another model family clears it."]]},
+   {t:'reuse that standard from the docs',no:[['bad',"Per your standard of 90% coverage, I rejected this change."],['',"(An earlier agent made that number up.)"]],yes:[['ok',"That target came from an agent-written file with no sign-off. Asking before I enforce it."],['p',"rule: don't cite agent-generated defaults back as the human's own standard."]]}
+  ];
+  var pk=0,picks=document.getElementById('picks'),out=document.getElementById('out'),ctx=document.getElementById('ctx'),lab=document.getElementById('prompt-label');
+  function run(){
+    var on=ctx.getAttribute('aria-checked')==='true',d=T[pk];
+    lab.textContent='$ agent "'+d.t+'"';
+    out.innerHTML='';
+    (on?d.yes:d.no).forEach(function(x){var s=document.createElement('div');if(x[0])s.className=x[0];s.textContent=x[1];out.appendChild(s)});
+    [].forEach.call(picks.children,function(b,i){b.setAttribute('aria-pressed',i===pk)});
+  }
+  T.forEach(function(d,i){var b=document.createElement('button');b.textContent=d.t;b.addEventListener('click',function(){pk=i;run()});picks.appendChild(b)});
+  ctx.addEventListener('click',function(){ctx.setAttribute('aria-checked',ctx.getAttribute('aria-checked')==='true'?'false':'true');run()});
+  run();
+})();
+</script>
+</body>
+</html>

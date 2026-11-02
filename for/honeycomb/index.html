@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>Andrew Zoll for Senior Software Engineer II, Agentic Intelligence at Honeycomb</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,800;6..12,900&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#25303e; --ink2:#4a5868; --line:#c9d1df; --soft:#f4f6f9; --paper:#fff; --blue:#0278cd; --blue-l:#badef9; --honey:#ffb000; --honey-l:#ffdd81; --orange:#f96e10; --green:#6fb33b; --green-l:#bde696;
+    --sans:'Nunito Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    --mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--soft);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  a{color:var(--blue)}
+  button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+  :focus-visible{outline:2.5px solid var(--blue);outline-offset:2px}
+  .wrap{max-width:1140px;margin:0 auto;padding-inline:20px}
+
+  .topbar{background:var(--ink);color:#fff;font-family:var(--mono);font-size:.8rem}
+  .topbar .wrap{display:flex;flex-wrap:wrap;gap:6px 18px;padding-block:9px;align-items:center}
+  .topbar b{color:var(--honey-l);font-weight:500}
+  header{padding-block:44px 22px;position:relative}
+  h1{font-size:clamp(2.1rem,5vw,3.5rem);line-height:1.08;font-weight:900;letter-spacing:-.02em;max-width:16em}
+  h1 mark{background:var(--honey-l);color:inherit;padding:0 .12em;border-radius:6px}
+  header p{margin-top:14px;max-width:43em;font-size:1.08rem;color:var(--ink2)}
+  .bee{position:absolute;right:24px;top:40px;font-size:30px;animation:bz 7s ease-in-out infinite}
+  .bee svg{display:block}
+  @keyframes bz{0%,100%{transform:translate(0,0) rotate(-6deg)}25%{transform:translate(-46px,18px) rotate(8deg)}55%{transform:translate(-14px,52px) rotate(-10deg)}80%{transform:translate(18px,14px) rotate(6deg)}}
+
+  section{padding-block:22px}
+  h2{font-size:clamp(1.45rem,3vw,2rem);font-weight:900;line-height:1.18;letter-spacing:-.01em}
+  .lede{color:var(--ink2);max-width:46em;margin-top:6px}
+
+  /* canvas */
+  .canvas{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:16px;margin-top:16px;align-items:start}
+  .panel{background:var(--paper);border:1px solid var(--line);border-radius:12px;min-width:0}
+  .panel>header{padding:10px 14px;border-bottom:1px solid var(--line);font-family:var(--mono);font-size:.78rem;color:var(--ink2);display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;align-items:center}
+  .query{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:12px 14px;border-bottom:1px solid var(--line);font-family:var(--mono);font-size:.82rem}
+  .query select{font:inherit;border:1px solid var(--line);border-radius:6px;padding:3px 6px;background:#fff;color:var(--ink)}
+  .hexwrap{padding:14px;overflow-x:auto}
+  svg.hex{display:block;width:100%;min-width:360px;height:auto}
+  svg.hex polygon{stroke:#fff;stroke-width:3;cursor:pointer;transition:opacity .15s,transform .15s;transform-box:fill-box;transform-origin:center}
+  svg.hex polygon:hover,svg.hex polygon:focus{transform:scale(1.07);outline:none;stroke:var(--ink)}
+  svg.hex polygon.dim{opacity:.16}
+  svg.hex polygon.sel{stroke:var(--ink);stroke-width:4}
+  svg.hex text{font-family:var(--mono);font-size:11px;fill:var(--ink);pointer-events:none;text-anchor:middle}
+  .legend{display:flex;flex-wrap:wrap;gap:12px;padding:0 14px 14px;font-size:.82rem;color:var(--ink2)}
+  .legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+  .result{padding:14px 16px}
+  .result h3{font-size:1.06rem;font-weight:800;line-height:1.3}
+  .result .q{font-family:var(--mono);font-size:.76rem;color:var(--ink2);margin-bottom:6px}
+  .result p{margin-top:8px;color:var(--ink)}
+  .badge{display:inline-block;font-family:var(--mono);font-size:.7rem;padding:1px 7px;border-radius:5px;margin-top:10px;margin-right:5px}
+  .counts{border-top:1px solid var(--line);padding:10px 16px;font-family:var(--mono);font-size:.76rem;color:var(--ink2)}
+  .counts div{display:flex;align-items:center;gap:8px;margin-bottom:4px}
+  .counts .bar{height:8px;border-radius:4px;background:var(--honey)}
+
+  /* hypotheses */
+  .hyps{display:grid;gap:10px;margin-top:14px}
+  .hyp{background:var(--paper);border:1px solid var(--line);border-left:5px solid var(--honey);border-radius:10px}
+  .hyp button{display:flex;width:100%;gap:12px;justify-content:space-between;text-align:left;padding:12px 16px;font-weight:800}
+  .hyp .st{font-family:var(--mono);font-size:.74rem;font-weight:500;flex:none;align-self:center}
+  .hyp .body{display:none;padding:0 16px 14px;color:var(--ink2)}
+  .hyp button[aria-expanded="true"]+.body{display:block}
+  .hyp.conf{border-left-color:var(--green)} .hyp.conf .st{color:#3f7d17}
+  .hyp.open{border-left-color:var(--orange)} .hyp.open .st{color:#b34b05}
+
+  .cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+  .cta a{font-weight:800;padding:10px 18px;border-radius:8px;text-decoration:none}
+  .cta .p{background:var(--ink);color:#fff}
+  .cta .s{border:2px solid var(--ink);color:var(--ink)}
+  footer{font-size:.82rem;color:var(--ink2);padding-block:14px 40px}
+  @media (max-width:880px){.canvas{grid-template-columns:minmax(0,1fr)}.bee{display:none}}
+  @media (prefers-reduced-motion:reduce){.bee{animation:none}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div class="topbar"><div class="wrap">
+  <span><b>role</b> Senior Software Engineer II, Agentic Intelligence</span>
+  <span><b>geo</b> "a fully distributed company"</span>
+  <span><b>base</b> $183,340 to $206,000</span>
+  <span><b>me</b> Pueblo, Colorado</span>
+</div></div>
+<div class="wrap">
+  <header>
+    <div class="bee" aria-hidden="true"><svg width="40" height="32" viewBox="0 0 40 32"><ellipse cx="15" cy="9" rx="9" ry="6" fill="#badef9" opacity=".85"/><ellipse cx="25" cy="9" rx="8" ry="5.5" fill="#badef9" opacity=".85"/><ellipse cx="20" cy="20" rx="13" ry="9" fill="#ffb000"/><rect x="14" y="11.5" width="3.6" height="17" fill="#25303e" rx="1.4"/><rect x="22" y="11.5" width="3.6" height="17" fill="#25303e" rx="1.4"/><circle cx="31" cy="18" r="1.5" fill="#25303e"/></svg></div>
+    <h1>Before you read my resume, <mark>investigate it.</mark></h1>
+    <p>Hi, I'm Andrew. Your team builds agents that form hypotheses from real data and show their work before a human looks. So here's my application as an open investigation. The question is "should Honeycomb talk to this person?" Run your own query against what I've shipped, then see which hypotheses I think held up and which ones didn't.</p>
+  </header>
+
+  <section id="query">
+    <h2>Every receipt is a cell. Group by anything.</h2>
+    <p class="lede">Pick a field and a value, and the rest dims. Click a cell to read it. High cardinality, it isn't. There are only 19 cells, and I wrote every one of them by hand.</p>
+    <div class="canvas">
+      <div class="panel">
+        <div class="query">
+          <span>WHERE</span>
+          <select id="field" aria-label="Field">
+            <option value="all">all events</option>
+            <option value="project">project =</option>
+            <option value="asks">your_jd_asks =</option>
+            <option value="status">status =</option>
+          </select>
+          <select id="val" aria-label="Value" hidden></select>
+        </div>
+        <div class="hexwrap"><svg class="hex" id="hex" viewBox="0 0 560 330" role="group" aria-label="Receipts"></svg></div>
+        <div class="legend" id="legend"></div>
+      </div>
+      <div class="panel" id="detail">
+        <div class="result" id="result" aria-live="polite"></div>
+        <div class="counts" id="counts"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="hypotheses">
+    <h2>What the investigation concluded.</h2>
+    <p class="lede">You asked for someone "honest about their limits." Each of these opens. Green held up. Orange didn't, or hasn't been tested.</p>
+    <div class="hyps" id="hyps"></div>
+  </section>
+
+  <section id="next">
+    <h2>Next step: a human looks.</h2>
+    <p class="lede">I'm in Pueblo, Colorado and I've worked remotely for years. If this reads like a fit, I'd like to talk about what you'd build next on Canvas.</p>
+    <div class="cta">
+      <a class="p" href="https://portfolio.andrewzoll.com">See the portfolio</a>
+      <a class="s" href="https://www.linkedin.com/in/andrewzoll">Connect on LinkedIn</a>
+    </div>
+  </section>
+  <footer>Not affiliated with Honeycomb, and this isn't Canvas. It's a personal page I built as part of my own application for the Senior Software Engineer II, Agentic Intelligence role.</footer>
+</div>
+<script>
+(function(){
+  var COL={shipped:'#ffb000',partial:'#ffdd81',gap:'#f96e10'};
+  var R=[
+   {t:'Shipped an internal agent platform',p:'coder',a:'production agents',s:'shipped',b:"I built an internal AI agent platform that turned CRM, support and call-transcript data into answers and workflows for Coder's revenue org, with a Slack bot in front. You asked for LLM systems people relied on, not demos, and sellers were the people relying on it."},
+   {t:'884 merged PRs in eleven weeks',p:'coder',a:'end-to-end ownership',s:'shipped',b:"I authored 884 merged pull requests in Python and TypeScript between July 27 and October 9, 2026, on a two-person team. Nobody was behind me to do the durable engineering, which is the condition you describe."},
+   {t:'Cross-family review gate',p:'coder',a:'evals',s:'shipped',b:"A reviewer from a different model family than the builder had to clear each change. Across about 1,200 verdicts on about 350 pull requests, reviewers recorded more than 430 confirmed catches and 21 false flags. My bet was that two models from one family tend to miss the same things."},
+   {t:'Mutation tests as a merge gate',p:'coder',a:'evals',s:'shipped',b:"Tests have to prove they can fail. That's my answer to your line about evals telling you whether something got better or is just different, at least for code."},
+   {t:'Fail-closed Federal access',p:'coder',a:'trustworthy agents',s:'shipped',b:"Shipped across 26 merged pull requests. The platform classifies Federal accounts, withholds unproven Federal history from model input for uncleared users, and tests every access tier."},
+   {t:'OAuth for hosted MCP',p:'coder',a:'MCP',s:'shipped',b:"An OAuth authorization server that gates hosted MCP access to the platform. You've shipped the Honeycomb MCP server, so you know why that part is more interesting than it sounds."},
+   {t:'Model cost per merged PR',p:'coder',a:'evals',s:'partial',b:"The peak week ran 602 agent launches and 193 merged pull requests, and I tracked model cost per PR. It's a good operating metric, though it isn't an eval of agent output on live data."},
+   {t:'Bounded fan-out',p:'coder',a:'fast data',s:'partial',b:"I cut a cold dashboard from 5 to 10 seconds down to about 2 by replacing a serial per-account S3 read loop with a bounded fan-out. That's my closest brush with your concern about query speed, and it's nowhere near your data store."},
+   {t:'Veritas verification pipeline',p:'veritas',a:'trustworthy agents',s:'shipped',b:"A citation-verification platform for legal filings. It checks cited cases and quotations against source records and returns an auditable record. A model doesn't get the last word, because a lawyer might have to defend the result."},
+   {t:'Hedged verdict semantics',p:'veritas',a:'honest about limits',s:'shipped',b:"I designed what the product says when it isn't sure. Your line about agents being honest about their limits is the same problem. When the evidence is thin, the agent should say so."},
+   {t:'Fixture suite for verdicts',p:'veritas',a:'evals',s:'partial',b:"Veritas has a fixture suite I run before releases. It's closer to regression tests than to the eval framework you likely run on Canvas."},
+   {t:'Agent OS I run every day',p:'andrewos',a:'agent architecture',s:'shipped',b:"AndrewOS has a delegation hierarchy, reusable skills, scheduled loops with duplicate-fire protection, and an append-only trace per stage so a finished run replays. It's my daily opinion-forming machine."},
+   {t:'Skills and memory',p:'andrewos',a:'Canvas Skills',s:'shipped',b:"You list skills that encode a team's domain expertise and memory on your example projects. Mine encode one person's, in skills and one-fact-per-file memory that agents grep. I've got a lot of opinions about what goes wrong there."},
+   {t:'Four AI features in production',p:'fieldcommand',a:'production agents',s:'shipped',b:"Shipped into a multi-tenant SaaS I built solo, 187,745 lines of TypeScript, behind per-tenant feature flags."},
+   {t:'Non-engineer users',p:'fieldcommand',a:'product judgment',s:'partial',b:"I've built for contractors and sellers. Your users are engineers in high-pressure moments, which is a sharper audience, and I'd need to earn their trust."},
+   {t:'No observability background',p:'gap',a:'nice to have',s:'gap',b:"I've used dashboards and traces. I've never worked in an observability company, and I don't know high-cardinality query engines from the inside. You list it as an even-better rather than a requirement, but I'd be ramping."},
+   {t:'Bedrock loop',p:'gap',a:'agent architecture',s:'gap',b:"You mention a faster Bedrock loop. My work has been on other providers and AWS compute, so Bedrock would be new."},
+   {t:'Depth of multi-agent design',p:'gap',a:'agent architecture',s:'gap',b:"You describe agents claiming hypotheses on a shared canvas. I've orchestrated builder and reviewer agents in sequence. Agents collaborating on one shared investigation is a step past what I've shipped."},
+   {t:'Title history',p:'gap',a:'seniority',s:'gap',b:"My engineering title began in July 2026, and the years before it are founder years. You don't state a years line, but Senior II implies one, so here it is."}
+  ];
+  var svg=document.getElementById('hex'),NS='http://www.w3.org/2000/svg',S=46,W=Math.sqrt(3)*S,polys=[];
+  function pts(cx,cy){var a=[];for(var i=0;i<6;i++){var r=Math.PI/180*(60*i-30);a.push((cx+(S-2)*Math.cos(r)).toFixed(1)+','+(cy+(S-2)*Math.sin(r)).toFixed(1))}return a.join(' ')}
+  var rows=[7,6,6],idx=0,sel=0;
+  rows.forEach(function(n,ri){
+    for(var c=0;c<n;c++){
+      if(idx>=R.length)return;
+      var cx=W/2+8+c*W+(ri%2?W/2:0),cy=S+6+ri*S*1.5,r=R[idx];
+      var p=document.createElementNS(NS,'polygon');p.setAttribute('points',pts(cx,cy));p.setAttribute('fill',COL[r.s]);p.setAttribute('tabindex','0');p.setAttribute('role','button');p.setAttribute('aria-label',r.t);
+      (function(i){p.addEventListener('click',function(){pick(i)});p.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();pick(i)}})})(idx);
+      svg.appendChild(p);polys.push(p);
+      var t=document.createElementNS(NS,'text');t.setAttribute('x',cx);t.setAttribute('y',cy+4);t.textContent=r.p==='gap'?'gap':r.p.slice(0,8);svg.appendChild(t);
+      idx++;
+    }
+  });
+  svg.setAttribute('viewBox','0 0 '+Math.ceil(W*7.6)+' '+Math.ceil(S*5.2));
+  document.getElementById('legend').innerHTML=[['shipped','Shipped'],['partial','Partial'],['gap','Gap']].map(function(x){return '<span><i style="background:'+COL[x[0]]+'"></i>'+x[1]+'</span>'}).join('');
+  var field=document.getElementById('field'),val=document.getElementById('val'),KEY={project:'p',asks:'a',status:'s'};
+  function matches(r){var f=field.value;return f==='all'||r[KEY[f]]===val.value}
+  function pick(i){sel=i;draw()}
+  function draw(){
+    polys.forEach(function(p,i){p.classList.toggle('dim',!matches(R[i]));p.classList.toggle('sel',i===sel)});
+    var r=R[sel],q=field.value==='all'?'all events':(field.value==='asks'?'your_jd_asks':field.value)+' = "'+val.value+'"';
+    document.getElementById('result').innerHTML='<div class="q">event '+(sel+1)+' of '+R.length+'</div><h3></h3><p></p><span class="badge" style="background:'+COL[r.s]+'">status: '+r.s+'</span><span class="badge" style="background:#badef9">asks: '+r.a+'</span>';
+    var res=document.getElementById('result');res.querySelector('h3').textContent=r.t;res.querySelector('p').textContent=r.b;
+    var hits=R.filter(matches),by={};hits.forEach(function(h){by[h.s]=(by[h.s]||0)+1});
+    var cs='<div><b>'+hits.length+'</b> of '+R.length+' events where '+q+'</div>';
+    ['shipped','partial','gap'].forEach(function(s){if(by[s])cs+='<div><span class="bar" style="width:'+(by[s]*14)+'px;background:'+COL[s]+'"></span>'+s+' '+by[s]+'</div>'});
+    document.getElementById('counts').innerHTML=cs;
+  }
+  field.addEventListener('change',function(){
+    var f=field.value;val.hidden=f==='all';
+    if(f!=='all'){
+      var opts=[];R.forEach(function(r){if(opts.indexOf(r[KEY[f]])<0)opts.push(r[KEY[f]])});
+      val.innerHTML='';opts.forEach(function(o){var e=document.createElement('option');e.value=o;e.textContent=o;val.appendChild(e)});
+    }
+    afterFilter();
+  });
+  function afterFilter(){var first=R.findIndex(matches);if(first>=0&&!matches(R[sel]))sel=first;draw()}
+  val.addEventListener('change',afterFilter);
+  draw();
+
+  var H=[
+   ['conf','He has shipped LLM systems that people relied on','held up',"The Coder revenue platform and Veritas both ran in production for real users. Select project = coder to see the evidence."],
+   ['conf','He owns the whole arc, from rough version to durable','held up',"Two-person team at Coder, alone on FieldCommand and Veritas. There wasn't a handoff queue to hand anything to."],
+   ['conf','He has current opinions about agent design','held up',"My strongest one: a model shouldn't review its own family's work, so I made the reviewer come from a different family. I'd like to hear where you think that's already out of date."],
+   ['open','He can build agents that reason over your data','not tested',"Nothing I've built looks like high-cardinality observability data. I'd expect the first few months to go to learning why your store changes what an agent can do."],
+   ['open','He has enough engineering years for Senior II','did not hold',"My engineering title began in July 2026. Before that I was a founder shipping alone, and before that a financial advisor under FINRA and SEC oversight. I also hold a securities registration through that advisory work, which is winding down and is a disclosed outside business activity."],
+   ['open','He\'s available','needs context',"I'm employed. The Coder agent platform program ran from July to October 2026 and ended, and since October 14 I've been a Senior GTM Engineer (AI) at Coder, building marketing-data tools. This seat is closer to the work I want to be doing."]
+  ];
+  var hy=document.getElementById('hyps');
+  H.forEach(function(x){
+    var d=document.createElement('div');d.className='hyp '+x[0];
+    var b=document.createElement('button');b.setAttribute('aria-expanded','false');
+    var a=document.createElement('span');a.textContent=x[1];var s=document.createElement('span');s.className='st';s.textContent=x[2];b.appendChild(a);b.appendChild(s);
+    var c=document.createElement('div');c.className='body';c.textContent=x[3];
+    b.addEventListener('click',function(){b.setAttribute('aria-expanded',b.getAttribute('aria-expanded')==='true'?'false':'true')});
+    d.appendChild(b);d.appendChild(c);hy.appendChild(d);
+  });
+})();
+</script>
+</body>
+</html>
