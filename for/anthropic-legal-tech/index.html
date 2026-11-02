@@ -319,7 +319,7 @@ footer p{margin:0;max-width:44em}
 
 <footer>
   <div class="wrap">
-    <p>I'm Andrew Zoll, and I live in Pueblo, Colorado. I'm a Senior Software Engineer (AI Solutions) at Coder and the founder of <a href="https://veritaslaw.app">Veritas</a>. This page isn't affiliated with or endorsed by Anthropic. Every number on it comes from work I've tracked.</p>
+    <p>I'm Andrew Zoll, and I live in Pueblo, Colorado. I'm a Senior GTM Engineer (AI) at Coder and the founder of <a href="https://veritaslaw.app">Veritas</a>. This page isn't affiliated with or endorsed by Anthropic. Every number on it comes from work I've tracked.</p>
     <p><a href="https://portfolio.andrewzoll.com">portfolio.andrewzoll.com</a><br/><a href="https://linkedin.com/in/andrewzoll">linkedin.com/in/andrewzoll</a></p>
   </div>
 </footer>
@@ -332,7 +332,7 @@ footer p{margin:0;max-width:44em}
      a:"Veritas runs five checks on every citation in a legal filing and reports the worst verdict, with the reason, on each one. The output is a Verification Certificate a lawyer can hand to a partner, a client, or an insurer.",
      r:"You can see the pipeline and the certificate at veritaslaw.app."},
     {id:"c02", v:"verified", q:"A habit of verifying rather than assuming: designing checks for invariants and plainly naming what isn't proved.",
-     a:"At Coder I built review gates where a model from a different family than the builder has to clear each change, and mutation tests confirm the tests can fail. Across about 1,200 verdicts on about 350 pull requests they recorded more than 430 confirmed defect catches and 21 false flags. One catch was a Redis cluster-mode blocker that passed every test against an in-memory fake.",
+     a:"At Coder I built review gates where a model from a different family than the builder had to clear each change, and mutation tests confirmed the tests could fail. Across about 1,200 verdicts on about 350 pull requests they recorded more than 430 confirmed defect catches and 21 false flags. One catch was a Redis cluster-mode blocker that passed every test against an in-memory fake.",
      r:"This comes from the review and mutation gates I built at Coder."},
     {id:"c03", v:"verified", q:"Ability to translate legal and privacy requirements into sound technical designs and implementations.",
      a:"I shipped fail-closed Federal data access controls across 26 merged pull requests. Uncleared users never get Federal history in model input, and the tests cover every access tier. In Veritas, a strict projection type keeps privileged brief text off the public certificate, and a test asserts it never appears in the frozen snapshot.",
@@ -350,7 +350,7 @@ footer p{margin:0;max-width:44em}
      a:"In Veritas, rate limits and transport failures resolve to unknown, never risk, and a 'not located' verdict now requires the source to affirmatively return a 404. That closed a whole class of false accusations instead of one bug.",
      r:"The Veritas scan self-verify gate closed this in June 2026."},
     {id:"c08", v:"partial", q:"Experience designing, building, and operating highly trusted infrastructure and data systems in production, including owning architectural decisions.",
-     a:"I own the architecture of Veritas end to end and maintain an AWS stack at Coder through Terraform with a CI plan gate, ECS tasks, and Lambda jobs. I cut a cold dashboard load from 5 to 10 seconds to about 2 by replacing a serial S3 read loop with a bounded fan-out. It's real production work, at a smaller scale than yours.",
+     a:"I own the architecture of Veritas end to end and maintained an AWS stack at Coder through Terraform with a CI plan gate, ECS tasks, and Lambda jobs. I cut a cold dashboard load from 5 to 10 seconds to about 2 by replacing a serial S3 read loop with a bounded fan-out. It's real production work, at a smaller scale than yours.",
      r:"The receipts are the Coder AWS stack and the Veritas architecture."},
     {id:"c09", v:"partial", q:"Experience working across large, complex, multi-team environments, including in stacks and code you don't own.",
      a:"I opened coder/coder#30576 in Coder's upstream Go codebase, and I've built integrations for Salesforce, Granola transcripts, and Slack. I haven't worked inside an organization the size of Anthropic's.",
