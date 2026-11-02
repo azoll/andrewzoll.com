@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>Andrew Zoll for AI Engineer, Internal Tools at Figma</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=Reenie+Beanie&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1e1e1e; --mut:#5c5c5c; --line:#e3e3e3; --paper:#fff; --dot:#d4d4d4; --bg:#f7f6f3;
+    --yellow:#ffe58f; --pink:#ffc2dd; --green:#b6ecc8; --blue:#bde3ff; --violet:#dcc8ff; --orange:#ffcfa8; --gray:#ececec;
+    --violet-d:#7b3ff2; --blue-d:#0b78d1; --green-d:#0d8a4a; --red-d:#d9381e; --orange-d:#c9610a; --pink-d:#c7337f;
+    --sans:'Figtree',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    --hand:'Reenie Beanie','Bradley Hand','Segoe Print',cursive;
+    --shadow:0 1px 2px rgba(0,0,0,.08),0 6px 14px rgba(0,0,0,.08);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth;scroll-padding-top:24px}
+  body{background-color:var(--bg);background-image:radial-gradient(var(--dot) 1.1px,transparent 1.1px);background-size:22px 22px;color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;padding-bottom:110px;overflow-x:hidden}
+  a{color:var(--blue-d)}
+  button{font:inherit;color:inherit;cursor:pointer;background:none;border:0}
+  button:focus-visible,a:focus-visible{outline:2.5px solid var(--blue-d);outline-offset:2px}
+  .wrap{max-width:1040px;margin:0 auto;padding-inline:20px}
+  .hand{font-family:var(--hand);font-size:1.75rem;line-height:1.05;font-weight:400}
+
+  /* title pill */
+  .pill{position:relative;display:inline-flex;align-items:center;gap:10px;margin:14px 0 0;background:var(--paper);border-radius:12px;box-shadow:var(--shadow);padding:8px 14px;font-size:.87rem;font-weight:600;max-width:100%}
+  .pill .tile{width:20px;height:20px;border-radius:6px;background:var(--violet-d);flex:none;position:relative}
+  .pill .tile:after{content:"";position:absolute;inset:5px 5px 5px 5px;background:#fff;border-radius:2px 2px 7px 2px}
+  .pill small{font-weight:500;color:var(--mut);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+  /* hero */
+  .hero{position:relative;display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:36px;padding-block:48px 34px;align-items:start}
+  h1{font-size:clamp(2.2rem,5.2vw,3.7rem);line-height:1.06;font-weight:800;letter-spacing:-.025em}
+  h1 mark{background:linear-gradient(transparent 62%,var(--yellow) 62%);color:inherit}
+  .hero p{margin-top:18px;font-size:1.12rem;max-width:36em}
+  .facts{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+  .facts span{background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:4px 10px;font-size:.86rem}
+  .facts b{font-weight:600}
+  .stack{position:relative;min-height:290px}
+  .note{position:absolute;width:190px;min-height:150px;padding:16px;border-radius:3px;box-shadow:var(--shadow);font-size:.95rem;line-height:1.35}
+  .note:nth-child(1){background:var(--yellow);transform:rotate(-3deg);left:0;top:0}
+  .note:nth-child(2){background:var(--blue);transform:rotate(2.5deg);left:112px;top:58px}
+  .note:nth-child(3){background:var(--pink);transform:rotate(-1.5deg);left:34px;top:142px}
+  .note b{display:block;font-size:.72rem;letter-spacing:.04em;text-transform:uppercase;margin-bottom:6px;font-weight:700;opacity:.72}
+
+  /* multiplayer cursors */
+  .cur{position:fixed;left:0;top:0;z-index:20;pointer-events:none;transition:transform 2.6s cubic-bezier(.45,.05,.3,1);will-change:transform}
+  .cur svg{display:block}
+  .cur span{display:inline-block;margin:-2px 0 0 12px;padding:2px 8px;border-radius:0 8px 8px 8px;color:#fff;font-size:.74rem;font-weight:600;white-space:nowrap}
+  body.solo .cur{display:none}
+
+  /* sections */
+  section{padding-block:30px}
+  .sec-tag{display:inline-block;color:#fff;border-radius:6px 6px 6px 0;padding:3px 10px;font-weight:700;font-size:.8rem}
+  h2{font-size:clamp(1.55rem,3.2vw,2.15rem);line-height:1.15;font-weight:800;letter-spacing:-.015em;margin-top:10px}
+  .lede{margin-top:8px;max-width:43em;color:#333}
+  .board{background:var(--paper);border-radius:16px;box-shadow:var(--shadow);padding:24px;margin-top:18px}
+
+  /* functions */
+  .chips{display:flex;flex-wrap:wrap;gap:8px}
+  .chip{padding:7px 14px;border-radius:999px;border:1.5px solid var(--line);font-weight:600;font-size:.92rem;background:#fff}
+  .chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
+  .fn-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px;margin-top:18px}
+  .fn{padding:16px;min-height:150px;border-radius:3px;box-shadow:0 1px 2px rgba(0,0,0,.1);font-size:.95rem;line-height:1.42}
+  .fn h3{font-size:.76rem;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;font-weight:700;opacity:.75}
+  .fn[data-f="GTM"]{background:var(--blue)} .fn[data-f="Finance"]{background:var(--green)} .fn[data-f="Legal"]{background:var(--violet)} .fn[data-f="Support"]{background:var(--orange)} .fn[data-f="People"]{background:var(--gray)}
+  .fn.dashed{background:transparent!important;box-shadow:none;border:2px dashed #bbb}
+
+  /* AI or rules */
+  .sort-top{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center}
+  .tally{font-weight:700;font-size:.95rem}
+  .reset{font-size:.86rem;color:var(--blue-d);font-weight:600;text-decoration:underline}
+  .sort-list{display:grid;gap:12px;margin-top:16px}
+  .job{border:1.5px solid var(--line);border-radius:10px;padding:14px 16px;background:#fff}
+  .job-q{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center}
+  .job-q p{flex:1 1 300px;font-weight:600}
+  .vote{display:flex;gap:6px}
+  .vote button{padding:6px 14px;border-radius:8px;font-weight:700;font-size:.88rem;border:1.5px solid var(--line);background:#fff}
+  .vote button:hover:not(:disabled){border-color:var(--ink)}
+  .vote button:disabled{cursor:default;opacity:.55}
+  .vote button.picked{opacity:1;border-color:var(--ink);background:var(--ink);color:#fff}
+  .ans{margin-top:10px;padding-top:10px;border-top:1px dashed var(--line);font-size:.95rem}
+  .ans b.ai{color:var(--violet-d)} .ans b.rules{color:var(--green-d)} .ans b.both{color:var(--orange-d)}
+
+  /* wall */
+  .wall-top{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between}
+  .switch{display:inline-flex;align-items:center;gap:9px;font-weight:600;font-size:.92rem}
+  .switch i{width:36px;height:20px;border-radius:999px;background:#c8c8c8;position:relative;transition:background .15s;flex:none}
+  .switch i:after{content:"";position:absolute;width:16px;height:16px;border-radius:50%;background:#fff;left:2px;top:2px;transition:transform .15s}
+  .switch[aria-checked="true"] i{background:var(--red-d)}
+  .switch[aria-checked="true"] i:after{transform:translateX(16px)}
+  .wall{display:grid;grid-template-columns:repeat(auto-fill,minmax(285px,1fr));gap:18px;margin-top:18px;align-items:start}
+  .st{display:block;width:100%;text-align:left;padding:16px;border-radius:3px;box-shadow:0 1px 2px rgba(0,0,0,.12),0 3px 8px rgba(0,0,0,.06);background:var(--yellow);transition:transform .15s}
+  .st:hover{transform:translateY(-2px) rotate(-.5deg)}
+  .st.gap{background:var(--pink)}
+  .st .ask{font-weight:600;font-size:.96rem;line-height:1.35}
+  .st .meta{display:block;margin-top:8px;font-size:.76rem;font-weight:700;letter-spacing:.03em;text-transform:uppercase;opacity:.65}
+  .st .rcpt{display:none;margin-top:10px;padding-top:10px;border-top:1px solid rgba(0,0,0,.18);font-size:.93rem;line-height:1.45;font-weight:400}
+  .st[aria-expanded="true"] .rcpt{display:block}
+  .wall.gaps-only .st:not(.gap){display:none}
+
+  /* gap, next, foot */
+  .gapbox{border:2.5px dashed var(--red-d);border-radius:14px;background:#fff;padding:22px;margin-top:18px}
+  .gapbox p+p{margin-top:12px}
+  .cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+  .cta a{padding:10px 18px;border-radius:10px;font-weight:700;text-decoration:none}
+  .cta a.p{background:var(--ink);color:#fff}
+  .cta a.s{background:#fff;color:var(--ink);border:1.5px solid var(--ink)}
+  footer{font-size:.84rem;color:var(--mut);padding-block:12px 26px}
+
+  /* bottom toolbar */
+  .tools{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:40;background:#fff;border-radius:14px;box-shadow:0 2px 6px rgba(0,0,0,.14),0 10px 26px rgba(0,0,0,.14);display:flex;align-items:center;gap:2px;padding:6px;max-width:calc(100vw - 16px);overflow-x:auto}
+  .tools a,.tools button{padding:7px 12px;border-radius:9px;font-size:.84rem;font-weight:600;color:var(--ink);text-decoration:none;white-space:nowrap}
+  .tools a:hover,.tools button:hover{background:#f0f0f0}
+  .tools a.on{background:var(--violet-d);color:#fff}
+  .tools .sep{width:1px;height:20px;background:var(--line);margin:0 4px;flex:none}
+
+  @media (max-width:760px){
+    .hero{grid-template-columns:minmax(0,1fr);padding-top:30px;gap:26px}
+    .stack{min-height:280px;max-width:320px}
+    .board{padding:16px}
+    .cur{display:none}
+    .tools .opt{display:none}
+    .tools .sep{display:none}
+  }
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.cur{transition:none}.st{transition:none}}
+</style>
+</head>
+<body>
+
+<div class="cur" id="c1" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 20 20"><path d="M3 2l13 7-6 1.6L7 17z" fill="#7b3ff2" stroke="#fff" stroke-width="1.3"/></svg><span style="background:#7b3ff2">Andrew</span></div>
+<div class="cur" id="c2" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 20 20"><path d="M3 2l13 7-6 1.6L7 17z" fill="#0d8a4a" stroke="#fff" stroke-width="1.3"/></svg><span style="background:#0d8a4a">a very patient Sales rep</span></div>
+
+<div class="wrap">
+  <div class="pill"><span class="tile"></span><span>Andrew Zoll <small>/ for AI Engineer, Internal Tools</small></span></div>
+
+  <header class="hero" id="top">
+    <div>
+      <h1>Your Sales team has a workflow. <mark>I've built that agent before.</mark></h1>
+      <p>Hi, I'm Andrew. Your posting describes someone who sits with a business team, finds the work that should never have been manual, builds the agent, tests it, and decides where plain rules are the better answer. From July to October 2026 that was my job at Coder, on a two-person team inside the revenue org. I've put this page on a board because that's where those conversations start, and I'd rather show you the stickies than a summary of them.</p>
+      <div class="facts">
+        <span><b>Role</b> AI Engineer, Internal Tools</span>
+        <span><b>Geo</b> "remotely in the United States"</span>
+        <span><b>Base</b> $153,000 to $296,000</span>
+        <span><b>Me</b> Pueblo, Colorado</span>
+      </div>
+    </div>
+    <div class="stack" aria-hidden="true">
+      <div class="note"><b>The kind of sticky a seller writes</b>Why do I need three tabs open to answer one question about an account?</div>
+      <div class="note"><b>What I shipped</b>A Slack bot on Salesforce and call transcripts that answers it.</div>
+      <div class="note"><b>What I shipped next</b>The controls that stop it from saying what that seller isn't cleared to see.</div>
+    </div>
+  </header>
+
+  <section id="functions">
+    <span class="sec-tag" style="background:var(--blue-d)">Discovery</span>
+    <h2>You named five teams. Here's what I've got for each.</h2>
+    <p class="lede">Your posting lists GTM, Finance, People, Legal and Support. Pick one. I've only got deep receipts for GTM, and one of these stickies is blank on purpose.</p>
+    <div class="board">
+      <div class="chips" role="group" aria-label="Filter by business function">
+        <button class="chip" data-filter="all" aria-pressed="true">All five</button>
+        <button class="chip" data-filter="GTM" aria-pressed="false">GTM</button>
+        <button class="chip" data-filter="Finance" aria-pressed="false">Finance</button>
+        <button class="chip" data-filter="People" aria-pressed="false">People</button>
+        <button class="chip" data-filter="Legal" aria-pressed="false">Legal</button>
+        <button class="chip" data-filter="Support" aria-pressed="false">Support</button>
+      </div>
+      <div class="fn-grid" id="fn-grid">
+        <div class="fn" data-f="GTM"><h3>GTM. The deep one</h3>I built an internal agent platform for Coder's revenue org that turned Salesforce, support and Granola call-transcript data into answers and workflows, and put a Slack bot in front of it. I sat with the people using it and acted as the translator between them and the platform.</div>
+        <div class="fn" data-f="Finance"><h3>Finance. Adjacent</h3>I've built automated pipelines connecting Stripe billing, AI services, CRM data and operational reporting for FieldCommand. And I've spent years as a financial advisor under FINRA and SEC oversight, so I know what an auditor wants to see. I've never built for a corporate finance team.</div>
+        <div class="fn" data-f="Legal"><h3>Legal. A real product</h3>Veritas is my citation-verification platform for legal filings. It checks cited cases and quotations against source records and returns an auditable record. It's built for lawyers as customers, so an in-house legal team would be new, but the fear of a wrong answer wouldn't be.</div>
+        <div class="fn" data-f="Support"><h3>Support. Some</h3>Support data was one of the inputs on the Coder platform, alongside CRM and call transcripts. I haven't built a support-facing agent or deflection flow.</div>
+        <div class="fn dashed" data-f="People"><h3>People. Blank sticky</h3>I've got nothing here yet. I'd start by sitting with the team and asking which question they answer forty times a week.</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="rules">
+    <span class="sec-tag" style="background:var(--green-d)">Judgment</span>
+    <h2>AI or rules? You call it, then see what I did.</h2>
+    <p class="lede">You wrote that this person helps determine "where AI adds value and where traditional rules-based software is the right choice." These are real decisions from things I've shipped. Vote on each one and compare.</p>
+    <div class="board">
+      <div class="sort-top">
+        <span class="tally" id="tally" aria-live="polite">0 of 6 called</span>
+        <button class="reset" id="reset" hidden>Start over</button>
+      </div>
+      <div class="sort-list" id="sort-list"></div>
+    </div>
+  </section>
+
+  <section id="receipts">
+    <span class="sec-tag" style="background:var(--orange-d)">Receipts</span>
+    <h2>Your posting, one sticky per line.</h2>
+    <p class="lede">Yellow is a line I've got a receipt for. Pink is a gap, and I'd rather you find it here than in the second interview. Click any sticky to open it. Nothing on these is estimated or rounded up.</p>
+    <div class="board">
+      <div class="wall-top">
+        <button class="switch" id="gaps" role="switch" aria-checked="false"><i></i>Show me only the gaps</button>
+        <button class="reset" id="openall">Open every sticky</button>
+      </div>
+      <div class="wall" id="wall">
+        <button class="st" aria-expanded="false"><span class="ask">"Design, build, and productionize AI agents, assistants, and workflow automations"</span><span class="meta">Receipt</span><span class="rcpt">I authored 884 merged pull requests in Python and TypeScript on the Coder platform between July 27 and October 9, 2026, in production on AWS. Agents were the builders, and I was the one on the hook for what landed.</span></button>
+        <button class="st" aria-expanded="false"><span class="ask">"LLMs, tool calling, RAG, structured outputs, agent frameworks, MCP, APIs, and enterprise data"</span><span class="meta">Receipt</span><span class="rcpt">I ran multi-model orchestration across Kimi, GLM, GPT and Claude, and I shipped an OAuth authorization server that gates hosted MCP access to the platform. AndrewOS, the agent operating system I built and run my own work on, is where I learned most of this.</span></button>
+        <button class="st" aria-expanded="false"><span class="ask">"Integrate AI applications with enterprise systems and data sources"</span><span class="meta">Receipt</span><span class="rcpt">Salesforce, Granola meeting transcripts and Slack at Coder, and Stripe and CRM data at FieldCommand. My Salesforce work was as an integrator rather than an admin.</span></button>
+        <button class="st" aria-expanded="false"><span class="ask">"Build evaluations and feedback loops to measure accuracy, reliability, and business impact"</span><span class="meta">Receipt</span><span class="rcpt">I designed a review gate in which a reviewer from a different model family than the builder had to clear each change, with mutation tests to prove the tests could fail. Across about 1,200 verdicts on about 350 pull requests, reviewers recorded more than 430 confirmed catches. That measures code quality. Business-impact evals on a workflow are the part I'd want to build out with you.</span></button>
+        <button class="st" aria-expanded="false"><span class="ask">"Deterministic guardrails, human-in-the-loop controls, and approval patterns"</span><span class="meta">Receipt</span><span class="rcpt">I shipped fail-closed Federal data access controls across 26 merged pull requests. The platform classifies Federal accounts, withholds unproven Federal history from model input for uncleared users, and tests every access tier. If it can't prove you're allowed, the model never sees it.</span></button>
+        <button class="st" aria-expanded="false"><span class="ask">"Strong observability, failure handling, security, authentication, authorization, and auditability"</span><span class="meta">Receipt</span><span class="rcpt">Role-based access control, tenant isolation and audit-ready data handling on FieldCommand, 187,745 lines of TypeScript that I built solo. Terraform with a CI plan gate, ECS tasks and Lambda jobs at Coder. Veritas returns an auditable verification record because a lawyer has to be able to defend it later.</span></button>
+        <button class="st" aria-expanded="false"><span class="ask">"Working directly with non-engineering stakeholders to understand ambiguous business problems"</span><span class="meta">Receipt</span><span class="rcpt">It's the part I've done longest. I advised 120+ households with 95% client retention, which is years of hearing a vague worry and finding the real question under it. At Coder I was the translation layer between the platform and the revenue team.</span></button>
+        <button class="st" aria-expanded="false"><span class="ask">"Identify reusable patterns... shared components and capabilities"</span><span class="meta">Receipt</span><span class="rcpt">AndrewOS is this habit made into a system: reusable skills, a delegation hierarchy, and deterministic hooks that check generated output before it can land. I've kept the patterns that survived and thrown out the ones that didn't.</span></button>
+        <button class="st gap" aria-expanded="false"><span class="ask">"5+ years of software engineering experience"</span><span class="meta">Gap</span><span class="rcpt">My engineering title began in July 2026. Before that were the founder years, shipping FieldCommand, Veritas and AndrewOS by myself. That's real production software, and it's still short of five years by any strict count.</span></button>
+        <button class="st gap" aria-expanded="false"><span class="ask">Bonus: "Salesforce, Zendesk, Workday, NetSuite, Greenhouse, or Slack" and "AWS Bedrock, AgentCore"</span><span class="meta">Partial gap</span><span class="rcpt">Salesforce and Slack, yes. The rest aren't on my resume, and neither are Bedrock or AgentCore. My AWS work has been ECS, Lambda, S3 and EventBridge.</span></button>
+        <button class="st gap" aria-expanded="false"><span class="ask">Bonus: "Okta, SSO, OAuth... SOX/ITGC, or other enterprise governance"</span><span class="meta">Partial gap</span><span class="rcpt">I've built OAuth. I haven't worked inside Okta or a SOX program. The governance I know is FINRA and SEC oversight, which is a different rulebook with the same instinct.</span></button>
+      </div>
+    </div>
+  </section>
+
+  <section id="gap">
+    <span class="sec-tag" style="background:var(--red-d)">Straight talk</span>
+    <h2>Where I am, and what I don't have.</h2>
+    <div class="gapbox">
+      <p><b>Where I am today.</b> I'm employed. The Coder agent platform program ran from July to October 2026 and ended, and since October 14 I've been a Senior GTM Engineer (AI) at Coder, building marketing-data tools. I'm writing because this seat is the closest thing I've seen to the best work I've done.</p>
+      <p><b>The honest gap.</b> I'm short of your five years on a strict count. I've built for one company's revenue org, not for a whole company's worth of functions at once, and I've done it on a two-person team rather than inside a larger internal platform group. I also hold a securities registration through advisory work that's winding down, and it's a disclosed outside business activity.</p>
+      <p><b>What I'd do first.</b> I'd sit with one team, watch the workflow, and write down what the rules can handle before I reached for a model. That's a guess at how you work, so I'd want to hear how the team actually starts.</p>
+    </div>
+  </section>
+
+  <section id="next">
+    <span class="sec-tag" style="background:var(--violet-d)">Next step</span>
+    <h2>If this reads like a fit, I'd like to talk.</h2>
+    <p class="lede">I'm in Pueblo, Colorado, I've worked remotely for years, and I'm glad to show up for in-person onboarding. <span class="hand">(I'll bring my own stickies.)</span></p>
+    <div class="cta">
+      <a class="p" href="https://portfolio.andrewzoll.com">See the portfolio</a>
+      <a class="s" href="https://www.linkedin.com/in/andrewzoll">Connect on LinkedIn</a>
+    </div>
+  </section>
+
+  <footer>Not affiliated with Figma, and this isn't a real FigJam file. It's a personal page I built as part of my own application for the AI Engineer, Internal Tools role.</footer>
+</div>
+
+<nav class="tools" aria-label="Board sections">
+  <a href="#functions" data-s="functions">Teams</a>
+  <a href="#rules" data-s="rules">AI or rules</a>
+  <a href="#receipts" data-s="receipts">Receipts</a>
+  <a href="#gap" data-s="gap">Gaps</a>
+  <a href="#next" data-s="next">Talk</a>
+  <span class="sep"></span>
+  <button class="opt" id="solo" aria-pressed="false">Hide cursors</button>
+</nav>
+
+<script>
+(function(){
+  // function filter
+  var chips=[].slice.call(document.querySelectorAll('.chip')), fns=[].slice.call(document.querySelectorAll('.fn'));
+  chips.forEach(function(c){c.addEventListener('click',function(){
+    chips.forEach(function(x){x.setAttribute('aria-pressed',x===c?'true':'false')});
+    var f=c.getAttribute('data-filter');
+    fns.forEach(function(n){n.hidden=!(f==='all'||n.getAttribute('data-f')===f)});
+  })});
+
+  // AI or rules
+  var JOBS=[
+    {q:"Veritas: pull the citations and claims out of a messy legal filing",a:"ai",t:"AI.",why:"The input is unstructured, and a model reads it better than any parser I could write. It only extracts, though. It doesn't get to decide anything."},
+    {q:"Veritas: decide whether a cited case actually checks out",a:"rules",t:"Rules.",why:"That verdict is checked against source records in code. A lawyer can get sanctioned over this answer, so a model doesn't get to give it."},
+    {q:"Coder: answer a seller's question about an account from CRM and call transcripts",a:"ai",t:"AI.",why:"Sellers ask in plain language and the answer lives in transcripts and CRM fields. That's what a model is for, so it went in a Slack bot."},
+    {q:"Coder: decide whether a user may see Federal account history",a:"rules",t:"Rules, and fail closed.",why:"Unproven Federal history is withheld from model input for uncleared users, before the model is ever called. No prompt can leak what it never received."},
+    {q:"My build pipeline: decide whether a change is good enough to merge",a:"both",t:"Both.",why:"A reviewer model from a different family than the builder reads the change, and mutation tests prove the tests can fail. I wouldn't trust either one alone. If you picked either side, you're half right."},
+    {q:"FieldCommand: keep one contractor's data away from another's",a:"rules",t:"Rules.",why:"Tenant isolation and role-based access are plain code in a multi-tenant Postgres app. The four AI features sit behind per-tenant flags on top of that, and never in place of it."}
+  ];
+  var list=document.getElementById('sort-list'), tally=document.getElementById('tally'), reset=document.getElementById('reset');
+  var state={};
+  function draw(){
+    list.innerHTML='';
+    var done=0,match=0;
+    JOBS.forEach(function(j,i){
+      var el=document.createElement('div');el.className='job';
+      var pick=state[i];
+      var q=document.createElement('div');q.className='job-q';
+      var p=document.createElement('p');p.textContent=j.q;q.appendChild(p);
+      var v=document.createElement('div');v.className='vote';
+      [['ai','AI'],['rules','Rules']].forEach(function(o){
+        var b=document.createElement('button');b.textContent=o[1];
+        b.setAttribute('aria-label',o[1]+': '+j.q);
+        if(pick){b.disabled=true;if(pick===o[0])b.className='picked'}
+        b.addEventListener('click',function(){state[i]=o[0];draw()});
+        v.appendChild(b);
+      });
+      q.appendChild(v);el.appendChild(q);
+      if(pick){
+        done++;
+        var hit=(j.a==='both'||pick===j.a);if(hit)match++;
+        var r=document.createElement('div');r.className='ans';
+        var b=document.createElement('b');b.className=j.a;b.textContent='I went with: '+j.t+' ';
+        r.appendChild(b);r.appendChild(document.createTextNode(j.why));
+        el.appendChild(r);
+      }
+      list.appendChild(el);
+    });
+    tally.textContent=done===JOBS.length
+      ? 'We agreed on '+match+' of '+JOBS.length+'. '+(match===JOBS.length?'We should talk.':'We should definitely talk.')
+      : done+' of '+JOBS.length+' called';
+    reset.hidden=done===0;
+  }
+  reset.addEventListener('click',function(){state={};draw()});
+  draw();
+
+  // stickies
+  var sts=[].slice.call(document.querySelectorAll('.st')), wall=document.getElementById('wall');
+  var openall=document.getElementById('openall');
+  function syncOpen(){
+    var vis=sts.filter(function(s){return !wall.classList.contains('gaps-only')||s.classList.contains('gap')});
+    var all=vis.every(function(s){return s.getAttribute('aria-expanded')==='true'});
+    openall.textContent=all?'Close every sticky':'Open every sticky';
+    return all;
+  }
+  sts.forEach(function(s){s.addEventListener('click',function(){
+    s.setAttribute('aria-expanded',s.getAttribute('aria-expanded')==='true'?'false':'true');syncOpen();
+  })});
+  openall.addEventListener('click',function(){
+    var all=syncOpen();
+    sts.forEach(function(s){s.setAttribute('aria-expanded',all?'false':'true')});
+    syncOpen();
+  });
+  var gaps=document.getElementById('gaps');
+  gaps.addEventListener('click',function(){
+    var on=gaps.getAttribute('aria-checked')!=='true';
+    gaps.setAttribute('aria-checked',on?'true':'false');
+    wall.classList.toggle('gaps-only',on);
+    if(on)sts.forEach(function(s){if(s.classList.contains('gap'))s.setAttribute('aria-expanded','true')});
+    syncOpen();
+  });
+
+  // toolbar highlight
+  var links=[].slice.call(document.querySelectorAll('.tools a'));
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){
+      if(e.isIntersecting)links.forEach(function(l){l.classList.toggle('on',l.getAttribute('data-s')===e.target.id)});
+    })},{rootMargin:'-35% 0px -55% 0px'});
+    links.forEach(function(l){var t=document.getElementById(l.getAttribute('data-s'));if(t)io.observe(t)});
+    addEventListener('scroll',function(){
+      if(innerHeight+scrollY>=document.documentElement.scrollHeight-4)links.forEach(function(l){l.classList.toggle('on',l.getAttribute('data-s')==='next')});
+    },{passive:true});
+  }
+
+  // cursors wander toward whatever is on the board
+  var solo=document.getElementById('solo');
+  solo.addEventListener('click',function(){
+    var on=document.body.classList.toggle('solo');
+    solo.textContent=on?'Show cursors':'Hide cursors';
+    solo.setAttribute('aria-pressed',on?'true':'false');
+  });
+  var c1=document.getElementById('c1'),c2=document.getElementById('c2');
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function targets(){return [].slice.call(document.querySelectorAll('.note,.fn,.st')).filter(function(n){
+    if(!n.offsetParent)return false;var r=n.getBoundingClientRect();return r.top>40&&r.bottom<innerHeight-90&&r.left>=0&&r.right<=innerWidth;
+  })}
+  function move(c,ox,oy){
+    var t=targets();if(!t.length)return;
+    var r=t[Math.floor(Math.random()*t.length)].getBoundingClientRect();
+    // park on the sticky's top edge so a cursor never sits on the words being read
+    var x=Math.min(innerWidth-190,Math.max(8,r.right-40+ox*.3));
+    var y=Math.min(innerHeight-120,Math.max(8,r.top-14+oy*.1));
+    c.style.transform='translate('+Math.round(x)+'px,'+Math.round(y)+'px)';
+  }
+  move(c1,0,0);move(c2,30,20);
+  if(reduce){document.body.classList.add('solo');solo.textContent='Show cursors';solo.setAttribute('aria-pressed','true')}
+  else{setInterval(function(){if(!document.hidden)move(c1,0,0)},3400);setTimeout(function(){setInterval(function(){if(!document.hidden)move(c2,30,20)},4300)},900)}
+})();
+</script>
+</body>
+</html>
