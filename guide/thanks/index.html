@@ -217,11 +217,11 @@
     <div class="wrap inner" style="max-width:760px;">
       <div class="eyebrow"><span class="dot"></span> Thank you</div>
       <h1 style="font-size:clamp(34px,5vw,56px);">Your guide is ready.</h1>
-      <p class="lead" id="lead">Click below to download The AI OS Building Guide. The same link is in your Stripe receipt, and it always serves the current version.</p>
+      <p class="lead" id="lead">Click below to download The AI OS Building Guide. Save the file now; this page is the only place the link lives.</p>
       <div class="ctas" id="ctas">
         <a id="dl" class="btn-primary green" href="#" hidden>Download the guide <span class="arrow">→</span></a>
       </div>
-      <p class="ctasub" id="sub">If the download does not start, forward your Stripe receipt to <a href="mailto:andrew@andrewzoll.com">andrew@andrewzoll.com</a> and the PDF comes back by reply.</p>
+      <p class="ctasub" id="sub">If the download does not start, or you lose the file later, forward your Stripe receipt to <a href="mailto:andrew@andrewzoll.com">andrew@andrewzoll.com</a> and the current PDF comes back by reply.</p>
       <div class="meta">
         <div class="item"><span class="k">01</span> Read Foundations first, then run the steps in order</div>
         <div class="item"><span class="k">02</span> One step per session</div>
@@ -238,7 +238,7 @@
         a.href = 'https://andrewzoll-guide.banah-enterprises.workers.dev/download?session_id=' + encodeURIComponent(id);
         a.hidden = false;
       } else {
-        document.getElementById('lead').textContent = 'This page needs the link Stripe sends after checkout. Open it from your receipt email, or write to andrew@andrewzoll.com with your receipt and the PDF comes back by reply.';
+        document.getElementById('lead').textContent = 'This page needs the link Stripe opens right after checkout. If you already paid, write to andrew@andrewzoll.com with your receipt and the PDF comes back by reply.';
       }
     })();
   </script>
