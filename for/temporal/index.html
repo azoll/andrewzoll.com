@@ -146,6 +146,10 @@ section{padding:88px 0;position:relative}
 .chip.hot{border-color:rgba(182,100,255,.4);color:var(--purple);background:rgba(182,100,255,.07)}
 
 /* ---------- history rows (JD to receipt) ---------- */
+.roles{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 18px}
+.role-tab{font-family:var(--mono);font-size:12px;letter-spacing:.02em;padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--muted,#aaa);cursor:pointer}
+.role-tab:hover{border-color:var(--purple);color:var(--purple)}
+.role-tab[aria-selected="true"]{border-color:rgba(195,255,98,.5);color:var(--lime);background:rgba(195,255,98,.07)}
 .hist{border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--panel)}
 .row{border-bottom:1px solid var(--line)}
 .row:last-child{border-bottom:0}
@@ -254,10 +258,14 @@ footer .wrap{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;
 </div></div>
 
 <header class="hero"><div class="wrap">
-  <div class="eyebrow">Staff Software Engineer · AI Foundations · Agent Optimization</div>
+  <div class="roles" role="tablist" aria-label="Which Temporal role">
+    <button class="role-tab" role="tab" type="button" data-role="foundations" aria-selected="true">workflowType: AIFoundations</button>
+    <button class="role-tab" role="tab" type="button" data-role="builder" aria-selected="false">workflowType: BuilderPlatform</button>
+  </div>
+  <div class="eyebrow" id="roleEyebrow">Staff Software Engineer · AI Foundations · Agent Optimization</div>
   <h1>My career is a long-running workflow. Here's the <span class="hl">event history</span>.</h1>
   <p class="lede">I'm Andrew Zoll. I build agent systems that have to be right, not just impressive, and I've spent the last two years making agentic coding produce output I'd actually ship. <strong>That's the job you posted.</strong> So instead of telling you about it, I replayed the execution.</p>
-  <p class="disclaim">This is a candidate's pitch for your Staff Software Engineer, AI Foundations role, built in your design language on purpose. I'm not affiliated with Temporal. It's just me, showing the work, using your vocabulary because it happens to be the right vocabulary.</p>
+  <p class="disclaim">This is a candidate's pitch for your <span id="roleName">Staff Software Engineer, AI Foundations</span> role, built in your design language on purpose. I'm not affiliated with Temporal. It's just me, showing the work, using your vocabulary because it happens to be the right vocabulary.</p>
 
   <div class="player">
     <div class="player-head">
@@ -429,7 +437,7 @@ const EVENTS = [
   {n:8,  t:'ChildWorkflowStarted',     c:'', d:'<b>AndrewOS</b>. Agent operating system, arena-based delegation, builder to reviewer to validator, no agent audits its own work.'},
   {n:9,  t:'ChildWorkflowStarted',     c:'', d:'<b>Veritas</b>. Citation verification for legal filings, with hedged-verdict semantics because a confident wrong answer is the failure mode that matters.'},
   {n:10, t:'ActivityTaskCompleted',    c:'win', d:'<b>Coder</b>, Senior Software Engineer for AI Solutions. Python, large production codebase, two-person team, internal AI agent platform.'},
-  {n:11, t:'SignalReceived',           c:'', d:'Your posting: Staff Software Engineer, AI Foundations. <b>Agent optimization.</b> Token spend, latency, and result quality.'},
+  {n:11, id:'sig', t:'SignalReceived',           c:'', d:'Your posting: Staff Software Engineer, AI Foundations. <b>Agent optimization.</b> Token spend, latency, and result quality.'},
   {n:12, t:'WorkflowTaskScheduled',    c:'win', d:'Which is the problem I already work on. So I built this page and stopped the timer.'}
 ];
 const evBox=document.getElementById('events');
@@ -489,7 +497,9 @@ const HIST=[
    body:'<p>Listed as a nice-to-have, and I do not have it. My work has been commercial or solo, so there is no meaningful public PR history to send you.</p><p>I note that your team works in the open by default, which means this gap has a real cost for you and not just for me. Worth naming rather than skipping.</p><span class="src">open: no significant public contribution history.</span>'}
 ];
 const histBox=document.getElementById('hist');
-HIST.forEach((h,i)=>{
+function renderHist(list){
+histBox.innerHTML='';
+list.forEach((h,i)=>{
   const row=document.createElement('div');
   row.className='row'; row.setAttribute('aria-expanded','false');
   const open = h.st==='open';
@@ -514,6 +524,48 @@ HIST.forEach((h,i)=>{
     requestAnimationFrame(()=>{body.style.maxHeight=body.scrollHeight+'px';});
   }
 });
+}
+renderHist(HIST);
+
+const HIST_BUILDER=[
+  {req:'Develop and operate our Agent Platform for deploying, running, evaluating, governing, and improving agents',st:'completed',
+   body:'<p>From July to October 2026 I was a Senior Software Engineer (AI Solutions) at <strong>Coder</strong>, where I built an internal AI agent platform for the revenue organization in Python and TypeScript on AWS. It turned CRM, support, and call-transcript data into answers and workflows, and I authored 884 merged pull requests on it in about eleven weeks.</p><p>The "governing" half is the part I care about most. Every change had to clear a reviewer from a different model family than the builder, plus mutation tests that proved the tests could fail.</p>'},
+  {req:'Establish the AI Infrastructure agents depend on: LLM and MCP gateways, guardrails, fallback, usage and cost controls',st:'partial',
+   body:'<p>I shipped an OAuth authorization server that gated hosted MCP access to the Coder platform, and I ran builds across Kimi, GLM, GPT, Claude Opus and Fable models with escalation from cheap builders to stronger reviewers. Cost was tracked per merged pull request, about $38 at the peak week.</p><p>The honest gap: that was routing and gating inside one platform, not a company-wide LLM gateway with model rollout policies. I know the shape of the problem; I haven\'t owned that exact product.</p>'},
+  {req:'Build agents that carry engineering work from issue to production, with humans governing the boundaries',st:'completed',
+   body:'<p>This is how I build. Open-weight models wrote the code, a different model family reviewed it, and I held the merge. Across about 1,200 review verdicts on about 350 pull requests, reviewers recorded more than 430 confirmed defect catches and 21 false flags, including a Redis cluster-mode production blocker found in review round 5.</p><p>On the business side, <strong>AndrewOS</strong> runs my own work the same way: arena agents do the tasks, and I keep the decisions.</p>'},
+  {req:'Partner with Engineering, Product, Sales, and G&A on where AI could accelerate their work',st:'completed',
+   body:'<p>I sat inside the revenue organization at Coder and built Salesforce, Granola transcript and Slack bot integrations for people who are not engineers. Since October 2026 I\'m a Senior GTM Engineer (AI) in Coder marketing, building marketing-data tools, so I\'m on the business side of this exact conversation right now.</p>'},
+  {req:'Own our Developer Infrastructure (Source Control and CI) and build tools that improve builder flow',st:'partial',
+   body:'<p>I maintained the Coder platform\'s AWS stack through Terraform with a CI plan gate, and I made mutation testing a merge gate. Those are CI decisions I made and lived with.</p><p>The gap is scale: I haven\'t owned source control and CI for a whole company. I\'d be learning your Git and CI estate, not arriving with one I\'ve run.</p>'},
+  {req:'Build measurement and feedback loops (usage, reliability, and cost) to quantify productivity',st:'completed',
+   body:'<p>I measured the pipeline I ran: peak week was 602 agent launches and 193 merged pull requests at about $38 of model cost per merged PR. I also cut cold dashboard load time from 5 to 10 seconds to about 2 seconds by replacing a serial per-account S3 read loop with a bounded fan-out.</p>'},
+  {req:'Drive adoption of agentic tooling and own the best practices and enablement materials',st:'partial',
+   body:'<p>I wrote the operating documentation for my Coder platform, and AndrewOS only works because its doctrine is written down and current. That\'s enablement for agents and for me.</p><p>I don\'t have company-wide adoption numbers to show you, so I won\'t invent one.</p>'},
+  {req:'Treat Temporal as customer zero: requirements for Temporal Cloud, the SDKs, and the Agent Harness',st:'open',
+   body:'<p>A real gap. I haven\'t built or operated a production Temporal application. My long-running work has run on EventBridge, Lambda and ECS, where I learned the hard way about retries, duplicate sends and double-firing schedulers. That\'s exactly why durable execution reads to me like the right answer, but I\'d be learning the SDK on your team.</p>'},
+  {req:'Participate in on-call to support internal users',st:'open',
+   body:'<p>I\'ve run production for systems I built alone, FieldCommand and Veritas, where there was nobody else to page. My CV doesn\'t show a formal on-call rotation on a team, so I won\'t claim one. I\'m fine carrying a pager.</p>'}
+];
+const ROLES={
+  foundations:{eyebrow:'Staff Software Engineer · AI Foundations · Agent Optimization',name:'Staff Software Engineer, AI Foundations',
+    sig:'Your posting: Staff Software Engineer, AI Foundations. <b>Agent optimization.</b> Token spend, latency, and result quality.',hist:HIST},
+  builder:{eyebrow:'Senior Software Engineer · Builder Platform · Agents for a company of builders',name:'Senior Software Engineer, Builder Platform',
+    sig:'Your posting: Senior Software Engineer, Builder Platform. <b>An agent platform for the whole company.</b> MCP gateways, internal agents, CI.',hist:HIST_BUILDER}
+};
+function setRole(key){
+  const r=ROLES[key]; if(!r) return;
+  document.querySelectorAll('.role-tab').forEach(t=>t.setAttribute('aria-selected',String(t.dataset.role===key)));
+  document.getElementById('roleEyebrow').textContent=r.eyebrow;
+  document.getElementById('roleName').textContent=r.name;
+  EVENTS.find(e=>e.id==='sig').d=r.sig;
+  renderHist(r.hist);
+  statusChip.style.color=''; statusChip.style.background='';
+  play();
+  try{history.replaceState(null,'',key==='builder'?'#builder':location.pathname);}catch(e){}
+}
+document.querySelectorAll('.role-tab').forEach(t=>t.addEventListener('click',()=>setRole(t.dataset.role)));
+if(location.hash==='#builder') setRole('builder');
 window.addEventListener('resize',()=>{
   document.querySelectorAll('.row[aria-expanded="true"]').forEach(r=>{
     const b=r.querySelector('.row-body'); b.style.maxHeight=b.scrollHeight+'px';

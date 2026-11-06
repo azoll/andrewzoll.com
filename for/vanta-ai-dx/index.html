@@ -149,6 +149,8 @@
   .btn.p:hover{background:var(--plum2);border-color:var(--plum2)}
   footer{border-top:1px solid var(--rule);padding:28px 0 48px;font-size:13px;color:var(--mut2);line-height:1.8}
   @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+.rolesw{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.rolesw .ghost[aria-selected="true"]{outline:2px solid currentColor;outline-offset:1px;font-weight:600}
 </style>
 </head>
 <body>
@@ -159,18 +161,22 @@
 </div></div>
 
 <header class="hero"><div class="wrap">
-  <div class="kick">Senior Software Engineer · AI Developer Experience · Vanta</div>
+  <div class="rolesw" role="tablist" aria-label="Which Vanta role">
+    <button class="ghost" role="tab" data-role="dx" aria-selected="true" aria-pressed="true">AI Developer Experience</button>
+    <button class="ghost" role="tab" data-role="platform" aria-selected="false" aria-pressed="false">AI Platform</button>
+  </div>
+  <div class="kick" id="kick">Senior Software Engineer · AI Developer Experience · Vanta</div>
   <h1>Agents wrote most of my last 884 pull requests. The job was deciding <em>which ones to trust.</em></h1>
   <div class="intro">
     <div>
       <p>Hi, I'm Andrew. From July to October 2026 I was a Senior Software Engineer on AI Solutions at <strong>Coder</strong>, and nearly everything I shipped there went through a pipeline of background agents I set up: open-weight models built, a model from a different family reviewed, and mutation tests checked that the tests could actually fail.</p>
-      <p>Your AI DX team is building the grown-up version of that for a whole engineering org, with real evals on <strong>outcome, quality, human intervention and cost</strong>. That's the part I care about most, so I've laid out my case the way I'd want to read an agent's work: as a run log.</p>
+      <p id="pitch">Your AI DX team is building the grown-up version of that for a whole engineering org, with real evals on <strong>outcome, quality, human intervention and cost</strong>. That's the part I care about most, so I've laid out my case the way I'd want to read an agent's work: as a run log.</p>
     </div>
     <div class="term" id="term" aria-label="Pipeline summary"></div>
   </div>
   <div class="facts">
     <span class="fact">Posted <b>Remote U.S.</b></span>
-    <span class="fact">Band <b>$195K to $229K</b> + equity</span>
+    <span class="fact">Band <b id="band">$195K to $229K</b> + equity</span>
     <span class="fact">I'm in <b>Pueblo, Colorado</b></span>
   </div>
 </div></header>
@@ -179,7 +185,7 @@
 
   <section id="runs">
     <div class="lab">Run log</div>
-    <h2>Eight tasks from your posting, each scored like an agent run.</h2>
+    <h2><span id="nTasks">Eight</span> tasks from your posting, each scored like an agent run.</h2>
     <p class="lede">Each run is one line from the job description. Open it to read the trace. "Needed a human" means I don't fully meet that line yet, and I've marked those plainly instead of rounding them up. The scorecard recomputes from whatever runs are showing.</p>
 
     <div class="score">
@@ -236,7 +242,7 @@
   </section>
 
   <footer>
-    Not affiliated with Vanta. A personal page I built as part of my own application for the Senior Software Engineer, AI Developer Experience role.<br>
+    Not affiliated with Vanta. A personal page I built as part of my own application for the <span id="footRole">Senior Software Engineer, AI Developer Experience</span> role.<br>
     The scorecard is my own self-assessment against the posting, not a measurement of anything at Vanta.
   </footer>
 </div>
@@ -244,7 +250,7 @@
 <script>
 (function(){
   // i: intervention, 0 none, 1 light, 2 a human had to step in
-  var RUNS = [
+  var RUNS_DX = [
     {id:'r-01', s:'m', i:0, t:'Background-agent infrastructure', q:'reliable, trackable, and repeatable automated engineering work',
      tr:[['I set up the pipeline I shipped through at Coder on <strong>Coder Agents</strong>.',''],
          ['Open-weight <strong>Kimi</strong> models built, <strong>GLM</strong> models reviewed, and hard fixes and reviews escalated to <strong>GPT, Claude Opus and Fable</strong>.',''],
@@ -284,6 +290,67 @@
          ['A human is needed here: I&#39;ve led complex projects alone and on a two-person team, not a larger team. If your bar is years leading a team, I don&#39;t clear it yet.','flag']],
      src:'Honest gap, both clocks stated'}
   ];
+
+  var RUNS_PLATFORM = [
+    {id:'p-01', s:'m', i:0, t:'Shared SDKs, APIs and infrastructure for AI features', q:'Build shared SDKs, APIs, and infrastructure for AI features and agentic workflows',
+     tr:[['From July to October 2026 I built an internal AI agent platform at <strong>Coder</strong> for the revenue organization, in Python and TypeScript on AWS.',''],
+         ['I built its Salesforce, Granola transcript and Slack bot integrations, and an <strong>OAuth authorization server</strong> that gated hosted MCP access to it.','']],
+     src:'Coder, July to October 2026'},
+    {id:'p-02', s:'h', i:2, t:'Durable execution for long-running agent workflows', q:'checkpointing, retries, human-in-the-loop steps, and recovery from partial failures',
+     tr:[['My long-running work ran on <strong>EventBridge, Lambda and ECS</strong>, and the human-in-the-loop step was real: I held the merge on every change an agent wrote.',''],
+         ['A human is needed here: I haven&#39;t integrated a durable execution or workflow orchestration platform in production, and your posting asks for that experience. I&#39;d be learning it on the job.','flag']],
+     src:'Honest gap'},
+    {id:'p-03', s:'m', i:1, t:'Evolve the agent harness', q:'the runtime for tool calling, context management, memory, and model orchestration',
+     tr:[['I orchestrated builds through Coder Agents: open-weight <strong>Kimi</strong> builders, <strong>GLM</strong> reviewers, and escalation to GPT, Claude Opus and Fable for hard fixes.',''],
+         ['<strong>AndrewOS</strong>, my own agent system, routes work across arenas with written doctrine as each agent&#39;s context.',''],
+         ['Light intervention: I designed orchestration on top of a harness. I haven&#39;t owned the harness runtime itself as a product.','flag']],
+     src:'Coder pipeline, AndrewOS'},
+    {id:'p-04', s:'m', i:1, t:'Turn production failures into regression coverage', q:'evaluation and debugging tools that turn production failures into measurable improvements',
+     tr:[['In <strong>Veritas</strong> a fixed fixture suite gates every release, and three failing fixtures are why I raised a reasoning cap from <strong>600 to 2,000 characters</strong>.',''],
+         ['At Coder, <strong>mutation testing</strong> proved tests could fail, and cross-family review logged <strong>430+ confirmed catches</strong> and <strong>21 false flags</strong> on about 350 PRs.',''],
+         ['Light intervention: these were evals for my own systems, not a debugging product other teams use.','flag']],
+     src:'Veritas fixtures, Coder review log'},
+    {id:'p-05', s:'m', i:0, t:'Model integrations, retrieval and context delivery', q:'Improve model integrations, retrieval, and context delivery',
+     tr:[['The Coder platform turned CRM, support and call-transcript data into answers and workflows for revenue teams.',''],
+         ['Context was a security decision too: the platform withheld unproven Federal history from model input for uncleared users.','']],
+     src:'Coder platform'},
+    {id:'p-06', s:'m', i:0, t:'Reliability, performance and secure handling of customer data', q:'reliability, observability, performance, and secure handling of customer data',
+     tr:[['I shipped fail-closed Federal data access controls across <strong>26 merged pull requests</strong>, with a test for every access tier.',''],
+         ['I cut a cold dashboard load from <strong>5 to 10 seconds down to about 2</strong> with a bounded fan-out, and ran the stack through <strong>Terraform</strong> with a CI plan gate.','']],
+     src:'Coder platform'},
+    {id:'p-07', s:'m', i:1, t:'Prototype with product teams and drive adoption', q:'Partner with product teams to prototype solutions and drive adoption',
+     tr:[['I sat inside the revenue organization at Coder and built for people who aren&#39;t engineers. Since October 2026 I&#39;m a Senior GTM Engineer (AI) in Coder marketing.',''],
+         ['Light intervention: I don&#39;t have company-wide adoption numbers to show, so I won&#39;t round one up.','flag']],
+     src:'Coder'},
+    {id:'p-08', s:'h', i:2, t:'Senior scope on a platform team', q:'Strong software engineering fundamentals building and operating backend services, APIs, or developer platforms',
+     tr:[['My engineering title began in <strong>July 2026</strong>. Before that I shipped FieldCommand (187,745 lines of TypeScript), Veritas and AndrewOS on my own.',''],
+         ['A human is needed here if your bar is years on a platform team. I&#39;d rather you weigh both clocks now.','flag']],
+     src:'Honest gap, both clocks stated'}
+  ];
+  var RUNS = RUNS_DX;
+  var ROLES = {
+    dx:{kick:'Senior Software Engineer · AI Developer Experience · Vanta', band:'$195K to $229K', role:'Senior Software Engineer, AI Developer Experience', runs:RUNS_DX,
+        pitch:'Your AI DX team is building the grown-up version of that for a whole engineering org, with real evals on <strong>outcome, quality, human intervention and cost</strong>.'},
+    platform:{kick:'Senior Software Engineer · AI Platform · Vanta', band:'$224K to $263K', role:'Senior Software Engineer, AI Platform', runs:RUNS_PLATFORM,
+        pitch:'Your AI Platform team owns the shared foundations under Vanta&#39;s agents: the <strong>harness, durable execution, evals and context</strong>. I&#39;ve built on top of that layer and I&#39;d like to build the layer itself.'}
+  };
+  var WORDS = ['Zero','One','Two','Three','Four','Five','Six','Seven','Eight','Nine','Ten'];
+  function setRole(key){
+    var r = ROLES[key]; if (!r) return;
+    RUNS = r.runs;
+    Array.prototype.forEach.call(document.querySelectorAll('.rolesw button'), function(b){
+      var on = b.dataset.role===key; b.setAttribute('aria-selected', on?'true':'false'); b.setAttribute('aria-pressed', on?'true':'false');
+    });
+    document.getElementById('kick').textContent = r.kick;
+    document.getElementById('band').textContent = r.band;
+    document.getElementById('footRole').textContent = r.role;
+    document.getElementById('nTasks').textContent = WORDS[r.runs.length] || r.runs.length;
+    var pitch = document.getElementById('pitch'), tail = pitch.innerHTML.indexOf(' That');
+    pitch.innerHTML = r.pitch + (tail>=0 ? pitch.innerHTML.slice(tail) : '');
+    list.innerHTML = '';
+    render();
+    try { history.replaceState(null,'', key==='platform' ? '#platform' : location.pathname); } catch(e) {}
+  }
 
   var list = document.getElementById('list'), empty = document.getElementById('empty');
   var filter = 'all', sorted = false;
@@ -387,6 +454,10 @@
   }
 
   render();
+  Array.prototype.forEach.call(document.querySelectorAll('.rolesw button'), function(b){
+    b.addEventListener('click', function(){ setRole(b.dataset.role); });
+  });
+  if (location.hash==='#platform') setRole('platform');
 })();
 </script>
 </body>
