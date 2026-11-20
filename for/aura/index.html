@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>Andrew Zoll for Aura, Senior Software Engineer, Applied AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Zilla+Slab:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#161616; --ink-2:#4d4d4d; --ink-3:#6d6d6d; --line:#ebebeb; --paper:#ffffff; --mist:#f5f7ff;
+  --blue:#3366ff; --blue-2:#679aff; --blue-3:#b5cdff; --sun:#ffd89e; --sun-ink:#7a4b00;
+  --ok:#1f7a4d; --ok-bg:#e3f5ea; --part:#2a4fd6; --part-bg:#e7edff; --gap:#7a4b00; --gap-bg:#fff1d9;
+  --slab:'Zilla Slab', Rockwell, 'Courier New', serif; --sans:'Hanken Grotesk', system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:var(--blue)}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+button{font:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--blue-2);outline-offset:2px;border-radius:6px}
+
+/* top bar */
+.bar{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.bar .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;height:64px}
+.mark{display:flex;align-items:center;gap:10px;font-weight:700;letter-spacing:-.01em}
+.mark svg{flex:none}
+.bar nav{display:flex;gap:22px;font-size:15px}
+.bar nav a{color:var(--ink-2);text-decoration:none}
+.bar nav a:hover{color:var(--ink)}
+.pill-btn{background:var(--ink);color:#fff;border:0;border-radius:999px;padding:10px 18px;font-weight:600;font-size:15px;transition:transform .15s ease, background .2s}
+.pill-btn:hover{background:var(--blue);transform:translateY(-1px)}
+@media (max-width:760px){.bar nav{display:none}}
+
+/* hero */
+.hero{padding:72px 0 56px;background:radial-gradient(1200px 500px at 85% -10%, #eaf0ff 0%, rgba(234,240,255,0) 60%)}
+.hero .wrap{display:grid;grid-template-columns:1.25fr .9fr;gap:48px;align-items:center}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:600;color:var(--blue);background:var(--part-bg);padding:6px 12px;border-radius:999px}
+h1{font-family:var(--slab);font-weight:700;font-size:clamp(40px,5.6vw,68px);line-height:1.02;letter-spacing:-.015em;margin:18px 0 20px}
+h1 em{font-style:normal;color:var(--blue)}
+.lede{font-size:19px;color:var(--ink-2);max-width:34em;margin:0 0 28px}
+.hero-ctas{display:flex;flex-wrap:wrap;gap:12px}
+.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--ink);border-radius:999px;padding:10px 18px;font-weight:600;font-size:15px;text-decoration:none}
+.ghost:hover{border-color:var(--blue);color:var(--blue)}
+
+/* dial */
+.dial-card{background:var(--paper);border:1px solid var(--line);border-radius:28px;padding:28px;box-shadow:0 20px 60px -30px rgba(22,22,22,.25);text-align:center;position:relative;overflow:hidden}
+.dial{position:relative;width:240px;height:240px;margin:0 auto}
+.dial svg{transform:rotate(-90deg)}
+.dial .track{stroke:var(--line)}
+.dial .ring{stroke:var(--blue);stroke-linecap:round;transition:stroke-dashoffset 1.4s cubic-bezier(.2,.8,.2,1)}
+.dial .ring2{stroke:var(--sun);stroke-linecap:round;transition:stroke-dashoffset 1.4s cubic-bezier(.2,.8,.2,1)}
+.dial .center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.dial .num{font-family:var(--slab);font-size:56px;font-weight:700;line-height:1}
+.dial .sub{font-size:14px;color:var(--ink-3);margin-top:6px}
+.sweep{position:absolute;inset:0;border-radius:50%;background:conic-gradient(from 0deg, rgba(51,102,255,.0) 0deg, rgba(51,102,255,.18) 40deg, rgba(51,102,255,0) 41deg);opacity:0;pointer-events:none}
+.scanning .sweep{opacity:1;animation:spin 1.1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.legend{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;font-size:13px;color:var(--ink-2);margin-top:18px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.dot{width:10px;height:10px;border-radius:50%;display:inline-block}
+.dial-note{font-size:14px;color:var(--ink-3);margin:14px 0 0}
+@media (max-width:860px){.hero .wrap{grid-template-columns:1fr}.dial{width:200px;height:200px}}
+
+/* sections */
+section{padding:64px 0}
+.sec-head{display:flex;justify-content:space-between;align-items:end;gap:24px;flex-wrap:wrap;margin-bottom:28px}
+h2{font-family:var(--slab);font-weight:700;font-size:clamp(30px,3.6vw,44px);line-height:1.08;letter-spacing:-.01em;margin:0}
+.sec-sub{color:var(--ink-2);max-width:36em;margin:10px 0 0}
+
+/* filter chips */
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{border:1.5px solid var(--line);background:var(--paper);border-radius:999px;padding:8px 14px;font-size:14px;font-weight:600;color:var(--ink-2);transition:all .15s}
+.chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
+.chip .n{opacity:.65;margin-left:4px}
+
+/* findings list */
+.findings{border:1px solid var(--line);border-radius:22px;overflow:hidden}
+.finding{border-top:1px solid var(--line);background:var(--paper)}
+.finding:first-child{border-top:0}
+.finding[hidden]{display:none}
+.f-row{width:100%;display:grid;grid-template-columns:auto 1fr auto auto;align-items:center;gap:16px;padding:18px 22px;background:none;border:0;text-align:left;color:var(--ink)}
+.f-row:hover{background:var(--mist)}
+.f-icon{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:var(--line);color:var(--ink-3);font-weight:700;font-size:15px;transition:background .3s,color .3s}
+.f-title{font-weight:600}
+.f-src{display:block;font-size:13px;color:var(--ink-3);font-weight:500;margin-top:2px}
+.badge{font-size:13px;font-weight:700;border-radius:999px;padding:5px 11px;white-space:nowrap;background:var(--line);color:var(--ink-3)}
+.badge.covered{background:var(--ok-bg);color:var(--ok)}
+.badge.partial{background:var(--part-bg);color:var(--part)}
+.badge.gap{background:var(--gap-bg);color:var(--gap)}
+.f-icon.covered{background:var(--ok-bg);color:var(--ok)}
+.f-icon.partial{background:var(--part-bg);color:var(--part)}
+.f-icon.gap{background:var(--gap-bg);color:var(--gap)}
+.caret{transition:transform .25s;color:var(--ink-3)}
+.f-row[aria-expanded="true"] .caret{transform:rotate(180deg)}
+.f-body{display:grid;grid-template-rows:0fr;transition:grid-template-rows .3s ease}
+.f-body>div{overflow:hidden}
+.f-row[aria-expanded="true"]+.f-body{grid-template-rows:1fr}
+.f-body p{margin:0;padding:0 22px 20px 72px;color:var(--ink-2)}
+@media (max-width:640px){.f-row{grid-template-columns:auto 1fr auto;}.f-row .badge{grid-column:2;justify-self:start}.f-body p{padding-left:22px}}
+
+/* project tabs */
+.projects{background:var(--ink);color:#fff;border-radius:32px;padding:40px}
+.projects h2{color:#fff}
+.projects .sec-sub{color:#bdbdbd}
+.tablist{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:28px 0 24px}
+.tab{background:#2a2a2a;color:#d6d6d6;border:1.5px solid #2a2a2a;border-radius:16px;padding:16px;text-align:left;font-weight:600;font-size:15px;line-height:1.3;transition:all .2s}
+.tab small{display:block;font-family:var(--slab);font-size:26px;color:var(--blue-2);margin-bottom:6px}
+.tab[aria-selected="true"]{background:#fff;color:var(--ink);border-color:#fff}
+.tab[aria-selected="true"] small{color:var(--blue)}
+.panel{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+.panel[hidden]{display:none}
+.panel h3{font-family:var(--slab);font-size:24px;margin:0 0 10px;color:#fff}
+.panel p{color:#d6d6d6;margin:0 0 12px}
+.panel .card{background:#2a2a2a;border-radius:20px;padding:22px}
+.panel .card .k{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--blue-3);font-weight:700;margin-bottom:8px}
+@media (max-width:860px){.tablist{grid-template-columns:1fr 1fr}.panel{grid-template-columns:1fr}.projects{padding:26px;border-radius:24px}}
+
+/* gaps */
+.gaps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.gapcard{background:var(--gap-bg);border:1px solid #ffe2b3;border-radius:20px;padding:22px}
+.gapcard .tag{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--gap);background:var(--sun);border-radius:999px;padding:4px 10px;margin-bottom:12px}
+.gapcard h3{font-family:var(--slab);font-size:21px;margin:0 0 8px}
+.gapcard p{margin:0;color:#4d3a1a;font-size:16px}
+@media (max-width:860px){.gaps{grid-template-columns:1fr}}
+
+/* close */
+.close{background:var(--mist);border-radius:32px;padding:48px;display:grid;grid-template-columns:1.4fr 1fr;gap:32px;align-items:center}
+.close p{color:var(--ink-2);margin:0 0 12px}
+.ctas{display:flex;flex-direction:column;gap:12px}
+.cta{display:flex;justify-content:space-between;align-items:center;gap:12px;background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:18px 20px;color:var(--ink);text-decoration:none;font-weight:600;transition:transform .15s, border-color .15s}
+.cta:hover{transform:translateX(4px);border-color:var(--blue)}
+.cta.primary{background:var(--blue);border-color:var(--blue);color:#fff}
+@media (max-width:860px){.close{grid-template-columns:1fr;padding:28px}}
+footer{padding:28px 0 48px;color:var(--ink-3);font-size:14px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+
+<header class="bar">
+  <div class="wrap">
+    <div class="mark">
+      <svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true"><circle cx="14" cy="14" r="12.5" fill="none" stroke="#3366ff" stroke-width="3"/><circle cx="14" cy="14" r="5" fill="#161616"/></svg>
+      Andrew Zoll
+    </div>
+    <nav aria-label="Sections">
+      <a href="#scan">Coverage check</a>
+      <a href="#projects">The four projects</a>
+      <a href="#gaps">What I'm missing</a>
+      <a href="#hello">Say hi</a>
+    </nav>
+    <button class="pill-btn" data-run-scan type="button">Run the check</button>
+  </div>
+</header>
+
+<main>
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <span class="eyebrow">For Aura's intelligence platform team</span>
+      <h1>Hi Aura. I've been building the AI stack <em>I'd want to hand your engineers.</em></h1>
+      <p class="lede">You're hiring a Senior Software Engineer, Applied AI to build background agents, wire AI into the tools people already use, and help every team at Aura work this way. That's been my job, and my hobby, for the last year. So instead of a resume, here's a coverage check you can run yourself.</p>
+      <div class="hero-ctas">
+        <button class="pill-btn" data-run-scan type="button">Run the coverage check</button>
+        <a class="ghost" href="#gaps">Skip to the gaps</a>
+      </div>
+    </div>
+    <div class="dial-card" id="dialCard" aria-live="polite">
+      <div class="dial">
+        <div class="sweep"></div>
+        <svg width="100%" height="100%" viewBox="0 0 120 120" aria-hidden="true">
+          <circle class="track" cx="60" cy="60" r="52" fill="none" stroke-width="9"/>
+          <circle class="ring2" id="ringPartial" cx="60" cy="60" r="52" fill="none" stroke-width="9"/>
+          <circle class="ring" id="ringCovered" cx="60" cy="60" r="52" fill="none" stroke-width="9"/>
+        </svg>
+        <div class="center"><div class="num" id="dialNum">?</div><div class="sub" id="dialSub">not checked yet</div></div>
+      </div>
+      <div class="legend"><span><i class="dot" style="background:var(--blue)"></i>Covered</span><span><i class="dot" style="background:var(--sun)"></i>Partial</span><span><i class="dot" style="background:var(--line)"></i>Gap</span></div>
+      <p class="dial-note" id="dialNote">Twelve lines from your posting. Press the button and I'll grade myself on each one.</p>
+    </div>
+  </div>
+</section>
+
+<section id="scan">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <h2>The coverage check</h2>
+        <p class="sec-sub">Every line below comes from your posting. Open any row for the receipt. I graded the partials and gaps as honestly as the covered ones.</p>
+      </div>
+      <div class="chips" role="group" aria-label="Filter findings">
+        <button class="chip" type="button" data-filter="all" aria-pressed="true">All<span class="n" data-count="all"></span></button>
+        <button class="chip" type="button" data-filter="covered" aria-pressed="false">Covered<span class="n" data-count="covered"></span></button>
+        <button class="chip" type="button" data-filter="partial" aria-pressed="false">Partial<span class="n" data-count="partial"></span></button>
+        <button class="chip" type="button" data-filter="gap" aria-pressed="false">Gap<span class="n" data-count="gap"></span></button>
+      </div>
+    </div>
+    <div class="findings" id="findings"></div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap">
+    <div class="projects">
+      <h2>Your four projects, and where I'd start</h2>
+      <p class="sec-sub">The posting names four projects. Pick one.</p>
+      <div class="tablist" role="tablist" aria-label="Projects from the posting">
+        <button class="tab" role="tab" id="t1" aria-controls="p1" aria-selected="true" tabindex="0"><small>01</small>Dev loops in cloud containers</button>
+        <button class="tab" role="tab" id="t2" aria-controls="p2" aria-selected="false" tabindex="-1"><small>02</small>Connect AI to internal tools</button>
+        <button class="tab" role="tab" id="t3" aria-controls="p3" aria-selected="false" tabindex="-1"><small>03</small>Measure AI adoption</button>
+        <button class="tab" role="tab" id="t4" aria-controls="p4" aria-selected="false" tabindex="-1"><small>04</small>Back the customer-facing agent teams</button>
+      </div>
+
+      <div class="panel" role="tabpanel" id="p1" aria-labelledby="t1">
+        <div>
+          <h3>Bring the whole development loop into a container</h3>
+          <p>I've lived on the other side of this. At Coder I ran my builds through Coder Agents, Coder's own agent product, and peaked at 602 agent launches and 193 merged pull requests in one week. The thing that made it work wasn't the model. It was a workspace where the agent and I could both see the output and a reviewer could say no.</p>
+          <p>I'd start by sitting with one frontend team for a week and writing down every place the loop leaves the container today.</p>
+        </div>
+        <div class="card"><div class="k">Honest note</div><p>I haven't built the virtualization layer itself, and I haven't shipped iOS or Android. I'd be learning Firecracker or gVisor on the job, and I'd lean on the mobile engineers for what "visually inspect" has to mean on a simulator.</p></div>
+      </div>
+
+      <div class="panel" role="tabpanel" id="p2" aria-labelledby="t2" hidden>
+        <div>
+          <h3>Plug the agents into the systems people already use</h3>
+          <p>At Coder I built integrations for Salesforce, Granola meeting transcripts and a Slack bot, and I shipped an OAuth authorization server that gated hosted MCP access to the platform. The work turned CRM, support and call-transcript data into answers for people who aren't engineers.</p>
+          <p>I'd start with a short list of the tools Aura's teams open every morning and a plain rule for what an agent may read and write in each.</p>
+        </div>
+        <div class="card"><div class="k">Receipt</div><p>884 merged pull requests in Python and TypeScript on that platform between July 27 and October 9, 2026.</p></div>
+      </div>
+
+      <div class="panel" role="tabpanel" id="p3" aria-labelledby="t3" hidden>
+        <div>
+          <h3>Find out who's actually using it</h3>
+          <p>I tracked model cost per merged pull request, which came to about $38 in that peak week, and I kept a ledger of every review verdict. Across about 1,200 verdicts on about 350 pull requests, reviewers recorded more than 430 confirmed catches and 21 false flags. Numbers like those told me which tools were earning their keep.</p>
+          <p>I'd start with three questions per team: who used it this week, what did it finish, and what did it cost.</p>
+        </div>
+        <div class="card"><div class="k">Honest note</div><p>I measured my own pipeline, not adoption across a 1,000-person company. The instrumentation is familiar. The scale isn't.</p></div>
+      </div>
+
+      <div class="panel" role="tabpanel" id="p4" aria-labelledby="t4" hidden>
+        <div>
+          <h3>Share what keeps customer data safe</h3>
+          <p>I shipped fail-closed Federal data access controls across 26 merged pull requests. The platform classified Federal accounts, withheld unproven Federal history from model input for uncleared users, and tested every access tier. For a company that protects families and schools, I'd expect data governance to matter more here, not less.</p>
+          <p>I also built Veritas, a citation-verification product for legal filings, where a wrong answer is worse than no answer. That habit carries over.</p>
+        </div>
+        <div class="card"><div class="k">Receipt</div><p>FieldCommand, a multi-tenant SaaS I built solo on PostgreSQL and Supabase, with role-based access control and tenant isolation, and four AI features behind per-tenant feature flags.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="gaps">
+  <div class="wrap">
+    <div class="sec-head"><div><h2>What I'm missing</h2><p class="sec-sub">You'd find these in the interview anyway, so here they are first.</p></div></div>
+    <div class="gaps">
+      <div class="gapcard"><span class="tag">Years</span><h3>Short of five years under an engineering title</h3><p>My engineering title began in July 2026. Before that I was a founder building FieldCommand and Veritas myself, and before that I ran operations and automation at an advisory firm. I've shipped a lot of code. I haven't held the title for five years.</p></div>
+      <div class="gapcard"><span class="tag">Nice to have</span><h3>No Firecracker, QEMU or gVisor</h3><p>My infrastructure has been AWS ECS, Lambda and EventBridge, managed in Terraform with a CI plan gate. I haven't run microVMs or sandboxed kernels.</p></div>
+      <div class="gapcard"><span class="tag">Mobile</span><h3>No iOS or Android</h3><p>The container project includes mobile teams. I'd be building for a workflow I haven't done myself, so I'd want a mobile engineer as my first customer.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="hello">
+  <div class="wrap">
+    <div class="close">
+      <div>
+        <h2>That's the check.</h2>
+        <p>Since October 14 I've been a Senior GTM Engineer (AI) at Coder, building marketing-data tools. Before that I built Coder's internal agent platform for the revenue organization. I'm in Pueblo, Colorado, and I've worked remotely for years.</p>
+        <p>If the coverage looks good enough to talk, I'd love to hear what Aura's engineers wish their agents could already do.</p>
+      </div>
+      <div class="ctas">
+        <a class="cta primary" href="https://portfolio.andrewzoll.com">See the portfolio <span aria-hidden="true">&rarr;</span></a>
+        <a class="cta" href="https://www.linkedin.com/in/andrewzoll">Connect on LinkedIn <span aria-hidden="true">&rarr;</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">Not affiliated with Aura or Qoria. This is a personal page I built as part of my own application for the Senior Software Engineer, Applied AI role, and the colors are a nod to theirs.</div>
+</footer>
+
+<script>
+(function(){
+  var F=[
+    {t:"Develop AI tools and background agents for internal use",s:"Day to day",v:"covered",r:"I built Coder's internal agent platform for the revenue organization, and I run AndrewOS, my own agent system, where scheduled background agents handle work like this application's research pass."},
+    {t:"Connect AI systems to existing internal tools and systems",s:"Projects",v:"covered",r:"Salesforce, Granola meeting transcripts and a Slack bot at Coder, plus an OAuth authorization server that gated hosted MCP access to the platform."},
+    {t:"Familiarity with an agent harness like Claude Code, and its plugins or MCP",s:"What you bring",v:"covered",r:"AndrewOS runs on Claude Code with custom skills, hooks that block bad writing before it ships, and scheduled agents. At Coder I gated hosted MCP behind OAuth."},
+    {t:"Strong proficiency in Python or NodeJS for backend development",s:"What you bring",v:"covered",r:"884 merged pull requests in Python and TypeScript on the Coder platform between July 27 and October 9, 2026."},
+    {t:"Git-based workflows, including pull requests and code reviews",s:"What you bring",v:"covered",r:"Every change went through a reviewer from a different model family than the builder. About 1,200 verdicts on about 350 pull requests, more than 430 confirmed catches, 21 false flags."},
+    {t:"Familiarity with a cloud compute platform like AWS, GCP or Cloudflare",s:"What you bring",v:"covered",r:"AWS ECS, Lambda, S3, EventBridge and ElastiCache at Coder. This page runs on Cloudflare Pages."},
+    {t:"Hands-on experience with Terraform or other infrastructure-as-code",s:"Great if you also had",v:"covered",r:"I maintained the Coder platform's AWS stack through Terraform with a CI plan gate."},
+    {t:"Delivering new products in research or startup environments",s:"Great if you also had",v:"covered",r:"I built FieldCommand, a multi-tenant SaaS, solo, and Veritas, a citation-verification product for legal filings."},
+    {t:"Build observability and reporting to understand AI adoption",s:"Projects",v:"partial",r:"I tracked model cost per merged pull request and kept a ledger of every review verdict. That was one pipeline, not a whole company."},
+    {t:"Support teams building customer-facing agents with data governance",s:"Projects",v:"partial",r:"Fail-closed Federal data access controls across 26 merged pull requests. I haven't shared virtualization tech with other teams."},
+    {t:"5+ years of experience in software engineering",s:"What you bring",v:"partial",r:"My engineering title began in July 2026. Founder-engineer work on FieldCommand and Veritas came before it. It's real code, but it isn't five years under the title."},
+    {t:"Virtualization with Firecracker, QEMU or gVisor",s:"Great if you also had",v:"gap",r:"I haven't run any of the three. It's the first thing I'd study."}
+  ];
+  var list=document.getElementById('findings');
+  var label={covered:"Covered",partial:"Partial",gap:"Gap"}, glyph={covered:"✓",partial:"½",gap:"!"};
+  var scanned=false;
+  F.forEach(function(f,i){
+    var el=document.createElement('div'); el.className='finding'; el.dataset.v=f.v;
+    el.innerHTML='<button class="f-row" type="button" aria-expanded="false" aria-controls="fb'+i+'">'+
+      '<span class="f-icon" aria-hidden="true">'+(i+1)+'</span>'+
+      '<span><span class="f-title"></span><span class="f-src"></span></span>'+
+      '<span class="badge">Not checked</span>'+
+      '<svg class="caret" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2"/></svg></button>'+
+      '<div class="f-body" id="fb'+i+'"><div><p></p></div></div>';
+    el.querySelector('.f-title').textContent=f.t;
+    el.querySelector('.f-src').textContent='From: '+f.s;
+    el.querySelector('p').textContent=f.r;
+    el.querySelector('.f-row').addEventListener('click',function(){
+      var b=this; b.setAttribute('aria-expanded', b.getAttribute('aria-expanded')==='true'?'false':'true');
+    });
+    list.appendChild(el);
+  });
+  var counts={all:F.length,covered:0,partial:0,gap:0}; F.forEach(function(f){counts[f.v]++});
+  document.querySelectorAll('[data-count]').forEach(function(n){n.textContent=counts[n.dataset.count]});
+
+  var C=2*Math.PI*52, rc=document.getElementById('ringCovered'), rp=document.getElementById('ringPartial');
+  [rc,rp].forEach(function(r){r.style.strokeDasharray=C; r.style.strokeDashoffset=C});
+  function reveal(el){
+    var v=el.dataset.v; el.querySelector('.badge').textContent=label[v]; el.querySelector('.badge').className='badge '+v;
+    var ic=el.querySelector('.f-icon'); ic.className='f-icon '+v; ic.textContent=glyph[v];
+  }
+  function runScan(){
+    document.getElementById('scan').scrollIntoView({behavior:'smooth'});
+    if(scanned) return; scanned=true;
+    var card=document.getElementById('dialCard'); card.classList.add('scanning');
+    document.getElementById('dialSub').textContent='checking...';
+    var rows=list.querySelectorAll('.finding'), i=0;
+    var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    (function step(){
+      if(i<rows.length){ reveal(rows[i]); i++; setTimeout(step, reduce?0:140); return; }
+      card.classList.remove('scanning');
+      rc.style.strokeDashoffset=C*(1-counts.covered/F.length);
+      rp.style.strokeDashoffset=C*(1-(counts.covered+counts.partial)/F.length);
+      document.getElementById('dialNum').textContent=counts.covered+'/'+F.length;
+      document.getElementById('dialSub').textContent='fully covered';
+      document.getElementById('dialNote').textContent=counts.partial+' partial and '+counts.gap+' gap. The gaps are spelled out below, no fine print.';
+    })();
+  }
+  document.querySelectorAll('[data-run-scan]').forEach(function(b){b.addEventListener('click',runScan)});
+
+  var chips=document.querySelectorAll('.chip');
+  chips.forEach(function(c){c.addEventListener('click',function(){
+    chips.forEach(function(x){x.setAttribute('aria-pressed','false')}); c.setAttribute('aria-pressed','true');
+    if(!scanned) runScan();
+    var f=c.dataset.filter; list.querySelectorAll('.finding').forEach(function(r){r.hidden=!(f==='all'||r.dataset.v===f)});
+  })});
+
+  var tabs=[].slice.call(document.querySelectorAll('[role=tab]'));
+  function select(t){
+    tabs.forEach(function(x){var on=x===t; x.setAttribute('aria-selected',on); x.tabIndex=on?0:-1; document.getElementById(x.getAttribute('aria-controls')).hidden=!on});
+    t.focus();
+  }
+  tabs.forEach(function(t,i){
+    t.addEventListener('click',function(){select(t)});
+    t.addEventListener('keydown',function(e){
+      if(e.key==='ArrowRight'||e.key==='ArrowDown'){e.preventDefault();select(tabs[(i+1)%tabs.length])}
+      if(e.key==='ArrowLeft'||e.key==='ArrowUp'){e.preventDefault();select(tabs[(i-1+tabs.length)%tabs.length])}
+    });
+  });
+})();
+</script>
+</body>
+</html>
