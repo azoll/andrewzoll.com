@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>Draft: Add Andrew Zoll to Enterprise AI</title>
+<meta name="description" content="A personal application page by Andrew Zoll for the Senior Applied AI Engineer, Enterprise AI role. Not affiliated with or endorsed by GitLab.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#171321;--ink-2:#3a383f;--mute:#626168;--line:#dcdcde;--line-2:#ececef;--bg:#fbfafd;--white:#fff;
+  --purple:#7759c2;--purple-d:#5c3ead;--purple-bg:#f4f0ff;
+  --orange:#fc6d26;--red:#e24329;--amber:#fca326;
+  --green:#108548;--green-bg:#ecf4ee;--amberbg:#fdf1dd;--amber-t:#ab6100;--redbg:#fcf1ef;--red-t:#c91c00;
+  --add:#ecfdf0;--add-b:#c3e6cd;--del:#fbe9eb;--del-b:#f3c1c7;
+  --sans:"GitLab Sans",Inter,system-ui,-apple-system,sans-serif;--mono:"GitLab Mono","JetBrains Mono",ui-monospace,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--sans);color:var(--ink);background:var(--bg);font-size:14px;line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:var(--purple-d)}
+button{font:inherit;cursor:pointer;color:inherit}
+.disc{background:var(--ink);color:#c9c4d9;font-size:12px;text-align:center;padding:7px 16px}
+.top{background:var(--ink);border-top:1px solid #2b2838;color:#fff;display:flex;align-items:center;gap:14px;padding:10px 20px}
+.mark{width:26px;height:26px}
+.crumbs{font-size:13px;color:#bfbacb}
+.crumbs b{color:#fff;font-weight:500}
+.layout{display:grid;grid-template-columns:1fr 300px;gap:28px;max-width:1240px;margin:0 auto;padding:28px 24px 60px}
+.status{display:inline-flex;align-items:center;gap:6px;background:var(--green-bg);color:var(--green);font-weight:600;font-size:12px;border-radius:999px;padding:3px 10px}
+.status.draft{background:#ececef;color:var(--ink-2)}
+h1{font-size:28px;line-height:1.25;font-weight:600;letter-spacing:-.3px;margin:10px 0 8px}
+.byline{color:var(--mute);font-size:13px}
+.byline code{font-family:var(--mono);background:var(--purple-bg);color:var(--purple-d);padding:1px 6px;border-radius:4px;font-size:12px}
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);margin:22px 0 0;overflow-x:auto}
+.tab{background:none;border:0;padding:10px 14px;font-weight:500;color:var(--mute);border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap;display:flex;gap:6px;align-items:center}
+.tab .ct{background:var(--line-2);border-radius:999px;font-size:11px;padding:0 7px;color:var(--ink-2)}
+.tab[aria-selected="true"]{color:var(--ink);border-color:var(--orange)}
+.tab:hover{color:var(--ink)}
+.tab:focus-visible{outline:2px solid var(--purple);outline-offset:-2px}
+.panel{padding-top:22px}
+.panel[hidden]{display:none}
+.card{background:var(--white);border:1px solid var(--line);border-radius:8px;margin-bottom:18px}
+.card-hd{padding:12px 16px;border-bottom:1px solid var(--line-2);font-weight:600;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.card-bd{padding:16px}
+.md h2{font-size:18px;font-weight:600;margin:4px 0 8px}
+.md h3{font-size:15px;font-weight:600;margin:16px 0 6px}
+.md p{color:var(--ink-2);margin-bottom:10px;font-size:15px}
+.md ul{margin:0 0 10px 20px;color:var(--ink-2);font-size:15px}
+.md li{margin-bottom:4px}
+.md blockquote{border-left:3px solid var(--purple);background:var(--purple-bg);padding:10px 14px;border-radius:0 6px 6px 0;color:var(--ink-2);margin:10px 0;font-size:14px}
+
+/* threads */
+.thread{border:1px solid var(--line);border-radius:8px;background:#fff;margin-bottom:12px}
+.th-hd{display:flex;align-items:center;gap:10px;padding:12px 14px}
+.av{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--orange),var(--red));color:#fff;font-weight:700;font-size:12px;display:grid;place-items:center;flex:none}
+.av.p{background:linear-gradient(135deg,var(--purple),#4b2f9e)}
+.th-hd .who{font-weight:600}.th-hd .when{color:var(--mute);font-size:12px}
+.th-bd{padding:0 14px 12px 52px;color:var(--ink-2);font-size:14px}
+.th-ft{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line-2);padding:8px 14px;background:var(--bg);border-radius:0 0 8px 8px}
+.resolve{border:1px solid var(--line);background:#fff;border-radius:4px;padding:4px 10px;font-size:12px;font-weight:500}
+.resolve:hover{border-color:var(--purple)}
+.thread.done{opacity:.72}
+.thread.done .resolve{background:var(--green-bg);color:var(--green);border-color:#b7d9c3}
+.reply{display:none;padding:0 14px 12px 52px;font-size:14px;color:var(--ink)}
+.thread.done .reply{display:block}
+.reply b{color:var(--green)}
+
+/* pipeline */
+.pipe{display:flex;gap:0;align-items:flex-start;overflow-x:auto;padding:4px 2px 10px}
+.stage{min-width:170px;flex:1}
+.stage-hd{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.4px;color:var(--mute);margin-bottom:10px;padding-left:4px}
+.jobs{display:flex;flex-direction:column;gap:8px;position:relative;padding-right:22px}
+.stage:not(:last-child) .jobs::after{content:"";position:absolute;right:4px;top:17px;width:14px;height:2px;background:var(--line)}
+.job{display:flex;align-items:center;gap:8px;border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 12px 6px 7px;font-size:13px;text-align:left;width:100%}
+.job:hover{border-color:var(--purple);background:var(--purple-bg)}
+.job[aria-expanded="true"]{border-color:var(--purple);box-shadow:0 0 0 2px rgba(119,89,194,.18)}
+.ico{width:18px;height:18px;border-radius:50%;display:grid;place-items:center;flex:none;font-size:11px;font-weight:700;color:#fff}
+.ico.ok{background:var(--green)}.ico.warn{background:var(--amber)}.ico.fail{background:var(--red)}
+.ico.run{background:#fff;border:2px solid var(--purple);border-top-color:transparent;animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.ico.run{animation:none}}
+.log{margin-top:14px;background:#1f1e24;color:#e0dee6;border-radius:8px;font-family:var(--mono);font-size:12.5px;line-height:1.7;padding:14px 16px;min-height:150px;white-space:pre-wrap}
+.log .c{color:#9a96a8}.log .g{color:#7bd19a}.log .y{color:#ffc56b}.log .r{color:#ff8f7a}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--mute);margin-top:10px}
+.legend span{display:inline-flex;gap:6px;align-items:center}
+
+/* diff */
+.difftools{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:4px;overflow:hidden}
+.seg button{background:#fff;border:0;padding:5px 10px;font-size:12px;font-weight:500;color:var(--ink-2)}
+.seg button+button{border-left:1px solid var(--line)}
+.seg button[aria-pressed="true"]{background:var(--purple-bg);color:var(--purple-d)}
+.file{border:1px solid var(--line);border-radius:8px;overflow:hidden;margin-bottom:14px;background:#fff}
+.file-hd{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:9px 12px;background:var(--bg);border-bottom:1px solid var(--line);font-family:var(--mono);font-size:12.5px;width:100%;border-left:0;border-right:0;border-top:0;text-align:left}
+.file-hd .chev{transition:transform .15s;display:inline-block}
+.file-hd[aria-expanded="false"] .chev{transform:rotate(-90deg)}
+.file-hd .badge{font-family:var(--sans);font-size:11px;font-weight:600;border-radius:999px;padding:1px 8px}
+.b-ok{background:var(--green-bg);color:var(--green)}.b-par{background:var(--amberbg);color:var(--amber-t)}.b-gap{background:var(--redbg);color:var(--red-t)}
+.hunk{font-family:var(--mono);font-size:12.5px;line-height:1.6}
+.ln{display:grid;grid-template-columns:28px 1fr;gap:0}
+.ln span:first-child{text-align:center;color:var(--mute);user-select:none}
+.ln span:last-child{padding:3px 12px 3px 4px;white-space:pre-wrap;font-family:var(--sans);font-size:13.5px}
+.ln.d{background:var(--del)}.ln.d span:first-child{background:var(--del-b);color:#a12133}
+.ln.a{background:var(--add)}.ln.a span:first-child{background:var(--add-b);color:#13652f}
+.file[hidden]{display:none}
+
+/* sidebar */
+aside .box{background:#fff;border:1px solid var(--line);border-radius:8px;padding:14px 16px;margin-bottom:14px}
+aside h4{font-size:12px;font-weight:600;color:var(--mute);text-transform:uppercase;letter-spacing:.4px;margin-bottom:8px}
+aside .row{display:flex;justify-content:space-between;font-size:13px;padding:4px 0;color:var(--ink-2)}
+aside .row b{color:var(--ink);font-weight:500;text-align:right}
+.lbl{display:inline-block;font-size:12px;border-radius:999px;padding:1px 9px;margin:2px 4px 2px 0;font-weight:500}
+.l1{background:#e9e3fb;color:#4b2f9e}.l2{background:#ffe7d9;color:#a23c08}.l3{background:#dff3e6;color:#0b6a38}.l4{background:#e3eefc;color:#1f5aa8}
+.side-btn{display:block;width:100%;text-align:left;background:none;border:0;padding:6px 8px;border-radius:4px;font-size:13px;color:var(--ink-2)}
+.side-btn:hover{background:var(--line-2);color:var(--ink)}
+.side-btn[aria-current="true"]{background:var(--purple-bg);color:var(--purple-d);font-weight:500}
+
+/* merge widget */
+.mw{border:1px solid var(--line);border-radius:8px;background:#fff;overflow:hidden}
+.mw-row{display:flex;gap:12px;align-items:flex-start;padding:14px 16px;border-bottom:1px solid var(--line-2)}
+.mw-row:last-child{border-bottom:0}
+.mw-row p{color:var(--ink-2);font-size:14px}
+.mw-row strong{display:block;font-size:14px}
+.btn{display:inline-flex;align-items:center;gap:6px;border-radius:4px;padding:7px 14px;font-size:14px;font-weight:500;text-decoration:none;border:1px solid transparent}
+.btn-c{background:var(--purple);color:#fff}.btn-c:hover{background:var(--purple-d);color:#fff}
+.btn-d{background:#fff;border-color:var(--line);color:var(--ink)}.btn-d:hover{border-color:var(--mute)}
+.btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.prog{height:6px;background:var(--line-2);border-radius:3px;overflow:hidden;margin-top:8px;max-width:280px}
+.prog i{display:block;height:100%;background:var(--green);width:0;transition:width .4s}
+footer{max-width:1240px;margin:0 auto;padding:0 24px 30px;color:var(--mute);font-size:12px}
+@media (max-width:960px){.layout{grid-template-columns:1fr}aside{order:-1}}
+</style>
+</head>
+<body>
+<div class="disc" id="top">This is a personal page by Andrew Zoll. It is not affiliated with or endorsed by GitLab, and it uses no GitLab logos or assets.</div>
+<div class="top">
+  <svg class="mark" viewBox="0 0 32 32" aria-hidden="true"><rect x="5" y="5" width="22" height="22" rx="6" fill="#7759c2"/><text x="16" y="21" text-anchor="middle" font-family="Inter,sans-serif" font-weight="700" font-size="13" fill="#fff">AZ</text></svg>
+  <span class="crumbs">enterprise-ai / hiring / <b>Merge request !1127</b></span>
+</div>
+
+<div class="layout">
+<main>
+  <span class="status" id="mrStatus">Open</span>
+  <h1>Add Andrew Zoll to Enterprise AI as Senior Applied AI Engineer</h1>
+  <p class="byline">Andrew Zoll wants to merge <code>andrew/applied-ai</code> into <code>enterprise-ai/main</code> &middot; opened November 27, 2026</p>
+
+  <div class="tabs" role="tablist" aria-label="Merge request sections">
+    <button class="tab" role="tab" id="t-ov" aria-controls="p-ov" aria-selected="true">Overview <span class="ct" id="ctThreads">4</span></button>
+    <button class="tab" role="tab" id="t-pl" aria-controls="p-pl" aria-selected="false" tabindex="-1">Pipelines <span class="ct">10</span></button>
+    <button class="tab" role="tab" id="t-ch" aria-controls="p-ch" aria-selected="false" tabindex="-1">Changes <span class="ct">9</span></button>
+  </div>
+
+  <section class="panel" id="p-ov" role="tabpanel" aria-labelledby="t-ov">
+    <div class="card"><div class="card-bd md">
+      <h2>Why this MR exists</h2>
+      <p>Hi, I'm Andrew. Your posting describes someone who builds AI for GitLab's own Sales, Marketing and Support teams, finds the real constraint first, and says "this doesn't need AI" when that's the honest answer. That's the job I've been doing at Coder, so I wrote it up the way your team would review it.</p>
+      <h3>What changed</h3>
+      <ul>
+        <li>From July to October 2026 I built Coder's internal AI agent platform for the revenue organization in Python and TypeScript on AWS. It turned CRM, support and call-transcript data into answers and workflows.</li>
+        <li>I authored 884 merged pull requests on it between July 27 and October 9.</li>
+        <li>Since October 14 I've been a Senior GTM Engineer (AI) at Coder, building marketing-data tools for the marketing team.</li>
+      </ul>
+      <blockquote>Your posting says coding skills can come from "building automations, or shipping side projects." Most of mine did, so I'm grateful you wrote it that way.</blockquote>
+      <h3>How to review</h3>
+      <p><b>Pipelines</b> runs your role from discovery to measurement, one job per stage. <b>Changes</b> diffs each requirement in your posting against what I've actually shipped. The threads below are my open gaps, and each one has my answer.</p>
+    </div></div>
+
+    <div class="card">
+      <div class="card-hd"><span>Unresolved threads</span><span style="font-weight:400;color:var(--mute);font-size:13px"><span id="resN">0</span> of 4 resolved</span></div>
+      <div class="card-bd" id="threads"></div>
+    </div>
+
+    <div class="mw" id="merge">
+      <div class="mw-row"><span class="ico ok">&#10003;</span><div><strong>Pipeline passed with warnings</strong><p>7 jobs passed, 2 passed with warnings, 1 is a known gap. Details are in the Pipelines tab.</p></div></div>
+      <div class="mw-row"><span class="ico warn">!</span><div><strong>Threads: <span id="resN2">0</span> of 4 resolved</strong><p>Resolve a thread to read my answer to it.</p><div class="prog"><i id="progBar"></i></div></div></div>
+      <div class="mw-row"><span class="ico run" aria-hidden="true"></span><div><strong>Waiting on a reviewer</strong><p>If this looks like a fit, I'd love to talk. I live in Pueblo, Colorado, and I'm happy to show any of this running.</p>
+        <div class="btns"><a class="btn btn-c" href="https://portfolio.andrewzoll.com" target="_blank" rel="noopener">See the portfolio</a><a class="btn btn-d" href="https://www.linkedin.com/in/andrewzoll" target="_blank" rel="noopener">Connect on LinkedIn</a></div></div></div>
+    </div>
+  </section>
+
+  <section class="panel" id="p-pl" role="tabpanel" aria-labelledby="t-pl" hidden>
+    <div class="card">
+      <div class="card-hd"><span>Pipeline #1127 &middot; andrew/applied-ai</span><span style="font-weight:400;color:var(--mute);font-size:13px">Pick a job to read its log</span></div>
+      <div class="card-bd">
+        <div class="pipe" id="pipe"></div>
+        <div class="log" id="log" aria-live="polite"><span class="c">$ select a job above</span></div>
+        <div class="legend"><span><i class="ico ok">&#10003;</i> passed</span><span><i class="ico warn">!</i> passed with warnings</span><span><i class="ico fail">&#215;</i> known gap</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel" id="p-ch" role="tabpanel" aria-labelledby="t-ch" hidden>
+    <div class="card">
+      <div class="card-hd"><span>Your posting <span style="color:var(--mute);font-weight:400">vs.</span> what I've shipped</span>
+        <div class="difftools">
+          <div class="seg" role="group" aria-label="Filter files" id="dfilt"></div>
+          <div class="seg" role="group" aria-label="Expand or collapse"><button id="expAll">Expand all</button><button id="colAll">Collapse all</button></div>
+        </div>
+      </div>
+      <div class="card-bd" id="diffs"></div>
+    </div>
+  </section>
+</main>
+
+<aside>
+  <div class="box">
+    <h4>Jump to</h4>
+    <button class="side-btn" data-go="t-ov">Overview and threads</button>
+    <button class="side-btn" data-go="t-pl">Pipeline: discovery to metrics</button>
+    <button class="side-btn" data-go="t-ch">Changes: requirement diff</button>
+    <button class="side-btn" data-go="gaps">Only the gaps</button>
+  </div>
+  <div class="box">
+    <h4>Details</h4>
+    <div class="row"><span>Role</span><b>Senior Applied AI Engineer</b></div>
+    <div class="row"><span>Team</span><b>Enterprise AI, CIO org</b></div>
+    <div class="row"><span>Location</span><b>Pueblo, CO, remote</b></div>
+    <div class="row"><span>Current</span><b>Senior GTM Engineer (AI), Coder</b></div>
+  </div>
+  <div class="box">
+    <h4>Labels</h4>
+    <span class="lbl l1">python</span><span class="lbl l1">typescript</span><span class="lbl l2">agents</span><span class="lbl l2">mcp</span><span class="lbl l3">salesforce</span><span class="lbl l3">guardrails</span><span class="lbl l4">flow</span><span class="lbl l4">customer-zero</span>
+  </div>
+</aside>
+</div>
+
+<footer>A personal application page by Andrew Zoll for the Senior Applied AI Engineer, Enterprise AI role. It is not affiliated with or endorsed by GitLab, and it uses no GitLab logos or assets. The merge request, pipeline and threads are a playful format, not a real GitLab project. <a href="#top">Back to top</a></footer>
+
+<script>
+(function(){
+  function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
+
+  /* tabs */
+  var tabs=[].slice.call(document.querySelectorAll(".tab"));
+  function show(id){
+    tabs.forEach(function(t){var on=t.id===id;t.setAttribute("aria-selected",on?"true":"false");t.tabIndex=on?0:-1;document.getElementById(t.getAttribute("aria-controls")).hidden=!on;});
+    document.querySelectorAll(".side-btn").forEach(function(b){b.setAttribute("aria-current",b.dataset.go===id?"true":"false");});
+  }
+  tabs.forEach(function(t,i){
+    t.addEventListener("click",function(){show(t.id);});
+    t.addEventListener("keydown",function(e){var d=e.key==="ArrowRight"?1:e.key==="ArrowLeft"?-1:0;if(!d)return;var n=tabs[(i+d+tabs.length)%tabs.length];show(n.id);n.focus();e.preventDefault();});
+  });
+
+  /* threads */
+  var TH=[
+    {q:"Your engineering title only started in July 2026. Is that enough?",a:"It's short, and I won't pretend otherwise. The years before it were founder years: I built FieldCommand, a multi-tenant SaaS platform with 187,745 lines of TypeScript, solo, and Veritas, a citation-verification product for legal filings. The title is new; the building isn't."},
+    {q:"Have you used Marketo, Zendesk, Workato or Relevance AI?",a:"Not in production. I've built on Salesforce, Slack, Granola transcripts, Redtail CRM, n8n and Zapier. Your posting says you don't need all of them, and I learn a new system by building on it."},
+    {q:"Have you built on GitLab Duo Agent Platform?",a:"No. I'd be a real Customer Zero, starting from the docs like any new user, and I'd write down every place it tripped me up for R&D."},
+    {q:"Do you have flow metrics from a value stream?",a:"Not a formal value-stream map. I have measured fixes, like a cold dashboard load cut from 5 to 10 seconds to about 2 seconds, and model cost tracked per merged pull request. Formal flow metrics are something I'd learn here."}
+  ];
+  var thEl=document.getElementById("threads"),res=0;
+  TH.forEach(function(t,i){
+    var d=document.createElement("div");d.className="thread";d.id="th"+i;
+    d.innerHTML='<div class="th-hd"><span class="av p" aria-hidden="true">R</span><span class="who">Reviewer</span><span class="when">asked a question</span></div><div class="th-bd">'+esc(t.q)+'</div><div class="reply"><b>Andrew:</b> '+esc(t.a)+'</div><div class="th-ft"><span style="font-size:12px;color:var(--mute)">Gap '+(i+1)+' of 4</span><button class="resolve" aria-pressed="false">Resolve thread</button></div>';
+    var b=d.querySelector(".resolve");
+    b.addEventListener("click",function(){var on=!d.classList.contains("done");d.classList.toggle("done",on);b.setAttribute("aria-pressed",on?"true":"false");b.textContent=on?"Resolved ✓":"Resolve thread";res+=on?1:-1;upd();});
+    thEl.appendChild(d);
+  });
+  function upd(){
+    document.getElementById("resN").textContent=res;document.getElementById("resN2").textContent=res;
+    document.getElementById("ctThreads").textContent=4-res;
+    document.getElementById("progBar").style.width=(res/4*100)+"%";
+    var s=document.getElementById("mrStatus");
+    if(res===4){s.textContent="Ready for review";s.classList.remove("draft");}else{s.textContent="Open";}
+  }
+
+  /* pipeline */
+  var P=[
+    {s:"Discover",jobs:[
+      {n:"map-the-workflow",st:"ok",log:["$ map-the-workflow","At Ryleigh Wealth Management I traced where advisory work stalled before building anything.","The fix was an integration between Redtail CRM, outside services and the ChatGPT API.","<g>PASS</g> 20+ hours of monthly manual work eliminated"]},
+      {n:"say-no-to-ai",st:"ok",log:["$ say-no-to-ai","One of my Coder speedups used no model at all.","A serial per-account S3 read loop was the constraint, so I replaced it with a bounded fan-out.","<g>PASS</g> cold dashboard load went from 5 to 10 seconds to about 2 seconds"]}]},
+    {s:"Design",jobs:[
+      {n:"agentic-architecture",st:"ok",log:["$ agentic-architecture","Builds ran through Coder Agents: open-weight Kimi models built, GLM models reviewed,","and GPT, Claude Opus and Fable took the hard fixes and reviews.","<g>PASS</g> peak week: 602 agent launches, 193 merged pull requests"]},
+      {n:"model-cost-tradeoffs",st:"ok",log:["$ model-cost-tradeoffs","I tracked model cost per merged pull request instead of guessing.","Cheap models did the bulk of the work; expensive ones were escalation only.","<g>PASS</g> about $38 of model cost per merged PR in the peak week"]}]},
+    {s:"Build",jobs:[
+      {n:"internal-platform",st:"ok",log:["$ internal-platform","Coder's internal AI agent platform for the revenue organization, Python and TypeScript on AWS.","It turned CRM, support and call-transcript data into answers and workflows.","<g>PASS</g> 884 merged pull requests, July 27 to October 9, 2026"]},
+      {n:"business-systems",st:"warn",log:["$ business-systems","Built: Salesforce, Granola meeting transcripts, a Slack bot, Redtail CRM, n8n, Zapier.","<y>WARN</y> not yet used: Marketo, Zendesk, Workato, Relevance AI, Glean","<g>PASS</g> with warnings"]}]},
+    {s:"Guard",jobs:[
+      {n:"access-controls",st:"ok",log:["$ access-controls","Fail-closed Federal data access controls across 26 merged pull requests.","The platform withheld unproven Federal history from model input for uncleared users,","and every access tier was tested.","<g>PASS</g>"]},
+      {n:"cross-family-review",st:"ok",log:["$ cross-family-review","Every change needed a reviewer from a different model family than its builder, plus mutation testing.","About 1,200 review verdicts on about 350 pull requests.","<g>PASS</g> 430+ confirmed defect catches, 21 false flags"]}]},
+    {s:"Measure",jobs:[
+      {n:"flow-metrics",st:"warn",log:["$ flow-metrics","I measure the fixes I ship: load times, cost per PR, hours saved.","<y>WARN</y> no formal value-stream map or flow-metric program yet","<g>PASS</g> with warnings"]},
+      {n:"duo-agent-platform",st:"fail",log:["$ duo-agent-platform","<r>GAP</r> I haven't built on GitLab Duo Agent Platform.","I'd start as Customer Zero and file what I learn back to R&D."]}]}
+  ];
+  var pipe=document.getElementById("pipe"),logEl=document.getElementById("log"),ICON={ok:"&#10003;",warn:"!",fail:"&#215;"},jobBtns=[];
+  P.forEach(function(st){
+    var c=document.createElement("div");c.className="stage";
+    c.innerHTML='<div class="stage-hd">'+esc(st.s)+'</div><div class="jobs"></div>';
+    st.jobs.forEach(function(j){
+      var b=document.createElement("button");b.className="job";b.setAttribute("aria-expanded","false");b.setAttribute("aria-controls","log");
+      b.innerHTML='<span class="ico '+j.st+'" aria-hidden="true">'+ICON[j.st]+'</span>'+esc(j.n);
+      b.addEventListener("click",function(){
+        jobBtns.forEach(function(x){x.setAttribute("aria-expanded","false");});b.setAttribute("aria-expanded","true");
+        logEl.innerHTML=j.log.map(function(l,i){
+          var e=esc(l).replace(/&lt;(g|y|r)&gt;(.*?)&lt;\/\1&gt;/g,'<span class="$1">$2</span>');
+          return i===0?'<span class="c">'+e+'</span>':e;
+        }).join("\n");
+      });
+      jobBtns.push(b);c.querySelector(".jobs").appendChild(b);
+    });
+    pipe.appendChild(c);
+  });
+  jobBtns[0].click();
+
+  /* diffs */
+  var D=[
+    {f:"hands-on-senior-engineer.md",s:"ok",del:"Write production code and deliver measurable outcomes for internal partners",add:"Built Coder's internal AI agent platform for the revenue org and authored 884 merged pull requests on it between July 27 and October 9, 2026."},
+    {f:"diagnose-before-building.md",s:"ok",del:"Map workflows, identify constraints, confirm AI is the right intervention",add:"One Coder speedup used no model: a serial S3 read loop became a bounded fan-out, and a cold dashboard load fell from 5 to 10 seconds to about 2."},
+    {f:"prototypes-in-days.md",s:"ok",del:"Ship working prototypes in days, not months",add:"Peak week at Coder: 602 agent launches and 193 merged pull requests, built through a multi-model agent pipeline I set up."},
+    {f:"scripting-and-apis.md",s:"ok",del:"Strong Python or JavaScript/TypeScript, REST, GraphQL and integration patterns",add:"Python and TypeScript on AWS at Coder; Salesforce, Granola and Slack integrations; 187,745 lines of TypeScript in FieldCommand, built solo."},
+    {f:"agentic-patterns-and-models.md",s:"ok",del:"Tool use, multi-agent orchestration, human-in-the-loop, evals; Anthropic, OpenAI and open models",add:"Kimi and GLM models built and reviewed, GPT, Claude Opus and Fable handled escalations, and a cross-family reviewer had to clear each change. My own agent system runs on Claude Code with a human gate."},
+    {f:"ai-safety-and-guardrails.md",s:"ok",del:"Access controls, prompt injection defenses, data leakage prevention as first-class concerns",add:"Fail-closed Federal data access across 26 merged PRs, and an OAuth authorization server that gated hosted MCP access."},
+    {f:"business-systems.md",s:"par",del:"Salesforce, Marketo, Zendesk, Workato, Relevance AI, Glean",add:"Salesforce yes, plus Redtail CRM, n8n and Zapier. Marketo, Zendesk, Workato, Relevance AI and Glean, not yet."},
+    {f:"stakeholder-partnership.md",s:"ok",del:"Bridge technical and non-technical perspectives across functions",add:"Four years as a financial advisor explaining complex ideas in workshops and one-on-one, and I built Coder's platform for the revenue organization, not for engineers."},
+    {f:"preferred-gitlab-platform.md",s:"gap",del:"Experience with the GitLab platform and CI/CD workflows; Duo Agent Platform",add:"I've used Git and CI every day, but not GitLab's own platform or Duo. I'd be learning it as Customer Zero."}
+  ];
+  var BADGE={ok:'<span class="badge b-ok">covered</span>',par:'<span class="badge b-par">partial</span>',gap:'<span class="badge b-gap">gap</span>'};
+  var dEl=document.getElementById("diffs");
+  D.forEach(function(d,i){
+    var w=document.createElement("div");w.className="file";w.dataset.s=d.s;
+    w.innerHTML='<button class="file-hd" aria-expanded="true" aria-controls="h'+i+'"><span><span class="chev" aria-hidden="true">&#9662;</span> '+esc(d.f)+'</span>'+BADGE[d.s]+'</button><div class="hunk" id="h'+i+'"><div class="ln d"><span>-</span><span>'+esc(d.del)+'</span></div><div class="ln a"><span>+</span><span>'+esc(d.add)+'</span></div></div>';
+    var h=w.querySelector(".file-hd"),hk=w.querySelector(".hunk");
+    h.addEventListener("click",function(){var o=h.getAttribute("aria-expanded")==="true";h.setAttribute("aria-expanded",o?"false":"true");hk.hidden=o;});
+    dEl.appendChild(w);
+  });
+  function setAll(open){dEl.querySelectorAll(".file").forEach(function(w){w.querySelector(".file-hd").setAttribute("aria-expanded",open?"true":"false");w.querySelector(".hunk").hidden=!open;});}
+  document.getElementById("expAll").addEventListener("click",function(){setAll(true);});
+  document.getElementById("colAll").addEventListener("click",function(){setAll(false);});
+  var df=document.getElementById("dfilt"),cur="all";
+  [["all","All"],["ok","Covered"],["par","Partial"],["gap","Gaps"]].forEach(function(f){
+    var b=document.createElement("button");b.dataset.f=f[0];b.textContent=f[1];
+    b.addEventListener("click",function(){filter(f[0]);});df.appendChild(b);
+  });
+  function filter(f){
+    cur=f;df.querySelectorAll("button").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.f===f?"true":"false");});
+    dEl.querySelectorAll(".file").forEach(function(w){w.hidden=!(f==="all"||w.dataset.s===f||(f==="gap"&&w.dataset.s==="gap"));});
+  }
+  filter("all");
+
+  /* sidebar */
+  document.querySelectorAll(".side-btn").forEach(function(b){
+    b.addEventListener("click",function(){
+      if(b.dataset.go==="gaps"){show("t-ch");filter("gap");setAll(true);}
+      else{show(b.dataset.go);if(b.dataset.go==="t-ch")filter("all");}
+      document.querySelector(".tabs").scrollIntoView({behavior:"smooth",block:"start"});
+    });
+  });
+  show("t-ov");upd();
+})();
+</script>
+</body>
+</html>
