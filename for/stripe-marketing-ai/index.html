@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>Andrew Zoll, for the Forward Deployed AI Accelerator role</title>
+<meta name="description" content="A personal application page by Andrew Zoll for the Forward Deployed AI Accelerator, Marketing role. Not affiliated with or endorsed by Stripe.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --primary:#533afd;--primary-deep:#4434d4;--primary-soft:#665efd;--subdued:#b9b9f9;
+  --brand-dark:#1c1e54;--ink:#0d253d;--ink-2:#273951;--mute:#64748d;
+  --canvas:#fff;--soft:#f6f9fc;--cream:#f5e9d4;--hair:#e3e8ee;
+  --ruby:#ea2261;--magenta:#f96bee;--lemon:#9b6829;--shadow:#003770;
+  --sans:"sohne-var","Inter Tight","SF Pro Display",system-ui,-apple-system,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,monospace;
+  --lift:0 30px 60px -12px rgba(50,50,93,.25),0 18px 36px -18px rgba(0,0,0,.3);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);font-weight:300;color:var(--ink);background:var(--canvas);font-size:16px;line-height:1.5;font-feature-settings:"ss01";-webkit-font-smoothing:antialiased}
+a{color:var(--primary);text-decoration:none}
+a:hover{color:var(--primary-deep)}
+button{font:inherit;cursor:pointer}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+.strip{background:var(--brand-dark);color:#dfe3ff;font-size:13px;text-align:center;padding:8px 16px;font-weight:400}
+
+/* hero and mesh */
+.hero{position:relative;overflow:hidden;padding:72px 0 140px;isolation:isolate}
+.mesh{position:absolute;inset:-20% -10% 18% -10%;z-index:-1;transform:skewY(-8deg);transform-origin:0 100%;overflow:hidden;background:#fff}
+.blob{position:absolute;border-radius:50%;filter:blur(60px);opacity:.85;animation:drift 18s ease-in-out infinite alternate}
+.b1{width:52%;height:70%;left:-6%;top:10%;background:var(--magenta)}
+.b2{width:46%;height:64%;left:28%;top:-4%;background:var(--primary);animation-duration:22s}
+.b3{width:40%;height:60%;right:-4%;top:14%;background:#ffb36b;animation-duration:26s}
+.b4{width:30%;height:44%;left:52%;top:42%;background:var(--ruby);opacity:.6;animation-duration:20s}
+@keyframes drift{to{transform:translate(6%,8%) scale(1.12)}}
+@media (prefers-reduced-motion:reduce){.blob{animation:none}}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center}
+.eyebrow{font-size:14px;font-weight:400;color:#fff;background:rgba(13,37,61,.35);backdrop-filter:blur(6px);display:inline-block;padding:6px 12px;border-radius:999px;margin-bottom:22px}
+h1{font-size:56px;line-height:1.03;letter-spacing:-1.4px;font-weight:300;color:var(--ink);max-width:12ch}
+.hero p.lede{font-size:20px;line-height:1.4;color:var(--ink-2);margin-top:22px;max-width:34ch}
+.ctas{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+.btn{display:inline-flex;align-items:center;gap:8px;border-radius:999px;padding:11px 18px;font-size:15px;font-weight:400;border:0;transition:background .15s,transform .15s}
+.btn-p{background:var(--primary);color:#fff}
+.btn-p:hover{background:var(--primary-deep);color:#fff}
+.btn-s{background:#fff;color:var(--primary);box-shadow:inset 0 0 0 1px var(--hair)}
+.btn-s:hover{background:var(--soft)}
+.btn .arr{transition:transform .15s}
+.btn:hover .arr{transform:translateX(3px)}
+
+/* cohort tracker card */
+.tracker{background:#fff;border-radius:12px;box-shadow:var(--lift);overflow:hidden}
+.tr-hd{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;border-bottom:1px solid var(--hair);font-size:13px;font-weight:400;color:var(--mute)}
+.tr-hd b{color:var(--ink);font-weight:500}
+.live{display:inline-flex;align-items:center;gap:6px}
+.live i{width:7px;height:7px;border-radius:50%;background:#1ea672;box-shadow:0 0 0 0 rgba(30,166,114,.5);animation:pulse 2s infinite}
+@keyframes pulse{70%{box-shadow:0 0 0 7px rgba(30,166,114,0)}100%{box-shadow:0 0 0 0 rgba(30,166,114,0)}}
+.stages{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;padding:16px 18px 6px}
+.stage{background:none;border:0;text-align:left;padding:0;color:var(--mute);font-size:12px;font-weight:400}
+.stage .bar{height:6px;border-radius:3px;background:var(--hair);margin-bottom:8px;position:relative;overflow:hidden}
+.stage .bar::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,var(--primary),var(--magenta));transform:scaleX(0);transform-origin:left;transition:transform .45s cubic-bezier(.2,.7,.2,1)}
+.stage.done .bar::after,.stage.on .bar::after{transform:scaleX(1)}
+.stage.on{color:var(--ink)}
+.stage:focus-visible{outline:2px solid var(--primary);outline-offset:4px;border-radius:4px}
+.tr-body{padding:14px 18px 20px;min-height:228px}
+.tr-kicker{font-family:var(--mono);font-size:12px;color:var(--primary)}
+.tr-body h3{font-size:22px;font-weight:300;letter-spacing:-.22px;margin:6px 0 10px}
+.tr-body p{font-size:15px;color:var(--ink-2)}
+.tr-body .proof{margin-top:12px;font-size:13px;font-weight:400;background:var(--soft);border-radius:8px;padding:10px 12px;color:var(--ink-2)}
+.tag{display:inline-block;font-size:11px;font-weight:500;padding:2px 8px;border-radius:999px;margin-left:6px;vertical-align:2px}
+.t-cov{background:#d7f7c2;color:#05690d}.t-par{background:#fcedb9;color:#a04100}.t-gap{background:#ffe7f2;color:#b3093c}
+.tr-ft{display:flex;justify-content:space-between;align-items:center;padding:12px 18px;border-top:1px solid var(--hair);background:var(--soft)}
+.tr-ft span{font-size:12px;color:var(--mute);font-weight:400}
+.nav-b{display:flex;gap:6px}
+.nav-b button{width:30px;height:30px;border-radius:8px;border:1px solid var(--hair);background:#fff;color:var(--ink)}
+.nav-b button:hover{border-color:var(--subdued)}
+.nav-b button:disabled{opacity:.4;cursor:default}
+.fade{animation:fade .35s ease}
+@keyframes fade{from{opacity:0;transform:translateY(4px)}}
+
+/* sections */
+section.band{padding:88px 0}
+.soft{background:var(--soft)}
+.sec-hd{max-width:640px;margin-bottom:36px}
+.sec-hd .k{font-size:15px;font-weight:500;color:var(--primary);margin-bottom:10px}
+h2{font-size:40px;line-height:1.12;letter-spacing:-.9px;font-weight:300}
+.sec-hd p{font-size:18px;color:var(--ink-2);margin-top:14px}
+
+/* before / after */
+.flows{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+.flow{background:#fff;border-radius:12px;padding:22px;box-shadow:0 2px 5px rgba(50,50,93,.08),0 1px 1.5px rgba(0,0,0,.05);transition:box-shadow .2s}
+.flow:hover{box-shadow:var(--lift)}
+.flow-top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px}
+.flow h3{font-size:18px;font-weight:400}
+.sw{display:inline-flex;background:var(--soft);border-radius:999px;padding:3px;box-shadow:inset 0 0 0 1px var(--hair)}
+.sw button{border:0;background:none;border-radius:999px;padding:5px 12px;font-size:13px;color:var(--mute);font-weight:400}
+.sw button[aria-pressed="true"]{background:#fff;color:var(--ink);box-shadow:0 1px 3px rgba(50,50,93,.18)}
+.flow .txt{font-size:15px;color:var(--ink-2);min-height:72px}
+.flow .meta{font-family:var(--mono);font-size:12px;color:var(--mute);margin-top:12px}
+.flow.after .txt{color:var(--ink)}
+.flow.after{background:linear-gradient(#fff,#fff) padding-box,linear-gradient(120deg,var(--primary),var(--magenta),#ffb36b) border-box;border:1px solid transparent}
+
+/* requirements table */
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.chip{border:1px solid var(--hair);background:#fff;border-radius:999px;padding:6px 14px;font-size:14px;font-weight:400;color:var(--ink-2)}
+.chip[aria-pressed="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
+.chip .n{opacity:.6;margin-left:4px}
+.reqs{background:#fff;border-radius:12px;box-shadow:0 2px 5px rgba(50,50,93,.08);overflow:hidden}
+.req{border-top:1px solid var(--hair)}
+.req:first-child{border-top:0}
+.req-btn{width:100%;display:grid;grid-template-columns:1fr auto 20px;gap:16px;align-items:center;padding:18px 22px;background:none;border:0;text-align:left;color:var(--ink);font-size:16px;font-weight:300}
+.req-btn:hover{background:var(--soft)}
+.req-btn .pm{color:var(--primary);font-weight:400;transition:transform .2s}
+.req-btn[aria-expanded="true"] .pm{transform:rotate(45deg)}
+.req-body{padding:0 22px 20px;font-size:15px;color:var(--ink-2);max-width:760px}
+.req[hidden]{display:none}
+
+/* gaps */
+.gaps{display:grid;grid-template-columns:1fr 1.2fr;gap:40px;align-items:start}
+.gap-list{list-style:none;display:grid;gap:12px}
+.gap-list li{background:#fff;border-radius:10px;padding:16px 18px;border-left:3px solid var(--ruby);font-size:15px;color:var(--ink-2)}
+.gap-list b{color:var(--ink);font-weight:500}
+
+/* close */
+.close{position:relative;overflow:hidden;background:var(--brand-dark);color:#fff;padding:88px 0;isolation:isolate}
+.close::before{content:"";position:absolute;width:60%;height:140%;right:-20%;top:-20%;background:radial-gradient(closest-side,rgba(102,94,253,.7),transparent),radial-gradient(closest-side at 30% 70%,rgba(249,107,238,.45),transparent);z-index:-1;filter:blur(30px)}
+.close h2{color:#fff;max-width:18ch}
+.close p{color:#c9ccf5;font-size:18px;margin-top:14px;max-width:52ch}
+.close .btn-s{background:transparent;color:#fff;box-shadow:inset 0 0 0 1px rgba(255,255,255,.35)}
+.close .btn-s:hover{background:rgba(255,255,255,.08)}
+footer{padding:28px 0;font-size:13px;color:var(--mute);font-weight:400}
+footer .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+
+@media (max-width:900px){
+  .hero-grid,.gaps{grid-template-columns:1fr}
+  h1{font-size:42px}
+  .flows{grid-template-columns:1fr}
+  h2{font-size:32px}
+}
+@media (max-width:520px){
+  .stages{gap:3px}.stage{font-size:10px}
+  .req-btn{grid-template-columns:1fr 20px}.req-btn .tag{display:none}
+}
+</style>
+</head>
+<body>
+<div class="strip" id="top">This is a personal page by Andrew Zoll. It is not affiliated with or endorsed by Stripe.</div>
+
+<header class="hero">
+  <div class="mesh" aria-hidden="true"><span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span><span class="blob b4"></span></div>
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow">For the Forward Deployed AI Accelerator, Marketing role</span>
+      <h1>Hi, I'm Andrew. I build the tools marketers start their day with.</h1>
+      <p class="lede">I'm a Senior GTM Engineer (AI) at Coder, building marketing-data tools for the marketing team. Your posting reads like my week, so I mapped myself onto your five-stage journey.</p>
+      <div class="ctas">
+        <a class="btn btn-p" href="#journey">Walk the journey <span class="arr" aria-hidden="true">&rarr;</span></a>
+        <a class="btn btn-s" href="#gaps">Skip to the gaps</a>
+      </div>
+    </div>
+
+    <div class="tracker" id="journey" aria-label="Five-stage journey, with what I built at each stage">
+      <div class="tr-hd"><span><b>Cohort of one</b> &middot; Andrew Zoll</span><span class="live"><i></i> Stage <span id="stNum">1</span> of 5</span></div>
+      <div class="stages" role="tablist" aria-label="Journey stages" id="stages"></div>
+      <div class="tr-body" id="trBody" role="tabpanel" aria-live="polite"></div>
+      <div class="tr-ft"><span>Use the arrows or tap a stage</span><div class="nav-b"><button id="prev" aria-label="Previous stage">&larr;</button><button id="next" aria-label="Next stage">&rarr;</button></div></div>
+    </div>
+  </div>
+</header>
+
+<section class="band soft">
+  <div class="wrap">
+    <div class="sec-hd">
+      <div class="k">Workflows I've changed</div>
+      <h2>Flip each one to see the after.</h2>
+      <p>You measure success by workflows permanently transformed. These are the ones I can point to, with the numbers where I have them and none where I don't.</p>
+    </div>
+    <div class="flows" id="flows"></div>
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap">
+    <div class="sec-hd">
+      <div class="k">Your posting, line by line</div>
+      <h2>Every requirement, and what I'd bring to it.</h2>
+      <p>Open a row to read the receipt. Filter to the partials and gaps if you'd rather start there.</p>
+    </div>
+    <div class="filters" role="group" aria-label="Filter requirements" id="filters"></div>
+    <div class="reqs" id="reqs"></div>
+  </div>
+</section>
+
+<section class="band soft" id="gaps">
+  <div class="wrap gaps">
+    <div class="sec-hd">
+      <div class="k">Where I'm short</div>
+      <h2>The honest part.</h2>
+      <p>I'd rather you see these here than find them in a screen.</p>
+    </div>
+    <ul class="gap-list">
+      <li><b>No cohort at scale yet.</b> I haven't held a formal AI transformation role with 25 to 45 people, so I can't show you cohort adoption metrics.</li>
+      <li><b>New to the marketing org.</b> My marketing-team tenure at Coder began on October 14, 2026. Before that I built for the revenue organization.</li>
+      <li><b>No Marketo.</b> I've built on Salesforce, Slack and meeting transcripts, but I haven't used Marketo.</li>
+      <li><b>Short engineering title.</b> My engineering title began in July 2026. The founder years before it, building FieldCommand and Veritas, are where most of the building happened.</li>
+    </ul>
+  </div>
+</section>
+
+<section class="close" id="contact">
+  <div class="wrap">
+    <h2>If this looks like a fit, I'd love to talk.</h2>
+    <p>I live in Pueblo, Colorado, and I'm happy to show any of this running. The portfolio has more of the work, and LinkedIn is the easiest place to reach me.</p>
+    <div class="ctas">
+      <a class="btn btn-p" href="https://portfolio.andrewzoll.com" target="_blank" rel="noopener">See the portfolio <span class="arr" aria-hidden="true">&rarr;</span></a>
+      <a class="btn btn-s" href="https://www.linkedin.com/in/andrewzoll" target="_blank" rel="noopener">Connect on LinkedIn</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>A personal application page by Andrew Zoll for the Forward Deployed AI Accelerator, Marketing role. It is not affiliated with or endorsed by Stripe, and it uses no Stripe logos or assets.</span>
+    <a href="#top">Back to top</a>
+  </div>
+</footer>
+
+<script>
+(function(){
+  function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
+  var TAG={cov:'<span class="tag t-cov">Covered</span>',par:'<span class="tag t-par">Partial</span>',gap:'<span class="tag t-gap">Gap</span>'};
+
+  var STAGES=[
+    {n:"Awareness",k:"stage_01.awareness",h:"I've explained hard things to non-technical people for a long time.",
+     p:"Before I wrote code for a living, I was a financial advisor for four years. I ran workshops and one-on-one meetings that turned complex financial ideas into plain frameworks, and I kept 95% of 120+ client households.",
+     proof:"Earlier still: pastor, then communications director and IT lead for a 1,200-member church.",s:"cov"},
+    {n:"First win",k:"stage_02.first_win",h:"My first real AI win saved 20+ hours a month.",
+     p:"At Ryleigh Wealth Management I connected Redtail CRM, outside services and the ChatGPT API, and the integration eliminated more than 20 hours of manual work each month.",
+     proof:"I also built lead-capture and onboarding pipelines there that converted more than 7% of visitors to leads.",s:"cov"},
+    {n:"Regular use",k:"stage_03.regular_ai",h:"Then I built a platform a whole revenue org used.",
+     p:"From July to October 2026 I built Coder's internal AI agent platform. It turned CRM, support and call-transcript data into answers and workflows for people who aren't engineers.",
+     proof:"884 merged pull requests between July 27 and October 9, with Salesforce, Granola transcript and Slack bot integrations.",s:"cov"},
+    {n:"Transformation",k:"stage_04.full_workflow",h:"I let agents run the marketing for two businesses.",
+     p:"I built AndrewOS, my own agent operating system. Agents handle marketing, prospecting, content distribution and LinkedIn content production, and a human gate approves what goes out.",
+     proof:"It runs on Claude Code with custom skills, hooks and scheduled agents.",s:"cov"},
+    {n:"Self-sufficiency",k:"stage_05.self_sufficient",h:"This is where I have the least proof, and I'll say so.",
+     p:"I've built for people to serve themselves. At Coder I shipped an OAuth server that gated hosted MCP access, so teammates could reach the platform from their own tools. But I haven't yet taken a cohort to the point where they build their own.",
+     proof:"Teaching people to build is the part of this role I'd be growing into.",s:"par"}
+  ];
+  var cur=0, stagesEl=document.getElementById("stages"), body=document.getElementById("trBody");
+  STAGES.forEach(function(s,i){
+    var b=document.createElement("button");
+    b.className="stage";b.setAttribute("role","tab");b.id="st"+i;b.setAttribute("aria-controls","trBody");
+    b.innerHTML='<div class="bar"></div>'+esc(s.n);
+    b.addEventListener("click",function(){go(i);});
+    b.addEventListener("keydown",function(e){
+      if(e.key==="ArrowRight"){go(Math.min(4,cur+1));stagesEl.children[cur].focus();e.preventDefault();}
+      if(e.key==="ArrowLeft"){go(Math.max(0,cur-1));stagesEl.children[cur].focus();e.preventDefault();}
+    });
+    stagesEl.appendChild(b);
+  });
+  function go(i){
+    cur=i;
+    Array.prototype.forEach.call(stagesEl.children,function(b,j){
+      b.classList.toggle("on",j===i);b.classList.toggle("done",j<i);
+      b.setAttribute("aria-selected",j===i?"true":"false");b.tabIndex=j===i?0:-1;
+    });
+    var s=STAGES[i];
+    body.setAttribute("aria-labelledby","st"+i);
+    body.innerHTML='<div class="fade"><div class="tr-kicker">'+esc(s.k)+TAG[s.s]+'</div><h3>'+esc(s.h)+'</h3><p>'+esc(s.p)+'</p><div class="proof">'+esc(s.proof)+'</div></div>';
+    document.getElementById("stNum").textContent=i+1;
+    document.getElementById("prev").disabled=i===0;
+    document.getElementById("next").disabled=i===4;
+  }
+  document.getElementById("prev").addEventListener("click",function(){go(Math.max(0,cur-1));});
+  document.getElementById("next").addEventListener("click",function(){go(Math.min(4,cur+1));});
+  go(0);
+
+  var FLOWS=[
+    {t:"Advisory back office",b:"Client records lived in Redtail, and keeping them current meant hours of manual entry and follow-up every month.",a:"An integration between Redtail CRM, outside services and the ChatGPT API took more than 20 hours of monthly manual work off the table.",m:"Ryleigh Wealth Management"},
+    {t:"Revenue team questions",b:"Answers about an account were spread across the CRM, support tickets and call transcripts, so people went digging by hand.",a:"One internal agent platform turned that data into answers and workflows for the revenue organization.",m:"Coder, Jul to Oct 2026"},
+    {t:"Cold dashboard load",b:"The dashboard read each account from S3 one at a time, so a cold load took 5 to 10 seconds.",a:"A bounded fan-out replaced the serial loop, and a cold load dropped to about 2 seconds.",m:"Coder, AWS"},
+    {t:"Marketing for my own businesses",b:"Marketing, prospecting and content were all evening work I did by hand.",a:"Agents handle marketing, prospecting and content distribution, and I approve what ships.",m:"AndrewOS"}
+  ];
+  var flowsEl=document.getElementById("flows");
+  FLOWS.forEach(function(f,i){
+    var el=document.createElement("article");el.className="flow";
+    el.innerHTML='<div class="flow-top"><h3>'+esc(f.t)+'</h3><div class="sw" role="group" aria-label="Before or after"><button aria-pressed="true" data-v="b">Before</button><button aria-pressed="false" data-v="a">After</button></div></div><p class="txt" aria-live="polite"></p><div class="meta">'+esc(f.m)+'</div>';
+    var txt=el.querySelector(".txt");
+    function set(v){
+      el.classList.toggle("after",v==="a");
+      el.querySelectorAll(".sw button").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.v===v?"true":"false");});
+      txt.textContent=v==="a"?f.a:f.b;
+    }
+    el.querySelectorAll(".sw button").forEach(function(b){b.addEventListener("click",function(){set(b.dataset.v);});});
+    set("b");flowsEl.appendChild(el);
+  });
+
+  var REQS=[
+    {q:"5+ years of professional experience requiring diagnostic thinking, problem-solving and cross-functional collaboration",s:"cov",r:"Since 2015 I've run operations for a church, led communications and IT for a 1,200-member organization, advised 120+ households, and founded two software companies. Most of that work was figuring out where a process actually broke."},
+    {q:"Hands-on experience building and deploying AI agents, tools, automations or workflows that real people use",s:"cov",r:"Coder's internal AI agent platform served the revenue organization, and I authored 884 merged pull requests on it. Before that, FieldCommand shipped four AI features into production behind per-tenant feature flags."},
+    {q:"Proficiency with AI development tools such as Claude Code, Codex and custom agent frameworks",s:"cov",r:"I ran my Coder engineering through a multi-model agent pipeline: open-weight Kimi models built, GLM models reviewed, and GPT, Claude Opus and Fable handled the hard cases. In the peak week that meant 602 agent launches and 193 merged pull requests. At home I run my own agent system on Claude Code."},
+    {q:"Strong written and verbal communication, explaining technical concepts to non-technical audiences",s:"cov",r:"Four years of financial workshops and one-on-one meetings, and before that, years of preaching and writing for a congregation. At Coder the people I built for were in the revenue organization, not engineering."},
+    {q:"Comfort across multiple workstreams and relationships at once",s:"cov",r:"At Coder I built for the whole revenue organization. In my evenings I run Veritas, a citation-verification product for legal filings, and the agent system that markets my other businesses."},
+    {q:"A track record of coaching, teaching or enabling others, with evidence they changed how they work",s:"par",r:"I've taught for most of my career, as a pastor and as an advisor. What I can't show yet is measured evidence of people changing how they work with AI because I coached them. That's the honest partial."},
+    {q:"Preferred: a formal AI transformation role built on finding workflow changes and building them",s:"gap",r:"My roles have been engineering and founder roles. The transformation work happened inside them, but I haven't held a title built around it."},
+    {q:"Preferred: experience in marketing, marketing ops or growth, and its tool stack",s:"par",r:"I'm in Coder's marketing org now, building marketing-data tools. From 2017 to 2019 I owned a church's web, email, print and app channels and reported engagement to leadership. I haven't used Marketo."}
+  ];
+  var reqsEl=document.getElementById("reqs"), filt="all";
+  REQS.forEach(function(r,i){
+    var d=document.createElement("div");d.className="req";d.dataset.s=r.s;
+    d.innerHTML='<button class="req-btn" aria-expanded="false" aria-controls="rb'+i+'"><span>'+esc(r.q)+'</span>'+TAG[r.s]+'<span class="pm" aria-hidden="true">+</span></button><div class="req-body" id="rb'+i+'" hidden>'+esc(r.r)+'</div>';
+    var btn=d.querySelector(".req-btn"),rb=d.querySelector(".req-body");
+    btn.addEventListener("click",function(){var o=btn.getAttribute("aria-expanded")==="true";btn.setAttribute("aria-expanded",o?"false":"true");rb.hidden=o;});
+    reqsEl.appendChild(d);
+  });
+  var counts={all:REQS.length,cov:0,par:0,gap:0};REQS.forEach(function(r){counts[r.s]++;});
+  var F=[["all","All"],["cov","Covered"],["par","Partial"],["gap","Gap"]],fEl=document.getElementById("filters");
+  F.forEach(function(f){
+    var b=document.createElement("button");b.className="chip";b.dataset.f=f[0];
+    b.innerHTML=esc(f[1])+'<span class="n">'+counts[f[0]]+'</span>';
+    b.addEventListener("click",function(){filt=f[0];apply();});
+    fEl.appendChild(b);
+  });
+  function apply(){
+    fEl.querySelectorAll(".chip").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.f===filt?"true":"false");});
+    reqsEl.querySelectorAll(".req").forEach(function(d){d.hidden=!(filt==="all"||d.dataset.s===filt);});
+  }
+  apply();
+})();
+</script>
+</body>
+</html>
